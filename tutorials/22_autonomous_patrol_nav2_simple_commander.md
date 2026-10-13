@@ -1,4 +1,4 @@
-# Lesson 25: Autonomous Navigation Scripting with Nav2 Simple Commander
+# Lesson 22: Autonomous Navigation Scripting with Nav2 Simple Commander
 
 > **Focus:** Python Mission Scripting, `BasicNavigator` API, Multi-Waypoint Patrols & Timeout Guards  
 > **Course Track:** NavPro Learning Hub - Level 1 (Day 3 Capstone)  
@@ -45,7 +45,7 @@ By the end of this lesson, you will:
 
 ## 4. Complete Autonomous Patrol Script Walkthrough
 
-Open [`ros2_ws/src/navpro_navigation/navpro_navigation/solution_multi_waypoint_patrol.py`](file:///home/chaitu/Projects/navpro_learning_hub/level1/ros2_ws/src/navpro_navigation/navpro_navigation/solution_multi_waypoint_patrol.py):
+Open [`ros2_ws/src/navpro_navigation/navpro_navigation/m04_l22_03_solution_multi_waypoint_patrol.py`](file:///home/chaitu/Projects/navpro_learning_hub/level1/ros2_ws/src/navpro_navigation/navpro_navigation/m04_l22_03_solution_multi_waypoint_patrol.py):
 
 ```python
 #!/usr/bin/env python3
@@ -162,5 +162,5 @@ Watch the robot sequentially drive through every warehouse aisle, halt for inspe
 
 ## 6. Student Task & Reference Solution
 
-* **Your Assignment File:** [`task_multi_waypoint_patrol.py`](file:///home/chaitu/Projects/navpro_learning_hub/level1/ros2_ws/src/navpro_navigation/navpro_navigation/task_multi_waypoint_patrol.py)
-* **Instructor Reference Answer:** [`solution_multi_waypoint_patrol.py`](file:///home/chaitu/Projects/navpro_learning_hub/level1/ros2_ws/src/navpro_navigation/navpro_navigation/solution_multi_waypoint_patrol.py)
+* **Your Assignment File:** [`m04_l22_02_task_multi_waypoint_patrol.py`](file:///home/chaitu/Projects/navpro_learning_hub/level1/ros2_ws/src/navpro_navigation/navpro_navigation/m04_l22_02_task_multi_waypoint_patrol.py)
+* **Instructor Reference Answer:** [`m04_l22_03_solution_multi_waypoint_patrol.py`](file:///home/chaitu/Projects/navpro_learning_hub/level1/ros2_ws/src/navpro_navigation/navpro_navigation/m04_l22_03_solution_multi_waypoint_patrol.py)

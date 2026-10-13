@@ -1,4 +1,4 @@
-# Lesson 22: Nav2 Stack Architecture & Costmap 2D Configuration
+# Lesson 19: Nav2 Stack Architecture & Costmap 2D Configuration
 
 > **Focus:** Navigation2 Server Architecture, Costmap 2D Layers, Inflation Math & Safety Buffers  
 > **Course Track:** NavPro Learning Hub - Level 1  

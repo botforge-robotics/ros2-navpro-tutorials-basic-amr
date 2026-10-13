@@ -1,4 +1,4 @@
-# Lesson 21: 2D LiDAR SLAM Mapping with SLAM Toolbox
+# Lesson 18: 2D LiDAR SLAM Mapping with SLAM Toolbox
 
 > **Focus:** 2D Occupancy Grid Mapping, Pose Graph Optimization, Loop Closure & Map Serialization  
 > **Course Track:** NavPro Learning Hub - Level 1  

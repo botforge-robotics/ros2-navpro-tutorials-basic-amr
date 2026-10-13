@@ -1,4 +1,4 @@
-# Lesson 17: 3D Robot Modeling with URDF & Xacro
+# Lesson 14: 3D Robot Modeling with URDF & Xacro
 
 > **Focus:** Kinematic Tree Modeling, XML Macros (Xacro), Inertia Tensors & Visual/Collision Geometry  
 > **Course Track:** NavPro Learning Hub - Level 1  

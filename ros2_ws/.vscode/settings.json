@@ -1,0 +1,31 @@
+{
+  "python.defaultInterpreterPath": "/usr/bin/python3",
+  "python.autoComplete.extraPaths": [
+    "/opt/ros/jazzy/lib/python3.12/site-packages",
+    "/home/student/ros2_ws/install/navpro_interfaces/lib/python3.12/site-packages",
+    "/home/student/ros2_ws/install/navpro_basics/lib/python3.12/site-packages",
+    "/home/student/ros2_ws/install/navpro_description/lib/python3.12/site-packages",
+    "/home/student/ros2_ws/install/navpro_navigation/lib/python3.12/site-packages"
+  ],
+  "python.analysis.extraPaths": [
+    "/opt/ros/jazzy/lib/python3.12/site-packages",
+    "/home/student/ros2_ws/install/navpro_interfaces/lib/python3.12/site-packages",
+    "/home/student/ros2_ws/install/navpro_basics/lib/python3.12/site-packages",
+    "/home/student/ros2_ws/install/navpro_description/lib/python3.12/site-packages",
+    "/home/student/ros2_ws/install/navpro_navigation/lib/python3.12/site-packages"
+  ],
+  "python.analysis.autoSearchPaths": true,
+  "python.analysis.diagnosticMode": "openFilesOnly",
+  "python.analysis.typeCheckingMode": "basic",
+  "editor.quickSuggestions": {
+    "other": true,
+    "comments": false,
+    "strings": true
+  },
+  "editor.suggestOnTriggerCharacters": true,
+  "editor.acceptSuggestionOnEnter": "on",
+  "editor.tabCompletion": "on",
+  "editor.formatOnSave": true,
+  "files.autoSave": "afterDelay",
+  "files.autoSaveDelay": 1000
+}

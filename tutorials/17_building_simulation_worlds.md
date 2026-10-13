@@ -1,4 +1,4 @@
-# Lesson 20: Building Custom Simulation Worlds in Gazebo
+# Lesson 17: Building Custom Simulation Worlds in Gazebo
 
 > **Focus:** SDF World Architecture, Physics Solver Tuning, Warehouse Modeling & Environment Assets  
 > **Course Track:** NavPro Learning Hub - Level 1  

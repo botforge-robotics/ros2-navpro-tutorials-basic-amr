@@ -111,12 +111,12 @@ export function HubOverview({
           <div className="stat-sub">Step-by-step guides</div>
         </div>
         <div className="stat-card">
-          <div className="stat-number">5</div>
+          <div className="stat-number">{modules.length}</div>
           <div className="stat-label">Core Modules</div>
           <div className="stat-sub">Middleware to Nav2</div>
         </div>
         <div className="stat-card">
-          <div className="stat-number">4</div>
+          <div className="stat-number">2</div>
           <div className="stat-label">Capstone Projects</div>
           <div className="stat-sub">Physical &amp; Sim AMRs</div>
         </div>
@@ -237,10 +237,10 @@ export function HubOverview({
                 </td>
                 <td>Official String Pub/Sub (Lesson 05)</td>
                 <td>
-                  <code>navpro_basics/task_custom_pubsub.py</code>
+                  <code>navpro_basics/m01_l05_task_custom_pubsub.py</code>
                 </td>
                 <td>
-                  <code>navpro_basics/solution_custom_pubsub.py</code>
+                  <code>navpro_basics/m01_l05_solution_custom_pubsub.py</code>
                 </td>
               </tr>
               <tr>
@@ -250,10 +250,10 @@ export function HubOverview({
                 </td>
                 <td>Official AddTwoInts Service (Lesson 08)</td>
                 <td>
-                  <code>navpro_basics/task_service_calculator.py</code>
+                  <code>navpro_basics/m02_l08_task_service_calculator.py</code>
                 </td>
                 <td>
-                  <code>navpro_basics/solution_service_calculator.py</code>
+                  <code>navpro_basics/m02_l08_solution_service_calculator.py</code>
                 </td>
               </tr>
               <tr>
@@ -263,51 +263,23 @@ export function HubOverview({
                 </td>
                 <td>Publishers, Subscribers &amp; QoS</td>
                 <td>
-                  <code>navpro_basics/task_teleop_speed_limiter.py</code>
+                  <code>navpro_basics/m01_l05_task_teleop_speed_limiter.py</code>
                 </td>
                 <td>
-                  <code>navpro_basics/solution_teleop_speed_limiter.py</code>
+                  <code>navpro_basics/m01_l05_solution_teleop_speed_limiter.py</code>
                 </td>
               </tr>
               <tr>
                 <td>
                   <span className="badge badge-info" style={{ marginRight: '6px', fontSize: '0.7rem' }}>Capstone 2</span>
-                  <strong>Forward Kinematics TF2</strong>
-                </td>
-                <td>TF2 Tree, Odometry &amp; Coordinate Frames</td>
-                <td>
-                  <code>navpro_description/task_custom_odometry_tf.py</code>
-                </td>
-                <td>
-                  <code>navpro_description/solution_custom_odometry_tf.py</code>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <span className="badge badge-info" style={{ marginRight: '6px', fontSize: '0.7rem' }}>Capstone 3</span>
-                  <strong>Nav2 Patrol Mission</strong>
+                  <strong>Nav2 Autonomous Patrol Mission</strong>
                 </td>
                 <td>Autonomous Navigation &amp; Simple Commander</td>
                 <td>
-                  <code>navpro_navigation/task_multi_waypoint_patrol.py</code>
+                  <code>navpro_navigation/m04_l22_02_task_multi_waypoint_patrol.py</code>
                 </td>
                 <td>
-                  <code>
-                    navpro_navigation/solution_multi_waypoint_patrol.py
-                  </code>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <span className="badge badge-info" style={{ marginRight: '6px', fontSize: '0.7rem' }}>Capstone 4</span>
-                  <strong>OpenCV Optical Inspection</strong>
-                </td>
-                <td>cv_bridge &amp; Edge Detection Pipeline</td>
-                <td>
-                  <code>navpro_vision/task_opencv_inspection.py</code>
-                </td>
-                <td>
-                  <code>navpro_vision/solution_opencv_inspection.py</code>
+                  <code>navpro_navigation/m04_l22_03_solution_multi_waypoint_patrol.py</code>
                 </td>
               </tr>
             </tbody>

@@ -29,7 +29,7 @@ By the end of this lesson, you will:
 
 ## 3. Official ROS 2 Minimal Parameter Node (Python) - Step-by-Step
 
-Following the canonical [Official ROS 2 Jazzy Parameter Tutorial](https://docs.ros.org/en/jazzy/Tutorials/Beginner-Client-Libraries/Using-Parameters-In-A-Class-Python.html), we begin with `minimal_param_node.py`. It declares a parameter named `'my_parameter'` with default value `'world'` and logs it periodically.
+Following the canonical [Official ROS 2 Jazzy Parameter Tutorial](https://docs.ros.org/en/jazzy/Tutorials/Beginner-Client-Libraries/Using-Parameters-In-A-Class-Python.html), we begin with `m02_l09_01_minimal_param_node.py`. It declares a parameter named `'my_parameter'` with default value `'world'` and logs it periodically.
 
 ```python
 #!/usr/bin/env python3

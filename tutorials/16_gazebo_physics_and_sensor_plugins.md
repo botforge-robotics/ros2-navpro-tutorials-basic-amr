@@ -1,4 +1,4 @@
-# Lesson 19: Gazebo Physics Simulation & Sensor Plugins
+# Lesson 16: Gazebo Physics Simulation & Sensor Plugins
 
 > **Focus:** Physics Engine Simulation, Differential Drive Plugins, 2D LiDAR Ray Sensors & IMU  
 > **Course Track:** NavPro Learning Hub - Level 1  

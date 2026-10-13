@@ -1,4 +1,4 @@
-# Lesson 18: RViz2 Visualization & Kinematic TF Inspection
+# Lesson 15: RViz2 Visualization & Kinematic TF Inspection
 
 > **Focus:** 3D Visualization Plugins, Fixed Frames, Display Configurations & Kinematic Sliders  
 > **Course Track:** NavPro Learning Hub - Level 1  

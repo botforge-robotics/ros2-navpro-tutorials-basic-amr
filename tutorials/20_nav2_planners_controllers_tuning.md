@@ -1,4 +1,4 @@
-# Lesson 23: Nav2 Path Planners & Local Controller Tuning
+# Lesson 20: Nav2 Path Planners & Local Controller Tuning
 
 > **Focus:** Global Planners (Smac/NavFn), DWB Trajectory Rollouts, Critic Scoring & Pure Pursuit  
 > **Course Track:** NavPro Learning Hub - Level 1  

@@ -1,4 +1,4 @@
-# Lesson 26: Physical Robot Hardware Deployment (Sim-to-Real)
+# Lesson 23: Physical Robot Hardware Deployment (Sim-to-Real)
 
 > **Focus:** Embedded Hardware Bringup, Micro-ROS/Serial Drivers, AMCL Relocalization & Physical AMR Deployment  
 > **Course Track:** NavPro Learning Hub - Level 1 (Physical Hardware Capstone)  

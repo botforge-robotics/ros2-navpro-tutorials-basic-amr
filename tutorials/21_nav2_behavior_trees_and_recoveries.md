@@ -1,4 +1,4 @@
-# Lesson 24: Behavior Trees, Recovery Behaviors & Lifecycle Management
+# Lesson 21: Behavior Trees, Recovery Behaviors & Lifecycle Management
 
 > **Focus:** BT Navigator Engine, Recovery Plugins (Spin, BackUp, Wait) & Lifecycle State Machines  
 > **Course Track:** NavPro Learning Hub - Level 1  

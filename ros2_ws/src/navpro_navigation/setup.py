@@ -23,9 +23,12 @@ setup(
     license='Apache-2.0',
     entry_points={
         'console_scripts': [
-            'nav2_commander_explained = navpro_navigation.nav2_commander_explained:main',
-            'task_multi_waypoint_patrol = navpro_navigation.task_multi_waypoint_patrol:main',
-            'solution_multi_waypoint_patrol = navpro_navigation.solution_multi_waypoint_patrol:main',
+            'nav2_commander_explained = navpro_navigation.m04_l22_01_nav2_commander_explained:main',
+            'm04_l22_01_nav2_commander_explained = navpro_navigation.m04_l22_01_nav2_commander_explained:main',
+            'task_multi_waypoint_patrol = navpro_navigation.m04_l22_02_task_multi_waypoint_patrol:main',
+            'm04_l22_02_task_multi_waypoint_patrol = navpro_navigation.m04_l22_02_task_multi_waypoint_patrol:main',
+            'solution_multi_waypoint_patrol = navpro_navigation.m04_l22_03_solution_multi_waypoint_patrol:main',
+            'm04_l22_03_solution_multi_waypoint_patrol = navpro_navigation.m04_l22_03_solution_multi_waypoint_patrol:main',
         ],
     },
 )

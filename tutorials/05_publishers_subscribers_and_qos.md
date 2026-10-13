@@ -63,7 +63,7 @@ Unlike ROS 1 (which used TCP/UDP sockets with hardcoded parameters), ROS 2 allow
 
 ## 4. Official ROS 2 Minimal Publisher (Python) - Step-by-Step
 
-Following the canonical [Official ROS 2 Jazzy Beginner Tutorial](https://docs.ros.org/en/jazzy/Tutorials/Beginner-Client-Libraries/Writing-A-Simple-Py-Publisher-And-Subscriber.html), we begin with the simplest possible publisher node (`publisher_member_function.py` / `talker`). It sends standard string messages (`std_msgs/msg/String`) to a topic named `'topic'`.
+Following the canonical [Official ROS 2 Jazzy Beginner Tutorial](https://docs.ros.org/en/jazzy/Tutorials/Beginner-Client-Libraries/Writing-A-Simple-Py-Publisher-And-Subscriber.html), we begin with the simplest possible publisher node (`m01_l05_01_publisher_member_function.py` / `talker`). It sends standard string messages (`std_msgs/msg/String`) to a topic named `'topic'`.
 
 ```python
 #!/usr/bin/env python3
@@ -129,7 +129,7 @@ if __name__ == '__main__':
 
 ## 5. Official ROS 2 Minimal Subscriber (Python) - Step-by-Step
 
-Now let's build the consumer node (`subscriber_member_function.py` / `listener`) that subscribes to `'topic'` and logs incoming string messages.
+Now let's build the consumer node (`m01_l05_02_subscriber_member_function.py` / `listener`) that subscribes to `'topic'` and logs incoming string messages.
 
 ```python
 #!/usr/bin/env python3
@@ -266,8 +266,8 @@ ros2 topic pub --once /topic std_msgs/msg/String "{data: 'Hello from Student Ter
 
 To solidify what you've learned, two progressive exercises are mounted in your workspace:
 
-### Task 1 (Beginner Foundation): `task_custom_pubsub.py`
-Located in `~/ros2_ws/src/navpro_basics/navpro_basics/task_custom_pubsub.py`.
+### Task 1 (Beginner Foundation): `m01_l05_task_custom_pubsub.py`
+Located in `~/ros2_ws/src/navpro_basics/navpro_basics/m01_l05_task_custom_pubsub.py`.
 - **Goal:** Create a node that publishes ping messages (`std_msgs/msg/String`) on `/chatter` and subscribes to listen to them.
 - **Run your node:**
   ```bash
@@ -275,8 +275,8 @@ Located in `~/ros2_ws/src/navpro_basics/navpro_basics/task_custom_pubsub.py`.
   ```
 - **Reference Solution:** `ros2 run navpro_basics solution_custom_pubsub`
 
-### Task 2 (Robotics Capstone): `task_teleop_speed_limiter.py`
-Located in `~/ros2_ws/src/navpro_basics/navpro_basics/task_teleop_speed_limiter.py`.
+### Task 2 (Robotics Capstone): `m01_l05_task_teleop_speed_limiter.py`
+Located in `~/ros2_ws/src/navpro_basics/navpro_basics/m01_l05_task_teleop_speed_limiter.py`.
 - **Goal:** Intercept `/input/cmd_vel` (`geometry_msgs/msg/Twist`), scale velocities by a safety factor, and republish to `/cmd_vel`.
 - **Run your node:**
   ```bash

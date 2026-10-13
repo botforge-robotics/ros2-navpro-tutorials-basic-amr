@@ -24,9 +24,6 @@ setup(
     license='Apache-2.0',
     entry_points={
         'console_scripts': [
-            'tf_broadcaster_explained = navpro_description.tf_broadcaster_explained:main',
-            'task_custom_odometry_tf = navpro_description.task_custom_odometry_tf:main',
-            'solution_custom_odometry_tf = navpro_description.solution_custom_odometry_tf:main',
         ],
     },
 )

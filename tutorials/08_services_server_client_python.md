@@ -31,7 +31,7 @@ By the end of this lesson, you will:
 
 ## 3. Official ROS 2 Minimal Service Server (Python) - Step-by-Step
 
-Following the canonical [Official ROS 2 Jazzy Beginner Service Tutorial](https://docs.ros.org/en/jazzy/Tutorials/Beginner-Client-Libraries/Writing-A-Simple-Py-Service-And-Client.html), we begin with the fundamental `AddTwoInts` service server (`service_member_function.py` / `add_two_ints_server`).
+Following the canonical [Official ROS 2 Jazzy Beginner Service Tutorial](https://docs.ros.org/en/jazzy/Tutorials/Beginner-Client-Libraries/Writing-A-Simple-Py-Service-And-Client.html), we begin with the fundamental `AddTwoInts` service server (`m02_l08_01_service_member_function.py` / `add_two_ints_server`).
 
 It uses the standard interface `example_interfaces/srv/AddTwoInts`:
 ```text
@@ -116,7 +116,7 @@ if __name__ == '__main__':
 
 ## 5. Official ROS 2 Minimal Client Async (Python) - Step-by-Step
 
-Here is the canonical asynchronous Python Service Client (`client_member_function.py` / `add_two_ints_client`):
+Here is the canonical asynchronous Python Service Client (`m02_l08_02_client_member_function.py` / `add_two_ints_client`):
 
 ```python
 #!/usr/bin/env python3
@@ -224,8 +224,8 @@ ros2 service call /add_two_ints example_interfaces/srv/AddTwoInts "{a: 10, b: 25
 
 ## 7. Student Hands-On Tasks & Assignments
 
-### Task 1 (Beginner Foundation): `task_service_calculator.py`
-Located in `~/ros2_ws/src/navpro_basics/navpro_basics/task_service_calculator.py`.
+### Task 1 (Beginner Foundation): `m02_l08_task_service_calculator.py`
+Located in `~/ros2_ws/src/navpro_basics/navpro_basics/m02_l08_task_service_calculator.py`.
 - **Goal:** Implement a service server on `/calculate_sum` using `AddTwoInts`.
 - **Run your node:**
   ```bash
@@ -237,8 +237,8 @@ Located in `~/ros2_ws/src/navpro_basics/navpro_basics/task_service_calculator.py
   ```
 - **Reference Solution:** `ros2 run navpro_basics solution_service_calculator`
 
-### Task 2 (Robotics Capstone): `task_teleop_speed_limiter.py`
-Located in `~/ros2_ws/src/navpro_basics/navpro_basics/task_teleop_speed_limiter.py`.
+### Task 2 (Robotics Capstone): `m01_l05_task_teleop_speed_limiter.py`
+Located in `~/ros2_ws/src/navpro_basics/navpro_basics/m01_l05_task_teleop_speed_limiter.py`.
 - **Goal:** Add `/set_speed_mode` (`std_srvs/srv/SetBool`) to toggle Turbo mode on the robot!
 - **Run your node:**
   ```bash

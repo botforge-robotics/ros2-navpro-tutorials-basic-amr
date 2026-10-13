@@ -20,6 +20,11 @@ if [ "$START_SERVICES" = "true" ]; then
     echo "[Entrypoint] Starting TigerVNC server on :1 (Display port 5901, Passwordless)..."
     vncserver :1 -geometry 1920x1080 -depth 24 -localhost no -SecurityTypes None --I-KNOW-THIS-IS-INSECURE
 
+    # Start bidirectional X11 clipboard synchronization
+    DISPLAY=:1 vncconfig -nowin &
+    DISPLAY=:1 autocutsel -fork 2>/dev/null || true
+    DISPLAY=:1 autocutsel -selection PRIMARY -fork 2>/dev/null || true
+
     # Hide unneeded desktop icons (File System root, Trash, Removable drives)
     mkdir -p /home/student/.config/xfce4/xfconf/xfce-perchannel-xml /home/student/Desktop
     xfconf-query -c xfce4-desktop -p /desktop-icons/file-icons/show-filesystem -n -t bool -s false 2>/dev/null || true
@@ -72,6 +77,43 @@ Icon=folder
 EOF
         chmod +x /home/student/Desktop/*.desktop 2>/dev/null || true
     fi
+
+    # Patch noVNC ui.js to enable auto-sync from browser clipboard to VNC
+    python3 -c '
+path = "/usr/share/novnc/app/ui.js"
+try:
+    with open(path, "r") as f:
+        c = f.read()
+    if "Auto-sync clipboard" not in c and "addClipboardHandlers() {" in c:
+        target = "addClipboardHandlers() {"
+        replacement = target + """
+        window.addEventListener(\x27focus\x27, async () => {
+            try {
+                if (navigator.clipboard && navigator.clipboard.readText && UI.rfb) {
+                    const text = await navigator.clipboard.readText();
+                    if (text) {
+                        UI.rfb.clipboardPasteFrom(text);
+                        const b = document.getElementById(\x27noVNC_clipboard_text\x27);
+                        if (b) b.value = text;
+                    }
+                }
+            } catch(e) {}
+        });
+        window.addEventListener(\x27paste\x27, (e) => {
+            try {
+                const text = e.clipboardData ? e.clipboardData.getData(\x27text/plain\x27) : null;
+                if (text && UI.rfb) {
+                    UI.rfb.clipboardPasteFrom(text);
+                    const b = document.getElementById(\x27noVNC_clipboard_text\x27);
+                    if (b) b.value = text;
+                }
+            } catch(e) {}
+        });"""
+        with open(path, "w") as f:
+            f.write(c.replace(target, replacement))
+except Exception:
+    pass
+' 2>/dev/null || true
 
     echo "[Entrypoint] Starting noVNC web proxy on port 6080..."
     websockify --web /usr/share/novnc/ 6080 localhost:5901 &

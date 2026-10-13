@@ -23,14 +23,17 @@ if [ -d "$WS_DIR/build" ] || [ -d "$WS_DIR/install" ] || [ -d "$WS_DIR/log" ]; t
     rm -rf "$WS_DIR/build" "$WS_DIR/install" "$WS_DIR/log"
 fi
 
-# 2. Re-create / overwrite Beginner Task 1: task_custom_pubsub.py
-cat << 'EOF' > "$WS_DIR/src/navpro_basics/navpro_basics/task_custom_pubsub.py"
+# Remove obsolete packages if present
+rm -rf "$WS_DIR/src/navpro_vision" "$WS_DIR/src/navpro_description/navpro_description/task_custom_odometry_tf.py" 2>/dev/null || true
+
+# 2. Re-create / overwrite Module 1 / Lesson 05 Task 1: m01_l05_task_custom_pubsub.py
+cat << 'EOF' > "$WS_DIR/src/navpro_basics/navpro_basics/m01_l05_task_custom_pubsub.py"
 #!/usr/bin/env python3
 """
 ================================================================================
-NavPro Learning Hub - Level 1: Beginner Task 1
+NavPro Learning Hub - Level 1: Module 1 / Lesson 05 Task 1
 Package: navpro_basics
-Task:    task_custom_pubsub.py
+Task:    m01_l05_task_custom_pubsub.py (alias: task_custom_pubsub)
 Reference: https://docs.ros.org/en/jazzy/Tutorials/Beginner-Client-Libraries/
            Writing-A-Simple-Py-Publisher-And-Subscriber.html
 ================================================================================
@@ -109,14 +112,14 @@ if __name__ == '__main__':
     main()
 EOF
 
-# 3. Re-create / overwrite Beginner Task 2: task_service_calculator.py
-cat << 'EOF' > "$WS_DIR/src/navpro_basics/navpro_basics/task_service_calculator.py"
+# 3. Re-create / overwrite Module 2 / Lesson 08 Task: m02_l08_task_service_calculator.py
+cat << 'EOF' > "$WS_DIR/src/navpro_basics/navpro_basics/m02_l08_task_service_calculator.py"
 #!/usr/bin/env python3
 """
 ================================================================================
-NavPro Learning Hub - Level 1: Beginner Task 2
+NavPro Learning Hub - Level 1: Module 2 / Lesson 08 Task
 Package: navpro_basics
-Task:    task_service_calculator.py
+Task:    m02_l08_task_service_calculator.py (alias: task_service_calculator)
 Reference: https://docs.ros.org/en/jazzy/Tutorials/Beginner-Client-Libraries/
            Writing-A-Simple-Py-Service-And-Client.html
 ================================================================================
@@ -167,12 +170,13 @@ if __name__ == '__main__':
     main()
 EOF
 
-# 4. Re-create / overwrite Capstone 1 Task: task_teleop_speed_limiter.py
-cat << 'EOF' > "$WS_DIR/src/navpro_basics/navpro_basics/task_teleop_speed_limiter.py"
+# 4. Re-create / overwrite Module 1 / Lesson 05 Capstone Task: m01_l05_task_teleop_speed_limiter.py
+cat << 'EOF' > "$WS_DIR/src/navpro_basics/navpro_basics/m01_l05_task_teleop_speed_limiter.py"
 #!/usr/bin/env python3
 """
-NavPro Learning Hub - Level 1: Day 1 Student Task
+NavPro Learning Hub - Level 1: Module 1 / Lesson 05 Capstone
 Teleop Speed Limiter & Battery Supervisor Node
+Task: m01_l05_task_teleop_speed_limiter.py (alias: task_teleop_speed_limiter)
 
 TODO Instructions:
 1. Declare parameters: 'speed_scale_factor' (0.8) and 'low_battery_threshold' (20.0).
@@ -196,7 +200,6 @@ class TeleopSpeedLimiter(Node):
 
         # TODO 1: Declare parameters 'speed_scale_factor' (default 0.8) and 'low_battery_threshold' (default 20.0)
         # Store them in self.scale_factor and self.low_bat_thresh
-        # TODO: FILL IN CODE HERE
         self.scale_factor = 0.8
         self.low_bat_thresh = 20.0
 
@@ -204,31 +207,25 @@ class TeleopSpeedLimiter(Node):
         self.turbo_mode = False
 
         # TODO 2: Create publisher to '/cmd_vel' (Twist)
-        # TODO: FILL IN CODE HERE
         # self.cmd_vel_pub = ...
 
         # TODO 3: Create subscriptions to '/input/cmd_vel' (Twist) and '/battery_voltage' (Float32)
-        # TODO: FILL IN CODE HERE
         # self.cmd_vel_sub = ...
         # self.battery_sub = ...
 
         # TODO 4: Create service server for '/set_speed_mode' (SetBool)
-        # TODO: FILL IN CODE HERE
         # self.speed_mode_srv = ...
 
     def on_battery(self, msg: Float32):
         # TODO 5: Store battery voltage and warn if below low_bat_thresh
-        # TODO: FILL IN CODE HERE
         pass
 
     def on_cmd_vel(self, msg: Twist):
         # TODO 6: Calculate effective scale factor (turbo=1.0, low_battery=*0.5) and publish scaled Twist
-        # TODO: FILL IN CODE HERE
         pass
 
     def handle_speed_mode(self, request: SetBool.Request, response: SetBool.Response):
         # TODO 7: Enable turbo if request.data is True, otherwise eco mode
-        # TODO: FILL IN CODE HERE
         return response
 
 
@@ -248,210 +245,66 @@ if __name__ == '__main__':
     main()
 EOF
 
-# 5. Re-create / overwrite Capstone 2 Task: task_custom_odometry_tf.py
-cat << 'EOF' > "$WS_DIR/src/navpro_description/navpro_description/task_custom_odometry_tf.py"
+# 5. Re-create / overwrite Module 4 / Lesson 22 Task: m04_l22_02_task_multi_waypoint_patrol.py
+cat << 'EOF' > "$WS_DIR/src/navpro_navigation/navpro_navigation/m04_l22_02_task_multi_waypoint_patrol.py"
 #!/usr/bin/env python3
 """
-NavPro Learning Hub - Level 1: Day 2 Student Task
-Forward Kinematics Odometry & TF2 Dynamic Broadcaster
+NavPro Learning Hub - Level 1: Module 4 / Lesson 22 Task
+Nav2 Multi-Waypoint Patrol Mission Planner
+Task: m04_l22_02_task_multi_waypoint_patrol.py (alias: task_multi_waypoint_patrol)
 
 TODO Instructions:
-1. Receive left and right wheel angular speeds from '/wheel_speeds' (geometry_msgs/Vector3).
-2. Calculate linear velocity (v) and angular velocity (w) using wheel radius R=0.05m and track width L=0.28m.
-3. Numerically integrate pose (x, y, theta).
-4. Broadcast dynamic transform odom -> base_footprint.
-5. Publish nav_msgs/Odometry topic on '/odom'.
-"""
-
-import math
-import rclpy
-from rclpy.node import Node
-from geometry_msgs.msg import Vector3, TransformStamped, Quaternion
-from nav_msgs.msg import Odometry
-import tf2_ros
-
-
-def yaw_to_quaternion(yaw: float) -> Quaternion:
-    q = Quaternion()
-    q.x = 0.0
-    q.y = 0.0
-    q.z = math.sin(yaw / 2.0)
-    q.w = math.cos(yaw / 2.0)
-    return q
-
-
-class CustomOdometryNode(Node):
-
-    def __init__(self):
-        super().__init__('custom_odometry_node')
-        self.WHEEL_RADIUS = 0.05
-        self.TRACK_WIDTH = 0.28
-
-        self.x = 0.0
-        self.y = 0.0
-        self.theta = 0.0
-
-        self.v_linear = 0.0
-        self.v_angular = 0.0
-        self.last_time = self.get_clock().now()
-
-        # TODO 1: Initialize tf2_ros.TransformBroadcaster(self) and '/odom' publisher
-        # TODO: FILL IN CODE HERE
-
-        # TODO 2: Subscribe to '/wheel_speeds' (Vector3)
-        # TODO: FILL IN CODE HERE
-
-        self.timer = self.create_timer(0.05, self.update_and_publish)
-
-    def on_wheel_speeds(self, msg: Vector3):
-        # TODO 3: Compute forward kinematics from msg.x (left) and msg.y (right)
-        # TODO: FILL IN CODE HERE
-        pass
-
-    def update_and_publish(self):
-        current_time = self.get_clock().now()
-        dt = (current_time - self.last_time).nanoseconds / 1e9
-        if dt <= 0.0 or dt > 0.5:
-            self.last_time = current_time
-            return
-
-        # TODO 4: Integrate pose: x += v * cos(theta)*dt, y += v * sin(theta)*dt, theta += w*dt
-        # TODO: FILL IN CODE HERE
-
-        # TODO 5: Broadcast TransformStamped (odom -> base_footprint)
-        # TODO: FILL IN CODE HERE
-
-        # TODO 6: Publish Odometry message on self.odom_pub
-        # TODO: FILL IN CODE HERE
-
-        self.last_time = current_time
-
-
-def main(args=None):
-    rclpy.init(args=args)
-    node = CustomOdometryNode()
-    try:
-        rclpy.spin(node)
-    except KeyboardInterrupt:
-        pass
-    finally:
-        node.destroy_node()
-        rclpy.shutdown()
-
-
-if __name__ == '__main__':
-    main()
-EOF
-
-# 6. Re-create / overwrite Capstone 3 Task: task_multi_waypoint_patrol.py
-cat << 'EOF' > "$WS_DIR/src/navpro_navigation/navpro_navigation/task_multi_waypoint_patrol.py"
-#!/usr/bin/env python3
-"""
-NavPro Learning Hub - Level 1: Day 3 Student Task
-Autonomous Multi-Waypoint Inspection Patrol with Nav2 Simple Commander
-
-TODO Instructions:
-1. Initialize BasicNavigator and waitUntilNav2Active().
-2. Define sequential waypoints (A, B, C) in the map frame.
-3. For each waypoint: command robot using navigator.goToPose(), monitor remaining distance, enforce timeout.
-4. Return and dock at Home pose (0, 0, 0).
+1. Initialize BasicNavigator from nav2_simple_commander.robot_navigator.
+2. Define a list of patrol waypoints (geometry_msgs/PoseStamped).
+3. Command the robot using navigator.followWaypoints(waypoints).
+4. Monitor navigation feedback and log distance/time remaining.
 """
 
 import time
-import math
 import rclpy
+from rclpy.node import Node
 from geometry_msgs.msg import PoseStamped
 from nav2_simple_commander.robot_navigator import BasicNavigator, TaskResult
 
 
-def create_goal_pose(navigator: BasicNavigator, x: float, y: float, yaw: float) -> PoseStamped:
-    pose = PoseStamped()
-    pose.header.frame_id = 'map'
-    pose.header.stamp = navigator.get_clock().now().to_msg()
-    pose.pose.position.x = float(x)
-    pose.pose.position.y = float(y)
-    pose.pose.orientation.z = math.sin(yaw / 2.0)
-    pose.pose.orientation.w = math.cos(yaw / 2.0)
-    return pose
-
-
-def main():
-    rclpy.init()
-
-    # TODO 1: Initialize navigator and wait for Nav2 to activate
-    navigator = BasicNavigator()
-    # TODO: FILL IN CODE HERE
-
-    waypoints = [
-        (1.5, 0.5, 0.0, "Checkpoint Alpha"),
-        (2.0, 2.0, 1.57, "Checkpoint Bravo"),
-        (0.5, 1.8, 3.14, "Checkpoint Charlie"),
-    ]
-
-    # TODO 2: Loop through waypoints, call goToPose(), loop while not isTaskComplete(), check timeout
-    # TODO: FILL IN CODE HERE
-
-    # TODO 3: Navigate back to Home Pose (0, 0, 0)
-    # TODO: FILL IN CODE HERE
-
-    rclpy.shutdown()
-
-
-if __name__ == '__main__':
-    main()
-EOF
-
-# 7. Re-create / overwrite Capstone 4 Task: task_opencv_inspection.py
-cat << 'EOF' > "$WS_DIR/src/navpro_vision/navpro_vision/task_opencv_inspection.py"
-#!/usr/bin/env python3
-"""
-NavPro Learning Hub - Level 1: Project 3.2 Student Task
-Optical Inspection with OpenCV & cv_bridge
-"""
-
-import cv2
-import rclpy
-from rclpy.node import Node
-from sensor_msgs.msg import Image
-from std_srvs.srv import Trigger
-from cv_bridge import CvBridge, CvBridgeError
-
-
-class TaskOpencvInspection(Node):
+class MultiWaypointPatrolTask(Node):
 
     def __init__(self):
-        super().__init__('task_opencv_inspection')
-        self.get_logger().info('Initializing TaskOpencvInspection node...')
+        super().__init__('task_multi_waypoint_patrol')
+        self.get_logger().info('Initializing Nav2 Waypoint Patrol Task...')
 
-        # TODO 1: Initialize CvBridge instance
-        # TODO: FILL IN CODE HERE
-        self.bridge = CvBridge()
-        self.latest_cv_image = None
-        self.contour_count = 0
+        # TODO 1: Instantiate BasicNavigator
+        # self.navigator = BasicNavigator()
 
-        # TODO 2: Create Subscription, Publisher, and Service
-        # TODO: FILL IN CODE HERE
+    def create_pose(self, x: float, y: float, yaw: float) -> PoseStamped:
+        """Helper to create PoseStamped messages with correct frame_id and timestamp."""
+        pose = PoseStamped()
+        pose.header.frame_id = 'map'
+        pose.header.stamp = self.get_clock().now().to_msg()
+        pose.pose.position.x = x
+        pose.pose.position.y = y
+        import math
+        pose.pose.orientation.z = math.sin(yaw / 2.0)
+        pose.pose.orientation.w = math.cos(yaw / 2.0)
+        return pose
 
-    def on_image(self, msg: Image):
-        # TODO 3: Convert ROS Image -> OpenCV BGR Image
-        # TODO 4: Process Image with OpenCV (grayscale, Canny edges, contours)
-        # TODO 5: Convert edges -> ROS Image and Publish
-        # TODO: FILL IN CODE HERE
-        pass
+    def run_patrol(self):
+        # TODO 2: Define at least 3 warehouse patrol waypoints
+        waypoints = []
 
-    def on_inspect(self, request: Trigger.Request, response: Trigger.Response):
-        # TODO 6: Handle Inspection Service Request
-        # TODO: FILL IN CODE HERE
-        return response
+        self.get_logger().info(f'Starting patrol across {len(waypoints)} waypoints...')
+        # TODO 3: Dispatch navigation goal using followWaypoints
+        # TODO 4: Loop while not isTaskComplete(), logging navigation feedback
+        self.get_logger().info('Patrol mission completed!')
 
 
 def main(args=None):
     rclpy.init(args=args)
-    node = TaskOpencvInspection()
+    node = MultiWaypointPatrolTask()
     try:
-        rclpy.spin(node)
+        node.run_patrol()
     except KeyboardInterrupt:
-        pass
+        node.get_logger().warn('Patrol mission cancelled by user.')
     finally:
         node.destroy_node()
         rclpy.shutdown()
@@ -461,12 +314,11 @@ if __name__ == '__main__':
     main()
 EOF
 
-chmod +x "$WS_DIR/src/navpro_basics/navpro_basics/"*.py
-chmod +x "$WS_DIR/src/navpro_description/navpro_description/"*.py
-chmod +x "$WS_DIR/src/navpro_navigation/navpro_navigation/"*.py
-chmod +x "$WS_DIR/src/navpro_vision/navpro_vision/"*.py
+# Ensure all scripts are executable
+chmod +x "$WS_DIR/src/navpro_basics/navpro_basics/"*.py 2>/dev/null || true
+chmod +x "$WS_DIR/src/navpro_navigation/navpro_navigation/"*.py 2>/dev/null || true
 
-# 8. Reset Web Platform Progress State (legacy fallback)
+# Reset Web Platform Progress State (legacy fallback)
 if [ -d "$SCRIPT_DIR/../web" ]; then
     echo "-> Resetting web progress state in $SCRIPT_DIR/../web..."
     RESET_TIME=$(date +%s)
@@ -474,6 +326,7 @@ if [ -d "$SCRIPT_DIR/../web" ]; then
 fi
 
 echo "=================================================================="
-echo "  [SUCCESS] Level 1 Workspace and Web Progress have been reset!"
-echo "  Students can now run: colcon build --symlink-install"
+echo "  [SUCCESS] Level 1 Workspace has been reset to clean boilerplate!"
+echo "  Files are sorted in module & lesson order (m01_, m02_, m04_)."
+echo "  Students can now source ROS 2 and build: colcon build --symlink-install"
 echo "=================================================================="
