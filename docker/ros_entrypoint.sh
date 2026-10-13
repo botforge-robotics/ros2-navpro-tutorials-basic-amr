@@ -17,8 +17,8 @@ if [ "$START_SERVICES" = "true" ]; then
 
     # Start bidirectional X11 clipboard synchronization
     DISPLAY=:1 vncconfig -nowin &
-    DISPLAY=:1 autocutsel -fork 2>/dev/null || true
-    DISPLAY=:1 autocutsel -selection PRIMARY -fork 2>/dev/null || true
+    DISPLAY=:1 autocutsel -fork >/dev/null 2>&1 &
+    DISPLAY=:1 autocutsel -selection PRIMARY -fork >/dev/null 2>&1 &
 
     # Hide unneeded desktop icons (File System root, Trash, Removable drives)
     mkdir -p /home/student/.config/xfce4/xfconf/xfce-perchannel-xml /home/student/Desktop
@@ -124,7 +124,10 @@ except Exception:
     fi
 
     # Launch Level 1 / Basic AMR Learning Hub web portal on port 8000
-    if [ -d "/opt/navpro_level1/lms/dist" ]; then
+    if [ -f "/opt/navpro_level1/scripts/lms_server.py" ]; then
+        echo "[Entrypoint] Starting NavPro LMS Server with Clipboard API on port 8000..."
+        python3 /opt/navpro_level1/scripts/lms_server.py --port 8000 --directory /opt/navpro_level1/lms/dist &
+    elif [ -d "/opt/navpro_level1/lms/dist" ]; then
         echo "[Entrypoint] Starting NavPro Web Server on port 8000..."
         python3 -m http.server 8000 --directory /opt/navpro_level1/lms/dist &
     elif [ -d "/opt/navpro_level1/web" ]; then
