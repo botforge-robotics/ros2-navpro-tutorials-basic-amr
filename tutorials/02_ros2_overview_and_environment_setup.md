@@ -151,217 +151,92 @@ rosdep update
 
 ---
 
-## 6. Docker Containerized Setup (Zero-Friction Option)
+## 6. How to Open &amp; Use the Desktop GUI (noVNC &bull; Port 6080)
 
-For students on Windows, macOS, or clean Linux installations, the **NavPro Learning Hub** provides a fully pre-configured Docker image containing ROS 2 Jazzy, Gazebo Sim (Harmonic), Nav2, an in-browser Ubuntu 24.04 desktop GUI (**noVNC**), and an in-browser VS Code editor (**code-server**).
+Because your NavPro Learning Hub container is already running, a full Ubuntu 24.04 XFCE desktop environment is available directly inside your web browser. This desktop is where you run graphical robotics software like Gazebo Harmonic 3D simulations, RViz2 sensor visualizers, and multi-pane terminals.
 
-### Step 6.0: Prerequisites — Installing Docker
+### 6.1 Accessing the Desktop GUI
+You can open the Ubuntu desktop at any time using either method:
+* **One-Click Navbar Link:** Click the **`🖥️ Desktop GUI`** button in the top navigation bar of this platform.
+* **Direct Browser URL:** Navigate to:  
+  [`http://localhost:6080/vnc.html?autoconnect=true&resize=remote`](http://localhost:6080/vnc.html?autoconnect=true&resize=remote)
 
-Before building the container, ensure Docker Engine and Docker Compose are installed on your host system.
+> [!NOTE]
+> **Passwordless Instant Connect:**  
+> The VNC server is pre-configured with passwordless authentication. The browser tab connects immediately without prompting for a password.
 
-#### A. Installing Docker on Windows (WSL 2 Backend)
-1. **Enable Hardware Virtualization:** Ensure Virtualization (VT-x / AMD-V) is enabled in your PC's BIOS/UEFI settings.
-2. **Install WSL 2 (Windows Subsystem for Linux):** Open PowerShell as Administrator and execute:
-   ```powershell
-   wsl --install
-   ```
-   Restart your computer if prompted by Windows.
-3. **Download & Install Docker Desktop:**
-   - Download the official installer from [Docker Desktop for Windows](https://docs.docker.com/desktop/setup/install/windows-install/).
-   - During setup, verify the option **"Use WSL 2 instead of Hyper-V"** is checked.
-   - Launch Docker Desktop, navigate to **Settings &rarr; Resources &rarr; WSL Integration**, and ensure your Ubuntu/WSL distro is toggled on.
-   - Test in PowerShell or Command Prompt:
-     ```powershell
-     docker --version
-     docker compose version
-     ```
+### 6.2 Pre-Configured Robotics Desktop Launchers
+On your desktop screen, you will find clean, dedicated application launchers tailored specifically for your coursework:
+* **Terminal:** Launches the pre-configured ROS 2 command terminal directly inside `/home/student`.
+* **RViz2 Visualizer:** Opens the 3D robot visualization tool with the ROS 2 Jazzy environment loaded.
+* **Gazebo Simulator:** Launches the Gazebo Harmonic physics engine ready to simulate your AMRs.
+* **ROS 2 Workspace:** Instant shortcut opening your active `~/ros2_ws` project folder.
 
-#### B. Installing Docker on Linux (Ubuntu 22.04 / 24.04 LTS)
-1. **Remove conflicting legacy packages:**
-   ```bash
-   for pkg in docker.io docker-doc docker-compose podman-docker containerd runc; do sudo apt-get remove -y $pkg; done
-   ```
-2. **Set up Docker's official APT repository:**
-   ```bash
-   sudo apt update
-   sudo apt install -y ca-certificates curl gnupg
-   sudo install -m 0755 -d /etc/apt/keyrings
-   sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
-   sudo chmod a+r /etc/apt/keyrings/docker.asc
-
-   echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu $(. /etc/os-release && echo "$UBUNTU_CODENAME") stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
-   ```
-3. **Install Docker Engine & Compose plugin:**
-   ```bash
-   sudo apt update
-   sudo apt install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
-   ```
-4. **Configure Non-Root User Permissions (Post-Install):**
-   ```bash
-   sudo usermod -aG docker $USER
-   newgrp docker
-   ```
-5. **Verify installation:**
-   ```bash
-   docker run --rm hello-world
-   docker compose version
-   ```
-
-#### Official Reference Documentation Links
-| Resource | URL & Official Guide | Description |
-|---|---|---|
-| **Docker Desktop for Windows** | [Install Docker Desktop on Windows](https://docs.docker.com/desktop/setup/install/windows-install/) | Official installation walkthrough for Windows 10/11 with WSL 2 backend |
-| **Microsoft WSL 2 Setup** | [How to install Linux on Windows with WSL](https://learn.microsoft.com/en-us/windows/wsl/install) | Microsoft documentation for setting up the WSL 2 Linux kernel |
-| **Docker Engine for Ubuntu** | [Install Docker Engine on Ubuntu](https://docs.docker.com/engine/install/ubuntu/) | Official APT repository setup guide for Ubuntu 22.04 & 24.04 LTS |
-| **Docker Linux Post-Install** | [Linux Post-installation Steps](https://docs.docker.com/engine/install/linux-postinstall/) | Managing Docker as a non-root user and systemd auto-start |
-| **Docker Compose Docs** | [Overview of Docker Compose](https://docs.docker.com/compose/) | Reference guide for compose syntax and CLI commands |
+### 6.3 noVNC Controls &amp; Productivity Tips
+* **Remote Auto-Resize:** The desktop automatically matches your browser window dimensions (`resize=remote`).
+* **Clipboard Sync:** Click the small slide-out chevron menu on the left edge of the noVNC screen to open the noVNC Control Bar &rarr; select the **Clipboard** tool to copy-paste text between your host OS and the container.
+* **Fullscreen Mode:** Click the Fullscreen icon in the noVNC slide-out menu or press <kbd>F11</kbd> in your browser for a distraction-free native desktop experience.
 
 ---
 
-### Step 6.1: Build & Launch the Complete Stack with One Command
-> [!SYNTAX]
-> **Command Syntax:** `docker compose up [options]`  
-> **Description:** Builds and starts containerized services defined in `docker-compose.yml`. Flag `--build` compiles images from the local Dockerfile; `-d` runs containers detached in the background.
+## 7. How to Open &amp; Use In-Browser VS Code IDE (Port 8443)
 
-**One-Command Stack Launch (Level 1 Repository):**
-```bash
-# Navigate to the Level 1 repository directory
-cd /home/chaitu/Projects/navpro_learning_hub/level1
+You do not need to install local IDEs or extensions. A full Visual Studio Code IDE (code-server) is running inside your container, accessible from any browser tab.
 
-# Launch the entire ecosystem (Web Portal, Desktop GUI, and VS Code) in one command:
-docker compose up --build -d
-```
+### 7.1 Accessing the VS Code Editor
+* **One-Click Navbar Link:** Click the **`💻 VS Code`** button in the top navigation bar.
+* **Direct Browser URL:** Navigate to:  
+  [`http://localhost:8443/?folder=/home/student/ros2_ws`](http://localhost:8443/?folder=/home/student/ros2_ws)
 
-Verify that the Level 1 container is active and running:
-```bash
-docker ps --filter "name=navpro_level1_container"
-```
-*Expected Terminal Output:*
-```text
-CONTAINER ID   IMAGE                          STATUS         PORTS
-a1b2c3d4e5f6   navpro-level1-ros2-sim:latest  Up 2 minutes   0.0.0.0:8000->8000/tcp, 0.0.0.0:6080->6080/tcp, 0.0.0.0:8443->8443/tcp
-```
+> [!NOTE]
+> **Pre-Authenticated Workspace:**  
+> No password or sign-in is required. The editor opens directly rooted inside `/home/student/ros2_ws` so you can immediately inspect robot packages, launch files, and Python scripts.
+
+### 7.2 Key In-Browser VS Code Features
+1. **Pre-Installed Robotics Extensions:** Python IntelliSense, ROS tooling, XML (for URDF/Xacro), and YAML highlighting are pre-configured.
+2. **Integrated Terminal:** Press <kbd>Ctrl</kbd> + <kbd>`</kbd> (Backtick) or select **Terminal &rarr; New Terminal** to open a bash shell already located in `~/ros2_ws`.
+3. **Real-Time Code Persistence:** Any code files you edit or save in this browser window are stored directly in your workspace on disk and preserved across container restarts.
 
 ---
 
-### Step 6.2: One-Click Launch via Top Navigation Status Bar
+## 8. How to Open &amp; Use the Terminal (Desktop, Hotkeys, Terminator &amp; Host CLI)
 
-You do not need to memorize URLs. Notice the **quick-launch buttons on the top status bar / header** of this web portal:
+Robotics engineers spend most of their time in the Linux terminal: compiling packages, echoing topics, and monitoring nodes. You have four convenient ways to open and use the terminal in your environment:
 
-| Status Bar Button | Destination URL | Purpose & Environment |
-|---|---|---|
-| **`🖥️ Desktop GUI`** | `http://localhost:6080/vnc.html?autoconnect=true&resize=remote` | Opens full Ubuntu 24.04 XFCE desktop with Gazebo, RViz2, and Terminator. |
-| **`💻 VS Code`** | `http://localhost:8443/?folder=/home/student/ros2_ws` | Opens in-browser VS Code editor directly rooted in your ROS 2 workspace. |
+### Method 1: Desktop Terminal Icon &amp; Universal Hotkey (Inside VNC)
+* **Desktop Launcher:** Double-click the **Terminal** icon on the desktop.
+* **Universal Hotkey:** In the noVNC desktop window, press <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>T</kbd>.
+* **Prompt Location:** Launches directly in `/home/student` with ROS 2 Jazzy automatically sourced.
 
-> [!IMPORTANT]
-> **Authentication & Credentials:**  
-> * **noVNC Desktop GUI:** **No password required (Passwordless Instant Connect)**. When the browser tab opens, it connects automatically to your Ubuntu desktop.  
-> * **In-Browser VS Code IDE:** **No password required** (pre-authenticated). It opens directly into `/home/student/ros2_ws`.
+### Method 2: Multi-Pane Workflow with Terminator
+Robotics workflows require monitoring 3 to 4 nodes at once (e.g. simulation, teleop control, sensor topics, and node logs). **Terminator** lets you split your screen into multiple independent terminal tiles:
+* **Launch Terminator:** Open the terminal and run `terminator &` (or find it in the XFCE Applications menu).
+* **Split Horizontally:** Press <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>O</kbd> to split the current pane top and bottom.
+* **Split Vertically:** Press <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>E</kbd> to split the current pane left and right.
+* **Navigate Panes:** Press <kbd>Alt</kbd> + <kbd>Arrow Keys</kbd> to jump between tiles without touching the mouse.
+* **Close Pane:** Press <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>W</kbd>.
 
----
+### Method 3: Integrated Terminal inside VS Code
+* Press <kbd>Ctrl</kbd> + <kbd>`</kbd> (Backtick) inside the in-browser VS Code tab (`:8443`).
+* Perfect for quick `colcon build` commands while editing Python node files.
 
-### Step 6.3: Command-Line Terminal Access inside Container
-> [!SYNTAX]
-> **Command Syntax:** `docker exec -it <container_name> <shell_binary>`  
-> **Description:** Opens an interactive terminal session inside a running container. Flag `-i` keeps stdin open, and `-t` allocates a terminal TTY buffer.
-
-**Hands-On Practical Command:**
+### Method 4: Terminal Access Directly from Host Shell
+You can also enter the container directly from your local computer's native shell (Ubuntu terminal, macOS terminal, or Windows PowerShell):
 ```bash
 docker exec -it navpro_level1_container bash
 ```
 
-Inside the container shell, all ROS 2 Jazzy paths and workspace tools are auto-sourced:
-```bash
-# Verify environment inside container:
-ros2 pkg list | grep turtlebot3
-gz sim --version
-```
-*Expected Terminal Output:*
-```text
-turtlebot3_description
-turtlebot3_navigation2
-Gazebo Sim, version 8.6.0
-```
-
----
-
-### Step 6.4: Stopping the Container
-```bash
-cd /home/chaitu/Projects/navpro_learning_hub/level1/docker
-docker compose down
-```
-
----
-
-## 7. Productivity Development Tooling
-
-Robotics programming requires running multiple nodes, echoing topics, and monitoring logs simultaneously.
-
-### 7.1 Multi-Terminal Manager: Terminator
-Install Terminator for easy terminal window splitting:
-
-```bash
-sudo apt install -y terminator
-```
-
-**Essential Terminator Shortcuts:**
-- `Ctrl + Shift + O`: Split pane **horizontally** (top and bottom).
-- `Ctrl + Shift + E`: Split pane **vertically** (left and right).
-- `Alt + Arrow Keys`: Navigate between active split panes.
-- `Ctrl + Shift + W`: Close active pane.
-- `F11`: Toggle fullscreen.
-
-![Terminator Multi-Pane Terminal Layout](../../web/assets/images/terminator_layout.svg)
-
-### 7.2 Visual Studio Code Configuration
-Launch VS Code in your workspace:
-```bash
-code .
-```
-
-Recommended Extensions for ROS 2 Python:
-1. **Python** (`ms-python.python`): IntelliSense, linting, syntax highlighting.
-2. **ROS** (`ms-iot.vscode-ros`): ROS 2 environment discovery, build task runners.
-3. **XML** (`redhat.vscode-xml`): Autocompletion and syntax validation for `package.xml` and URDF/Xacro files.
-4. **Even Better TOML** / **YAML**: Syntax highlighting for parameter and configuration files.
-
----
-
-## 8. Shell Environment Sourcing & Productive Aliases
-
-By default, every new bash terminal needs to know where ROS 2 is installed. Adding the setup script to `~/.bashrc` automates this.
-
-Edit your `~/.bashrc` file:
-```bash
-nano ~/.bashrc
-```
-
-Append the following lines to the bottom of the file:
-```bash
-# -------------------------------------------------------------
-# NavPro ROS 2 Environment Setup & Aliases
-# -------------------------------------------------------------
-source /opt/ros/jazzy/setup.bash
-
-# Ensure local workspace overlay is sourced if present
-if [ -f "$HOME/ros2_ws/install/setup.bash" ]; then
-    source "$HOME/ros2_ws/install/setup.bash"
-fi
-
-# Set isolated DDS domain ID (Change per student to avoid network crosstalk)
-export ROS_DOMAIN_ID=1
-
-# Productivity Shortcuts
-alias sb='source ~/.bashrc && echo "Environment sourced!"'
-alias cb='colcon build --symlink-install'
-alias cbp='colcon build --symlink-install --packages-select'
-alias killros='killall -9 gzserver gzclient robot_state_publisher 2>/dev/null'
-```
-
-Save and reload the environment:
-```bash
-source ~/.bashrc
-```
+### Pre-Configured ROS 2 Environment &amp; Shortcuts
+Your shell is already primed with the essential ROS 2 environment:
+* **System Underlay:** `source /opt/ros/jazzy/setup.bash` is executed automatically in every new terminal.
+* **Workspace Overlay:** To source your custom compiled packages after building, run:
+  ```bash
+  source ~/ros2_ws/install/setup.bash
+  ```
+* **Global Workspace Reset:** If you ever want to restore your practice workspace to clean starting boilerplate:
+  ```bash
+  reset_workspace
+  ```
 
 ---
 
