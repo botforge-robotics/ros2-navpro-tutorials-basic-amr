@@ -127,7 +127,17 @@ if __name__ == '__main__':
     main()
 ```
 
+### Core Logic Breakdown: What We Are Trying to Achieve & Why
+| Code Segment | What We Are Trying to Achieve | Why It Is Written This Way & Underlying Mechanism |
+|---|---|---|
+| `ParameterDescriptor(description='...', type=...)` | Self-documenting, type-safe parameter metadata. | Attaches schema metadata to the parameter. External diagnostic tools (`ros2 param describe`) read these descriptors so operators know the units and constraints. |
+| `self.declare_parameter('max_linear_speed', 0.5, max_speed_desc)` | Register parameter name, default fallback value, and descriptor. | Every parameter must be declared before it can be read or modified. In ROS 2, nodes cannot read arbitrary undeclared parameters unless `allow_undeclared_parameters=True` is explicitly specified. |
+| `self.add_on_set_parameters_callback(self.parameter_validation_callback)` | Intercept parameter change attempts before they are applied. | Registers an atomic validation hook. When a user runs `ros2 param set`, ROS 2 dispatches the proposed values to this hook first. If the hook rejects them, the node's internal state remains untouched. |
+| `if param.value <= 0.0 or param.value > 1.5:`<br>`return SetParametersResult(successful=False, reason="...")` | Hardware safety guardrails. | Mobile robots operate in physical environments with real momentum. Rejection prevents catastrophic values (e.g. setting speed to $100\,\text{m/s}$ or a negative threshold) that could cause collisions or motor overheating. |
+| `SetParametersResult(successful=True, ...)` | Atomic acceptance. | Signals to the middleware that all incoming parameter values conform to physical limits, allowing the new values to be adopted in RAM. |
+
 ---
+
 
 ## 4. Organizing Configuration with YAML Files
 

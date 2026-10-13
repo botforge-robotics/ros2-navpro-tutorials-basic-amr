@@ -134,7 +134,20 @@ if __name__ == '__main__':
     main()
 ```
 
+### Core Logic Breakdown: What We Are Trying to Achieve & Why
+| Code Segment | What We Are Trying to Achieve | Why It Is Written This Way & Underlying Mechanism |
+|---|---|---|
+| `navigator = BasicNavigator()` | Instantiate high-level mission commander. | Wraps Nav2 Action Clients (`NavigateToPose`, `FollowWaypoints`, `ComputePathToPose`) inside a simplified, blocking/non-blocking Python API. |
+| `navigator.waitUntilNav2Active()` | Synchronize with Nav2 lifecycle state machines. | In ROS 2, Nav2 nodes (costmap servers, planners, controllers) start in an `Unconfigured` or `Inactive` state. Attempting to navigate before nodes reach `Active` causes immediate rejected goals. |
+| `pose.header.frame_id = 'map'` | Define target coordinates in global reference frame. | In robotics navigation, target waypoints must be referenced to the static global origin (`map` frame), not the moving chassis (`base_link`) or local odometry (`odom` which drifts over time). |
+| `navigator.goToPose(goal)` | Asynchronous action goal dispatch. | Sends the goal to the Nav2 Behavior Tree Navigator action server without blocking execution. |
+| `while not navigator.isTaskComplete():` | Non-blocking execution polling loop. | Allows the control script to remain responsive: monitoring remaining distance, checking sensor safety stops, updating dashboards, or checking timeouts while the robot drives. |
+| `fb = navigator.getFeedback()`<br>`dist = fb.distance_remaining` | Query real-time feedback metrics. | Nav2 streams continuous feedback from the controller server indicating Euclidean path distance remaining and estimated travel time. |
+| `if time.time() - start_time > 45.0:`<br>`navigator.cancelTask()` | **Autonomous Safety Watchdog**: Prevent infinite deadlocks. | If an aisle is blocked by an unmapped obstacle, the robot might attempt repeated recovery spins. The watchdog timer detects lack of progress and cancels the goal cleanly so the mission script can take corrective action or retreat. |
+| `navigator.getResult() == TaskResult.SUCCEEDED` | Validate physical mission completion. | Evaluates whether the Nav2 Behavior Tree terminated with success, or whether it failed/was canceled. |
+
 ---
+
 
 ## 5. Execution & Verification
 

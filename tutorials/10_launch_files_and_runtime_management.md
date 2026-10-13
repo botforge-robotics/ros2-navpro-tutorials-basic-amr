@@ -106,7 +106,18 @@ def generate_launch_description():
     ])
 ```
 
+### Core Logic Breakdown: What We Are Trying to Achieve & Why
+| Code Segment | What We Are Trying to Achieve | Why It Is Written This Way & Underlying Mechanism |
+|---|---|---|
+| `def generate_launch_description():` | Entry point required by ROS 2 launch system. | The `ros2 launch` runner imports the `.py` file and calls this exact function. It must return a `LaunchDescription` list of actions. |
+| `get_package_share_directory('navpro_basics')` | Locate relocated asset files across environments. | Hardcoded absolute paths (`/home/user/...`) break when deployed to Docker containers or other robots. Ament Index dynamically finds the true runtime install share directory. |
+| `DeclareLaunchArgument('use_sim_time', default_value='false', ...)` | Expose configurable knobs to CLI users. | Registers command-line options that operators can override at startup (`use_sim_time:=true`) without editing source code. |
+| `LaunchConfiguration('config_file')` | Lazy evaluation of runtime variables. | At the time `generate_launch_description()` is invoked, command-line arguments are not yet resolved. `LaunchConfiguration` is a substitution object that resolves its true string value when the processes actually launch. |
+| `Node(package='...', executable='...', name='...')` | Spawn and supervise a process lifecycle. | Configures the binary, manages stdout redirection (`output='screen'`), and monitors the child process. |
+| `remappings=[('/input/cmd_vel', '/teleop/cmd_vel')]` | Graph rewiring without modifying C++/Python code. | Decouples node implementations from global topic names. If a joystick node publishes to `/teleop/cmd_vel`, the launch file redirects the supervisor's input cleanly at the DDS graph layer. |
+
 ---
+
 
 ## 4. Key Launch Actions & Syntax Breakdown
 

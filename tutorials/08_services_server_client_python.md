@@ -102,7 +102,16 @@ if __name__ == '__main__':
     main()
 ```
 
+### Core Logic Breakdown: What We Are Trying to Achieve & Why
+| Code Segment | What We Are Trying to Achieve | Why It Is Written This Way & Underlying Mechanism |
+|---|---|---|
+| `self.create_service(SetBool, '/robot/set_turbo_mode', self.handle_set_turbo)` | Expose a remote procedure call endpoint on the ROS 2 graph. | Binds the service interface to our node. The DDS middleware registers the service server and dispatches incoming RPC requests to `handle_set_turbo`. |
+| `def handle_set_turbo(self, request: SetBool.Request, response: SetBool.Response)` | Dual-argument callback signature. | Unlike topic callbacks (which only take `msg`), service callbacks **must** take both `request` and `response` objects provided by the middleware. |
+| `self.turbo_enabled_ = request.data`<br>`response.success = True`<br>`return response` | Atomic state transition and structured acknowledgement. | Modifies internal node operational state and populates the return payload. You **must return the modified response object**; if omitted or returning `None`, the client hangs waiting indefinitely. |
+| Non-blocking fast execution | Keep service callback latency sub-millisecond. | Service callbacks run on the main executor thread. If you perform blocking loops or lengthy I/O in this callback, the entire node stops processing topics and timers, freezing robot responsiveness. |
+
 ---
+
 
 ## 4. The Critical SingleThreadedExecutor Deadlock Bug
 
@@ -189,7 +198,17 @@ if __name__ == '__main__':
     main()
 ```
 
+### Core Logic Breakdown: What We Are Trying to Achieve & Why
+| Code Segment | What We Are Trying to Achieve | Why It Is Written This Way & Underlying Mechanism |
+|---|---|---|
+| `self.client_ = self.create_client(SetBool, '/robot/set_turbo_mode')` | Create outbound RPC client socket. | Establishes communication handles in DDS to send request packets and listen for matched responses. |
+| `while not self.client_.wait_for_service(timeout_sec=1.0):` | Defend against race conditions at startup. | If a client attempts to dispatch requests before the server has finished booting, the request is lost or errors out. `wait_for_service` polls DDS discovery with a non-zero timeout. |
+| `future = self.client_.call_async(request)` | **Deadlock-Free Dispatch**: Send request without halting the calling thread. | `call_async` queues the request packet into DDS buffers and immediately returns a Python `Future` object, leaving the executor thread free to process other events. |
+| `future.add_done_callback(self.response_callback)` | Event-driven response consumption. | Avoids busy-waiting with `while not future.done()`. As soon as the server's reply arrives over DDS, the executor automatically triggers `response_callback(future)`. |
+| `response = future.result()` | Safely unpack the server payload. | Retrieves the resolved `SetBool.Response` structure containing `success` and `message`. |
+
 ---
+
 
 ## 6. Verification with the ROS 2 CLI
 

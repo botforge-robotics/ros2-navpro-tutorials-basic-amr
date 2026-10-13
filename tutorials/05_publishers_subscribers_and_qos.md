@@ -139,6 +139,17 @@ if __name__ == '__main__':
     main()
 ```
 
+### Core Logic Breakdown: What We Are Trying to Achieve & Why
+| Code Segment | What We Are Trying to Achieve | Why It Is Written This Way & Underlying Mechanism |
+|---|---|---|
+| `super().__init__('velocity_publisher_node')` | Register node identity on the computational graph. | Initializes base `rclpy.node.Node` infrastructure; this string name is used by DDS discovery and appears in `ros2 node list`. |
+| `qos_profile = QoSProfile(reliability=RELIABLE, history=KEEP_LAST, depth=10)` | Guarantee delivery of velocity setpoints with bounded RAM usage. | Motion commands are safety-critical. `RELIABLE` enforces packet acknowledgments (ACKs) and retransmissions. `KEEP_LAST` with `depth=10` keeps up to 10 unread setpoints, dropping older ones if the subscriber experiences temporary lag. |
+| `self.create_publisher(Twist, '/cmd_vel', qos_profile)` | Bind publisher to standard velocity topic. | `/cmd_vel` is the universal ROS convention for mobile base locomotion. Any downstream motor controller or simulation node expects `geometry_msgs/msg/Twist`. |
+| `self.create_timer(0.1, self.publish_velocity)` | Establish deterministic 10 Hz control loop. | Robotics control requires periodic execution ($T = 0.1\,\text{s} \rightarrow f = 10\,\text{Hz}$). Using `create_timer()` allows the single-threaded executor to run callbacks asynchronously without blocking sleep calls (`time.sleep()`). |
+| `msg.linear.x = 0.35`<br>`msg.angular.z = 0.15` | Command simultaneous forward motion and yaw rotation. | For differential drive robots (non-holonomic ground vehicles), only `linear.x` (forward translation) and `angular.z` (heading yaw rate) are physically achievable. Lateral `linear.y` and vertical `linear.z` remain 0. |
+| `stop_msg = Twist()`<br>`node.publisher_.publish(stop_msg)` | Safety failsafe on process termination. | When Ctrl+C is pressed, clearing velocity prevents runaway robots where motors continue moving at the last commanded setpoint. |
+
+
 ---
 
 ## 5. Step-by-Step: Writing a Velocity Subscriber in Python
@@ -221,7 +232,18 @@ if __name__ == '__main__':
     main()
 ```
 
+### Core Logic Breakdown: What We Are Trying to Achieve & Why
+| Code Segment | What We Are Trying to Achieve | Why It Is Written This Way & Underlying Mechanism |
+|---|---|---|
+| `self.create_subscription(Twist, '/cmd_vel', self.cmd_vel_callback, qos_profile)` | Register interest in motion commands. | Binds the DDS deserialization pipeline to our callback method. The executor listens on the socket and schedules `cmd_vel_callback` whenever a valid `Twist` packet arrives. |
+| `qos_profile = QoSProfile(reliability=RELIABLE, ...)` | Prevent QoS Incompatibility silence. | A subscriber requesting `RELIABLE` will happily connect to a publisher offering `RELIABLE`. If the subscriber requested an incompatible policy (e.g. demanding higher strictness than offered), DDS would silently drop all messages. |
+| `v = msg.linear.x`<br>`w = msg.angular.z` | Extract forward velocity setpoint and yaw rotation rate. | Extracts the 2D degrees of freedom from the incoming 3D Twist structure. |
+| `v_left = v - (w * L / 2.0)`<br>`v_right = v + (w * L / 2.0)` | **Differential Drive Inverse Kinematics**: Split robot velocity into individual wheel linear velocities. | The AMR steers via differential wheel speeds. To turn counter-clockwise ($w > 0$), the right wheel must move faster than the left wheel by an offset proportional to the track width $L$. |
+| `omega_left = v_left / R`<br>`omega_right = v_right / R` | Convert linear wheel speed ($\text{m/s}$) to motor rotational speed ($\text{rad/s}$). | Motors accept angular velocity commands ($\text{rad/s}$ or RPM). Dividing tangential surface velocity by wheel radius ($R = 0.06\,\text{m}$) yields the exact angular velocity required at the motor gearbox output. |
+| `rclpy.spin(node)` | Keep the execution thread alive to process callbacks. | In ROS 2, callbacks DO NOT run in spontaneous background threads unless an executor is active. `rclpy.spin()` continuously checks event queues, unmarshals DDS packets, and invokes callbacks in sequence. |
+
 ---
+
 
 ## 6. Verification with the ROS 2 Command Line Interface (CLI)
 

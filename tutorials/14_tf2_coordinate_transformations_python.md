@@ -105,7 +105,16 @@ if __name__ == '__main__':
     main()
 ```
 
+### Core Logic Breakdown: Static Transform Broadcaster
+| Code Segment | What We Are Trying to Achieve | Why It Is Written This Way & Underlying Mechanism |
+|---|---|---|
+| `StaticTransformBroadcaster(self)` | Broadcast permanent, unmoving physical linkages. | Publishes to the latched `/tf_static` topic using `TRANSIENT_LOCAL` durability QoS. Late-joining nodes (like RViz or SLAM) receive the entire static transform tree upon connection without re-requesting. |
+| `tf_msg.header.frame_id = 'base_link'`<br>`tf_msg.child_frame_id = 'laser_frame'` | Define parent-child spatial hierarchy. | TF requires an acyclic tree structure. `frame_id` is the reference origin (robot chassis center); `child_frame_id` is the sensor payload frame located relative to that origin. |
+| `tf_msg.transform.translation.x = 0.08`<br>`tf_msg.transform.translation.z = 0.16` | Rigid physical bracket offset in 3D space. | Encodes the real CAD measurement: the sensor aperture is 8cm forward and 16cm above the robot's ground center. |
+| `rotation = (0, 0, 0, 1.0)` | Identity quaternion (no orientation offset). | $(x=0, y=0, z=0, w=1)$ represents zero rotation (facing directly along the $+X$ axis of the parent frame). |
+
 ---
+
 
 ## 5. Step-by-Step: Writing a Dynamic Transform Broadcaster
 
@@ -185,7 +194,17 @@ if __name__ == '__main__':
     main()
 ```
 
+### Core Logic Breakdown: Dynamic Odometry Broadcaster
+| Code Segment | What We Are Trying to Achieve | Why It Is Written This Way & Underlying Mechanism |
+|---|---|---|
+| `TransformBroadcaster(self)` | Broadcast continuously moving spatial relationships. | Publishes to the volatile `/tf` topic at high frequency (20 Hz) using standard `KEEP_LAST` QoS. |
+| `dt = (current_time - self.last_time).nanoseconds / 1e9` | Discrete time delta calculation. | Numerical integration requires measuring real elapsed wall-clock or simulation time $\Delta t$. Nanoseconds divided by $10^9$ yields floating-point seconds. |
+| `self.x += v * cos(yaw) * dt`<br>`self.y += v * sin(yaw) * dt`<br>`self.yaw += w * dt` | **Differential Drive Dead-Reckoning Integration**. | Resolves the chassis forward speed $v$ along the current orientation vector $(\cos\psi, \sin\psi)$ to accumulate 2D planar position over time. |
+| `math.sin(self.yaw / 2.0)`<br>`math.cos(self.yaw / 2.0)` | Planar Euler-to-Quaternion formula. | For pure planar rotation around Z ($Roll=0, Pitch=0$), the 4-element unit quaternion simplifies directly to $z = \sin(\psi/2)$ and $w = \cos(\psi/2)$, with $x=y=0$. This is computationally fast and avoids external library overhead. |
+| `self.broadcaster_.sendTransform(tf_msg)` | Inject updated transform into TF tree. | Publishes to `/tf`. Downstream nodes (AMCL, Nav2 local costmaps) cache these transforms in ring buffers to look up historical positions at any microsecond timestamp. |
+
 ---
+
 
 ## 6. Step-by-Step: Writing a Transform Listener
 

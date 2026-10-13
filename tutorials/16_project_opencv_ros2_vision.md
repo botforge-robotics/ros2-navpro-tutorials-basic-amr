@@ -220,7 +220,19 @@ if __name__ == '__main__':
     main()
 ```
 
+### Core Logic Breakdown: What We Are Trying to Achieve & Why
+| Code Segment | What We Are Trying to Achieve | Why It Is Written This Way & Underlying Mechanism |
+|---|---|---|
+| `cv_image = self.bridge_.imgmsg_to_cv2(msg, desired_encoding='bgr8')` | Convert ROS 2 serialized image bytes to an OpenCV NumPy matrix. | ROS 2 transmits images as flat byte buffers with metadata (step, width, height, encoding). `cv_bridge` parses the header and reconstructs a NumPy array shape `(H, W, 3)` with BGR channel ordering. |
+| `try ... except CvBridgeError as e:` | Defensive programming against corrupt camera packets. | High-speed network feeds can drop packets or deliver corrupted frames. Catching `CvBridgeError` prevents perception pipeline crashes, allowing subsequent frames to process cleanly. |
+| `gray = cv2.cvtColor(cv_image, cv2.COLOR_BGR2GRAY)` | Dimensionality reduction for intensity processing. | Reduces 3 color channels ($B, G, R$) down to a single 8-bit luminance channel ($0..255$). Color is irrelevant for structural edge boundaries, and grayscale processing is $3\times$ faster. |
+| `blurred = cv2.GaussianBlur(gray, (5, 5), 0)` | High-frequency noise suppression. | Edge detectors use mathematical spatial gradients (derivatives). Sensor pixel noise produces extreme localized gradients; Gaussian blur smooths speckle noise before gradient calculation. |
+| `edges = cv2.Canny(blurred, 50, 150)` | Multi-stage edge detection with hysteresis. | Computes gradient magnitude and direction. Pixels with gradient $> 150$ are preserved as strong edges; pixels $< 50$ are suppressed. Pixels between $50$ and $150$ are kept only if connected to a strong edge. |
+| `contours, _ = cv2.findContours(...)` | Topological feature extraction. | Groups connected boundary pixels into vector polygon contours. `RETR_EXTERNAL` isolates outer object perimeters while ignoring internal texture patterns. |
+| `out_msg = self.bridge_.cv2_to_imgmsg(edges, encoding='mono8')` | Repackage binary edge map into ROS 2 network format. | Converts the single-channel 8-bit NumPy array back into `sensor_msgs/msg/Image` so tools like `rqt_image_view` or RViz2 can visualize real-time edge maps over DDS. |
+
 ---
+
 
 ## 5. Verification & Visualizing in `rqt_image_view`
 
