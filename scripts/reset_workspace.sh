@@ -8,7 +8,10 @@
 set -e
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-WS_DIR="$SCRIPT_DIR/../ros2_ws"
+WS_DIR="${1:-/home/student/ros2_ws}"
+if [ ! -d "$WS_DIR" ] && [ -d "$SCRIPT_DIR/../ros2_ws" ]; then
+    WS_DIR="$SCRIPT_DIR/../ros2_ws"
+fi
 
 echo "=================================================================="
 echo "  [NavPro Reset] Resetting Level 1 Student Workspace to Fresh State"
@@ -319,12 +322,11 @@ chmod +x "$WS_DIR/src/navpro_description/navpro_description/"*.py
 chmod +x "$WS_DIR/src/navpro_navigation/navpro_navigation/"*.py
 chmod +x "$WS_DIR/src/navpro_vision/navpro_vision/"*.py
 
-# 6. Reset Web Platform Progress State
-WEB_DIR="$(cd "$SCRIPT_DIR/../../web" && pwd)"
-if [ -d "$WEB_DIR" ]; then
-    echo "-> Resetting web progress state in $WEB_DIR..."
+# 6. Reset Web Platform Progress State (legacy fallback)
+if [ -d "$SCRIPT_DIR/../web" ]; then
+    echo "-> Resetting web progress state in $SCRIPT_DIR/../web..."
     RESET_TIME=$(date +%s)
-    echo "{\"last_reset\": $RESET_TIME, \"completed_lessons\": []}" > "$WEB_DIR/progress_state.json"
+    echo "{\"last_reset\": $RESET_TIME, \"completed_lessons\": []}" > "$SCRIPT_DIR/../web/progress_state.json" 2>/dev/null || true
 fi
 
 echo "=================================================================="

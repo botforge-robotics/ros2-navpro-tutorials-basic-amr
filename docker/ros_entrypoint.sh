@@ -26,8 +26,21 @@ if [ "$START_SERVICES" = "true" ]; then
     echo "[Entrypoint] Starting in-browser VS Code editor on port 8443..."
     code-server --auth none --bind-addr 0.0.0.0:8443 /home/student/ros2_ws &
 
+    # Symlink reset_workspace script to /usr/local/bin so it is globally available
+    if [ -f "/opt/navpro_level1/scripts/reset_workspace.sh" ]; then
+        sudo ln -sf /opt/navpro_level1/scripts/reset_workspace.sh /usr/local/bin/reset_workspace 2>/dev/null || true
+    elif [ -f "/home/student/scripts/reset_workspace.sh" ]; then
+        sudo ln -sf /home/student/scripts/reset_workspace.sh /usr/local/bin/reset_workspace 2>/dev/null || true
+    fi
+
     # Launch Level 1 / Basic AMR Learning Hub web portal on port 8000
-    if [ -d "/home/student/navpro_level1/lms/dist" ]; then
+    if [ -d "/opt/navpro_level1/lms/dist" ]; then
+        echo "[Entrypoint] Starting NavPro Web Server on port 8000..."
+        python3 -m http.server 8000 --directory /opt/navpro_level1/lms/dist &
+    elif [ -d "/opt/navpro_level1/web" ]; then
+        echo "[Entrypoint] Starting NavPro Web Server on port 8000..."
+        python3 -m http.server 8000 --directory /opt/navpro_level1/web &
+    elif [ -d "/home/student/navpro_level1/lms/dist" ]; then
         echo "[Entrypoint] Starting NavPro Web Server on port 8000..."
         python3 -m http.server 8000 --directory /home/student/navpro_level1/lms/dist &
     elif [ -d "/home/student/navpro_level1/web" ]; then

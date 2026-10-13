@@ -19,10 +19,9 @@ services:
       # In-browser VS Code Code Server (port 8443)
       - "8443:8443"
     volumes:
-      # Mount Level 1 repository
-      - ..:/home/student/navpro_level1
+      # Mount Level 1 repository for web portal (read-only, out of student home space)
+      - ..:/opt/navpro_level1:ro
       # Mount the local ros2_ws directory so student code edits persist on host
       - ../ros2_ws:/home/student/ros2_ws
-      - ../scripts:/home/student/scripts
     restart: unless-stopped
     shm_size: '2gb'
