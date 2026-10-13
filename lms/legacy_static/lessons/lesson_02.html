@@ -411,17 +411,17 @@ sudo update-locale LC_ALL=en_US.UTF-8 LANG=en_US.UTF-8
 export LANG=en_US.UTF-8</code></pre></div>
 <hr>
 <h3>Step 5.2: Enable Ubuntu Universe Repository</h3>
-<blockquote class="alert alert-syntax"><strong>Command Syntax:</strong> <code>sudo add-apt-repository &lt;repo_name&gt;</code><br><strong>Description:</strong> Enables the official Ubuntu Universe repository, which provides community-maintained open-source packages and build tools.</blockquote>
+<blockquote class="alert alert-syntax"><strong>Command Syntax:</strong> <code>sudo add-apt-repository &lt;repo_name&gt;</code><br><strong>Description:</strong> Enables the Ubuntu Universe repository, which provides community-maintained open-source packages and build tools.</blockquote>
 <p><strong>Hands-On Practical Command:</strong></p>
 <div class="code-container"><pre><button class="copy-btn">Copy</button><code class="language-bash">sudo apt install -y software-properties-common
 sudo add-apt-repository universe</code></pre></div>
 <hr>
-<h3>Step 5.3: Add Official ROS 2 GPG Key &amp; APT Source</h3>
-<blockquote class="alert alert-syntax"><strong>Command Syntax:</strong> <code>curl -sSL &lt;key_url&gt; -o &lt;keyring_path&gt;</code> &amp;nbsp;|&amp;nbsp; <code>tee /etc/apt/sources.list.d/&lt;list&gt;</code><br><strong>Description:</strong> Downloads OpenPGP archive keys into <code>/usr/share/keyrings</code> and adds the official Open Robotics package repository to your APT sources list for cryptographically verified package installations.</blockquote>
+<h3>Step 5.3: Add ROS 2 GPG Key &amp; APT Source</h3>
+<blockquote class="alert alert-syntax"><strong>Command Syntax:</strong> <code>curl -sSL &lt;key_url&gt; -o &lt;keyring_path&gt;</code> &amp;nbsp;|&amp;nbsp; <code>tee /etc/apt/sources.list.d/&lt;list&gt;</code><br><strong>Description:</strong> Downloads OpenPGP archive keys into <code>/usr/share/keyrings</code> and adds the Open Robotics package repository to your APT sources list for cryptographically verified package installations.</blockquote>
 <p><strong>Hands-On Practical Command:</strong></p>
 <div class="code-container"><pre><button class="copy-btn">Copy</button><code class="language-bash">sudo apt update &amp;&amp; sudo apt install -y curl gnupg lsb-release
 
-# Download official ROS archive key
+# Download ROS archive key
 sudo curl -sSL https://raw.githubusercontent.com/ros/rosdistro/master/ros.key -o /usr/share/keyrings/ros-archive-keyring.gpg
 
 # Add ROS 2 repository to sources list

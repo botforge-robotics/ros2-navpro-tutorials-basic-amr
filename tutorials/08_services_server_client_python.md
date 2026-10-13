@@ -29,9 +29,9 @@ By the end of this lesson, you will:
 
 ---
 
-## 3. Official ROS 2 Minimal Service Server (Python) - Step-by-Step
+## 3. Building a Service Server in Python - Step-by-Step
 
-Following the canonical [Official ROS 2 Jazzy Beginner Service Tutorial](https://docs.ros.org/en/jazzy/Tutorials/Beginner-Client-Libraries/Writing-A-Simple-Py-Service-And-Client.html), we begin with the fundamental `AddTwoInts` service server (`m02_l08_01_service_member_function.py` / `add_two_ints_server`).
+We begin with the fundamental `AddTwoInts` service server (`m02_l08_01_service_member_function.py` / `add_two_ints_server`).
 
 It uses the standard interface `example_interfaces/srv/AddTwoInts`:
 ```text
@@ -44,8 +44,8 @@ int64 sum
 ```python
 #!/usr/bin/env python3
 """
-Official ROS 2 Jazzy Tutorial: MinimalService
-Reference: https://docs.ros.org/en/jazzy/Tutorials/Beginner-Client-Libraries/Writing-A-Simple-Py-Service-And-Client.html
+NavPro Robotics: MinimalService
+Implements a Python service server for AddTwoInts.
 """
 
 from example_interfaces.srv import AddTwoInts
@@ -114,15 +114,15 @@ if __name__ == '__main__':
 
 ---
 
-## 5. Official ROS 2 Minimal Client Async (Python) - Step-by-Step
+## 5. Building an Asynchronous Service Client in Python - Step-by-Step
 
-Here is the canonical asynchronous Python Service Client (`m02_l08_02_client_member_function.py` / `add_two_ints_client`):
+Here is the asynchronous Python Service Client (`m02_l08_02_client_member_function.py` / `add_two_ints_client`):
 
 ```python
 #!/usr/bin/env python3
 """
-Official ROS 2 Jazzy Tutorial: MinimalClientAsync
-Reference: https://docs.ros.org/en/jazzy/Tutorials/Beginner-Client-Libraries/Writing-A-Simple-Py-Service-And-Client.html
+NavPro Robotics: MinimalClientAsync
+Implements a non-blocking asynchronous Python service client for AddTwoInts.
 """
 
 import sys

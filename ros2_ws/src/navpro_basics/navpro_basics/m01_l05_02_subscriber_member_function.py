@@ -1,15 +1,14 @@
 #!/usr/bin/env python3
 """
 ================================================================================
-Official ROS 2 Jazzy Tutorial: Writing a simple publisher and subscriber (Python)
-Reference: https://docs.ros.org/en/jazzy/Tutorials/Beginner-Client-Libraries/
-           Writing-A-Simple-Py-Publisher-And-Subscriber.html
-Node: MinimalSubscriber (listener)
+NavPro Learning Hub - Level 1: Module 1 / Lesson 05
+Package: navpro_basics
+Node:    MinimalSubscriber (listener)
 ================================================================================
 
 WHAT THIS NODE DOES:
 --------------------
-This is the canonical official ROS 2 beginner tutorial subscriber node.
+This is the foundational ROS 2 subscriber node.
 It inherits from rclpy.node.Node, registers a subscription on topic 'topic'
 using standard string messages (std_msgs/msg/String), and defines a callback
 method that logs 'I heard: "<message>"' whenever a message arrives.
@@ -22,7 +21,7 @@ from std_msgs.msg import String
 
 class MinimalSubscriber(Node):
     """
-    Official ROS 2 Minimal Subscriber Node.
+    Minimal Subscriber Node.
     """
 
     def __init__(self):

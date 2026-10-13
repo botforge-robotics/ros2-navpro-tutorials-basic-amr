@@ -34,15 +34,12 @@ cat << 'EOF' > "$WS_DIR/src/navpro_basics/navpro_basics/m01_l05_task_custom_pubs
 NavPro Learning Hub - Level 1: Module 1 / Lesson 05 Task 1
 Package: navpro_basics
 Task:    m01_l05_task_custom_pubsub.py (alias: task_custom_pubsub)
-Reference: https://docs.ros.org/en/jazzy/Tutorials/Beginner-Client-Libraries/
-           Writing-A-Simple-Py-Publisher-And-Subscriber.html
 ================================================================================
 
 EXERCISE OVERVIEW:
 ------------------
 Your goal is to build your very first ROS 2 Publisher and Subscriber node
-using the standard ROS 2 `std_msgs/msg/String` message type, exactly as taught
-in the official ROS 2 Jazzy tutorials.
+using the standard ROS 2 `std_msgs/msg/String` message type.
 """
 
 import rclpy
@@ -120,8 +117,6 @@ cat << 'EOF' > "$WS_DIR/src/navpro_basics/navpro_basics/m02_l08_task_service_cal
 NavPro Learning Hub - Level 1: Module 2 / Lesson 08 Task
 Package: navpro_basics
 Task:    m02_l08_task_service_calculator.py (alias: task_service_calculator)
-Reference: https://docs.ros.org/en/jazzy/Tutorials/Beginner-Client-Libraries/
-           Writing-A-Simple-Py-Service-And-Client.html
 ================================================================================
 """
 

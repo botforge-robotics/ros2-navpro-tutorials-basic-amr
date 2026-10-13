@@ -1,15 +1,14 @@
 #!/usr/bin/env python3
 """
 ================================================================================
-Official ROS 2 Jazzy Tutorial: Writing a simple service and client (Python)
-Reference: https://docs.ros.org/en/jazzy/Tutorials/Beginner-Client-Libraries/
-           Writing-A-Simple-Py-Service-And-Client.html
-Node: MinimalClientAsync (add_two_ints client)
+NavPro Learning Hub - Level 1: Module 2 / Lesson 08
+Package: navpro_basics
+Node:    MinimalClientAsync (add_two_ints client)
 ================================================================================
 
 WHAT THIS NODE DOES:
 --------------------
-This is the canonical official ROS 2 beginner tutorial service client node.
+This is the foundational ROS 2 service client node.
 It uses `example_interfaces/srv/AddTwoInts`, connects to the 'add_two_ints'
 service, sends two integer arguments, waits asynchronously for the result,
 and logs the returned sum.
@@ -23,7 +22,7 @@ from rclpy.node import Node
 
 class MinimalClientAsync(Node):
     """
-    Official ROS 2 Minimal Service Client Node.
+    Minimal Service Client Node.
     """
 
     def __init__(self):

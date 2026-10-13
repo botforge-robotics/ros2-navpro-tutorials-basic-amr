@@ -1,15 +1,14 @@
 #!/usr/bin/env python3
 """
 ================================================================================
-Official ROS 2 Jazzy Tutorial: Writing a simple publisher and subscriber (Python)
-Reference: https://docs.ros.org/en/jazzy/Tutorials/Beginner-Client-Libraries/
-           Writing-A-Simple-Py-Publisher-And-Subscriber.html
-Node: MinimalPublisher (talker)
+NavPro Learning Hub - Level 1: Module 1 / Lesson 05
+Package: navpro_basics
+Node:    MinimalPublisher (talker)
 ================================================================================
 
 WHAT THIS NODE DOES:
 --------------------
-This is the canonical official ROS 2 beginner tutorial publisher node.
+This is the foundational ROS 2 publisher node.
 It inherits from rclpy.node.Node, initializes a publisher on topic 'topic'
 using standard string messages (std_msgs/msg/String), and periodically publishes
 'Hello World: <count>' every 0.5 seconds (2 Hz).
@@ -22,7 +21,7 @@ from std_msgs.msg import String
 
 class MinimalPublisher(Node):
     """
-    Official ROS 2 Minimal Publisher Node.
+    Minimal Publisher Node.
     """
 
     def __init__(self):

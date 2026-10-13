@@ -49,9 +49,9 @@ Under the hood, every ROS 2 Action is implemented as a coordinated set of DDS to
 
 ---
 
-## 3. Official ROS 2 Fibonacci Action Server (Python) - Step-by-Step
+## 3. Building an Action Server in Python - Step-by-Step
 
-Following the canonical [Official ROS 2 Jazzy Action Server Tutorial](https://docs.ros.org/en/jazzy/Tutorials/Intermediate/Writing-an-action-server-client/Python.html), we begin with `m02_l11_01_fibonacci_action_server.py`.
+We implement an action server in `m02_l11_01_fibonacci_action_server.py` using Fibonacci computation as a clear, step-by-step example of a long-running goal.
 
 It uses the standard interface `Fibonacci.action`:
 ```text
@@ -68,8 +68,8 @@ int32[] partial_sequence
 ```python
 #!/usr/bin/env python3
 """
-Official ROS 2 Jazzy Tutorial: Fibonacci Action Server
-Reference: https://docs.ros.org/en/jazzy/Tutorials/Intermediate/Writing-an-action-server-client/Python.html
+NavPro Robotics: Fibonacci Action Server
+Demonstrates goal handling, periodic feedback publishing, cancellation checking, and result delivery.
 """
 
 import time
@@ -168,15 +168,15 @@ if __name__ == '__main__':
 
 ---
 
-## 4. Official ROS 2 Fibonacci Action Client (Python) - Step-by-Step
+## 4. Building an Action Client in Python - Step-by-Step
 
 Now let's build `m02_l11_02_fibonacci_action_client.py` to send goals and track live feedback:
 
 ```python
 #!/usr/bin/env python3
 """
-Official ROS 2 Jazzy Tutorial: Fibonacci Action Client
-Reference: https://docs.ros.org/en/jazzy/Tutorials/Intermediate/Writing-an-action-server-client/Python.html
+NavPro Robotics: Fibonacci Action Client
+Sends action goals asynchronously, receives streaming feedback callbacks, and handles final results.
 """
 
 import sys

@@ -1,18 +1,15 @@
 #!/usr/bin/env python3
 """
 ================================================================================
-NavPro Learning Hub - Level 1: Beginner Task 1
+NavPro Learning Hub - Level 1: Module 1 / Lesson 05 Task 1
 Package: navpro_basics
-Task:    task_custom_pubsub.py
-Reference: https://docs.ros.org/en/jazzy/Tutorials/Beginner-Client-Libraries/
-           Writing-A-Simple-Py-Publisher-And-Subscriber.html
+Task:    m01_l05_task_custom_pubsub.py (alias: task_custom_pubsub)
 ================================================================================
 
 EXERCISE OVERVIEW:
 ------------------
 Your goal is to build your very first ROS 2 Publisher and Subscriber node
-using the standard ROS 2 `std_msgs/msg/String` message type, exactly as taught
-in the official ROS 2 Jazzy tutorials.
+using the standard ROS 2 `std_msgs/msg/String` message type.
 
 OBJECTIVES:
 -----------

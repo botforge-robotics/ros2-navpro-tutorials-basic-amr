@@ -1,15 +1,14 @@
 #!/usr/bin/env python3
 """
 ================================================================================
-Official ROS 2 Jazzy Tutorial: Writing an action server and client (Python)
-Reference: https://docs.ros.org/en/jazzy/Tutorials/Intermediate/
-           Writing-an-action-server-client/Python.html
-Node: FibonacciActionServer
+NavPro Learning Hub - Level 1: Module 2 / Lesson 11
+Package: navpro_basics
+Node:    FibonacciActionServer
 ================================================================================
 
 WHAT THIS NODE DOES:
 --------------------
-This is the canonical official ROS 2 tutorial action server node.
+This is the foundational ROS 2 action server node.
 It implements the Fibonacci action:
   Goal:     int32 order
   Result:   int32[] sequence
@@ -33,7 +32,7 @@ except ImportError:
 
 class FibonacciActionServer(Node):
     """
-    Official ROS 2 Fibonacci Action Server Node.
+    Fibonacci Action Server Node.
     """
 
     def __init__(self):

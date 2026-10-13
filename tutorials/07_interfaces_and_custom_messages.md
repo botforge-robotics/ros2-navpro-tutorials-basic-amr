@@ -43,9 +43,9 @@ Before creating custom messages, always verify if a standardized ROS message alr
 
 ---
 
-## 4. Official ROS 2 Custom Interfaces - Step-by-Step
+## 4. Creating Custom ROS 2 Interfaces - Step-by-Step
 
-Following the [Official ROS 2 Jazzy Custom Interfaces Tutorial](https://docs.ros.org/en/jazzy/Tutorials/Beginner-Client-Libraries/Custom-ROS2-Interfaces.html), we build a dedicated CMake package (`navpro_interfaces`) containing beginner-friendly custom message, service, and action definitions.
+We build a dedicated CMake package (`navpro_interfaces`) containing custom message, service, and action definitions.
 
 ### Step 4.1: Create the Interface Package
 ```bash
@@ -55,7 +55,7 @@ cd navpro_interfaces
 mkdir -p msg srv action
 ```
 
-### Step 4.2: Define Custom Message 1: `msg/Num.msg` (Official Example)
+### Step 4.2: Define Custom Message 1: `msg/Num.msg`
 The simplest possible custom message contains a single primitive integer:
 ```text
 int64 num
@@ -68,7 +68,7 @@ geometry_msgs/Point center
 float64 radius
 ```
 
-### Step 4.4: Define Custom Service: `srv/AddThreeInts.srv` (Official Example)
+### Step 4.4: Define Custom Service: `srv/AddThreeInts.srv`
 In `.srv` files, three dashes `---` separate the **Request** from the **Response**:
 ```text
 int64 a
@@ -78,7 +78,7 @@ int64 c
 int64 sum
 ```
 
-### Step 4.5: Define Custom Action: `action/Fibonacci.action` (Official Example)
+### Step 4.5: Define Custom Action: `action/Fibonacci.action`
 In `.action` files, three dashes `---` separate **Goal**, **Result**, and **Feedback**:
 ```text
 int32 order

@@ -94,7 +94,7 @@ export LANG=en_US.UTF-8
 ### Step 5.2: Enable Ubuntu Universe Repository
 > [!SYNTAX]
 > **Command Syntax:** `sudo add-apt-repository <repo_name>`  
-> **Description:** Enables the official Ubuntu Universe repository, which provides community-maintained open-source packages and build tools.
+> **Description:** Enables the Ubuntu Universe repository, which provides community-maintained open-source packages and build tools.
 
 **Hands-On Practical Command:**
 ```bash
@@ -104,16 +104,16 @@ sudo add-apt-repository universe
 
 ---
 
-### Step 5.3: Add Official ROS 2 GPG Key & APT Source
+### Step 5.3: Add ROS 2 GPG Key & APT Source
 > [!SYNTAX]
 > **Command Syntax:** `curl -sSL <key_url> -o <keyring_path>` &nbsp;|&nbsp; `tee /etc/apt/sources.list.d/<list>`  
-> **Description:** Downloads OpenPGP archive keys into `/usr/share/keyrings` and adds the official Open Robotics package repository to your APT sources list for cryptographically verified package installations.
+> **Description:** Downloads OpenPGP archive keys into `/usr/share/keyrings` and adds the Open Robotics package repository to your APT sources list for cryptographically verified package installations.
 
 **Hands-On Practical Command:**
 ```bash
 sudo apt update && sudo apt install -y curl gnupg lsb-release
 
-# Download official ROS archive key
+# Download ROS archive key
 sudo curl -sSL https://raw.githubusercontent.com/ros/rosdistro/master/ros.key -o /usr/share/keyrings/ros-archive-keyring.gpg
 
 # Add ROS 2 repository to sources list

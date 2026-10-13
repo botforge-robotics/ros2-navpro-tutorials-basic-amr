@@ -10,7 +10,7 @@
 
 Up to this point, you commanded goals manually by clicking buttons in RViz2. In commercial warehouse robotics, an AMR receives autonomous mission assignments from an ERP or warehouse execution system (WES): **"Pick up pallet at Station Alpha -> Deliver to Packing Bay Bravo -> Return to Charger."**
 
-The **Nav2 Simple Commander API (`BasicNavigator`)** is the official Python programmatic SDK for orchestrating autonomous navigation tasks.
+The **Nav2 Simple Commander API (`BasicNavigator`)** is the standard Python programmatic SDK for orchestrating autonomous navigation tasks.
 
 By the end of this lesson, you will:
 1. Initialize the navigation stack programmatically using `BasicNavigator.waitUntilNav2Active()`.

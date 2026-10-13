@@ -92,10 +92,7 @@ RUN echo "export TURTLEBOT3_MODEL=waffle" >> /home/$USERNAME/.bashrc
 # Copy entrypoint script and set up global environment
 USER root
 COPY docker/ros_entrypoint.sh /ros_entrypoint.sh
-RUN chmod +x /ros_entrypoint.sh && \
-    ln -sf /opt/ros/jazzy/bin/ros2 /usr/local/bin/ros2 && \
-    ln -sf /opt/ros/jazzy/opt/gz_tools_vendor/bin/gz /usr/local/bin/gz && \
-    echo "source /opt/ros/jazzy/setup.bash" > /etc/profile.d/ros.sh
+RUN chmod +x /ros_entrypoint.sh
 
 USER $USERNAME
 WORKDIR /home/$USERNAME

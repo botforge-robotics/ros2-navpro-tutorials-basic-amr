@@ -235,7 +235,7 @@ export function HubOverview({
                   <span className="badge badge-success" style={{ marginRight: '6px', fontSize: '0.7rem' }}>Beginner</span>
                   <strong>Pub/Sub Chatter Task</strong>
                 </td>
-                <td>Official String Pub/Sub (Lesson 05)</td>
+                <td>Core String Pub/Sub (Lesson 05)</td>
                 <td>
                   <code>navpro_basics/m01_l05_task_custom_pubsub.py</code>
                 </td>
@@ -248,7 +248,7 @@ export function HubOverview({
                   <span className="badge badge-success" style={{ marginRight: '6px', fontSize: '0.7rem' }}>Beginner</span>
                   <strong>Service Calculator Task</strong>
                 </td>
-                <td>Official AddTwoInts Service (Lesson 08)</td>
+                <td>Core AddTwoInts Service (Lesson 08)</td>
                 <td>
                   <code>navpro_basics/m02_l08_task_service_calculator.py</code>
                 </td>

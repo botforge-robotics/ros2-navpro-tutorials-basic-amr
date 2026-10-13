@@ -1,15 +1,14 @@
 #!/usr/bin/env python3
 """
 ================================================================================
-Official ROS 2 Jazzy Tutorial: Using parameters in a class (Python)
-Reference: https://docs.ros.org/en/jazzy/Tutorials/Beginner-Client-Libraries/
-           Using-Parameters-In-A-Class-Python.html
-Node: MinimalParam (parameter demonstration)
+NavPro Learning Hub - Level 1: Module 2 / Lesson 09
+Package: navpro_basics
+Node:    MinimalParam (parameter demonstration)
 ================================================================================
 
 WHAT THIS NODE DOES:
 --------------------
-This is the canonical official ROS 2 beginner tutorial parameter node.
+This is the foundational ROS 2 parameter node.
 It declares a parameter named 'my_parameter' with default value 'world',
 periodically inspects its value in a 1-second timer loop, and logs 'Hello <value>!'.
 Students can change this value dynamically using:
@@ -22,7 +21,7 @@ from rclpy.node import Node
 
 class MinimalParam(Node):
     """
-    Official ROS 2 Minimal Parameter Node.
+    Minimal Parameter Node.
     """
 
     def __init__(self):

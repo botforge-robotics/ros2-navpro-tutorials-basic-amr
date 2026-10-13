@@ -61,15 +61,15 @@ Unlike ROS 1 (which used TCP/UDP sockets with hardcoded parameters), ROS 2 allow
 
 ---
 
-## 4. Official ROS 2 Minimal Publisher (Python) - Step-by-Step
+## 4. Building a Minimal Publisher Node (Python) - Step-by-Step
 
-Following the canonical [Official ROS 2 Jazzy Beginner Tutorial](https://docs.ros.org/en/jazzy/Tutorials/Beginner-Client-Libraries/Writing-A-Simple-Py-Publisher-And-Subscriber.html), we begin with the simplest possible publisher node (`m01_l05_01_publisher_member_function.py` / `talker`). It sends standard string messages (`std_msgs/msg/String`) to a topic named `'topic'`.
+We begin with the foundational publisher node (`m01_l05_01_publisher_member_function.py` / `talker`). It sends standard string messages (`std_msgs/msg/String`) to a topic named `'topic'`.
 
 ```python
 #!/usr/bin/env python3
 """
-Official ROS 2 Jazzy Tutorial: MinimalPublisher
-Reference: https://docs.ros.org/en/jazzy/Tutorials/Beginner-Client-Libraries/Writing-A-Simple-Py-Publisher-And-Subscriber.html
+NavPro Robotics: MinimalPublisher
+Publishes standard string messages to a topic at a fixed 2 Hz rate.
 """
 
 import rclpy
@@ -121,21 +121,21 @@ if __name__ == '__main__':
 | `super().__init__('minimal_publisher')` | Register node identity on the computational graph. | Initializes the base `rclpy.node.Node` class; `'minimal_publisher'` is the unique identifier visible in `ros2 node list`. |
 | `self.create_publisher(String, 'topic', 10)` | Establish DDS publisher endpoint. | Binds data output to topic `'topic'`. `10` is the QoS queue depth (retaining up to 10 unread messages in memory buffer). |
 | `self.create_timer(0.5, self.timer_callback)` | Schedule non-blocking periodic publishing. | Fires every 0.5 seconds (2 Hz). `create_timer()` allows the ROS 2 executor to process callbacks asynchronously without blocking sleep calls (`time.sleep()`). |
-| `msg = String()`<br>`msg.data = f'Hello World: {self.i}'` | Construct and populate message payload. | Instantiates an official ROS 2 message container. Standard string messages encapsulate textual data in the `.data` attribute. |
+| `msg = String()`<br>`msg.data = f'Hello World: {self.i}'` | Construct and populate message payload. | Instantiates a standard ROS 2 message container. Standard string messages encapsulate textual data in the `.data` attribute. |
 | `self.publisher_.publish(msg)` | Push message onto the DDS middleware bus. | Serializes the Python object into CDR binary packets and broadcasts it to all discovered subscribers on the network. |
 | `rclpy.spin(minimal_publisher)` | Enter executor event loop. | Keeps the process alive, monitoring timers and event queues to dispatch callbacks deterministically. |
 
 ---
 
-## 5. Official ROS 2 Minimal Subscriber (Python) - Step-by-Step
+## 5. Building a Minimal Subscriber Node (Python) - Step-by-Step
 
 Now let's build the consumer node (`m01_l05_02_subscriber_member_function.py` / `listener`) that subscribes to `'topic'` and logs incoming string messages.
 
 ```python
 #!/usr/bin/env python3
 """
-Official ROS 2 Jazzy Tutorial: MinimalSubscriber
-Reference: https://docs.ros.org/en/jazzy/Tutorials/Beginner-Client-Libraries/Writing-A-Simple-Py-Publisher-And-Subscriber.html
+NavPro Robotics: MinimalSubscriber
+Subscribes to standard string messages from a topic and logs them.
 """
 
 import rclpy
@@ -218,7 +218,7 @@ class VelocityPublisher(Node):
 
 ## 7. Verification with the ROS 2 Command Line Interface (CLI)
 
-Open two terminal panes and run the official minimal pub/sub nodes:
+Open two terminal panes and run the minimal pub/sub nodes:
 
 **Terminal 1 (Publisher / Talker):**
 ```bash

@@ -1,13 +1,8 @@
 #!/bin/bash
 set -e
 
-# Source ROS 2 system installation
-source "/opt/ros/jazzy/setup.bash"
-
-# Source workspace if compiled
-if [ -f "/home/student/ros2_ws/install/setup.bash" ]; then
-    source "/home/student/ros2_ws/install/setup.bash"
-fi
+# Student environment starts clean without automatic ROS sourcing
+# Students learn to source /opt/ros/jazzy/setup.bash and their workspace in Lessons 02 & 03
 
 # Launch VNC server and web services if running in daemon/service mode
 if [ "$START_SERVICES" = "true" ]; then

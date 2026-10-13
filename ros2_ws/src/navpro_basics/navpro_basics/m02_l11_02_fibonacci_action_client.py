@@ -1,15 +1,14 @@
 #!/usr/bin/env python3
 """
 ================================================================================
-Official ROS 2 Jazzy Tutorial: Writing an action server and client (Python)
-Reference: https://docs.ros.org/en/jazzy/Tutorials/Intermediate/
-           Writing-an-action-server-client/Python.html
-Node: FibonacciActionClient
+NavPro Learning Hub - Level 1: Module 2 / Lesson 11
+Package: navpro_basics
+Node:    FibonacciActionClient
 ================================================================================
 
 WHAT THIS NODE DOES:
 --------------------
-This is the canonical official ROS 2 tutorial action client node.
+This is the foundational ROS 2 action client node.
 It connects to the 'fibonacci' action server, submits a goal with order=10,
 listens for real-time progress feedback, and logs the final completed result.
 """
@@ -27,7 +26,7 @@ except ImportError:
 
 class FibonacciActionClient(Node):
     """
-    Official ROS 2 Fibonacci Action Client Node.
+    Fibonacci Action Client Node.
     """
 
     def __init__(self):

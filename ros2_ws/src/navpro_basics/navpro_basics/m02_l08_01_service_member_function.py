@@ -1,15 +1,14 @@
 #!/usr/bin/env python3
 """
 ================================================================================
-Official ROS 2 Jazzy Tutorial: Writing a simple service and client (Python)
-Reference: https://docs.ros.org/en/jazzy/Tutorials/Beginner-Client-Libraries/
-           Writing-A-Simple-Py-Service-And-Client.html
-Node: MinimalService (add_two_ints server)
+NavPro Learning Hub - Level 1: Module 2 / Lesson 08
+Package: navpro_basics
+Node:    MinimalService (add_two_ints server)
 ================================================================================
 
 WHAT THIS NODE DOES:
 --------------------
-This is the canonical official ROS 2 beginner tutorial service server node.
+This is the foundational ROS 2 service server node.
 It uses the standard interface `example_interfaces/srv/AddTwoInts` which has:
   int64 a
   int64 b
@@ -26,7 +25,7 @@ from rclpy.node import Node
 
 class MinimalService(Node):
     """
-    Official ROS 2 Minimal Service Server Node.
+    Minimal Service Server Node.
     """
 
     def __init__(self):
