@@ -9,6 +9,33 @@ import {
   Send
 } from 'lucide-react';
 
+const STORAGE_KEY_QUIZ_ANSWERS = 'navpro_l1_quiz_answers';
+
+const getStoredQuizAnswers = (lid) => {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY_QUIZ_ANSWERS);
+    const parsed = raw ? JSON.parse(raw) : {};
+    return parsed[lid] || {};
+  } catch {
+    return {};
+  }
+};
+
+const setStoredQuizAnswers = (lid, answers) => {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY_QUIZ_ANSWERS);
+    const parsed = raw ? JSON.parse(raw) : {};
+    if (answers && Object.keys(answers).length > 0) {
+      parsed[lid] = answers;
+    } else {
+      delete parsed[lid];
+    }
+    localStorage.setItem(STORAGE_KEY_QUIZ_ANSWERS, JSON.stringify(parsed));
+  } catch (err) {
+    console.error('Failed to save quiz answers', err);
+  }
+};
+
 export function QuizCard({ 
   lessonId, 
   quizzes, 
@@ -17,16 +44,28 @@ export function QuizCard({
   isQuizGateOpen,
   onOpenSyncModal
 }) {
-  const [selectedAnswers, setSelectedAnswers] = useState({});
-  const [isSubmitted, setIsSubmitted] = useState(false);
-  const [scoreResult, setScoreResult] = useState(null);
+  const [selectedAnswers, setSelectedAnswers] = useState(() => getStoredQuizAnswers(lessonId));
+  const [isSubmitted, setIsSubmitted] = useState(() => {
+    const stored = getStoredQuizAnswers(lessonId);
+    return Boolean(savedScore && Object.keys(stored).length > 0);
+  });
+  const [scoreResult, setScoreResult] = useState(savedScore || null);
 
-  // Initialize or restore state
+  // Restore state when switching lessons
   useEffect(() => {
-    setSelectedAnswers({});
-    setIsSubmitted(false);
+    const stored = getStoredQuizAnswers(lessonId);
+    setSelectedAnswers(stored);
+    const hasStored = Object.keys(stored).length > 0;
+    setIsSubmitted(Boolean(savedScore && hasStored));
     setScoreResult(savedScore || null);
-  }, [lessonId, savedScore]);
+  }, [lessonId]);
+
+  // Sync external score update without wiping selected answers
+  useEffect(() => {
+    if (savedScore) {
+      setScoreResult(savedScore);
+    }
+  }, [savedScore]);
 
   if (!quizzes || quizzes.length === 0) {
     return null;
@@ -50,10 +89,14 @@ export function QuizCard({
 
   const handleSelect = (questionIndex, optionIndex) => {
     if (isSubmitted) return;
-    setSelectedAnswers(prev => ({
-      ...prev,
-      [questionIndex]: optionIndex
-    }));
+    setSelectedAnswers(prev => {
+      const next = {
+        ...prev,
+        [questionIndex]: optionIndex
+      };
+      setStoredQuizAnswers(lessonId, next);
+      return next;
+    });
   };
 
   const handleSubmit = (e) => {
@@ -76,6 +119,7 @@ export function QuizCard({
 
     setIsSubmitted(true);
     setScoreResult(result);
+    setStoredQuizAnswers(lessonId, selectedAnswers);
     onRecordScore(lessonId, correctCount, quizzes.length);
   };
 
@@ -83,6 +127,7 @@ export function QuizCard({
     setSelectedAnswers({});
     setIsSubmitted(false);
     setScoreResult(null);
+    setStoredQuizAnswers(lessonId, null);
   };
 
   const allAnswered = quizzes.length > 0 && 
@@ -112,6 +157,7 @@ export function QuizCard({
       <form onSubmit={handleSubmit} className="quiz-form">
         {quizzes.map((q, qIdx) => {
           const userChoice = selectedAnswers[qIdx];
+          const hasUserChoice = userChoice !== undefined && userChoice !== null;
           const isQuestionCorrect = isSubmitted && userChoice === q.correct;
 
           return (
@@ -124,13 +170,20 @@ export function QuizCard({
               <div className="question-options">
                 {q.options.map((opt, optIdx) => {
                   const isSelected = userChoice === optIdx;
+                  const isCorrectOption = optIdx === q.correct;
                   let optionClass = 'quiz-option-label';
 
                   if (isSubmitted) {
-                    if (optIdx === q.correct) {
+                    optionClass += ' submitted';
+                    if (isCorrectOption) {
                       optionClass += ' correct-option';
-                    } else if (isSelected && optIdx !== q.correct) {
-                      optionClass += ' wrong-option';
+                      if (isSelected) {
+                        optionClass += ' user-selected';
+                      }
+                    } else if (isSelected) {
+                      optionClass += ' wrong-option user-selected';
+                    } else {
+                      optionClass += ' unselected-dimmed';
                     }
                   } else if (isSelected) {
                     optionClass += ' selected-option';
@@ -146,11 +199,26 @@ export function QuizCard({
                         disabled={isSubmitted}
                       />
                       <span className="option-text">{opt}</span>
-                      {isSubmitted && optIdx === q.correct && (
-                        <CheckCircle size={16} className="state-icon green" />
-                      )}
-                      {isSubmitted && isSelected && optIdx !== q.correct && (
-                        <XCircle size={16} className="state-icon red" />
+
+                      {/* Explicit Result Badges When Submitted */}
+                      {isSubmitted && (
+                        <>
+                          {isCorrectOption && isSelected && (
+                            <span className="quiz-choice-badge correct">
+                              <CheckCircle size={14} /> Your Answer &bull; Correct
+                            </span>
+                          )}
+                          {isCorrectOption && !isSelected && (
+                            <span className="quiz-choice-badge correct-answer">
+                              <CheckCircle size={14} /> Correct Answer
+                            </span>
+                          )}
+                          {!isCorrectOption && isSelected && (
+                            <span className="quiz-choice-badge wrong">
+                              <XCircle size={14} /> Your Answer &bull; Incorrect
+                            </span>
+                          )}
+                        </>
                       )}
                     </label>
                   );

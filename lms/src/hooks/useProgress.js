@@ -121,6 +121,7 @@ export function useProgress(totalLessons = 26) {
       setQuizScores({});
       localStorage.removeItem(STORAGE_KEY_COMPLETED);
       localStorage.removeItem(STORAGE_KEY_QUIZZES);
+      localStorage.removeItem('navpro_l1_quiz_answers');
     }
   }, []);
 
