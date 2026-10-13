@@ -496,15 +496,16 @@ top
 <div class="cmd-card">
   <div class="cmd-header">
     <div class="cmd-header-left">
-      <span class="cmd-badge">kill / killall</span>
+      <span class="cmd-badge">kill / killall / pkill</span>
       <span class="cmd-title">Terminate Background Processes Cleanly</span>
     </div>
-    <span class="cmd-syntax">Syntax: <code>kill &lt;PID&gt;</code> | <code>kill -9 &lt;PID&gt;</code> | <code>killall &lt;name&gt;</code></span>
+    <span class="cmd-syntax">Syntax: <code>killall &lt;name&gt;</code> | <code>pkill &lt;name&gt;</code> | <code>kill &lt;PID&gt;</code> | <code>kill -9 &lt;PID&gt;</code></span>
   </div>
-  <p class="cmd-desc">Sends POSIX termination signals. Standard <code>kill</code> sends SIGTERM (graceful shutdown); <code>kill -9</code> sends SIGKILL (forced instant halt); <code>killall</code> terminates all processes matching a binary name.</p>
+  <p class="cmd-desc">Sends POSIX termination signals. <code>killall</code> and <code>pkill</code> terminate all processes matching a program name; standard <code>kill &lt;PID&gt;</code> sends SIGTERM (graceful shutdown); <code>kill -9 &lt;PID&gt;</code> sends SIGKILL (forced instant halt).</p>
 ```bash
-# 1. Terminate all running sleep test processes cleanly
+# 1. Terminate all running sleep test processes cleanly by name:
 killall sleep
+# (Alternatively, 'pkill sleep' performs the exact same action)
 
 # 2. Verify the process has terminated (returns only grep itself):
 ps aux | grep sleep

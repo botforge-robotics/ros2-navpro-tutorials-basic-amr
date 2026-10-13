@@ -51,6 +51,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     xclip \
     supervisor \
     net-tools \
+    psmisc \
     nano \
     sudo && \
     ln -sf /usr/share/novnc/vnc.html /usr/share/novnc/index.html && \
