@@ -6,6 +6,7 @@ import { Navbar } from './components/Navbar';
 import { Sidebar } from './components/Sidebar';
 import { HubOverview } from './components/HubOverview';
 import { LessonView } from './components/LessonView';
+import { FeedbackView } from './components/FeedbackView';
 import { RegistrationModal } from './components/RegistrationModal';
 import { HelpModal } from './components/HelpModal';
 import { StudentChatModal } from './components/StudentChatModal';
@@ -107,7 +108,9 @@ export function App() {
       if (['INPUT', 'TEXTAREA'].includes(document.activeElement?.tagName)) return;
 
       if (e.key === '[' || e.key === 'p') {
-        if (activeLesson && activeLesson.prev_id) {
+        if (currentLessonId === 'feedback') {
+          setCurrentLessonId('lesson_23');
+        } else if (activeLesson && activeLesson.prev_id) {
           setCurrentLessonId(activeLesson.prev_id);
         }
       } else if (e.key === ']' || e.key === 'n') {
@@ -123,7 +126,7 @@ export function App() {
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [activeLesson, setCurrentLessonId]);
+  }, [activeLesson, currentLessonId, setCurrentLessonId]);
 
   return (
     <div className="app-root">
@@ -180,6 +183,15 @@ export function App() {
               onOpenSyncModal={() => setIsModalOpen(true)}
               studentInfo={studentInfo}
               onSubmitFeedback={submitFeedback}
+            />
+          ) : currentLessonId === 'feedback' ? (
+            <FeedbackView
+              onNavigateHub={() => setCurrentLessonId(null)}
+              onSelectLesson={(id) => setCurrentLessonId(id)}
+              studentInfo={studentInfo}
+              onSubmitFeedback={submitFeedback}
+              completedCount={completedCount}
+              totalLessons={totalLessons}
             />
           ) : (
             <HubOverview

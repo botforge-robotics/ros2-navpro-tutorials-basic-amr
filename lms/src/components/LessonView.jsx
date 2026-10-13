@@ -14,7 +14,6 @@ import {
 } from 'lucide-react';
 import { QuizCard } from './QuizCard';
 import { PermissionCalculator } from './PermissionCalculator';
-import { StudentFeedbackForm } from './StudentFeedbackForm';
 
 export function LessonView({ 
   lesson, 
@@ -187,16 +186,6 @@ export function LessonView({
         </section>
       )}
 
-      {/* Capstone Student Feedback & Ratings Form on Final Lesson */}
-      {(!lesson.next_id || lesson.id === 'lesson_23' || lesson.id === 'lesson_26') && (
-        <section className="lesson-feedback-section" style={{ margin: '2.5rem 0' }}>
-          <StudentFeedbackForm
-            studentInfo={studentInfo || {}}
-            onSubmitFeedback={onSubmitFeedback}
-          />
-        </section>
-      )}
-
       {/* Bottom Completion Action Bar */}
       <section className="lesson-bottom-completion-card" style={{
         margin: '2.5rem 0 1rem',
@@ -255,7 +244,7 @@ export function LessonView({
                   className="lesson-nav-btn next"
                   style={{ padding: '0.65rem 1.25rem' }}
                 >
-                  <span>Next Lesson</span>
+                  <span>{lesson.next_id === 'feedback' ? 'Course Feedback & Survey' : 'Next Lesson'}</span>
                   <ArrowRight size={16} />
                 </button>
               )}
@@ -288,7 +277,13 @@ export function LessonView({
               className="btn-complete-and-advance"
             >
               <CheckSquare size={18} />
-              <span>{lesson.next_id ? 'Mark as Complete & Next Module' : 'Mark as Complete & Finish'}</span>
+              <span>
+                {lesson.next_id === 'feedback' 
+                  ? 'Mark Complete & Course Feedback' 
+                  : lesson.next_id 
+                    ? 'Mark as Complete & Next Module' 
+                    : 'Mark as Complete & Finish'}
+              </span>
               <ArrowRight size={18} />
             </button>
           )}
@@ -322,7 +317,7 @@ export function LessonView({
             onClick={() => onSelectLesson(lesson.next_id)}
             className="lesson-nav-btn next"
           >
-            <span>Next Lesson</span>
+            <span>{lesson.next_id === 'feedback' ? 'Course Feedback' : 'Next Lesson'}</span>
             <ArrowRight size={16} />
           </button>
         ) : (

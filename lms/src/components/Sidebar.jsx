@@ -9,7 +9,8 @@ import {
   CheckSquare, 
   Square,
   Award,
-  Layers
+  Layers,
+  MessageSquare
 } from 'lucide-react';
 
 export function Sidebar({ 
@@ -175,6 +176,26 @@ export function Sidebar({
               </div>
             );
           })}
+        </div>
+
+        {/* Capstone Course Feedback & Survey */}
+        <div className="sidebar-feedback-nav-section" style={{ marginTop: '1.25rem', paddingBottom: '1.5rem' }}>
+          <button 
+            onClick={() => {
+              onSelectLesson('feedback');
+              if (isOpenMobile) onCloseMobile();
+            }}
+            className={`sidebar-feedback-nav-btn ${currentLessonId === 'feedback' ? 'active' : ''}`}
+            title="Course Feedback & Survey"
+          >
+            <MessageSquare size={16} className="feedback-nav-icon" />
+            <div style={{ display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
+              <span className="feedback-nav-title">Course Feedback &amp; Survey</span>
+              <span className="feedback-nav-sub" style={{ fontSize: '0.72rem', color: 'var(--text-muted)' }}>
+                Share your learning experience
+              </span>
+            </div>
+          </button>
         </div>
       </aside>
     </>

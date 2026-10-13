@@ -458,6 +458,59 @@
   color: var(--accent-primary);
 }
 
+.sidebar-feedback-nav-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 0.7rem 0.85rem;
+  background: var(--bg-surface);
+  border: 1px dashed var(--border-color);
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  box-shadow: var(--shadow-sm);
+  width: 100%;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  text-align: left;
+}
+
+.sidebar-feedback-nav-btn .feedback-nav-icon {
+  color: #10b981;
+  flex-shrink: 0;
+  transition: transform 0.2s ease;
+}
+
+.sidebar-feedback-nav-btn:hover {
+  background: rgba(16, 185, 129, 0.08);
+  border: 1px solid #10b981;
+  color: #059669;
+}
+
+.sidebar-feedback-nav-btn:hover .feedback-nav-icon {
+  transform: scale(1.15);
+}
+
+.sidebar-feedback-nav-btn.active {
+  background: rgba(16, 185, 129, 0.14);
+  border: 1px solid #10b981;
+  color: #047857;
+  font-weight: 800;
+}
+
+[data-theme="dark"] .sidebar-feedback-nav-btn:hover {
+  background: rgba(16, 185, 129, 0.15);
+  border-color: #34d399;
+  color: #34d399;
+}
+
+[data-theme="dark"] .sidebar-feedback-nav-btn.active {
+  background: rgba(16, 185, 129, 0.22);
+  border-color: #34d399;
+  color: #6ee7b7;
+}
+
 /* Modules Accordion in Sidebar */
 .sidebar-modules-list {
   display: flex;

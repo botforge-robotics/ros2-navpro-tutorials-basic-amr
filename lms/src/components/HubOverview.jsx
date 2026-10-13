@@ -17,7 +17,6 @@ import {
   Box,
   Network,
 } from "lucide-react";
-import { StudentFeedbackForm } from "./StudentFeedbackForm";
 
 const MODULE_ICONS = {
   1: Cpu,
@@ -311,14 +310,6 @@ export function HubOverview({
             <code>/wheel_speeds</code>.
           </span>
         </div>
-      </section>
-
-      {/* Capstone Course Feedback & Rating Form */}
-      <section className="hub-feedback-section" style={{ marginTop: "2.5rem" }}>
-        <StudentFeedbackForm
-          studentInfo={studentInfo || {}}
-          onSubmitFeedback={onSubmitFeedback}
-        />
       </section>
     </div>
   );
