@@ -145,10 +145,30 @@ export function RegistrationModal({
                   placeholder="e.g. 192.168.1.100 or localhost"
                   value={formData.host_ip}
                   onChange={e => setFormData({ ...formData, host_ip: e.target.value })}
+                  onBlur={e => {
+                    let v = e.target.value.trim().replace(/^https?:\/\//i, '').split('/')[0].split(':')[0];
+                    if (v) setFormData({ ...formData, host_ip: v });
+                  }}
                 />
-                <span className="field-hint">
-                  The local Wi-Fi IP address displayed on the instructor's terminal or projector.
-                </span>
+                <div className="ip-port-clarification-card" style={{
+                  marginTop: '0.5rem',
+                  padding: '0.6rem 0.85rem',
+                  background: 'rgba(59, 130, 246, 0.08)',
+                  border: '1px solid rgba(59, 130, 246, 0.25)',
+                  borderRadius: '8px',
+                  fontSize: '0.82rem',
+                  lineHeight: '1.45',
+                  color: 'var(--text-secondary)'
+                }}>
+                  <div style={{ fontWeight: 700, color: 'var(--accent-primary)', marginBottom: '3px', display: 'flex', alignItems: 'center', gap: '4px' }}>
+                    💡 Do I need to enter the port (:9000)?
+                  </div>
+                  <div>
+                    <strong>NO, enter the IP address only</strong> (e.g. <code>192.168.1.100</code> or <code>localhost</code>). 
+                    Port 9000 is automatically connected in the background. 
+                    <em>(If you accidentally type <code>:9000</code> or <code>http://</code>, it will be automatically formatted for you).</em>
+                  </div>
+                </div>
               </div>
 
               <div className="sync-status-banner">

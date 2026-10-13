@@ -2,6 +2,18 @@ import { useState, useEffect, useCallback, useRef } from 'react';
 
 const STORAGE_KEY_STUDENT = 'navpro_student_info';
 
+export function sanitizeHostIp(raw) {
+  if (!raw) return 'localhost';
+  let clean = String(raw).trim();
+  // Strip protocol (http:// or https://)
+  clean = clean.replace(/^https?:\/\//i, '');
+  // Strip trailing path
+  clean = clean.split('/')[0];
+  // Strip port (e.g. :9000)
+  clean = clean.split(':')[0];
+  return clean || 'localhost';
+}
+
 export function useInstructorSync(completedLessons, quizScores, currentLessonId) {
   const [studentInfo, setStudentInfo] = useState(() => {
     try {
@@ -13,6 +25,7 @@ export function useInstructorSync(completedLessons, quizScores, currentLessonId)
       email_roll: '',
       org_college: '',
       host_ip: window.location.hostname || 'localhost',
+      workshop_id: null,
       registered: false,
       student_id: null
     };
@@ -27,28 +40,40 @@ export function useInstructorSync(completedLessons, quizScores, currentLessonId)
     gate_feedback_open: false
   });
 
+  // Chat & Raise Hand State
+  const [chatMessages, setChatMessages] = useState([]);
+  const [unreadChatCount, setUnreadChatCount] = useState(0);
+  const [isHandRaised, setIsHandRaised] = useState(false);
+  const [isChatOpen, setIsChatOpen] = useState(false);
+
   const heartbeatRef = useRef(null);
+  const chatPollRef = useRef(null);
+  const lastChatIdRef = useRef(0);
+  const isChatOpenRef = useRef(isChatOpen);
+  isChatOpenRef.current = isChatOpen;
 
   // Determine base API URL
   const getApiBase = useCallback((ip) => {
-    const host = ip || studentInfo.host_ip || 'localhost';
-    const port = 9000;
-    return `http://${host}:${port}`;
+    const host = sanitizeHostIp(ip || studentInfo.host_ip);
+    return `http://${host}:9000`;
   }, [studentInfo.host_ip]);
 
   // Register student with host
   const registerStudent = useCallback(async (info) => {
     try {
       setConnectionStatus('connecting');
-      const apiBase = getApiBase(info.host_ip);
+      const cleanIp = sanitizeHostIp(info.host_ip);
+      const apiBase = getApiBase(cleanIp);
       const res = await fetch(`${apiBase}/api/sync/register`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           name: info.name,
+          email: info.email_roll,
           email_roll: info.email_roll,
+          organization: info.org_college,
           org_college: info.org_college,
-          level: 'Level 1: ROS 2 Foundations'
+          level: 'level1'
         })
       });
 
@@ -57,7 +82,9 @@ export function useInstructorSync(completedLessons, quizScores, currentLessonId)
       
       const updated = {
         ...info,
+        host_ip: cleanIp,
         registered: true,
+        workshop_id: data.workshop_id || null,
         student_id: data.student_id || info.email_roll
       };
       setStudentInfo(updated);
@@ -67,9 +94,10 @@ export function useInstructorSync(completedLessons, quizScores, currentLessonId)
       return { success: true };
     } catch (err) {
       console.warn('Workshop registration failed (continuing in offline mode):', err.message);
-      // Still save locally so student isn't blocked
+      const cleanIp = sanitizeHostIp(info.host_ip);
       const updated = {
         ...info,
+        host_ip: cleanIp,
         registered: true,
         student_id: info.email_roll || `local_${Date.now()}`
       };
@@ -80,9 +108,13 @@ export function useInstructorSync(completedLessons, quizScores, currentLessonId)
     }
   }, [getApiBase]);
 
-  // Periodic heartbeat sync
-  const sendHeartbeat = useCallback(async () => {
+  // Immediate sync progress helper
+  const syncProgressNow = useCallback(async (overrideCompleted, overrideQuizzes, overrideLesson) => {
     if (!studentInfo.registered || !studentInfo.student_id) return;
+
+    const lessonsToSync = overrideCompleted !== undefined ? overrideCompleted : completedLessons;
+    const quizzesToSync = overrideQuizzes !== undefined ? overrideQuizzes : quizScores;
+    const lessonToSync = overrideLesson !== undefined ? overrideLesson : currentLessonId;
 
     try {
       const apiBase = getApiBase(studentInfo.host_ip);
@@ -90,12 +122,14 @@ export function useInstructorSync(completedLessons, quizScores, currentLessonId)
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
+          workshop_id: studentInfo.workshop_id || undefined,
           student_id: studentInfo.student_id,
-          level: 'Level 1: ROS 2 Foundations',
-          active_lesson: currentLessonId || 'overview',
-          completed_count: completedLessons.length,
-          completed_lessons: completedLessons,
-          quiz_scores: quizScores
+          name: studentInfo.name,
+          level: 'level1',
+          active_lesson: lessonToSync || 'overview',
+          completed_count: lessonsToSync.length,
+          completed_lessons: lessonsToSync,
+          quiz_scores: quizzesToSync
         })
       });
 
@@ -104,20 +138,168 @@ export function useInstructorSync(completedLessons, quizScores, currentLessonId)
         setConnectionStatus('connected');
         if (data.workshop_name) setWorkshopName(data.workshop_name);
         if (data.gates) setGates(data.gates);
-      } else {
-        setConnectionStatus('offline');
+        return true;
       }
     } catch (e) {
-      setConnectionStatus('offline');
+      // offline
     }
+    return false;
   }, [studentInfo, completedLessons, quizScores, currentLessonId, getApiBase]);
 
-  // Run heartbeat on interval (12 seconds)
+  // Periodic heartbeat sync
+  const sendHeartbeat = useCallback(async () => {
+    return syncProgressNow();
+  }, [syncProgressNow]);
+
+  // Run heartbeat on interval (10 seconds)
   useEffect(() => {
     sendHeartbeat();
-    heartbeatRef.current = setInterval(sendHeartbeat, 12000);
+    heartbeatRef.current = setInterval(sendHeartbeat, 10000);
     return () => clearInterval(heartbeatRef.current);
   }, [sendHeartbeat]);
+
+  // Chat & Raise Hand polling (every 3 seconds when connected)
+  const pollChatAndHands = useCallback(async () => {
+    if (!studentInfo.registered || !studentInfo.student_id) return;
+    try {
+      const apiBase = getApiBase(studentInfo.host_ip);
+      const wsParam = studentInfo.workshop_id ? `?workshop_id=${studentInfo.workshop_id}` : '';
+      
+      // 1. Poll chat messages
+      const chatRes = await fetch(`${apiBase}/api/sync/chat${wsParam}`);
+      if (chatRes.ok) {
+        const chatData = await chatRes.json();
+        const msgs = chatData.messages || [];
+        setChatMessages(msgs);
+
+        // Compute unread messages if chat modal is closed
+        if (msgs.length > 0) {
+          const maxId = msgs[msgs.length - 1].id;
+          if (!isChatOpenRef.current && lastChatIdRef.current > 0 && maxId > lastChatIdRef.current) {
+            setUnreadChatCount(prev => prev + (maxId - lastChatIdRef.current));
+          }
+          lastChatIdRef.current = maxId;
+        }
+      }
+
+      // 2. Poll raised hands to update local hand state
+      const handsRes = await fetch(`${apiBase}/api/sync/raised_hands${wsParam}`);
+      if (handsRes.ok) {
+        const handsData = await handsRes.json();
+        const activeHands = handsData.raised_hands || [];
+        const myHand = activeHands.some(h => h.student_id === studentInfo.student_id);
+        setIsHandRaised(myHand);
+      }
+    } catch (err) {
+      // ignore transient polling errors
+    }
+  }, [studentInfo, getApiBase]);
+
+  useEffect(() => {
+    pollChatAndHands();
+    chatPollRef.current = setInterval(pollChatAndHands, 3000);
+    return () => clearInterval(chatPollRef.current);
+  }, [pollChatAndHands]);
+
+  // Send student chat message
+  const sendChatMessage = useCallback(async (message, replyTo = null) => {
+    if (!studentInfo.registered || !studentInfo.student_id) {
+      setIsModalOpen(true);
+      return { success: false, error: 'Please log in to chat.' };
+    }
+    if (!message || !message.trim()) return { success: false };
+
+    try {
+      const apiBase = getApiBase(studentInfo.host_ip);
+      const res = await fetch(`${apiBase}/api/sync/chat`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          workshop_id: studentInfo.workshop_id || undefined,
+          sender_id: studentInfo.student_id,
+          sender_name: studentInfo.name || 'Student',
+          sender_role: 'student',
+          sender_level: 'level1',
+          message: message.trim(),
+          reply_to_id: replyTo ? replyTo.id : null,
+          reply_to_text: replyTo ? replyTo.message : null,
+          reply_to_sender: replyTo ? replyTo.sender_name : null
+        })
+      });
+
+      if (!res.ok) {
+        const err = await res.json();
+        return { success: false, error: err.error || 'Failed to send message' };
+      }
+      await pollChatAndHands();
+      return { success: true };
+    } catch (e) {
+      return { success: false, error: e.message };
+    }
+  }, [studentInfo, getApiBase, pollChatAndHands]);
+
+  // Raise hand
+  const raiseHand = useCallback(async (activeLesson) => {
+    if (!studentInfo.registered || !studentInfo.student_id) {
+      setIsModalOpen(true);
+      return false;
+    }
+    try {
+      const apiBase = getApiBase(studentInfo.host_ip);
+      const res = await fetch(`${apiBase}/api/sync/raise_hand`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          workshop_id: studentInfo.workshop_id || undefined,
+          student_id: studentInfo.student_id,
+          active_lesson: activeLesson || currentLessonId || 'lesson_01'
+        })
+      });
+      if (res.ok) {
+        setIsHandRaised(true);
+        return true;
+      }
+    } catch (e) {
+      console.warn('Failed to raise hand:', e);
+    }
+    return false;
+  }, [studentInfo, currentLessonId, getApiBase]);
+
+  // Lower hand
+  const lowerHand = useCallback(async () => {
+    if (!studentInfo.registered || !studentInfo.student_id) return false;
+    try {
+      const apiBase = getApiBase(studentInfo.host_ip);
+      const res = await fetch(`${apiBase}/api/sync/lower_hand`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          workshop_id: studentInfo.workshop_id || undefined,
+          student_id: studentInfo.student_id
+        })
+      });
+      if (res.ok) {
+        setIsHandRaised(false);
+        return true;
+      }
+    } catch (e) {
+      console.warn('Failed to lower hand:', e);
+    }
+    return false;
+  }, [studentInfo, getApiBase]);
+
+  // Clear unread count when opening chat
+  const openChatModal = useCallback(() => {
+    setIsChatOpen(true);
+    setUnreadChatCount(0);
+    if (chatMessages.length > 0) {
+      lastChatIdRef.current = chatMessages[chatMessages.length - 1].id;
+    }
+  }, [chatMessages]);
+
+  const closeChatModal = useCallback(() => {
+    setIsChatOpen(false);
+  }, []);
 
   // Check if first-time visitor needs registration
   useEffect(() => {
@@ -135,6 +317,7 @@ export function useInstructorSync(completedLessons, quizScores, currentLessonId)
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
+          workshop_id: studentInfo.workshop_id || undefined,
           student_id: studentInfo.student_id,
           rating,
           comments
@@ -155,6 +338,17 @@ export function useInstructorSync(completedLessons, quizScores, currentLessonId)
     gates,
     registerStudent,
     submitFeedback,
-    sendHeartbeat
+    sendHeartbeat,
+    syncProgressNow,
+    // Chat & Raise Hand exports
+    chatMessages,
+    unreadChatCount,
+    isHandRaised,
+    isChatOpen,
+    openChatModal,
+    closeChatModal,
+    sendChatMessage,
+    raiseHand,
+    lowerHand
   };
 }
