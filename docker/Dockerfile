@@ -97,7 +97,7 @@ RUN chmod +x /ros_entrypoint.sh && \
     echo "source /opt/ros/jazzy/setup.bash" > /etc/profile.d/ros.sh
 
 USER $USERNAME
-WORKDIR /home/$USERNAME/ros2_ws
+WORKDIR /home/$USERNAME
 
 EXPOSE 8000 6080 8443
 

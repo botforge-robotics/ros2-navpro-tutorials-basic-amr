@@ -20,6 +20,59 @@ if [ "$START_SERVICES" = "true" ]; then
     echo "[Entrypoint] Starting TigerVNC server on :1 (Display port 5901, Passwordless)..."
     vncserver :1 -geometry 1920x1080 -depth 24 -localhost no -SecurityTypes None --I-KNOW-THIS-IS-INSECURE
 
+    # Hide unneeded desktop icons (File System root, Trash, Removable drives)
+    mkdir -p /home/student/.config/xfce4/xfconf/xfce-perchannel-xml /home/student/Desktop
+    xfconf-query -c xfce4-desktop -p /desktop-icons/file-icons/show-filesystem -n -t bool -s false 2>/dev/null || true
+    xfconf-query -c xfce4-desktop -p /desktop-icons/file-icons/show-trash -n -t bool -s false 2>/dev/null || true
+    xfconf-query -c xfce4-desktop -p /desktop-icons/file-icons/show-removable -n -t bool -s false 2>/dev/null || true
+
+    # Create essential robotics desktop launchers for students if missing
+    if [ ! -f "/home/student/Desktop/Terminal.desktop" ]; then
+        cat << 'EOF' > /home/student/Desktop/Terminal.desktop
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Terminal
+Comment=Open ROS 2 Command Line Terminal
+Exec=xfce4-terminal --working-directory=/home/student
+Icon=utilities-terminal
+Terminal=false
+StartupNotify=true
+EOF
+        cat << 'EOF' > /home/student/Desktop/RViz2.desktop
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=RViz2 Visualizer
+Comment=ROS 2 3D Sensor & Robot Visualizer
+Exec=bash -c "source /opt/ros/jazzy/setup.bash && rviz2"
+Icon=utilities-system-monitor
+Terminal=false
+StartupNotify=true
+EOF
+        cat << 'EOF' > /home/student/Desktop/Gazebo_Sim.desktop
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Gazebo Simulator
+Comment=Gazebo Harmonic 3D Robot Physics Simulation
+Exec=bash -c "source /opt/ros/jazzy/setup.bash && gz sim -v 4"
+Icon=applications-games
+Terminal=false
+StartupNotify=true
+EOF
+        cat << 'EOF' > /home/student/Desktop/ROS2_Workspace.desktop
+[Desktop Entry]
+Version=1.0
+Type=Link
+Name=ROS 2 Workspace
+Comment=Open student ros2_ws directory
+URL=file:///home/student/ros2_ws
+Icon=folder
+EOF
+        chmod +x /home/student/Desktop/*.desktop 2>/dev/null || true
+    fi
+
     echo "[Entrypoint] Starting noVNC web proxy on port 6080..."
     websockify --web /usr/share/novnc/ 6080 localhost:5901 &
 
