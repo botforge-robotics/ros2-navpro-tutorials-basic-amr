@@ -1,8 +1,8 @@
 services:
   navpro_level1_sim:
     build:
-      context: .
-      dockerfile: Dockerfile
+      context: ..
+      dockerfile: docker/Dockerfile
     image: navpro-level1-ros2-sim:latest
     pull_policy: build
     container_name: navpro_level1_container
@@ -19,8 +19,8 @@ services:
       # In-browser VS Code Code Server (port 8443)
       - "8443:8443"
     volumes:
-      # Mount entire repository so web portal and lessons are live
-      - ../..:/home/student/navpro_learning_hub
+      # Mount Level 1 repository
+      - ..:/home/student/navpro_level1
       # Mount the local ros2_ws directory so student code edits persist on host
       - ../ros2_ws:/home/student/ros2_ws
       - ../scripts:/home/student/scripts

@@ -91,7 +91,7 @@ RUN echo "source /opt/ros/jazzy/setup.bash" >> /home/$USERNAME/.bashrc && \
 
 # Copy entrypoint script and set up global environment
 USER root
-COPY ros_entrypoint.sh /ros_entrypoint.sh
+COPY docker/ros_entrypoint.sh /ros_entrypoint.sh
 RUN chmod +x /ros_entrypoint.sh && \
     ln -sf /opt/ros/jazzy/bin/ros2 /usr/local/bin/ros2 && \
     ln -sf /opt/ros/jazzy/opt/gz_tools_vendor/bin/gz /usr/local/bin/gz && \
