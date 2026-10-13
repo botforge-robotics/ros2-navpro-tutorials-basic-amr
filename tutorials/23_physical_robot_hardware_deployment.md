@@ -97,7 +97,7 @@ ros2 topic pub --once /cmd_vel geometry_msgs/msg/Twist "{linear: {x: 0.1}, angul
 
 ## 5. Executing Autonomous Missions on Real Hardware
 
-With the physical robot localized, run your autonomous patrol script from Lesson 25:
+With the physical robot localized, run your autonomous patrol script from Lesson 22:
 
 ```bash
 ros2 run navpro_navigation task_multi_waypoint_patrol
@@ -113,4 +113,5 @@ Congratulations! You have completed the **NavPro Level 1 Course**: from raw DDS 
 
 You are now ready to progress to **Level 2: Enterprise Robotics Architect & AI Agent Integration**!
 
-Please take a moment to submit your thoughts, star rating, and favorite modules in the **Workshop Experience & Student Feedback Form** below. Your feedback goes directly to your instructor to help enhance upcoming robotics courses!
+Click **Course Feedback & Survey** below or in the sidebar to share your learning feedback, star ratings, and review your course milestones!
+

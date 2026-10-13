@@ -52,7 +52,8 @@ def create_converter():
         token = tokens[idx]
         src = token.attrGet('src') or ''
         alt = token.content or ''
-        src = re.sub(r'^\.\./assets/images/', 'assets/images/', src)
+        src = re.sub(r'^(\.\./)+web/assets/images/', 'assets/images/', src)
+        src = re.sub(r'^(\.\./)+assets/images/', 'assets/images/', src)
         src = re.sub(r'^\./assets/images/', 'assets/images/', src)
         return f'<img src="{src}" alt="{html.escape(alt)}" class="lesson-image" loading="lazy" />'
 
@@ -146,10 +147,41 @@ def postprocess_html(html_str):
     return html_str
 
 def md_to_lesson_html(md_content):
-    converter = create_converter()
+    # 1. Preprocess callouts first so any code blocks inside callouts have '>' stripped
     preprocessed = preprocess_markdown(md_content)
-    raw_html = converter.render(preprocessed)
-    return postprocess_html(raw_html)
+
+    # 2. Stash all fenced code blocks to prevent Markdown-It from treating
+    # blank lines inside HTML blocks (like <div class="cmd-card">) as heading triggers
+    code_blocks = []
+    def stash_code_block(match):
+        idx = len(code_blocks)
+        lang = match.group(1).strip() or "text"
+        code = html.escape(match.group(2))
+        block_html = (
+            f'<div class="code-container" data-language="{lang}">\n'
+            f'<div class="code-header"><span class="code-lang-tag">{lang}</span><button class="copy-code-btn">📋 Copy</button></div>\n'
+            f'<pre><code class="language-{lang}">{code}</code></pre>\n'
+            f'</div>\n'
+        )
+        code_blocks.append(block_html)
+        return f'\n§§CODEBLOCK_{idx}§§\n'
+
+    stashed = re.sub(r'```([a-zA-Z0-9_-]*)\n([\s\S]*?)```', stash_code_block, preprocessed)
+    stashed = re.sub(r'(\.\./)+web/assets/images/', 'assets/images/', stashed)
+    stashed = re.sub(r'(\.\./)+assets/images/', 'assets/images/', stashed)
+
+    converter = create_converter()
+    raw_html = converter.render(stashed)
+    final_html = postprocess_html(raw_html)
+
+    for idx, b in enumerate(code_blocks):
+        final_html = final_html.replace(f'§§CODEBLOCK_{idx}§§', b)
+
+    final_html = re.sub(r'<p>\s*(<div class="code-container[\s\S]*?</div>\s*</div>)\s*</p>', r'\1', final_html)
+    final_html = re.sub(r'<p>\s*(<div class="cmd-card[\s\S]*?</div>\s*</div>)\s*</p>', r'\1', final_html)
+    final_html = re.sub(r'<p>\s*</p>', '', final_html)
+
+    return final_html
 
 def update_lessons_json(repo_dir, target_lesson_ids=None):
     json_path = os.path.join(repo_dir, 'lms/src/data/lessonsData.json')
