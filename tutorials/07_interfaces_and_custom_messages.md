@@ -43,74 +43,49 @@ Before creating custom messages, always verify if a standardized ROS message alr
 
 ---
 
-## 4. Step-by-Step: Creating the `navpro_interfaces` Package
+## 4. Official ROS 2 Custom Interfaces - Step-by-Step
 
-### Step 4.1: Create the CMake Package
+Following the [Official ROS 2 Jazzy Custom Interfaces Tutorial](https://docs.ros.org/en/jazzy/Tutorials/Beginner-Client-Libraries/Custom-ROS2-Interfaces.html), we build a dedicated CMake package (`navpro_interfaces`) containing beginner-friendly custom message, service, and action definitions.
+
+### Step 4.1: Create the Interface Package
 ```bash
 cd ~/ros2_ws/src
 ros2 pkg create --build-type ament_cmake navpro_interfaces
+cd navpro_interfaces
+mkdir -p msg srv action
 ```
 
-Create interface subdirectories:
-```bash
-mkdir -p navpro_interfaces/msg
-mkdir -p navpro_interfaces/srv
-mkdir -p navpro_interfaces/action
+### Step 4.2: Define Custom Message 1: `msg/Num.msg` (Official Example)
+The simplest possible custom message contains a single primitive integer:
+```text
+int64 num
 ```
 
-### Step 4.2: Define Custom Message (`msg/RobotStatus.msg`)
-Create `navpro_interfaces/msg/RobotStatus.msg`:
-```
-# Header contains timestamp and coordinate frame ID
-std_msgs/Header header
-
-# Identity and operational metrics
-string robot_id
-float32 battery_percentage
-float32 internal_temperature_celsius
-bool is_docked
-bool emergency_stop_latched
-
-# Operating mode constants
-uint8 MODE_MANUAL_TELEOP = 0
-uint8 MODE_AUTONOMOUS_NAV = 1
-uint8 MODE_CHARGING = 2
-uint8 active_mode
+### Step 4.3: Define Custom Message 2: `msg/Sphere.msg` (Composed Message)
+Interfaces can also import types from other ROS packages (e.g. `geometry_msgs`):
+```text
+geometry_msgs/Point center
+float64 radius
 ```
 
-### Step 4.3: Define Custom Service (`srv/SetSpeedMode.srv`)
-In `.srv` files, three dashes `---` separate the **Request** from the **Response**.
-
-Create `navpro_interfaces/srv/SetSpeedMode.srv`:
-```
-# Request
-string speed_mode       # e.g., "ECO", "STANDARD", "TURBO"
-float32 custom_multiplier
+### Step 4.4: Define Custom Service: `srv/AddThreeInts.srv` (Official Example)
+In `.srv` files, three dashes `---` separate the **Request** from the **Response**:
+```text
+int64 a
+int64 b
+int64 c
 ---
-# Response
-bool success
-string message
-float32 effective_max_linear_speed
+int64 sum
 ```
 
-### Step 4.4: Define Custom Action (`action/Patrol.action`)
-In `.action` files, three dashes `---` separate **Goal**, **Result**, and **Feedback**.
-
-Create `navpro_interfaces/action/Patrol.action`:
-```
-# Goal
-geometry_msgs/PoseStamped[] waypoints
-uint32 loop_count
+### Step 4.5: Define Custom Action: `action/Fibonacci.action` (Official Example)
+In `.action` files, three dashes `---` separate **Goal**, **Result**, and **Feedback**:
+```text
+int32 order
 ---
-# Result
-bool success
-uint32 completed_waypoints
-float32 total_distance_traveled
+int32[] sequence
 ---
-# Feedback
-uint32 current_waypoint_index
-float32 distance_to_next_waypoint
-float32 battery_remaining_pct
+int32[] partial_sequence
 ```
 
 ---
@@ -118,15 +93,15 @@ float32 battery_remaining_pct
 ## 5. Configuring `package.xml` & `CMakeLists.txt`
 
 ### 5.1 `package.xml` Configuration
-Add the IDL generator and runtime dependencies:
+Add the IDL code generation dependencies:
 
 ```xml
 <?xml version="1.0"?>
 <package format="3">
   <name>navpro_interfaces</name>
   <version>1.0.0</version>
-  <description>Custom ROS 2 message, service, and action interfaces for NavPro AMR</description>
-  <maintainer email="engineer@navpro.io">NavPro Robotics</maintainer>
+  <description>Custom ROS 2 message, service, and action interfaces</description>
+  <maintainer email="student@navpro.io">Student Engineer</maintainer>
   <license>Apache-2.0</license>
 
   <buildtool_depend>ament_cmake</buildtool_depend>
@@ -137,7 +112,6 @@ Add the IDL generator and runtime dependencies:
   <member_of_group>rosidl_interface_packages</member_of_group>
 
   <!-- Dependencies for field types used in custom messages -->
-  <depend>std_msgs</depend>
   <depend>geometry_msgs</depend>
 
   <export>
@@ -151,21 +125,20 @@ Add the IDL generator and runtime dependencies:
 cmake_minimum_required(VERSION 3.8)
 project(navpro_interfaces)
 
-if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
-  add_compile_options(-Wall -Wextra -Wpedantic)
-endif()
-
 find_package(ament_cmake REQUIRED)
 find_package(rosidl_default_generators REQUIRED)
-find_package(std_msgs REQUIRED)
 find_package(geometry_msgs REQUIRED)
 
 # Generate language bindings for all custom IDL definitions
 rosidl_generate_interfaces(${PROJECT_NAME}
+  "msg/Num.msg"
+  "msg/Sphere.msg"
   "msg/RobotStatus.msg"
+  "srv/AddThreeInts.srv"
   "srv/SetSpeedMode.srv"
+  "action/Fibonacci.action"
   "action/Patrol.action"
-  DEPENDENCIES std_msgs geometry_msgs
+  DEPENDENCIES geometry_msgs
 )
 
 ament_package()
@@ -173,66 +146,77 @@ ament_package()
 
 ---
 
-## 6. Building & Verifying Interfaces with CLI
+## 6. Building & Verifying Custom Interfaces with CLI
 
-Build the interface package:
+Build the interface package in your workspace:
 ```bash
 cd ~/ros2_ws
 colcon build --packages-select navpro_interfaces
 source install/setup.bash
 ```
 
-Use `ros2 interface` CLI commands to inspect generated types:
+Use the `ros2 interface show` CLI command to verify that your custom types were compiled successfully:
 
 ```bash
-# 1. View structure of our custom message
-ros2 interface show navpro_interfaces/msg/RobotStatus
+# 1. View Num message definition
+ros2 interface show navpro_interfaces/msg/Num
+# Output:
+# int64 num
 
-# 2. View structure of our custom service
-ros2 interface show navpro_interfaces/srv/SetSpeedMode
+# 2. View Sphere message definition
+ros2 interface show navpro_interfaces/msg/Sphere
+# Output:
+# geometry_msgs/Point center
+# float64 radius
 
-# 3. View structure of our custom action
-ros2 interface show navpro_interfaces/action/Patrol
+# 3. View AddThreeInts service definition
+ros2 interface show navpro_interfaces/srv/AddThreeInts
+# Output:
+# int64 a
+# int64 b
+# int64 c
+# ---
+# int64 sum
+
+# 4. View Fibonacci action definition
+ros2 interface show navpro_interfaces/action/Fibonacci
 ```
 
 ---
 
-## 7. Using Custom Interfaces in a Python Node
+## 7. Using Custom Interfaces in Python Nodes
 
-Now, any Python node in your workspace can import and publish this message type:
+Now, any Python node in your workspace can import and use your custom types cleanly:
 
 ```python
 #!/usr/bin/env python3
+"""
+Publishes custom Num.msg data at 1 Hz
+"""
 import rclpy
 from rclpy.node import Node
-from navpro_interfaces.msg import RobotStatus
+from navpro_interfaces.msg import Num
 
 
-class StatusBroadcasterNode(Node):
+class MinimalCustomPublisher(Node):
 
     def __init__(self):
-        super().__init__('status_broadcaster_node')
-        self.pub_ = self.create_publisher(RobotStatus, '/navpro/status', 10)
-        self.timer_ = self.create_timer(1.0, self.publish_status)
+        super().__init__('minimal_custom_publisher')
+        self.publisher_ = self.create_publisher(Num, 'custom_num_topic', 10)
+        self.timer = self.create_timer(1.0, self.timer_callback)
+        self.count = 0
 
-    def publish_status(self):
-        msg = RobotStatus()
-        msg.header.stamp = self.get_clock().now().to_msg()
-        msg.header.frame_id = 'base_footprint'
-        msg.robot_id = 'NAVPRO-AMR-402'
-        msg.battery_percentage = 94.2
-        msg.internal_temperature_celsius = 38.5
-        msg.is_docked = False
-        msg.emergency_stop_latched = False
-        msg.active_mode = RobotStatus.MODE_AUTONOMOUS_NAV
-
-        self.pub_.publish(msg)
-        self.get_logger().info(f'Published Status: {msg.robot_id} | Batt: {msg.battery_percentage}%')
+    def timer_callback(self):
+        msg = Num()
+        msg.num = self.count
+        self.publisher_.publish(msg)
+        self.get_logger().info(f'Published custom Num: {msg.num}')
+        self.count += 1
 
 
-def main():
-    rclpy.init()
-    node = StatusBroadcasterNode()
+def main(args=None):
+    rclpy.init(args=args)
+    node = MinimalCustomPublisher()
     try:
         rclpy.spin(node)
     finally:
@@ -243,3 +227,4 @@ def main():
 if __name__ == '__main__':
     main()
 ```
+

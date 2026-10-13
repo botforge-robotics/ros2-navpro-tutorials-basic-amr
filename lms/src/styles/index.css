@@ -192,7 +192,8 @@ input, select, textarea {
   margin-bottom: 0.45rem;
 }
 
-.inline-code {
+.inline-code,
+.markdown-body code:not(pre code) {
   font-family: var(--font-mono);
   font-size: 0.875em;
   background: var(--bg-sidebar);
@@ -288,7 +289,8 @@ input, select, textarea {
 }
 
 /* Table styling */
-.table-wrapper {
+.table-wrapper,
+.table-responsive {
   margin: 1.5rem 0;
   overflow-x: auto;
   border-radius: 10px;

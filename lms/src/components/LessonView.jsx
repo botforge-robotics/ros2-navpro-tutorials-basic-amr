@@ -52,10 +52,10 @@ export function LessonView({
     if (!contentRef.current) return;
 
     const handleCopyClick = (e) => {
-      const btn = e.target.closest('.copy-code-btn');
+      const btn = e.target.closest('.copy-code-btn, .copy-btn');
       if (!btn) return;
 
-      const codeContainer = btn.closest('.code-container');
+      const codeContainer = btn.closest('.code-container') || btn.closest('pre');
       const codeElement = codeContainer ? codeContainer.querySelector('code') : null;
       if (!codeElement) return;
 

@@ -25,95 +25,46 @@ By the end of this lesson, you will:
 
 ---
 
-## 3. Step-by-Step: Declaring Parameters in Python
+---
 
-Let's build a parameter-driven node with validation.
+## 3. Official ROS 2 Minimal Parameter Node (Python) - Step-by-Step
 
-Create file `parameter_controller.py`:
+Following the canonical [Official ROS 2 Jazzy Parameter Tutorial](https://docs.ros.org/en/jazzy/Tutorials/Beginner-Client-Libraries/Using-Parameters-In-A-Class-Python.html), we begin with `minimal_param_node.py`. It declares a parameter named `'my_parameter'` with default value `'world'` and logs it periodically.
+
 ```python
 #!/usr/bin/env python3
 """
-NavPro Learning Hub - Lesson 09
-Dynamic Parameters: Declares, validates, and responds to runtime configuration changes.
+Official ROS 2 Jazzy Tutorial: MinimalParam
+Reference: https://docs.ros.org/en/jazzy/Tutorials/Beginner-Client-Libraries/Using-Parameters-In-A-Class-Python.html
 """
 
 import rclpy
 from rclpy.node import Node
-from rcl_interfaces.msg import ParameterDescriptor, ParameterType, SetParametersResult
 
 
-class ParameterizedController(Node):
+class MinimalParam(Node):
 
     def __init__(self):
-        super().__init__('parameterized_controller')
+        super().__init__('minimal_param_node')
 
-        # -------------------------------------------------------------
-        # 1. Parameter Declaration with Descriptors
-        # -------------------------------------------------------------
-        # String parameter
-        robot_id_desc = ParameterDescriptor(
-            description='Unique factory serial identifier of the AMR',
-            type=ParameterType.PARAMETER_STRING
-        )
-        self.declare_parameter('robot_id', 'navpro-mini-42', robot_id_desc)
+        # 1. Declare parameter 'my_parameter' with default value 'world'
+        # The data type (string) is automatically inferred from the default value
+        self.declare_parameter('my_parameter', 'world')
 
-        # Float parameter with logical limits
-        max_speed_desc = ParameterDescriptor(
-            description='Maximum allowable linear speed in meters/second',
-            type=ParameterType.PARAMETER_DOUBLE
-        )
-        self.declare_parameter('max_linear_speed', 0.5, max_speed_desc)
+        # 2. Create timer running every 1.0 second
+        self.timer = self.create_timer(1.0, self.timer_callback)
+        self.get_logger().info('MinimalParam node initialized.')
 
-        # Boolean parameter
-        safety_brake_desc = ParameterDescriptor(
-            description='Enforce ultrasonic proximity safety brake',
-            type=ParameterType.PARAMETER_BOOL
-        )
-        self.declare_parameter('enable_proximity_brake', True, safety_brake_desc)
+    def timer_callback(self):
+        # 3. Retrieve the current value of the parameter dynamically
+        my_param = self.get_parameter('my_parameter').get_parameter_value().string_value
 
-        # -------------------------------------------------------------
-        # 2. Retrieve Initial Values
-        # -------------------------------------------------------------
-        self.robot_id = self.get_parameter('robot_id').value
-        self.max_speed = self.get_parameter('max_linear_speed').value
-        self.brake_enabled = self.get_parameter('enable_proximity_brake').value
-
-        self.get_logger().info(
-            f'Loaded Params | ID: {self.robot_id} | MaxSpeed: {self.max_speed} m/s | Brake: {self.brake_enabled}'
-        )
-
-        # -------------------------------------------------------------
-        # 3. Register Dynamic Parameter Change Callback
-        # -------------------------------------------------------------
-        self.add_on_set_parameters_callback(self.parameter_validation_callback)
-
-    def parameter_validation_callback(self, params):
-        """
-        Executed automatically whenever a user runs `ros2 param set`.
-        Allows the node to validate constraints and REJECT invalid values!
-        """
-        for param in params:
-            if param.name == 'max_linear_speed':
-                # Enforce physical safety constraint: speed must be between 0.05 and 1.5 m/s
-                if param.value <= 0.0 or param.value > 1.5:
-                    self.get_logger().error(f'Rejected invalid speed: {param.value}. Must be in range (0.0, 1.5]!')
-                    return SetParametersResult(
-                        successful=False,
-                        reason="max_linear_speed must be between 0.01 and 1.5 m/s"
-                    )
-                self.max_speed = param.value
-                self.get_logger().info(f'UPDATED max_linear_speed to: {self.max_speed} m/s')
-
-            elif param.name == 'enable_proximity_brake':
-                self.brake_enabled = param.value
-                self.get_logger().warn(f'UPDATED enable_proximity_brake to: {self.brake_enabled}')
-
-        return SetParametersResult(successful=True, reason="Parameters applied successfully")
+        self.get_logger().info(f'Hello {my_param}!')
 
 
-def main():
-    rclpy.init()
-    node = ParameterizedController()
+def main(args=None):
+    rclpy.init(args=args)
+    node = MinimalParam()
     try:
         rclpy.spin(node)
     except KeyboardInterrupt:
@@ -130,11 +81,38 @@ if __name__ == '__main__':
 ### Core Logic Breakdown: What We Are Trying to Achieve & Why
 | Code Segment | What We Are Trying to Achieve | Why It Is Written This Way & Underlying Mechanism |
 |---|---|---|
-| `ParameterDescriptor(description='...', type=...)` | Self-documenting, type-safe parameter metadata. | Attaches schema metadata to the parameter. External diagnostic tools (`ros2 param describe`) read these descriptors so operators know the units and constraints. |
-| `self.declare_parameter('max_linear_speed', 0.5, max_speed_desc)` | Register parameter name, default fallback value, and descriptor. | Every parameter must be declared before it can be read or modified. In ROS 2, nodes cannot read arbitrary undeclared parameters unless `allow_undeclared_parameters=True` is explicitly specified. |
-| `self.add_on_set_parameters_callback(self.parameter_validation_callback)` | Intercept parameter change attempts before they are applied. | Registers an atomic validation hook. When a user runs `ros2 param set`, ROS 2 dispatches the proposed values to this hook first. If the hook rejects them, the node's internal state remains untouched. |
-| `if param.value <= 0.0 or param.value > 1.5:`<br>`return SetParametersResult(successful=False, reason="...")` | Hardware safety guardrails. | Mobile robots operate in physical environments with real momentum. Rejection prevents catastrophic values (e.g. setting speed to $100\,\text{m/s}$ or a negative threshold) that could cause collisions or motor overheating. |
-| `SetParametersResult(successful=True, ...)` | Atomic acceptance. | Signals to the middleware that all incoming parameter values conform to physical limits, allowing the new values to be adopted in RAM. |
+| `self.declare_parameter('my_parameter', 'world')` | Enforce parameter registration and schema. | In ROS 2, nodes must declare parameters before accessing them. This enforces type safety and prevents arbitrary misconfigurations. |
+| `self.get_parameter('my_parameter').get_parameter_value().string_value` | Read live parameter value from node storage. | `get_parameter()` returns a `Parameter` object. Calling `get_parameter_value().string_value` unpacks the typed string representation. |
+| `ros2 param set /minimal_param_node my_parameter earth` | Modify parameter value dynamically from outside process. | DDS dispatches parameter change events without requiring process restarts. Next time `timer_callback` runs, it immediately logs `Hello earth!`. |
+
+---
+
+## 4. Parameter Descriptors & Dynamic Validation (Robotics Safety)
+
+In robotics systems, you often need to attach formal descriptions and reject invalid values (e.g. negative speeds) using `add_on_set_parameters_callback`:
+
+```python
+from rcl_interfaces.msg import ParameterDescriptor, ParameterType, SetParametersResult
+
+class ParameterizedSafetyNode(Node):
+    def __init__(self):
+        super().__init__('parameterized_safety_node')
+
+        # Formal descriptor for documentation
+        desc = ParameterDescriptor(description='Maximum allowable linear speed (m/s)')
+        self.declare_parameter('max_speed', 0.5, desc)
+
+        # Register validation callback
+        self.add_on_set_parameters_callback(self.validate_params)
+
+    def validate_params(self, params):
+        for param in params:
+            if param.name == 'max_speed':
+                if param.value <= 0.0 or param.value > 2.0:
+                    self.get_logger().error(f'Rejected invalid speed: {param.value}')
+                    return SetParametersResult(successful=False, reason="Speed must be in (0.0, 2.0]")
+        return SetParametersResult(successful=True, reason="Valid parameters")
+```
 
 ---
 

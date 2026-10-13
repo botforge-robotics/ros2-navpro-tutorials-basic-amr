@@ -232,7 +232,34 @@ export function HubOverview({
             <tbody>
               <tr>
                 <td>
-                  <strong>Day 1: Teleop Velocity Scaler</strong>
+                  <span className="badge badge-success" style={{ marginRight: '6px', fontSize: '0.7rem' }}>Beginner</span>
+                  <strong>Pub/Sub Chatter Task</strong>
+                </td>
+                <td>Official String Pub/Sub (Lesson 05)</td>
+                <td>
+                  <code>navpro_basics/task_custom_pubsub.py</code>
+                </td>
+                <td>
+                  <code>navpro_basics/solution_custom_pubsub.py</code>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <span className="badge badge-success" style={{ marginRight: '6px', fontSize: '0.7rem' }}>Beginner</span>
+                  <strong>Service Calculator Task</strong>
+                </td>
+                <td>Official AddTwoInts Service (Lesson 08)</td>
+                <td>
+                  <code>navpro_basics/task_service_calculator.py</code>
+                </td>
+                <td>
+                  <code>navpro_basics/solution_service_calculator.py</code>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <span className="badge badge-info" style={{ marginRight: '6px', fontSize: '0.7rem' }}>Capstone 1</span>
+                  <strong>Teleop Velocity Scaler</strong>
                 </td>
                 <td>Publishers, Subscribers &amp; QoS</td>
                 <td>
@@ -244,7 +271,8 @@ export function HubOverview({
               </tr>
               <tr>
                 <td>
-                  <strong>Day 2: Forward Kinematics TF2</strong>
+                  <span className="badge badge-info" style={{ marginRight: '6px', fontSize: '0.7rem' }}>Capstone 2</span>
+                  <strong>Forward Kinematics TF2</strong>
                 </td>
                 <td>TF2 Tree, Odometry &amp; Coordinate Frames</td>
                 <td>
@@ -256,7 +284,8 @@ export function HubOverview({
               </tr>
               <tr>
                 <td>
-                  <strong>Day 3: Nav2 Patrol Mission</strong>
+                  <span className="badge badge-info" style={{ marginRight: '6px', fontSize: '0.7rem' }}>Capstone 3</span>
+                  <strong>Nav2 Patrol Mission</strong>
                 </td>
                 <td>Autonomous Navigation &amp; Simple Commander</td>
                 <td>
@@ -270,7 +299,8 @@ export function HubOverview({
               </tr>
               <tr>
                 <td>
-                  <strong>Project 3: OpenCV Optical Inspection</strong>
+                  <span className="badge badge-info" style={{ marginRight: '6px', fontSize: '0.7rem' }}>Capstone 4</span>
+                  <strong>OpenCV Optical Inspection</strong>
                 </td>
                 <td>cv_bridge &amp; Edge Detection Pipeline</td>
                 <td>

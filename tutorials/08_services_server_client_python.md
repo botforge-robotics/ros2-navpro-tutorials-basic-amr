@@ -29,72 +29,64 @@ By the end of this lesson, you will:
 
 ---
 
-## 3. Step-by-Step: Writing a Service Server in Python
+## 3. Official ROS 2 Minimal Service Server (Python) - Step-by-Step
 
-Let's write a service server that dynamically sets the robot speed mode (ECO vs TURBO) using `std_srvs/srv/SetBool`.
+Following the canonical [Official ROS 2 Jazzy Beginner Service Tutorial](https://docs.ros.org/en/jazzy/Tutorials/Beginner-Client-Libraries/Writing-A-Simple-Py-Service-And-Client.html), we begin with the fundamental `AddTwoInts` service server (`service_member_function.py` / `add_two_ints_server`).
 
-Create file `speed_mode_server.py`:
+It uses the standard interface `example_interfaces/srv/AddTwoInts`:
+```text
+int64 a
+int64 b
+---
+int64 sum
+```
+
 ```python
 #!/usr/bin/env python3
 """
-NavPro Learning Hub - Lesson 08
-Service Server: Manages robot drive mode transitions.
+Official ROS 2 Jazzy Tutorial: MinimalService
+Reference: https://docs.ros.org/en/jazzy/Tutorials/Beginner-Client-Libraries/Writing-A-Simple-Py-Service-And-Client.html
 """
 
+from example_interfaces.srv import AddTwoInts
 import rclpy
 from rclpy.node import Node
-from std_srvs.srv import SetBool
 
 
-class SpeedModeServer(Node):
+class MinimalService(Node):
 
     def __init__(self):
-        super().__init__('speed_mode_server')
-
-        # Internal state
-        self.turbo_enabled_ = False
-        self.max_speed_ = 0.5  # m/s
-
-        # Create Service Server: type=SetBool, name='/robot/set_turbo_mode', callback=self.handle_set_turbo
-        self.srv_ = self.create_service(
-            SetBool,
-            '/robot/set_turbo_mode',
-            self.handle_set_turbo
+        super().__init__('minimal_service')
+        # 1. Create Service Server:
+        # - Service Type: AddTwoInts from example_interfaces.srv
+        # - Service Name: 'add_two_ints'
+        # - Callback: self.add_two_ints_callback
+        self.srv = self.create_service(
+            AddTwoInts,
+            'add_two_ints',
+            self.add_two_ints_callback
         )
+        self.get_logger().info('MinimalService ready on "add_two_ints"...')
 
-        self.get_logger().info('Speed Mode Service Server ready on /robot/set_turbo_mode')
-
-    def handle_set_turbo(self, request: SetBool.Request, response: SetBool.Response) -> SetBool.Response:
-        """
-        Callback triggered whenever a client calls /robot/set_turbo_mode.
-        Receives request: request.data (bool)
-        Must return response: response.success (bool), response.message (str)
-        """
-        self.turbo_enabled_ = request.data
-
-        if self.turbo_enabled_:
-            self.max_speed_ = 1.2
-            response.success = True
-            response.message = f'TURBO MODE ENGAGED: Max speed increased to {self.max_speed_} m/s.'
-            self.get_logger().warn(response.message)
-        else:
-            self.max_speed_ = 0.5
-            response.success = True
-            response.message = f'ECO MODE ENGAGED: Max speed restricted to {self.max_speed_} m/s.'
-            self.get_logger().info(response.message)
-
+    def add_two_ints_callback(self, request, response):
+        # 2. Callback receives request (with .a and .b) and response object
+        response.sum = request.a + request.b
+        self.get_logger().info(f'Incoming request\na: {request.a} b: {request.b}')
+        self.get_logger().info(f'Returning response: [{response.sum}]')
+        # 3. MUST return the modified response object
         return response
 
 
 def main():
     rclpy.init()
-    node = SpeedModeServer()
+    minimal_service = MinimalService()
+
     try:
-        rclpy.spin(node)
+        rclpy.spin(minimal_service)
     except KeyboardInterrupt:
         pass
     finally:
-        node.destroy_node()
+        minimal_service.destroy_node()
         rclpy.shutdown()
 
 
@@ -105,13 +97,12 @@ if __name__ == '__main__':
 ### Core Logic Breakdown: What We Are Trying to Achieve & Why
 | Code Segment | What We Are Trying to Achieve | Why It Is Written This Way & Underlying Mechanism |
 |---|---|---|
-| `self.create_service(SetBool, '/robot/set_turbo_mode', self.handle_set_turbo)` | Expose a remote procedure call endpoint on the ROS 2 graph. | Binds the service interface to our node. The DDS middleware registers the service server and dispatches incoming RPC requests to `handle_set_turbo`. |
-| `def handle_set_turbo(self, request: SetBool.Request, response: SetBool.Response)` | Dual-argument callback signature. | Unlike topic callbacks (which only take `msg`), service callbacks **must** take both `request` and `response` objects provided by the middleware. |
-| `self.turbo_enabled_ = request.data`<br>`response.success = True`<br>`return response` | Atomic state transition and structured acknowledgement. | Modifies internal node operational state and populates the return payload. You **must return the modified response object**; if omitted or returning `None`, the client hangs waiting indefinitely. |
-| Non-blocking fast execution | Keep service callback latency sub-millisecond. | Service callbacks run on the main executor thread. If you perform blocking loops or lengthy I/O in this callback, the entire node stops processing topics and timers, freezing robot responsiveness. |
+| `self.create_service(AddTwoInts, 'add_two_ints', self.add_two_ints_callback)` | Expose remote procedure call (RPC) endpoint on DDS. | Binds the service type and name to our node. The DDS middleware registers the service server and dispatches incoming requests to `add_two_ints_callback`. |
+| `def add_two_ints_callback(self, request, response)` | Dual-argument callback signature. | Unlike topic callbacks (which only take `msg`), service callbacks **always** take two arguments: `request` and `response` provided by middleware. |
+| `response.sum = request.a + request.b`<br>`return response` | Compute result and return payload. | Populates the output field defined after `---` in the `.srv` file. You **must return the response object**; if omitted or returning `None`, the client hangs indefinitely. |
+| `rclpy.spin(minimal_service)` | Process incoming client requests. | The executor thread monitors DDS sockets and triggers `add_two_ints_callback` whenever a client invokes the service. |
 
 ---
-
 
 ## 4. The Critical SingleThreadedExecutor Deadlock Bug
 
@@ -123,75 +114,62 @@ if __name__ == '__main__':
 
 ---
 
-## 5. Step-by-Step: Writing an Asynchronous Service Client in Python
+## 5. Official ROS 2 Minimal Client Async (Python) - Step-by-Step
 
-Here is the correct, non-blocking asynchronous Python Service Client using `call_async()` and a future callback:
+Here is the canonical asynchronous Python Service Client (`client_member_function.py` / `add_two_ints_client`):
 
-Create file `speed_mode_client.py`:
 ```python
 #!/usr/bin/env python3
 """
-NavPro Learning Hub - Lesson 08
-Service Client: Calls /robot/set_turbo_mode asynchronously without deadlocks.
+Official ROS 2 Jazzy Tutorial: MinimalClientAsync
+Reference: https://docs.ros.org/en/jazzy/Tutorials/Beginner-Client-Libraries/Writing-A-Simple-Py-Service-And-Client.html
 """
 
 import sys
+from example_interfaces.srv import AddTwoInts
 import rclpy
 from rclpy.node import Node
-from std_srvs.srv import SetBool
 
 
-class SpeedModeClient(Node):
+class MinimalClientAsync(Node):
 
     def __init__(self):
-        super().__init__('speed_mode_client')
+        super().__init__('minimal_client_async')
+        # 1. Create client for 'add_two_ints' service
+        self.cli = self.create_client(AddTwoInts, 'add_two_ints')
 
-        # 1. Create client: type=SetBool, name='/robot/set_turbo_mode'
-        self.client_ = self.create_client(SetBool, '/robot/set_turbo_mode')
+        # 2. Wait until the service server is online
+        while not self.cli.wait_for_service(timeout_sec=1.0):
+            self.get_logger().info('service not available, waiting again...')
+        self.req = AddTwoInts.Request()
 
-        # 2. Wait until the server node is online
-        while not self.client_.wait_for_service(timeout_sec=1.0):
-            self.get_logger().warn('Service /robot/set_turbo_mode not available, waiting...')
-
-        self.get_logger().info('Connected to Service Server successfully.')
-
-    def send_request(self, enable_turbo: bool):
-        """Asynchronously dispatches the service request."""
-        request = SetBool.Request()
-        request.data = enable_turbo
-
-        self.get_logger().info(f'Sending request: enable_turbo = {enable_turbo}')
-        
-        # call_async returns a Future object immediately without blocking!
-        future = self.client_.call_async(request)
-        
-        # Attach callback triggered when the server responds
-        future.add_done_callback(self.response_callback)
-
-    def response_callback(self, future):
-        """Executed automatically when the server finishes and returns a response."""
-        try:
-            response = future.result()
-            self.get_logger().info(f'Response Received -> Success: {response.success} | Message: "{response.message}"')
-        except Exception as e:
-            self.get_logger().error(f'Service call failed: {e}')
+    def send_request(self, a, b):
+        self.req.a = a
+        self.req.b = b
+        # 3. Call service asynchronously (returns Future immediately)
+        return self.cli.call_async(self.req)
 
 
 def main():
     rclpy.init()
-    client_node = SpeedModeClient()
 
-    # Send request to activate Turbo Mode
-    client_node.send_request(enable_turbo=True)
+    # Read numbers from terminal arguments (e.g. $ ros2 run py_srvcli client 2 3)
+    a = int(sys.argv[1]) if len(sys.argv) > 1 else 2
+    b = int(sys.argv[2]) if len(sys.argv) > 2 else 3
 
-    try:
-        # Spin keeps the client node alive until the response arrives
-        rclpy.spin(client_node)
-    except KeyboardInterrupt:
-        pass
-    finally:
-        client_node.destroy_node()
-        rclpy.shutdown()
+    minimal_client = MinimalClientAsync()
+    future = minimal_client.send_request(a, b)
+
+    # 4. Spin executor until future resolves
+    rclpy.spin_until_future_complete(minimal_client, future)
+
+    response = future.result()
+    minimal_client.get_logger().info(
+        f'Result of add_two_ints: {a} + {b} = {response.sum}'
+    )
+
+    minimal_client.destroy_node()
+    rclpy.shutdown()
 
 
 if __name__ == '__main__':
@@ -199,51 +177,71 @@ if __name__ == '__main__':
 ```
 
 ### Core Logic Breakdown: What We Are Trying to Achieve & Why
-| Code Segment | What We Are Trying to Achieve | Why It Is Written This Way & Underlying Mechanism |
+| Code Segment | What We Are Trying to Achieve | Why It Is Written This Why & Underlying Mechanism |
 |---|---|---|
-| `self.client_ = self.create_client(SetBool, '/robot/set_turbo_mode')` | Create outbound RPC client socket. | Establishes communication handles in DDS to send request packets and listen for matched responses. |
-| `while not self.client_.wait_for_service(timeout_sec=1.0):` | Defend against race conditions at startup. | If a client attempts to dispatch requests before the server has finished booting, the request is lost or errors out. `wait_for_service` polls DDS discovery with a non-zero timeout. |
-| `future = self.client_.call_async(request)` | **Deadlock-Free Dispatch**: Send request without halting the calling thread. | `call_async` queues the request packet into DDS buffers and immediately returns a Python `Future` object, leaving the executor thread free to process other events. |
-| `future.add_done_callback(self.response_callback)` | Event-driven response consumption. | Avoids busy-waiting with `while not future.done()`. As soon as the server's reply arrives over DDS, the executor automatically triggers `response_callback(future)`. |
-| `response = future.result()` | Safely unpack the server payload. | Retrieves the resolved `SetBool.Response` structure containing `success` and `message`. |
+| `self.create_client(AddTwoInts, 'add_two_ints')` | Create outbound RPC client socket. | Establishes DDS transport handles to send request packets and listen for matched responses. |
+| `while not self.cli.wait_for_service(timeout_sec=1.0):` | Defend against race conditions at startup. | If a client attempts to send requests before the server has finished booting, the request is dropped. `wait_for_service` polls DDS discovery with a non-zero timeout. |
+| `future = self.cli.call_async(self.req)` | **Deadlock-Free Dispatch**: Send request without halting the calling thread. | `call_async` queues the request packet into DDS buffers and immediately returns a Python `Future` object, leaving the thread free. |
+| `rclpy.spin_until_future_complete(minimal_client, future)` | Block only the outer script, not the middleware. | The executor spins specifically until this future is fulfilled, allowing the incoming response packet to be unmarshaled. |
+| `response = future.result()` | Safely unpack the server payload. | Retrieves the resolved `AddTwoInts.Response` containing `response.sum`. |
 
 ---
-
 
 ## 6. Verification with the ROS 2 CLI
 
 Start the server node in Terminal 1:
 ```bash
-ros2 run navpro_basics service_server_explained
+ros2 run navpro_basics add_two_ints_server
+# Output:
+# [INFO] [minimal_service]: MinimalService ready on "add_two_ints"...
 ```
 
-In Terminal 2, inspect and call the service using the command line:
+In Terminal 2, run the client node:
+```bash
+ros2 run navpro_basics add_two_ints_client 41 59
+# Output:
+# [INFO] [minimal_client_async]: Result of add_two_ints: 41 + 59 = 100
+```
+
+In Terminal 3, you can also trigger the service directly from the command line:
 
 ```bash
-# 1. List all active service endpoints
+# 1. List all active services
 ros2 service list
 
-# 2. Find the message type of the service
-ros2 service type /robot/set_autonomous_mode
+# 2. Inspect service interface type
+ros2 service type /add_two_ints
+# Output: example_interfaces/srv/AddTwoInts
 
-# 3. Call the service directly from terminal with JSON-style payload
-ros2 service call /robot/set_autonomous_mode std_srvs/srv/SetBool "{data: true}"
-```
-
-*Expected Output in Terminal 2:*
-```
-requester: making request: std_srvs.srv.SetBool_Request(data=True)
-
-response:
-std_srvs.srv.SetBool_Response(success=True, message='Autonomous mode ENABLED')
+# 3. Call the service manually with arguments:
+ros2 service call /add_two_ints example_interfaces/srv/AddTwoInts "{a: 10, b: 25}"
+# Output:
+# response:
+# example_interfaces.srv.AddTwoInts_Response(sum=35)
 ```
 
 ---
 
-## 7. Hands-on Student Challenge
+## 7. Student Hands-On Tasks & Assignments
 
-**Task:**
-1. Create a service server named `battery_health_server`.
-2. Use `std_srvs/srv/Trigger` (`---` `bool success`, `string message`).
-3. When called, the service checks simulated battery voltage. If voltage > 24.0V, it returns `success=True` with message `"Battery healthy: 24.8V"`. Otherwise, it returns `success=False` with `"Warning: Battery under-voltage: 21.2V"`.
-4. Test calling the service using `ros2 service call /check_battery std_srvs/srv/Trigger`.
+### Task 1 (Beginner Foundation): `task_service_calculator.py`
+Located in `~/ros2_ws/src/navpro_basics/navpro_basics/task_service_calculator.py`.
+- **Goal:** Implement a service server on `/calculate_sum` using `AddTwoInts`.
+- **Run your node:**
+  ```bash
+  ros2 run navpro_basics task_service_calculator
+  ```
+- **Test with CLI:**
+  ```bash
+  ros2 service call /calculate_sum example_interfaces/srv/AddTwoInts "{a: 10, b: 20}"
+  ```
+- **Reference Solution:** `ros2 run navpro_basics solution_service_calculator`
+
+### Task 2 (Robotics Capstone): `task_teleop_speed_limiter.py`
+Located in `~/ros2_ws/src/navpro_basics/navpro_basics/task_teleop_speed_limiter.py`.
+- **Goal:** Add `/set_speed_mode` (`std_srvs/srv/SetBool`) to toggle Turbo mode on the robot!
+- **Run your node:**
+  ```bash
+  ros2 run navpro_basics task_teleop_speed_limiter
+  ```
+

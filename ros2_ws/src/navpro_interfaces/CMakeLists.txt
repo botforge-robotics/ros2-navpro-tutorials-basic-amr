@@ -10,8 +10,12 @@ find_package(geometry_msgs REQUIRED)
 find_package(rosidl_default_generators REQUIRED)
 
 rosidl_generate_interfaces(${PROJECT_NAME}
+  "msg/Num.msg"
+  "msg/Sphere.msg"
   "msg/RobotStatus.msg"
+  "srv/AddThreeInts.srv"
   "srv/SetSpeedMode.srv"
+  "action/Fibonacci.action"
   "action/Patrol.action"
   DEPENDENCIES geometry_msgs
 )

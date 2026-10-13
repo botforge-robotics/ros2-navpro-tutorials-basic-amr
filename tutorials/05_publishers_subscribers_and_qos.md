@@ -59,270 +59,228 @@ Unlike ROS 1 (which used TCP/UDP sockets with hardcoded parameters), ROS 2 allow
 
 ---
 
-## 4. Step-by-Step: Writing a Velocity Publisher in Python
+---
 
-Let's write a node that periodically publishes `geometry_msgs/msg/Twist` commands to drive the robot.
+## 4. Official ROS 2 Minimal Publisher (Python) - Step-by-Step
 
-Create file `publisher_node.py`:
+Following the canonical [Official ROS 2 Jazzy Beginner Tutorial](https://docs.ros.org/en/jazzy/Tutorials/Beginner-Client-Libraries/Writing-A-Simple-Py-Publisher-And-Subscriber.html), we begin with the simplest possible publisher node (`publisher_member_function.py` / `talker`). It sends standard string messages (`std_msgs/msg/String`) to a topic named `'topic'`.
+
 ```python
 #!/usr/bin/env python3
 """
-NavPro Learning Hub - Lesson 05
-Topic Publisher: Generates smooth velocity setpoints for differential drive robots.
+Official ROS 2 Jazzy Tutorial: MinimalPublisher
+Reference: https://docs.ros.org/en/jazzy/Tutorials/Beginner-Client-Libraries/Writing-A-Simple-Py-Publisher-And-Subscriber.html
 """
 
 import rclpy
 from rclpy.node import Node
-from geometry_msgs.msg import Twist
-from rclpy.qos import QoSProfile, ReliabilityPolicy, HistoryPolicy
+from std_msgs.msg import String
 
 
-class VelocityPublisher(Node):
+class MinimalPublisher(Node):
 
     def __init__(self):
-        super().__init__('velocity_publisher_node')
+        super().__init__('minimal_publisher')
+        # 1. Create Publisher: Message type String, Topic name 'topic', QoS depth 10
+        self.publisher_ = self.create_publisher(String, 'topic', 10)
 
-        # 1. Define custom QoS profile for motion control (Reliable, keep last 10)
-        qos_profile = QoSProfile(
-            reliability=ReliabilityPolicy.RELIABLE,
-            history=HistoryPolicy.KEEP_LAST,
-            depth=10
+        # 2. Create periodic timer running at 2 Hz (period = 0.5 seconds)
+        timer_period = 0.5  # seconds
+        self.timer = self.create_timer(timer_period, self.timer_callback)
+        self.i = 0
+
+    def timer_callback(self):
+        # 3. Create message, assign data, publish and log
+        msg = String()
+        msg.data = f'Hello World: {self.i}'
+        self.publisher_.publish(msg)
+        self.get_logger().info(f'Publishing: "{msg.data}"')
+        self.i += 1
+
+
+def main(args=None):
+    rclpy.init(args=args)
+    minimal_publisher = MinimalPublisher()
+
+    try:
+        rclpy.spin(minimal_publisher)
+    except KeyboardInterrupt:
+        pass
+    finally:
+        minimal_publisher.destroy_node()
+        rclpy.shutdown()
+
+
+if __name__ == '__main__':
+    main()
+```
+
+### Core Logic Breakdown: What We Are Trying to Achieve & Why
+| Code Segment | What We Are Trying to Achieve | Why It Is Written This Way & Underlying Mechanism |
+|---|---|---|
+| `super().__init__('minimal_publisher')` | Register node identity on the computational graph. | Initializes the base `rclpy.node.Node` class; `'minimal_publisher'` is the unique identifier visible in `ros2 node list`. |
+| `self.create_publisher(String, 'topic', 10)` | Establish DDS publisher endpoint. | Binds data output to topic `'topic'`. `10` is the QoS queue depth (retaining up to 10 unread messages in memory buffer). |
+| `self.create_timer(0.5, self.timer_callback)` | Schedule non-blocking periodic publishing. | Fires every 0.5 seconds (2 Hz). `create_timer()` allows the ROS 2 executor to process callbacks asynchronously without blocking sleep calls (`time.sleep()`). |
+| `msg = String()`<br>`msg.data = f'Hello World: {self.i}'` | Construct and populate message payload. | Instantiates an official ROS 2 message container. Standard string messages encapsulate textual data in the `.data` attribute. |
+| `self.publisher_.publish(msg)` | Push message onto the DDS middleware bus. | Serializes the Python object into CDR binary packets and broadcasts it to all discovered subscribers on the network. |
+| `rclpy.spin(minimal_publisher)` | Enter executor event loop. | Keeps the process alive, monitoring timers and event queues to dispatch callbacks deterministically. |
+
+---
+
+## 5. Official ROS 2 Minimal Subscriber (Python) - Step-by-Step
+
+Now let's build the consumer node (`subscriber_member_function.py` / `listener`) that subscribes to `'topic'` and logs incoming string messages.
+
+```python
+#!/usr/bin/env python3
+"""
+Official ROS 2 Jazzy Tutorial: MinimalSubscriber
+Reference: https://docs.ros.org/en/jazzy/Tutorials/Beginner-Client-Libraries/Writing-A-Simple-Py-Publisher-And-Subscriber.html
+"""
+
+import rclpy
+from rclpy.node import Node
+from std_msgs.msg import String
+
+
+class MinimalSubscriber(Node):
+
+    def __init__(self):
+        super().__init__('minimal_subscriber')
+        # 1. Create Subscription: Message type String, Topic 'topic', Callback listener_callback, Queue depth 10
+        self.subscription = self.create_subscription(
+            String,
+            'topic',
+            self.listener_callback,
+            10
         )
+        self.subscription  # Prevent unused variable warning
 
-        # 2. Create Publisher: topic='/cmd_vel', type=Twist
-        self.publisher_ = self.create_publisher(Twist, '/cmd_vel', qos_profile)
+    def listener_callback(self, msg):
+        # 2. Callback triggered automatically whenever a new message arrives
+        self.get_logger().info(f'I heard: "{msg.data}"')
 
-        # 3. Create timer loop running at 10 Hz (period = 0.1s)
-        self.timer_ = self.create_timer(0.1, self.publish_velocity)
-        self.tick_count_ = 0
 
-        self.get_logger().info('Velocity Publisher initialized. Broadcasting on /cmd_vel at 10Hz.')
+def main(args=None):
+    rclpy.init(args=args)
+    minimal_subscriber = MinimalSubscriber()
+
+    try:
+        rclpy.spin(minimal_subscriber)
+    except KeyboardInterrupt:
+        pass
+    finally:
+        minimal_subscriber.destroy_node()
+        rclpy.shutdown()
+
+
+if __name__ == '__main__':
+    main()
+```
+
+### Core Logic Breakdown: What We Are Trying to Achieve & Why
+| Code Segment | What We Are Trying to Achieve | Why It Is Written This Way & Underlying Mechanism |
+|---|---|---|
+| `self.create_subscription(String, 'topic', self.listener_callback, 10)` | Register consumer interest in a topic. | Tells DDS middleware that this node wants messages from `'topic'`. Whenever a message arrives, DDS automatically unmarshals it and invokes `listener_callback`. |
+| `def listener_callback(self, msg)` | Process incoming message event. | Topic subscriber callbacks always accept exactly one argument: `msg`, containing the received message object. |
+| `self.get_logger().info(f'I heard: "{msg.data}"')` | Log received message text. | Thread-safe, timestamped logging to standard output. |
+
+---
+
+## 6. From Hello World to Robotics: Publishing `/cmd_vel` & QoS Profiles
+
+Notice the elegance of ROS 2: **The exact same Publisher and Subscriber mechanics are used whether sending strings or driving a real physical robot!**
+
+To drive a robot base:
+1. Change message type from `std_msgs/msg/String` to `geometry_msgs/msg/Twist`.
+2. Change topic name from `'topic'` to `'/cmd_vel'`.
+3. Set motion setpoints: `msg.linear.x = 0.2` (m/s) and `msg.angular.z = 0.1` (rad/s).
+
+```python
+# The exact same pattern applied to Mobile Robot Motion (/cmd_vel):
+from geometry_msgs.msg import Twist
+
+class VelocityPublisher(Node):
+    def __init__(self):
+        super().__init__('velocity_publisher')
+        self.publisher_ = self.create_publisher(Twist, '/cmd_vel', 10)
+        self.timer = self.create_timer(0.1, self.publish_velocity)  # 10 Hz
 
     def publish_velocity(self):
         msg = Twist()
-        # Linear velocity (forward/backward) along X axis (m/s)
-        msg.linear.x = 0.35
-        msg.linear.y = 0.0
-        msg.linear.z = 0.0
-
-        # Angular velocity (rotation/yaw) around Z axis (rad/s)
-        msg.angular.x = 0.0
-        msg.angular.y = 0.0
-        msg.angular.z = 0.15
-
+        msg.linear.x = 0.2   # Move forward at 0.2 m/s
+        msg.angular.z = 0.1  # Rotate CCW at 0.1 rad/s
         self.publisher_.publish(msg)
-        self.tick_count_ += 1
-
-        # Log every 20 ticks (every 2 seconds) to avoid spamming terminal
-        if self.tick_count_ % 20 == 0:
-            self.get_logger().info(
-                f'Published /cmd_vel -> Linear: {msg.linear.x:.2f} m/s, Angular: {msg.angular.z:.2f} rad/s'
-            )
-
-
-def main(args=None):
-    rclpy.init(args=args)
-    node = VelocityPublisher()
-    try:
-        rclpy.spin(node)
-    except KeyboardInterrupt:
-        node.get_logger().warn('Stopping velocity publisher...')
-    finally:
-        # Publish zero velocity before exiting to stop physical motors!
-        stop_msg = Twist()
-        node.publisher_.publish(stop_msg)
-        node.destroy_node()
-        rclpy.shutdown()
-
-
-if __name__ == '__main__':
-    main()
 ```
-
-### Core Logic Breakdown: What We Are Trying to Achieve & Why
-| Code Segment | What We Are Trying to Achieve | Why It Is Written This Way & Underlying Mechanism |
-|---|---|---|
-| `super().__init__('velocity_publisher_node')` | Register node identity on the computational graph. | Initializes base `rclpy.node.Node` infrastructure; this string name is used by DDS discovery and appears in `ros2 node list`. |
-| `qos_profile = QoSProfile(reliability=RELIABLE, history=KEEP_LAST, depth=10)` | Guarantee delivery of velocity setpoints with bounded RAM usage. | Motion commands are safety-critical. `RELIABLE` enforces packet acknowledgments (ACKs) and retransmissions. `KEEP_LAST` with `depth=10` keeps up to 10 unread setpoints, dropping older ones if the subscriber experiences temporary lag. |
-| `self.create_publisher(Twist, '/cmd_vel', qos_profile)` | Bind publisher to standard velocity topic. | `/cmd_vel` is the universal ROS convention for mobile base locomotion. Any downstream motor controller or simulation node expects `geometry_msgs/msg/Twist`. |
-| `self.create_timer(0.1, self.publish_velocity)` | Establish deterministic 10 Hz control loop. | Robotics control requires periodic execution ($T = 0.1\,\text{s} \rightarrow f = 10\,\text{Hz}$). Using `create_timer()` allows the single-threaded executor to run callbacks asynchronously without blocking sleep calls (`time.sleep()`). |
-| `msg.linear.x = 0.35`<br>`msg.angular.z = 0.15` | Command simultaneous forward motion and yaw rotation. | For differential drive robots (non-holonomic ground vehicles), only `linear.x` (forward translation) and `angular.z` (heading yaw rate) are physically achievable. Lateral `linear.y` and vertical `linear.z` remain 0. |
-| `stop_msg = Twist()`<br>`node.publisher_.publish(stop_msg)` | Safety failsafe on process termination. | When Ctrl+C is pressed, clearing velocity prevents runaway robots where motors continue moving at the last commanded setpoint. |
-
-
----
-
-## 5. Step-by-Step: Writing a Velocity Subscriber in Python
-
-Now let's build the consumer node that receives `/cmd_vel` messages and simulates motor actuation.
-
-Create file `subscriber_node.py`:
-```python
-#!/usr/bin/env python3
-"""
-NavPro Learning Hub - Lesson 05
-Topic Subscriber: Consumes velocity commands and computes wheel drive velocities.
-"""
-
-import rclpy
-from rclpy.node import Node
-from geometry_msgs.msg import Twist
-from rclpy.qos import QoSProfile, ReliabilityPolicy, HistoryPolicy
-
-
-class MotorControllerSubscriber(Node):
-
-    def __init__(self):
-        super().__init__('motor_controller_subscriber')
-
-        # Differential drive robot geometry constants
-        self.WHEEL_RADIUS = 0.06       # meters
-        self.WHEEL_SEPARATION = 0.32   # meters
-
-        # Subscriber QoS profile (must match or be less strict than publisher)
-        qos_profile = QoSProfile(
-            reliability=ReliabilityPolicy.RELIABLE,
-            history=HistoryPolicy.KEEP_LAST,
-            depth=10
-        )
-
-        # Create Subscription: topic='/cmd_vel', type=Twist, callback=self.cmd_vel_callback
-        self.subscription_ = self.create_subscription(
-            Twist,
-            '/cmd_vel',
-            self.cmd_vel_callback,
-            qos_profile
-        )
-
-        self.get_logger().info('Motor Controller Subscriber active. Listening on /cmd_vel.')
-
-    def cmd_vel_callback(self, msg: Twist):
-        """Executed automatically whenever a new Twist message arrives on /cmd_vel."""
-        v = msg.linear.x      # Forward linear velocity (m/s)
-        w = msg.angular.z     # Rotational angular velocity (rad/s)
-
-        # Compute individual left and right wheel velocities using inverse kinematics
-        # v_left  = v - (w * L / 2)
-        # v_right = v + (w * L / 2)
-        v_left = v - (w * self.WHEEL_SEPARATION / 2.0)
-        v_right = v + (w * self.WHEEL_SEPARATION / 2.0)
-
-        # Convert linear wheel speed to rotational wheel angular speed: omega = v / R
-        omega_left = v_left / self.WHEEL_RADIUS
-        omega_right = v_right / self.WHEEL_RADIUS
-
-        self.get_logger().info(
-            f'Received (v={v:.2f}, w={w:.2f}) -> Wheel RPM: Left={omega_left:.1f} rad/s, Right={omega_right:.1f} rad/s'
-        )
-
-
-def main(args=None):
-    rclpy.init(args=args)
-    node = MotorControllerSubscriber()
-    try:
-        rclpy.spin(node)
-    except KeyboardInterrupt:
-        pass
-    finally:
-        node.destroy_node()
-        rclpy.shutdown()
-
-
-if __name__ == '__main__':
-    main()
-```
-
-### Core Logic Breakdown: What We Are Trying to Achieve & Why
-| Code Segment | What We Are Trying to Achieve | Why It Is Written This Way & Underlying Mechanism |
-|---|---|---|
-| `self.create_subscription(Twist, '/cmd_vel', self.cmd_vel_callback, qos_profile)` | Register interest in motion commands. | Binds the DDS deserialization pipeline to our callback method. The executor listens on the socket and schedules `cmd_vel_callback` whenever a valid `Twist` packet arrives. |
-| `qos_profile = QoSProfile(reliability=RELIABLE, ...)` | Prevent QoS Incompatibility silence. | A subscriber requesting `RELIABLE` will happily connect to a publisher offering `RELIABLE`. If the subscriber requested an incompatible policy (e.g. demanding higher strictness than offered), DDS would silently drop all messages. |
-| `v = msg.linear.x`<br>`w = msg.angular.z` | Extract forward velocity setpoint and yaw rotation rate. | Extracts the 2D degrees of freedom from the incoming 3D Twist structure. |
-| `v_left = v - (w * L / 2.0)`<br>`v_right = v + (w * L / 2.0)` | **Differential Drive Inverse Kinematics**: Split robot velocity into individual wheel linear velocities. | The AMR steers via differential wheel speeds. To turn counter-clockwise ($w > 0$), the right wheel must move faster than the left wheel by an offset proportional to the track width $L$. |
-| `omega_left = v_left / R`<br>`omega_right = v_right / R` | Convert linear wheel speed ($\text{m/s}$) to motor rotational speed ($\text{rad/s}$). | Motors accept angular velocity commands ($\text{rad/s}$ or RPM). Dividing tangential surface velocity by wheel radius ($R = 0.06\,\text{m}$) yields the exact angular velocity required at the motor gearbox output. |
-| `rclpy.spin(node)` | Keep the execution thread alive to process callbacks. | In ROS 2, callbacks DO NOT run in spontaneous background threads unless an executor is active. `rclpy.spin()` continuously checks event queues, unmarshals DDS packets, and invokes callbacks in sequence. |
 
 ---
 
 
-## 6. Verification with the ROS 2 Command Line Interface (CLI)
+## 7. Verification with the ROS 2 Command Line Interface (CLI)
 
-Open two Terminator panes and run the nodes:
+Open two terminal panes and run the official minimal pub/sub nodes:
 
-**Pane 1:**
+**Terminal 1 (Publisher / Talker):**
 ```bash
-ros2 run navpro_basics publisher_explained
+ros2 run navpro_basics talker
+# Output:
+# [INFO] [minimal_publisher]: Publishing: "Hello World: 0"
+# [INFO] [minimal_publisher]: Publishing: "Hello World: 1"
+# [INFO] [minimal_publisher]: Publishing: "Hello World: 2"
 ```
 
-**Pane 2:**
+**Terminal 2 (Subscriber / Listener):**
 ```bash
-ros2 run navpro_basics subscriber_explained
+ros2 run navpro_basics listener
+# Output:
+# [INFO] [minimal_subscriber]: I heard: "Hello World: 0"
+# [INFO] [minimal_subscriber]: I heard: "Hello World: 1"
+# [INFO] [minimal_subscriber]: I heard: "Hello World: 2"
 ```
 
-In a third pane, inspect the live DDS topic communication:
+In a third terminal pane, inspect the live DDS topic communication:
 
 ```bash
-# 1. List all active topics
+# 1. List all active topics on the DDS bus
 ros2 topic list
+# Output includes: /parameter_events, /rosout, /topic
 
-# 2. Inspect topic type and publisher/subscriber count
-ros2 topic info /cmd_vel
+# 2. Inspect topic message type and active endpoint count
+ros2 topic info /topic
+# Type: std_msgs/msg/String | Publisher count: 1 | Subscription count: 1
 
 # 3. Echo live messages passing through the DDS bus
-ros2 topic echo /cmd_vel
+ros2 topic echo /topic
 
 # 4. Measure message publishing frequency (Hz)
-ros2 topic hz /cmd_vel
+ros2 topic hz /topic
+# Average rate: 2.000 Hz
 
-# 5. Measure network bandwidth consumed by topic
-ros2 topic bw /cmd_vel
-
-# 6. Manually publish a one-shot velocity command from terminal
-ros2 topic pub --once /cmd_vel geometry_msgs/msg/Twist "{linear: {x: 0.5}, angular: {z: 0.0}}"
+# 5. Publish a one-shot message manually from the terminal
+ros2 topic pub --once /topic std_msgs/msg/String "{data: 'Hello from Student Terminal!'}"
 ```
 
 ---
 
-## 7. Project 1.2: Dual Publisher & Subscriber Safety Supervisor
+## 8. Student Hands-On Tasks & Assignments
 
-### Project Objective:
-Write a node named `safety_supervisor` that bridges raw teleoperation input and physical motor execution.
+To solidify what you've learned, two progressive exercises are mounted in your workspace:
 
-**Requirements:**
-1. Subscribe to `/teleop/cmd_vel` (`geometry_msgs/msg/Twist`).
-2. Subscribe to `/obstacle_distance` (`std_msgs/msg/Float32`).
-3. If `/obstacle_distance` is `< 0.4` meters:
-   - Immediately override `linear.x` to `0.0` (emergency stop).
-   - Log a warning: `EMERGENCY BRAKE ENGAGED! Obstacle too close.`
-4. Otherwise:
-   - Scale `linear.x` and `angular.z` by safety scale factor `0.85`.
-5. Publish the safe velocity command to `/cmd_vel`.
+### Task 1 (Beginner Foundation): `task_custom_pubsub.py`
+Located in `~/ros2_ws/src/navpro_basics/navpro_basics/task_custom_pubsub.py`.
+- **Goal:** Create a node that publishes ping messages (`std_msgs/msg/String`) on `/chatter` and subscribes to listen to them.
+- **Run your node:**
+  ```bash
+  ros2 run navpro_basics task_custom_pubsub
+  ```
+- **Reference Solution:** `ros2 run navpro_basics solution_custom_pubsub`
 
-```python
-# Project 1.2 Boilerplate Starter Code
-class SafetySupervisor(Node):
-    def __init__(self):
-        super().__init__('safety_supervisor')
-        
-        # TODO 1: Create publisher on '/cmd_vel' (Twist)
-        # TODO: FILL IN CODE HERE
-        
-        # TODO 2: Create subscriber on '/teleop/cmd_vel' (Twist)
-        # TODO: FILL IN CODE HERE
-        
-        # TODO 3: Create subscriber on '/obstacle_distance' (Float32)
-        # TODO: FILL IN CODE HERE
-        
-        self.obstacle_distance = 10.0  # meters
-        
-    def on_obstacle_scan(self, msg):
-        # TODO 4: Update self.obstacle_distance
-        # TODO: FILL IN CODE HERE
-        pass
-        
-    def on_teleop_cmd(self, msg):
-        # TODO 5: If obstacle_distance < 0.4: zero out linear.x
-        # TODO 6: Else: scale velocities by 0.85 and publish
-        # TODO: FILL IN CODE HERE
-        pass
-```
+### Task 2 (Robotics Capstone): `task_teleop_speed_limiter.py`
+Located in `~/ros2_ws/src/navpro_basics/navpro_basics/task_teleop_speed_limiter.py`.
+- **Goal:** Intercept `/input/cmd_vel` (`geometry_msgs/msg/Twist`), scale velocities by a safety factor, and republish to `/cmd_vel`.
+- **Run your node:**
+  ```bash
+  ros2 run navpro_basics task_teleop_speed_limiter
+  ```
+- **Reference Solution:** `ros2 run navpro_basics solution_teleop_speed_limiter`
+
