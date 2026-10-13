@@ -206,7 +206,7 @@ Robotics engineers spend most of their time in the Linux terminal: compiling pac
 ### Method 1: Desktop Terminal Icon &amp; Universal Hotkey (Inside VNC)
 * **Desktop Launcher:** Double-click the **Terminal** icon on the desktop.
 * **Universal Hotkey:** In the noVNC desktop window, press <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>T</kbd>.
-* **Prompt Location:** Launches directly in `/home/student` with ROS 2 Jazzy automatically sourced.
+* **Prompt Location:** Launches directly in your home directory `/home/student`.
 
 ### Method 2: Multi-Pane Workflow with Terminator
 Robotics workflows require monitoring 3 to 4 nodes at once (e.g. simulation, teleop control, sensor topics, and node logs). **Terminator** lets you split your screen into multiple independent terminal tiles:
@@ -226,23 +226,51 @@ You can also enter the container directly from your local computer's native shel
 docker exec -it navpro_level1_container bash
 ```
 
-### Pre-Configured ROS 2 Environment &amp; Shortcuts
-Your shell is already primed with the essential ROS 2 environment:
-* **System Underlay:** `source /opt/ros/jazzy/setup.bash` is executed automatically in every new terminal.
-* **Workspace Overlay:** To source your custom compiled packages after building, run:
-  ```bash
-  source ~/ros2_ws/install/setup.bash
-  ```
-* **Global Workspace Reset:** If you ever want to restore your practice workspace to clean starting boilerplate:
-  ```bash
-  reset_workspace
-  ```
+---
+
+### 8.5 Sourcing the ROS 2 Installation (Underlay) &amp; Shell Automation
+
+When you open a brand new terminal, the system does not load ROS 2 into your shell environment by default. If you try running `ros2` immediately:
+```text
+bash: ros2: command not found
+```
+
+To tell Linux where the ROS 2 binaries, libraries, and Python packages reside, you must **source the ROS 2 system setup file**:
+
+<div class="cmd-card">
+  <div class="cmd-header">
+    <div class="cmd-header-left">
+      <span class="cmd-badge">source /opt/ros/...</span>
+      <span class="cmd-title">Source ROS 2 Jazzy Underlay &amp; Automate with ~/.bashrc</span>
+    </div>
+    <span class="cmd-syntax">Syntax: <code>source /opt/ros/jazzy/setup.bash</code></span>
+  </div>
+  <p class="cmd-desc">Populates your shell's <code>PATH</code>, <code>AMENT_PREFIX_PATH</code>, and <code>PYTHONPATH</code> with the ROS 2 Jazzy distribution.</p>
+```bash
+# Step 1: Source the ROS 2 installation manually in your current terminal:
+source /opt/ros/jazzy/setup.bash
+
+# Step 2: Verify that ROS 2 CLI commands are now active:
+ros2 --help
+
+# Step 3: Add sourcing permanently to your ~/.bashrc so every future terminal is automated:
+echo "source /opt/ros/jazzy/setup.bash" >> ~/.bashrc
+```
+</div>
+
+> [!NOTE]
+> **What about custom workspace sourcing?**  
+> Sourcing custom project packages (`source ~/ros2_ws/install/setup.bash`) is called the **workspace overlay**. In **Lesson 03**, you will create, build, and source your own custom robotics workspace from scratch!
 
 ---
 
 ## 9. Verification & "Hello World" Smoke Test
 
 Run the built-in ROS 2 talker and listener demo nodes to verify that DDS peer discovery is operational.
+
+> [!TIP]
+> Ensure ROS 2 is sourced in your active terminal before running these commands:  
+> `source /opt/ros/jazzy/setup.bash` (or open a new terminal if you already added it to `~/.bashrc` in Section 8.5).
 
 ### Step 9.1: Launch Talker Node
 > [!SYNTAX]
@@ -251,6 +279,10 @@ Run the built-in ROS 2 talker and listener demo nodes to verify that DDS peer di
 
 **Hands-On Practical Command (Terminal 1):**
 ```bash
+# 1. Ensure ROS 2 is sourced in this terminal:
+source /opt/ros/jazzy/setup.bash
+
+# 2. Start the talker publisher node:
 ros2 run demo_nodes_py talker
 ```
 *Expected Terminal Output:*
@@ -269,6 +301,10 @@ ros2 run demo_nodes_py talker
 
 **Hands-On Practical Command (Terminal 2):**
 ```bash
+# 1. In a second terminal pane (e.g. Terminator Ctrl+Shift+O), ensure ROS 2 is sourced:
+source /opt/ros/jazzy/setup.bash
+
+# 2. Start the listener subscriber node:
 ros2 run demo_nodes_py listener
 ```
 *Expected Terminal Output:*
