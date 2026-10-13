@@ -1,4 +1,5 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import ReactDOM from 'react-dom';
 import { 
   ChevronLeft, 
   ChevronRight, 
@@ -12,6 +13,8 @@ import {
   ArrowRight
 } from 'lucide-react';
 import { QuizCard } from './QuizCard';
+import { PermissionCalculator } from './PermissionCalculator';
+import { StudentFeedbackForm } from './StudentFeedbackForm';
 
 export function LessonView({ 
   lesson, 
@@ -22,9 +25,22 @@ export function LessonView({
   savedScore, 
   onRecordScore, 
   isQuizGateOpen,
-  onOpenSyncModal
+  onOpenSyncModal,
+  studentInfo,
+  onSubmitFeedback
 }) {
   const contentRef = useRef(null);
+  const [permissionPortalNode, setPermissionPortalNode] = useState(null);
+
+  // Hook portal root for interactive permission calculator in Lesson 01
+  useEffect(() => {
+    if (lesson.id === 'lesson_01') {
+      const el = document.getElementById('interactive-permission-calculator-root');
+      setPermissionPortalNode(el);
+    } else {
+      setPermissionPortalNode(null);
+    }
+  }, [lesson.id, lesson.html_content]);
 
   // Scroll to top when changing lesson
   useEffect(() => {
@@ -146,6 +162,17 @@ export function LessonView({
         dangerouslySetInnerHTML={{ __html: lesson.html_content }}
       />
 
+      {/* Interactive Permission Calculator for Lesson 01 (Portaled into Section 4.1 or inline fallback) */}
+      {lesson.id === 'lesson_01' && (
+        permissionPortalNode ? (
+          ReactDOM.createPortal(<PermissionCalculator />, permissionPortalNode)
+        ) : (
+          <section className="lesson-interactive-tool-section" style={{ margin: '2rem 0' }}>
+            <PermissionCalculator />
+          </section>
+        )
+      )}
+
       {/* Embedded Interactive Quiz */}
       {lesson.has_quiz && (
         <section className="lesson-quiz-section">
@@ -156,6 +183,16 @@ export function LessonView({
             onRecordScore={onRecordScore}
             isQuizGateOpen={isQuizGateOpen}
             onOpenSyncModal={onOpenSyncModal}
+          />
+        </section>
+      )}
+
+      {/* Capstone Student Feedback & Ratings Form on Final Lesson */}
+      {(!lesson.next_id || lesson.id === 'lesson_26') && onSubmitFeedback && (
+        <section className="lesson-feedback-section" style={{ margin: '2.5rem 0' }}>
+          <StudentFeedbackForm
+            studentInfo={studentInfo || {}}
+            onSubmitFeedback={onSubmitFeedback}
           />
         </section>
       )}

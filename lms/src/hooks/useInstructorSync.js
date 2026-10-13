@@ -355,24 +355,32 @@ export function useInstructorSync(completedLessons, quizScores, currentLessonId)
   }, [studentInfo.registered]);
 
   // Submit feedback
-  const submitFeedback = useCallback(async (rating, comments) => {
+  const submitFeedback = useCallback(async (rating, favorite_module, comments) => {
     try {
       const apiBase = getApiBase(studentInfo.host_ip);
+      // Support signature (rating, comments) or (rating, favorite_module, comments)
+      const moduleVal = typeof comments === 'string' ? favorite_module : '';
+      const textVal = typeof comments === 'string' ? comments : (favorite_module || '');
+
       const res = await fetch(`${apiBase}/api/sync/feedback`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          workshop_id: studentInfo.workshop_id || undefined,
-          student_id: studentInfo.student_id,
-          rating,
-          comments
+          workshop_id: studentInfo.workshop_id || 'ws_default',
+          student_id: studentInfo.student_id || studentInfo.email_roll || 'student_guest',
+          student_name: studentInfo.name || 'Student',
+          rating: Number(rating) || 5,
+          favorite_module: moduleVal,
+          feedback_text: textVal
         })
       });
       return res.ok;
     } catch (e) {
+      console.warn('Feedback submission failed:', e);
       return false;
     }
   }, [getApiBase, studentInfo]);
+
 
   return {
     studentInfo,

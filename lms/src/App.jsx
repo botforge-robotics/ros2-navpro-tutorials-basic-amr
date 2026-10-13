@@ -178,6 +178,8 @@ export function App() {
               onRecordScore={handleRecordScore}
               isQuizGateOpen={gates.gate_quizzes_open}
               onOpenSyncModal={() => setIsModalOpen(true)}
+              studentInfo={studentInfo}
+              onSubmitFeedback={submitFeedback}
             />
           ) : (
             <HubOverview
@@ -188,6 +190,8 @@ export function App() {
               progressPercent={progressPercent}
               completedCount={completedCount}
               totalLessons={totalLessons}
+              studentInfo={studentInfo}
+              onSubmitFeedback={submitFeedback}
             />
           )}
         </main>

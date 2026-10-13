@@ -112,3 +112,5 @@ Watch the physical NavPro robot navigate around real warehouse racks, dodge unex
 Congratulations! You have completed the **NavPro Level 1 Course**: from raw DDS communications and OOP Python nodes to kinematics, 3D modeling, Gazebo physics simulation, sensor fusion, 2D SLAM, Nav2 path planning, and physical hardware deployment.
 
 You are now ready to progress to **Level 2: Enterprise Robotics Architect & AI Agent Integration**!
+
+Please take a moment to submit your thoughts, star rating, and favorite modules in the **Workshop Experience & Student Feedback Form** below. Your feedback goes directly to your instructor to help enhance upcoming robotics courses!

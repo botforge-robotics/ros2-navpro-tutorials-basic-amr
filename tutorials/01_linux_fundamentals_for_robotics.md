@@ -400,6 +400,8 @@ Each triplet represents:
 * **`w` (Write = 2):** Modify or delete file.
 * **`x` (Execute = 1):** Execute the file as a program.
 
+<div id="interactive-permission-calculator-root"></div>
+
 ### 4.2 Hands-On Exercise: Creating &amp; Running an Executable Script
 
 <div class="cmd-card">

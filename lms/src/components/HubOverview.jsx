@@ -17,6 +17,7 @@ import {
   Box,
   Network,
 } from "lucide-react";
+import { StudentFeedbackForm } from "./StudentFeedbackForm";
 
 const MODULE_ICONS = {
   1: Cpu,
@@ -34,6 +35,8 @@ export function HubOverview({
   progressPercent,
   completedCount,
   totalLessons,
+  studentInfo,
+  onSubmitFeedback,
 }) {
   return (
     <div className="hub-overview-container fade-in">
@@ -307,6 +310,16 @@ export function HubOverview({
           </span>
         </div>
       </section>
+
+      {/* Capstone Course Feedback & Rating Form */}
+      {onSubmitFeedback && (
+        <section className="hub-feedback-section" style={{ marginTop: "2.5rem" }}>
+          <StudentFeedbackForm
+            studentInfo={studentInfo || {}}
+            onSubmitFeedback={onSubmitFeedback}
+          />
+        </section>
+      )}
     </div>
   );
 }
