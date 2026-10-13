@@ -79,6 +79,7 @@ USER $USERNAME
 WORKDIR /home/$USERNAME
 
 RUN mkdir -p /home/$USERNAME/.vnc && \
+    echo "securitytypes=None" > /home/$USERNAME/.vnc/config && \
     printf '#!/bin/bash\nunset SESSION_MANAGER\nunset DBUS_SESSION_BUS_ADDRESS\nexport XDG_CURRENT_DESKTOP=XFCE\n[ -r $HOME/.Xresources ] && xrdb $HOME/.Xresources\nexec startxfce4\n' > /home/$USERNAME/.vnc/xstartup && \
     chmod +x /home/$USERNAME/.vnc/xstartup
 

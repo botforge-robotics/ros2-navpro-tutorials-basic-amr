@@ -18,7 +18,7 @@ if [ "$START_SERVICES" = "true" ]; then
     vncserver -kill :1 2>/dev/null || rm -rf /tmp/.X1-lock /tmp/.X11-unix/X1 2>/dev/null || true
 
     echo "[Entrypoint] Starting TigerVNC server on :1 (Display port 5901, Passwordless)..."
-    vncserver :1 -geometry 1920x1080 -depth 24 -localhost no -SecurityTypes None
+    vncserver :1 -geometry 1920x1080 -depth 24 -localhost no -SecurityTypes None --I-KNOW-THIS-IS-INSECURE
 
     echo "[Entrypoint] Starting noVNC web proxy on port 6080..."
     websockify --web /usr/share/novnc/ 6080 localhost:5901 &
