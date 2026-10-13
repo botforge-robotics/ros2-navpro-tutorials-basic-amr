@@ -135,16 +135,28 @@ Let's build a clean robotics project folder `~/robotics_lab` with dedicated subd
 <div class="cmd-card">
   <div class="cmd-header">
     <div class="cmd-header-left">
-      <span class="cmd-badge">mkdir -p</span>
-      <span class="cmd-title">Create Nested Directory Trees</span>
+      <span class="cmd-badge">mkdir / mkdir -p</span>
+      <span class="cmd-title">Create Directories (Single, Multiple &amp; Nested Trees)</span>
     </div>
-    <span class="cmd-syntax">Syntax: <code>mkdir -p &lt;dir_1&gt; [dir_2] ...</code></span>
+    <span class="cmd-syntax">Syntax: <code>mkdir &lt;dir&gt;</code> | <code>mkdir &lt;d1&gt; &lt;d2&gt;</code> | <code>mkdir -p &lt;parent/child&gt;</code></span>
   </div>
-  <p class="cmd-desc">Creates new directories. The <code>-p</code> (parents) flag creates any missing parent directories automatically in a single command without throwing errors if they already exist.</p>
+  <p class="cmd-desc">Creates new directories. You can create a single directory, multiple directories in one command by separating names with spaces, or entire nested directory hierarchies using the <code>-p</code> (parents) flag.</p>
 ```bash
+# 1. Create a single directory:
+mkdir my_robot_test
+
+# 2. Create multiple separate directories at once (separated by spaces):
+mkdir sensors actuators telemetry
+
+# 3. Create nested directory hierarchies automatically using -p (parents flag):
+# Without -p, Linux throws "No such file or directory" if parent folders do not exist.
+# With -p, missing parents are generated automatically without errors:
 mkdir -p ~/robotics_lab/config ~/robotics_lab/scripts ~/robotics_lab/logs
 
-# Verify the three subdirectories exist:
+# Clean up temporary practice folders:
+rm -rf my_robot_test sensors actuators telemetry
+
+# Verify the structured robotics lab directories exist:
 ls -la ~/robotics_lab
 ```
 </div>
@@ -307,6 +319,58 @@ grep -rn "navpro" ~/robotics_lab/
 # Output:
 # /home/student/robotics_lab/config/robot_params.yaml:1:robot_model: navpro_mini
 # /home/student/robotics_lab/logs/archived_params.yaml:1:robot_model: navpro_mini
+```
+</div>
+
+<div class="cmd-card">
+  <div class="cmd-header">
+    <div class="cmd-header-left">
+      <span class="cmd-badge">| (Pipe)</span>
+      <span class="cmd-title">Piping Output: Filter &amp; Chain Commands (cat | grep)</span>
+    </div>
+    <span class="cmd-syntax">Syntax: <code>command_1 | command_2</code></span>
+  </div>
+  <p class="cmd-desc">The <strong>Pipe (<code>|</code>)</strong> operator takes the Standard Output (<code>stdout</code>) of the command on the left and redirects it directly into the Standard Input (<code>stdin</code>) of the command on the right. In robotics, combining <code>cat</code> with <code>grep</code> is an indispensable technique for instantly filtering configuration files, system parameters, and diagnostic logs without scrolling through hundreds of lines.</p>
+```bash
+# 1. Pipe file contents from 'cat' into 'grep' to filter specific robot parameters:
+cat ~/robotics_lab/config/robot_params.yaml | grep "velocity"
+# Output: max_linear_velocity: 0.5
+
+# 2. Inspect operating system release information by piping cat into grep:
+cat /etc/os-release | grep "PRETTY_NAME"
+# Output: PRETTY_NAME="Ubuntu 24.04 LTS"
+
+# 3. Practical Robotics Real-World Examples:
+# - Filter live ROS 2 topic streams:  ros2 topic list | grep cmd_vel
+# - Filter system error logs:         cat /var/log/syslog | grep -i error
+```
+</div>
+
+<div class="cmd-card">
+  <div class="cmd-header">
+    <div class="cmd-header-left">
+      <span class="cmd-badge">&amp;&amp; / ; / ||</span>
+      <span class="cmd-title">Executing Multiple Commands in a Single Line</span>
+    </div>
+    <span class="cmd-syntax">Syntax: <code>cmd1 &amp;&amp; cmd2</code> | <code>cmd1 ; cmd2</code> | <code>cmd1 || cmd2</code></span>
+  </div>
+  <p class="cmd-desc">In Linux, you can chain multiple commands onto a single command line using three operators depending on whether you want subsequent commands to depend on previous success, run unconditionally, or act as an error fallback.</p>
+```bash
+# 1. The '&&' Operator (Logical AND - Run next ONLY IF previous command succeeded):
+# If the first command fails, execution halts immediately. Crucial for robotics builds!
+cd ~/robotics_lab && ls -la
+
+# The Gold Standard ROS 2 Build & Source workflow:
+# (If compilation fails, it will NOT attempt to source broken binaries):
+# cd ~/ros2_ws && colcon build --symlink-install && source install/setup.bash
+
+# 2. The ';' Semicolon (Sequential Execution - Run regardless of success or failure):
+# Commands run one after another in order, even if an earlier command threw an error:
+echo "Starting pre-flight check..." ; ls -l ~/robotics_lab ; echo "Pre-flight check complete."
+
+# 3. The '||' Operator (Logical OR - Run next ONLY IF previous command failed):
+# Perfect for error alerts and fallback defaults:
+grep "camera_topic" ~/robotics_lab/config/robot_params.yaml || echo "⚠️ Warning: Camera parameter not found in config!"
 ```
 </div>
 
