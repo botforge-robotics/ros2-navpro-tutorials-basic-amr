@@ -367,12 +367,8 @@ cat /etc/os-release | grep "PRETTY_NAME"
   <p class="cmd-desc">In Linux, you can chain multiple commands onto a single command line using three operators depending on whether you want subsequent commands to depend on previous success, run unconditionally, or act as an error fallback.</p>
 ```bash
 # 1. The '&&' Operator (Logical AND - Run next ONLY IF previous command succeeded):
-# If the first command fails, execution halts immediately. Crucial for robotics builds!
+# If the first command fails, execution halts immediately:
 cd ~/robotics_lab && ls -la
-
-# The Gold Standard ROS 2 Build & Source workflow:
-# (If compilation fails, it will NOT attempt to source broken binaries):
-# cd ~/ros2_ws && colcon build --symlink-install && source install/setup.bash
 
 # 2. The ';' Semicolon (Sequential Execution - Run regardless of success or failure):
 # Commands run one after another in order, even if an earlier command threw an error:
@@ -390,7 +386,7 @@ grep "camera_topic" ~/robotics_lab/config/robot_params.yaml || echo "⚠️ Warn
 
 When you create a script in Linux, it is created without execution permissions by default. Attempting to run it directly triggers:
 ```text
-bash: ./diagnostics.sh: Permission denied
+bash: ./system_check.sh: Permission denied
 ```
 
 ### 4.1 Understanding the Permission String
@@ -398,7 +394,7 @@ bash: ./diagnostics.sh: Permission denied
 Running `ls -l` outputs a 10-character permission string:
 
 ```text
--rwxr-xr-x 1 student student 1420 Oct 13 10:00 diagnostics.sh
+-rwxr-xr-x 1 student student 1420 Oct 13 10:00 system_check.sh
  │├──┘├──┘└── Others permissions (Read, Execute)
  ││   └── Group permissions (Read, Execute)
  │└── User (Owner) permissions: Read (r), Write (w), Execute (x)
@@ -438,14 +434,18 @@ echo "All host subsystems operating normally!"
 echo "=========================================="
 EOF
 
-# Step 2: Try running the script directly (triggers Permission denied)
-~/robotics_lab/scripts/system_check.sh
+# Step 2: Navigate into the scripts folder where the file was saved
+cd ~/robotics_lab/scripts
 
-# Step 3: Grant executable permission (+x)
-chmod +x ~/robotics_lab/scripts/system_check.sh
+# Step 3: Try running the script directly with './' (triggers Permission denied)
+./system_check.sh
+# Output: bash: ./system_check.sh: Permission denied
 
-# Step 4: Run the script successfully!
-~/robotics_lab/scripts/system_check.sh
+# Step 4: Grant executable permission (+x) to the script
+chmod +x system_check.sh
+
+# Step 5: Run the script successfully!
+./system_check.sh
 ```
 </div>
 
