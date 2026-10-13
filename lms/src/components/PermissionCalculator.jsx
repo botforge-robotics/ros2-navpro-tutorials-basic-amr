@@ -41,7 +41,7 @@ export function PermissionCalculator() {
   ];
 
   const fullPermString = bits.map(b => b.val).join('');
-  const commandStr = `chmod ${fullOctal} system_check.sh`;
+  const commandStr = `chmod ${fullOctal} sensor_diagnostics.sh`;
 
   const toggleBit = (category, bitName, bitIndex) => {
     setAnimatingBit(bitIndex);
@@ -357,19 +357,19 @@ export function PermissionCalculator() {
             <span className="dot yellow"></span>
             <span className="dot green"></span>
           </div>
-          <span className="terminal-title">Terminal Execution Test: ~/robotics_lab/scripts/system_check.sh</span>
+          <span className="terminal-title">Terminal Execution Test: ~/robotics_lab/scripts/sensor_diagnostics.sh</span>
         </div>
         <div className="terminal-body">
           <div className="terminal-line">
-            <span className="term-prompt">student@navpro:~$</span>
-            <span className="term-cmd">ls -l system_check.sh</span>
+            <span className="term-prompt">student@navpro:~/robotics_lab/scripts$</span>
+            <span className="term-cmd">ls -l sensor_diagnostics.sh</span>
           </div>
           <div className="terminal-output ls-output">
-            <span style={{ color: '#38bdf8' }}>{fullPermString}</span> 1 student student 1420 Oct 14 10:00 system_check.sh
+            <span style={{ color: '#38bdf8' }}>{fullPermString}</span> 1 student student 1420 Oct 14 10:00 sensor_diagnostics.sh
           </div>
           <div className="terminal-line" style={{ marginTop: '8px' }}>
-            <span className="term-prompt">student@navpro:~$</span>
-            <span className="term-cmd">./system_check.sh</span>
+            <span className="term-prompt">student@navpro:~/robotics_lab/scripts$</span>
+            <span className="term-cmd">./sensor_diagnostics.sh</span>
           </div>
 
           {user.x ? (
@@ -380,7 +380,7 @@ export function PermissionCalculator() {
               </div>
               <p className="output-msg">
                 ==========================================<br />
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ROBOT SUBSYSTEM PRE-FLIGHT CHECK<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ROBOT SENSOR PRE-FLIGHT CHECK<br />
                 ==========================================<br />
                 All host AMR motor controllers and LiDAR sensors operating normally!
               </p>
@@ -389,11 +389,11 @@ export function PermissionCalculator() {
             <div className="terminal-output exec-denied">
               <div className="status-badge-row">
                 <XCircle size={16} className="text-danger" />
-                <strong className="text-danger">bash: ./system_check.sh: Permission denied (Exit Code 126)</strong>
+                <strong className="text-danger">bash: ./sensor_diagnostics.sh: Permission denied (Exit Code 126)</strong>
               </div>
               <p className="output-tip">
                 💡 <strong>Why this happens:</strong> The Owner Execute bit (<code>x</code>) is unchecked! 
-                Linux blocks script execution to protect the system. Run <code>chmod +x system_check.sh</code> (or toggle Execute above) to fix this.
+                Linux blocks script execution to protect the system. Run <code>chmod +x sensor_diagnostics.sh</code> (or toggle Execute above) to fix this.
               </p>
             </div>
           )}

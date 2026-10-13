@@ -386,7 +386,7 @@ grep "camera_topic" ~/robotics_lab/config/robot_params.yaml || echo "⚠️ Warn
 
 When you create a script in Linux, it is created without execution permissions by default. Attempting to run it directly triggers:
 ```text
-bash: ./system_check.sh: Permission denied
+bash: ./sensor_diagnostics.sh: Permission denied
 ```
 
 ### 4.1 Understanding the Permission String
@@ -394,7 +394,7 @@ bash: ./system_check.sh: Permission denied
 Running `ls -l` outputs a 10-character permission string:
 
 ```text
--rwxr-xr-x 1 student student 1420 Oct 13 10:00 system_check.sh
+-rwxr-xr-x 1 student student 1420 Oct 13 10:00 sensor_diagnostics.sh
  │├──┘├──┘└── Others permissions (Read, Execute)
  ││   └── Group permissions (Read, Execute)
  │└── User (Owner) permissions: Read (r), Write (w), Execute (x)
@@ -420,32 +420,32 @@ Each triplet represents:
   </div>
   <p class="cmd-desc">Modifies file access permissions. Flag <code>+x</code> grants execution rights so the operating system can run the script directly as an independent program.</p>
 ```bash
-# Step 1: Create a real diagnostic script inside ~/robotics_lab/scripts/
-cat << 'EOF' > ~/robotics_lab/scripts/system_check.sh
+# Step 1: Navigate into the scripts folder where sensor_diagnostics.sh resides
+cd ~/robotics_lab/scripts
+
+# Step 2: Add robot sensor diagnostic logic to sensor_diagnostics.sh
+cat << 'EOF' > sensor_diagnostics.sh
 #!/bin/bash
 echo "=========================================="
-echo "      ROBOT SUBSYSTEM PRE-FLIGHT CHECK    "
+echo "      ROBOT SENSOR PRE-FLIGHT CHECK       "
 echo "=========================================="
 echo "Timestamp:    $(date)"
 echo "Kernel:       $(uname -r)"
 echo "Architecture: $(uname -m)"
 echo "Free Memory:  $(free -h | awk '/^Mem:/ {print $4}')"
-echo "All host subsystems operating normally!"
+echo "All robot sensor subsystems operating normally!"
 echo "=========================================="
 EOF
 
-# Step 2: Navigate into the scripts folder where the file was saved
-cd ~/robotics_lab/scripts
-
 # Step 3: Try running the script directly with './' (triggers Permission denied)
-./system_check.sh
-# Output: bash: ./system_check.sh: Permission denied
+./sensor_diagnostics.sh
+# Output: bash: ./sensor_diagnostics.sh: Permission denied
 
 # Step 4: Grant executable permission (+x) to the script
-chmod +x system_check.sh
+chmod +x sensor_diagnostics.sh
 
 # Step 5: Run the script successfully!
-./system_check.sh
+./sensor_diagnostics.sh
 ```
 </div>
 
@@ -576,7 +576,7 @@ Robotics workflows often require 3–4 terminal windows running concurrently (si
 > Then log out and log back in (or run `newgrp dialout`).
 
 > [!TIP] Searching Bash Command History
-> Press `Ctrl + R` in any terminal and start typing a previous command (e.g. `system_check`) to search and auto-complete your command history without retyping.
+> Press `Ctrl + R` in any terminal and start typing a previous command (e.g. `sensor_diagnostics`) to search and auto-complete your command history without retyping.
 
 ---
 
