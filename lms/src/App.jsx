@@ -98,6 +98,27 @@ export function App() {
     setTheme(prev => (prev === 'light' ? 'dark' : 'light'));
   }, []);
 
+  // Global clipboard synchronizer to container X11 / VNC desktop
+  useEffect(() => {
+    const handleCopy = () => {
+      setTimeout(async () => {
+        try {
+          const selectedText = window.getSelection()?.toString();
+          if (selectedText && selectedText.trim()) {
+            fetch('/api/clipboard', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ text: selectedText.trim() })
+            }).catch(() => {});
+          }
+        } catch {}
+      }, 50);
+    };
+
+    window.addEventListener('copy', handleCopy);
+    return () => window.removeEventListener('copy', handleCopy);
+  }, []);
+
   // Active lesson object
   const activeLesson = lessonsData.lessons.find(l => l.id === currentLessonId) || null;
 

@@ -104,13 +104,32 @@ ls -lah
   <div class="cmd-header">
     <div class="cmd-header-left">
       <span class="cmd-badge">cd</span>
-      <span class="cmd-title">Change Working Directory</span>
+      <span class="cmd-title">Change Working Directory (Navigation Mastery)</span>
     </div>
-    <span class="cmd-syntax">Syntax: <code>cd &lt;target_directory&gt;</code></span>
+    <span class="cmd-syntax">Syntax: <code>cd [folder]</code> | <code>cd ~</code> | <code>cd ..</code> | <code>cd -</code></span>
   </div>
-  <p class="cmd-desc">Changes your active shell location. Use <code>cd ~</code> to return to your home directory, <code>cd ..</code> to step up one level, and <code>cd -</code> to toggle back to the previous directory.</p>
+  <p class="cmd-desc">Changes your active shell directory location. Practice these practical navigation patterns in your VNC terminal relative to your user home directory (<code>/home/student</code>):</p>
 ```bash
-# Ensure you are at your user home directory root
+# 1. cd <folder>: Navigate into an existing subfolder in your home workspace
+cd ~/ros2_ws
+pwd
+# Output: /home/student/ros2_ws
+
+# 2. cd ..: Step UP one level to the parent directory (/home/student)
+cd ..
+pwd
+# Output: /home/student
+
+# 3. cd Desktop: Navigate into your Desktop folder
+cd Desktop
+pwd
+# Output: /home/student/Desktop
+
+# 4. cd -: Toggle back to the PREVIOUS directory you were just in (/home/student)
+cd -
+# Output: /home/student
+
+# 5. cd ~ (or simply cd): Return directly to your home directory from anywhere
 cd ~
 pwd
 # Output: /home/student

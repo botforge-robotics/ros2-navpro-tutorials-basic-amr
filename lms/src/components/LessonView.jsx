@@ -59,15 +59,23 @@ export function LessonView({
       if (!codeElement) return;
 
       const codeText = codeElement.innerText;
-      navigator.clipboard.writeText(codeText).then(() => {
-        const originalText = btn.innerHTML;
-        btn.innerHTML = '✅ Copied!';
-        btn.classList.add('copied');
-        setTimeout(() => {
-          btn.innerHTML = originalText;
-          btn.classList.remove('copied');
-        }, 2000);
-      });
+      // 1. Copy to browser clipboard
+      navigator.clipboard.writeText(codeText).catch(() => {});
+
+      // 2. Bridge directly to container X11/VNC clipboard
+      fetch('/api/clipboard', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ text: codeText })
+      }).catch(() => {});
+
+      const originalText = btn.innerHTML;
+      btn.innerHTML = '✅ Copied!';
+      btn.classList.add('copied');
+      setTimeout(() => {
+        btn.innerHTML = originalText;
+        btn.classList.remove('copied');
+      }, 2000);
     };
 
     // Attach listener for internal links in HTML (e.g. data-lesson="02")
