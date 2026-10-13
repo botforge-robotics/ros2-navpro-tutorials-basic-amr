@@ -9,8 +9,7 @@ import {
   Server,
   User,
   Mail,
-  Building2,
-  Laptop
+  Building2
 } from 'lucide-react';
 import { detectLocalIp } from '../hooks/useInstructorSync';
 
@@ -207,19 +206,6 @@ export function RegistrationModal({
                     <em>(If you accidentally type <code>:9000</code> or <code>http://</code>, it will be automatically formatted for you).</em>
                   </div>
                 </div>
-              </div>
-
-              <div className="form-group">
-                <label>
-                  <Laptop size={14} />
-                  <span>Your Device / Station IP (Auto-Detected)</span>
-                </label>
-                <input
-                  type="text"
-                  placeholder="e.g. 192.168.1.45 (Auto-detected)"
-                  value={formData.client_ip}
-                  onChange={e => setFormData({ ...formData, client_ip: e.target.value })}
-                />
               </div>
 
               {errorMessage && (

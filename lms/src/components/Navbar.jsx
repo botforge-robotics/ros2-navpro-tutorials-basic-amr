@@ -12,8 +12,6 @@ import {
   Menu, 
   User, 
   HelpCircle,
-  MessageSquare,
-  Hand,
   Activity
 } from 'lucide-react';
 
@@ -229,42 +227,6 @@ export function Navbar({
               ? `${studentInfo.name.split(' ')[0]} (${connectionStatus === 'connected' ? `Live #${heartbeatCount}` : 'Local'})` 
               : 'Student Login'}
           </span>
-        </button>
-
-        {/* Live Group Chat & Raise Hand Button */}
-        <button
-          onClick={onOpenChatModal}
-          className={`nav-action-btn chat-nav-btn ${studentInfo?.registered && connectionStatus === 'connected' ? 'synced' : 'locked'}`}
-          title={
-            studentInfo?.registered && connectionStatus === 'connected'
-              ? (isHandRaised ? "Hand Raised! Click to view group chat or lower hand." : "Open Workshop Group Chat & Raise Hand")
-              : "Group Chat requires active attendance login with instructor host"
-          }
-          style={{
-            position: 'relative',
-            background: isHandRaised ? 'rgba(245, 158, 11, 0.2)' : undefined,
-            borderColor: isHandRaised ? '#f59e0b' : undefined,
-            color: isHandRaised ? '#b45309' : undefined
-          }}
-        >
-          {isHandRaised ? <Hand size={16} /> : <MessageSquare size={16} />}
-          <span>{isHandRaised ? 'Hand Raised' : 'Group Chat'}</span>
-          {unreadChatCount > 0 && !isHandRaised && (
-            <span style={{
-              position: 'absolute',
-              top: -4,
-              right: -4,
-              background: 'var(--accent-primary)',
-              color: '#fff',
-              fontSize: '0.7rem',
-              fontWeight: 800,
-              padding: '1px 5px',
-              borderRadius: 10,
-              lineHeight: 1
-            }}>
-              {unreadChatCount}
-            </span>
-          )}
         </button>
 
         {/* Help & FAQ Button */}
