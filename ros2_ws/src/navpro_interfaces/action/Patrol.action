@@ -1,0 +1,14 @@
+# Goal: List of targets and total patrol loops
+geometry_msgs/Point[] waypoints
+int32 loop_count
+---
+# Result: Final status
+bool success
+int32 completed_loops
+float32 total_distance_traveled
+string final_report
+---
+# Feedback: Real-time progress
+int32 current_waypoint_index
+float32 distance_to_target
+float32 estimated_time_remaining

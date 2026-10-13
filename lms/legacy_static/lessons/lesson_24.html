@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lesson 24: Nav2 Behavior Trees And Recoveries | Level 1 Foundations</title>
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="stylesheet" href="../assets/css/animations.css">
+  <link rel="stylesheet" href="../assets/css/highlight-dark.min.css">
+  <link rel="stylesheet" href="../assets/css/quiz.css">
+  <link rel="stylesheet" href="../assets/css/instructor_sync.css">
+</head>
+<body>
+  <header class="app-header">
+    <div class="brand-container">
+      <a href="https://botforge.in" target="_blank" class="company-brand" title="Botforge Robotics - botforge.in">
+        <img src="../assets/images/botforge_black.png" alt="Botforge Robotics" class="company-logo">
+      </a>
+      <div class="brand-divider"></div>
+      <a href="../index.html" class="brand" title="Level 1: ROS 2 Foundations">
+        <img src="../assets/images/ros2_logo.svg" alt="ROS 2" class="brand-logo">
+        <span class="brand-title">NavPro Learning Hub</span>
+        <span class="badge-jazzy">ROS 2 Jazzy</span>
+      </a>
+    </div>
+    <div class="header-center">
+      <input type="text" id="lessonSearchInput" class="search-input" placeholder="🔍 Search Level 1 curriculum...">
+    </div>
+    <div class="header-actions">
+      <a href="http://localhost:6080/vnc.html" target="_blank" class="track-btn" title="Open Ubuntu Desktop GUI via noVNC">🖥️ Desktop GUI</a>
+      <a href="http://localhost:8443/?folder=/home/student/ros2_ws" target="_blank" class="track-btn" title="Open VS Code in browser">💻 VS Code</a>
+      <a href="../index.html" class="track-btn active">Curriculum Hub</a>
+      <span class="theme-pill">☀️ Light Theme</span>
+    </div>
+  </header>
+
+  <div class="app-container">
+    <aside class="app-sidebar">
+      <div class="progress-card">
+        <div class="progress-header">
+          <span>Curriculum Progress</span>
+          <span id="overallProgressText">0% Complete (0/26)</span>
+        </div>
+        <div class="progress-bar-track">
+          <div id="overallProgressBar" class="progress-bar-fill"></div>
+        </div>
+        <button id="resetProgressBtn" class="track-btn reset-btn" style="width:100%; margin-top:8px; justify-content:center;">↺ Reset Progress</button>
+      </div>
+
+      
+        <div class="sidebar-section-title">ROS 2 Foundations (26 Lessons)</div>
+        <ul class="lesson-list">
+          
+            <li>
+              <a href="lesson_01.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_01" onclick="event.stopPropagation();">
+                <span class="lesson-num">01</span>
+                <span class="lesson-title">Linux Fundamentals For Robotics</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_02.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_02" onclick="event.stopPropagation();">
+                <span class="lesson-num">02</span>
+                <span class="lesson-title">Ros2 Overview And Environment Setup</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_03.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_03" onclick="event.stopPropagation();">
+                <span class="lesson-num">03</span>
+                <span class="lesson-title">Workspace And First Python Node</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_04.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_04" onclick="event.stopPropagation();">
+                <span class="lesson-num">04</span>
+                <span class="lesson-title">Package Architecture And Configuration</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_05.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_05" onclick="event.stopPropagation();">
+                <span class="lesson-num">05</span>
+                <span class="lesson-title">Publishers Subscribers And Qos</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_06.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_06" onclick="event.stopPropagation();">
+                <span class="lesson-num">06</span>
+                <span class="lesson-title">Vscode Debugging And Ros2 Logging</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_07.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_07" onclick="event.stopPropagation();">
+                <span class="lesson-num">07</span>
+                <span class="lesson-title">Interfaces And Custom Messages</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_08.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_08" onclick="event.stopPropagation();">
+                <span class="lesson-num">08</span>
+                <span class="lesson-title">Services Server Client Python</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_09.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_09" onclick="event.stopPropagation();">
+                <span class="lesson-num">09</span>
+                <span class="lesson-title">Dynamic Parameters And Yaml</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_10.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_10" onclick="event.stopPropagation();">
+                <span class="lesson-num">10</span>
+                <span class="lesson-title">Launch Files And Runtime Management</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_11.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_11" onclick="event.stopPropagation();">
+                <span class="lesson-num">11</span>
+                <span class="lesson-title">Ros2 Actions Server And Client</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_12.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_12" onclick="event.stopPropagation();">
+                <span class="lesson-num">12</span>
+                <span class="lesson-title">Ros2 Bag Recording And Playback</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_13.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_13" onclick="event.stopPropagation();">
+                <span class="lesson-num">13</span>
+                <span class="lesson-title">Ros2 Cli Command Mastery</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_14.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_14" onclick="event.stopPropagation();">
+                <span class="lesson-num">14</span>
+                <span class="lesson-title">Tf2 Coordinate Transformations Python</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_15.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_15" onclick="event.stopPropagation();">
+                <span class="lesson-num">15</span>
+                <span class="lesson-title">Distributed Ros2 And Dds Networking</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_16.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_16" onclick="event.stopPropagation();">
+                <span class="lesson-num">16</span>
+                <span class="lesson-title">Project Opencv Ros2 Vision</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_17.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_17" onclick="event.stopPropagation();">
+                <span class="lesson-num">17</span>
+                <span class="lesson-title">3D Modeling Urdf Xacro</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_18.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_18" onclick="event.stopPropagation();">
+                <span class="lesson-num">18</span>
+                <span class="lesson-title">Rviz2 Visualization Tf Inspection</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_19.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_19" onclick="event.stopPropagation();">
+                <span class="lesson-num">19</span>
+                <span class="lesson-title">Gazebo Physics And Sensor Plugins</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_20.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_20" onclick="event.stopPropagation();">
+                <span class="lesson-num">20</span>
+                <span class="lesson-title">Building Simulation Worlds</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_21.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_21" onclick="event.stopPropagation();">
+                <span class="lesson-num">21</span>
+                <span class="lesson-title">2D Slam Mapping Slam Toolbox</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_22.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_22" onclick="event.stopPropagation();">
+                <span class="lesson-num">22</span>
+                <span class="lesson-title">Nav2 Architecture And Costmaps</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_23.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_23" onclick="event.stopPropagation();">
+                <span class="lesson-num">23</span>
+                <span class="lesson-title">Nav2 Planners Controllers Tuning</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_24.html" class="lesson-item active">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_24" onclick="event.stopPropagation();">
+                <span class="lesson-num">24</span>
+                <span class="lesson-title">Nav2 Behavior Trees And Recoveries</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_25.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_25" onclick="event.stopPropagation();">
+                <span class="lesson-num">25</span>
+                <span class="lesson-title">Autonomous Patrol Nav2 Simple Commander</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_26.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_26" onclick="event.stopPropagation();">
+                <span class="lesson-num">26</span>
+                <span class="lesson-title">Physical Robot Hardware Deployment</span>
+              </a>
+            </li>
+            
+        </ul>
+        
+    </aside>
+
+    <main class="app-content">
+      <article class="markdown-body">
+        
+        <div class="concept-card">
+          <h3>⚡ Quick Concept Snapshot</h3>
+          <ul>
+            <li><strong>Behavior Trees (BT):</strong> Hierarchical tree execution enabling reactive autonomous decision-making and recovery behaviors.</li>
+            <li><strong>Control Nodes:</strong> Fallbacks (Selector = OR logic for recoveries), Sequences (AND logic for navigation steps), and Action/Condition leaves.</li>
+          </ul>
+        </div>
+        <h1>Lesson 24: Behavior Trees, Recovery Behaviors &amp; Lifecycle Management</h1>
+<blockquote class="alert alert-note"><strong>Focus:</strong> BT Navigator Engine, Recovery Plugins (Spin, BackUp, Wait) &amp; Lifecycle State Machines<br><strong>Course Track:</strong> NavPro Learning Hub - Level 1<br><strong>Target Environment:</strong> ROS 2 Jazzy Jalisco</blockquote>
+<hr>
+<h2>1. Overview &amp; Learning Objectives</h2>
+<p>What happens when an autonomous robot gets stuck? A pallet jack is parked in its path, a worker stands in the doorway, or localization loses confidence?</p>
+<p>In legacy robotics, state machines became unmaintainable &quot;spaghetti state diagrams.&quot; In Nav2, decision-making is governed by <strong>Behavior Trees (BT)</strong> and managed by <strong>Lifecycle Nodes</strong>.</p>
+<p>By the end of this lesson, you will:</p>
+<ol>
+<li>Understand why Behavior Trees replaced Finite State Machines in modern autonomous systems.</li>
+<li>Master the core BT node primitives: Action, Condition, Sequence, and Fallback.</li>
+<li>Configure the <strong>Recovery Behavior Server</strong> (Spin, BackUp, Wait, and Costmap Clearing).</li>
+<li>Master ROS 2 <strong>Lifecycle Management</strong> (<code>Unconfigured -&gt; Inactive -&gt; Active</code>).</li>
+<li>Visualize and audit behavior trees in real time.</li>
+</ol>
+<hr>
+<h2>2. Why Behavior Trees Over State Machines?</h2>
+<div class="table-wrapper"><table>
+<thead><tr>
+<th>Finite State Machine (FSM)</th>
+<th>Behavior Tree (BT)</th>
+</tr></thead><tbody>
+<tr>
+<td>$N^2$ possible transition arrows</td>
+<td>Highly modular sub-trees</td>
+</tr>
+<tr>
+<td>High risk of unhandled edge cases</td>
+<td>Composable and readable</td>
+</tr>
+<tr>
+<td>Difficult to add new behaviors</td>
+<td>Reactive tick-based execution</td>
+</tr>
+</tbody></table></div>
+<p>A Behavior Tree executes by sending periodic <strong>Ticks</strong> from the root downward. Each node returns one of three statuses:</p>
+<ul>
+<li><code>SUCCESS</code>: The action completed successfully.</li>
+<li><code>FAILURE</code>: The action failed (e.g. planner found no path).</li>
+<li><code>RUNNING</code>: The action is currently in progress (e.g. robot is moving).</li>
+</ul>
+<hr>
+<h2>3. The Recovery Sub-Tree Pipeline</h2>
+<p>When the robot encounters an obstacle that blocks its planned path:</p>
+<div style="text-align:center; margin:1.6rem 0;"><img src="../assets/images/nav2_bt_pipeline.svg" alt="Nav2 Behavior Tree Recovery Pipeline" style="max-width:100%; border-radius:10px; border:1px solid #e2e8f0; box-shadow:0 2px 8px rgba(0,0,0,0.05); background:#ffffff;"></div>
+<ol>
+<li><strong>Clear Entire Costmap:</strong> Strips out transient sensor noise or dynamic obstacles that may have already moved.</li>
+<li><strong>BackUp Recovery:</strong> Reverses 30cm to create maneuvering clearance.</li>
+<li><strong>Spin Recovery:</strong> Rotates 360 degrees to scan the perimeter and find open exits.</li>
+<li><strong>Wait Recovery:</strong> Pauses for 2-5 seconds allowing walking humans to clear the lane.</li>
+</ol>
+<hr>
+<h2>4. The ROS 2 Lifecycle State Machine</h2>
+<p>Every major node in Nav2 (Planner, Controller, Recoveries, Costmaps) is a <strong>Managed Lifecycle Node</strong>:</p>
+<div style="text-align:center; margin:1.6rem 0;"><img src="../assets/images/lifecycle_state_machine.svg" alt="ROS 2 Managed Lifecycle Node" style="max-width:100%; border-radius:10px; border:1px solid #e2e8f0; box-shadow:0 2px 8px rgba(0,0,0,0.05); background:#ffffff;"></div>
+<h3>Why Lifecycle Nodes are Crucial:</h3>
+<p>In ROS 1, nodes started operating immediately on launch. If a path planner launched before the map server was finished loading, the robot would crash.</p>
+<p>In ROS 2, the <strong><code>lifecycle_manager</code></strong> guarantees that all nodes are configured, memory is allocated, and topics are connected before any node enters the <code>Active</code> state!</p>
+<hr>
+<h2>5. Inspecting Lifecycle States with the CLI</h2>
+<div class="code-container"><pre><button class="copy-btn">Copy</button><code class="language-bash"># 1. List all managed lifecycle nodes
+ros2 lifecycle nodes
+
+# 2. Query the lifecycle state of the controller server
+ros2 lifecycle get /controller_server
+# Output: active [3]
+
+# 3. Manually transition a node state for diagnostics
+ros2 lifecycle set /controller_server deactivate
+ros2 lifecycle set /controller_server activate</code></pre></div>
+<hr>
+<h2>6. Hands-on Student Challenge</h2>
+<p><strong>Task:</strong></p>
+<ol>
+<li>Start Nav2 navigation: <code>ros2 launch navpro_navigation navigation.launch.py</code>.</li>
+<li>Send a navigation goal into a dead-end corridor in the warehouse.</li>
+<li>In Gazebo, place a static box directly in front of the robot while it is driving.</li>
+<li>Watch the robot stop, trigger the Recovery Pipeline: observe it backup 0.3m, spin, recompute a global detour around the obstacle, and proceed!</li>
+</ol>
+      </article>
+
+      <footer class="lesson-nav-footer">
+        <a href="lesson_23.html" class="nav-link-btn" >&larr; Previous Lesson</a>
+        <a href="../index.html" class="nav-link-btn">🧭 Course Hub</a>
+        <a href="lesson_25.html" class="nav-link-btn" >Next Lesson &rarr;</a>
+      </footer>
+    </main>
+  </div>
+
+  <script src="../assets/js/highlight.min.js"></script>
+  <script src="../assets/js/app.js"></script>
+  <script src="../assets/js/quiz_engine.js"></script>
+  <script src="../assets/js/instructor_sync.js"></script>
+</body>
+</html>

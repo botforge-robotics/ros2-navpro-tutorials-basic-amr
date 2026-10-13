@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 340" width="100%" height="100%">
+  <defs>
+    <filter id="netShadow" x="-2%" y="-3%" width="104%" height="108%">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#0f172a" flood-opacity="0.08"/>
+    </filter>
+  </defs>
+
+  <rect width="800" height="340" rx="12" fill="#ffffff" stroke="#e2e8f0" stroke-width="1.5"/>
+  <text x="400" y="30" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="16" font-weight="800" fill="#0f172a" text-anchor="middle">DISTRIBUTED ROS 2: DDS DOMAIN ID &amp; SUBNET ISOLATION</text>
+
+  <!-- Physical LAN boundary -->
+  <rect x="30" y="50" width="740" height="260" rx="10" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5" stroke-dasharray="6,4"/>
+  <text x="50" y="74" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" font-weight="700" fill="#64748b">Local Area Network (WiFi / Ethernet: 192.168.1.0/24)</text>
+
+  <!-- Domain 42 Box (Robot Fleet A) -->
+  <g filter="url(#netShadow)">
+    <rect x="50" y="90" width="330" height="200" rx="8" fill="#eff6ff" stroke="#3b82f6" stroke-width="2"/>
+    <rect x="50" y="90" width="330" height="30" rx="8" fill="#3b82f6"/>
+    <text x="215" y="110" font-family="monospace" font-size="13" font-weight="bold" fill="#ffffff" text-anchor="middle">ROS_DOMAIN_ID = 42 (Robot Fleet A)</text>
+
+    <!-- Node 1 -->
+    <rect x="75" y="140" width="120" height="50" rx="6" fill="#ffffff" stroke="#3b82f6" stroke-width="1.5"/>
+    <text x="135" y="162" font-family="monospace" font-size="11" font-weight="bold" fill="#1e3a8a" text-anchor="middle">AMR-01 Node</text>
+    <text x="135" y="178" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="10" fill="#64748b" text-anchor="middle">IP: 192.168.1.101</text>
+
+    <!-- Node 2 -->
+    <rect x="235" y="140" width="120" height="50" rx="6" fill="#ffffff" stroke="#3b82f6" stroke-width="1.5"/>
+    <text x="295" y="162" font-family="monospace" font-size="11" font-weight="bold" fill="#1e3a8a" text-anchor="middle">Base Station</text>
+    <text x="295" y="178" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="10" fill="#64748b" text-anchor="middle">IP: 192.168.1.50</text>
+
+    <!-- Connected Arrow -->
+    <path d="M 195 165 L 235 165" stroke="#2563eb" stroke-width="2.5"/>
+    <polygon points="230,161 238,165 230,169" fill="#2563eb"/>
+    <polygon points="200,161 192,165 200,169" fill="#2563eb"/>
+    <text x="215" y="215" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11" font-weight="600" fill="#2563eb" text-anchor="middle">✓ Discover &amp; Exchange Topics</text>
+  </g>
+
+  <!-- Domain 88 Box (Robot Fleet B) -->
+  <g filter="url(#netShadow)">
+    <rect x="420" y="90" width="330" height="200" rx="8" fill="#fdf4ff" stroke="#a855f7" stroke-width="2"/>
+    <rect x="420" y="90" width="330" height="30" rx="8" fill="#a855f7"/>
+    <text x="585" y="110" font-family="monospace" font-size="13" font-weight="bold" fill="#ffffff" text-anchor="middle">ROS_DOMAIN_ID = 88 (Robot Fleet B)</text>
+
+    <!-- Node 3 -->
+    <rect x="445" y="140" width="120" height="50" rx="6" fill="#ffffff" stroke="#a855f7" stroke-width="1.5"/>
+    <text x="505" y="162" font-family="monospace" font-size="11" font-weight="bold" fill="#581c87" text-anchor="middle">AMR-02 Node</text>
+    <text x="505" y="178" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="10" fill="#64748b" text-anchor="middle">IP: 192.168.1.102</text>
+
+    <!-- Node 4 -->
+    <rect x="605" y="140" width="120" height="50" rx="6" fill="#ffffff" stroke="#a855f7" stroke-width="1.5"/>
+    <text x="665" y="162" font-family="monospace" font-size="11" font-weight="bold" fill="#581c87" text-anchor="middle">Operator Cockpit</text>
+    <text x="665" y="178" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="10" fill="#64748b" text-anchor="middle">IP: 192.168.1.55</text>
+
+    <!-- Connected Arrow -->
+    <path d="M 565 165 L 605 165" stroke="#9333ea" stroke-width="2.5"/>
+    <polygon points="600,161 608,165 600,169" fill="#9333ea"/>
+    <polygon points="570,161 562,165 570,169" fill="#9333ea"/>
+    <text x="585" y="215" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11" font-weight="600" fill="#9333ea" text-anchor="middle">✓ Discover &amp; Exchange Topics</text>
+  </g>
+
+  <!-- Cross Domain Blocked Line -->
+  <path d="M 380 180 L 420 180" stroke="#ef4444" stroke-width="2.5" stroke-dasharray="4,4"/>
+  <circle cx="400" cy="180" r="10" fill="#ef4444"/>
+  <text x="400" y="184" font-family="monospace" font-size="11" font-weight="bold" fill="#ffffff" text-anchor="middle">✕</text>
+  <text x="400" y="240" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11" font-weight="700" fill="#ef4444" text-anchor="middle">Zero Topic Cross-Talk</text>
+  <text x="400" y="255" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="10" fill="#64748b" text-anchor="middle">Different UDP Multicast Ports</text>
+</svg>

@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lesson 16: Project Opencv Ros2 Vision | Level 1 Foundations</title>
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="stylesheet" href="../assets/css/animations.css">
+  <link rel="stylesheet" href="../assets/css/highlight-dark.min.css">
+  <link rel="stylesheet" href="../assets/css/quiz.css">
+  <link rel="stylesheet" href="../assets/css/instructor_sync.css">
+</head>
+<body>
+  <header class="app-header">
+    <div class="brand-container">
+      <a href="https://botforge.in" target="_blank" class="company-brand" title="Botforge Robotics - botforge.in">
+        <img src="../assets/images/botforge_black.png" alt="Botforge Robotics" class="company-logo">
+      </a>
+      <div class="brand-divider"></div>
+      <a href="../index.html" class="brand" title="Level 1: ROS 2 Foundations">
+        <img src="../assets/images/ros2_logo.svg" alt="ROS 2" class="brand-logo">
+        <span class="brand-title">NavPro Learning Hub</span>
+        <span class="badge-jazzy">ROS 2 Jazzy</span>
+      </a>
+    </div>
+    <div class="header-center">
+      <input type="text" id="lessonSearchInput" class="search-input" placeholder="🔍 Search Level 1 curriculum...">
+    </div>
+    <div class="header-actions">
+      <a href="http://localhost:6080/vnc.html" target="_blank" class="track-btn" title="Open Ubuntu Desktop GUI via noVNC">🖥️ Desktop GUI</a>
+      <a href="http://localhost:8443/?folder=/home/student/ros2_ws" target="_blank" class="track-btn" title="Open VS Code in browser">💻 VS Code</a>
+      <a href="../index.html" class="track-btn active">Curriculum Hub</a>
+      <span class="theme-pill">☀️ Light Theme</span>
+    </div>
+  </header>
+
+  <div class="app-container">
+    <aside class="app-sidebar">
+      <div class="progress-card">
+        <div class="progress-header">
+          <span>Curriculum Progress</span>
+          <span id="overallProgressText">0% Complete (0/26)</span>
+        </div>
+        <div class="progress-bar-track">
+          <div id="overallProgressBar" class="progress-bar-fill"></div>
+        </div>
+        <button id="resetProgressBtn" class="track-btn reset-btn" style="width:100%; margin-top:8px; justify-content:center;">↺ Reset Progress</button>
+      </div>
+
+      
+        <div class="sidebar-section-title">ROS 2 Foundations (26 Lessons)</div>
+        <ul class="lesson-list">
+          
+            <li>
+              <a href="lesson_01.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_01" onclick="event.stopPropagation();">
+                <span class="lesson-num">01</span>
+                <span class="lesson-title">Linux Fundamentals For Robotics</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_02.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_02" onclick="event.stopPropagation();">
+                <span class="lesson-num">02</span>
+                <span class="lesson-title">Ros2 Overview And Environment Setup</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_03.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_03" onclick="event.stopPropagation();">
+                <span class="lesson-num">03</span>
+                <span class="lesson-title">Workspace And First Python Node</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_04.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_04" onclick="event.stopPropagation();">
+                <span class="lesson-num">04</span>
+                <span class="lesson-title">Package Architecture And Configuration</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_05.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_05" onclick="event.stopPropagation();">
+                <span class="lesson-num">05</span>
+                <span class="lesson-title">Publishers Subscribers And Qos</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_06.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_06" onclick="event.stopPropagation();">
+                <span class="lesson-num">06</span>
+                <span class="lesson-title">Vscode Debugging And Ros2 Logging</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_07.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_07" onclick="event.stopPropagation();">
+                <span class="lesson-num">07</span>
+                <span class="lesson-title">Interfaces And Custom Messages</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_08.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_08" onclick="event.stopPropagation();">
+                <span class="lesson-num">08</span>
+                <span class="lesson-title">Services Server Client Python</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_09.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_09" onclick="event.stopPropagation();">
+                <span class="lesson-num">09</span>
+                <span class="lesson-title">Dynamic Parameters And Yaml</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_10.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_10" onclick="event.stopPropagation();">
+                <span class="lesson-num">10</span>
+                <span class="lesson-title">Launch Files And Runtime Management</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_11.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_11" onclick="event.stopPropagation();">
+                <span class="lesson-num">11</span>
+                <span class="lesson-title">Ros2 Actions Server And Client</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_12.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_12" onclick="event.stopPropagation();">
+                <span class="lesson-num">12</span>
+                <span class="lesson-title">Ros2 Bag Recording And Playback</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_13.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_13" onclick="event.stopPropagation();">
+                <span class="lesson-num">13</span>
+                <span class="lesson-title">Ros2 Cli Command Mastery</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_14.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_14" onclick="event.stopPropagation();">
+                <span class="lesson-num">14</span>
+                <span class="lesson-title">Tf2 Coordinate Transformations Python</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_15.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_15" onclick="event.stopPropagation();">
+                <span class="lesson-num">15</span>
+                <span class="lesson-title">Distributed Ros2 And Dds Networking</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_16.html" class="lesson-item active">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_16" onclick="event.stopPropagation();">
+                <span class="lesson-num">16</span>
+                <span class="lesson-title">Project Opencv Ros2 Vision</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_17.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_17" onclick="event.stopPropagation();">
+                <span class="lesson-num">17</span>
+                <span class="lesson-title">3D Modeling Urdf Xacro</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_18.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_18" onclick="event.stopPropagation();">
+                <span class="lesson-num">18</span>
+                <span class="lesson-title">Rviz2 Visualization Tf Inspection</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_19.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_19" onclick="event.stopPropagation();">
+                <span class="lesson-num">19</span>
+                <span class="lesson-title">Gazebo Physics And Sensor Plugins</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_20.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_20" onclick="event.stopPropagation();">
+                <span class="lesson-num">20</span>
+                <span class="lesson-title">Building Simulation Worlds</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_21.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_21" onclick="event.stopPropagation();">
+                <span class="lesson-num">21</span>
+                <span class="lesson-title">2D Slam Mapping Slam Toolbox</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_22.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_22" onclick="event.stopPropagation();">
+                <span class="lesson-num">22</span>
+                <span class="lesson-title">Nav2 Architecture And Costmaps</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_23.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_23" onclick="event.stopPropagation();">
+                <span class="lesson-num">23</span>
+                <span class="lesson-title">Nav2 Planners Controllers Tuning</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_24.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_24" onclick="event.stopPropagation();">
+                <span class="lesson-num">24</span>
+                <span class="lesson-title">Nav2 Behavior Trees And Recoveries</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_25.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_25" onclick="event.stopPropagation();">
+                <span class="lesson-num">25</span>
+                <span class="lesson-title">Autonomous Patrol Nav2 Simple Commander</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_26.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_26" onclick="event.stopPropagation();">
+                <span class="lesson-num">26</span>
+                <span class="lesson-title">Physical Robot Hardware Deployment</span>
+              </a>
+            </li>
+            
+        </ul>
+        
+    </aside>
+
+    <main class="app-content">
+      <article class="markdown-body">
+        <h1>Lesson 16: Project 3.2: Computer Vision &amp; OpenCV Integration with ROS 2</h1>
+<blockquote class="alert alert-note"><strong>Focus:</strong> Python Computer Vision Pipeline, <code>cv_bridge</code> Conversion &amp; Vision Service Processing<br><strong>Course Track:</strong> NavPro Learning Hub - Level 1 (Project 3.2 - Python Only)<br><strong>Target Environment:</strong> ROS 2 Jazzy Jalisco</blockquote>
+<hr>
+<h2>1. Overview &amp; Learning Objectives</h2>
+<p>Visual perception is essential for modern autonomous mobile robots: identifying QR barcodes on warehouse shelving, detecting pallet drop zones, and tracking human workers.</p>
+<p>ROS 2 streams images using the standard message type <code>sensor_msgs/msg/Image</code>. However, computer vision libraries like <strong>OpenCV</strong> manipulate images as standard NumPy multidimensional arrays. The official ROS package <strong><code>cv_bridge</code></strong> bridges this gap.</p>
+<p>By the end of this capstone lesson, you will:</p>
+<ol>
+<li>Understand image serialization in ROS 2: encoding types (<code>bgr8</code>, <code>rgb8</code>, <code>mono8</code>).</li>
+<li>Use <code>cv_bridge.CvBridge</code> to convert between <code>sensor_msgs/msg/Image</code> and OpenCV NumPy matrices.</li>
+<li>Build a Python <strong>Camera Streamer Node</strong> generating simulated color test video.</li>
+<li>Build a Python <strong>Vision Processing Service Node</strong> executing Canny Edge Detection and contour extraction.</li>
+<li>Inspect live image topics using <code>rqt_image_view</code> and RViz2.</li>
+</ol>
+<hr>
+<h2>2. The <code>cv_bridge</code> Conversion Architecture</h2>
+<div style="text-align:center; margin:1.6rem 0;"><img src="../assets/images/opencv_cv_bridge_pipeline.svg" alt="OpenCV cv_bridge Conversion Pipeline" style="max-width:100%; border-radius:10px; border:1px solid #e2e8f0; box-shadow:0 2px 8px rgba(0,0,0,0.05); background:#ffffff;"></div>
+<h3>Install Prerequisites:</h3>
+<div class="code-container"><pre><button class="copy-btn">Copy</button><code class="language-bash">sudo apt install -y ros-jazzy-cv-bridge ros-jazzy-image-transport python3-opencv rqt-image-view</code></pre></div>
+<hr>
+<h2>3. Step-by-Step: Camera Streamer Node (<code>camera_publisher.py</code>)</h2>
+<p>This node simulates an onboard mobile robot camera publishing 640x480 video frames at 15 Hz.</p>
+<p>Create file <code>camera_publisher.py</code>:</p>
+<div class="code-container"><pre><button class="copy-btn">Copy</button><code class="language-python">#!/usr/bin/env python3
+&quot;&quot;&quot;
+NavPro Learning Hub - Lesson 16
+Camera Streamer: Generates simulated moving geometric patterns and publishes sensor_msgs/Image.
+&quot;&quot;&quot;
+
+import math
+import numpy as np
+import cv2
+import rclpy
+from rclpy.node import Node
+from sensor_msgs.msg import Image
+from cv_bridge import CvBridge
+
+
+class SimulatedCameraPublisher(Node):
+
+    def __init__(self):
+        super().__init__(&#x27;camera_publisher&#x27;)
+
+        # Create Publisher on /camera/image_raw
+        self.pub_ = self.create_publisher(Image, &#x27;/camera/image_raw&#x27;, 10)
+        self.bridge_ = CvBridge()
+
+        # 15 Hz stream timer
+        self.timer_ = self.create_timer(1.0 / 15.0, self.stream_frame)
+        self.tick_ = 0
+
+        self.get_logger().info(&#x27;Simulated Camera Publisher active on /camera/image_raw (15 Hz).&#x27;)
+
+    def stream_frame(self):
+        self.tick_ += 1
+
+        # 1. Create a 640x480 dark slate canvas (NumPy array)
+        frame = np.full((480, 640, 3), 32, dtype=np.uint8)
+
+        # 2. Draw moving target circle simulating a warehouse pallet target
+        center_x = int(320 + 180 * math.sin(self.tick_ * 0.08))
+        center_y = int(240 + 80 * math.cos(self.tick_ * 0.08))
+
+        # Outer bounding box
+        cv2.rectangle(frame, (center_x - 50, center_y - 50), (center_x + 50, center_y + 50), (0, 200, 255), 3)
+        # Inner target circle
+        cv2.circle(frame, (center_x, center_y), 25, (0, 255, 120), -1)
+
+        # Draw HUD Telemetry text overlay
+        cv2.putText(frame, f&quot;NAVPRO OPTICAL FEED | FRAME #{self.tick_}&quot;, (20, 40),
+                    cv2.FONT_HERSHEY_SIMPLEX, 0.7, (220, 220, 220), 2)
+
+        # 3. Convert OpenCV NumPy array to ROS 2 Image message
+        msg = self.bridge_.cv2_to_imgmsg(frame, encoding=&#x27;bgr8&#x27;)
+        msg.header.stamp = self.get_clock().now().to_msg()
+        msg.header.frame_id = &#x27;camera_optical_link&#x27;
+
+        # 4. Publish message
+        self.pub_.publish(msg)
+
+
+def main():
+    rclpy.init()
+    node = SimulatedCameraPublisher()
+    try:
+        rclpy.spin(node)
+    except KeyboardInterrupt:
+        pass
+    finally:
+        node.destroy_node()
+        rclpy.shutdown()
+
+
+if __name__ == &#x27;__main__&#x27;:
+    main()</code></pre></div>
+<hr>
+<h2>4. Step-by-Step: Vision Processing Node with Service (<code>vision_service_node.py</code>)</h2>
+<p>This node subscribes to <code>/camera/image_raw</code>, performs Canny edge detection, and exposes a ROS 2 Service <code>/vision/capture_target</code> that counts how many edges/contours exist in the current scene!</p>
+<p>Create file <code>vision_service_node.py</code>:</p>
+<div class="code-container"><pre><button class="copy-btn">Copy</button><code class="language-python">#!/usr/bin/env python3
+&quot;&quot;&quot;
+NavPro Learning Hub - Lesson 16
+Vision Service: Performs Canny edge detection and exposes a trigger service to count contours.
+&quot;&quot;&quot;
+
+import cv2
+import rclpy
+from rclpy.node import Node
+from sensor_msgs.msg import Image
+from std_srvs.srv import Trigger
+from cv_bridge import CvBridge, CvBridgeError
+
+
+class VisionProcessorNode(Node):
+
+    def __init__(self):
+        super().__init__(&#x27;vision_processor_node&#x27;)
+
+        self.bridge_ = CvBridge()
+        self.latest_cv_image = None
+        self.detected_contour_count = 0
+
+        # 1. Subscriber to raw camera feed
+        self.sub_ = self.create_subscription(
+            Image,
+            &#x27;/camera/image_raw&#x27;,
+            self.image_callback,
+            10
+        )
+
+        # 2. Publisher for processed edge detection output
+        self.processed_pub_ = self.create_publisher(Image, &#x27;/camera/image_edges&#x27;, 10)
+
+        # 3. Service Server: Returns inspection analytics on demand
+        self.srv_ = self.create_service(
+            Trigger,
+            &#x27;/vision/inspect_target&#x27;,
+            self.handle_inspect_service
+        )
+
+        self.get_logger().info(&#x27;Vision Processor Node active. Listening on /camera/image_raw.&#x27;)
+
+    def image_callback(self, msg: Image):
+        &quot;&quot;&quot;Processes incoming camera frames in real time.&quot;&quot;&quot;
+        try:
+            # Convert ROS 2 Image to OpenCV BGR matrix
+            cv_image = self.bridge_.imgmsg_to_cv2(msg, desired_encoding=&#x27;bgr8&#x27;)
+            self.latest_cv_image = cv_image
+        except CvBridgeError as e:
+            self.get_logger().error(f&#x27;CvBridge conversion error: {e}&#x27;)
+            return
+
+        # 1. Convert to Grayscale
+        gray = cv2.cvtColor(cv_image, cv2.COLOR_BGR2GRAY)
+
+        # 2. Apply Gaussian Blur to filter sensor noise
+        blurred = cv2.GaussianBlur(gray, (5, 5), 0)
+
+        # 3. Canny Edge Detection (Thresholds 50 to 150)
+        edges = cv2.Canny(blurred, 50, 150)
+
+        # 4. Find Contours
+        contours, _ = cv2.findContours(edges, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+        self.detected_contour_count = len(contours)
+
+        # 5. Convert edge detection back to ROS Image message and publish
+        out_msg = self.bridge_.cv2_to_imgmsg(edges, encoding=&#x27;mono8&#x27;)
+        out_msg.header = msg.header
+        self.processed_pub_.publish(out_msg)
+
+    def handle_inspect_service(self, request: Trigger.Request, response: Trigger.Response) -&gt; Trigger.Response:
+        &quot;&quot;&quot;Service callback returning the current optical inspection outcome.&quot;&quot;&quot;
+        if self.latest_cv_image is None:
+            response.success = False
+            response.message = &quot;No camera frames received yet.&quot;
+            return response
+
+        response.success = True
+        response.message = f&quot;Optical Inspection Complete: Identified {self.detected_contour_count} distinct objects/edges.&quot;
+        self.get_logger().info(f&#x27;Inspection Service triggered -&gt; {response.message}&#x27;)
+        return response
+
+
+def main():
+    rclpy.init()
+    node = VisionProcessorNode()
+    try:
+        rclpy.spin(node)
+    except KeyboardInterrupt:
+        pass
+    finally:
+        node.destroy_node()
+        rclpy.shutdown()
+
+
+if __name__ == &#x27;__main__&#x27;:
+    main()</code></pre></div>
+<hr>
+<h2>5. Verification &amp; Visualizing in <code>rqt_image_view</code></h2>
+<p>In Terminal 1:</p>
+<div class="code-container"><pre><button class="copy-btn">Copy</button><code class="language-bash">python3 camera_publisher.py</code></pre></div>
+<p>In Terminal 2:</p>
+<div class="code-container"><pre><button class="copy-btn">Copy</button><code class="language-bash">python3 vision_service_node.py</code></pre></div>
+<p>In Terminal 3, view the raw and processed feeds:</p>
+<div class="code-container"><pre><button class="copy-btn">Copy</button><code class="language-bash"># Launch RQT Image View GUI
+rqt_image_view</code></pre></div>
+<p><em>In the dropdown menu, select <code>/camera/image_raw</code> to see the simulated color moving target, and <code>/camera/image_edges</code> to view real-time Canny edge extraction!</em></p>
+<p>In Terminal 4, call the vision inspection service:</p>
+<div class="code-container"><pre><button class="copy-btn">Copy</button><code class="language-bash">ros2 service call /vision/inspect_target std_srvs/srv/Trigger</code></pre></div>
+<p><em>Expected Output:</em></p>
+<div class="code-container"><pre><button class="copy-btn">Copy</button><code class="language-bash">response:
+std_srvs.srv.Trigger_Response(
+  success=True,
+  message=&#x27;Optical Inspection Complete: Identified 2 distinct objects/edges.&#x27;
+)</code></pre></div>
+<hr>
+<h2>6. Hands-on Student Challenge</h2>
+<p><strong>Task:</strong></p>
+<ol>
+<li>In <code>vision_service_node.py</code>, add color filtering using <code>cv2.inRange()</code> in HSV color space to isolate yellow targets.</li>
+<li>Calculate the centroid coordinates $(c_x, c_y)$ of the largest contour using OpenCV image moments:</li>
+</ol>
+<p>$$c_x = \frac{M_{10}}{M_{00}}, \quad c_y = \frac{M_{01}}{M_{00}}$$</p>
+<ol>
+<li>Include the detected target centroid $(c_x, c_y)$ in the service response message!</li>
+</ol>
+      </article>
+
+      <footer class="lesson-nav-footer">
+        <a href="lesson_15.html" class="nav-link-btn" >&larr; Previous Lesson</a>
+        <a href="../index.html" class="nav-link-btn">🧭 Course Hub</a>
+        <a href="lesson_17.html" class="nav-link-btn" >Next Lesson &rarr;</a>
+      </footer>
+    </main>
+  </div>
+
+  <script src="../assets/js/highlight.min.js"></script>
+  <script src="../assets/js/app.js"></script>
+  <script src="../assets/js/quiz_engine.js"></script>
+  <script src="../assets/js/instructor_sync.js"></script>
+</body>
+</html>

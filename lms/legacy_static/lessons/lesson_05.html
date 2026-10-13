@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lesson 05: Publishers Subscribers And Qos | Level 1 Foundations</title>
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="stylesheet" href="../assets/css/animations.css">
+  <link rel="stylesheet" href="../assets/css/highlight-dark.min.css">
+  <link rel="stylesheet" href="../assets/css/quiz.css">
+  <link rel="stylesheet" href="../assets/css/instructor_sync.css">
+</head>
+<body>
+  <header class="app-header">
+    <div class="brand-container">
+      <a href="https://botforge.in" target="_blank" class="company-brand" title="Botforge Robotics - botforge.in">
+        <img src="../assets/images/botforge_black.png" alt="Botforge Robotics" class="company-logo">
+      </a>
+      <div class="brand-divider"></div>
+      <a href="../index.html" class="brand" title="Level 1: ROS 2 Foundations">
+        <img src="../assets/images/ros2_logo.svg" alt="ROS 2" class="brand-logo">
+        <span class="brand-title">NavPro Learning Hub</span>
+        <span class="badge-jazzy">ROS 2 Jazzy</span>
+      </a>
+    </div>
+    <div class="header-center">
+      <input type="text" id="lessonSearchInput" class="search-input" placeholder="🔍 Search Level 1 curriculum...">
+    </div>
+    <div class="header-actions">
+      <a href="http://localhost:6080/vnc.html" target="_blank" class="track-btn" title="Open Ubuntu Desktop GUI via noVNC">🖥️ Desktop GUI</a>
+      <a href="http://localhost:8443/?folder=/home/student/ros2_ws" target="_blank" class="track-btn" title="Open VS Code in browser">💻 VS Code</a>
+      <a href="../index.html" class="track-btn active">Curriculum Hub</a>
+      <span class="theme-pill">☀️ Light Theme</span>
+    </div>
+  </header>
+
+  <div class="app-container">
+    <aside class="app-sidebar">
+      <div class="progress-card">
+        <div class="progress-header">
+          <span>Curriculum Progress</span>
+          <span id="overallProgressText">0% Complete (0/26)</span>
+        </div>
+        <div class="progress-bar-track">
+          <div id="overallProgressBar" class="progress-bar-fill"></div>
+        </div>
+        <button id="resetProgressBtn" class="track-btn reset-btn" style="width:100%; margin-top:8px; justify-content:center;">↺ Reset Progress</button>
+      </div>
+
+      
+        <div class="sidebar-section-title">ROS 2 Foundations (26 Lessons)</div>
+        <ul class="lesson-list">
+          
+            <li>
+              <a href="lesson_01.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_01" onclick="event.stopPropagation();">
+                <span class="lesson-num">01</span>
+                <span class="lesson-title">Linux Fundamentals For Robotics</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_02.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_02" onclick="event.stopPropagation();">
+                <span class="lesson-num">02</span>
+                <span class="lesson-title">Ros2 Overview And Environment Setup</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_03.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_03" onclick="event.stopPropagation();">
+                <span class="lesson-num">03</span>
+                <span class="lesson-title">Workspace And First Python Node</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_04.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_04" onclick="event.stopPropagation();">
+                <span class="lesson-num">04</span>
+                <span class="lesson-title">Package Architecture And Configuration</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_05.html" class="lesson-item active">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_05" onclick="event.stopPropagation();">
+                <span class="lesson-num">05</span>
+                <span class="lesson-title">Publishers Subscribers And Qos</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_06.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_06" onclick="event.stopPropagation();">
+                <span class="lesson-num">06</span>
+                <span class="lesson-title">Vscode Debugging And Ros2 Logging</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_07.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_07" onclick="event.stopPropagation();">
+                <span class="lesson-num">07</span>
+                <span class="lesson-title">Interfaces And Custom Messages</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_08.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_08" onclick="event.stopPropagation();">
+                <span class="lesson-num">08</span>
+                <span class="lesson-title">Services Server Client Python</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_09.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_09" onclick="event.stopPropagation();">
+                <span class="lesson-num">09</span>
+                <span class="lesson-title">Dynamic Parameters And Yaml</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_10.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_10" onclick="event.stopPropagation();">
+                <span class="lesson-num">10</span>
+                <span class="lesson-title">Launch Files And Runtime Management</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_11.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_11" onclick="event.stopPropagation();">
+                <span class="lesson-num">11</span>
+                <span class="lesson-title">Ros2 Actions Server And Client</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_12.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_12" onclick="event.stopPropagation();">
+                <span class="lesson-num">12</span>
+                <span class="lesson-title">Ros2 Bag Recording And Playback</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_13.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_13" onclick="event.stopPropagation();">
+                <span class="lesson-num">13</span>
+                <span class="lesson-title">Ros2 Cli Command Mastery</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_14.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_14" onclick="event.stopPropagation();">
+                <span class="lesson-num">14</span>
+                <span class="lesson-title">Tf2 Coordinate Transformations Python</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_15.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_15" onclick="event.stopPropagation();">
+                <span class="lesson-num">15</span>
+                <span class="lesson-title">Distributed Ros2 And Dds Networking</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_16.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_16" onclick="event.stopPropagation();">
+                <span class="lesson-num">16</span>
+                <span class="lesson-title">Project Opencv Ros2 Vision</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_17.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_17" onclick="event.stopPropagation();">
+                <span class="lesson-num">17</span>
+                <span class="lesson-title">3D Modeling Urdf Xacro</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_18.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_18" onclick="event.stopPropagation();">
+                <span class="lesson-num">18</span>
+                <span class="lesson-title">Rviz2 Visualization Tf Inspection</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_19.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_19" onclick="event.stopPropagation();">
+                <span class="lesson-num">19</span>
+                <span class="lesson-title">Gazebo Physics And Sensor Plugins</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_20.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_20" onclick="event.stopPropagation();">
+                <span class="lesson-num">20</span>
+                <span class="lesson-title">Building Simulation Worlds</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_21.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_21" onclick="event.stopPropagation();">
+                <span class="lesson-num">21</span>
+                <span class="lesson-title">2D Slam Mapping Slam Toolbox</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_22.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_22" onclick="event.stopPropagation();">
+                <span class="lesson-num">22</span>
+                <span class="lesson-title">Nav2 Architecture And Costmaps</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_23.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_23" onclick="event.stopPropagation();">
+                <span class="lesson-num">23</span>
+                <span class="lesson-title">Nav2 Planners Controllers Tuning</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_24.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_24" onclick="event.stopPropagation();">
+                <span class="lesson-num">24</span>
+                <span class="lesson-title">Nav2 Behavior Trees And Recoveries</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_25.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_25" onclick="event.stopPropagation();">
+                <span class="lesson-num">25</span>
+                <span class="lesson-title">Autonomous Patrol Nav2 Simple Commander</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_26.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_26" onclick="event.stopPropagation();">
+                <span class="lesson-num">26</span>
+                <span class="lesson-title">Physical Robot Hardware Deployment</span>
+              </a>
+            </li>
+            
+        </ul>
+        
+    </aside>
+
+    <main class="app-content">
+      <article class="markdown-body">
+        
+        <div class="concept-card">
+          <h3>⚡ Quick Concept Snapshot</h3>
+          <ul>
+            <li><strong>Publish/Subscribe:</strong> Asynchronous, non-blocking one-to-many communication over DDS bus.</li>
+            <li><strong>Quality of Service (QoS):</strong> Sensor data (LiDAR, Camera) utilizes <code>BEST_EFFORT</code> (lossy UDP); mission commands use <code>RELIABLE</code> (guaranteed TCP-like).</li>
+            <li><strong>Volatile vs Transient Local:</strong> Late-joining subscribers miss past data under Volatile, but receive cached historical states under Transient Local.</li>
+          </ul>
+        </div>
+        <h1>Lesson 05: Communication Mechanism I: Publishers, Subscribers &amp; QoS</h1>
+<blockquote class="alert alert-note"><strong>Focus:</strong> Asynchronous Topic Communication, Quality of Service (QoS) &amp; Python Implementation<br><strong>Course Track:</strong> NavPro Learning Hub - Level 1 (Chapters 5.2, 8.2 &amp; Project 1.2)<br><strong>Target Environment:</strong> ROS 2 Jazzy Jalisco</blockquote>
+<hr>
+<h2>1. Overview &amp; Learning Objectives</h2>
+<p>The <strong>Publish-Subscribe (Pub/Sub)</strong> pattern is the primary asynchronous communication backbone of ROS 2. Nodes communicate via named buses called <strong>Topics</strong> without needing to know which specific nodes are producing or consuming the data.</p>
+<p>By the end of this lesson, you will:</p>
+<ol>
+<li>Understand the anonymous, asynchronous nature of ROS 2 Topics.</li>
+<li>Build an object-oriented Python <strong>Publisher</strong> sending velocity setpoints (<code>geometry_msgs/msg/Twist</code>).</li>
+<li>Build an object-oriented Python <strong>Subscriber</strong> processing incoming sensor data with custom callbacks.</li>
+<li>Master <strong>Quality of Service (QoS)</strong> policies: Reliability, Durability, and History.</li>
+<li>Prevent the #1 common ROS 2 networking bug: <strong>QoS Incompatibility</strong>.</li>
+<li>Build <strong>Project 1.2</strong>: An autonomous differential drive velocity supervisor and obstacle filter.</li>
+</ol>
+<hr>
+<h2>2. Topic Communication Architecture</h2>
+<p>In ROS 2, topics are unidirectional, many-to-many data streams:</p>
+<div style="text-align:center; margin:1.6rem 0;"><img src="../assets/images/ros2_pubsub_pipeline.svg" alt="ROS 2 Publish-Subscribe Computational Graph" style="max-width:100%; border-radius:10px; border:1px solid #e2e8f0; box-shadow:0 2px 8px rgba(0,0,0,0.05); background:#ffffff;"></div>
+<ul>
+<li><strong>Publishers:</strong> Produce structured messages and push them onto a topic.</li>
+<li><strong>Subscribers:</strong> Register interest in a topic and invoke a designated callback function whenever a new message arrives.</li>
+<li><strong>Anonymous &amp; Decoupled:</strong> A publisher does not know or care how many subscribers exist, or even if any exist at all.</li>
+</ul>
+<hr>
+<h2>3. Deep Dive: Quality of Service (QoS) Policies</h2>
+<p>Unlike ROS 1 (which used TCP/UDP sockets with hardcoded parameters), ROS 2 allows developers to fine-tune network transport behavior per topic using DDS <strong>QoS Profiles</strong>.</p>
+<div class="table-wrapper"><table>
+<thead><tr>
+<th>QoS Policy</th>
+<th>Setting</th>
+<th>Behavior &amp; Characteristics</th>
+</tr></thead><tbody>
+<tr>
+<td><strong>Reliability</strong></td>
+<td><code>RELIABLE</code></td>
+<td>Guarantees message delivery via packet ACKs and retransmissions. Ideal for commands and state flags.</td>
+</tr>
+<tr>
+<td><strong>Reliability</strong></td>
+<td><code>BEST_EFFORT</code></td>
+<td>Fire-and-forget. Drops lost packets immediately without retransmission. Lowest latency for high-rate sensors (LiDAR, Cameras).</td>
+</tr>
+<tr>
+<td><strong>Durability</strong></td>
+<td><code>VOLATILE</code></td>
+<td>Default. Late-joining subscribers only receive messages published after connection.</td>
+</tr>
+<tr>
+<td><strong>Durability</strong></td>
+<td><code>TRANSIENT_LOCAL</code></td>
+<td>Publisher retains the last $N$ messages in memory. Late subscribers receive recent history upon connection.</td>
+</tr>
+<tr>
+<td><strong>History</strong></td>
+<td><code>KEEP_LAST</code></td>
+<td>Retains up to $N$ messages in the queue (depth configurable). Oldest messages dropped when full.</td>
+</tr>
+<tr>
+<td><strong>History</strong></td>
+<td><code>KEEP_ALL</code></td>
+<td>Buffers all incoming messages until consumed. Risk of out-of-memory if subscribers process slowly.</td>
+</tr>
+</tbody></table></div>
+<h3>3.1 The QoS Compatibility Rule</h3>
+<blockquote class="alert alert-warning"><strong>A subscriber&#x27;s QoS requirements must be LESS restrictive than or equal to the publisher&#x27;s QoS offering.</strong><br>If a publisher offers <code>BEST_EFFORT</code>, but a subscriber requests <code>RELIABLE</code>, <strong>DDS will reject the connection and NO DATA will be received!</strong></blockquote>
+<div class="table-wrapper"><table>
+<thead><tr>
+<th>Publisher Offers</th>
+<th>Subscriber Requests</th>
+<th>Compatible?</th>
+<th>Result</th>
+</tr></thead><tbody>
+<tr>
+<td><code>RELIABLE</code></td>
+<td><code>RELIABLE</code></td>
+<td>✅ YES</td>
+<td>Reliable delivery with ACKs</td>
+</tr>
+<tr>
+<td><code>RELIABLE</code></td>
+<td><code>BEST_EFFORT</code></td>
+<td>✅ YES</td>
+<td>Subscriber tolerates drops, Publisher guarantees delivery</td>
+</tr>
+<tr>
+<td><code>BEST_EFFORT</code></td>
+<td><code>BEST_EFFORT</code></td>
+<td>✅ YES</td>
+<td>Fast best-effort streaming (ideal for LiDAR / Cameras)</td>
+</tr>
+<tr>
+<td><code>BEST_EFFORT</code></td>
+<td><code>RELIABLE</code></td>
+<td>❌ <strong>NO</strong></td>
+<td><strong>SILENT FAILURE: No messages delivered!</strong></td>
+</tr>
+</tbody></table></div>
+<hr>
+<h2>4. Step-by-Step: Writing a Velocity Publisher in Python</h2>
+<p>Let&#x27;s write a node that periodically publishes <code>geometry_msgs/msg/Twist</code> commands to drive the robot.</p>
+<p>Create file <code>publisher_node.py</code>:</p>
+<div class="code-container"><pre><button class="copy-btn">Copy</button><code class="language-python">#!/usr/bin/env python3
+&quot;&quot;&quot;
+NavPro Learning Hub - Lesson 05
+Topic Publisher: Generates smooth velocity setpoints for differential drive robots.
+&quot;&quot;&quot;
+
+import rclpy
+from rclpy.node import Node
+from geometry_msgs.msg import Twist
+from rclpy.qos import QoSProfile, ReliabilityPolicy, HistoryPolicy
+
+
+class VelocityPublisher(Node):
+
+    def __init__(self):
+        super().__init__(&#x27;velocity_publisher_node&#x27;)
+
+        # 1. Define custom QoS profile for motion control (Reliable, keep last 10)
+        qos_profile = QoSProfile(
+            reliability=ReliabilityPolicy.RELIABLE,
+            history=HistoryPolicy.KEEP_LAST,
+            depth=10
+        )
+
+        # 2. Create Publisher: topic=&#x27;/cmd_vel&#x27;, type=Twist
+        self.publisher_ = self.create_publisher(Twist, &#x27;/cmd_vel&#x27;, qos_profile)
+
+        # 3. Create timer loop running at 10 Hz (period = 0.1s)
+        self.timer_ = self.create_timer(0.1, self.publish_velocity)
+        self.tick_count_ = 0
+
+        self.get_logger().info(&#x27;Velocity Publisher initialized. Broadcasting on /cmd_vel at 10Hz.&#x27;)
+
+    def publish_velocity(self):
+        msg = Twist()
+        # Linear velocity (forward/backward) along X axis (m/s)
+        msg.linear.x = 0.35
+        msg.linear.y = 0.0
+        msg.linear.z = 0.0
+
+        # Angular velocity (rotation/yaw) around Z axis (rad/s)
+        msg.angular.x = 0.0
+        msg.angular.y = 0.0
+        msg.angular.z = 0.15
+
+        self.publisher_.publish(msg)
+        self.tick_count_ += 1
+
+        # Log every 20 ticks (every 2 seconds) to avoid spamming terminal
+        if self.tick_count_ % 20 == 0:
+            self.get_logger().info(
+                f&#x27;Published /cmd_vel -&gt; Linear: {msg.linear.x:.2f} m/s, Angular: {msg.angular.z:.2f} rad/s&#x27;
+            )
+
+
+def main(args=None):
+    rclpy.init(args=args)
+    node = VelocityPublisher()
+    try:
+        rclpy.spin(node)
+    except KeyboardInterrupt:
+        node.get_logger().warn(&#x27;Stopping velocity publisher...&#x27;)
+    finally:
+        # Publish zero velocity before exiting to stop physical motors!
+        stop_msg = Twist()
+        node.publisher_.publish(stop_msg)
+        node.destroy_node()
+        rclpy.shutdown()
+
+
+if __name__ == &#x27;__main__&#x27;:
+    main()</code></pre></div>
+<hr>
+<h2>5. Step-by-Step: Writing a Velocity Subscriber in Python</h2>
+<p>Now let&#x27;s build the consumer node that receives <code>/cmd_vel</code> messages and simulates motor actuation.</p>
+<p>Create file <code>subscriber_node.py</code>:</p>
+<div class="code-container"><pre><button class="copy-btn">Copy</button><code class="language-python">#!/usr/bin/env python3
+&quot;&quot;&quot;
+NavPro Learning Hub - Lesson 05
+Topic Subscriber: Consumes velocity commands and computes wheel drive velocities.
+&quot;&quot;&quot;
+
+import rclpy
+from rclpy.node import Node
+from geometry_msgs.msg import Twist
+from rclpy.qos import QoSProfile, ReliabilityPolicy, HistoryPolicy
+
+
+class MotorControllerSubscriber(Node):
+
+    def __init__(self):
+        super().__init__(&#x27;motor_controller_subscriber&#x27;)
+
+        # Differential drive robot geometry constants
+        self.WHEEL_RADIUS = 0.06       # meters
+        self.WHEEL_SEPARATION = 0.32   # meters
+
+        # Subscriber QoS profile (must match or be less strict than publisher)
+        qos_profile = QoSProfile(
+            reliability=ReliabilityPolicy.RELIABLE,
+            history=HistoryPolicy.KEEP_LAST,
+            depth=10
+        )
+
+        # Create Subscription: topic=&#x27;/cmd_vel&#x27;, type=Twist, callback=self.cmd_vel_callback
+        self.subscription_ = self.create_subscription(
+            Twist,
+            &#x27;/cmd_vel&#x27;,
+            self.cmd_vel_callback,
+            qos_profile
+        )
+
+        self.get_logger().info(&#x27;Motor Controller Subscriber active. Listening on /cmd_vel.&#x27;)
+
+    def cmd_vel_callback(self, msg: Twist):
+        &quot;&quot;&quot;Executed automatically whenever a new Twist message arrives on /cmd_vel.&quot;&quot;&quot;
+        v = msg.linear.x      # Forward linear velocity (m/s)
+        w = msg.angular.z     # Rotational angular velocity (rad/s)
+
+        # Compute individual left and right wheel velocities using inverse kinematics
+        # v_left  = v - (w * L / 2)
+        # v_right = v + (w * L / 2)
+        v_left = v - (w * self.WHEEL_SEPARATION / 2.0)
+        v_right = v + (w * self.WHEEL_SEPARATION / 2.0)
+
+        # Convert linear wheel speed to rotational wheel angular speed: omega = v / R
+        omega_left = v_left / self.WHEEL_RADIUS
+        omega_right = v_right / self.WHEEL_RADIUS
+
+        self.get_logger().info(
+            f&#x27;Received (v={v:.2f}, w={w:.2f}) -&gt; Wheel RPM: Left={omega_left:.1f} rad/s, Right={omega_right:.1f} rad/s&#x27;
+        )
+
+
+def main(args=None):
+    rclpy.init(args=args)
+    node = MotorControllerSubscriber()
+    try:
+        rclpy.spin(node)
+    except KeyboardInterrupt:
+        pass
+    finally:
+        node.destroy_node()
+        rclpy.shutdown()
+
+
+if __name__ == &#x27;__main__&#x27;:
+    main()</code></pre></div>
+<hr>
+<h2>6. Verification with the ROS 2 Command Line Interface (CLI)</h2>
+<p>Open two Terminator panes and run the nodes:</p>
+<p><strong>Pane 1:</strong></p>
+<div class="code-container"><pre><button class="copy-btn">Copy</button><code class="language-bash">ros2 run navpro_basics publisher_explained</code></pre></div>
+<p><strong>Pane 2:</strong></p>
+<div class="code-container"><pre><button class="copy-btn">Copy</button><code class="language-bash">ros2 run navpro_basics subscriber_explained</code></pre></div>
+<p>In a third pane, inspect the live DDS topic communication:</p>
+<div class="code-container"><pre><button class="copy-btn">Copy</button><code class="language-bash"># 1. List all active topics
+ros2 topic list
+
+# 2. Inspect topic type and publisher/subscriber count
+ros2 topic info /cmd_vel
+
+# 3. Echo live messages passing through the DDS bus
+ros2 topic echo /cmd_vel
+
+# 4. Measure message publishing frequency (Hz)
+ros2 topic hz /cmd_vel
+
+# 5. Measure network bandwidth consumed by topic
+ros2 topic bw /cmd_vel
+
+# 6. Manually publish a one-shot velocity command from terminal
+ros2 topic pub --once /cmd_vel geometry_msgs/msg/Twist &quot;{linear: {x: 0.5}, angular: {z: 0.0}}&quot;</code></pre></div>
+<hr>
+<h2>7. Project 1.2: Dual Publisher &amp; Subscriber Safety Supervisor</h2>
+<h3>Project Objective:</h3>
+<p>Write a node named <code>safety_supervisor</code> that bridges raw teleoperation input and physical motor execution.</p>
+<p><strong>Requirements:</strong></p>
+<ol>
+<li>Subscribe to <code>/teleop/cmd_vel</code> (<code>geometry_msgs/msg/Twist</code>).</li>
+<li>Subscribe to <code>/obstacle_distance</code> (<code>std_msgs/msg/Float32</code>).</li>
+<li>If <code>/obstacle_distance</code> is <code>&lt; 0.4</code> meters:</li>
+</ol>
+<ul>
+<li>Immediately override <code>linear.x</code> to <code>0.0</code> (emergency stop).</li>
+<li>Log a warning: <code>EMERGENCY BRAKE ENGAGED! Obstacle too close.</code></li>
+</ul>
+<ol>
+<li>Otherwise:</li>
+</ol>
+<ul>
+<li>Scale <code>linear.x</code> and <code>angular.z</code> by safety scale factor <code>0.85</code>.</li>
+</ul>
+<ol>
+<li>Publish the safe velocity command to <code>/cmd_vel</code>.</li>
+</ol>
+<div class="code-container"><pre><button class="copy-btn">Copy</button><code class="language-python"># Project 1.2 Boilerplate Starter Code
+class SafetySupervisor(Node):
+    def __init__(self):
+        super().__init__(&#x27;safety_supervisor&#x27;)
+        
+        # TODO 1: Create publisher on &#x27;/cmd_vel&#x27; (Twist)
+        # TODO: FILL IN CODE HERE
+        
+        # TODO 2: Create subscriber on &#x27;/teleop/cmd_vel&#x27; (Twist)
+        # TODO: FILL IN CODE HERE
+        
+        # TODO 3: Create subscriber on &#x27;/obstacle_distance&#x27; (Float32)
+        # TODO: FILL IN CODE HERE
+        
+        self.obstacle_distance = 10.0  # meters
+        
+    def on_obstacle_scan(self, msg):
+        # TODO 4: Update self.obstacle_distance
+        # TODO: FILL IN CODE HERE
+        pass
+        
+    def on_teleop_cmd(self, msg):
+        # TODO 5: If obstacle_distance &lt; 0.4: zero out linear.x
+        # TODO 6: Else: scale velocities by 0.85 and publish
+        # TODO: FILL IN CODE HERE
+        pass</code></pre></div>
+      </article>
+
+      <footer class="lesson-nav-footer">
+        <a href="lesson_04.html" class="nav-link-btn" >&larr; Previous Lesson</a>
+        <a href="../index.html" class="nav-link-btn">🧭 Course Hub</a>
+        <a href="lesson_06.html" class="nav-link-btn" >Next Lesson &rarr;</a>
+      </footer>
+    </main>
+  </div>
+
+  <script src="../assets/js/highlight.min.js"></script>
+  <script src="../assets/js/app.js"></script>
+  <script src="../assets/js/quiz_engine.js"></script>
+  <script src="../assets/js/instructor_sync.js"></script>
+</body>
+</html>

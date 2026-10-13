@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lesson 23: Nav2 Planners Controllers Tuning | Level 1 Foundations</title>
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="stylesheet" href="../assets/css/animations.css">
+  <link rel="stylesheet" href="../assets/css/highlight-dark.min.css">
+  <link rel="stylesheet" href="../assets/css/quiz.css">
+  <link rel="stylesheet" href="../assets/css/instructor_sync.css">
+</head>
+<body>
+  <header class="app-header">
+    <div class="brand-container">
+      <a href="https://botforge.in" target="_blank" class="company-brand" title="Botforge Robotics - botforge.in">
+        <img src="../assets/images/botforge_black.png" alt="Botforge Robotics" class="company-logo">
+      </a>
+      <div class="brand-divider"></div>
+      <a href="../index.html" class="brand" title="Level 1: ROS 2 Foundations">
+        <img src="../assets/images/ros2_logo.svg" alt="ROS 2" class="brand-logo">
+        <span class="brand-title">NavPro Learning Hub</span>
+        <span class="badge-jazzy">ROS 2 Jazzy</span>
+      </a>
+    </div>
+    <div class="header-center">
+      <input type="text" id="lessonSearchInput" class="search-input" placeholder="🔍 Search Level 1 curriculum...">
+    </div>
+    <div class="header-actions">
+      <a href="http://localhost:6080/vnc.html" target="_blank" class="track-btn" title="Open Ubuntu Desktop GUI via noVNC">🖥️ Desktop GUI</a>
+      <a href="http://localhost:8443/?folder=/home/student/ros2_ws" target="_blank" class="track-btn" title="Open VS Code in browser">💻 VS Code</a>
+      <a href="../index.html" class="track-btn active">Curriculum Hub</a>
+      <span class="theme-pill">☀️ Light Theme</span>
+    </div>
+  </header>
+
+  <div class="app-container">
+    <aside class="app-sidebar">
+      <div class="progress-card">
+        <div class="progress-header">
+          <span>Curriculum Progress</span>
+          <span id="overallProgressText">0% Complete (0/26)</span>
+        </div>
+        <div class="progress-bar-track">
+          <div id="overallProgressBar" class="progress-bar-fill"></div>
+        </div>
+        <button id="resetProgressBtn" class="track-btn reset-btn" style="width:100%; margin-top:8px; justify-content:center;">↺ Reset Progress</button>
+      </div>
+
+      
+        <div class="sidebar-section-title">ROS 2 Foundations (26 Lessons)</div>
+        <ul class="lesson-list">
+          
+            <li>
+              <a href="lesson_01.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_01" onclick="event.stopPropagation();">
+                <span class="lesson-num">01</span>
+                <span class="lesson-title">Linux Fundamentals For Robotics</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_02.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_02" onclick="event.stopPropagation();">
+                <span class="lesson-num">02</span>
+                <span class="lesson-title">Ros2 Overview And Environment Setup</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_03.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_03" onclick="event.stopPropagation();">
+                <span class="lesson-num">03</span>
+                <span class="lesson-title">Workspace And First Python Node</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_04.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_04" onclick="event.stopPropagation();">
+                <span class="lesson-num">04</span>
+                <span class="lesson-title">Package Architecture And Configuration</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_05.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_05" onclick="event.stopPropagation();">
+                <span class="lesson-num">05</span>
+                <span class="lesson-title">Publishers Subscribers And Qos</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_06.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_06" onclick="event.stopPropagation();">
+                <span class="lesson-num">06</span>
+                <span class="lesson-title">Vscode Debugging And Ros2 Logging</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_07.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_07" onclick="event.stopPropagation();">
+                <span class="lesson-num">07</span>
+                <span class="lesson-title">Interfaces And Custom Messages</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_08.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_08" onclick="event.stopPropagation();">
+                <span class="lesson-num">08</span>
+                <span class="lesson-title">Services Server Client Python</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_09.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_09" onclick="event.stopPropagation();">
+                <span class="lesson-num">09</span>
+                <span class="lesson-title">Dynamic Parameters And Yaml</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_10.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_10" onclick="event.stopPropagation();">
+                <span class="lesson-num">10</span>
+                <span class="lesson-title">Launch Files And Runtime Management</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_11.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_11" onclick="event.stopPropagation();">
+                <span class="lesson-num">11</span>
+                <span class="lesson-title">Ros2 Actions Server And Client</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_12.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_12" onclick="event.stopPropagation();">
+                <span class="lesson-num">12</span>
+                <span class="lesson-title">Ros2 Bag Recording And Playback</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_13.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_13" onclick="event.stopPropagation();">
+                <span class="lesson-num">13</span>
+                <span class="lesson-title">Ros2 Cli Command Mastery</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_14.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_14" onclick="event.stopPropagation();">
+                <span class="lesson-num">14</span>
+                <span class="lesson-title">Tf2 Coordinate Transformations Python</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_15.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_15" onclick="event.stopPropagation();">
+                <span class="lesson-num">15</span>
+                <span class="lesson-title">Distributed Ros2 And Dds Networking</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_16.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_16" onclick="event.stopPropagation();">
+                <span class="lesson-num">16</span>
+                <span class="lesson-title">Project Opencv Ros2 Vision</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_17.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_17" onclick="event.stopPropagation();">
+                <span class="lesson-num">17</span>
+                <span class="lesson-title">3D Modeling Urdf Xacro</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_18.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_18" onclick="event.stopPropagation();">
+                <span class="lesson-num">18</span>
+                <span class="lesson-title">Rviz2 Visualization Tf Inspection</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_19.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_19" onclick="event.stopPropagation();">
+                <span class="lesson-num">19</span>
+                <span class="lesson-title">Gazebo Physics And Sensor Plugins</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_20.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_20" onclick="event.stopPropagation();">
+                <span class="lesson-num">20</span>
+                <span class="lesson-title">Building Simulation Worlds</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_21.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_21" onclick="event.stopPropagation();">
+                <span class="lesson-num">21</span>
+                <span class="lesson-title">2D Slam Mapping Slam Toolbox</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_22.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_22" onclick="event.stopPropagation();">
+                <span class="lesson-num">22</span>
+                <span class="lesson-title">Nav2 Architecture And Costmaps</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_23.html" class="lesson-item active">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_23" onclick="event.stopPropagation();">
+                <span class="lesson-num">23</span>
+                <span class="lesson-title">Nav2 Planners Controllers Tuning</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_24.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_24" onclick="event.stopPropagation();">
+                <span class="lesson-num">24</span>
+                <span class="lesson-title">Nav2 Behavior Trees And Recoveries</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_25.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_25" onclick="event.stopPropagation();">
+                <span class="lesson-num">25</span>
+                <span class="lesson-title">Autonomous Patrol Nav2 Simple Commander</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_26.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_26" onclick="event.stopPropagation();">
+                <span class="lesson-num">26</span>
+                <span class="lesson-title">Physical Robot Hardware Deployment</span>
+              </a>
+            </li>
+            
+        </ul>
+        
+    </aside>
+
+    <main class="app-content">
+      <article class="markdown-body">
+        <h1>Lesson 23: Nav2 Path Planners &amp; Local Controller Tuning</h1>
+<blockquote class="alert alert-note"><strong>Focus:</strong> Global Planners (Smac/NavFn), DWB Trajectory Rollouts, Critic Scoring &amp; Pure Pursuit<br><strong>Course Track:</strong> NavPro Learning Hub - Level 1<br><strong>Target Environment:</strong> ROS 2 Jazzy Jalisco</blockquote>
+<hr>
+<h2>1. Overview &amp; Learning Objectives</h2>
+<p>Autonomous navigation is a two-tier problem:</p>
+<ol>
+<li><strong>Global Planning:</strong> &quot;How do I get from Warehouse Dock A to Packaging Shelf 4 across the whole building?&quot; (Computed once at 1 Hz).</li>
+<li><strong>Local Control:</strong> &quot;How do I turn my wheels right now at 20 Hz to follow that line while dodging a pallet jack that just entered my path?&quot;</li>
+</ol>
+<p>By the end of this lesson, you will:</p>
+<ol>
+<li>Understand the difference between Global Path Planning (NavFn / Smac) and Local Trajectory Control (DWB / Regulated Pure Pursuit).</li>
+<li>Master the <strong>DWB Local Planner Critic Scoring Algorithm</strong>.</li>
+<li>Tune DWB critics (<code>PathAlign</code>, <code>GoalDist</code>, <code>BaseObstacle</code>, <code>RotateToGoal</code>) to control robot aggression and smoothness.</li>
+<li>Set position (<code>xy_goal_tolerance</code>) and orientation (<code>yaw_goal_tolerance</code>) convergence thresholds.</li>
+</ol>
+<hr>
+<h2>2. Planners vs. Controllers: The Two-Tier Paradigm</h2>
+<div class="code-container"><pre><button class="copy-btn">Copy</button><code class="language-bash">                   GLOBAL PLANNER (Navfn / Smac)
+                   Runs at 1-2 Hz. Computes static line
+                   of waypoints from Start to Goal.
+                               |
+                               | Global Path: /plan
+                               v
+                  LOCAL CONTROLLER (DWB / RPP)
+                  Runs at 20 Hz. Generates candidate
+                  velocity arcs, avoids obstacles, outputs:
+                               |
+                               | Motor Commands: /cmd_vel
+                               v
+                     DIFFERENTIAL DRIVE ROBOT</code></pre></div>
+<hr>
+<h2>3. DWB Local Planner: Trajectory Rollout &amp; Critic Scoring</h2>
+<p>The <strong>DWB Local Planner</strong> evaluates dozens of potential velocity trajectories $(v_x, \omega_z)$ projected forward in time (<code>sim_time = 1.7s</code>):</p>
+<div class="code-container"><pre><button class="copy-btn">Copy</button><code class="language-bash">                               DWB TRAJECTORY SCORING
+                               
+                                          Arc 1 (Too close to wall -&gt; PENALTY)
+                                       .-&#x27;
+                         Robot       .&#x27;   Arc 2 (Follows path smoothly -&gt; BEST SCORE)
+                         [===] =====+
+                                     `.   Arc 3 (Drifts away from path -&gt; PENALTY)
+                                       `-.</code></pre></div>
+<p>Every trajectory arc is scored against an ensemble of mathematical <strong>Critics</strong>:</p>
+<p>$$\text{Total Score} = \sum_{i} \left( \text{weight}_i \times \text{critic\_cost}_i \right)$$</p>
+<p>The trajectory with the lowest overall penalty cost is selected and published to <code>/cmd_vel</code>!</p>
+<hr>
+<h2>4. Key DWB Critics &amp; Tuning Matrix</h2>
+<p>Open <a href="file:///home/chaitu/Projects/navpro_learning_hub/level1/ros2_ws/src/navpro_navigation/config/nav2_params.yaml"><code>config/nav2_params.yaml</code></a>:</p>
+<div class="code-container"><pre><button class="copy-btn">Copy</button><code class="language-yaml">controller_server:
+  ros__parameters:
+    FollowPath:
+      plugin: &quot;dwb_core::DWBLocalPlanner&quot;
+      max_vel_x: 0.5
+      max_vel_theta: 1.0
+      sim_time: 1.7
+      vx_samples: 20
+      vtheta_samples: 20
+      critics: [&quot;RotateToGoal&quot;, &quot;BaseObstacle&quot;, &quot;PathAlign&quot;, &quot;GoalDist&quot;]
+
+      BaseObstacle.scale: 0.02
+      PathAlign.scale: 32.0
+      GoalDist.scale: 24.0
+      RotateToGoal.scale: 32.0</code></pre></div>
+<div class="table-wrapper"><table>
+<thead><tr>
+<th>Critic Name</th>
+<th>What it Rewards / Penalizes</th>
+<th>If Weight is Too High</th>
+<th>If Weight is Too Low</th>
+</tr></thead><tbody>
+<tr>
+<td><strong><code>BaseObstacle</code></strong></td>
+<td>Heavy penalty if trajectory intersects costmap obstacles</td>
+<td>Robot is overly timid, freezes near doorways</td>
+<td>Robot clips corners and collides with racks</td>
+</tr>
+<tr>
+<td><strong><code>PathAlign</code></strong></td>
+<td>Rewards pointing the robot chassis along the global path vector</td>
+<td>Robot strictly adheres to path, struggles to steer around dynamic obstacles</td>
+<td>Robot cuts corners recklessly</td>
+</tr>
+<tr>
+<td><strong><code>GoalDist</code></strong></td>
+<td>Pulls the robot toward the final goal point</td>
+<td>Robot ignores global path and tries to drive directly through obstacles</td>
+<td>Robot crawls sluggishly near the goal</td>
+</tr>
+<tr>
+<td><strong><code>RotateToGoal</code></strong></td>
+<td>Rewards rotating in place to match the final heading</td>
+<td>Robot slows down prematurely to rotate</td>
+<td>Robot reaches coordinate but stops facing the wrong direction</td>
+</tr>
+</tbody></table></div>
+<hr>
+<h2>5. Regulated Pure Pursuit (RPP)</h2>
+<p>For industrial AMR and AGV applications where robots must strictly follow designated one-way warehouse lanes without cutting corners, Nav2 offers the <strong>Regulated Pure Pursuit Controller</strong>:</p>
+<div class="code-container"><pre><button class="copy-btn">Copy</button><code class="language-yaml">FollowPath:
+  plugin: &quot;nav2_regulated_pure_pursuit_controller::RegulatedPurePursuitController&quot;
+  desired_linear_vel: 0.5
+  lookahead_dist: 0.6
+  min_lookahead_dist: 0.3
+  max_lookahead_dist: 0.9
+  use_regulated_linear_velocity_scaling: true</code></pre></div>
+<ul>
+<li>Automatically scales speed down as path curvature increases (slows down smoothly for tight 90-degree turns).</li>
+</ul>
+<hr>
+<h2>6. Hands-on Student Challenge</h2>
+<p><strong>Task:</strong></p>
+<ol>
+<li>In <code>nav2_params.yaml</code>, modify <code>general_goal_checker</code>:</li>
+</ol>
+<ul>
+<li>Set <code>xy_goal_tolerance: 0.10</code> (10cm precision).</li>
+<li>Set <code>yaw_goal_tolerance: 0.15</code> (~8.5 degrees precision).</li>
+</ul>
+<ol>
+<li>Launch navigation:</li>
+</ol>
+<div class="code-container"><pre><button class="copy-btn">Copy</button><code class="language-bash">   ros2 launch navpro_navigation navigation.launch.py</code></pre></div>
+<ol>
+<li>Use the RViz2 <strong>2D Goal Pose</strong> tool to command a goal. Observe how precisely the robot stops at the target pose!</li>
+</ol>
+      </article>
+
+      <footer class="lesson-nav-footer">
+        <a href="lesson_22.html" class="nav-link-btn" >&larr; Previous Lesson</a>
+        <a href="../index.html" class="nav-link-btn">🧭 Course Hub</a>
+        <a href="lesson_24.html" class="nav-link-btn" >Next Lesson &rarr;</a>
+      </footer>
+    </main>
+  </div>
+
+  <script src="../assets/js/highlight.min.js"></script>
+  <script src="../assets/js/app.js"></script>
+  <script src="../assets/js/quiz_engine.js"></script>
+  <script src="../assets/js/instructor_sync.js"></script>
+</body>
+</html>

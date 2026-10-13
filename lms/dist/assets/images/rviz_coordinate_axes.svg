@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 280" width="100%" height="100%">
+  <rect width="920" height="280" rx="16" fill="#0f172a"/>
+  <text x="460" y="32" fill="#94a3b8" font-family="system-ui, sans-serif" font-size="14" font-weight="600" text-anchor="middle" letter-spacing="1">ROS 2 SPATIAL CONVENTION: RGB = XYZ COORDINATE AXES</text>
+
+  <!-- 3D Axes Graphic on Left -->
+  <g transform="translate(240, 160)">
+    <!-- Z Axis (Blue - Up) -->
+    <line x1="0" y1="0" x2="0" y2="-100" stroke="#3b82f6" stroke-width="4"/>
+    <polygon points="-7,-95 7,-95 0,-110" fill="#3b82f6"/>
+    <text x="14" y="-95" fill="#60a5fa" font-family="monospace" font-size="14" font-weight="bold">Z (Blue / Up)</text>
+
+    <!-- X Axis (Red - Forward) -->
+    <line x1="0" y1="0" x2="110" y2="0" stroke="#ef4444" stroke-width="4"/>
+    <polygon points="105,-7 105,7 120,0" fill="#ef4444"/>
+    <text x="125" y="5" fill="#f87171" font-family="monospace" font-size="14" font-weight="bold">X (Red / Forward)</text>
+
+    <!-- Y Axis (Green - Left) -->
+    <line x1="0" y1="0" x2="-80" y2="60" stroke="#10b981" stroke-width="4"/>
+    <polygon points="-75,50 -70,68 -90,67" fill="#10b981"/>
+    <text x="-105" y="80" fill="#34d399" font-family="monospace" font-size="14" font-weight="bold">Y (Green / Left)</text>
+
+    <!-- Origin sphere -->
+    <circle cx="0" cy="0" r="7" fill="#ffffff" stroke="#475569" stroke-width="2"/>
+    <text x="-12" y="-12" fill="#94a3b8" font-family="system-ui, sans-serif" font-size="10">Origin (0,0,0)</text>
+  </g>
+
+  <!-- Right: Rule Explanation Cards -->
+  <g transform="translate(540, 65)">
+    <g transform="translate(0, 0)">
+      <rect width="320" height="50" rx="8" fill="#1e293b" stroke="#ef4444" stroke-width="1.5"/>
+      <rect width="8" height="50" rx="4" fill="#ef4444"/>
+      <text x="24" y="24" fill="#f87171" font-family="monospace" font-size="13" font-weight="bold">Red = X Axis</text>
+      <text x="24" y="40" fill="#94a3b8" font-family="system-ui, sans-serif" font-size="11">Robot forward heading, longitudinal distance</text>
+    </g>
+
+    <g transform="translate(0, 60)">
+      <rect width="320" height="50" rx="8" fill="#1e293b" stroke="#10b981" stroke-width="1.5"/>
+      <rect width="8" height="50" rx="4" fill="#10b981"/>
+      <text x="24" y="24" fill="#34d399" font-family="monospace" font-size="13" font-weight="bold">Green = Y Axis</text>
+      <text x="24" y="40" fill="#94a3b8" font-family="system-ui, sans-serif" font-size="11">Robot port / left lateral displacement</text>
+    </g>
+
+    <g transform="translate(0, 120)">
+      <rect width="320" height="50" rx="8" fill="#1e293b" stroke="#3b82f6" stroke-width="1.5"/>
+      <rect width="8" height="50" rx="4" fill="#3b82f6"/>
+      <text x="24" y="24" fill="#60a5fa" font-family="monospace" font-size="13" font-weight="bold">Blue = Z Axis</text>
+      <text x="24" y="40" fill="#94a3b8" font-family="system-ui, sans-serif" font-size="11">Vertical elevation / yaw axis of rotation</text>
+    </g>
+  </g>
+</svg>

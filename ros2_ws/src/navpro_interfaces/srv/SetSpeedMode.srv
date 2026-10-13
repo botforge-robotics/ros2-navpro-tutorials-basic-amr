@@ -1,0 +1,8 @@
+# Request: mode_name ("TURBO", "NORMAL", "ECO") or speed scale factor (0.1 to 1.0)
+string mode_name
+float32 custom_scale
+---
+# Response
+bool success
+string message
+float32 effective_scale

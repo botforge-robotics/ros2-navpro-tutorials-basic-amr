@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lesson 02: Ros2 Overview And Environment Setup | Level 1 Foundations</title>
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="stylesheet" href="../assets/css/animations.css">
+  <link rel="stylesheet" href="../assets/css/highlight-dark.min.css">
+  <link rel="stylesheet" href="../assets/css/quiz.css">
+  <link rel="stylesheet" href="../assets/css/instructor_sync.css">
+</head>
+<body>
+  <header class="app-header">
+    <div class="brand-container">
+      <a href="https://botforge.in" target="_blank" class="company-brand" title="Botforge Robotics - botforge.in">
+        <img src="../assets/images/botforge_black.png" alt="Botforge Robotics" class="company-logo">
+      </a>
+      <div class="brand-divider"></div>
+      <a href="../index.html" class="brand" title="Level 1: ROS 2 Foundations">
+        <img src="../assets/images/ros2_logo.svg" alt="ROS 2" class="brand-logo">
+        <span class="brand-title">NavPro Learning Hub</span>
+        <span class="badge-jazzy">ROS 2 Jazzy</span>
+      </a>
+    </div>
+    <div class="header-center">
+      <input type="text" id="lessonSearchInput" class="search-input" placeholder="🔍 Search Level 1 curriculum...">
+    </div>
+    <div class="header-actions">
+      <a href="http://localhost:6080/vnc.html" target="_blank" class="track-btn" title="Open Ubuntu Desktop GUI via noVNC">🖥️ Desktop GUI</a>
+      <a href="http://localhost:8443/?folder=/home/student/ros2_ws" target="_blank" class="track-btn" title="Open VS Code in browser">💻 VS Code</a>
+      <a href="../index.html" class="track-btn active">Curriculum Hub</a>
+      <span class="theme-pill">☀️ Light Theme</span>
+    </div>
+  </header>
+
+  <div class="app-container">
+    <aside class="app-sidebar">
+      <div class="progress-card">
+        <div class="progress-header">
+          <span>Curriculum Progress</span>
+          <span id="overallProgressText">0% Complete (0/26)</span>
+        </div>
+        <div class="progress-bar-track">
+          <div id="overallProgressBar" class="progress-bar-fill"></div>
+        </div>
+        <button id="resetProgressBtn" class="track-btn reset-btn" style="width:100%; margin-top:8px; justify-content:center;">↺ Reset Progress</button>
+      </div>
+
+      
+        <div class="sidebar-section-title">ROS 2 Foundations (26 Lessons)</div>
+        <ul class="lesson-list">
+          
+            <li>
+              <a href="lesson_01.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_01" onclick="event.stopPropagation();">
+                <span class="lesson-num">01</span>
+                <span class="lesson-title">Linux Fundamentals For Robotics</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_02.html" class="lesson-item active">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_02" onclick="event.stopPropagation();">
+                <span class="lesson-num">02</span>
+                <span class="lesson-title">Ros2 Overview And Environment Setup</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_03.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_03" onclick="event.stopPropagation();">
+                <span class="lesson-num">03</span>
+                <span class="lesson-title">Workspace And First Python Node</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_04.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_04" onclick="event.stopPropagation();">
+                <span class="lesson-num">04</span>
+                <span class="lesson-title">Package Architecture And Configuration</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_05.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_05" onclick="event.stopPropagation();">
+                <span class="lesson-num">05</span>
+                <span class="lesson-title">Publishers Subscribers And Qos</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_06.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_06" onclick="event.stopPropagation();">
+                <span class="lesson-num">06</span>
+                <span class="lesson-title">Vscode Debugging And Ros2 Logging</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_07.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_07" onclick="event.stopPropagation();">
+                <span class="lesson-num">07</span>
+                <span class="lesson-title">Interfaces And Custom Messages</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_08.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_08" onclick="event.stopPropagation();">
+                <span class="lesson-num">08</span>
+                <span class="lesson-title">Services Server Client Python</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_09.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_09" onclick="event.stopPropagation();">
+                <span class="lesson-num">09</span>
+                <span class="lesson-title">Dynamic Parameters And Yaml</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_10.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_10" onclick="event.stopPropagation();">
+                <span class="lesson-num">10</span>
+                <span class="lesson-title">Launch Files And Runtime Management</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_11.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_11" onclick="event.stopPropagation();">
+                <span class="lesson-num">11</span>
+                <span class="lesson-title">Ros2 Actions Server And Client</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_12.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_12" onclick="event.stopPropagation();">
+                <span class="lesson-num">12</span>
+                <span class="lesson-title">Ros2 Bag Recording And Playback</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_13.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_13" onclick="event.stopPropagation();">
+                <span class="lesson-num">13</span>
+                <span class="lesson-title">Ros2 Cli Command Mastery</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_14.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_14" onclick="event.stopPropagation();">
+                <span class="lesson-num">14</span>
+                <span class="lesson-title">Tf2 Coordinate Transformations Python</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_15.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_15" onclick="event.stopPropagation();">
+                <span class="lesson-num">15</span>
+                <span class="lesson-title">Distributed Ros2 And Dds Networking</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_16.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_16" onclick="event.stopPropagation();">
+                <span class="lesson-num">16</span>
+                <span class="lesson-title">Project Opencv Ros2 Vision</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_17.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_17" onclick="event.stopPropagation();">
+                <span class="lesson-num">17</span>
+                <span class="lesson-title">3D Modeling Urdf Xacro</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_18.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_18" onclick="event.stopPropagation();">
+                <span class="lesson-num">18</span>
+                <span class="lesson-title">Rviz2 Visualization Tf Inspection</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_19.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_19" onclick="event.stopPropagation();">
+                <span class="lesson-num">19</span>
+                <span class="lesson-title">Gazebo Physics And Sensor Plugins</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_20.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_20" onclick="event.stopPropagation();">
+                <span class="lesson-num">20</span>
+                <span class="lesson-title">Building Simulation Worlds</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_21.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_21" onclick="event.stopPropagation();">
+                <span class="lesson-num">21</span>
+                <span class="lesson-title">2D Slam Mapping Slam Toolbox</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_22.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_22" onclick="event.stopPropagation();">
+                <span class="lesson-num">22</span>
+                <span class="lesson-title">Nav2 Architecture And Costmaps</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_23.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_23" onclick="event.stopPropagation();">
+                <span class="lesson-num">23</span>
+                <span class="lesson-title">Nav2 Planners Controllers Tuning</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_24.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_24" onclick="event.stopPropagation();">
+                <span class="lesson-num">24</span>
+                <span class="lesson-title">Nav2 Behavior Trees And Recoveries</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_25.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_25" onclick="event.stopPropagation();">
+                <span class="lesson-num">25</span>
+                <span class="lesson-title">Autonomous Patrol Nav2 Simple Commander</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_26.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_26" onclick="event.stopPropagation();">
+                <span class="lesson-num">26</span>
+                <span class="lesson-title">Physical Robot Hardware Deployment</span>
+              </a>
+            </li>
+            
+        </ul>
+        
+    </aside>
+
+    <main class="app-content">
+      <article class="markdown-body">
+        
+        <div class="concept-card">
+          <h3>⚡ Quick Concept Snapshot</h3>
+          <ul>
+            <li><strong>Peer-to-Peer DDS:</strong> Zero master bottleneck (<code>roscore</code> eliminated); nodes discover each other dynamically.</li>
+            <li><strong>ROS 2 Jazzy LTS:</strong> Standardized on Ubuntu 24.04 Noble Numbat and Python 3.12 with enhanced DDS performance.</li>
+            <li><strong>Terminator:</strong> Manage bringup, teleoperation, RViz, and telemetry in a single split-window layout.</li>
+          </ul>
+        </div>
+        <h1>Lesson 02: ROS 2 Overview &amp; Environment Setup</h1>
+<blockquote class="alert alert-note"><strong>Focus:</strong> Python-Only Robotics Engineering Workflow<br><strong>Course Track:</strong> NavPro Learning Hub - Level 1<br><strong>Target Environment:</strong> Ubuntu 24.04 LTS / Docker Container with ROS 2 Jazzy Jalisco</blockquote>
+<hr>
+<h2>1. Overview &amp; Learning Objectives</h2>
+<p>Welcome to the foundation of modern robotics software engineering. This tutorial introduces <strong>Robot Operating System 2 (ROS 2)</strong>, the global standard for building commercial autonomous robots.</p>
+<p>By the end of this lesson, you will:</p>
+<ol>
+<li>Understand the core architectural differences between ROS 1 and ROS 2 (DDS middleware vs. Master node).</li>
+<li>Learn the release lifecycle and why <strong>ROS 2 Jazzy Jalisco</strong> on Ubuntu 24.04 is the industry benchmark.</li>
+<li>Install and configure a complete ROS 2 development workstation (Native Ubuntu or Containerized Docker).</li>
+<li>Configure multi-terminal development tooling with <strong>Terminator</strong> and <strong>VS Code</strong>.</li>
+<li>Set up automatic shell environment sourcing and productivity aliases.</li>
+</ol>
+<hr>
+<h2>2. Hardware and Software Prerequisites</h2>
+<div class="table-wrapper"><table>
+<thead><tr>
+<th>Component</th>
+<th>Specification</th>
+<th>Purpose</th>
+</tr></thead><tbody>
+<tr>
+<td><strong>Operating System</strong></td>
+<td>Ubuntu 24.04 LTS (Noble Numbat) or Docker</td>
+<td>Base OS supporting ROS 2 Jazzy</td>
+</tr>
+<tr>
+<td><strong>Processor</strong></td>
+<td>x86_64 or ARM64 (e.g. Jetson Orin, Raspberry Pi 5)</td>
+<td>Host compute</td>
+</tr>
+<tr>
+<td><strong>RAM</strong></td>
+<td>Minimum 8 GB (16 GB recommended for Gazebo sim)</td>
+<td>Colcon builds and simulation</td>
+</tr>
+<tr>
+<td><strong>ROS 2 Distro</strong></td>
+<td><strong>ROS 2 Jazzy Jalisco</strong> (LTS until May 2027)</td>
+<td>Robotics middleware</td>
+</tr>
+<tr>
+<td><strong>Python</strong></td>
+<td>Python 3.12+</td>
+<td>Primary programming language</td>
+</tr>
+<tr>
+<td><strong>Editor</strong></td>
+<td>Visual Studio Code (or Web code-server)</td>
+<td>Code development &amp; debugging</td>
+</tr>
+<tr>
+<td><strong>Terminal</strong></td>
+<td>Terminator or tmux</td>
+<td>Multi-pane ROS 2 CLI monitoring</td>
+</tr>
+</tbody></table></div>
+<hr>
+<h2>3. What is ROS 2?</h2>
+<p><strong>ROS 2</strong> is not a traditional operating system like Linux or Windows. It is a <strong>meta-operating system</strong>—a modular software framework and middleware suite providing:</p>
+<ul>
+<li><strong>Hardware Abstraction:</strong> Drivers for LiDARs, depth cameras, IMUs, motor controllers.</li>
+<li><strong>Inter-Process Communication (IPC):</strong> Standardized message passing between isolated processes (Nodes).</li>
+<li><strong>Package Management:</strong> Modular build, dependency, and release tooling via <code>colcon</code> and <code>rosdep</code>.</li>
+<li><strong>Ecosystem Libraries:</strong> Advanced algorithms for 2D/3D SLAM (<code>slam_toolbox</code>), path planning (<code>Nav2</code>), perception (<code>OpenCV</code>), and kinematics (<code>TF2</code>).</li>
+</ul>
+<h3>3.1 ROS 1 vs. ROS 2: The Architectural Paradigm Shift</h3>
+<div style="text-align:center; margin:1.6rem 0;"><img src="../assets/images/ros1_vs_ros2_dds.svg" alt="ROS 1 vs ROS 2 DDS Architectural Comparison" style="max-width:100%; border-radius:10px; border:1px solid #e2e8f0; box-shadow:0 2px 8px rgba(0,0,0,0.05); background:#ffffff;"></div>
+<p>Key evolutions in ROS 2:</p>
+<ol>
+<li><strong>No Master Node (<code>roscore</code> eliminated):</strong> In ROS 1, if <code>roscore</code> crashed, the entire robot halted. In ROS 2, nodes automatically discover each other over the local network via peer-to-peer <strong>DDS (Data Distribution Service)</strong> discovery.</li>
+<li><strong>Industrial Quality of Service (QoS):</strong> Customize delivery guarantees per topic (e.g., Best Effort for high-rate sensor streams vs. Reliable for safety commands).</li>
+<li><strong>Native Multi-Robot Networking:</strong> Robots on the same network communicate seamlessly using isolated <code>ROS_DOMAIN_ID</code> channels.</li>
+<li><strong>Modern Python 3 Standard:</strong> Pure Python 3 architecture with asynchronous execution (<code>asyncio</code> and <code>rclpy.executors</code>).</li>
+</ol>
+<hr>
+<h2>4. ROS 2 Release Timeline</h2>
+<p>ROS 2 releases are named alphabetically after adjectives and marine/amphibian species:</p>
+<div class="table-wrapper"><table>
+<thead><tr>
+<th>Release Name</th>
+<th>Target Ubuntu</th>
+<th>Release Date</th>
+<th>End of Life (EOL)</th>
+<th>Industry Status</th>
+</tr></thead><tbody>
+<tr>
+<td>Foxy Fitzroy</td>
+<td>Ubuntu 20.04 LTS</td>
+<td>June 2020</td>
+<td>May 2023</td>
+<td>End of Life</td>
+</tr>
+<tr>
+<td>Galactic Geochelone</td>
+<td>Ubuntu 20.04 LTS</td>
+<td>May 2021</td>
+<td>Nov 2022</td>
+<td>End of Life</td>
+</tr>
+<tr>
+<td>Humble Hawksbill</td>
+<td>Ubuntu 22.04 LTS</td>
+<td>May 2022</td>
+<td>May 2027</td>
+<td>Mature LTS</td>
+</tr>
+<tr>
+<td>Iron Irwini</td>
+<td>Ubuntu 22.04 LTS</td>
+<td>May 2023</td>
+<td>Nov 2024</td>
+<td>End of Life</td>
+</tr>
+<tr>
+<td><strong>Jazzy Jalisco</strong></td>
+<td><strong>Ubuntu 24.04 LTS</strong></td>
+<td><strong>May 2024</strong></td>
+<td><strong>May 2029</strong></td>
+<td><strong>Primary Recommended LTS (Workshop Standard)</strong></td>
+</tr>
+</tbody></table></div>
+<blockquote class="alert alert-important"><strong>ROS 2 Jazzy Jalisco</strong> on <strong>Ubuntu 24.04 LTS (Noble Numbat)</strong> represents the state-of-the-art long-term support release, featuring Python 3.12, native MCAP bag storage, enhanced FastDDS / CycloneDDS middleware, and the latest Nav2 autonomous navigation framework.</blockquote>
+<hr>
+<h2>5. Step-by-Step Installation on Ubuntu 24.04 LTS</h2>
+<p>If installing natively on Ubuntu 24.04, follow these exact verified steps:</p>
+<h3>Step 5.1: Configure Locale (UTF-8 Verification)</h3>
+<blockquote class="alert alert-syntax"><strong>Command Syntax:</strong> <code>locale</code> &amp;nbsp;|&amp;nbsp; <code>sudo locale-gen &lt;locale&gt;</code> &amp;nbsp;|&amp;nbsp; <code>sudo update-locale &lt;vars&gt;</code><br><strong>Description:</strong> ROS 2 requires an explicit UTF-8 locale environment to process character encoding in ROS message strings, logs, and telemetry packets.</blockquote>
+<p><strong>Hands-On Practical Command:</strong></p>
+<div class="code-container"><pre><button class="copy-btn">Copy</button><code class="language-bash">locale  # Verify output contains UTF-8
+
+sudo apt update &amp;&amp; sudo apt install -y locales
+sudo locale-gen en_US en_US.UTF-8
+sudo update-locale LC_ALL=en_US.UTF-8 LANG=en_US.UTF-8
+export LANG=en_US.UTF-8</code></pre></div>
+<hr>
+<h3>Step 5.2: Enable Ubuntu Universe Repository</h3>
+<blockquote class="alert alert-syntax"><strong>Command Syntax:</strong> <code>sudo add-apt-repository &lt;repo_name&gt;</code><br><strong>Description:</strong> Enables the official Ubuntu Universe repository, which provides community-maintained open-source packages and build tools.</blockquote>
+<p><strong>Hands-On Practical Command:</strong></p>
+<div class="code-container"><pre><button class="copy-btn">Copy</button><code class="language-bash">sudo apt install -y software-properties-common
+sudo add-apt-repository universe</code></pre></div>
+<hr>
+<h3>Step 5.3: Add Official ROS 2 GPG Key &amp; APT Source</h3>
+<blockquote class="alert alert-syntax"><strong>Command Syntax:</strong> <code>curl -sSL &lt;key_url&gt; -o &lt;keyring_path&gt;</code> &amp;nbsp;|&amp;nbsp; <code>tee /etc/apt/sources.list.d/&lt;list&gt;</code><br><strong>Description:</strong> Downloads OpenPGP archive keys into <code>/usr/share/keyrings</code> and adds the official Open Robotics package repository to your APT sources list for cryptographically verified package installations.</blockquote>
+<p><strong>Hands-On Practical Command:</strong></p>
+<div class="code-container"><pre><button class="copy-btn">Copy</button><code class="language-bash">sudo apt update &amp;&amp; sudo apt install -y curl gnupg lsb-release
+
+# Download official ROS archive key
+sudo curl -sSL https://raw.githubusercontent.com/ros/rosdistro/master/ros.key -o /usr/share/keyrings/ros-archive-keyring.gpg
+
+# Add ROS 2 repository to sources list
+echo &quot;deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/ros-archive-keyring.gpg] http://packages.ros.org/ros2/ubuntu $(. /etc/os-release &amp;&amp; echo $UBUNTU_CODENAME) main&quot; | sudo tee /etc/apt/sources.list.d/ros2.list &gt; /dev/null</code></pre></div>
+<hr>
+<h3>Step 5.4: Install ROS 2 Jazzy Desktop &amp; Build Tools</h3>
+<blockquote class="alert alert-syntax"><strong>Command Syntax:</strong> <code>sudo apt install -y ros-jazzy-desktop python3-colcon-common-extensions</code><br><strong>Description:</strong> Installs the core ROS 2 libraries, RViz2 visualization, Gazebo integration packages, Python 3 bindings, and the Colcon build tool.</blockquote>
+<p><strong>Hands-On Practical Command:</strong></p>
+<div class="code-container"><pre><button class="copy-btn">Copy</button><code class="language-bash">sudo apt update
+sudo apt install -y ros-jazzy-desktop
+
+# Install Colcon build system, rosdep, and python dependencies
+sudo apt install -y python3-colcon-common-extensions python3-rosdep python3-pip python3-argcomplete</code></pre></div>
+<hr>
+<h3>Step 5.5: Initialize Rosdep</h3>
+<blockquote class="alert alert-syntax"><strong>Command Syntax:</strong> <code>sudo rosdep init</code> &amp;nbsp;|&amp;nbsp; <code>rosdep update</code><br><strong>Description:</strong> Initializes the package dependency index. <code>rosdep</code> queries the global ROS package index to resolve and install OS system dependencies (apt libraries, C++ headers, Python packages) required by ROS 2 nodes.</blockquote>
+<p><strong>Hands-On Practical Command:</strong></p>
+<div class="code-container"><pre><button class="copy-btn">Copy</button><code class="language-bash">sudo rosdep init
+rosdep update</code></pre></div>
+<hr>
+<h2>6. Docker Containerized Setup (Zero-Friction Option)</h2>
+<p>For students on Windows, macOS, or clean Linux installations, the <strong>NavPro Learning Hub</strong> provides a fully pre-configured Docker image containing ROS 2 Jazzy, Gazebo Sim (Harmonic), Nav2, an in-browser Ubuntu 24.04 desktop GUI (<strong>noVNC</strong>), and an in-browser VS Code editor (<strong>code-server</strong>).</p>
+<h3>Step 6.0: Prerequisites — Installing Docker</h3>
+<p>Before building the container, ensure Docker Engine and Docker Compose are installed on your host system.</p>
+<h4>A. Installing Docker on Windows (WSL 2 Backend)</h4>
+<ol>
+<li><strong>Enable Hardware Virtualization:</strong> Ensure Virtualization (VT-x / AMD-V) is enabled in your PC&#x27;s BIOS/UEFI settings.</li>
+<li><strong>Install WSL 2 (Windows Subsystem for Linux):</strong> Open PowerShell as Administrator and execute:</li>
+</ol>
+<div class="code-container"><pre><button class="copy-btn">Copy</button><code class="language-powershell">   wsl --install</code></pre></div>
+<p>Restart your computer if prompted by Windows.</p>
+<ol>
+<li><strong>Download &amp; Install Docker Desktop:</strong></li>
+</ol>
+<ul>
+<li>Download the official installer from <a href="https://docs.docker.com/desktop/setup/install/windows-install/">Docker Desktop for Windows</a>.</li>
+<li>During setup, verify the option <strong>&quot;Use WSL 2 instead of Hyper-V&quot;</strong> is checked.</li>
+<li>Launch Docker Desktop, navigate to <strong>Settings &amp;rarr; Resources &amp;rarr; WSL Integration</strong>, and ensure your Ubuntu/WSL distro is toggled on.</li>
+<li>Test in PowerShell or Command Prompt:</li>
+</ul>
+<div class="code-container"><pre><button class="copy-btn">Copy</button><code class="language-powershell">     docker --version
+     docker compose version</code></pre></div>
+<h4>B. Installing Docker on Linux (Ubuntu 22.04 / 24.04 LTS)</h4>
+<ol>
+<li><strong>Remove conflicting legacy packages:</strong></li>
+</ol>
+<div class="code-container"><pre><button class="copy-btn">Copy</button><code class="language-bash">   for pkg in docker.io docker-doc docker-compose podman-docker containerd runc; do sudo apt-get remove -y $pkg; done</code></pre></div>
+<ol>
+<li><strong>Set up Docker&#x27;s official APT repository:</strong></li>
+</ol>
+<div class="code-container"><pre><button class="copy-btn">Copy</button><code class="language-bash">   sudo apt update
+   sudo apt install -y ca-certificates curl gnupg
+   sudo install -m 0755 -d /etc/apt/keyrings
+   sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
+   sudo chmod a+r /etc/apt/keyrings/docker.asc
+
+   echo &quot;deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu $(. /etc/os-release &amp;&amp; echo &quot;$UBUNTU_CODENAME&quot;) stable&quot; | sudo tee /etc/apt/sources.list.d/docker.list &gt; /dev/null</code></pre></div>
+<ol>
+<li><strong>Install Docker Engine &amp; Compose plugin:</strong></li>
+</ol>
+<div class="code-container"><pre><button class="copy-btn">Copy</button><code class="language-bash">   sudo apt update
+   sudo apt install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin</code></pre></div>
+<ol>
+<li><strong>Configure Non-Root User Permissions (Post-Install):</strong></li>
+</ol>
+<div class="code-container"><pre><button class="copy-btn">Copy</button><code class="language-bash">   sudo usermod -aG docker $USER
+   newgrp docker</code></pre></div>
+<ol>
+<li><strong>Verify installation:</strong></li>
+</ol>
+<div class="code-container"><pre><button class="copy-btn">Copy</button><code class="language-bash">   docker run --rm hello-world
+   docker compose version</code></pre></div>
+<h4>Official Reference Documentation Links</h4>
+<div class="table-wrapper"><table>
+<thead><tr>
+<th>Resource</th>
+<th>URL &amp; Official Guide</th>
+<th>Description</th>
+</tr></thead><tbody>
+<tr>
+<td><strong>Docker Desktop for Windows</strong></td>
+<td><a href="https://docs.docker.com/desktop/setup/install/windows-install/">Install Docker Desktop on Windows</a></td>
+<td>Official installation walkthrough for Windows 10/11 with WSL 2 backend</td>
+</tr>
+<tr>
+<td><strong>Microsoft WSL 2 Setup</strong></td>
+<td><a href="https://learn.microsoft.com/en-us/windows/wsl/install">How to install Linux on Windows with WSL</a></td>
+<td>Microsoft documentation for setting up the WSL 2 Linux kernel</td>
+</tr>
+<tr>
+<td><strong>Docker Engine for Ubuntu</strong></td>
+<td><a href="https://docs.docker.com/engine/install/ubuntu/">Install Docker Engine on Ubuntu</a></td>
+<td>Official APT repository setup guide for Ubuntu 22.04 &amp; 24.04 LTS</td>
+</tr>
+<tr>
+<td><strong>Docker Linux Post-Install</strong></td>
+<td><a href="https://docs.docker.com/engine/install/linux-postinstall/">Linux Post-installation Steps</a></td>
+<td>Managing Docker as a non-root user and systemd auto-start</td>
+</tr>
+<tr>
+<td><strong>Docker Compose Docs</strong></td>
+<td><a href="https://docs.docker.com/compose/">Overview of Docker Compose</a></td>
+<td>Reference guide for compose syntax and CLI commands</td>
+</tr>
+</tbody></table></div>
+<hr>
+<h3>Step 6.1: Build &amp; Launch the Complete Stack with One Command</h3>
+<blockquote class="alert alert-syntax"><strong>Command Syntax:</strong> <code>docker compose up [options]</code><br><strong>Description:</strong> Builds and starts containerized services defined in <code>docker-compose.yml</code>. Flag <code>--build</code> compiles images from the local Dockerfile; <code>-d</code> runs containers detached in the background.</blockquote>
+<p><strong>One-Command Stack Launch (Level 1 Repository):</strong></p>
+<div class="code-container"><pre><button class="copy-btn">Copy</button><code class="language-bash"># Navigate to the Level 1 repository directory
+cd /home/chaitu/Projects/navpro_learning_hub/level1
+
+# Launch the entire ecosystem (Web Portal, Desktop GUI, and VS Code) in one command:
+docker compose up --build -d</code></pre></div>
+<p>Verify that the Level 1 container is active and running:</p>
+<div class="code-container"><pre><button class="copy-btn">Copy</button><code class="language-bash">docker ps --filter &quot;name=navpro_level1_container&quot;</code></pre></div>
+<p><em>Expected Terminal Output:</em></p>
+<div class="code-container"><pre><button class="copy-btn">Copy</button><code class="language-text">CONTAINER ID   IMAGE                          STATUS         PORTS
+a1b2c3d4e5f6   navpro-level1-ros2-sim:latest  Up 2 minutes   0.0.0.0:8000-&gt;8000/tcp, 0.0.0.0:6080-&gt;6080/tcp, 0.0.0.0:8443-&gt;8443/tcp</code></pre></div>
+<hr>
+<h3>Step 6.2: One-Click Launch via Top Navigation Status Bar</h3>
+<p>You do not need to memorize URLs. Notice the <strong>quick-launch buttons on the top status bar / header</strong> of this web portal:</p>
+<div class="table-wrapper"><table>
+<thead><tr>
+<th>Status Bar Button</th>
+<th>Destination URL</th>
+<th>Purpose &amp; Environment</th>
+</tr></thead><tbody>
+<tr>
+<td><strong><code>🖥️ Desktop GUI</code></strong></td>
+<td><code>http://localhost:6080/vnc.html</code></td>
+<td>Opens full Ubuntu 24.04 XFCE desktop with Gazebo, RViz2, and Terminator.</td>
+</tr>
+<tr>
+<td><strong><code>💻 VS Code</code></strong></td>
+<td><code>http://localhost:8443/?folder=/home/student/ros2_ws</code></td>
+<td>Opens in-browser VS Code editor directly rooted in your ROS 2 workspace.</td>
+</tr>
+</tbody></table></div>
+<blockquote class="alert alert-important"><strong>Authentication &amp; Passwords:</strong><br>&bull; <strong>noVNC Desktop GUI Password:</strong> <code>password</code><br>When the noVNC browser tab opens, click <strong>Connect</strong> and enter password <code>password</code>. You will immediately see the Ubuntu desktop, ready to launch Gazebo and RViz2.<br>&bull; <strong>In-Browser VS Code IDE:</strong> <strong>No password required</strong> (pre-authenticated). It opens directly into <code>/home/student/ros2_ws</code>.</blockquote>
+<hr>
+<h3>Step 6.3: Command-Line Terminal Access inside Container</h3>
+<blockquote class="alert alert-syntax"><strong>Command Syntax:</strong> <code>docker exec -it &lt;container_name&gt; &lt;shell_binary&gt;</code><br><strong>Description:</strong> Opens an interactive terminal session inside a running container. Flag <code>-i</code> keeps stdin open, and <code>-t</code> allocates a terminal TTY buffer.</blockquote>
+<p><strong>Hands-On Practical Command:</strong></p>
+<div class="code-container"><pre><button class="copy-btn">Copy</button><code class="language-bash">docker exec -it navpro_level1_container bash</code></pre></div>
+<p>Inside the container shell, all ROS 2 Jazzy paths and workspace tools are auto-sourced:</p>
+<div class="code-container"><pre><button class="copy-btn">Copy</button><code class="language-bash"># Verify environment inside container:
+ros2 pkg list | grep turtlebot3
+gz sim --version</code></pre></div>
+<p><em>Expected Terminal Output:</em></p>
+<div class="code-container"><pre><button class="copy-btn">Copy</button><code class="language-text">turtlebot3_description
+turtlebot3_navigation2
+Gazebo Sim, version 8.6.0</code></pre></div>
+<hr>
+<h3>Step 6.4: Stopping the Container</h3>
+<div class="code-container"><pre><button class="copy-btn">Copy</button><code class="language-bash">cd /home/chaitu/Projects/navpro_learning_hub/level1/docker
+docker compose down</code></pre></div>
+<hr>
+<h2>7. Productivity Development Tooling</h2>
+<p>Robotics programming requires running multiple nodes, echoing topics, and monitoring logs simultaneously.</p>
+<h3>7.1 Multi-Terminal Manager: Terminator</h3>
+<p>Install Terminator for easy terminal window splitting:</p>
+<div class="code-container"><pre><button class="copy-btn">Copy</button><code class="language-bash">sudo apt install -y terminator</code></pre></div>
+<p><strong>Essential Terminator Shortcuts:</strong></p>
+<ul>
+<li><code>Ctrl + Shift + O</code>: Split pane <strong>horizontally</strong> (top and bottom).</li>
+<li><code>Ctrl + Shift + E</code>: Split pane <strong>vertically</strong> (left and right).</li>
+<li><code>Alt + Arrow Keys</code>: Navigate between active split panes.</li>
+<li><code>Ctrl + Shift + W</code>: Close active pane.</li>
+<li><code>F11</code>: Toggle fullscreen.</li>
+</ul>
+<div style="text-align:center; margin:1.6rem 0;"><img src="../assets/images/terminator_layout.svg" alt="Terminator Multi-Pane Terminal Layout" style="max-width:100%; border-radius:10px; border:1px solid #e2e8f0; box-shadow:0 2px 8px rgba(0,0,0,0.05); background:#ffffff;"></div>
+<h3>7.2 Visual Studio Code Configuration</h3>
+<p>Launch VS Code in your workspace:</p>
+<div class="code-container"><pre><button class="copy-btn">Copy</button><code class="language-bash">code .</code></pre></div>
+<p>Recommended Extensions for ROS 2 Python:</p>
+<ol>
+<li><strong>Python</strong> (<code>ms-python.python</code>): IntelliSense, linting, syntax highlighting.</li>
+<li><strong>ROS</strong> (<code>ms-iot.vscode-ros</code>): ROS 2 environment discovery, build task runners.</li>
+<li><strong>XML</strong> (<code>redhat.vscode-xml</code>): Autocompletion and syntax validation for <code>package.xml</code> and URDF/Xacro files.</li>
+<li><strong>Even Better TOML</strong> / <strong>YAML</strong>: Syntax highlighting for parameter and configuration files.</li>
+</ol>
+<hr>
+<h2>8. Shell Environment Sourcing &amp; Productive Aliases</h2>
+<p>By default, every new bash terminal needs to know where ROS 2 is installed. Adding the setup script to <code>~/.bashrc</code> automates this.</p>
+<p>Edit your <code>~/.bashrc</code> file:</p>
+<div class="code-container"><pre><button class="copy-btn">Copy</button><code class="language-bash">nano ~/.bashrc</code></pre></div>
+<p>Append the following lines to the bottom of the file:</p>
+<div class="code-container"><pre><button class="copy-btn">Copy</button><code class="language-bash"># -------------------------------------------------------------
+# NavPro ROS 2 Environment Setup &amp; Aliases
+# -------------------------------------------------------------
+source /opt/ros/jazzy/setup.bash
+
+# Ensure local workspace overlay is sourced if present
+if [ -f &quot;$HOME/ros2_ws/install/setup.bash&quot; ]; then
+    source &quot;$HOME/ros2_ws/install/setup.bash&quot;
+fi
+
+# Set isolated DDS domain ID (Change per student to avoid network crosstalk)
+export ROS_DOMAIN_ID=1
+
+# Productivity Shortcuts
+alias sb=&#x27;source ~/.bashrc &amp;&amp; echo &quot;Environment sourced!&quot;&#x27;
+alias cb=&#x27;colcon build --symlink-install&#x27;
+alias cbp=&#x27;colcon build --symlink-install --packages-select&#x27;
+alias killros=&#x27;killall -9 gzserver gzclient robot_state_publisher 2&gt;/dev/null&#x27;</code></pre></div>
+<p>Save and reload the environment:</p>
+<div class="code-container"><pre><button class="copy-btn">Copy</button><code class="language-bash">source ~/.bashrc</code></pre></div>
+<hr>
+<h2>9. Verification &amp; &quot;Hello World&quot; Smoke Test</h2>
+<p>Run the built-in ROS 2 talker and listener demo nodes to verify that DDS peer discovery is operational.</p>
+<h3>Step 9.1: Launch Talker Node</h3>
+<blockquote class="alert alert-syntax"><strong>Command Syntax:</strong> <code>ros2 run &lt;package_name&gt; &lt;executable_name&gt;</code><br><strong>Description:</strong> Executes a compiled ROS 2 executable from an installed package. Starts the node process and begins publishing on DDS topics.</blockquote>
+<p><strong>Hands-On Practical Command (Terminal 1):</strong></p>
+<div class="code-container"><pre><button class="copy-btn">Copy</button><code class="language-bash">ros2 run demo_nodes_py talker</code></pre></div>
+<p><em>Expected Terminal Output:</em></p>
+<div class="code-container"><pre><button class="copy-btn">Copy</button><code class="language-text">[INFO] [talker]: Publishing: &quot;Hello World: 1&quot;
+[INFO] [talker]: Publishing: &quot;Hello World: 2&quot;
+[INFO] [talker]: Publishing: &quot;Hello World: 3&quot;</code></pre></div>
+<hr>
+<h3>Step 9.2: Launch Listener Node</h3>
+<blockquote class="alert alert-syntax"><strong>Command Syntax:</strong> <code>ros2 run &lt;package_name&gt; &lt;executable_name&gt;</code><br><strong>Description:</strong> Runs the subscriber node which dynamically discovers <code>/talker</code> over local DDS multicast and prints received messages.</blockquote>
+<p><strong>Hands-On Practical Command (Terminal 2):</strong></p>
+<div class="code-container"><pre><button class="copy-btn">Copy</button><code class="language-bash">ros2 run demo_nodes_py listener</code></pre></div>
+<p><em>Expected Terminal Output:</em></p>
+<div class="code-container"><pre><button class="copy-btn">Copy</button><code class="language-text">[INFO] [listener]: I heard: [Hello World: 1]
+[INFO] [listener]: I heard: [Hello World: 2]
+[INFO] [listener]: I heard: [Hello World: 3]</code></pre></div>
+<hr>
+<h3>Step 9.3: Inspect Active Nodes &amp; Echo Topics</h3>
+<blockquote class="alert alert-syntax"><strong>Command Syntax:</strong> <code>ros2 node list</code> &amp;nbsp;|&amp;nbsp; <code>ros2 topic list</code> &amp;nbsp;|&amp;nbsp; <code>ros2 topic echo &lt;topic_name&gt;</code><br><strong>Description:</strong> Queries the DDS peer discovery bus to inspect live running nodes, active message topics, and echo real-time data packets in the terminal.</blockquote>
+<p><strong>Hands-On Practical Command:</strong></p>
+<div class="code-container"><pre><button class="copy-btn">Copy</button><code class="language-bash">ros2 node list
+# Displays: /talker, /listener
+
+ros2 topic list
+# Displays: /chatter, /parameter_events, /rosout
+
+ros2 topic echo /chatter</code></pre></div>
+<p><em>Expected Terminal Output:</em></p>
+<div class="code-container"><pre><button class="copy-btn">Copy</button><code class="language-text">data: &#x27;Hello World: 4&#x27;
+---
+data: &#x27;Hello World: 5&#x27;
+---</code></pre></div>
+<hr>
+<h2>10. Summary &amp; Next Steps</h2>
+<p>You now have a fully operational, industry-grade ROS 2 Jazzy workstation. In <strong>Lesson 03</strong>, we will build our first custom ROS 2 workspace from scratch and write an object-oriented Python node with timers and logging!</p>
+      </article>
+
+      <footer class="lesson-nav-footer">
+        <a href="lesson_01.html" class="nav-link-btn" >&larr; Previous Lesson</a>
+        <a href="../index.html" class="nav-link-btn">🧭 Course Hub</a>
+        <a href="lesson_03.html" class="nav-link-btn" >Next Lesson &rarr;</a>
+      </footer>
+    </main>
+  </div>
+
+  <script src="../assets/js/highlight.min.js"></script>
+  <script src="../assets/js/app.js"></script>
+  <script src="../assets/js/quiz_engine.js"></script>
+  <script src="../assets/js/instructor_sync.js"></script>
+</body>
+</html>

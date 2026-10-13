@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lesson 01: Linux Fundamentals For Robotics | Level 1 Foundations</title>
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="stylesheet" href="../assets/css/animations.css">
+  <link rel="stylesheet" href="../assets/css/highlight-dark.min.css">
+  <link rel="stylesheet" href="../assets/css/quiz.css">
+  <link rel="stylesheet" href="../assets/css/instructor_sync.css">
+</head>
+<body>
+  <header class="app-header">
+    <div class="brand-container">
+      <a href="https://botforge.in" target="_blank" class="company-brand" title="Botforge Robotics - botforge.in">
+        <img src="../assets/images/botforge_black.png" alt="Botforge Robotics" class="company-logo">
+      </a>
+      <div class="brand-divider"></div>
+      <a href="../index.html" class="brand" title="Level 1: ROS 2 Foundations">
+        <img src="../assets/images/ros2_logo.svg" alt="ROS 2" class="brand-logo">
+        <span class="brand-title">NavPro Learning Hub</span>
+        <span class="badge-jazzy">ROS 2 Jazzy</span>
+      </a>
+    </div>
+    <div class="header-center">
+      <input type="text" id="lessonSearchInput" class="search-input" placeholder="🔍 Search Level 1 curriculum...">
+    </div>
+    <div class="header-actions">
+      <a href="http://localhost:6080/vnc.html" target="_blank" class="track-btn" title="Open Ubuntu Desktop GUI via noVNC">🖥️ Desktop GUI</a>
+      <a href="http://localhost:8443/?folder=/home/student/ros2_ws" target="_blank" class="track-btn" title="Open VS Code in browser">💻 VS Code</a>
+      <a href="../index.html" class="track-btn active">Curriculum Hub</a>
+      <span class="theme-pill">☀️ Light Theme</span>
+    </div>
+  </header>
+
+  <div class="app-container">
+    <aside class="app-sidebar">
+      <div class="progress-card">
+        <div class="progress-header">
+          <span>Curriculum Progress</span>
+          <span id="overallProgressText">0% Complete (0/26)</span>
+        </div>
+        <div class="progress-bar-track">
+          <div id="overallProgressBar" class="progress-bar-fill"></div>
+        </div>
+        <button id="resetProgressBtn" class="track-btn reset-btn" style="width:100%; margin-top:8px; justify-content:center;">↺ Reset Progress</button>
+      </div>
+
+      
+        <div class="sidebar-section-title">ROS 2 Foundations (26 Lessons)</div>
+        <ul class="lesson-list">
+          
+            <li>
+              <a href="lesson_01.html" class="lesson-item active">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_01" onclick="event.stopPropagation();">
+                <span class="lesson-num">01</span>
+                <span class="lesson-title">Linux Fundamentals For Robotics</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_02.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_02" onclick="event.stopPropagation();">
+                <span class="lesson-num">02</span>
+                <span class="lesson-title">Ros2 Overview And Environment Setup</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_03.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_03" onclick="event.stopPropagation();">
+                <span class="lesson-num">03</span>
+                <span class="lesson-title">Workspace And First Python Node</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_04.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_04" onclick="event.stopPropagation();">
+                <span class="lesson-num">04</span>
+                <span class="lesson-title">Package Architecture And Configuration</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_05.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_05" onclick="event.stopPropagation();">
+                <span class="lesson-num">05</span>
+                <span class="lesson-title">Publishers Subscribers And Qos</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_06.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_06" onclick="event.stopPropagation();">
+                <span class="lesson-num">06</span>
+                <span class="lesson-title">Vscode Debugging And Ros2 Logging</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_07.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_07" onclick="event.stopPropagation();">
+                <span class="lesson-num">07</span>
+                <span class="lesson-title">Interfaces And Custom Messages</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_08.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_08" onclick="event.stopPropagation();">
+                <span class="lesson-num">08</span>
+                <span class="lesson-title">Services Server Client Python</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_09.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_09" onclick="event.stopPropagation();">
+                <span class="lesson-num">09</span>
+                <span class="lesson-title">Dynamic Parameters And Yaml</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_10.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_10" onclick="event.stopPropagation();">
+                <span class="lesson-num">10</span>
+                <span class="lesson-title">Launch Files And Runtime Management</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_11.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_11" onclick="event.stopPropagation();">
+                <span class="lesson-num">11</span>
+                <span class="lesson-title">Ros2 Actions Server And Client</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_12.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_12" onclick="event.stopPropagation();">
+                <span class="lesson-num">12</span>
+                <span class="lesson-title">Ros2 Bag Recording And Playback</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_13.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_13" onclick="event.stopPropagation();">
+                <span class="lesson-num">13</span>
+                <span class="lesson-title">Ros2 Cli Command Mastery</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_14.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_14" onclick="event.stopPropagation();">
+                <span class="lesson-num">14</span>
+                <span class="lesson-title">Tf2 Coordinate Transformations Python</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_15.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_15" onclick="event.stopPropagation();">
+                <span class="lesson-num">15</span>
+                <span class="lesson-title">Distributed Ros2 And Dds Networking</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_16.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_16" onclick="event.stopPropagation();">
+                <span class="lesson-num">16</span>
+                <span class="lesson-title">Project Opencv Ros2 Vision</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_17.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_17" onclick="event.stopPropagation();">
+                <span class="lesson-num">17</span>
+                <span class="lesson-title">3D Modeling Urdf Xacro</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_18.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_18" onclick="event.stopPropagation();">
+                <span class="lesson-num">18</span>
+                <span class="lesson-title">Rviz2 Visualization Tf Inspection</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_19.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_19" onclick="event.stopPropagation();">
+                <span class="lesson-num">19</span>
+                <span class="lesson-title">Gazebo Physics And Sensor Plugins</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_20.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_20" onclick="event.stopPropagation();">
+                <span class="lesson-num">20</span>
+                <span class="lesson-title">Building Simulation Worlds</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_21.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_21" onclick="event.stopPropagation();">
+                <span class="lesson-num">21</span>
+                <span class="lesson-title">2D Slam Mapping Slam Toolbox</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_22.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_22" onclick="event.stopPropagation();">
+                <span class="lesson-num">22</span>
+                <span class="lesson-title">Nav2 Architecture And Costmaps</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_23.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_23" onclick="event.stopPropagation();">
+                <span class="lesson-num">23</span>
+                <span class="lesson-title">Nav2 Planners Controllers Tuning</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_24.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_24" onclick="event.stopPropagation();">
+                <span class="lesson-num">24</span>
+                <span class="lesson-title">Nav2 Behavior Trees And Recoveries</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_25.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_25" onclick="event.stopPropagation();">
+                <span class="lesson-num">25</span>
+                <span class="lesson-title">Autonomous Patrol Nav2 Simple Commander</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_26.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_26" onclick="event.stopPropagation();">
+                <span class="lesson-num">26</span>
+                <span class="lesson-title">Physical Robot Hardware Deployment</span>
+              </a>
+            </li>
+            
+        </ul>
+        
+    </aside>
+
+    <main class="app-content">
+      <article class="markdown-body">
+        
+        <div class="concept-card">
+          <h3>⚡ Quick Concept Snapshot</h3>
+          <ul>
+            <li><strong>Filesystem:</strong> Navigate directories with <code>pwd</code>, <code>cd</code>, and create nested trees with <code>mkdir -p</code>.</li>
+            <li><strong>Executable Permission:</strong> Scripts must have the execute bit set with <code>chmod +x script.sh</code> before running <code>./script.sh</code>.</li>
+            <li><strong>Process Management:</strong> Monitor resource utilization with <code>top</code> and terminate jobs with <code>kill <PID></code> or <code>killall</code>.</li>
+            <li><strong>Shell Aliases:</strong> Automate repetitive command paths by adding aliases to <code>~/.bashrc</code>.</li>
+          </ul>
+        </div>
+        <h1>Lesson 01: Linux Fundamentals for Robotics Engineers</h1>
+<blockquote class="alert alert-note"><strong>Focus:</strong> Essential Linux Terminal Commands, Filesystem Hierarchy, File Permissions &amp; Process Management<br><strong>Course Track:</strong> NavPro Learning Hub - Level 1 &amp;bull; Zero-to-Autonomous AMR Engineer<br><strong>Target Environment:</strong> Ubuntu 24.04 LTS (Noble Numbat) / Containerized Docker / Raspberry Pi &amp; Jetson</blockquote>
+<hr>
+<h2>1. Overview &amp; Learning Objectives</h2>
+<p>Robotics software runs on Linux (Ubuntu LTS). Before diving into robotics middleware in Lesson 02, you must master the fundamental command-line workflows: navigating directories, inspecting files, granting executable permissions to scripts, and managing background processes.</p>
+<div style="text-align:center; margin:1.6rem 0;"><img src="../assets/images/robotics_software_stack.svg" alt="Robotics Software Stack" style="max-width:100%; border-radius:10px; border:1px solid #e2e8f0; box-shadow:0 2px 8px rgba(0,0,0,0.05); background:#ffffff;"></div>
+<p>By the end of this lesson, you will:</p>
+<ul>
+<li><strong>Navigate the Linux filesystem</strong> and understand where user files, system packages, and logs reside.</li>
+<li><strong>Master daily command-line utilities</strong> (<code>cd</code>, <code>ls</code>, <code>mkdir -p</code>, <code>cp</code>, <code>rm</code>, <code>grep</code>) in an unbroken hands-on workflow.</li>
+<li><strong>Understand file permission strings</strong> and use <code>chmod +x</code> to make shell scripts directly executable.</li>
+<li><strong>Inspect and cleanly terminate background processes</strong> (<code>top</code>, <code>kill</code>, <code>killall</code>).</li>
+<li><strong>Configure <code>~/.bashrc</code></strong> with productivity shell shortcuts (<code>alias</code>) and automated environment variables.</li>
+<li><strong>Use Terminator</strong> to split and orchestrate multi-terminal workflows on a single screen.</li>
+</ul>
+<hr>
+<h2>2. The Linux Filesystem: What You Need to Know</h2>
+<p>In Linux, all files, hardware devices, and network sockets are organized into a single unified tree originating at root (<code>/</code>):</p>
+<div style="text-align:center; margin:1.6rem 0;"><img src="../assets/images/linux_filesystem_tree.svg" alt="Linux Filesystem Hierarchy" style="max-width:100%; border-radius:10px; border:1px solid #e2e8f0; box-shadow:0 2px 8px rgba(0,0,0,0.05); background:#ffffff;"></div>
+<h3>Key Directory Guide for Roboticists</h3>
+<div class="info-grid">
+  <div class="info-card">
+    <h4>📁 <code>~/</code> (/home/student/)</h4>
+    <p>Your personal user workspace. You have full read, write, and execute permissions here without requiring <code>sudo</code>.</p>
+  </div>
+  <div class="info-card">
+    <h4>⚙️ <code>/opt/</code></h4>
+    <p>Where system-level robotics packages and pre-compiled software stacks reside (e.g. <code>/opt/ros/jazzy/</code>).</p>
+  </div>
+  <div class="info-card">
+    <h4>🌐 <code>/etc/</code></h4>
+    <p>System-wide configuration files (networking, hosts, user groups, and APT package repositories).</p>
+  </div>
+  <div class="info-card">
+    <h4>📊 <code>/var/log/</code></h4>
+    <p>System service logs, boot diagnostics, and runtime error traces.</p>
+  </div>
+  <div class="info-card">
+    <h4>🔌 <code>/dev/</code></h4>
+    <p>Device nodes representing hardware peripherals (USB LiDARs <code>/dev/ttyUSB0</code> and microcontrollers).</p>
+  </div>
+</div>
+<hr>
+<h2>3. Hands-On Practical: Building a Robotics Workspace</h2>
+<p>Follow this continuous hands-on workflow in your terminal. Every single command builds directly upon the folders and files created in the preceding step, ensuring zero <em>&quot;file not found&quot;</em> errors.</p>
+<h3>3.1 Step 1: Navigating &amp; Inspecting Your Workspace</h3>
+<div class="cmd-card">
+  <div class="cmd-header">
+    <div class="cmd-header-left">
+      <span class="cmd-badge">pwd</span>
+      <span class="cmd-title">Print Current Working Directory</span>
+    </div>
+    <span class="cmd-syntax">Syntax: <code>pwd</code></span>
+  </div>
+  <p class="cmd-desc">Prints the absolute filesystem path of the directory you are currently working in. Useful to orient yourself before creating or modifying files.</p>
+<div class="code-container"><pre><button class="copy-btn">Copy</button><code class="language-bash">pwd
+# Output: /home/student</code></pre></div>
+</div>
+<div class="cmd-card">
+  <div class="cmd-header">
+    <div class="cmd-header-left">
+      <span class="cmd-badge">ls -lah</span>
+      <span class="cmd-title">List Files with Detailed Permissions &amp; Sizes</span>
+    </div>
+    <span class="cmd-syntax">Syntax: <code>ls [options] [path]</code></span>
+  </div>
+  <p class="cmd-desc">Lists directory contents. Flag <code>-l</code> uses long format with permissions and owners, <code>-a</code> reveals hidden files (<code>.bashrc</code>), and <code>-h</code> formats file sizes in human-readable units (KB, MB).</p>
+<div class="code-container"><pre><button class="copy-btn">Copy</button><code class="language-bash">ls -lah
+# Displays: permissions, owner, size, and filenames including .bashrc</code></pre></div>
+</div>
+<div class="cmd-card">
+  <div class="cmd-header">
+    <div class="cmd-header-left">
+      <span class="cmd-badge">cd</span>
+      <span class="cmd-title">Change Working Directory</span>
+    </div>
+    <span class="cmd-syntax">Syntax: <code>cd &lt;target_directory&gt;</code></span>
+  </div>
+  <p class="cmd-desc">Changes your active shell location. Use <code>cd ~</code> to return to your home directory, <code>cd ..</code> to step up one level, and <code>cd -</code> to toggle back to the previous directory.</p>
+<div class="code-container"><pre><button class="copy-btn">Copy</button><code class="language-bash"># Ensure you are at your user home directory root
+cd ~
+pwd
+# Output: /home/student</code></pre></div>
+</div>
+<hr>
+<h3>3.2 Step 2: Creating a Structured Robotics Workspace &amp;amp; Files</h3>
+<p>Let&#x27;s build a clean robotics project folder <code>~/robotics_lab</code> with dedicated subdirectories for configurations (<code>config</code>), scripts (<code>scripts</code>), and runtime logs (<code>logs</code>).</p>
+<div class="cmd-card">
+  <div class="cmd-header">
+    <div class="cmd-header-left">
+      <span class="cmd-badge">mkdir -p</span>
+      <span class="cmd-title">Create Nested Directory Trees</span>
+    </div>
+    <span class="cmd-syntax">Syntax: <code>mkdir -p &lt;dir_1&gt; [dir_2] ...</code></span>
+  </div>
+  <p class="cmd-desc">Creates new directories. The <code>-p</code> (parents) flag creates any missing parent directories automatically in a single command without throwing errors if they already exist.</p>
+<div class="code-container"><pre><button class="copy-btn">Copy</button><code class="language-bash">mkdir -p ~/robotics_lab/config ~/robotics_lab/scripts ~/robotics_lab/logs
+
+# Verify the three subdirectories exist:
+ls -la ~/robotics_lab</code></pre></div>
+</div>
+<div class="cmd-card">
+  <div class="cmd-header">
+    <div class="cmd-header-left">
+      <span class="cmd-badge">echo &gt; &gt;&gt;</span>
+      <span class="cmd-title">Create &amp; Append Configuration Files</span>
+    </div>
+    <span class="cmd-syntax">Syntax: <code>echo "text" &gt; file</code> (create/overwrite) | <code>echo "text" &gt;&gt; file</code> (append)</span>
+  </div>
+  <p class="cmd-desc">Emits text strings. The <code>&gt;</code> redirection operator writes output to a file (creating it or overwriting existing content), while <code>&gt;&gt;</code> appends new lines to the end of an existing file.</p>
+<div class="code-container"><pre><button class="copy-btn">Copy</button><code class="language-bash">echo &quot;robot_model: navpro_mini&quot; &gt; ~/robotics_lab/config/robot_params.yaml
+echo &quot;max_linear_velocity: 0.5&quot; &gt;&gt; ~/robotics_lab/config/robot_params.yaml
+echo &quot;lidar_topic: /scan&quot; &gt;&gt; ~/robotics_lab/config/robot_params.yaml
+
+# Inspect the written configuration:
+cat ~/robotics_lab/config/robot_params.yaml</code></pre></div>
+</div>
+<div class="cmd-card">
+  <div class="cmd-header">
+    <div class="cmd-header-left">
+      <span class="cmd-badge">touch</span>
+      <span class="cmd-title">Create Empty Placeholder Files</span>
+    </div>
+    <span class="cmd-syntax">Syntax: <code>touch &lt;file_path&gt;</code></span>
+  </div>
+  <p class="cmd-desc">Creates an empty 0-byte file if it does not already exist, or updates the file's last-modified timestamp without altering its contents.</p>
+<div class="code-container"><pre><button class="copy-btn">Copy</button><code class="language-bash">touch ~/robotics_lab/scripts/diagnostics.sh
+echo &quot;Pre-flight test initialization completed at $(date)&quot; &gt; ~/robotics_lab/logs/boot_temp.log
+
+# Verify both files now exist on disk:
+ls -l ~/robotics_lab/scripts/ ~/robotics_lab/logs/</code></pre></div>
+</div>
+<div class="cmd-card">
+  <div class="cmd-header">
+    <div class="cmd-header-left">
+      <span class="cmd-badge">cp / cp -r</span>
+      <span class="cmd-title">Copy Files &amp; Recursive Directories</span>
+    </div>
+    <span class="cmd-syntax">Syntax: <code>cp [options] &lt;source&gt; &lt;destination&gt;</code></span>
+  </div>
+  <p class="cmd-desc">Copies files or folders to a target location. Use flag <code>-r</code> (recursive) to copy an entire directory and all nested files within it.</p>
+<div class="code-container"><pre><button class="copy-btn">Copy</button><code class="language-bash"># 1. Create a safety backup copy of the robot config file
+cp ~/robotics_lab/config/robot_params.yaml ~/robotics_lab/config/robot_params_backup.yaml
+
+# 2. Copy the entire scripts directory recursively (-r)
+cp -r ~/robotics_lab/scripts ~/robotics_lab/scripts_backup
+
+# Verify both backup copies exist:
+ls -l ~/robotics_lab/config/
+ls -la ~/robotics_lab/scripts_backup/</code></pre></div>
+</div>
+<div class="cmd-card">
+  <div class="cmd-header">
+    <div class="cmd-header-left">
+      <span class="cmd-badge">mv</span>
+      <span class="cmd-title">Move or Rename Files &amp; Directories</span>
+    </div>
+    <span class="cmd-syntax">Syntax: <code>mv &lt;source&gt; &lt;destination&gt;</code></span>
+  </div>
+  <p class="cmd-desc">Moves files or folders to a new directory path, or renames them in place when the source and destination reside within the same parent folder.</p>
+<div class="code-container"><pre><button class="copy-btn">Copy</button><code class="language-bash"># 1. Rename diagnostics.sh to sensor_diagnostics.sh in place
+mv ~/robotics_lab/scripts/diagnostics.sh ~/robotics_lab/scripts/sensor_diagnostics.sh
+
+# 2. Move the backup config into the logs directory for archiving
+mv ~/robotics_lab/config/robot_params_backup.yaml ~/robotics_lab/logs/archived_params.yaml
+
+# Verify updates:
+ls -l ~/robotics_lab/scripts/
+ls -l ~/robotics_lab/logs/</code></pre></div>
+</div>
+<div class="cmd-card">
+  <div class="cmd-header">
+    <div class="cmd-header-left">
+      <span class="cmd-badge">rm / rm -rf</span>
+      <span class="cmd-title">Safe File &amp; Directory Cleanup</span>
+    </div>
+    <span class="cmd-syntax">Syntax: <code>rm [options] &lt;target_path&gt;</code></span>
+  </div>
+  <p class="cmd-desc">Deletes files or directories permanently. Flag <code>-r</code> enables recursive directory deletion, and <code>-f</code> (force) suppresses confirmation prompts and ignores non-existent files.</p>
+<div class="code-container"><pre><button class="copy-btn">Copy</button><code class="language-bash"># 1. Remove the temporary test log file
+rm ~/robotics_lab/logs/boot_temp.log
+
+# 2. Recursively force delete the scripts_backup directory
+rm -rf ~/robotics_lab/scripts_backup
+
+# Confirm clean workspace structure:
+ls -la ~/robotics_lab/</code></pre></div>
+</div>
+<hr>
+<h3>3.3 Step 3: Inspecting, Reading &amp;amp; Searching Files</h3>
+<div class="cmd-card">
+  <div class="cmd-header">
+    <div class="cmd-header-left">
+      <span class="cmd-badge">cat</span>
+      <span class="cmd-title">Display Full File Contents</span>
+    </div>
+    <span class="cmd-syntax">Syntax: <code>cat &lt;file_path&gt;</code></span>
+  </div>
+  <p class="cmd-desc">Concatenates and streams the entire contents of a file directly to standard output. Best suited for short configuration files and scripts.</p>
+<div class="code-container"><pre><button class="copy-btn">Copy</button><code class="language-bash">cat ~/robotics_lab/config/robot_params.yaml
+
+# Output:
+# robot_model: navpro_mini
+# max_linear_velocity: 0.5
+# lidar_topic: /scan</code></pre></div>
+</div>
+<div class="cmd-card">
+  <div class="cmd-header">
+    <div class="cmd-header-left">
+      <span class="cmd-badge">head / tail</span>
+      <span class="cmd-title">Inspect Top or Bottom Lines of Files</span>
+    </div>
+    <span class="cmd-syntax">Syntax: <code>head -n &lt;N&gt; &lt;file&gt;</code> | <code>tail -f &lt;file&gt;</code></span>
+  </div>
+  <p class="cmd-desc"><code>head</code> prints the first $N$ lines of a file; <code>tail</code> prints the last $N$ lines. Flag <code>-f</code> with <code>tail</code> follows live logs in real-time as background daemons write new data.</p>
+<div class="code-container"><pre><button class="copy-btn">Copy</button><code class="language-bash"># View the first 5 lines of network hosts
+head -n 5 /etc/hosts
+
+# Output displays: 127.0.0.1 localhost, ::1 ip6-localhost...</code></pre></div>
+</div>
+<div class="cmd-card">
+  <div class="cmd-header">
+    <div class="cmd-header-left">
+      <span class="cmd-badge">grep -rn</span>
+      <span class="cmd-title">Search Text Patterns Across Files &amp; Folders</span>
+    </div>
+    <span class="cmd-syntax">Syntax: <code>grep [options] "&lt;pattern&gt;" &lt;path&gt;</code></span>
+  </div>
+  <p class="cmd-desc">Searches text lines matching a query. Flag <code>-r</code> searches recursively through directories, and <code>-n</code> displays the exact line number of each match.</p>
+<div class="code-container"><pre><button class="copy-btn">Copy</button><code class="language-bash"># Search recursively for &quot;navpro&quot; inside our robotics lab workspace
+grep -rn &quot;navpro&quot; ~/robotics_lab/
+
+# Output:
+# /home/student/robotics_lab/config/robot_params.yaml:1:robot_model: navpro_mini
+# /home/student/robotics_lab/logs/archived_params.yaml:1:robot_model: navpro_mini</code></pre></div>
+</div>
+<hr>
+<h2>4. File Permissions: Making Shell Scripts Executable</h2>
+<p>When you create a script in Linux, it is created without execution permissions by default. Attempting to run it directly triggers:</p>
+<div class="code-container"><pre><button class="copy-btn">Copy</button><code class="language-text">bash: ./diagnostics.sh: Permission denied</code></pre></div>
+<h3>4.1 Understanding the Permission String</h3>
+<p>Running <code>ls -l</code> outputs a 10-character permission string:</p>
+<div class="code-container"><pre><button class="copy-btn">Copy</button><code class="language-text">-rwxr-xr-x 1 student student 1420 Oct 13 10:00 diagnostics.sh
+ │├──┘├──┘└── Others permissions (Read, Execute)
+ ││   └── Group permissions (Read, Execute)
+ │└── User (Owner) permissions: Read (r), Write (w), Execute (x)
+ └── File type: &#x27;-&#x27; = regular file, &#x27;d&#x27; = directory</code></pre></div>
+<p>Each triplet represents:</p>
+<ul>
+<li><strong><code>r</code> (Read = 4):</strong> View file contents.</li>
+<li><strong><code>w</code> (Write = 2):</strong> Modify or delete file.</li>
+<li><strong><code>x</code> (Execute = 1):</strong> Execute the file as a program.</li>
+</ul>
+<h3>4.2 Hands-On Exercise: Creating &amp;amp; Running an Executable Script</h3>
+<div class="cmd-card">
+  <div class="cmd-header">
+    <div class="cmd-header-left">
+      <span class="cmd-badge">chmod +x</span>
+      <span class="cmd-title">Grant Executable Permission to Shell Script</span>
+    </div>
+    <span class="cmd-syntax">Syntax: <code>chmod +x &lt;script_file&gt;</code> | <code>chmod 755 &lt;script_file&gt;</code></span>
+  </div>
+  <p class="cmd-desc">Modifies file access permissions. Flag <code>+x</code> grants execution rights so the operating system can run the script directly as an independent program.</p>
+<div class="code-container"><pre><button class="copy-btn">Copy</button><code class="language-bash"># Step 1: Create a real diagnostic script inside ~/robotics_lab/scripts/
+cat &lt;&lt; &#x27;EOF&#x27; &gt; ~/robotics_lab/scripts/system_check.sh
+#!/bin/bash
+echo &quot;==========================================&quot;
+echo &quot;      ROBOT SUBSYSTEM PRE-FLIGHT CHECK    &quot;
+echo &quot;==========================================&quot;
+echo &quot;Timestamp:    $(date)&quot;
+echo &quot;Kernel:       $(uname -r)&quot;
+echo &quot;Architecture: $(uname -m)&quot;
+echo &quot;Free Memory:  $(free -h | awk &#x27;/^Mem:/ {print $4}&#x27;)&quot;
+echo &quot;All host subsystems operating normally!&quot;
+echo &quot;==========================================&quot;
+EOF
+
+# Step 2: Try running the script directly (triggers Permission denied)
+~/robotics_lab/scripts/system_check.sh
+
+# Step 3: Grant executable permission (+x)
+chmod +x ~/robotics_lab/scripts/system_check.sh
+
+# Step 4: Run the script successfully!
+~/robotics_lab/scripts/system_check.sh</code></pre></div>
+</div>
+<hr>
+<h2>5. Process Management &amp;amp; Background Jobs</h2>
+<p>Robotics systems run multiple programs simultaneously (LiDAR driver, SLAM, motor controllers). You must know how to inspect resource usage, start background jobs, and terminate stalled processes.</p>
+<h3>5.1 Monitoring Running Processes</h3>
+<div class="cmd-card">
+  <div class="cmd-header">
+    <div class="cmd-header-left">
+      <span class="cmd-badge">sleep &amp; / ps aux</span>
+      <span class="cmd-title">Launch Background Jobs &amp; Inspect Processes</span>
+    </div>
+    <span class="cmd-syntax">Syntax: <code>&lt;cmd&gt; &amp;</code> | <code>ps aux | grep &lt;name&gt;</code></span>
+  </div>
+  <p class="cmd-desc">Appending <code>&amp;</code> to any command runs it as a background job, freeing your terminal immediately. <code>ps aux</code> lists all running processes with user, PID, CPU, memory, and command path.</p>
+<div class="code-container"><pre><button class="copy-btn">Copy</button><code class="language-bash"># 1. Start a harmless sleep process in the background using the &#x27;&amp;&#x27; operator
+sleep 300 &amp;
+# Output: [1] 42109
+
+# 2. Filter active processes to find our background sleep job:
+ps aux | grep sleep</code></pre></div>
+</div>
+<div class="cmd-card">
+  <div class="cmd-header">
+    <div class="cmd-header-left">
+      <span class="cmd-badge">top</span>
+      <span class="cmd-title">Interactive System Resource Task Manager</span>
+    </div>
+    <span class="cmd-syntax">Syntax: <code>top</code> (press 'q' to exit)</span>
+  </div>
+  <p class="cmd-desc">Interactive real-time process viewer displaying total CPU usage, memory utilization, and active process states sorted by resource consumption.</p>
+<div class="code-container"><pre><button class="copy-btn">Copy</button><code class="language-bash">top
+# Displays live PID table, memory load, and CPU %. Press &#x27;q&#x27; to exit.</code></pre></div>
+</div>
+<h3>5.2 Terminating Processes Cleanly</h3>
+<div class="cmd-card">
+  <div class="cmd-header">
+    <div class="cmd-header-left">
+      <span class="cmd-badge">kill / killall</span>
+      <span class="cmd-title">Terminate Background Processes Cleanly</span>
+    </div>
+    <span class="cmd-syntax">Syntax: <code>kill &lt;PID&gt;</code> | <code>kill -9 &lt;PID&gt;</code> | <code>killall &lt;name&gt;</code></span>
+  </div>
+  <p class="cmd-desc">Sends POSIX termination signals. Standard <code>kill</code> sends SIGTERM (graceful shutdown); <code>kill -9</code> sends SIGKILL (forced instant halt); <code>killall</code> terminates all processes matching a binary name.</p>
+<div class="code-container"><pre><button class="copy-btn">Copy</button><code class="language-bash"># 1. Terminate all running sleep test processes cleanly
+killall sleep
+
+# 2. Verify the process has terminated (returns only grep itself):
+ps aux | grep sleep</code></pre></div>
+</div>
+<hr>
+<h2>6. Shell Automation with <code>~/.bashrc</code></h2>
+<p>Every time you launch a new terminal, Linux reads and executes <code>~/.bashrc</code>. You can define custom shortcut aliases to streamline daily terminal operations:</p>
+<div class="cmd-card">
+  <div class="cmd-header">
+    <div class="cmd-header-left">
+      <span class="cmd-badge">alias / source</span>
+      <span class="cmd-title">Shell Shortcuts &amp; Automated Sourcing</span>
+    </div>
+    <span class="cmd-syntax">Syntax: <code>alias &lt;key&gt;='&lt;command&gt;'</code> | <code>source &lt;file&gt;</code></span>
+  </div>
+  <p class="cmd-desc">Defines persistent shortcuts in <code>~/.bashrc</code>. The <code>source</code> command reloads the configuration in the active terminal immediately without restarting the shell.</p>
+<div class="code-container"><pre><button class="copy-btn">Copy</button><code class="language-bash"># 1. Append productivity shortcuts to ~/.bashrc:
+echo &#x27;alias ll=&quot;ls -lah&quot;&#x27; &gt;&gt; ~/.bashrc
+echo &#x27;alias c=&quot;clear&quot;&#x27; &gt;&gt; ~/.bashrc
+echo &#x27;alias lab=&quot;cd ~/robotics_lab&quot;&#x27; &gt;&gt; ~/.bashrc
+echo &#x27;alias myip=&quot;hostname -I | awk &#x27;\&#x27;&#x27;{print \$1}&#x27;\&#x27;&#x27;&quot;&#x27; &gt;&gt; ~/.bashrc
+
+# 2. Reload bash configuration in current active terminal:
+source ~/.bashrc
+
+# 3. Test your custom shortcut:
+lab
+pwd
+# Output: /home/student/robotics_lab</code></pre></div>
+</div>
+<blockquote class="alert alert-note">In <strong>Lesson 02</strong>, we will add your ROS 2 underlay paths (<code>/opt/ros/jazzy/setup.bash</code>) to this file so every terminal is automatically primed for robotics programming!</blockquote>
+<hr>
+<h2>7. Multi-Pane Terminal Workflows (Terminator)</h2>
+<p>Robotics workflows often require 3–4 terminal windows running concurrently (simulation, sensors, visualization, commands). <strong>Terminator</strong> allows splitting your screen into a clean multi-terminal grid:</p>
+<div style="text-align:center; margin:1.6rem 0;"><img src="../assets/images/terminator_layout.svg" alt="Terminator Multi-Pane Layout" style="max-width:100%; border-radius:10px; border:1px solid #e2e8f0; box-shadow:0 2px 8px rgba(0,0,0,0.05); background:#ffffff;"></div>
+<div class="table-wrapper"><table>
+<thead><tr>
+<th>Shortcut</th>
+<th>Function</th>
+<th>Purpose in Robotics</th>
+</tr></thead><tbody>
+<tr>
+<td><code>Ctrl + Shift + O</code></td>
+<td><strong>Split Horizontally</strong></td>
+<td>Creates top and bottom terminal panes</td>
+</tr>
+<tr>
+<td><code>Ctrl + Shift + E</code></td>
+<td><strong>Split Vertically</strong></td>
+<td>Creates left and right terminal panes</td>
+</tr>
+<tr>
+<td><code>Alt + Arrow Keys</code></td>
+<td><strong>Navigate Active Panes</strong></td>
+<td>Switch focus quickly without touching mouse</td>
+</tr>
+<tr>
+<td><code>Ctrl + Shift + X</code></td>
+<td><strong>Maximize / Restore Active Pane</strong></td>
+<td>Zoom in on a busy node log</td>
+</tr>
+<tr>
+<td><code>Ctrl + Shift + W</code></td>
+<td><strong>Close Current Pane</strong></td>
+<td>Safely exit an active terminal session</td>
+</tr>
+<tr>
+<td><code>Alt + A</code></td>
+<td><strong>Broadcast Keystrokes to All Panes</strong></td>
+<td>Send identical commands across multiple panes</td>
+</tr>
+<tr>
+<td><code>Alt + O</code></td>
+<td><strong>Disable Broadcast Mode</strong></td>
+<td>Return to independent pane control</td>
+</tr>
+</tbody></table></div>
+<hr>
+<h2>8. 💡 Pro-Tips &amp;amp; Hardware Reference</h2>
+<blockquote class="alert alert-tip">Connecting Physical USB Sensors (Microcontrollers &amp; LiDARs)<br>If plugging in an external USB microcontroller (ESP32, Arduino) or LiDAR produces <code>Permission denied: /dev/ttyUSB0</code>, grant your user serial permissions once:<br><div class="code-container" style="margin:0.6rem 0;"><pre><button class="copy-btn">Copy</button><code class="language-bash">sudo usermod -a -G dialout $USER</code></pre></div><br>Then log out and log back in (or run <code>newgrp dialout</code>).</blockquote>
+<blockquote class="alert alert-tip">Searching Bash Command History<br>Press <code>Ctrl + R</code> in any terminal and start typing a previous command (e.g. <code>system_check</code>) to search and auto-complete your command history without retyping.</blockquote>
+<hr>
+<h2>9. Summary &amp;amp; Next Steps</h2>
+<p>You now have a solid command of Linux engineering fundamentals:</p>
+<ul>
+<li><strong>Navigated the filesystem hierarchy</strong> and inspected essential system paths.</li>
+<li><strong>Created and managed files</strong> in an organized robotics project workspace.</li>
+<li><strong>Created shell scripts and granted execution rights</strong> using <code>chmod +x</code>.</li>
+<li><strong>Managed background processes</strong> and monitored resource consumption with <code>top</code> and <code>killall</code>.</li>
+<li><strong>Configured productivity aliases</strong> in <code>~/.bashrc</code>.</li>
+</ul>
+<p>In <strong><a href="lesson_02.html">Lesson 02</a></strong>, we build on these Linux foundations to install our robotics stack: exploring ROS 2 Jazzy architecture, the peer-to-peer DDS middleware, and containerized Docker setup!</p>
+      </article>
+
+      <footer class="lesson-nav-footer">
+        <a href="#" class="nav-link-btn" style='visibility:hidden;'>&larr; Previous Lesson</a>
+        <a href="../index.html" class="nav-link-btn">🧭 Course Hub</a>
+        <a href="lesson_02.html" class="nav-link-btn" >Next Lesson &rarr;</a>
+      </footer>
+    </main>
+  </div>
+
+  <script src="../assets/js/highlight.min.js"></script>
+  <script src="../assets/js/app.js"></script>
+  <script src="../assets/js/quiz_engine.js"></script>
+  <script src="../assets/js/instructor_sync.js"></script>
+</body>
+</html>

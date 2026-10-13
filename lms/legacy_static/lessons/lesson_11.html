@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lesson 11: Ros2 Actions Server And Client | Level 1 Foundations</title>
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="stylesheet" href="../assets/css/animations.css">
+  <link rel="stylesheet" href="../assets/css/highlight-dark.min.css">
+  <link rel="stylesheet" href="../assets/css/quiz.css">
+  <link rel="stylesheet" href="../assets/css/instructor_sync.css">
+</head>
+<body>
+  <header class="app-header">
+    <div class="brand-container">
+      <a href="https://botforge.in" target="_blank" class="company-brand" title="Botforge Robotics - botforge.in">
+        <img src="../assets/images/botforge_black.png" alt="Botforge Robotics" class="company-logo">
+      </a>
+      <div class="brand-divider"></div>
+      <a href="../index.html" class="brand" title="Level 1: ROS 2 Foundations">
+        <img src="../assets/images/ros2_logo.svg" alt="ROS 2" class="brand-logo">
+        <span class="brand-title">NavPro Learning Hub</span>
+        <span class="badge-jazzy">ROS 2 Jazzy</span>
+      </a>
+    </div>
+    <div class="header-center">
+      <input type="text" id="lessonSearchInput" class="search-input" placeholder="🔍 Search Level 1 curriculum...">
+    </div>
+    <div class="header-actions">
+      <a href="http://localhost:6080/vnc.html" target="_blank" class="track-btn" title="Open Ubuntu Desktop GUI via noVNC">🖥️ Desktop GUI</a>
+      <a href="http://localhost:8443/?folder=/home/student/ros2_ws" target="_blank" class="track-btn" title="Open VS Code in browser">💻 VS Code</a>
+      <a href="../index.html" class="track-btn active">Curriculum Hub</a>
+      <span class="theme-pill">☀️ Light Theme</span>
+    </div>
+  </header>
+
+  <div class="app-container">
+    <aside class="app-sidebar">
+      <div class="progress-card">
+        <div class="progress-header">
+          <span>Curriculum Progress</span>
+          <span id="overallProgressText">0% Complete (0/26)</span>
+        </div>
+        <div class="progress-bar-track">
+          <div id="overallProgressBar" class="progress-bar-fill"></div>
+        </div>
+        <button id="resetProgressBtn" class="track-btn reset-btn" style="width:100%; margin-top:8px; justify-content:center;">↺ Reset Progress</button>
+      </div>
+
+      
+        <div class="sidebar-section-title">ROS 2 Foundations (26 Lessons)</div>
+        <ul class="lesson-list">
+          
+            <li>
+              <a href="lesson_01.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_01" onclick="event.stopPropagation();">
+                <span class="lesson-num">01</span>
+                <span class="lesson-title">Linux Fundamentals For Robotics</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_02.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_02" onclick="event.stopPropagation();">
+                <span class="lesson-num">02</span>
+                <span class="lesson-title">Ros2 Overview And Environment Setup</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_03.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_03" onclick="event.stopPropagation();">
+                <span class="lesson-num">03</span>
+                <span class="lesson-title">Workspace And First Python Node</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_04.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_04" onclick="event.stopPropagation();">
+                <span class="lesson-num">04</span>
+                <span class="lesson-title">Package Architecture And Configuration</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_05.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_05" onclick="event.stopPropagation();">
+                <span class="lesson-num">05</span>
+                <span class="lesson-title">Publishers Subscribers And Qos</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_06.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_06" onclick="event.stopPropagation();">
+                <span class="lesson-num">06</span>
+                <span class="lesson-title">Vscode Debugging And Ros2 Logging</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_07.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_07" onclick="event.stopPropagation();">
+                <span class="lesson-num">07</span>
+                <span class="lesson-title">Interfaces And Custom Messages</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_08.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_08" onclick="event.stopPropagation();">
+                <span class="lesson-num">08</span>
+                <span class="lesson-title">Services Server Client Python</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_09.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_09" onclick="event.stopPropagation();">
+                <span class="lesson-num">09</span>
+                <span class="lesson-title">Dynamic Parameters And Yaml</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_10.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_10" onclick="event.stopPropagation();">
+                <span class="lesson-num">10</span>
+                <span class="lesson-title">Launch Files And Runtime Management</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_11.html" class="lesson-item active">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_11" onclick="event.stopPropagation();">
+                <span class="lesson-num">11</span>
+                <span class="lesson-title">Ros2 Actions Server And Client</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_12.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_12" onclick="event.stopPropagation();">
+                <span class="lesson-num">12</span>
+                <span class="lesson-title">Ros2 Bag Recording And Playback</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_13.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_13" onclick="event.stopPropagation();">
+                <span class="lesson-num">13</span>
+                <span class="lesson-title">Ros2 Cli Command Mastery</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_14.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_14" onclick="event.stopPropagation();">
+                <span class="lesson-num">14</span>
+                <span class="lesson-title">Tf2 Coordinate Transformations Python</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_15.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_15" onclick="event.stopPropagation();">
+                <span class="lesson-num">15</span>
+                <span class="lesson-title">Distributed Ros2 And Dds Networking</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_16.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_16" onclick="event.stopPropagation();">
+                <span class="lesson-num">16</span>
+                <span class="lesson-title">Project Opencv Ros2 Vision</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_17.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_17" onclick="event.stopPropagation();">
+                <span class="lesson-num">17</span>
+                <span class="lesson-title">3D Modeling Urdf Xacro</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_18.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_18" onclick="event.stopPropagation();">
+                <span class="lesson-num">18</span>
+                <span class="lesson-title">Rviz2 Visualization Tf Inspection</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_19.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_19" onclick="event.stopPropagation();">
+                <span class="lesson-num">19</span>
+                <span class="lesson-title">Gazebo Physics And Sensor Plugins</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_20.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_20" onclick="event.stopPropagation();">
+                <span class="lesson-num">20</span>
+                <span class="lesson-title">Building Simulation Worlds</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_21.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_21" onclick="event.stopPropagation();">
+                <span class="lesson-num">21</span>
+                <span class="lesson-title">2D Slam Mapping Slam Toolbox</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_22.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_22" onclick="event.stopPropagation();">
+                <span class="lesson-num">22</span>
+                <span class="lesson-title">Nav2 Architecture And Costmaps</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_23.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_23" onclick="event.stopPropagation();">
+                <span class="lesson-num">23</span>
+                <span class="lesson-title">Nav2 Planners Controllers Tuning</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_24.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_24" onclick="event.stopPropagation();">
+                <span class="lesson-num">24</span>
+                <span class="lesson-title">Nav2 Behavior Trees And Recoveries</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_25.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_25" onclick="event.stopPropagation();">
+                <span class="lesson-num">25</span>
+                <span class="lesson-title">Autonomous Patrol Nav2 Simple Commander</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_26.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_26" onclick="event.stopPropagation();">
+                <span class="lesson-num">26</span>
+                <span class="lesson-title">Physical Robot Hardware Deployment</span>
+              </a>
+            </li>
+            
+        </ul>
+        
+    </aside>
+
+    <main class="app-content">
+      <article class="markdown-body">
+        
+        <div class="concept-card">
+          <h3>⚡ Quick Concept Snapshot</h3>
+          <ul>
+            <li><strong>Actions Pattern:</strong> Long-running, preemptible goal execution with real-time progress feedback (e.g., Navigate to Charging Dock).</li>
+            <li><strong>Three Channels:</strong> Goal Service (Accept/Reject), Feedback Topic (Continuous % progress), and Result Service (Success/Aborted/Canceled).</li>
+          </ul>
+        </div>
+        <h1>Lesson 11: Communication Mechanism IV: Action Servers &amp; Clients in Python</h1>
+<blockquote class="alert alert-note"><strong>Focus:</strong> Goal-Feedback-Result Communication, Preemption &amp; Asynchronous Action Clients<br><strong>Course Track:</strong> NavPro Learning Hub - Level 1 (Chapter 17.1)<br><strong>Target Environment:</strong> ROS 2 Jazzy Jalisco</blockquote>
+<hr>
+<h2>1. Overview &amp; Learning Objectives</h2>
+<p>Services are ideal for instant requests (e.g. &quot;turn on light&quot; or &quot;reset encoder&quot;). However, for long-running robotic tasks that take seconds or minutes to complete (e.g., navigating across a warehouse or executing a 360-degree LiDAR calibration sweep), Services fail because they provide no progress feedback and cannot be canceled midway.</p>
+<p>ROS 2 <strong>Actions</strong> solve this by implementing the <strong>Goal - Feedback - Result</strong> protocol with native preemption and cancellation support.</p>
+<p>By the end of this lesson, you will:</p>
+<ol>
+<li>Master the 3-part Action lifecycle: Goal submission, Real-time Feedback streaming, and Final Result delivery.</li>
+<li>Build an object-oriented Python <strong>Action Server</strong> using <code>rclpy.action.ActionServer</code>.</li>
+<li>Handle goal acceptance, goal rejection, feedback broadcasting, and client cancellation requests.</li>
+<li>Build an asynchronous Python <strong>Action Client</strong> using <code>rclpy.action.ActionClient</code>.</li>
+<li>Interact with, trigger, and cancel active actions via the CLI using <code>ros2 action send_goal --feedback</code>.</li>
+</ol>
+<hr>
+<h2>2. Action Communication Architecture</h2>
+<p>Under the hood, every ROS 2 Action is implemented as a coordinated set of DDS topics and services:</p>
+<div class="code-container"><pre><button class="copy-btn">Copy</button><code class="language-bash">                            ACTION LIFECYCLE
+                            
+   [Action Client]                                    [Action Server]
+          |                                                  |
+          | ----- 1. Send Goal (Service: send_goal) -------&gt; |
+          | &lt;---- 2. Goal Accepted (GoalResponse.ACCEPT) --- |
+          |                                                  |
+          | &lt;==== 3. Periodic Progress (Topic: feedback) === |
+          | &lt;====    (e.g., Distance remaining: 1.4m)   ==== |
+          |                                                  |
+          | ----- 4. (Optional) Cancel Goal ---------------&gt; |
+          | &lt;----    Cancel Accepted ----------------------- |
+          |                                                  |
+          | &lt;---- 5. Final Outcome (Service: get_result) --- |
+          |          (SUCCEEDED / CANCELED / ABORTED)        |</code></pre></div>
+<ul>
+<li><strong>Goal:</strong> Initiated by the client (e.g. target pose coordinates).</li>
+<li><strong>Feedback:</strong> Periodic updates published by the server while executing the goal (e.g. current progress, distance remaining).</li>
+<li><strong>Result:</strong> Final response sent when the task completes, fails, or is canceled.</li>
+</ul>
+<hr>
+<h2>3. Step-by-Step: Writing an Action Server in Python</h2>
+<p>Let&#x27;s implement a patrol action server that moves through waypoints, publishes feedback, and handles cancel requests.</p>
+<p>Create file <code>patrol_action_server.py</code>:</p>
+<div class="code-container"><pre><button class="copy-btn">Copy</button><code class="language-python">#!/usr/bin/env python3
+&quot;&quot;&quot;
+NavPro Learning Hub - Lesson 11
+Action Server: Executes autonomous multi-checkpoint patrol with progress streaming.
+&quot;&quot;&quot;
+
+import time
+import rclpy
+from rclpy.node import Node
+from rclpy.action import ActionServer, CancelResponse, GoalResponse
+from navpro_interfaces.action import Patrol
+
+
+class PatrolActionServer(Node):
+
+    def __init__(self):
+        super().__init__(&#x27;patrol_action_server&#x27;)
+
+        # Create Action Server
+        self.action_server_ = ActionServer(
+            self,
+            Patrol,
+            &#x27;patrol_robot&#x27;,
+            execute_callback=self.execute_callback,
+            goal_callback=self.goal_callback,
+            cancel_callback=self.cancel_callback
+        )
+
+        self.get_logger().info(&#x27;Patrol Action Server active on action name: &quot;patrol_robot&quot;&#x27;)
+
+    def goal_callback(self, goal_request):
+        &quot;&quot;&quot;Validates incoming goals before accepting.&quot;&quot;&quot;
+        self.get_logger().info(f&#x27;Received patrol goal request with {len(goal_request.waypoints)} checkpoints.&#x27;)
+        if len(goal_request.waypoints) == 0:
+            self.get_logger().warn(&#x27;Rejecting goal: Waypoint list cannot be empty!&#x27;)
+            return GoalResponse.REJECT
+        return GoalResponse.ACCEPT
+
+    def cancel_callback(self, goal_handle):
+        &quot;&quot;&quot;Handles client requests to cancel an in-progress patrol.&quot;&quot;&quot;
+        self.get_logger().warn(&#x27;Received client request to cancel patrol!&#x27;)
+        return CancelResponse.ACCEPT
+
+    def execute_callback(self, goal_handle):
+        &quot;&quot;&quot;Executes the long-running patrol loop in background thread.&quot;&quot;&quot;
+        self.get_logger().info(&#x27;Executing patrol mission...&#x27;)
+        feedback_msg = Patrol.Feedback()
+        total_waypoints = len(goal_handle.request.waypoints)
+        battery = 98.0
+
+        for i in range(total_waypoints):
+            # Check if the client requested cancellation!
+            if goal_handle.is_cancel_requested:
+                goal_handle.canceled()
+                self.get_logger().warn(&#x27;Patrol mission canceled by client request.&#x27;)
+                result = Patrol.Result()
+                result.success = False
+                result.completed_waypoints = i
+                return result
+
+            # Simulate traveling to waypoint i
+            time.sleep(1.5)
+            battery -= 2.5
+
+            # Stream feedback to the client
+            feedback_msg.current_waypoint_index = i + 1
+            feedback_msg.distance_to_next_waypoint = round(max(0.0, 5.0 - (i * 1.2)), 2)
+            feedback_msg.battery_remaining_pct = round(battery, 1)
+
+            goal_handle.publish_feedback(feedback_msg)
+            self.get_logger().info(
+                f&#x27;Checkpoint [{feedback_msg.current_waypoint_index}/{total_waypoints}] reached. Batt: {battery}%&#x27;
+            )
+
+        # Mark goal as successfully completed
+        goal_handle.succeed()
+        result = Patrol.Result()
+        result.success = True
+        result.completed_waypoints = total_waypoints
+        result.total_distance_traveled = 24.8
+        self.get_logger().info(&#x27;Patrol mission completed successfully!&#x27;)
+        return result
+
+
+def main():
+    rclpy.init()
+    server = PatrolActionServer()
+    try:
+        rclpy.spin(server)
+    except KeyboardInterrupt:
+        pass
+    finally:
+        server.destroy_node()
+        rclpy.shutdown()
+
+
+if __name__ == &#x27;__main__&#x27;:
+    main()</code></pre></div>
+<hr>
+<h2>4. Step-by-Step: Writing an Asynchronous Action Client in Python</h2>
+<p>Now let&#x27;s build the client that dispatches the patrol goal and monitors real-time feedback:</p>
+<p>Create file <code>patrol_action_client.py</code>:</p>
+<div class="code-container"><pre><button class="copy-btn">Copy</button><code class="language-python">#!/usr/bin/env python3
+&quot;&quot;&quot;
+NavPro Learning Hub - Lesson 11
+Action Client: Dispatches patrol goal, prints real-time feedback, and awaits result.
+&quot;&quot;&quot;
+
+import rclpy
+from rclpy.node import Node
+from rclpy.action import ActionClient
+from geometry_msgs.msg import PoseStamped
+from navpro_interfaces.action import Patrol
+
+
+class PatrolActionClient(Node):
+
+    def __init__(self):
+        super().__init__(&#x27;patrol_action_client&#x27;)
+        self.client_ = ActionClient(self, Patrol, &#x27;patrol_robot&#x27;)
+
+    def send_patrol_goal(self):
+        self.get_logger().info(&#x27;Waiting for patrol action server to start...&#x27;)
+        self.client_.wait_for_server()
+
+        goal_msg = Patrol.Goal()
+        goal_msg.loop_count = 1
+
+        # Populate 3 dummy waypoints
+        for i in range(3):
+            pose = PoseStamped()
+            pose.pose.position.x = float(i * 2.0)
+            goal_msg.waypoints.append(pose)
+
+        self.get_logger().info(&#x27;Dispatching patrol goal...&#x27;)
+        # Send goal asynchronously with feedback callback
+        send_goal_future = self.client_.send_goal_async(
+            goal_msg,
+            feedback_callback=self.feedback_callback
+        )
+        send_goal_future.add_done_callback(self.goal_response_callback)
+
+    def goal_response_callback(self, future):
+        goal_handle = future.result()
+        if not goal_handle.accepted:
+            self.get_logger().error(&#x27;Patrol goal was rejected by the server!&#x27;)
+            return
+
+        self.get_logger().info(&#x27;Patrol goal accepted! Awaiting mission progress...&#x27;)
+        result_future = goal_handle.get_result_async()
+        result_future.add_done_callback(self.result_callback)
+
+    def feedback_callback(self, feedback_msg):
+        fb = feedback_msg.feedback
+        self.get_logger().info(
+            f&#x27;[FEEDBACK] Checkpoint: {fb.current_waypoint_index} | Dist remaining: {fb.distance_to_next_waypoint}m | Battery: {fb.battery_remaining_pct}%&#x27;
+        )
+
+    def result_callback(self, future):
+        result = future.result().result
+        status = future.result().status
+        self.get_logger().info(f&#x27;[RESULT] Status: {status} | Completed: {result.completed_waypoints} waypoints | Dist: {result.total_distance_traveled}m&#x27;)
+
+
+def main():
+    rclpy.init()
+    client = PatrolActionClient()
+    client.send_patrol_goal()
+    try:
+        rclpy.spin(client)
+    except KeyboardInterrupt:
+        pass
+    finally:
+        client.destroy_node()
+        rclpy.shutdown()
+
+
+if __name__ == &#x27;__main__&#x27;:
+    main()</code></pre></div>
+<hr>
+<h2>5. Verification with the ROS 2 Action CLI</h2>
+<p>With the server running in Terminal 1, open Terminal 2:</p>
+<div class="code-container"><pre><button class="copy-btn">Copy</button><code class="language-bash"># 1. List active action servers
+ros2 action list
+
+# 2. View action type and endpoints
+ros2 action info /patrol_robot
+
+# 3. Send goal from command line and watch real-time feedback streaming!
+ros2 action send_goal /patrol_robot navpro_interfaces/action/Patrol &quot;{loop_count: 1, waypoints: [{pose: {position: {x: 1.0}}}, {pose: {position: {x: 2.0}}}]}&quot; --feedback</code></pre></div>
+<hr>
+<h2>6. Hands-on Student Challenge</h2>
+<p><strong>Task:</strong></p>
+<ol>
+<li>In <code>patrol_action_client.py</code>, set up a timer that triggers after 2.0 seconds.</li>
+<li>In the timer callback, call <code>goal_handle.cancel_goal_async()</code>.</li>
+<li>Verify that the server receives the cancellation request, safely breaks its loop, and returns <code>goal_handle.canceled()</code>.</li>
+</ol>
+      </article>
+
+      <footer class="lesson-nav-footer">
+        <a href="lesson_10.html" class="nav-link-btn" >&larr; Previous Lesson</a>
+        <a href="../index.html" class="nav-link-btn">🧭 Course Hub</a>
+        <a href="lesson_12.html" class="nav-link-btn" >Next Lesson &rarr;</a>
+      </footer>
+    </main>
+  </div>
+
+  <script src="../assets/js/highlight.min.js"></script>
+  <script src="../assets/js/app.js"></script>
+  <script src="../assets/js/quiz_engine.js"></script>
+  <script src="../assets/js/instructor_sync.js"></script>
+</body>
+</html>

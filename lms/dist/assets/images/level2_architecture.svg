@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 320" width="100%" height="100%">
+  <rect width="900" height="320" rx="16" fill="#0b1120"/>
+  <text x="450" y="32" fill="#94a3b8" font-family="system-ui, sans-serif" font-size="14" font-weight="600" text-anchor="middle" letter-spacing="1">NAVPRO ENTERPRISE LEVEL 2: DUAL-PLANE FLEET ARCHITECTURE</text>
+
+  <!-- Left: Cloud / Web Plane -->
+  <g transform="translate(50, 60)">
+    <rect width="360" height="220" rx="12" fill="#1e293b" stroke="#8b5cf6" stroke-width="2"/>
+    <text x="180" y="28" fill="#a78bfa" font-family="system-ui, sans-serif" font-size="13" font-weight="700" text-anchor="middle">APPLICATION &amp; CLOUD PLANE (Async Python)</text>
+
+    <!-- FastAPI Gateway -->
+    <rect x="20" y="45" width="320" height="45" rx="6" fill="#0f172a" stroke="#38bdf8"/>
+    <text x="180" y="72" fill="#38bdf8" font-family="monospace" font-size="11" font-weight="bold" text-anchor="middle">FastAPI REST Gateway (/api/v1/navigate)</text>
+
+    <!-- MCP Server -->
+    <rect x="20" y="100" width="320" height="45" rx="6" fill="#0f172a" stroke="#ec4899"/>
+    <text x="180" y="127" fill="#ec4899" font-family="monospace" font-size="11" font-weight="bold" text-anchor="middle">Model Context Protocol (MCP) AI Server</text>
+
+    <!-- WebSocket Streamer -->
+    <rect x="20" y="155" width="320" height="45" rx="6" fill="#0f172a" stroke="#10b981"/>
+    <text x="180" y="182" fill="#10b981" font-family="monospace" font-size="11" font-weight="bold" text-anchor="middle">WebSocket Telemetry Streamer (20 Hz)</text>
+  </g>
+
+  <!-- Right: ROS 2 Control Plane -->
+  <g transform="translate(490, 60)">
+    <rect width="360" height="220" rx="12" fill="#1e293b" stroke="#3b82f6" stroke-width="2"/>
+    <text x="180" y="28" fill="#60a5fa" font-family="system-ui, sans-serif" font-size="13" font-weight="700" text-anchor="middle">ROBOTICS REAL-TIME CONTROL PLANE (ROS 2 Jazzy)</text>
+
+    <!-- Nav2 Stack -->
+    <rect x="20" y="45" width="320" height="45" rx="6" fill="#0f172a" stroke="#f59e0b"/>
+    <text x="180" y="72" fill="#f59e0b" font-family="monospace" font-size="11" font-weight="bold" text-anchor="middle">Nav2 Action Server (NavigateToPose)</text>
+
+    <!-- Hardware Drivers -->
+    <rect x="20" y="100" width="320" height="45" rx="6" fill="#0f172a" stroke="#34d399"/>
+    <text x="180" y="127" fill="#34d399" font-family="monospace" font-size="11" font-weight="bold" text-anchor="middle">Hardware Drivers (LiDAR / Micro-ROS / IMU)</text>
+
+    <!-- DAG Mission Engine -->
+    <rect x="20" y="155" width="320" height="45" rx="6" fill="#0f172a" stroke="#a855f7"/>
+    <text x="180" y="182" fill="#c084fc" font-family="monospace" font-size="11" font-weight="bold" text-anchor="middle">Stateful DAG Engine &amp; Smartwatch Approval</text>
+  </g>
+
+  <!-- Center Bridge Arrow -->
+  <path d="M 410 170 L 490 170" stroke="#38bdf8" stroke-width="3" stroke-dasharray="6,4" fill="none"/>
+  <polygon points="490,170 480,165 480,175" fill="#38bdf8"/>
+  <polygon points="410,170 420,165 420,175" fill="#38bdf8"/>
+  <text x="450" y="155" fill="#38bdf8" font-family="monospace" font-size="10" font-weight="bold" text-anchor="middle">BRIDGE</text>
+</svg>

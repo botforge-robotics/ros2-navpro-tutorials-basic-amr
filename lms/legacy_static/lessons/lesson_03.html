@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lesson 03: Workspace And First Python Node | Level 1 Foundations</title>
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="stylesheet" href="../assets/css/animations.css">
+  <link rel="stylesheet" href="../assets/css/highlight-dark.min.css">
+  <link rel="stylesheet" href="../assets/css/quiz.css">
+  <link rel="stylesheet" href="../assets/css/instructor_sync.css">
+</head>
+<body>
+  <header class="app-header">
+    <div class="brand-container">
+      <a href="https://botforge.in" target="_blank" class="company-brand" title="Botforge Robotics - botforge.in">
+        <img src="../assets/images/botforge_black.png" alt="Botforge Robotics" class="company-logo">
+      </a>
+      <div class="brand-divider"></div>
+      <a href="../index.html" class="brand" title="Level 1: ROS 2 Foundations">
+        <img src="../assets/images/ros2_logo.svg" alt="ROS 2" class="brand-logo">
+        <span class="brand-title">NavPro Learning Hub</span>
+        <span class="badge-jazzy">ROS 2 Jazzy</span>
+      </a>
+    </div>
+    <div class="header-center">
+      <input type="text" id="lessonSearchInput" class="search-input" placeholder="🔍 Search Level 1 curriculum...">
+    </div>
+    <div class="header-actions">
+      <a href="http://localhost:6080/vnc.html" target="_blank" class="track-btn" title="Open Ubuntu Desktop GUI via noVNC">🖥️ Desktop GUI</a>
+      <a href="http://localhost:8443/?folder=/home/student/ros2_ws" target="_blank" class="track-btn" title="Open VS Code in browser">💻 VS Code</a>
+      <a href="../index.html" class="track-btn active">Curriculum Hub</a>
+      <span class="theme-pill">☀️ Light Theme</span>
+    </div>
+  </header>
+
+  <div class="app-container">
+    <aside class="app-sidebar">
+      <div class="progress-card">
+        <div class="progress-header">
+          <span>Curriculum Progress</span>
+          <span id="overallProgressText">0% Complete (0/26)</span>
+        </div>
+        <div class="progress-bar-track">
+          <div id="overallProgressBar" class="progress-bar-fill"></div>
+        </div>
+        <button id="resetProgressBtn" class="track-btn reset-btn" style="width:100%; margin-top:8px; justify-content:center;">↺ Reset Progress</button>
+      </div>
+
+      
+        <div class="sidebar-section-title">ROS 2 Foundations (26 Lessons)</div>
+        <ul class="lesson-list">
+          
+            <li>
+              <a href="lesson_01.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_01" onclick="event.stopPropagation();">
+                <span class="lesson-num">01</span>
+                <span class="lesson-title">Linux Fundamentals For Robotics</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_02.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_02" onclick="event.stopPropagation();">
+                <span class="lesson-num">02</span>
+                <span class="lesson-title">Ros2 Overview And Environment Setup</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_03.html" class="lesson-item active">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_03" onclick="event.stopPropagation();">
+                <span class="lesson-num">03</span>
+                <span class="lesson-title">Workspace And First Python Node</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_04.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_04" onclick="event.stopPropagation();">
+                <span class="lesson-num">04</span>
+                <span class="lesson-title">Package Architecture And Configuration</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_05.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_05" onclick="event.stopPropagation();">
+                <span class="lesson-num">05</span>
+                <span class="lesson-title">Publishers Subscribers And Qos</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_06.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_06" onclick="event.stopPropagation();">
+                <span class="lesson-num">06</span>
+                <span class="lesson-title">Vscode Debugging And Ros2 Logging</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_07.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_07" onclick="event.stopPropagation();">
+                <span class="lesson-num">07</span>
+                <span class="lesson-title">Interfaces And Custom Messages</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_08.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_08" onclick="event.stopPropagation();">
+                <span class="lesson-num">08</span>
+                <span class="lesson-title">Services Server Client Python</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_09.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_09" onclick="event.stopPropagation();">
+                <span class="lesson-num">09</span>
+                <span class="lesson-title">Dynamic Parameters And Yaml</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_10.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_10" onclick="event.stopPropagation();">
+                <span class="lesson-num">10</span>
+                <span class="lesson-title">Launch Files And Runtime Management</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_11.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_11" onclick="event.stopPropagation();">
+                <span class="lesson-num">11</span>
+                <span class="lesson-title">Ros2 Actions Server And Client</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_12.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_12" onclick="event.stopPropagation();">
+                <span class="lesson-num">12</span>
+                <span class="lesson-title">Ros2 Bag Recording And Playback</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_13.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_13" onclick="event.stopPropagation();">
+                <span class="lesson-num">13</span>
+                <span class="lesson-title">Ros2 Cli Command Mastery</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_14.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_14" onclick="event.stopPropagation();">
+                <span class="lesson-num">14</span>
+                <span class="lesson-title">Tf2 Coordinate Transformations Python</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_15.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_15" onclick="event.stopPropagation();">
+                <span class="lesson-num">15</span>
+                <span class="lesson-title">Distributed Ros2 And Dds Networking</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_16.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_16" onclick="event.stopPropagation();">
+                <span class="lesson-num">16</span>
+                <span class="lesson-title">Project Opencv Ros2 Vision</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_17.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_17" onclick="event.stopPropagation();">
+                <span class="lesson-num">17</span>
+                <span class="lesson-title">3D Modeling Urdf Xacro</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_18.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_18" onclick="event.stopPropagation();">
+                <span class="lesson-num">18</span>
+                <span class="lesson-title">Rviz2 Visualization Tf Inspection</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_19.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_19" onclick="event.stopPropagation();">
+                <span class="lesson-num">19</span>
+                <span class="lesson-title">Gazebo Physics And Sensor Plugins</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_20.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_20" onclick="event.stopPropagation();">
+                <span class="lesson-num">20</span>
+                <span class="lesson-title">Building Simulation Worlds</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_21.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_21" onclick="event.stopPropagation();">
+                <span class="lesson-num">21</span>
+                <span class="lesson-title">2D Slam Mapping Slam Toolbox</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_22.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_22" onclick="event.stopPropagation();">
+                <span class="lesson-num">22</span>
+                <span class="lesson-title">Nav2 Architecture And Costmaps</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_23.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_23" onclick="event.stopPropagation();">
+                <span class="lesson-num">23</span>
+                <span class="lesson-title">Nav2 Planners Controllers Tuning</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_24.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_24" onclick="event.stopPropagation();">
+                <span class="lesson-num">24</span>
+                <span class="lesson-title">Nav2 Behavior Trees And Recoveries</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_25.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_25" onclick="event.stopPropagation();">
+                <span class="lesson-num">25</span>
+                <span class="lesson-title">Autonomous Patrol Nav2 Simple Commander</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_26.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_26" onclick="event.stopPropagation();">
+                <span class="lesson-num">26</span>
+                <span class="lesson-title">Physical Robot Hardware Deployment</span>
+              </a>
+            </li>
+            
+        </ul>
+        
+    </aside>
+
+    <main class="app-content">
+      <article class="markdown-body">
+        
+        <div class="concept-card">
+          <h3>⚡ Quick Concept Snapshot</h3>
+          <ul>
+            <li><strong>Underlay vs Overlay:</strong> System ROS 2 binaries live in <code>/opt/ros/jazzy</code>; your custom packages live in <code>~/ros2_ws</code>.</li>
+            <li><strong>Python Node Life-Cycle:</strong> Initialize middleware with <code>rclpy.init()</code>, instantiate Node class, hand off to <code>rclpy.spin()</code>, and clean up with <code>node.destroy_node()</code>.</li>
+            <li><strong>Colcon Symlink:</strong> Always compile python nodes using <code>colcon build --symlink-install</code> for instant live-editing without rebuilding.</li>
+          </ul>
+        </div>
+        <h1>Lesson 03: ROS 2 Workspace &amp; HelloWorld in Python</h1>
+<blockquote class="alert alert-note"><strong>Focus:</strong> Python-Only Robotics Engineering Workflow<br><strong>Course Track:</strong> NavPro Learning Hub - Level 1<br><strong>Target Environment:</strong> ROS 2 Jazzy Jalisco</blockquote>
+<hr>
+<h2>1. Overview &amp; Learning Objectives</h2>
+<p>In this lesson, you will master the foundational workflow of all ROS 2 Python development:</p>
+<ol>
+<li>Understand the core terminologies: Nodes, Computational Graphs, and DDS Client Libraries (<code>rclpy</code>).</li>
+<li>Demystify the ROS 2 workspace architecture: <strong>Underlay</strong> vs. <strong>Overlay</strong>, and the four workspace folders (<code>src/</code>, <code>build/</code>, <code>install/</code>, <code>log/</code>).</li>
+<li>Master <code>colcon build</code> and learn why the <code>--symlink-install</code> flag is a game-changer for Python developers.</li>
+<li>Write, explain line-by-line, build, and execute a production-grade Object-Oriented ROS 2 Python node.</li>
+<li>Complete an interactive student challenge to modify node logging and timer frequency.</li>
+</ol>
+<hr>
+<h2>2. Core Terminologies: How ROS 2 Thinks</h2>
+<p>Before writing code, let&#x27;s establish the mental model of ROS 2:</p>
+<div style="text-align:center; margin:1.6rem 0;"><img src="../assets/images/ros2_graph_dds_bus.svg" alt="ROS 2 Computational Graph &amp; DDS Bus" style="max-width:100%; border-radius:10px; border:1px solid #e2e8f0; box-shadow:0 2px 8px rgba(0,0,0,0.05); background:#ffffff;"></div>
+<ul>
+<li><strong>Node:</strong> An independent software process dedicated to a single robotic task (e.g., read LiDAR data, compute kinematics, plan paths, stream video). A robotic system consists of tens or hundreds of interconnected nodes.</li>
+<li><strong>Graph:</strong> The network of active nodes and the communication pathways connecting them.</li>
+<li><strong>Client Library (<code>rclpy</code>):</strong> The Python API wrapper around the native ROS 2 C implementation (<code>rcl</code>). It provides classes for nodes, publishers, subscribers, services, and executors.</li>
+<li><strong>DDS (Data Distribution Service):</strong> The underlying peer-to-peer messaging protocol handling data serialization, transport, and discovery without requiring a central coordinator.</li>
+</ul>
+<hr>
+<h2>3. The ROS 2 Workspace Architecture</h2>
+<p>A <strong>Workspace</strong> is a dedicated directory on your filesystem where you develop, build, and install custom ROS 2 packages.</p>
+<div class="code-container"><pre><button class="copy-btn">Copy</button><code class="language-bash">ros2_ws/
+├── src/        &lt;-- SOURCE CODE: Your custom packages, git repos, and python scripts
+├── build/      &lt;-- BUILD CACHE: Intermediate compilation artifacts (managed by colcon)
+├── install/    &lt;-- RUNTIME OVERLAY: Where binaries, libraries, and launch scripts live
+└── log/        &lt;-- BUILD LOGS: stdout/stderr reports from colcon build operations</code></pre></div>
+<h3>3.1 Underlays vs. Overlays</h3>
+<p>ROS 2 uses an <strong>overlay</strong> mechanism to isolate system software from project software:</p>
+<ul>
+<li><strong>The Underlay:</strong> The core operating system installation (<code>/opt/ros/jazzy</code>). It contains system-level ROS 2 tools, standard message definitions, and Nav2 binaries.</li>
+<li><strong>The Overlay:</strong> Your custom development workspace (<code>~/ros2_ws</code>). When you source <code>~/ros2_ws/install/setup.bash</code>, your workspace <em>overlays</em> the underlay, allowing you to use your custom packages or override system packages without breaking the operating system.</li>
+</ul>
+<div style="text-align:center; margin:1.6rem 0;"><img src="../assets/images/ros2_overlay_underlay.svg" alt="ROS 2 Overlay vs Underlay Architecture" style="max-width:100%; border-radius:10px; border:1px solid #e2e8f0; box-shadow:0 2px 8px rgba(0,0,0,0.05); background:#ffffff;"></div>
+<hr>
+<h2>4. Step-by-Step: Creating a Workspace &amp; First Python Node</h2>
+<p>Follow these steps directly in your terminal.</p>
+<h3>Step 4.1: Initialize the Workspace Directory</h3>
+<div class="code-container"><pre><button class="copy-btn">Copy</button><code class="language-bash">mkdir -p ~/ros2_ws/src
+cd ~/ros2_ws
+colcon build</code></pre></div>
+<p>Verify that the workspace directories were created:</p>
+<div class="code-container"><pre><button class="copy-btn">Copy</button><code class="language-bash">ls ~/ros2_ws
+# Output: build  install  log  src</code></pre></div>
+<h3>Step 4.2: Create a Pure Python Package</h3>
+<p>Use <code>ros2 pkg create</code> to scaffold a package. Specify <code>--build-type ament_python</code>:</p>
+<div class="code-container"><pre><button class="copy-btn">Copy</button><code class="language-bash">cd ~/ros2_ws/src
+ros2 pkg create --build-type ament_python --node-name hello_node navpro_hello_py</code></pre></div>
+<p>Let&#x27;s inspect the generated directory layout:</p>
+<div class="code-container"><pre><button class="copy-btn">Copy</button><code class="language-bash">tree navpro_hello_py/</code></pre></div>
+<p><em>Output:</em></p>
+<div class="code-container"><pre><button class="copy-btn">Copy</button><code class="language-bash">navpro_hello_py/
+├── navpro_hello_py/
+│   ├── __init__.py
+│   └── hello_node.py
+├── package.xml
+├── resource/
+│   └── navpro_hello_py
+├── setup.cfg
+└── setup.py</code></pre></div>
+<hr>
+<h2>5. Writing the Python Node: Code &amp; Line-by-Line Breakdown</h2>
+<p>Open <code>~/ros2_ws/src/navpro_hello_py/navpro_hello_py/hello_node.py</code> in your code editor and update it to the production Object-Oriented structure below:</p>
+<div class="code-container"><pre><button class="copy-btn">Copy</button><code class="language-python">#!/usr/bin/env python3
+&quot;&quot;&quot;
+NavPro Learning Hub - Lesson 03: First ROS 2 Python Node
+Demonstrates the Object-Oriented rclpy Node architecture with periodic timers and logging.
+&quot;&quot;&quot;
+
+import rclpy
+from rclpy.node import Node
+
+
+class HelloWorldNode(Node):
+    &quot;&quot;&quot;
+    Inherits from rclpy.node.Node.
+    Every ROS 2 Python component should be written as a class.
+    &quot;&quot;&quot;
+
+    def __init__(self):
+        # Initialize parent Node with node name &#x27;navpro_hello_node&#x27;
+        super().__init__(&#x27;navpro_hello_node&#x27;)
+
+        # Internal state variable
+        self.counter_ = 0
+
+        # Log initial startup message
+        self.get_logger().info(&#x27;Hello World! NavPro ROS 2 Python Node has booted.&#x27;)
+
+        # Create a periodic timer running at 1.0 Hz (every 1.0 second)
+        # Parameters: (period_in_seconds, callback_function)
+        self.timer_ = self.create_timer(1.0, self.timer_callback)
+
+    def timer_callback(self):
+        &quot;&quot;&quot;Executed automatically every 1.0 second by the ROS 2 executor.&quot;&quot;&quot;
+        self.counter_ += 1
+        self.get_logger().info(f&#x27;[Heartbeat #{self.counter_}] NavPro AMR is alive and operational.&#x27;)
+
+
+def main(args=None):
+    # 1. Initialize ROS 2 DDS communications
+    rclpy.init(args=args)
+
+    # 2. Instantiate our custom node class
+    node = HelloWorldNode()
+
+    # 3. Spin the node: keeps the process alive and processes timer callbacks
+    try:
+        rclpy.spin(node)
+    except KeyboardInterrupt:
+        node.get_logger().warn(&#x27;Keyboard interrupt detected! Shutting down gracefully...&#x27;)
+    finally:
+        # 4. Clean up resources and destroy the node
+        node.destroy_node()
+        # 5. Shutdown the ROS 2 middleware
+        rclpy.shutdown()
+
+
+if __name__ == &#x27;__main__&#x27;:
+    main()</code></pre></div>
+<hr>
+<h3>5.1 Comprehensive Line-by-Line Code Breakdown</h3>
+<div class="table-wrapper"><table>
+<thead><tr>
+<th>Code Line</th>
+<th>Purpose &amp; Explanation</th>
+</tr></thead><tbody>
+<tr>
+<td><code>#!/usr/bin/env python3</code></td>
+<td><strong>Shebang:</strong> Tells the Linux OS to execute this script using the active Python 3 interpreter.</td>
+</tr>
+<tr>
+<td><code>import rclpy</code></td>
+<td>Imports the core ROS 2 Python client library, providing initialization, spinning, and shutdown methods.</td>
+</tr>
+<tr>
+<td><code>from rclpy.node import Node</code></td>
+<td>Imports the base <code>Node</code> class. In ROS 2, nodes encapsulate all communication capabilities.</td>
+</tr>
+<tr>
+<td><code>class HelloWorldNode(Node):</code></td>
+<td>Defines our custom class inheriting from <code>Node</code>. This Object-Oriented design is the industry standard for encapsulation and state management.</td>
+</tr>
+<tr>
+<td><code>super().__init__(&#x27;navpro_hello_node&#x27;)</code></td>
+<td>Calls the parent constructor to register the node in the ROS graph under the unique name <code>&#x27;navpro_hello_node&#x27;</code>.</td>
+</tr>
+<tr>
+<td><code>self.get_logger().info(...)</code></td>
+<td>Uses the node&#x27;s managed logger. Unlike plain <code>print()</code>, <code>get_logger()</code> prefixes timestamps, node names, and supports severity levels and redirection to <code>/rosout</code>.</td>
+</tr>
+<tr>
+<td><code>self.create_timer(1.0, callback)</code></td>
+<td>Registers a periodic hardware timer. The ROS 2 executor triggers <code>callback</code> every 1.0 second without blocking the thread.</td>
+</tr>
+<tr>
+<td><code>rclpy.init(args=args)</code></td>
+<td>Initializes the ROS 2 communications context and parses any ROS command-line arguments (e.g. remappings). Must be called once before instantiating nodes.</td>
+</tr>
+<tr>
+<td><code>rclpy.spin(node)</code></td>
+<td>Enters the event loop. Blocks the main thread and yields CPU execution to handle incoming timer ticks, subscriber messages, and service requests.</td>
+</tr>
+<tr>
+<td><code>node.destroy_node()</code></td>
+<td>Explicitly frees internal DDS handles, publishers, and timers.</td>
+</tr>
+<tr>
+<td><code>rclpy.shutdown()</code></td>
+<td>Shuts down the DDS middleware context cleanly before the Python process exits.</td>
+</tr>
+</tbody></table></div>
+<hr>
+<h2>6. Building and Symlink Installation</h2>
+<p>To make the node executable by ROS 2, we build the workspace using <code>colcon</code>.</p>
+<h3>6.1 The Power of <code>--symlink-install</code></h3>
+<div class="code-container"><pre><button class="copy-btn">Copy</button><code class="language-bash">cd ~/ros2_ws
+colcon build --symlink-install</code></pre></div>
+<blockquote class="alert alert-tip"><strong>Why <code>--symlink-install</code> is Essential for Python Developers:</strong><br>By default, <code>colcon build</code> copies your <code>.py</code> source files from <code>src/</code> into <code>install/</code>. If you modify a Python script, you would have to run <code>colcon build</code> again before changes take effect.<br>With <code>--symlink-install</code>, <code>colcon</code> creates a symbolic link (symlink) from <code>install/</code> directly pointing back to your source file in <code>src/</code>. <strong>You can edit Python code and run it immediately without rebuilding!</strong></blockquote>
+<hr>
+<h2>7. Execution &amp; Verification</h2>
+<p>Open a new terminal (or Terminator split pane) and run:</p>
+<div class="code-container"><pre><button class="copy-btn">Copy</button><code class="language-bash"># 1. Source the workspace overlay
+source ~/ros2_ws/install/setup.bash
+
+# 2. Run your new node
+ros2 run navpro_hello_py hello_node</code></pre></div>
+<h3>Expected Output:</h3>
+<div class="code-container"><pre><button class="copy-btn">Copy</button><code class="language-bash">[INFO] [1718204921.120485] [navpro_hello_node]: Hello World! NavPro ROS 2 Python Node has booted.
+[INFO] [1718204922.121304] [navpro_hello_node]: [Heartbeat #1] NavPro AMR is alive and operational.
+[INFO] [1718204923.121541] [navpro_hello_node]: [Heartbeat #2] NavPro AMR is alive and operational.
+[INFO] [1718204924.121702] [navpro_hello_node]: [Heartbeat #3] NavPro AMR is alive and operational.</code></pre></div>
+<p>In a second terminal, inspect the active node:</p>
+<div class="code-container"><pre><button class="copy-btn">Copy</button><code class="language-bash">ros2 node list
+# /navpro_hello_node
+
+ros2 node info /navpro_hello_node</code></pre></div>
+<hr>
+<h2>8. Hands-on Student Challenge</h2>
+<p><strong>Task:</strong></p>
+<p>Modify <code>hello_node.py</code> to:</p>
+<ol>
+<li>Increase the timer frequency from <code>1.0 Hz</code> to <code>5.0 Hz</code> (period = <code>0.2</code> seconds).</li>
+<li>Add a simulated battery percentage that starts at <code>100.0%</code> and decreases by <code>0.5%</code> on every timer tick.</li>
+<li>Log a warning with <code>self.get_logger().warn(...)</code> when the simulated battery drops below <code>20.0%</code>.</li>
+</ol>
+<div class="code-container"><pre><button class="copy-btn">Copy</button><code class="language-python"># TODO: FILL IN CODE HERE inside hello_node.py
+# 1. Change create_timer period to 0.2
+# 2. self.battery = 100.0
+# 3. Inside callback: self.battery -= 0.5
+# 4. Check if self.battery &lt; 20.0, use self.get_logger().warn(...)</code></pre></div>
+<p>Save your changes and re-run with <code>ros2 run navpro_hello_py hello_node</code>—notice how <code>--symlink-install</code> reflected your changes instantly!</p>
+      </article>
+
+      <footer class="lesson-nav-footer">
+        <a href="lesson_02.html" class="nav-link-btn" >&larr; Previous Lesson</a>
+        <a href="../index.html" class="nav-link-btn">🧭 Course Hub</a>
+        <a href="lesson_04.html" class="nav-link-btn" >Next Lesson &rarr;</a>
+      </footer>
+    </main>
+  </div>
+
+  <script src="../assets/js/highlight.min.js"></script>
+  <script src="../assets/js/app.js"></script>
+  <script src="../assets/js/quiz_engine.js"></script>
+  <script src="../assets/js/instructor_sync.js"></script>
+</body>
+</html>

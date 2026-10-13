@@ -1,0 +1,38 @@
+# =============================================================================
+# NavPro Learning Hub - Level 1 Docker Orchestration (ROS 2 Foundations)
+# Run: docker compose up -d
+#
+# One single command launches:
+# 1. Level 1 Learning Web Platform:    http://localhost:8000
+# 2. Ubuntu 24.04 Desktop GUI (noVNC): http://localhost:6080/vnc.html (password: password)
+# 3. In-Browser VS Code IDE:           http://localhost:8443/?folder=/home/student/ros2_ws
+# =============================================================================
+
+services:
+  navpro_level1:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    image: navpro-level1-ros2-sim:latest
+    pull_policy: build
+    container_name: navpro_level1_container
+    privileged: true
+    environment:
+      - START_SERVICES=true
+      - DISPLAY=:1
+      - ROS_DOMAIN_ID=42
+    ports:
+      # Level 1 Learning Web Platform
+      - "8000:8000"
+      # Web Desktop GUI (Ubuntu 24.04, Gazebo, RViz2 via noVNC)
+      - "6080:6080"
+      # In-browser VS Code Code Server
+      - "8443:8443"
+    volumes:
+      # Mount Level 1 repository
+      - .:/home/student/navpro_level1
+      # Mount student ros2_ws and scripts for persistence
+      - ./ros2_ws:/home/student/ros2_ws
+      - ./scripts:/home/student/scripts
+    restart: unless-stopped
+    shm_size: '2gb'

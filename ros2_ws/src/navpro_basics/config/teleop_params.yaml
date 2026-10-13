@@ -1,0 +1,4 @@
+teleop_speed_limiter:
+  ros__parameters:
+    speed_scale_factor: 0.75
+    low_battery_threshold: 25.0

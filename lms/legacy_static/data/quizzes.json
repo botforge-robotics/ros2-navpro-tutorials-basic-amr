@@ -1,0 +1,426 @@
+{
+  "lesson_01": [
+    {
+      "id": "q_l1_01_1",
+      "prompt": "Which Linux command is required to make a newly created Python node script executable by the ROS 2 runtime?",
+      "options": [
+        "chmod -R 777 script.py",
+        "chmod +x script.py",
+        "chown student:student script.py",
+        "source script.py"
+      ],
+      "correct": 1,
+      "explanation": "chmod +x grants execution permissions to the script. While 777 also grants execution, it is an insecure antipattern in production robotics. chmod +x is the targeted industry standard."
+    },
+    {
+      "id": "q_l1_01_2",
+      "prompt": "What does running 'source ~/.bashrc' achieve in an active terminal session?",
+      "options": [
+        "It restarts the Linux kernel and graphics drivers",
+        "It reloads environment variables, ROS 2 underlay paths, and aliases without closing the shell",
+        "It permanently writes current bash history to NVMe disk",
+        "It kills all running ROS 2 nodes"
+      ],
+      "correct": 1,
+      "explanation": "source ~/.bashrc re-executes the user profile in the active shell context, updating paths like $ROS_DISTRO and custom aliases without requiring the engineer to spawn a new terminal window."
+    }
+  ],
+  "lesson_02": [
+    {
+      "id": "q_l1_02_1",
+      "prompt": "What primary architectural component replaces the centralized 'roscore' master from ROS 1 in ROS 2 Jazzy?",
+      "options": [
+        "A central Redis server running in Docker",
+        "The decentralized Data Distribution Service (DDS) discovery protocol",
+        "systemd service manager",
+        "The Linux D-Bus messaging broker"
+      ],
+      "correct": 1,
+      "explanation": "ROS 2 is built on top of the OMG DDS standard. Discovery is fully decentralized using peer-to-peer multicast participant announcements, eliminating the single point of failure (roscore) present in ROS 1."
+    },
+    {
+      "id": "q_l1_02_2",
+      "prompt": "In an environment where multiple robots share the same Wi-Fi network, how do you isolate their ROS 2 DDS communications?",
+      "options": [
+        "By setting unique IP subnets on each robot's router",
+        "By setting a unique ROS_DOMAIN_ID environment variable (0-101 or 0-232) on each robot",
+        "By encrypting the disk with LUKS",
+        "By changing the ROS_DISTRO environment variable"
+      ],
+      "correct": 1,
+      "explanation": "ROS_DOMAIN_ID maps directly to DDS domain partition ports. Robots on different ROS_DOMAIN_IDs cannot discover or interfere with each other's topics, even on identical subnets."
+    }
+  ],
+  "lesson_03": [
+    {
+      "id": "q_l1_03_1",
+      "prompt": "What is the key benefit of passing the '--symlink-install' flag when building a Python package with colcon?",
+      "options": [
+        "It reduces compiled binary size by 50%",
+        "It links Python source files directly to the install folder so code changes take effect immediately without rebuilding",
+        "It creates symbolic links for C++ header libraries",
+        "It automatically signs the code with GPG keys"
+      ],
+      "correct": 1,
+      "explanation": "--symlink-install creates symbolic links pointing from install/ to your source code in src/. For pure Python nodes, edits take effect immediately upon rerunning the node without invoking colcon build again."
+    },
+    {
+      "id": "q_l1_03_2",
+      "prompt": "In an object-oriented ROS 2 Python node, which base class should your custom node inherit from?",
+      "options": [
+        "rclpy.node.Node",
+        "rclpy.executor.Executor",
+        "ros2.core.LifecycleNode",
+        "threading.Thread"
+      ],
+      "correct": 0,
+      "explanation": "All standard ROS 2 Python nodes inherit from rclpy.node.Node, which encapsulates node lifecycle, parameter declarations, logging, publisher/subscriber factories, and callback timers."
+    }
+  ],
+  "lesson_04": [
+    {
+      "id": "q_l1_04_1",
+      "prompt": "In a Python ROS 2 package, where must executable CLI scripts be declared so 'ros2 run <pkg> <executable>' can discover them?",
+      "options": [
+        "Inside package.xml under <export><executable>",
+        "Inside setup.py under entry_points={'console_scripts': [...] }",
+        "In a bash script located in /usr/local/bin",
+        "In the resource/ marker file"
+      ],
+      "correct": 1,
+      "explanation": "setuptools uses the entry_points dict with 'console_scripts' to generate standard Python executable wrappers in the package's install/lib/<pkg> directory during colcon build."
+    },
+    {
+      "id": "q_l1_04_2",
+      "prompt": "What is the purpose of the empty marker file inside the 'resource/' directory of a ROS 2 Python package?",
+      "options": [
+        "It stores cached colcon build timestamps",
+        "It allows the ament indexer (ament_index_python) to register and find the package at runtime",
+        "It is a required license verification stamp",
+        "It holds URDF mesh textures"
+      ],
+      "correct": 1,
+      "explanation": "The file resource/<pkg_name> is indexed by ament_index. It allows tools like 'ros2 pkg list' and 'get_package_share_directory()' to locate the package share directory on the system."
+    }
+  ],
+  "lesson_05": [
+    {
+      "id": "q_l1_05_1",
+      "prompt": "Which ROS 2 QoS Reliability policy is best suited for 50Hz LiDAR sensor streams where low latency is critical and dropping an occasional packet is acceptable?",
+      "options": [
+        "ReliabilityPolicy.RELIABLE",
+        "ReliabilityPolicy.BEST_EFFORT",
+        "DurabilityPolicy.TRANSIENT_LOCAL",
+        "HistoryPolicy.KEEP_ALL"
+      ],
+      "correct": 1,
+      "explanation": "BEST_EFFORT transmits UDP packets without waiting for retransmission ACKs. For high-frequency sensor streams, late packets are obsolete anyway because fresh sensor frames are already incoming."
+    },
+    {
+      "id": "q_l1_05_2",
+      "prompt": "If a subscriber sets DurabilityPolicy.VOLATILE, what happens to messages published before that subscriber joined the network?",
+      "options": [
+        "The subscriber retrieves the last 10 messages from the DDS ring buffer",
+        "The subscriber misses all past messages and only receives future publications",
+        "The publisher throws a DDS_QOS_INCOMPATIBLE exception",
+        "The DDS broker crashes"
+      ],
+      "correct": 1,
+      "explanation": "VOLATILE durability ignores past messages. To receive historical messages published prior to subscription (such as map data or robot configurations), TRANSIENT_LOCAL must be chosen."
+    }
+  ],
+  "lesson_06": [
+    {
+      "id": "q_l1_06_1",
+      "prompt": "Which of the following represents the correct ascending order of ROS 2 logger severity levels?",
+      "options": [
+        "DEBUG < INFO < WARN < ERROR < FATAL",
+        "INFO < DEBUG < WARN < ERROR < FATAL",
+        "WARN < INFO < DEBUG < ERROR < CRITICAL",
+        "TRACE < NOTICE < ALERT < EMERGENCY"
+      ],
+      "correct": 0,
+      "explanation": "ROS 2 logging follows standard POSIX severity: DEBUG (10), INFO (20), WARN (30), ERROR (40), and FATAL (50). Setting logger level to WARN filters out INFO and DEBUG."
+    }
+  ],
+  "lesson_07": [
+    {
+      "id": "q_l1_07_1",
+      "prompt": "Why must custom ROS 2 messages, services, and actions be compiled inside a CMake package rather than a pure Python (ament_python) package?",
+      "options": [
+        "Python does not support compiling binary structs",
+        "rosidl_default_generators is a CMake build pipeline that compiles .msg files into C, C++, and Python type bindings simultaneously",
+        "Python setup.py cannot create directories",
+        "DDS middleware only accepts C++ code"
+      ],
+      "correct": 1,
+      "explanation": "Custom ROS 2 interfaces require the rosidl_default_generators CMake package to generate language-specific C, C++, Python, and DDS type support serialization libraries."
+    }
+  ],
+  "lesson_08": [
+    {
+      "id": "q_l1_08_1",
+      "prompt": "Why should you NEVER call 'client.call(request)' synchronously inside a ROS 2 Python timer callback?",
+      "options": [
+        "Because synchronous calls cause memory leaks",
+        "Because synchronous calls block the single-threaded executor, preventing the response callback from ever executing and causing a permanent deadlock",
+        "Because ROS 2 Jazzy does not support synchronous calls",
+        "Because the service server rejects synchronous clients"
+      ],
+      "correct": 1,
+      "explanation": "In a SingleThreadedExecutor, calling client.call() blocks the only worker thread waiting for a response, but that same thread is needed to process the incoming response callback\u2014deadlocking the node!"
+    }
+  ],
+  "lesson_09": [
+    {
+      "id": "q_l1_09_1",
+      "prompt": "Which method on rclpy.node.Node is used to register a parameter and define its default value?",
+      "options": [
+        "self.set_parameter('speed', 1.0)",
+        "self.declare_parameter('speed', 1.0)",
+        "self.register_param('speed', 1.0)",
+        "self.add_parameter('speed', 1.0)"
+      ],
+      "correct": 1,
+      "explanation": "declare_parameter registers the parameter name, type descriptor, and default value with the parameter server, enabling external overrides via CLI or YAML."
+    }
+  ],
+  "lesson_10": [
+    {
+      "id": "q_l1_10_1",
+      "prompt": "In a ROS 2 Python launch file, what does the 'remappings' parameter on launch_ros.actions.Node allow you to do?",
+      "options": [
+        "Rename physical USB ports for motor controllers",
+        "Redirect topic or service names without modifying the underlying Python source code",
+        "Swap the ROS 2 DDS distribution at runtime",
+        "Change keyboard shortcuts in RViz2"
+      ],
+      "correct": 1,
+      "explanation": "Remappings allow routing topics (e.g. from /cmd_vel to /diff_drive_controller/cmd_vel_unstamped) dynamically in launch files, decoupling node code from specific robot topologies."
+    }
+  ],
+  "lesson_11": [
+    {
+      "id": "q_l1_11_1",
+      "prompt": "What are the three communication phases of a ROS 2 Action?",
+      "options": [
+        "Subscribe, Filter, Publish",
+        "Goal Request/Acceptance, Continuous Feedback Streaming, and Final Result",
+        "Ping, Handshake, Disconnect",
+        "Compile, Launch, Terminate"
+      ],
+      "correct": 1,
+      "explanation": "ROS 2 Actions are designed for long-running preemptible tasks. They communicate via: (1) Goal Request & Acceptance, (2) Periodic Feedback, and (3) Final Result."
+    }
+  ],
+  "lesson_12": [
+    {
+      "id": "q_l1_12_1",
+      "prompt": "What is the modern default storage format for rosbag2 in ROS 2 Jazzy, and why is it preferred over sqlite3?",
+      "options": [
+        "CSV, because it opens directly in Excel",
+        "MCAP, because it provides zero-copy streaming, high write throughput, and self-contained schemas without SQLite write-lock overhead",
+        "JSON Lines, for web compatibility",
+        "Parquet, for cloud analytics"
+      ],
+      "correct": 1,
+      "explanation": "MCAP is the modern robotics industry recording standard. It offers blazing write performance, schema self-description, and avoids SQLite transaction locking issues during heavy sensor logging."
+    }
+  ],
+  "lesson_13": [
+    {
+      "id": "q_l1_13_1",
+      "prompt": "Which CLI command allows you to inspect message transmission frequency on a topic in real-time?",
+      "options": [
+        "ros2 topic hz /scan",
+        "ros2 topic echo /scan --speed",
+        "ros2 topic rate /scan",
+        "ros2 doctor --topic /scan"
+      ],
+      "correct": 0,
+      "explanation": "'ros2 topic hz <topic>' monitors message arrival timestamps and calculates the moving average frequency (Hz), minimum, and maximum delta."
+    }
+  ],
+  "lesson_14": [
+    {
+      "id": "q_l1_14_1",
+      "prompt": "According to REP-105 (Mobile Robot Coordinate Frames), which frame represents continuous smooth odometric estimation without discrete jumps?",
+      "options": [
+        "map",
+        "odom",
+        "base_link",
+        "base_footprint"
+      ],
+      "correct": 1,
+      "explanation": "The 'odom' frame is continuous and smooth, ideal for short-term control. The 'map' frame represents global SLAM/AMCL localization and may experience discrete jumps during loop closures."
+    }
+  ],
+  "lesson_15": [
+    {
+      "id": "q_l1_15_1",
+      "prompt": "Why does ROS 2 DDS discover nodes automatically across an Ethernet switch without any master node running?",
+      "options": [
+        "Because the Linux kernel auto-forwards all ROS packets",
+        "Because DDS Simple Participant Discovery Protocol (SPDP) broadcasts announcements on UDP multicast group 239.255.0.1",
+        "Because VS Code acts as the hidden discovery server",
+        "Because DNS records are updated dynamically"
+      ],
+      "correct": 1,
+      "explanation": "DDS implementations use SPDP multicast packets on well-known ports derived from ROS_DOMAIN_ID. Participants automatically announce their presence to all listening peers on the network."
+    }
+  ],
+  "lesson_16": [
+    {
+      "id": "q_l1_16_1",
+      "prompt": "Which library bridges ROS 2 'sensor_msgs/msg/Image' objects to OpenCV 'cv2.Mat' numpy arrays?",
+      "options": [
+        "cv_bridge",
+        "image_transport",
+        "ros2_numpy",
+        "torchvision"
+      ],
+      "correct": 0,
+      "explanation": "cv_bridge provides the CvBridge class with imgmsg_to_cv2() and cv2_to_imgmsg() to convert seamlessly between ROS image messages and NumPy arrays used by OpenCV."
+    }
+  ],
+  "lesson_17": [
+    {
+      "id": "q_l1_17_1",
+      "prompt": "What is the primary advantage of Xacro over raw URDF XML files?",
+      "options": [
+        "Xacro can execute arbitrary Python scripts inside Gazebo",
+        "Xacro introduces modular XML macros, reusable property variables, and mathematical expressions to eliminate copy-paste boilerplate",
+        "Xacro converts 3D meshes to STL automatically",
+        "Xacro runs 10x faster in RViz2"
+      ],
+      "correct": 1,
+      "explanation": "Xacro (XML Macros) provides programmatic capabilities like <xacro:macro>, property variables (${wheel_radius}), and math expressions, allowing clean modular robot descriptions."
+    }
+  ],
+  "lesson_18": [
+    {
+      "id": "q_l1_18_1",
+      "prompt": "What is the universal color convention for coordinate frame axes (X, Y, Z) in RViz2?",
+      "options": [
+        "Red = X, Green = Y, Blue = Z (RGB = XYZ)",
+        "Red = Z, Green = X, Blue = Y",
+        "Blue = X, Green = Y, Red = Z",
+        "Yellow = X, Cyan = Y, Magenta = Z"
+      ],
+      "correct": 0,
+      "explanation": "RViz2 strictly follows the RGB = XYZ standard: Red is the X-axis (Forward), Green is the Y-axis (Left), and Blue is the Z-axis (Up)."
+    }
+  ],
+  "lesson_19": [
+    {
+      "id": "q_l1_19_1",
+      "prompt": "Which Gazebo Harmonic sensor type is used to simulate a 2D planar LiDAR sensor (such as RPLidar or Hokuyo)?",
+      "options": [
+        "depth_camera",
+        "gpu_lidar (or gpu_ray)",
+        "imu",
+        "magnetometer"
+      ],
+      "correct": 1,
+      "explanation": "gpu_lidar (formerly gpu_ray) uses GPU hardware acceleration to simulate laser rangefinder beams and publishes raw range data bridged to sensor_msgs/LaserScan."
+    }
+  ],
+  "lesson_20": [
+    {
+      "id": "q_l1_20_1",
+      "prompt": "What XML format is used to define Gazebo worlds, lighting, gravity, and static warehouse obstacles?",
+      "options": [
+        "URDF",
+        "SDF (Simulation Description Format)",
+        "YAML",
+        "JSON"
+      ],
+      "correct": 1,
+      "explanation": "SDF (Simulation Description Format) describes entire simulation environments including physics engines, terrain heights, sun models, friction, and multiple robot models."
+    }
+  ],
+  "lesson_21": [
+    {
+      "id": "q_l1_21_1",
+      "prompt": "What algorithm architecture does 'SLAM Toolbox' use to solve 2D mapping and loop closure?",
+      "options": [
+        "Particle filtering (Gmapping)",
+        "Pose-graph optimization with scan-matching and Ceres solver",
+        "Extended Kalman Filter (EKF)",
+        "Deep reinforcement learning"
+      ],
+      "correct": 1,
+      "explanation": "SLAM Toolbox uses graph-based SLAM. It creates pose graphs with scan-matching constraints and executes non-linear graph optimization using the Ceres solver to resolve loop closures."
+    }
+  ],
+  "lesson_22": [
+    {
+      "id": "q_l1_22_1",
+      "prompt": "In Nav2 Costmap 2D, what is the role of the Inflation Layer?",
+      "options": [
+        "It compresses the map image size for network bandwidth",
+        "It expands obstacle boundaries by the robot's inscribed radius and applies exponential decay costs to prevent the robot from brushing against walls",
+        "It dynamically updates the battery level",
+        "It recalculates motor wheel PID gains"
+      ],
+      "correct": 1,
+      "explanation": "The Inflation Layer propagates lethal obstacle costs outward by robot radius + inflation radius, penalizing paths too close to physical obstacles and preventing side collisions."
+    }
+  ],
+  "lesson_23": [
+    {
+      "id": "q_l1_23_1",
+      "prompt": "Which Nav2 component is responsible for high-frequency (e.g. 20Hz) obstacle avoidance and outputting /cmd_vel motor commands?",
+      "options": [
+        "Global Planner (e.g. NavFn or SmacPlanner)",
+        "Local Controller (e.g. DWB or Regulated Pure Pursuit)",
+        "Costmap 2D Static Layer",
+        "Lifecycle Manager"
+      ],
+      "correct": 1,
+      "explanation": "The Controller (Local Planner) runs at high frequency (20Hz), tracking the global path while dynamically dodging local obstacles and publishing velocity commands to /cmd_vel."
+    }
+  ],
+  "lesson_24": [
+    {
+      "id": "q_l1_24_1",
+      "prompt": "What are the core control node types in a Nav2 Behavior Tree XML definition?",
+      "options": [
+        "Sequence, Fallback (Selector), and Parallel",
+        "If, Else, While",
+        "Pub, Sub, Service",
+        "Try, Catch, Finally"
+      ],
+      "correct": 0,
+      "explanation": "Behavior Trees use Control Nodes (Sequence, Fallback/Selector, Parallel) to evaluate Action and Condition leaf nodes, enabling deterministic navigation failure recovery."
+    }
+  ],
+  "lesson_25": [
+    {
+      "id": "q_l1_25_1",
+      "prompt": "Which high-level Python class from 'nav2_simple_commander' provides intuitive navigation APIs such as 'goToPose()' and 'followWaypoints()'?",
+      "options": [
+        "BasicNavigator",
+        "Nav2Client",
+        "SimpleGoalRunner",
+        "AmrCommander"
+      ],
+      "correct": 0,
+      "explanation": "nav2_simple_commander.robot_navigator.BasicNavigator wraps the complex action client and lifecycle boilerplate into clean Python methods like goToPose() and followWaypoints()."
+    }
+  ],
+  "lesson_26": [
+    {
+      "id": "q_l1_26_1",
+      "prompt": "During Sim-to-Real hardware bringup, why must AMCL be provided with an accurate initial pose (/initialpose) before autonomous navigation?",
+      "options": [
+        "Because physical motors refuse to draw current without a map",
+        "Because AMCL particles need a Gaussian hypothesis around the robot's physical starting location to match incoming LiDAR scans against the pre-built map",
+        "Because the USB serial port requires an initial pose handshake",
+        "Because Gazebo will crash if AMCL is not initialized"
+      ],
+      "correct": 1,
+      "explanation": "AMCL is a Monte Carlo localization filter. Without an initial pose guess, particles are dispersed uniformly across the entire facility, preventing rapid localization convergence."
+    }
+  ]
+}

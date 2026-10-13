@@ -1,0 +1,113 @@
+/* NavPro Learning Hub - High-Tech Robotics Graphic Animations (Light Theme) */
+
+/* 1. DDS Message Packet Pulsing */
+@keyframes dds-packet-flow {
+  0% { transform: translateX(0) scale(0.7); opacity: 0; }
+  15% { opacity: 1; transform: translateX(40px) scale(1.1); }
+  85% { opacity: 1; transform: translateX(250px) scale(1.1); }
+  100% { transform: translateX(300px) scale(0.7); opacity: 0; }
+}
+
+.anim-packet {
+  animation: dds-packet-flow 2.2s infinite cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* 2. 2D LiDAR 360-Degree Ray Scanning Sweep */
+@keyframes lidar-sweep {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.anim-lidar-beam {
+  transform-origin: center;
+  animation: lidar-sweep 2.5s linear infinite;
+}
+
+/* 3. SLAM Loop Closure Constraint Pulse */
+@keyframes loop-closure-snap {
+  0%, 100% {
+    stroke-dashoffset: 0;
+    opacity: 0.4;
+  }
+  50% {
+    stroke-dashoffset: 20;
+    opacity: 1;
+    filter: drop-shadow(0 0 6px #059669);
+  }
+}
+
+.anim-loop-closure {
+  stroke-dasharray: 6, 4;
+  animation: loop-closure-snap 1.8s infinite ease-in-out;
+}
+
+/* 4. Nav2 Global Path Pulsing */
+@keyframes path-pulse {
+  0%, 100% { stroke-width: 2.5; stroke-opacity: 0.7; }
+  50% { stroke-width: 4.5; stroke-opacity: 1; filter: drop-shadow(0 0 5px #0284c7); }
+}
+
+.anim-global-path {
+  animation: path-pulse 2s infinite ease-in-out;
+}
+
+/* 5. Behavior Tree Status Indicator Pulse */
+@keyframes bt-status-pulse {
+  0%, 100% { box-shadow: 0 0 4px rgba(2, 132, 199, 0.2); }
+  50% { box-shadow: 0 0 12px rgba(2, 132, 199, 0.6); }
+}
+
+.bt-running {
+  animation: bt-status-pulse 1.2s infinite ease-in-out;
+  border-color: #0284c7 !important;
+}
+
+/* 6. Canvas Container Styles (Crisp Clean Light Theme) */
+.sim-canvas-box {
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.sim-hud {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: rgba(255, 255, 255, 0.94);
+  backdrop-filter: blur(8px);
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  padding: 6px 12px;
+  font-family: ui-monospace, SFMono-Regular, monospace;
+  font-size: 11px;
+  color: #0f172a;
+  pointer-events: none;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.sim-controls {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-top: 10px;
+  padding: 8px 12px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+}
+
+.hud-label {
+  color: #64748b;
+  font-size: 10px;
+  text-transform: uppercase;
+}
+
+.hud-val {
+  color: #0284c7;
+  font-weight: 700;
+  margin-left: 4px;
+}

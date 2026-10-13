@@ -1,0 +1,845 @@
+/* =============================================================================
+   NavPro Learning Hub - Clean Robotics Light Theme & Modern Typography
+   Designed for engineering clarity, high contrast, and interactive learning
+   ============================================================================= */
+
+:root {
+  /* Surface & Background Colors */
+  --bg-primary: #f8fafc;
+  --bg-secondary: #ffffff;
+  --bg-tertiary: #f1f5f9;
+  --bg-card: #ffffff;
+  
+  /* Borders & Dividers */
+  --border-color: #e2e8f0;
+  --border-subtle: #f1f5f9;
+  --border-active: #0284c7;
+  --border-focus: #0284c7;
+
+  /* Typography / Text Colors */
+  --text-primary: #0f172a;
+  --text-secondary: #334155;
+  --text-muted: #64748b;
+  --text-inverse: #ffffff;
+
+  /* Brand Accents */
+  --brand-blue: #0284c7;
+  --brand-navy: #0369a1;
+  --accent-cobalt: #2563eb;
+  --accent-emerald: #059669;
+  --accent-amber: #d97706;
+  --accent-rose: #e11d48;
+  --accent-purple: #7c3aed;
+
+  /* Layout Dimensions */
+  --sidebar-width: 320px;
+  --header-height: 68px;
+}
+
+/* Base Reset */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Inter", "Helvetica Neue", Arial, sans-serif;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  line-height: 1.6;
+  font-size: 15px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+/* =============================================================================
+   App Header & Brand Identity
+   ============================================================================= */
+
+.app-header {
+  height: var(--header-height);
+  background-color: rgba(255, 255, 255, 0.96);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border-color);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1.75rem;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05);
+}
+
+.brand-container {
+  display: flex;
+  align-items: center;
+  gap: 1.15rem;
+}
+
+.company-brand {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.company-brand:hover {
+  opacity: 0.85;
+  transform: translateY(-1px);
+}
+
+.company-logo {
+  height: 28px;
+  width: auto;
+  max-width: 170px;
+  object-fit: contain;
+  display: block;
+}
+
+.brand-divider {
+  width: 1px;
+  height: 28px;
+  background-color: #cbd5e1;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  text-decoration: none;
+}
+
+.brand-logo {
+  width: 44px;
+  height: 44px;
+  object-fit: contain;
+  display: block;
+  transition: transform 0.2s ease;
+}
+
+.brand:hover .brand-logo {
+  transform: scale(1.05);
+}
+
+.brand-title {
+  font-size: 1.18rem;
+  font-weight: 800;
+  color: #0f172a;
+  letter-spacing: -0.4px;
+}
+
+.badge-jazzy {
+  font-size: 0.72rem;
+  font-weight: 700;
+  background-color: #e0f2fe;
+  border: 1px solid #7dd3fc;
+  color: #0369a1;
+  padding: 0.2rem 0.6rem;
+  border-radius: 9999px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.header-center {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex: 1;
+  max-width: 500px;
+  margin: 0 2rem;
+}
+
+.search-input {
+  width: 100%;
+  background-color: #f8fafc;
+  border: 1px solid #cbd5e1;
+  color: #0f172a;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  font-size: 0.88rem;
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+.search-input:focus {
+  background-color: #ffffff;
+  border-color: var(--brand-blue);
+  box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.15);
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.track-btn {
+  background-color: #ffffff;
+  border: 1px solid #cbd5e1;
+  color: #334155;
+  padding: 0.45rem 1rem;
+  border-radius: 7px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.track-btn:hover {
+  background-color: #f8fafc;
+  border-color: var(--brand-blue);
+  color: var(--brand-blue);
+}
+
+.track-btn.active {
+  background: linear-gradient(135deg, #0284c7, #0369a1);
+  color: #ffffff;
+  border-color: #0284c7;
+  box-shadow: 0 2px 6px rgba(2, 132, 199, 0.25);
+}
+
+.theme-pill {
+  font-size: 0.78rem;
+  font-weight: 600;
+  background-color: #f1f5f9;
+  border: 1px solid #e2e8f0;
+  color: #475569;
+  padding: 0.35rem 0.75rem;
+  border-radius: 6px;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.reset-btn {
+  background-color: #fff1f2;
+  border: 1px solid #fecdd3;
+  color: #e11d48;
+}
+
+.reset-btn:hover {
+  background-color: #ffe4e6;
+  border-color: #fda4af;
+  color: #be123c;
+}
+
+/* =============================================================================
+   App Layout & Sidebar
+   ============================================================================= */
+
+.app-container {
+  display: flex;
+  margin-top: var(--header-height);
+  min-height: calc(100vh - var(--header-height));
+}
+
+.app-sidebar {
+  width: var(--sidebar-width);
+  background-color: var(--bg-secondary);
+  border-right: 1px solid var(--border-color);
+  position: fixed;
+  top: var(--header-height);
+  bottom: 0;
+  left: 0;
+  overflow-y: auto;
+  padding: 1.25rem 0.85rem;
+  z-index: 40;
+}
+
+.progress-card {
+  background: #f8fafc;
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  padding: 0.85rem 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.progress-header {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.progress-bar-track {
+  height: 8px;
+  background: #e2e8f0;
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, var(--brand-blue), var(--accent-emerald));
+  border-radius: 999px;
+  transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.sidebar-section-title {
+  font-size: 0.72rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  color: #64748b;
+  padding: 0.75rem 0.5rem 0.35rem 0.5rem;
+}
+
+.lesson-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  margin-bottom: 1.25rem;
+}
+
+.lesson-item {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.5rem 0.65rem;
+  border-radius: 7px;
+  color: #475569;
+  text-decoration: none;
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  border-left: 3px solid transparent;
+}
+
+.lesson-item:hover {
+  background-color: #f1f5f9;
+  color: #0f172a;
+}
+
+.lesson-item.active {
+  background-color: #eff6ff;
+  color: var(--brand-blue);
+  font-weight: 700;
+  border-left-color: var(--brand-blue);
+}
+
+.lesson-checkbox {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--accent-emerald);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.lesson-num {
+  font-family: ui-monospace, SFMono-Regular, monospace;
+  font-weight: 700;
+  color: #0284c7;
+  font-size: 0.8rem;
+  width: 24px;
+}
+
+/* =============================================================================
+   Main Content Area & Typography (Clean, Spacious Documentation Layout)
+   ============================================================================= */
+
+.app-content {
+  margin-left: var(--sidebar-width);
+  flex: 1;
+  padding: 2.75rem 4rem 7rem 4rem;
+  max-width: 980px;
+}
+
+/* Quick Concept Snapshot Card */
+.concept-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-left: 5px solid var(--brand-blue);
+  border-radius: 10px;
+  padding: 1.35rem 1.75rem;
+  margin-bottom: 2.25rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.02);
+}
+
+.concept-card h3 {
+  color: #0284c7;
+  font-size: 1.15rem;
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.concept-card ul {
+  padding-left: 1.35rem;
+  color: #334155;
+  font-size: 0.95rem;
+  line-height: 1.65;
+}
+
+.concept-card li {
+  margin-bottom: 0.5rem;
+}
+
+/* Interactive Simulators Hub Banner */
+.interactive-hub-banner {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.visualizer-nav {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.25rem;
+}
+
+.visualizer-tab-btn {
+  background-color: #f1f5f9;
+  border: 1px solid #e2e8f0;
+  color: #475569;
+  padding: 0.45rem 0.9rem;
+  border-radius: 7px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.visualizer-tab-btn:hover {
+  background-color: #e2e8f0;
+  color: #0f172a;
+}
+
+.visualizer-tab-btn.active {
+  background: linear-gradient(135deg, #0284c7, #0369a1);
+  color: #ffffff;
+  border-color: #0284c7;
+  box-shadow: 0 2px 6px rgba(2, 132, 199, 0.25);
+}
+
+.visualizer-panel {
+  display: none;
+  background-color: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 1rem;
+}
+
+.visualizer-panel.active {
+  display: block;
+}
+
+/* =============================================================================
+   Markdown Document Body (Spacious, High-Clarity Typography)
+   ============================================================================= */
+
+.markdown-body h1 {
+  font-size: 2.15rem;
+  font-weight: 800;
+  color: #0f172a;
+  letter-spacing: -0.6px;
+  margin-bottom: 1.25rem;
+  line-height: 1.28;
+}
+
+.markdown-body h2 {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #0f172a;
+  margin-top: 3.5rem;
+  margin-bottom: 1.25rem;
+  border-bottom: 2px solid #e2e8f0;
+  padding-bottom: 0.65rem;
+  letter-spacing: -0.3px;
+}
+
+.markdown-body h3 {
+  font-size: 1.22rem;
+  font-weight: 700;
+  color: #1e293b;
+  margin-top: 2.25rem;
+  margin-bottom: 1rem;
+  letter-spacing: -0.2px;
+}
+
+.markdown-body h4 {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #1e293b;
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.markdown-body p {
+  margin-bottom: 1.2rem;
+  color: #334155;
+  font-size: 0.98rem;
+  line-height: 1.75;
+}
+
+.markdown-body ul, .markdown-body ol {
+  padding-left: 1.5rem;
+  margin-bottom: 1rem;
+  color: #334155;
+}
+
+.markdown-body li {
+  margin-bottom: 0.35rem;
+}
+
+/* Callout Alerts */
+.markdown-body blockquote, .alert {
+  border-left: 4px solid #3b82f6;
+  background: #eff6ff;
+  padding: 0.85rem 1.15rem;
+  border-radius: 0 8px 8px 0;
+  margin: 1.25rem 0;
+  color: #1e3a8a;
+  font-size: 0.92rem;
+}
+
+.alert-tip {
+  border-left-color: #10b981;
+  background-color: #f0fdf4;
+  color: #065f46;
+}
+
+.alert-important {
+  border-left-color: #f59e0b;
+  background-color: #fffbeb;
+  color: #92400e;
+}
+
+.alert-warning {
+  border-left-color: #f43f5e;
+  background-color: #fff1f2;
+  color: #9f1239;
+}
+
+.alert-syntax {
+  border-left-color: #0284c7;
+  background-color: #f0f9ff;
+  color: #0369a1;
+  border: 1px solid #bae6fd;
+  border-left: 4px solid #0284c7;
+  box-shadow: 0 1px 3px rgba(2, 132, 199, 0.05);
+}
+
+.alert-syntax code {
+  background-color: #e0f2fe;
+  color: #0369a1;
+  border-color: #7dd3fc;
+  font-weight: 700;
+}
+
+/* =============================================================================
+   Command Reference Card Component
+   Spacious, elegant developer card for command syntax, description & code
+   ============================================================================= */
+
+.cmd-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  margin: 1.85rem 0;
+  padding: 1.4rem 1.65rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  transition: all 0.2s ease;
+}
+
+.cmd-card:hover {
+  border-color: #cbd5e1;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
+}
+
+.cmd-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-bottom: 0.95rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.cmd-header-left {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.cmd-badge {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.88rem;
+  font-weight: 700;
+  background: #e0f2fe;
+  color: #0369a1;
+  padding: 3px 10px;
+  border-radius: 6px;
+  border: 1px solid #bae6fd;
+}
+
+.cmd-title {
+  font-size: 1.08rem;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.cmd-syntax {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.82rem;
+  color: #475569;
+  background: #f8fafc;
+  padding: 4px 10px;
+  border-radius: 6px;
+  border: 1px solid #e2e8f0;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.cmd-syntax code {
+  color: #0284c7;
+  font-weight: 700;
+  background: transparent;
+  border: none;
+  padding: 0;
+}
+
+.cmd-desc {
+  font-size: 0.96rem;
+  color: #475569;
+  line-height: 1.65;
+  margin-bottom: 1rem;
+}
+
+.cmd-card .code-container {
+  margin: 0.5rem 0 0 0;
+}
+
+.cmd-card .code-container pre {
+  margin: 0;
+  border-radius: 9px;
+}
+
+/* Feature & Architecture Grid Cards */
+.info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.25rem;
+  margin: 1.75rem 0;
+}
+
+.info-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 1.25rem 1.4rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+}
+
+.info-card h4 {
+  font-size: 0.98rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin-top: 0;
+  margin-bottom: 0.45rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.info-card p {
+  font-size: 0.9rem;
+  color: #64748b;
+  line-height: 1.55;
+  margin: 0;
+}
+
+/* Permission Decoder Visual Block */
+.permission-decoder {
+  background: #f8fafc;
+  border: 1px solid #cbd5e1;
+  border-radius: 10px;
+  padding: 1.25rem 1.5rem;
+  margin: 1.75rem 0;
+}
+
+/* Tables */
+.markdown-body table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.25rem 0;
+  font-size: 0.88rem;
+  background: #ffffff;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+.markdown-body th {
+  background-color: #f1f5f9;
+  color: #0f172a;
+  text-align: left;
+  padding: 0.65rem 0.9rem;
+  border: 1px solid #e2e8f0;
+  font-weight: 700;
+}
+
+.markdown-body td {
+  padding: 0.6rem 0.9rem;
+  border: 1px solid #e2e8f0;
+  color: #334155;
+}
+
+.markdown-body tr:nth-child(even) {
+  background-color: #f8fafc;
+}
+
+/* Inline Code */
+.markdown-body code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  background-color: #f1f5f9;
+  color: #0369a1;
+  padding: 0.15rem 0.45rem;
+  border-radius: 5px;
+  font-size: 0.88em;
+  font-weight: 600;
+  border: 1px solid #e2e8f0;
+}
+
+/* Code Blocks (High-Contrast Clean Terminal Container) */
+.markdown-body pre {
+  background-color: #0f172a;
+  border: 1px solid #1e293b;
+  border-radius: 9px;
+  padding: 1rem 1.2rem;
+  overflow-x: auto;
+  margin: 1rem 0;
+  position: relative;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+.markdown-body pre code {
+  background-color: transparent;
+  padding: 0;
+  border: none;
+  color: #f8fafc;
+  font-size: 0.88rem;
+  font-weight: 400;
+  line-height: 1.55;
+}
+
+/* Image Embeds in Markdown */
+.markdown-body img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 10px;
+  margin: 1.25rem 0;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+  background-color: #ffffff;
+}
+
+/* Copy Button */
+.copy-btn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background-color: #1e293b;
+  border: 1px solid #334155;
+  color: #94a3b8;
+  border-radius: 5px;
+  padding: 4px 9px;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.copy-btn:hover {
+  background-color: #0284c7;
+  color: #ffffff;
+  border-color: #0284c7;
+}
+
+/* Footer Navigation */
+.lesson-nav-footer {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 3rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid #e2e8f0;
+}
+
+.nav-link-btn {
+  background-color: #ffffff;
+  border: 1px solid #cbd5e1;
+  color: #0f172a;
+  padding: 0.55rem 1.25rem;
+  border-radius: 8px;
+  text-decoration: none;
+  font-size: 0.88rem;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.nav-link-btn:hover {
+  border-color: var(--brand-blue);
+  color: var(--brand-blue);
+  background-color: #f8fafc;
+  box-shadow: 0 2px 6px rgba(2, 132, 199, 0.15);
+}
+
+/* Toast Notification */
+.toast {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  background: #0f172a;
+  color: #ffffff;
+  padding: 0.65rem 1.25rem;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.85rem;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+  transform: translateY(100px);
+  opacity: 0;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 100;
+}
+
+.toast.show {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .app-sidebar {
+    transform: translateX(-100%);
+    transition: transform 0.3s;
+  }
+  .app-sidebar.open {
+    transform: translateX(0);
+  }
+  .app-content {
+    margin-left: 0;
+    padding: 1.5rem;
+  }
+}

@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 340" width="100%" height="100%">
+  <rect width="920" height="340" rx="16" fill="#0f172a"/>
+  <text x="460" y="32" fill="#94a3b8" font-family="system-ui, sans-serif" font-size="14" font-weight="600" text-anchor="middle" letter-spacing="1">PARAMETER ARCHITECTURE: ROS 1 VS. ROS 2 JAZZY</text>
+
+  <!-- Left: ROS 1 (Centralized) -->
+  <g transform="translate(60, 60)">
+    <rect width="380" height="240" rx="12" fill="#1e293b" stroke="#ef4444" stroke-width="1.5"/>
+    <text x="190" y="32" fill="#f87171" font-family="system-ui, sans-serif" font-size="14" font-weight="700" text-anchor="middle">ROS 1: Centralized Server</text>
+    
+    <!-- roscore param server -->
+    <rect x="90" y="55" width="200" height="50" rx="8" fill="#450a0a" stroke="#ef4444"/>
+    <text x="190" y="80" fill="#fca5a5" font-family="system-ui, sans-serif" font-size="12" font-weight="bold" text-anchor="middle">roscore Parameter Server</text>
+    <text x="190" y="96" fill="#f87171" font-family="monospace" font-size="10" text-anchor="middle">Global XML-RPC Dictionary</text>
+
+    <!-- Nodes below -->
+    <line x1="140" y1="105" x2="110" y2="140" stroke="#ef4444" stroke-width="1.5"/>
+    <line x1="240" y1="105" x2="270" y2="140" stroke="#ef4444" stroke-width="1.5"/>
+
+    <rect x="40" y="140" width="140" height="40" rx="6" fill="#0f172a" stroke="#64748b"/>
+    <text x="110" y="165" fill="#cbd5e1" font-family="monospace" font-size="11" text-anchor="middle">Node A</text>
+
+    <rect x="200" y="140" width="140" height="40" rx="6" fill="#0f172a" stroke="#64748b"/>
+    <text x="270" y="165" fill="#cbd5e1" font-family="monospace" font-size="11" text-anchor="middle">Node B</text>
+
+    <text x="190" y="210" fill="#fca5a5" font-family="system-ui, sans-serif" font-size="11" text-anchor="middle">⚠️ Single point of failure &amp; global namespace collisions</text>
+  </g>
+
+  <!-- Right: ROS 2 (Decentralized & Scoped) -->
+  <g transform="translate(480, 60)">
+    <rect width="380" height="240" rx="12" fill="#1e293b" stroke="#10b981" stroke-width="1.5"/>
+    <text x="190" y="32" fill="#34d399" font-family="system-ui, sans-serif" font-size="14" font-weight="700" text-anchor="middle">ROS 2: Scoped Node Parameters</text>
+
+    <!-- Node 1 with params -->
+    <g transform="translate(30, 55)">
+      <rect width="320" height="65" rx="8" fill="#0f172a" stroke="#10b981"/>
+      <text x="16" y="24" fill="#38bdf8" font-family="monospace" font-size="12" font-weight="bold">Node: /navpro_controller</text>
+      <text x="24" y="44" fill="#10b981" font-family="monospace" font-size="11">• max_speed: 0.6 (float)</text>
+      <text x="180" y="44" fill="#10b981" font-family="monospace" font-size="11">• wheel_radius: 0.06</text>
+    </g>
+
+    <!-- Node 2 with params -->
+    <g transform="translate(30, 130)">
+      <rect width="320" height="65" rx="8" fill="#0f172a" stroke="#10b981"/>
+      <text x="16" y="24" fill="#38bdf8" font-family="monospace" font-size="12" font-weight="bold">Node: /lidar_driver</text>
+      <text x="24" y="44" fill="#10b981" font-family="monospace" font-size="11">• scan_rate: 10 (int)</text>
+      <text x="180" y="44" fill="#10b981" font-family="monospace" font-size="11">• frame_id: "laser_link"</text>
+    </g>
+
+    <text x="190" y="222" fill="#6ee7b7" font-family="system-ui, sans-serif" font-size="11" text-anchor="middle">✅ Fully isolated per-node, type-safe, dynamic callbacks</text>
+  </g>
+</svg>

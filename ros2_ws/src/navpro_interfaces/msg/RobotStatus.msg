@@ -1,0 +1,7 @@
+string robot_id
+float32 battery_percentage
+bool is_charging
+bool emergency_stop_active
+geometry_msgs/Point position
+float32 linear_velocity
+float32 angular_velocity

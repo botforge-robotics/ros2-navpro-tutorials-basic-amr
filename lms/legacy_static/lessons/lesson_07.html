@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lesson 07: Interfaces And Custom Messages | Level 1 Foundations</title>
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="stylesheet" href="../assets/css/animations.css">
+  <link rel="stylesheet" href="../assets/css/highlight-dark.min.css">
+  <link rel="stylesheet" href="../assets/css/quiz.css">
+  <link rel="stylesheet" href="../assets/css/instructor_sync.css">
+</head>
+<body>
+  <header class="app-header">
+    <div class="brand-container">
+      <a href="https://botforge.in" target="_blank" class="company-brand" title="Botforge Robotics - botforge.in">
+        <img src="../assets/images/botforge_black.png" alt="Botforge Robotics" class="company-logo">
+      </a>
+      <div class="brand-divider"></div>
+      <a href="../index.html" class="brand" title="Level 1: ROS 2 Foundations">
+        <img src="../assets/images/ros2_logo.svg" alt="ROS 2" class="brand-logo">
+        <span class="brand-title">NavPro Learning Hub</span>
+        <span class="badge-jazzy">ROS 2 Jazzy</span>
+      </a>
+    </div>
+    <div class="header-center">
+      <input type="text" id="lessonSearchInput" class="search-input" placeholder="🔍 Search Level 1 curriculum...">
+    </div>
+    <div class="header-actions">
+      <a href="http://localhost:6080/vnc.html" target="_blank" class="track-btn" title="Open Ubuntu Desktop GUI via noVNC">🖥️ Desktop GUI</a>
+      <a href="http://localhost:8443/?folder=/home/student/ros2_ws" target="_blank" class="track-btn" title="Open VS Code in browser">💻 VS Code</a>
+      <a href="../index.html" class="track-btn active">Curriculum Hub</a>
+      <span class="theme-pill">☀️ Light Theme</span>
+    </div>
+  </header>
+
+  <div class="app-container">
+    <aside class="app-sidebar">
+      <div class="progress-card">
+        <div class="progress-header">
+          <span>Curriculum Progress</span>
+          <span id="overallProgressText">0% Complete (0/26)</span>
+        </div>
+        <div class="progress-bar-track">
+          <div id="overallProgressBar" class="progress-bar-fill"></div>
+        </div>
+        <button id="resetProgressBtn" class="track-btn reset-btn" style="width:100%; margin-top:8px; justify-content:center;">↺ Reset Progress</button>
+      </div>
+
+      
+        <div class="sidebar-section-title">ROS 2 Foundations (26 Lessons)</div>
+        <ul class="lesson-list">
+          
+            <li>
+              <a href="lesson_01.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_01" onclick="event.stopPropagation();">
+                <span class="lesson-num">01</span>
+                <span class="lesson-title">Linux Fundamentals For Robotics</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_02.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_02" onclick="event.stopPropagation();">
+                <span class="lesson-num">02</span>
+                <span class="lesson-title">Ros2 Overview And Environment Setup</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_03.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_03" onclick="event.stopPropagation();">
+                <span class="lesson-num">03</span>
+                <span class="lesson-title">Workspace And First Python Node</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_04.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_04" onclick="event.stopPropagation();">
+                <span class="lesson-num">04</span>
+                <span class="lesson-title">Package Architecture And Configuration</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_05.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_05" onclick="event.stopPropagation();">
+                <span class="lesson-num">05</span>
+                <span class="lesson-title">Publishers Subscribers And Qos</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_06.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_06" onclick="event.stopPropagation();">
+                <span class="lesson-num">06</span>
+                <span class="lesson-title">Vscode Debugging And Ros2 Logging</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_07.html" class="lesson-item active">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_07" onclick="event.stopPropagation();">
+                <span class="lesson-num">07</span>
+                <span class="lesson-title">Interfaces And Custom Messages</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_08.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_08" onclick="event.stopPropagation();">
+                <span class="lesson-num">08</span>
+                <span class="lesson-title">Services Server Client Python</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_09.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_09" onclick="event.stopPropagation();">
+                <span class="lesson-num">09</span>
+                <span class="lesson-title">Dynamic Parameters And Yaml</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_10.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_10" onclick="event.stopPropagation();">
+                <span class="lesson-num">10</span>
+                <span class="lesson-title">Launch Files And Runtime Management</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_11.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_11" onclick="event.stopPropagation();">
+                <span class="lesson-num">11</span>
+                <span class="lesson-title">Ros2 Actions Server And Client</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_12.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_12" onclick="event.stopPropagation();">
+                <span class="lesson-num">12</span>
+                <span class="lesson-title">Ros2 Bag Recording And Playback</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_13.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_13" onclick="event.stopPropagation();">
+                <span class="lesson-num">13</span>
+                <span class="lesson-title">Ros2 Cli Command Mastery</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_14.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_14" onclick="event.stopPropagation();">
+                <span class="lesson-num">14</span>
+                <span class="lesson-title">Tf2 Coordinate Transformations Python</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_15.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_15" onclick="event.stopPropagation();">
+                <span class="lesson-num">15</span>
+                <span class="lesson-title">Distributed Ros2 And Dds Networking</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_16.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_16" onclick="event.stopPropagation();">
+                <span class="lesson-num">16</span>
+                <span class="lesson-title">Project Opencv Ros2 Vision</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_17.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_17" onclick="event.stopPropagation();">
+                <span class="lesson-num">17</span>
+                <span class="lesson-title">3D Modeling Urdf Xacro</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_18.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_18" onclick="event.stopPropagation();">
+                <span class="lesson-num">18</span>
+                <span class="lesson-title">Rviz2 Visualization Tf Inspection</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_19.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_19" onclick="event.stopPropagation();">
+                <span class="lesson-num">19</span>
+                <span class="lesson-title">Gazebo Physics And Sensor Plugins</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_20.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_20" onclick="event.stopPropagation();">
+                <span class="lesson-num">20</span>
+                <span class="lesson-title">Building Simulation Worlds</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_21.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_21" onclick="event.stopPropagation();">
+                <span class="lesson-num">21</span>
+                <span class="lesson-title">2D Slam Mapping Slam Toolbox</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_22.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_22" onclick="event.stopPropagation();">
+                <span class="lesson-num">22</span>
+                <span class="lesson-title">Nav2 Architecture And Costmaps</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_23.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_23" onclick="event.stopPropagation();">
+                <span class="lesson-num">23</span>
+                <span class="lesson-title">Nav2 Planners Controllers Tuning</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_24.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_24" onclick="event.stopPropagation();">
+                <span class="lesson-num">24</span>
+                <span class="lesson-title">Nav2 Behavior Trees And Recoveries</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_25.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_25" onclick="event.stopPropagation();">
+                <span class="lesson-num">25</span>
+                <span class="lesson-title">Autonomous Patrol Nav2 Simple Commander</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_26.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_26" onclick="event.stopPropagation();">
+                <span class="lesson-num">26</span>
+                <span class="lesson-title">Physical Robot Hardware Deployment</span>
+              </a>
+            </li>
+            
+        </ul>
+        
+    </aside>
+
+    <main class="app-content">
+      <article class="markdown-body">
+        <h1>Lesson 07: ROS 2 Interfaces &amp; Custom Messages/Services</h1>
+<blockquote class="alert alert-note"><strong>Focus:</strong> Interface Architecture, Standard Message Libraries &amp; Building Custom <code>.msg</code>, <code>.srv</code>, <code>.action</code> Packages<br><strong>Course Track:</strong> NavPro Learning Hub - Level 1 (Chapters 10 &amp; 13)<br><strong>Target Environment:</strong> ROS 2 Jazzy Jalisco</blockquote>
+<hr>
+<h2>1. Overview &amp; Learning Objectives</h2>
+<p>In ROS 2, nodes achieve language-agnostic interoperability because they communicate using strictly typed <strong>Interfaces</strong>. An interface defined once in an IDL (Interface Definition Language) file is automatically compiled into native Python classes and C++ structs.</p>
+<p>By the end of this lesson, you will:</p>
+<ol>
+<li>Understand the hierarchy of standard ROS 2 message libraries (<code>std_msgs</code>, <code>geometry_msgs</code>, <code>sensor_msgs</code>, <code>nav_msgs</code>).</li>
+<li>Learn the golden architectural rule: <strong>Why interface packages must use <code>ament_cmake</code> even when consuming them in pure Python</strong>.</li>
+<li>Create custom message (<code>.msg</code>), service (<code>.srv</code>), and action (<code>.action</code>) definitions.</li>
+<li>Configure <code>CMakeLists.txt</code> with <code>rosidl_generate_interfaces</code> and <code>package.xml</code>.</li>
+<li>Import and instantiate custom interfaces in a production Python node.</li>
+</ol>
+<hr>
+<h2>2. Standard ROS 2 Interface Libraries</h2>
+<p>Before creating custom messages, always verify if a standardized ROS message already exists:</p>
+<div class="table-wrapper"><table>
+<thead><tr>
+<th>Library</th>
+<th>Key Interface Types</th>
+<th>Primary Use Case</th>
+</tr></thead><tbody>
+<tr>
+<td><strong><code>std_msgs</code></strong></td>
+<td><code>Bool</code>, <code>Float32</code>, <code>Int32</code>, <code>String</code>, <code>Header</code></td>
+<td>Primitive data types and timestamps.</td>
+</tr>
+<tr>
+<td><strong><code>geometry_msgs</code></strong></td>
+<td><code>Point</code>, <code>Quaternion</code>, <code>Pose</code>, <code>PoseStamped</code>, <code>Twist</code></td>
+<td>2D/3D spatial coordinates, orientations, velocities.</td>
+</tr>
+<tr>
+<td><strong><code>sensor_msgs</code></strong></td>
+<td><code>LaserScan</code>, <code>Image</code>, <code>Imu</code>, <code>BatteryState</code>, <code>JointState</code></td>
+<td>Raw sensor telemetry from cameras, LiDARs, IMUs.</td>
+</tr>
+<tr>
+<td><strong><code>nav_msgs</code></strong></td>
+<td><code>Odometry</code>, <code>OccupancyGrid</code>, <code>Path</code></td>
+<td>SLAM 2D occupancy grid maps, robot odometry, paths.</td>
+</tr>
+</tbody></table></div>
+<hr>
+<h2>3. The Custom Interface Architecture Rule</h2>
+<blockquote class="alert alert-important"><strong>ROS 2 Custom Interfaces Must Be Built Using <code>ament_cmake</code>:</strong><br>The ROS 2 IDL generator (<code>rosidl</code>) compiles <code>.msg</code> and <code>.srv</code> files into C, C++, and Python bindings. The IDL generator plugins require CMake.<br>Therefore, industry best practice is to create a dedicated interface package (e.g., <code>navpro_interfaces</code>) built with <code>ament_cmake</code>. Your Python packages (<code>navpro_basics</code>, <code>navpro_navigation</code>) simply add <code>&lt;depend&gt;navpro_interfaces&lt;/depend&gt;</code> to their <code>package.xml</code> and import the generated classes cleanly.</blockquote>
+<div style="text-align:center; margin:1.6rem 0;"><img src="../assets/images/interface_idl_pipeline.svg" alt="Interface IDL Pipeline" style="max-width:100%; border-radius:10px; border:1px solid #e2e8f0; box-shadow:0 2px 8px rgba(0,0,0,0.05); background:#ffffff;"></div>
+<hr>
+<h2>4. Step-by-Step: Creating the <code>navpro_interfaces</code> Package</h2>
+<h3>Step 4.1: Create the CMake Package</h3>
+<div class="code-container"><pre><button class="copy-btn">Copy</button><code class="language-bash">cd ~/ros2_ws/src
+ros2 pkg create --build-type ament_cmake navpro_interfaces</code></pre></div>
+<p>Create interface subdirectories:</p>
+<div class="code-container"><pre><button class="copy-btn">Copy</button><code class="language-bash">mkdir -p navpro_interfaces/msg
+mkdir -p navpro_interfaces/srv
+mkdir -p navpro_interfaces/action</code></pre></div>
+<h3>Step 4.2: Define Custom Message (<code>msg/RobotStatus.msg</code>)</h3>
+<p>Create <code>navpro_interfaces/msg/RobotStatus.msg</code>:</p>
+<div class="code-container"><pre><button class="copy-btn">Copy</button><code class="language-bash"># Header contains timestamp and coordinate frame ID
+std_msgs/Header header
+
+# Identity and operational metrics
+string robot_id
+float32 battery_percentage
+float32 internal_temperature_celsius
+bool is_docked
+bool emergency_stop_latched
+
+# Operating mode constants
+uint8 MODE_MANUAL_TELEOP = 0
+uint8 MODE_AUTONOMOUS_NAV = 1
+uint8 MODE_CHARGING = 2
+uint8 active_mode</code></pre></div>
+<h3>Step 4.3: Define Custom Service (<code>srv/SetSpeedMode.srv</code>)</h3>
+<p>In <code>.srv</code> files, three dashes <code>---</code> separate the <strong>Request</strong> from the <strong>Response</strong>.</p>
+<p>Create <code>navpro_interfaces/srv/SetSpeedMode.srv</code>:</p>
+<div class="code-container"><pre><button class="copy-btn">Copy</button><code class="language-bash"># Request
+string speed_mode       # e.g., &quot;ECO&quot;, &quot;STANDARD&quot;, &quot;TURBO&quot;
+float32 custom_multiplier
+---
+# Response
+bool success
+string message
+float32 effective_max_linear_speed</code></pre></div>
+<h3>Step 4.4: Define Custom Action (<code>action/Patrol.action</code>)</h3>
+<p>In <code>.action</code> files, three dashes <code>---</code> separate <strong>Goal</strong>, <strong>Result</strong>, and <strong>Feedback</strong>.</p>
+<p>Create <code>navpro_interfaces/action/Patrol.action</code>:</p>
+<div class="code-container"><pre><button class="copy-btn">Copy</button><code class="language-bash"># Goal
+geometry_msgs/PoseStamped[] waypoints
+uint32 loop_count
+---
+# Result
+bool success
+uint32 completed_waypoints
+float32 total_distance_traveled
+---
+# Feedback
+uint32 current_waypoint_index
+float32 distance_to_next_waypoint
+float32 battery_remaining_pct</code></pre></div>
+<hr>
+<h2>5. Configuring <code>package.xml</code> &amp; <code>CMakeLists.txt</code></h2>
+<h3>5.1 <code>package.xml</code> Configuration</h3>
+<p>Add the IDL generator and runtime dependencies:</p>
+<div class="code-container"><pre><button class="copy-btn">Copy</button><code class="language-xml">&lt;?xml version=&quot;1.0&quot;?&gt;
+&lt;package format=&quot;3&quot;&gt;
+  &lt;name&gt;navpro_interfaces&lt;/name&gt;
+  &lt;version&gt;1.0.0&lt;/version&gt;
+  &lt;description&gt;Custom ROS 2 message, service, and action interfaces for NavPro AMR&lt;/description&gt;
+  &lt;maintainer email=&quot;engineer@navpro.io&quot;&gt;NavPro Robotics&lt;/maintainer&gt;
+  &lt;license&gt;Apache-2.0&lt;/license&gt;
+
+  &lt;buildtool_depend&gt;ament_cmake&lt;/buildtool_depend&gt;
+
+  &lt;!-- Required for IDL code generation --&gt;
+  &lt;buildtool_depend&gt;rosidl_default_generators&lt;/buildtool_depend&gt;
+  &lt;exec_depend&gt;rosidl_default_runtime&lt;/exec_depend&gt;
+  &lt;member_of_group&gt;rosidl_interface_packages&lt;/member_of_group&gt;
+
+  &lt;!-- Dependencies for field types used in custom messages --&gt;
+  &lt;depend&gt;std_msgs&lt;/depend&gt;
+  &lt;depend&gt;geometry_msgs&lt;/depend&gt;
+
+  &lt;export&gt;
+    &lt;build_type&gt;ament_cmake&lt;/build_type&gt;
+  &lt;/export&gt;
+&lt;/package&gt;</code></pre></div>
+<h3>5.2 <code>CMakeLists.txt</code> Configuration</h3>
+<div class="code-container"><pre><button class="copy-btn">Copy</button><code class="language-cmake">cmake_minimum_required(VERSION 3.8)
+project(navpro_interfaces)
+
+if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES &quot;Clang&quot;)
+  add_compile_options(-Wall -Wextra -Wpedantic)
+endif()
+
+find_package(ament_cmake REQUIRED)
+find_package(rosidl_default_generators REQUIRED)
+find_package(std_msgs REQUIRED)
+find_package(geometry_msgs REQUIRED)
+
+# Generate language bindings for all custom IDL definitions
+rosidl_generate_interfaces(${PROJECT_NAME}
+  &quot;msg/RobotStatus.msg&quot;
+  &quot;srv/SetSpeedMode.srv&quot;
+  &quot;action/Patrol.action&quot;
+  DEPENDENCIES std_msgs geometry_msgs
+)
+
+ament_package()</code></pre></div>
+<hr>
+<h2>6. Building &amp; Verifying Interfaces with CLI</h2>
+<p>Build the interface package:</p>
+<div class="code-container"><pre><button class="copy-btn">Copy</button><code class="language-bash">cd ~/ros2_ws
+colcon build --packages-select navpro_interfaces
+source install/setup.bash</code></pre></div>
+<p>Use <code>ros2 interface</code> CLI commands to inspect generated types:</p>
+<div class="code-container"><pre><button class="copy-btn">Copy</button><code class="language-bash"># 1. View structure of our custom message
+ros2 interface show navpro_interfaces/msg/RobotStatus
+
+# 2. View structure of our custom service
+ros2 interface show navpro_interfaces/srv/SetSpeedMode
+
+# 3. View structure of our custom action
+ros2 interface show navpro_interfaces/action/Patrol</code></pre></div>
+<hr>
+<h2>7. Using Custom Interfaces in a Python Node</h2>
+<p>Now, any Python node in your workspace can import and publish this message type:</p>
+<div class="code-container"><pre><button class="copy-btn">Copy</button><code class="language-python">#!/usr/bin/env python3
+import rclpy
+from rclpy.node import Node
+from navpro_interfaces.msg import RobotStatus
+
+
+class StatusBroadcasterNode(Node):
+
+    def __init__(self):
+        super().__init__(&#x27;status_broadcaster_node&#x27;)
+        self.pub_ = self.create_publisher(RobotStatus, &#x27;/navpro/status&#x27;, 10)
+        self.timer_ = self.create_timer(1.0, self.publish_status)
+
+    def publish_status(self):
+        msg = RobotStatus()
+        msg.header.stamp = self.get_clock().now().to_msg()
+        msg.header.frame_id = &#x27;base_footprint&#x27;
+        msg.robot_id = &#x27;NAVPRO-AMR-402&#x27;
+        msg.battery_percentage = 94.2
+        msg.internal_temperature_celsius = 38.5
+        msg.is_docked = False
+        msg.emergency_stop_latched = False
+        msg.active_mode = RobotStatus.MODE_AUTONOMOUS_NAV
+
+        self.pub_.publish(msg)
+        self.get_logger().info(f&#x27;Published Status: {msg.robot_id} | Batt: {msg.battery_percentage}%&#x27;)
+
+
+def main():
+    rclpy.init()
+    node = StatusBroadcasterNode()
+    try:
+        rclpy.spin(node)
+    finally:
+        node.destroy_node()
+        rclpy.shutdown()
+
+
+if __name__ == &#x27;__main__&#x27;:
+    main()</code></pre></div>
+      </article>
+
+      <footer class="lesson-nav-footer">
+        <a href="lesson_06.html" class="nav-link-btn" >&larr; Previous Lesson</a>
+        <a href="../index.html" class="nav-link-btn">🧭 Course Hub</a>
+        <a href="lesson_08.html" class="nav-link-btn" >Next Lesson &rarr;</a>
+      </footer>
+    </main>
+  </div>
+
+  <script src="../assets/js/highlight.min.js"></script>
+  <script src="../assets/js/app.js"></script>
+  <script src="../assets/js/quiz_engine.js"></script>
+  <script src="../assets/js/instructor_sync.js"></script>
+</body>
+</html>

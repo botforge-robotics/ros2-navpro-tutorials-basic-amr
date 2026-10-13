@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lesson 26: Physical Robot Hardware Deployment | Level 1 Foundations</title>
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="stylesheet" href="../assets/css/animations.css">
+  <link rel="stylesheet" href="../assets/css/highlight-dark.min.css">
+  <link rel="stylesheet" href="../assets/css/quiz.css">
+  <link rel="stylesheet" href="../assets/css/instructor_sync.css">
+</head>
+<body>
+  <header class="app-header">
+    <div class="brand-container">
+      <a href="https://botforge.in" target="_blank" class="company-brand" title="Botforge Robotics - botforge.in">
+        <img src="../assets/images/botforge_black.png" alt="Botforge Robotics" class="company-logo">
+      </a>
+      <div class="brand-divider"></div>
+      <a href="../index.html" class="brand" title="Level 1: ROS 2 Foundations">
+        <img src="../assets/images/ros2_logo.svg" alt="ROS 2" class="brand-logo">
+        <span class="brand-title">NavPro Learning Hub</span>
+        <span class="badge-jazzy">ROS 2 Jazzy</span>
+      </a>
+    </div>
+    <div class="header-center">
+      <input type="text" id="lessonSearchInput" class="search-input" placeholder="🔍 Search Level 1 curriculum...">
+    </div>
+    <div class="header-actions">
+      <a href="http://localhost:6080/vnc.html" target="_blank" class="track-btn" title="Open Ubuntu Desktop GUI via noVNC">🖥️ Desktop GUI</a>
+      <a href="http://localhost:8443/?folder=/home/student/ros2_ws" target="_blank" class="track-btn" title="Open VS Code in browser">💻 VS Code</a>
+      <a href="../index.html" class="track-btn active">Curriculum Hub</a>
+      <span class="theme-pill">☀️ Light Theme</span>
+    </div>
+  </header>
+
+  <div class="app-container">
+    <aside class="app-sidebar">
+      <div class="progress-card">
+        <div class="progress-header">
+          <span>Curriculum Progress</span>
+          <span id="overallProgressText">0% Complete (0/26)</span>
+        </div>
+        <div class="progress-bar-track">
+          <div id="overallProgressBar" class="progress-bar-fill"></div>
+        </div>
+        <button id="resetProgressBtn" class="track-btn reset-btn" style="width:100%; margin-top:8px; justify-content:center;">↺ Reset Progress</button>
+      </div>
+
+      
+        <div class="sidebar-section-title">ROS 2 Foundations (26 Lessons)</div>
+        <ul class="lesson-list">
+          
+            <li>
+              <a href="lesson_01.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_01" onclick="event.stopPropagation();">
+                <span class="lesson-num">01</span>
+                <span class="lesson-title">Linux Fundamentals For Robotics</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_02.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_02" onclick="event.stopPropagation();">
+                <span class="lesson-num">02</span>
+                <span class="lesson-title">Ros2 Overview And Environment Setup</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_03.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_03" onclick="event.stopPropagation();">
+                <span class="lesson-num">03</span>
+                <span class="lesson-title">Workspace And First Python Node</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_04.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_04" onclick="event.stopPropagation();">
+                <span class="lesson-num">04</span>
+                <span class="lesson-title">Package Architecture And Configuration</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_05.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_05" onclick="event.stopPropagation();">
+                <span class="lesson-num">05</span>
+                <span class="lesson-title">Publishers Subscribers And Qos</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_06.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_06" onclick="event.stopPropagation();">
+                <span class="lesson-num">06</span>
+                <span class="lesson-title">Vscode Debugging And Ros2 Logging</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_07.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_07" onclick="event.stopPropagation();">
+                <span class="lesson-num">07</span>
+                <span class="lesson-title">Interfaces And Custom Messages</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_08.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_08" onclick="event.stopPropagation();">
+                <span class="lesson-num">08</span>
+                <span class="lesson-title">Services Server Client Python</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_09.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_09" onclick="event.stopPropagation();">
+                <span class="lesson-num">09</span>
+                <span class="lesson-title">Dynamic Parameters And Yaml</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_10.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_10" onclick="event.stopPropagation();">
+                <span class="lesson-num">10</span>
+                <span class="lesson-title">Launch Files And Runtime Management</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_11.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_11" onclick="event.stopPropagation();">
+                <span class="lesson-num">11</span>
+                <span class="lesson-title">Ros2 Actions Server And Client</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_12.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_12" onclick="event.stopPropagation();">
+                <span class="lesson-num">12</span>
+                <span class="lesson-title">Ros2 Bag Recording And Playback</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_13.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_13" onclick="event.stopPropagation();">
+                <span class="lesson-num">13</span>
+                <span class="lesson-title">Ros2 Cli Command Mastery</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_14.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_14" onclick="event.stopPropagation();">
+                <span class="lesson-num">14</span>
+                <span class="lesson-title">Tf2 Coordinate Transformations Python</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_15.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_15" onclick="event.stopPropagation();">
+                <span class="lesson-num">15</span>
+                <span class="lesson-title">Distributed Ros2 And Dds Networking</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_16.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_16" onclick="event.stopPropagation();">
+                <span class="lesson-num">16</span>
+                <span class="lesson-title">Project Opencv Ros2 Vision</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_17.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_17" onclick="event.stopPropagation();">
+                <span class="lesson-num">17</span>
+                <span class="lesson-title">3D Modeling Urdf Xacro</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_18.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_18" onclick="event.stopPropagation();">
+                <span class="lesson-num">18</span>
+                <span class="lesson-title">Rviz2 Visualization Tf Inspection</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_19.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_19" onclick="event.stopPropagation();">
+                <span class="lesson-num">19</span>
+                <span class="lesson-title">Gazebo Physics And Sensor Plugins</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_20.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_20" onclick="event.stopPropagation();">
+                <span class="lesson-num">20</span>
+                <span class="lesson-title">Building Simulation Worlds</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_21.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_21" onclick="event.stopPropagation();">
+                <span class="lesson-num">21</span>
+                <span class="lesson-title">2D Slam Mapping Slam Toolbox</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_22.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_22" onclick="event.stopPropagation();">
+                <span class="lesson-num">22</span>
+                <span class="lesson-title">Nav2 Architecture And Costmaps</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_23.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_23" onclick="event.stopPropagation();">
+                <span class="lesson-num">23</span>
+                <span class="lesson-title">Nav2 Planners Controllers Tuning</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_24.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_24" onclick="event.stopPropagation();">
+                <span class="lesson-num">24</span>
+                <span class="lesson-title">Nav2 Behavior Trees And Recoveries</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_25.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_25" onclick="event.stopPropagation();">
+                <span class="lesson-num">25</span>
+                <span class="lesson-title">Autonomous Patrol Nav2 Simple Commander</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_26.html" class="lesson-item active">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_26" onclick="event.stopPropagation();">
+                <span class="lesson-num">26</span>
+                <span class="lesson-title">Physical Robot Hardware Deployment</span>
+              </a>
+            </li>
+            
+        </ul>
+        
+    </aside>
+
+    <main class="app-content">
+      <article class="markdown-body">
+        <h1>Lesson 26: Physical Robot Hardware Deployment (Sim-to-Real)</h1>
+<blockquote class="alert alert-note"><strong>Focus:</strong> Embedded Hardware Bringup, Micro-ROS/Serial Drivers, AMCL Relocalization &amp; Physical AMR Deployment<br><strong>Course Track:</strong> NavPro Learning Hub - Level 1 (Physical Hardware Capstone)<br><strong>Target Environment:</strong> Physical NavPro Mini AMR Hardware</blockquote>
+<hr>
+<h2>1. Overview &amp; Learning Objectives</h2>
+<p>Simulation is the testing ground; physical hardware is the real world. In the physical realm, you face real motor back-EMF, wheel slippage on dusty floors, Wi-Fi latency, battery depletion, and sensor reflections.</p>
+<p>Because ROS 2 isolates hardware drivers behind standardized interfaces (<code>/cmd_vel</code>, <code>/odom</code>, <code>/scan</code>, <code>/imu/data</code>), <strong>the exact same navigation script you wrote for Gazebo in Lesson 25 runs on the physical robot with ZERO code changes!</strong></p>
+<p>By the end of this capstone lesson, you will:</p>
+<ol>
+<li>Understand the Sim-to-Real architectural mapping from Gazebo plugins to physical hardware drivers.</li>
+<li>Establish a wireless DDS connection between your workstation PC and the onboard robot SBC (Single Board Computer).</li>
+<li>Bring up the physical 2D LiDAR sensor driver on <code>/dev/ttyUSB0</code>.</li>
+<li>Establish Micro-ROS / Serial communication with the ESP32 motor controller.</li>
+<li>Perform <strong>AMCL Global Relocalization</strong> using the 2D Pose Estimate tool in RViz2.</li>
+<li>Execute an autonomous multi-waypoint patrol mission on the physical NavPro robot.</li>
+</ol>
+<hr>
+<h2>2. Sim-to-Real Architecture Mapping</h2>
+<p>Notice how the software interfaces remain 100% identical:</p>
+<div style="text-align:center; margin:1.6rem 0;"><img src="../assets/images/sim_to_real_pipeline.svg" alt="Sim-to-Real Hardware Deployment Architecture" style="max-width:100%; border-radius:10px; border:1px solid #e2e8f0; box-shadow:0 2px 8px rgba(0,0,0,0.05); background:#ffffff;"></div>
+<hr>
+<h2>3. Step-by-Step: Hardware Bringup Procedure</h2>
+<h3>Step 3.1: Network Setup &amp; SSH Connection</h3>
+<ol>
+<li>Power on the NavPro robot.</li>
+<li>Ensure both your workstation laptop and the robot are connected to the same dedicated 5GHz Wi-Fi router.</li>
+<li>Identify the robot IP address (e.g. <code>192.168.1.50</code>).</li>
+<li>SSH into the robot&#x27;s onboard compute:</li>
+</ol>
+<div class="code-container"><pre><button class="copy-btn">Copy</button><code class="language-bash">   ssh navpro@192.168.1.50
+   # Password: navpro</code></pre></div>
+<ol>
+<li>Ensure both your laptop and the robot share the exact same <code>ROS_DOMAIN_ID</code>:</li>
+</ol>
+<div class="code-container"><pre><button class="copy-btn">Copy</button><code class="language-bash">   export ROS_DOMAIN_ID=1</code></pre></div>
+<hr>
+<h3>Step 3.2: Launch Physical Hardware Drivers (Onboard Robot)</h3>
+<p>On the robot SBC, launch the hardware layer:</p>
+<div class="code-container"><pre><button class="copy-btn">Copy</button><code class="language-bash"># 1. Bring up LiDAR Driver (RPLiDAR on /dev/ttyUSB0)
+ros2 launch rplidar_ros rplidar_a1_launch.py
+
+# 2. In a second terminal, start Micro-ROS Agent connecting to ESP32 motor board:
+ros2 run micro_ros_agent micro_ros_agent serial --dev /dev/ttyUSB1 -b 115200
+
+# 3. Start Robot State Publisher:
+ros2 launch navpro_description rsp.launch.py</code></pre></div>
+<hr>
+<h3>Step 3.3: Verify Real Hardware Streams (From Your Laptop)</h3>
+<p>On your laptop (without SSH), verify that the topics are visible across the wireless network:</p>
+<div class="code-container"><pre><button class="copy-btn">Copy</button><code class="language-bash"># 1. Verify LiDAR points are streaming
+ros2 topic hz /scan
+# Average rate: 10.02 Hz
+
+# 2. Verify physical wheel odometry
+ros2 topic echo /odom --once
+
+# 3. Perform a low-speed teleop safety test (0.1 m/s)
+ros2 topic pub --once /cmd_vel geometry_msgs/msg/Twist &quot;{linear: {x: 0.1}, angular: {z: 0.0}}&quot;</code></pre></div>
+<hr>
+<h2>4. AMCL Relocalization on the Physical Floor</h2>
+<ol>
+<li>On your laptop, launch the navigation stack with the facility map:</li>
+</ol>
+<div class="code-container"><pre><button class="copy-btn">Copy</button><code class="language-bash">   ros2 launch navpro_navigation navigation.launch.py map:=/path/to/warehouse_map.yaml</code></pre></div>
+<ol>
+<li>Open RViz2 on your laptop.</li>
+<li>Click the <strong>2D Pose Estimate</strong> button in the top toolbar.</li>
+<li>Click and drag on the map at the robot&#x27;s approximate physical location on the floor.</li>
+<li>In RViz2, observe the green Particle Cloud (<code>/particlecloud</code>).</li>
+<li>Drive the robot forward and turn slightly using teleop: as LiDAR beams hit the real walls, the particle cloud will snap together tightly, indicating high localization confidence!</li>
+</ol>
+<hr>
+<h2>5. Executing Autonomous Missions on Real Hardware</h2>
+<p>With the physical robot localized, run your autonomous patrol script from Lesson 25:</p>
+<div class="code-container"><pre><button class="copy-btn">Copy</button><code class="language-bash">ros2 run navpro_navigation task_multi_waypoint_patrol</code></pre></div>
+<p>Watch the physical NavPro robot navigate around real warehouse racks, dodge unexpected obstacles, and autonomously return to the charging station!</p>
+<hr>
+<h2>6. Graduation &amp; Course Completion</h2>
+<p>Congratulations! You have completed the <strong>NavPro Level 1 Course</strong>: from raw DDS communications and OOP Python nodes to kinematics, 3D modeling, Gazebo physics simulation, sensor fusion, 2D SLAM, Nav2 path planning, and physical hardware deployment.</p>
+<p>You are now ready to progress to <strong>Level 2: Enterprise Robotics Architect &amp; AI Agent Integration</strong>!</p>
+      </article>
+
+      <footer class="lesson-nav-footer">
+        <a href="lesson_25.html" class="nav-link-btn" >&larr; Previous Lesson</a>
+        <a href="../index.html" class="nav-link-btn">🧭 Course Hub</a>
+        <a href="#" class="nav-link-btn" style='visibility:hidden;'>Next Lesson &rarr;</a>
+      </footer>
+    </main>
+  </div>
+
+  <script src="../assets/js/highlight.min.js"></script>
+  <script src="../assets/js/app.js"></script>
+  <script src="../assets/js/quiz_engine.js"></script>
+  <script src="../assets/js/instructor_sync.js"></script>
+</body>
+</html>

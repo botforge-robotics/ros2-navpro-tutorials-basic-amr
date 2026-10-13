@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lesson 06: Vscode Debugging And Ros2 Logging | Level 1 Foundations</title>
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="stylesheet" href="../assets/css/animations.css">
+  <link rel="stylesheet" href="../assets/css/highlight-dark.min.css">
+  <link rel="stylesheet" href="../assets/css/quiz.css">
+  <link rel="stylesheet" href="../assets/css/instructor_sync.css">
+</head>
+<body>
+  <header class="app-header">
+    <div class="brand-container">
+      <a href="https://botforge.in" target="_blank" class="company-brand" title="Botforge Robotics - botforge.in">
+        <img src="../assets/images/botforge_black.png" alt="Botforge Robotics" class="company-logo">
+      </a>
+      <div class="brand-divider"></div>
+      <a href="../index.html" class="brand" title="Level 1: ROS 2 Foundations">
+        <img src="../assets/images/ros2_logo.svg" alt="ROS 2" class="brand-logo">
+        <span class="brand-title">NavPro Learning Hub</span>
+        <span class="badge-jazzy">ROS 2 Jazzy</span>
+      </a>
+    </div>
+    <div class="header-center">
+      <input type="text" id="lessonSearchInput" class="search-input" placeholder="🔍 Search Level 1 curriculum...">
+    </div>
+    <div class="header-actions">
+      <a href="http://localhost:6080/vnc.html" target="_blank" class="track-btn" title="Open Ubuntu Desktop GUI via noVNC">🖥️ Desktop GUI</a>
+      <a href="http://localhost:8443/?folder=/home/student/ros2_ws" target="_blank" class="track-btn" title="Open VS Code in browser">💻 VS Code</a>
+      <a href="../index.html" class="track-btn active">Curriculum Hub</a>
+      <span class="theme-pill">☀️ Light Theme</span>
+    </div>
+  </header>
+
+  <div class="app-container">
+    <aside class="app-sidebar">
+      <div class="progress-card">
+        <div class="progress-header">
+          <span>Curriculum Progress</span>
+          <span id="overallProgressText">0% Complete (0/26)</span>
+        </div>
+        <div class="progress-bar-track">
+          <div id="overallProgressBar" class="progress-bar-fill"></div>
+        </div>
+        <button id="resetProgressBtn" class="track-btn reset-btn" style="width:100%; margin-top:8px; justify-content:center;">↺ Reset Progress</button>
+      </div>
+
+      
+        <div class="sidebar-section-title">ROS 2 Foundations (26 Lessons)</div>
+        <ul class="lesson-list">
+          
+            <li>
+              <a href="lesson_01.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_01" onclick="event.stopPropagation();">
+                <span class="lesson-num">01</span>
+                <span class="lesson-title">Linux Fundamentals For Robotics</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_02.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_02" onclick="event.stopPropagation();">
+                <span class="lesson-num">02</span>
+                <span class="lesson-title">Ros2 Overview And Environment Setup</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_03.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_03" onclick="event.stopPropagation();">
+                <span class="lesson-num">03</span>
+                <span class="lesson-title">Workspace And First Python Node</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_04.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_04" onclick="event.stopPropagation();">
+                <span class="lesson-num">04</span>
+                <span class="lesson-title">Package Architecture And Configuration</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_05.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_05" onclick="event.stopPropagation();">
+                <span class="lesson-num">05</span>
+                <span class="lesson-title">Publishers Subscribers And Qos</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_06.html" class="lesson-item active">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_06" onclick="event.stopPropagation();">
+                <span class="lesson-num">06</span>
+                <span class="lesson-title">Vscode Debugging And Ros2 Logging</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_07.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_07" onclick="event.stopPropagation();">
+                <span class="lesson-num">07</span>
+                <span class="lesson-title">Interfaces And Custom Messages</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_08.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_08" onclick="event.stopPropagation();">
+                <span class="lesson-num">08</span>
+                <span class="lesson-title">Services Server Client Python</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_09.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_09" onclick="event.stopPropagation();">
+                <span class="lesson-num">09</span>
+                <span class="lesson-title">Dynamic Parameters And Yaml</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_10.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_10" onclick="event.stopPropagation();">
+                <span class="lesson-num">10</span>
+                <span class="lesson-title">Launch Files And Runtime Management</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_11.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_11" onclick="event.stopPropagation();">
+                <span class="lesson-num">11</span>
+                <span class="lesson-title">Ros2 Actions Server And Client</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_12.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_12" onclick="event.stopPropagation();">
+                <span class="lesson-num">12</span>
+                <span class="lesson-title">Ros2 Bag Recording And Playback</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_13.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_13" onclick="event.stopPropagation();">
+                <span class="lesson-num">13</span>
+                <span class="lesson-title">Ros2 Cli Command Mastery</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_14.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_14" onclick="event.stopPropagation();">
+                <span class="lesson-num">14</span>
+                <span class="lesson-title">Tf2 Coordinate Transformations Python</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_15.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_15" onclick="event.stopPropagation();">
+                <span class="lesson-num">15</span>
+                <span class="lesson-title">Distributed Ros2 And Dds Networking</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_16.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_16" onclick="event.stopPropagation();">
+                <span class="lesson-num">16</span>
+                <span class="lesson-title">Project Opencv Ros2 Vision</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_17.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_17" onclick="event.stopPropagation();">
+                <span class="lesson-num">17</span>
+                <span class="lesson-title">3D Modeling Urdf Xacro</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_18.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_18" onclick="event.stopPropagation();">
+                <span class="lesson-num">18</span>
+                <span class="lesson-title">Rviz2 Visualization Tf Inspection</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_19.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_19" onclick="event.stopPropagation();">
+                <span class="lesson-num">19</span>
+                <span class="lesson-title">Gazebo Physics And Sensor Plugins</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_20.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_20" onclick="event.stopPropagation();">
+                <span class="lesson-num">20</span>
+                <span class="lesson-title">Building Simulation Worlds</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_21.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_21" onclick="event.stopPropagation();">
+                <span class="lesson-num">21</span>
+                <span class="lesson-title">2D Slam Mapping Slam Toolbox</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_22.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_22" onclick="event.stopPropagation();">
+                <span class="lesson-num">22</span>
+                <span class="lesson-title">Nav2 Architecture And Costmaps</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_23.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_23" onclick="event.stopPropagation();">
+                <span class="lesson-num">23</span>
+                <span class="lesson-title">Nav2 Planners Controllers Tuning</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_24.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_24" onclick="event.stopPropagation();">
+                <span class="lesson-num">24</span>
+                <span class="lesson-title">Nav2 Behavior Trees And Recoveries</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_25.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_25" onclick="event.stopPropagation();">
+                <span class="lesson-num">25</span>
+                <span class="lesson-title">Autonomous Patrol Nav2 Simple Commander</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_26.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_26" onclick="event.stopPropagation();">
+                <span class="lesson-num">26</span>
+                <span class="lesson-title">Physical Robot Hardware Deployment</span>
+              </a>
+            </li>
+            
+        </ul>
+        
+    </aside>
+
+    <main class="app-content">
+      <article class="markdown-body">
+        <h1>Lesson 06: VS Code IDE Tooling &amp; ROS 2 Logging Framework</h1>
+<blockquote class="alert alert-note"><strong>Focus:</strong> Productivity Configuration (<code>tasks.json</code>, <code>settings.json</code>) &amp; Industrial Logging<br><strong>Course Track:</strong> NavPro Learning Hub - Level 1 (Chapters 7, 8.4 &amp; 9)<br><strong>Target Environment:</strong> ROS 2 Jazzy Jalisco</blockquote>
+<hr>
+<h2>1. Overview &amp; Learning Objectives</h2>
+<p>Writing robust robotics software requires fast feedback loops: one-key compilation, IntelliSense autocompletion for ROS message types, and contextual logging that doesn&#x27;t spam your terminal.</p>
+<p>By the end of this lesson, you will:</p>
+<ol>
+<li>Configure VS Code with <code>.vscode/tasks.json</code> to trigger <code>colcon build</code> with <code>Ctrl + Shift + B</code>.</li>
+<li>Configure <code>.vscode/settings.json</code> so Python language servers resolve ROS 2 packages (<code>rclpy</code>, <code>geometry_msgs</code>).</li>
+<li>Master the ROS 2 Logging Framework: understand why standard <code>print()</code> is forbidden in production robotics.</li>
+<li>Use all five logging severity levels: <code>DEBUG</code>, <code>INFO</code>, <code>WARN</code>, <code>ERROR</code>, and <code>FATAL</code>.</li>
+<li>Implement throttled logging (<code>throttle_duration_sec</code>) and one-shot logging to avoid CPU and terminal bloat.</li>
+</ol>
+<hr>
+<h2>2. VS Code IDE Configuration for ROS 2 Python</h2>
+<p>To enable code autocompletion and one-click build tasks in VS Code, create a <code>.vscode</code> folder in your workspace root (<code>~/ros2_ws/.vscode/</code>).</p>
+<h3>2.1 Workspace Settings (<code>.vscode/settings.json</code>)</h3>
+<p>This file points the Python analyzer to both the core ROS 2 underlay and your workspace install overlay:</p>
+<div class="code-container"><pre><button class="copy-btn">Copy</button><code class="language-json">{
+  &quot;python.autoComplete.extraPaths&quot;: [
+    &quot;/opt/ros/jazzy/lib/python3.12/site-packages&quot;,
+    &quot;${workspaceFolder}/install/navpro_basics/lib/python3.12/site-packages&quot;,
+    &quot;${workspaceFolder}/install/navpro_description/lib/python3.12/site-packages&quot;,
+    &quot;${workspaceFolder}/install/navpro_navigation/lib/python3.12/site-packages&quot;
+  ],
+  &quot;python.analysis.extraPaths&quot;: [
+    &quot;/opt/ros/jazzy/lib/python3.12/site-packages&quot;,
+    &quot;${workspaceFolder}/install/navpro_basics/lib/python3.12/site-packages&quot;,
+    &quot;${workspaceFolder}/install/navpro_description/lib/python3.12/site-packages&quot;,
+    &quot;${workspaceFolder}/install/navpro_navigation/lib/python3.12/site-packages&quot;
+  ],
+  &quot;python.linting.enabled&quot;: true,
+  &quot;python.linting.pylintEnabled&quot;: false,
+  &quot;python.linting.flake8Enabled&quot;: true,
+  &quot;files.associations&quot;: {
+    &quot;*.xacro&quot;: &quot;xml&quot;,
+    &quot;*.urdf&quot;: &quot;xml&quot;
+  }
+}</code></pre></div>
+<h3>2.2 Colcon Build Tasks (<code>.vscode/tasks.json</code>)</h3>
+<p>Allows you to press <code>Ctrl + Shift + B</code> inside VS Code to instantly build your workspace:</p>
+<div class="code-container"><pre><button class="copy-btn">Copy</button><code class="language-json">{
+  &quot;version&quot;: &quot;2.0.0&quot;,
+  &quot;tasks&quot;: [
+    {
+      &quot;label&quot;: &quot;colcon: build (symlink-install)&quot;,
+      &quot;type&quot;: &quot;shell&quot;,
+      &quot;command&quot;: &quot;colcon build --symlink-install&quot;,
+      &quot;group&quot;: {
+        &quot;kind&quot;: &quot;build&quot;,
+        &quot;isDefault&quot;: true
+      },
+      &quot;problemMatcher&quot;: [],
+      &quot;presentation&quot;: {
+        &quot;echo&quot;: true,
+        &quot;reveal&quot;: &quot;always&quot;,
+        &quot;focus&quot;: false,
+        &quot;panel&quot;: &quot;shared&quot;
+      }
+    },
+    {
+      &quot;label&quot;: &quot;colcon: clean build artifacts&quot;,
+      &quot;type&quot;: &quot;shell&quot;,
+      &quot;command&quot;: &quot;rm -rf build install log&quot;,
+      &quot;problemMatcher&quot;: []
+    }
+  ]
+}</code></pre></div>
+<hr>
+<h2>3. The ROS 2 Logging Framework</h2>
+<h3>3.1 Why <code>print()</code> is Forbidden in Production</h3>
+<p>In Python scripts, developers often use <code>print(&quot;Robot moving&quot;)</code>. In production robotics, this creates critical problems:</p>
+<ol>
+<li><strong>No Timestamp:</strong> You cannot tell when an event occurred during a post-mortem crash analysis.</li>
+<li><strong>No Node Source:</strong> In a multi-node system with 50 nodes running, <code>print()</code> outputs are mixed together with no way to identify which node printed what.</li>
+<li><strong>No Centralized Aggregation:</strong> <code>print()</code> writes to stdout. ROS 2 logger writes to the <code>/rosout</code> topic, enabling remote telemetry dashboards and fleet servers to monitor errors across a factory floor.</li>
+<li><strong>No Severity Filtering:</strong> You cannot disable high-frequency debug prints in production without modifying source code.</li>
+</ol>
+<hr>
+<h2>4. The Five Logging Severity Levels</h2>
+<div class="code-container"><pre><button class="copy-btn">Copy</button><code class="language-bash">                     LOGGING SEVERITY HIERARCHY
+                     
+   [DEBUG]  --&gt; Granular diagnostic data (raw sensor values, loop ticks)
+      |
+   [INFO]   --&gt; Normal operational state changes (arrived at waypoint)
+      |
+   [WARN]   --&gt; Recoverable anomalies (battery &lt; 20%, low WiFi signal)
+      |
+   [ERROR]  --&gt; Component failures (laser sensor timeout, planner abort)
+      |
+   [FATAL]  --&gt; Critical emergency (hardware estop triggered, motor burned)</code></pre></div>
+<h3>4.1 Python Implementation Example</h3>
+<div class="code-container"><pre><button class="copy-btn">Copy</button><code class="language-python">#!/usr/bin/env python3
+import rclpy
+from rclpy.node import Node
+
+
+class LoggingMasteryNode(Node):
+
+    def __init__(self):
+        super().__init__(&#x27;logging_mastery_node&#x27;)
+
+        # 1. Standard Info Log
+        self.get_logger().info(&#x27;NavPro AMR Diagnostic System Initialized.&#x27;)
+
+        # 2. Debug Log (Visible only if log level is set to DEBUG)
+        raw_encoder_ticks = 4096
+        self.get_logger().debug(f&#x27;Encoder calibration register: 0x{raw_encoder_ticks:04X}&#x27;)
+
+        # 3. Warning Log (Colorized Yellow in terminal)
+        battery_pct = 18.5
+        if battery_pct &lt; 20.0:
+            self.get_logger().warn(f&#x27;Battery level low: {battery_pct:.1f}% remaining!&#x27;)
+
+        # 4. Error Log (Colorized Red in terminal)
+        sensor_connected = False
+        if not sensor_connected:
+            self.get_logger().error(&#x27;LiDAR communication timeout on /dev/ttyUSB0!&#x27;)
+
+        # 5. Fatal Log (Colorized Bold Red / Highlighted)
+        emergency_circuit_broken = True
+        if emergency_circuit_broken:
+            self.get_logger().fatal(&#x27;HARDWARE SAFETY INTERLOCK BROKEN: SYSTEM HALTED!&#x27;)
+
+
+def main():
+    rclpy.init()
+    node = LoggingMasteryNode()
+    rclpy.spin_once(node)
+    node.destroy_node()
+    rclpy.shutdown()
+
+
+if __name__ == &#x27;__main__&#x27;:
+    main()</code></pre></div>
+<hr>
+<h2>5. Throttled &amp; One-Shot Logging</h2>
+<p>High-frequency control loops (e.g. 50 Hz motor loops) should not print every iteration, as doing so floods terminal buffers and consumes significant CPU.</p>
+<h3>5.1 Throttling by Duration:</h3>
+<div class="code-container"><pre><button class="copy-btn">Copy</button><code class="language-python">def control_loop(self):
+    # Logs at most once every 2.0 seconds, regardless of how often this loop runs!
+    self.get_logger().info(
+        f&#x27;Robot pose: x={self.x:.2f}, y={self.y:.2f}&#x27;,
+        throttle_duration_sec=2.0
+    )</code></pre></div>
+<h3>5.2 One-Shot Logging:</h3>
+<div class="code-container"><pre><button class="copy-btn">Copy</button><code class="language-python">def on_network_connect(self):
+    # Prints exactly once during the entire lifetime of the node
+    self.get_logger().info(&#x27;DDS discovery handshake completed with Fleet Server.&#x27;, once=True)</code></pre></div>
+<hr>
+<h2>6. Runtime Log Level Configuration</h2>
+<p>You can change the logging verbosity level of any node from the command line without recompiling code:</p>
+<div class="code-container"><pre><button class="copy-btn">Copy</button><code class="language-bash"># Launch node with DEBUG messages enabled:
+ros2 run navpro_basics logging_node --ros-args --log-level debug
+
+# Launch node displaying only WARNINGS and higher (suppressing INFO):
+ros2 run navpro_basics logging_node --ros-args --log-level warn</code></pre></div>
+<hr>
+<h2>7. Hands-on Student Challenge</h2>
+<p><strong>Task:</strong></p>
+<ol>
+<li>Open <code>.vscode/tasks.json</code> in your workspace and test building using the shortcut <code>Ctrl + Shift + B</code>.</li>
+<li>Write a Python script <code>log_demo.py</code> that runs a 20 Hz timer (period = 0.05s).</li>
+<li>Use <code>throttle_duration_sec=1.5</code> to log a heartbeat message every 1.5 seconds.</li>
+<li>Verify that running with <code>--ros-args --log-level warn</code> suppresses the heartbeat log.</li>
+</ol>
+      </article>
+
+      <footer class="lesson-nav-footer">
+        <a href="lesson_05.html" class="nav-link-btn" >&larr; Previous Lesson</a>
+        <a href="../index.html" class="nav-link-btn">🧭 Course Hub</a>
+        <a href="lesson_07.html" class="nav-link-btn" >Next Lesson &rarr;</a>
+      </footer>
+    </main>
+  </div>
+
+  <script src="../assets/js/highlight.min.js"></script>
+  <script src="../assets/js/app.js"></script>
+  <script src="../assets/js/quiz_engine.js"></script>
+  <script src="../assets/js/instructor_sync.js"></script>
+</body>
+</html>

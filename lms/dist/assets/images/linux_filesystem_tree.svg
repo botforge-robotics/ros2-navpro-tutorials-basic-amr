@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 360" width="100%" height="100%">
+  <defs>
+    <linearGradient id="treeBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="100%" stop-color="#f8fafc"/>
+    </linearGradient>
+    <filter id="boxShadow" x="-3%" y="-6%" width="106%" height="116%">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#0f172a" flood-opacity="0.06"/>
+    </filter>
+  </defs>
+
+  <rect width="800" height="360" rx="12" fill="url(#treeBg)" stroke="#e2e8f0" stroke-width="1.5"/>
+
+  <text x="400" y="30" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="16" font-weight="800" fill="#0f172a" text-anchor="middle">LINUX ROOT FILESYSTEM HIERARCHY FOR ROBOTICISTS</text>
+
+  <!-- Root Node -->
+  <g filter="url(#boxShadow)">
+    <rect x="340" y="48" width="120" height="38" rx="8" fill="#0284c7" stroke="#0369a1" stroke-width="1.5"/>
+    <text x="400" y="72" font-family="monospace" font-size="16" font-weight="800" fill="#ffffff" text-anchor="middle">/ (Root)</text>
+  </g>
+
+  <!-- Connecting Trunk lines -->
+  <path d="M 400 86 L 400 110" stroke="#94a3b8" stroke-width="2"/>
+  <path d="M 120 110 L 680 110" stroke="#94a3b8" stroke-width="2"/>
+
+  <!-- Drops to 5 main directories -->
+  <path d="M 120 110 L 120 135" stroke="#94a3b8" stroke-width="2"/>
+  <path d="M 260 110 L 260 135" stroke="#94a3b8" stroke-width="2"/>
+  <path d="M 400 110 L 400 135" stroke="#94a3b8" stroke-width="2"/>
+  <path d="M 540 110 L 540 135" stroke="#94a3b8" stroke-width="2"/>
+  <path d="M 680 110 L 680 135" stroke="#94a3b8" stroke-width="2"/>
+
+  <!-- Node 1: /home -->
+  <g filter="url(#boxShadow)">
+    <rect x="50" y="135" width="140" height="70" rx="8" fill="#ffffff" stroke="#0284c7" stroke-width="2"/>
+    <text x="120" y="160" font-family="monospace" font-size="14" font-weight="700" fill="#0284c7" text-anchor="middle">/home</text>
+    <text x="120" y="180" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11" font-weight="600" fill="#334155" text-anchor="middle">User Workspaces</text>
+    <text x="120" y="195" font-family="monospace" font-size="10" fill="#64748b" text-anchor="middle">/home/student/</text>
+  </g>
+
+  <!-- Node 2: /opt -->
+  <g filter="url(#boxShadow)">
+    <rect x="190" y="135" width="140" height="70" rx="8" fill="#ffffff" stroke="#2563eb" stroke-width="2"/>
+    <text x="260" y="160" font-family="monospace" font-size="14" font-weight="700" fill="#2563eb" text-anchor="middle">/opt</text>
+    <text x="260" y="180" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11" font-weight="600" fill="#334155" text-anchor="middle">Installed Systems</text>
+    <text x="260" y="195" font-family="monospace" font-size="10" fill="#64748b" text-anchor="middle">/opt/ros/jazzy/</text>
+  </g>
+
+  <!-- Node 3: /dev -->
+  <g filter="url(#boxShadow)">
+    <rect x="330" y="135" width="140" height="70" rx="8" fill="#ffffff" stroke="#059669" stroke-width="2"/>
+    <text x="400" y="160" font-family="monospace" font-size="14" font-weight="700" fill="#059669" text-anchor="middle">/dev</text>
+    <text x="400" y="180" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11" font-weight="600" fill="#334155" text-anchor="middle">Hardware Devices</text>
+    <text x="400" y="195" font-family="monospace" font-size="10" fill="#64748b" text-anchor="middle">/dev/ttyUSB0</text>
+  </g>
+
+  <!-- Node 4: /etc -->
+  <g filter="url(#boxShadow)">
+    <rect x="470" y="135" width="140" height="70" rx="8" fill="#ffffff" stroke="#d97706" stroke-width="2"/>
+    <text x="540" y="160" font-family="monospace" font-size="14" font-weight="700" fill="#d97706" text-anchor="middle">/etc</text>
+    <text x="540" y="180" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11" font-weight="600" fill="#334155" text-anchor="middle">Configuration</text>
+    <text x="540" y="195" font-family="monospace" font-size="10" fill="#64748b" text-anchor="middle">Network, users, udev</text>
+  </g>
+
+  <!-- Node 5: /var -->
+  <g filter="url(#boxShadow)">
+    <rect x="610" y="135" width="140" height="70" rx="8" fill="#ffffff" stroke="#7c3aed" stroke-width="2"/>
+    <text x="680" y="160" font-family="monospace" font-size="14" font-weight="700" fill="#7c3aed" text-anchor="middle">/var</text>
+    <text x="680" y="180" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11" font-weight="600" fill="#334155" text-anchor="middle">Variable &amp; Logs</text>
+    <text x="680" y="195" font-family="monospace" font-size="10" fill="#64748b" text-anchor="middle">/var/log/syslog</text>
+  </g>
+
+  <!-- Legend & Bottom Note Box -->
+  <rect x="50" y="235" width="700" height="95" rx="8" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="1"/>
+  <text x="75" y="260" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="13" font-weight="700" fill="#0f172a">🎯 Golden Rule for Developers:</text>
+  <text x="75" y="282" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" fill="#334155">• <tspan font-family="monospace" font-weight="bold">/home/student/</tspan> is your home directory — you have full read, write, and execute permissions here without sudo.</text>
+  <text x="75" y="302" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" fill="#334155">• <tspan font-family="monospace" font-weight="bold">/opt/ros/jazzy/</tspan> and <tspan font-family="monospace" font-weight="bold">/etc/</tspan> are system-protected directories requiring administrative (<tspan font-family="monospace" font-weight="bold">sudo</tspan>) privileges to alter.</text>
+  <text x="75" y="320" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" fill="#334155">• Everything in Linux is represented as a file, from code scripts to USB sensors (<tspan font-family="monospace" font-weight="bold">/dev</tspan>).</text>
+</svg>

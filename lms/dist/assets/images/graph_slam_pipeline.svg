@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 340" width="100%" height="100%">
+  <rect width="920" height="340" rx="16" fill="#0f172a"/>
+  <text x="460" y="32" fill="#94a3b8" font-family="system-ui, sans-serif" font-size="14" font-weight="600" text-anchor="middle" letter-spacing="1">GRAPH SLAM ARCHITECTURE: SCAN MATCHING &amp; LOOP CLOSURE</text>
+
+  <!-- Node k-1 -->
+  <g transform="translate(100, 60)">
+    <circle cx="50" cy="50" r="38" fill="#1e293b" stroke="#38bdf8" stroke-width="2.5"/>
+    <text x="50" y="46" fill="#38bdf8" font-family="monospace" font-size="12" font-weight="bold" text-anchor="middle">Pose k-1</text>
+    <text x="50" y="62" fill="#94a3b8" font-family="sans-serif" font-size="9" text-anchor="middle">(x₁, y₁, θ₁)</text>
+  </g>
+
+  <!-- Odometry / Scan matching edge -->
+  <g transform="translate(195, 105)">
+    <line x1="0" y1="0" x2="200" y2="0" stroke="#38bdf8" stroke-width="2"/>
+    <polygon points="195,-5 205,0 195,5" fill="#38bdf8"/>
+    <text x="100" y="-10" fill="#38bdf8" font-family="system-ui, sans-serif" font-size="11" font-weight="bold" text-anchor="middle">Incremental Scan Matching</text>
+    <text x="100" y="16" fill="#64748b" font-family="monospace" font-size="10" text-anchor="middle">Δx, Δy, Δθ (Front-End)</text>
+  </g>
+
+  <!-- Intermediate Drifting Node k -->
+  <g transform="translate(410, 60)">
+    <circle cx="50" cy="50" r="38" fill="#1e293b" stroke="#f59e0b" stroke-width="2.5"/>
+    <text x="50" y="46" fill="#f59e0b" font-family="monospace" font-size="12" font-weight="bold" text-anchor="middle">Pose k</text>
+    <text x="50" y="62" fill="#94a3b8" font-family="sans-serif" font-size="9" text-anchor="middle">(Drifted)</text>
+  </g>
+
+  <!-- Trajectory edge to Node N -->
+  <g transform="translate(505, 105)">
+    <line x1="0" y1="0" x2="200" y2="0" stroke="#f59e0b" stroke-width="2"/>
+    <polygon points="195,-5 205,0 195,5" fill="#f59e0b"/>
+    <text x="100" y="-10" fill="#f59e0b" font-family="system-ui, sans-serif" font-size="11" font-weight="bold" text-anchor="middle">Exploration Loop</text>
+    <text x="100" y="16" fill="#64748b" font-family="monospace" font-size="10" text-anchor="middle">Cumulative Dead-Reckoning</text>
+  </g>
+
+  <!-- Node N (Revisited area) -->
+  <g transform="translate(720, 60)">
+    <circle cx="50" cy="50" r="38" fill="#1e293b" stroke="#10b981" stroke-width="2.5"/>
+    <text x="50" y="46" fill="#10b981" font-family="monospace" font-size="12" font-weight="bold" text-anchor="middle">Pose N</text>
+    <text x="50" y="62" fill="#34d399" font-family="sans-serif" font-size="9" text-anchor="middle">(Recognized)</text>
+  </g>
+
+  <!-- Loop Closure Curved Constraint (Back-End) -->
+  <path d="M 770 145 C 770 230, 150 230, 150 145" fill="none" stroke="#10b981" stroke-width="2.5" stroke-dasharray="6,4"/>
+  <polygon points="144,152 150,140 156,152" fill="#10b981"/>
+  <rect x="360" y="195" width="200" height="30" rx="6" fill="#064e3b" stroke="#10b981"/>
+  <text x="460" y="215" fill="#a7f3d0" font-family="system-ui, sans-serif" font-size="11" font-weight="bold" text-anchor="middle">⚡ Ceres Loop Closure Constraint</text>
+
+  <!-- Bottom Global Map Output -->
+  <g transform="translate(100, 260)">
+    <rect width="720" height="54" rx="8" fill="#1e293b" stroke="#38bdf8"/>
+    <text x="360" y="24" fill="#38bdf8" font-family="system-ui, sans-serif" font-size="12" font-weight="700" text-anchor="middle">Global Occupancy Grid Map (/map)</text>
+    <text x="360" y="42" fill="#94a3b8" font-family="system-ui, sans-serif" font-size="10" text-anchor="middle">Graph Optimization snaps intermediate poses straight, removing drift across entire warehouse map</text>
+  </g>
+</svg>

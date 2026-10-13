@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lesson 04: Package Architecture And Configuration | Level 1 Foundations</title>
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="stylesheet" href="../assets/css/animations.css">
+  <link rel="stylesheet" href="../assets/css/highlight-dark.min.css">
+  <link rel="stylesheet" href="../assets/css/quiz.css">
+  <link rel="stylesheet" href="../assets/css/instructor_sync.css">
+</head>
+<body>
+  <header class="app-header">
+    <div class="brand-container">
+      <a href="https://botforge.in" target="_blank" class="company-brand" title="Botforge Robotics - botforge.in">
+        <img src="../assets/images/botforge_black.png" alt="Botforge Robotics" class="company-logo">
+      </a>
+      <div class="brand-divider"></div>
+      <a href="../index.html" class="brand" title="Level 1: ROS 2 Foundations">
+        <img src="../assets/images/ros2_logo.svg" alt="ROS 2" class="brand-logo">
+        <span class="brand-title">NavPro Learning Hub</span>
+        <span class="badge-jazzy">ROS 2 Jazzy</span>
+      </a>
+    </div>
+    <div class="header-center">
+      <input type="text" id="lessonSearchInput" class="search-input" placeholder="🔍 Search Level 1 curriculum...">
+    </div>
+    <div class="header-actions">
+      <a href="http://localhost:6080/vnc.html" target="_blank" class="track-btn" title="Open Ubuntu Desktop GUI via noVNC">🖥️ Desktop GUI</a>
+      <a href="http://localhost:8443/?folder=/home/student/ros2_ws" target="_blank" class="track-btn" title="Open VS Code in browser">💻 VS Code</a>
+      <a href="../index.html" class="track-btn active">Curriculum Hub</a>
+      <span class="theme-pill">☀️ Light Theme</span>
+    </div>
+  </header>
+
+  <div class="app-container">
+    <aside class="app-sidebar">
+      <div class="progress-card">
+        <div class="progress-header">
+          <span>Curriculum Progress</span>
+          <span id="overallProgressText">0% Complete (0/26)</span>
+        </div>
+        <div class="progress-bar-track">
+          <div id="overallProgressBar" class="progress-bar-fill"></div>
+        </div>
+        <button id="resetProgressBtn" class="track-btn reset-btn" style="width:100%; margin-top:8px; justify-content:center;">↺ Reset Progress</button>
+      </div>
+
+      
+        <div class="sidebar-section-title">ROS 2 Foundations (26 Lessons)</div>
+        <ul class="lesson-list">
+          
+            <li>
+              <a href="lesson_01.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_01" onclick="event.stopPropagation();">
+                <span class="lesson-num">01</span>
+                <span class="lesson-title">Linux Fundamentals For Robotics</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_02.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_02" onclick="event.stopPropagation();">
+                <span class="lesson-num">02</span>
+                <span class="lesson-title">Ros2 Overview And Environment Setup</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_03.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_03" onclick="event.stopPropagation();">
+                <span class="lesson-num">03</span>
+                <span class="lesson-title">Workspace And First Python Node</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_04.html" class="lesson-item active">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_04" onclick="event.stopPropagation();">
+                <span class="lesson-num">04</span>
+                <span class="lesson-title">Package Architecture And Configuration</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_05.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_05" onclick="event.stopPropagation();">
+                <span class="lesson-num">05</span>
+                <span class="lesson-title">Publishers Subscribers And Qos</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_06.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_06" onclick="event.stopPropagation();">
+                <span class="lesson-num">06</span>
+                <span class="lesson-title">Vscode Debugging And Ros2 Logging</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_07.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_07" onclick="event.stopPropagation();">
+                <span class="lesson-num">07</span>
+                <span class="lesson-title">Interfaces And Custom Messages</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_08.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_08" onclick="event.stopPropagation();">
+                <span class="lesson-num">08</span>
+                <span class="lesson-title">Services Server Client Python</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_09.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_09" onclick="event.stopPropagation();">
+                <span class="lesson-num">09</span>
+                <span class="lesson-title">Dynamic Parameters And Yaml</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_10.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_10" onclick="event.stopPropagation();">
+                <span class="lesson-num">10</span>
+                <span class="lesson-title">Launch Files And Runtime Management</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_11.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_11" onclick="event.stopPropagation();">
+                <span class="lesson-num">11</span>
+                <span class="lesson-title">Ros2 Actions Server And Client</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_12.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_12" onclick="event.stopPropagation();">
+                <span class="lesson-num">12</span>
+                <span class="lesson-title">Ros2 Bag Recording And Playback</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_13.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_13" onclick="event.stopPropagation();">
+                <span class="lesson-num">13</span>
+                <span class="lesson-title">Ros2 Cli Command Mastery</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_14.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_14" onclick="event.stopPropagation();">
+                <span class="lesson-num">14</span>
+                <span class="lesson-title">Tf2 Coordinate Transformations Python</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_15.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_15" onclick="event.stopPropagation();">
+                <span class="lesson-num">15</span>
+                <span class="lesson-title">Distributed Ros2 And Dds Networking</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_16.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_16" onclick="event.stopPropagation();">
+                <span class="lesson-num">16</span>
+                <span class="lesson-title">Project Opencv Ros2 Vision</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_17.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_17" onclick="event.stopPropagation();">
+                <span class="lesson-num">17</span>
+                <span class="lesson-title">3D Modeling Urdf Xacro</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_18.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_18" onclick="event.stopPropagation();">
+                <span class="lesson-num">18</span>
+                <span class="lesson-title">Rviz2 Visualization Tf Inspection</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_19.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_19" onclick="event.stopPropagation();">
+                <span class="lesson-num">19</span>
+                <span class="lesson-title">Gazebo Physics And Sensor Plugins</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_20.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_20" onclick="event.stopPropagation();">
+                <span class="lesson-num">20</span>
+                <span class="lesson-title">Building Simulation Worlds</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_21.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_21" onclick="event.stopPropagation();">
+                <span class="lesson-num">21</span>
+                <span class="lesson-title">2D Slam Mapping Slam Toolbox</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_22.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_22" onclick="event.stopPropagation();">
+                <span class="lesson-num">22</span>
+                <span class="lesson-title">Nav2 Architecture And Costmaps</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_23.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_23" onclick="event.stopPropagation();">
+                <span class="lesson-num">23</span>
+                <span class="lesson-title">Nav2 Planners Controllers Tuning</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_24.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_24" onclick="event.stopPropagation();">
+                <span class="lesson-num">24</span>
+                <span class="lesson-title">Nav2 Behavior Trees And Recoveries</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_25.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_25" onclick="event.stopPropagation();">
+                <span class="lesson-num">25</span>
+                <span class="lesson-title">Autonomous Patrol Nav2 Simple Commander</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_26.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_26" onclick="event.stopPropagation();">
+                <span class="lesson-num">26</span>
+                <span class="lesson-title">Physical Robot Hardware Deployment</span>
+              </a>
+            </li>
+            
+        </ul>
+        
+    </aside>
+
+    <main class="app-content">
+      <article class="markdown-body">
+        <h1>Lesson 04: ROS 2 Package Architecture &amp; Configuration Deep Dive</h1>
+<blockquote class="alert alert-note"><strong>Focus:</strong> Python Package Internals (<code>ament_python</code>), <code>package.xml</code>, and <code>setup.py</code><br><strong>Course Track:</strong> NavPro Learning Hub - Level 1<br><strong>Target Environment:</strong> ROS 2 Jazzy Jalisco</blockquote>
+<hr>
+<h2>1. Overview &amp; Learning Objectives</h2>
+<p>In ROS 2, code cannot exist in isolation. All executable nodes, launch configurations, URDF models, and YAML parameters must reside inside a <strong>Package</strong>.</p>
+<p>By the end of this lesson, you will:</p>
+<ol>
+<li>Understand the anatomy and filesystem structure of an <code>ament_python</code> package.</li>
+<li>Master <code>package.xml</code> (Format 3 schema), understanding dependency resolution tags (<code>&lt;depend&gt;</code>, <code>&lt;exec_depend&gt;</code>).</li>
+<li>Master <code>setup.py</code>, including <code>data_files</code> installation to <code>share/</code> and <code>entry_points</code> console script mappings.</li>
+<li>Understand how the <strong>Ament Index</strong> (<code>resource/</code> marker file) enables <code>ros2 run</code> and <code>ros2 pkg</code> discovery.</li>
+<li>Manually configure a production robotics package from scratch without relying on boilerplate generators.</li>
+</ol>
+<hr>
+<h2>2. Package Anatomy: What Makes a Folder a ROS 2 Package?</h2>
+<p>A pure Python package in ROS 2 follows the standard Python <code>setuptools</code> packaging structure augmented with ROS 2 metadata:</p>
+<div class="code-container"><pre><button class="copy-btn">Copy</button><code class="language-bash">navpro_controller/
+├── package.xml                 # 1. Package metadata &amp; dependency declarations (XML)
+├── setup.py                    # 2. Python build script &amp; executable entry points
+├── setup.cfg                   # 3. Target script installation directory configuration
+├── resource/                   # 4. Ament Index marker folder
+│   └── navpro_controller       #    Empty file matching package name (Discovery token)
+├── navpro_controller/          # 5. Actual Python module directory
+│   ├── __init__.py             #    Makes directory an importable Python module
+│   ├── motor_driver.py         #    Custom node implementation
+│   └── safety_supervisor.py    #    Custom node implementation
+├── launch/                     # 6. Runtime launch files
+│   └── controller.launch.py
+└── config/                     # 7. YAML parameters and tuning files
+    └── controller_params.yaml</code></pre></div>
+<hr>
+<h2>3. Deep Dive: <code>package.xml</code> (Schema Format 3)</h2>
+<p>The <code>package.xml</code> file is parsed by <code>colcon</code>, <code>rosdep</code>, and the Debian packaging tools to determine dependencies and build order.</p>
+<p>Here is a complete, production-grade <code>package.xml</code> for a Python package:</p>
+<div class="code-container"><pre><button class="copy-btn">Copy</button><code class="language-xml">&lt;?xml version=&quot;1.0&quot;?&gt;
+&lt;?xml-model href=&quot;http://download.ros.org/schema/package_format3.xsd&quot; schematypens=&quot;http://www.w3.org/2001/XMLSchema&quot;?&gt;
+&lt;package format=&quot;3&quot;&gt;
+  &lt;name&gt;navpro_controller&lt;/name&gt;
+  &lt;version&gt;1.0.0&lt;/version&gt;
+  &lt;description&gt;Differential drive motor controller and safety supervisor for NavPro AMR&lt;/description&gt;
+  
+  &lt;maintainer email=&quot;engineer@navpro.io&quot;&gt;NavPro Robotics Team&lt;/maintainer&gt;
+  &lt;license&gt;Apache-2.0&lt;/license&gt;
+  
+  &lt;author email=&quot;dev@navpro.io&quot;&gt;Lead Robotics Architect&lt;/author&gt;
+
+  &lt;!-- Build Tool Dependencies --&gt;
+  &lt;!-- Python packages require setuptools to build and install --&gt;
+  &lt;buildtool_depend&gt;ament_python&lt;/buildtool_depend&gt;
+  &lt;buildtool_depend&gt;python3-setuptools&lt;/buildtool_depend&gt;
+
+  &lt;!-- Runtime / Execution Dependencies --&gt;
+  &lt;!-- Packages your Python code imports at runtime --&gt;
+  &lt;depend&gt;rclpy&lt;/depend&gt;
+  &lt;depend&gt;geometry_msgs&lt;/depend&gt;
+  &lt;depend&gt;sensor_msgs&lt;/depend&gt;
+  &lt;depend&gt;std_msgs&lt;/depend&gt;
+  &lt;depend&gt;nav_msgs&lt;/depend&gt;
+
+  &lt;!-- Testing Dependencies --&gt;
+  &lt;test_depend&gt;ament_copyright&lt;/test_depend&gt;
+  &lt;test_depend&gt;ament_flake8&lt;/test_depend&gt;
+  &lt;test_depend&gt;ament_pep257&lt;/test_depend&gt;
+  &lt;test_depend&gt;python3-pytest&lt;/test_depend&gt;
+
+  &lt;!-- Export Declaration --&gt;
+  &lt;!-- Informs colcon this package is built with ament_python --&gt;
+  &lt;export&gt;
+    &lt;build_type&gt;ament_python&lt;/build_type&gt;
+  &lt;/export&gt;
+&lt;/package&gt;</code></pre></div>
+<h3>Dependency Tags Explained:</h3>
+<ul>
+<li><code>&lt;buildtool_depend&gt;</code>: Tools required to <em>build</em> the package (e.g. <code>ament_python</code>).</li>
+<li><code>&lt;depend&gt;</code>: Declares that the package needs this dependency at <strong>both build-time and runtime</strong> (equivalent to specifying both <code>&lt;build_depend&gt;</code> and <code>&lt;exec_depend&gt;</code>).</li>
+<li><code>&lt;exec_depend&gt;</code>: Required <em>only</em> at runtime when the node executes.</li>
+<li><code>&lt;test_depend&gt;</code>: Required only when running unit tests via <code>colcon test</code>.</li>
+</ul>
+<hr>
+<h2>4. Deep Dive: <code>setup.py</code> &amp; Console Scripts</h2>
+<p>The <code>setup.py</code> script directs Python&#x27;s <code>setuptools</code> on how to install code, configuration files, and create CLI binaries.</p>
+<div class="code-container"><pre><button class="copy-btn">Copy</button><code class="language-python">from setuptools import find_packages, setup
+import os
+from glob import glob
+
+package_name = &#x27;navpro_controller&#x27;
+
+setup(
+    name=package_name,
+    version=&#x27;1.0.0&#x27;,
+    # Automatically locate python subpackages inside navpro_controller/
+    packages=find_packages(exclude=[&#x27;test&#x27;]),
+    
+    # data_files installs non-Python assets into the install/share/&lt;pkg&gt; directory
+    data_files=[
+        # 1. Ament Index Marker: Registers package with ROS 2 discovery
+        (&#x27;share/ament_index/resource_index/packages&#x27;, [&#x27;resource/&#x27; + package_name]),
+        
+        # 2. package.xml: Installs package manifest into share/
+        (&#x27;share/&#x27; + package_name, [&#x27;package.xml&#x27;]),
+        
+        # 3. Launch files: Installs all *.launch.py into share/&lt;pkg&gt;/launch
+        (os.path.join(&#x27;share&#x27;, package_name, &#x27;launch&#x27;), glob(&#x27;launch/*.launch.py&#x27;)),
+        
+        # 4. Config files: Installs all *.yaml into share/&lt;pkg&gt;/config
+        (os.path.join(&#x27;share&#x27;, package_name, &#x27;config&#x27;), glob(&#x27;config/*.yaml&#x27;)),
+    ],
+    
+    install_requires=[&#x27;setuptools&#x27;],
+    zip_safe=True,
+    maintainer=&#x27;NavPro Robotics Team&#x27;,
+    maintainer_email=&#x27;engineer@navpro.io&#x27;,
+    description=&#x27;Differential drive motor controller package&#x27;,
+    license=&#x27;Apache-2.0&#x27;,
+    
+    # entry_points generates executable binaries inside install/&lt;pkg&gt;/lib/&lt;pkg&gt;/
+    entry_points={
+        &#x27;console_scripts&#x27;: [
+            # Syntax: &#x27;executable_name = package_dir.python_file:entry_function&#x27;
+            &#x27;motor_driver = navpro_controller.motor_driver:main&#x27;,
+            &#x27;safety_supervisor = navpro_controller.safety_supervisor:main&#x27;,
+        ],
+    },
+)</code></pre></div>
+<h3>How <code>entry_points</code> Works:</h3>
+<p>When you execute <code>ros2 run navpro_controller motor_driver</code>:</p>
+<ol>
+<li>ROS 2 queries the Ament Index for <code>navpro_controller</code>.</li>
+<li>It looks inside <code>install/navpro_controller/lib/navpro_controller/motor_driver</code>.</li>
+<li>Setuptools generates a wrapper script that automatically imports <code>navpro_controller.motor_driver</code> and invokes <code>main()</code>.</li>
+</ol>
+<hr>
+<h2>5. Supporting Files: <code>setup.cfg</code> and <code>resource/</code></h2>
+<h3>5.1 <code>setup.cfg</code></h3>
+<p>Tells setuptools where to place the generated executable binaries:</p>
+<div class="code-container"><pre><button class="copy-btn">Copy</button><code class="language-ini">[develop]
+script_dir=$base/lib/navpro_controller
+[install]
+install_scripts=$base/lib/navpro_controller</code></pre></div>
+<p>Without this file, executables would be placed directly in <code>/bin</code> or <code>/lib</code>, breaking ROS 2&#x27;s package namespacing.</p>
+<h3>5.2 <code>resource/&lt;package_name&gt;</code></h3>
+<p>An empty file whose filename <strong>must exactly match</strong> <code>package_name</code>. When installed into <code>share/ament_index/resource_index/packages</code>, it acts as a marker. Commands like <code>ros2 pkg list</code> simply read the directory listings of this resource folder.</p>
+<hr>
+<h2>6. Step-by-Step: Creating a Modular Package Manually</h2>
+<p>Let&#x27;s create a real package called <code>navpro_teleop_hub</code> step-by-step.</p>
+<h3>Step 6.1: Create Directory Tree</h3>
+<div class="code-container"><pre><button class="copy-btn">Copy</button><code class="language-bash">cd ~/ros2_ws/src
+mkdir -p navpro_teleop_hub/navpro_teleop_hub
+mkdir -p navpro_teleop_hub/resource
+mkdir -p navpro_teleop_hub/launch
+mkdir -p navpro_teleop_hub/config</code></pre></div>
+<h3>Step 6.2: Create Module and Resource Markers</h3>
+<div class="code-container"><pre><button class="copy-btn">Copy</button><code class="language-bash">touch navpro_teleop_hub/navpro_teleop_hub/__init__.py
+touch navpro_teleop_hub/resource/navpro_teleop_hub</code></pre></div>
+<h3>Step 6.3: Create <code>setup.cfg</code></h3>
+<div class="code-container"><pre><button class="copy-btn">Copy</button><code class="language-bash">cat &lt;&lt; &#x27;EOF&#x27; &gt; navpro_teleop_hub/setup.cfg
+[develop]
+script_dir=$base/lib/navpro_teleop_hub
+[install]
+install_scripts=$base/lib/navpro_teleop_hub
+EOF</code></pre></div>
+<h3>Step 6.4: Write the Node File (<code>teleop_hub.py</code>)</h3>
+<div class="code-container"><pre><button class="copy-btn">Copy</button><code class="language-bash">cat &lt;&lt; &#x27;EOF&#x27; &gt; navpro_teleop_hub/navpro_teleop_hub/teleop_hub.py
+#!/usr/bin/env python3
+import rclpy
+from rclpy.node import Node
+
+class TeleopHub(Node):
+    def __init__(self):
+        super().__init__(&#x27;teleop_hub&#x27;)
+        self.get_logger().info(&#x27;Teleop Hub Node initialized successfully!&#x27;)
+
+def main():
+    rclpy.init()
+    node = TeleopHub()
+    try:
+        rclpy.spin(node)
+    except KeyboardInterrupt:
+        pass
+    finally:
+        node.destroy_node()
+        rclpy.shutdown()
+
+if __name__ == &#x27;__main__&#x27;:
+    main()
+EOF
+chmod +x navpro_teleop_hub/navpro_teleop_hub/teleop_hub.py</code></pre></div>
+<h3>Step 6.5: Configure <code>package.xml</code> and <code>setup.py</code></h3>
+<p>Add the standard <code>package.xml</code> and <code>setup.py</code> templates detailed in Sections 3 and 4 with entry point:</p>
+<p><code>&#x27;teleop_hub = navpro_teleop_hub.teleop_hub:main&#x27;</code></p>
+<h3>Step 6.6: Build and Test</h3>
+<div class="code-container"><pre><button class="copy-btn">Copy</button><code class="language-bash">cd ~/ros2_ws
+colcon build --symlink-install --packages-select navpro_teleop_hub
+source install/setup.bash
+ros2 run navpro_teleop_hub teleop_hub</code></pre></div>
+<hr>
+<h2>7. Common Package Debugging &amp; Error Resolution</h2>
+<div class="table-wrapper"><table>
+<thead><tr>
+<th>Symptom / Error</th>
+<th>Root Cause</th>
+<th>Solution</th>
+</tr></thead><tbody>
+<tr>
+<td><code>Package &#x27;xyz&#x27; not found</code></td>
+<td>Workspace not sourced, or missing resource marker file</td>
+<td>Run <code>source install/setup.bash</code>. Check if <code>resource/xyz</code> exists and is installed in <code>setup.py</code>.</td>
+</tr>
+<tr>
+<td><code>No executable found</code></td>
+<td>Missing entry point in <code>setup.py</code>, or <code>setup.cfg</code> missing</td>
+<td>Check <code>entry_points[&#x27;console_scripts&#x27;]</code> for typos. Rebuild with <code>colcon build</code>.</td>
+</tr>
+<tr>
+<td><code>ModuleNotFoundError: No module named &#x27;xyz&#x27;</code></td>
+<td>Package name mismatch or missing <code>__init__.py</code> in python subfolder</td>
+<td>Ensure directory name matches package name and contains <code>__init__.py</code>.</td>
+</tr>
+<tr>
+<td>Changes in <code>.py</code> file not updating</td>
+<td>Built without <code>--symlink-install</code></td>
+<td>Rebuild using <code>colcon build --symlink-install</code>.</td>
+</tr>
+</tbody></table></div>
+<hr>
+<h2>8. Hands-on Student Challenge</h2>
+<p><strong>Task:</strong></p>
+<p>In your newly created package <code>navpro_teleop_hub</code>:</p>
+<ol>
+<li>Create a second node file: <code>navpro_teleop_hub/battery_monitor.py</code>.</li>
+<li>Register it as a second executable in <code>setup.py</code> entry points under the binary name <code>battery_monitor</code>.</li>
+<li>Re-run <code>colcon build --symlink-install --packages-select navpro_teleop_hub</code>.</li>
+<li>Verify you can run both nodes independently via <code>ros2 run navpro_teleop_hub teleop_hub</code> and <code>ros2 run navpro_teleop_hub battery_monitor</code>.</li>
+</ol>
+      </article>
+
+      <footer class="lesson-nav-footer">
+        <a href="lesson_03.html" class="nav-link-btn" >&larr; Previous Lesson</a>
+        <a href="../index.html" class="nav-link-btn">🧭 Course Hub</a>
+        <a href="lesson_05.html" class="nav-link-btn" >Next Lesson &rarr;</a>
+      </footer>
+    </main>
+  </div>
+
+  <script src="../assets/js/highlight.min.js"></script>
+  <script src="../assets/js/app.js"></script>
+  <script src="../assets/js/quiz_engine.js"></script>
+  <script src="../assets/js/instructor_sync.js"></script>
+</body>
+</html>

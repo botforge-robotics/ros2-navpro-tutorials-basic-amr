@@ -1,0 +1,28 @@
+services:
+  navpro_level1_sim:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: navpro-level1-ros2-sim:latest
+    pull_policy: build
+    container_name: navpro_level1_container
+    privileged: true
+    environment:
+      - START_SERVICES=true
+      - DISPLAY=:1
+      - ROS_DOMAIN_ID=42
+    ports:
+      # NavPro Learning Hub Web Platform (Master Hub, Level 1 & Level 2)
+      - "8000:8000"
+      # Web Desktop GUI (Gazebo, RViz2 via noVNC in browser on port 6080)
+      - "6080:6080"
+      # In-browser VS Code Code Server (port 8443)
+      - "8443:8443"
+    volumes:
+      # Mount entire repository so web portal and lessons are live
+      - ../..:/home/student/navpro_learning_hub
+      # Mount the local ros2_ws directory so student code edits persist on host
+      - ../ros2_ws:/home/student/ros2_ws
+      - ../scripts:/home/student/scripts
+    restart: unless-stopped
+    shm_size: '2gb'

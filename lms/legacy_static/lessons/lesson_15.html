@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lesson 15: Distributed Ros2 And Dds Networking | Level 1 Foundations</title>
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="stylesheet" href="../assets/css/animations.css">
+  <link rel="stylesheet" href="../assets/css/highlight-dark.min.css">
+  <link rel="stylesheet" href="../assets/css/quiz.css">
+  <link rel="stylesheet" href="../assets/css/instructor_sync.css">
+</head>
+<body>
+  <header class="app-header">
+    <div class="brand-container">
+      <a href="https://botforge.in" target="_blank" class="company-brand" title="Botforge Robotics - botforge.in">
+        <img src="../assets/images/botforge_black.png" alt="Botforge Robotics" class="company-logo">
+      </a>
+      <div class="brand-divider"></div>
+      <a href="../index.html" class="brand" title="Level 1: ROS 2 Foundations">
+        <img src="../assets/images/ros2_logo.svg" alt="ROS 2" class="brand-logo">
+        <span class="brand-title">NavPro Learning Hub</span>
+        <span class="badge-jazzy">ROS 2 Jazzy</span>
+      </a>
+    </div>
+    <div class="header-center">
+      <input type="text" id="lessonSearchInput" class="search-input" placeholder="🔍 Search Level 1 curriculum...">
+    </div>
+    <div class="header-actions">
+      <a href="http://localhost:6080/vnc.html" target="_blank" class="track-btn" title="Open Ubuntu Desktop GUI via noVNC">🖥️ Desktop GUI</a>
+      <a href="http://localhost:8443/?folder=/home/student/ros2_ws" target="_blank" class="track-btn" title="Open VS Code in browser">💻 VS Code</a>
+      <a href="../index.html" class="track-btn active">Curriculum Hub</a>
+      <span class="theme-pill">☀️ Light Theme</span>
+    </div>
+  </header>
+
+  <div class="app-container">
+    <aside class="app-sidebar">
+      <div class="progress-card">
+        <div class="progress-header">
+          <span>Curriculum Progress</span>
+          <span id="overallProgressText">0% Complete (0/26)</span>
+        </div>
+        <div class="progress-bar-track">
+          <div id="overallProgressBar" class="progress-bar-fill"></div>
+        </div>
+        <button id="resetProgressBtn" class="track-btn reset-btn" style="width:100%; margin-top:8px; justify-content:center;">↺ Reset Progress</button>
+      </div>
+
+      
+        <div class="sidebar-section-title">ROS 2 Foundations (26 Lessons)</div>
+        <ul class="lesson-list">
+          
+            <li>
+              <a href="lesson_01.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_01" onclick="event.stopPropagation();">
+                <span class="lesson-num">01</span>
+                <span class="lesson-title">Linux Fundamentals For Robotics</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_02.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_02" onclick="event.stopPropagation();">
+                <span class="lesson-num">02</span>
+                <span class="lesson-title">Ros2 Overview And Environment Setup</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_03.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_03" onclick="event.stopPropagation();">
+                <span class="lesson-num">03</span>
+                <span class="lesson-title">Workspace And First Python Node</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_04.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_04" onclick="event.stopPropagation();">
+                <span class="lesson-num">04</span>
+                <span class="lesson-title">Package Architecture And Configuration</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_05.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_05" onclick="event.stopPropagation();">
+                <span class="lesson-num">05</span>
+                <span class="lesson-title">Publishers Subscribers And Qos</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_06.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_06" onclick="event.stopPropagation();">
+                <span class="lesson-num">06</span>
+                <span class="lesson-title">Vscode Debugging And Ros2 Logging</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_07.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_07" onclick="event.stopPropagation();">
+                <span class="lesson-num">07</span>
+                <span class="lesson-title">Interfaces And Custom Messages</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_08.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_08" onclick="event.stopPropagation();">
+                <span class="lesson-num">08</span>
+                <span class="lesson-title">Services Server Client Python</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_09.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_09" onclick="event.stopPropagation();">
+                <span class="lesson-num">09</span>
+                <span class="lesson-title">Dynamic Parameters And Yaml</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_10.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_10" onclick="event.stopPropagation();">
+                <span class="lesson-num">10</span>
+                <span class="lesson-title">Launch Files And Runtime Management</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_11.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_11" onclick="event.stopPropagation();">
+                <span class="lesson-num">11</span>
+                <span class="lesson-title">Ros2 Actions Server And Client</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_12.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_12" onclick="event.stopPropagation();">
+                <span class="lesson-num">12</span>
+                <span class="lesson-title">Ros2 Bag Recording And Playback</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_13.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_13" onclick="event.stopPropagation();">
+                <span class="lesson-num">13</span>
+                <span class="lesson-title">Ros2 Cli Command Mastery</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_14.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_14" onclick="event.stopPropagation();">
+                <span class="lesson-num">14</span>
+                <span class="lesson-title">Tf2 Coordinate Transformations Python</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_15.html" class="lesson-item active">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_15" onclick="event.stopPropagation();">
+                <span class="lesson-num">15</span>
+                <span class="lesson-title">Distributed Ros2 And Dds Networking</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_16.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_16" onclick="event.stopPropagation();">
+                <span class="lesson-num">16</span>
+                <span class="lesson-title">Project Opencv Ros2 Vision</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_17.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_17" onclick="event.stopPropagation();">
+                <span class="lesson-num">17</span>
+                <span class="lesson-title">3D Modeling Urdf Xacro</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_18.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_18" onclick="event.stopPropagation();">
+                <span class="lesson-num">18</span>
+                <span class="lesson-title">Rviz2 Visualization Tf Inspection</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_19.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_19" onclick="event.stopPropagation();">
+                <span class="lesson-num">19</span>
+                <span class="lesson-title">Gazebo Physics And Sensor Plugins</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_20.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_20" onclick="event.stopPropagation();">
+                <span class="lesson-num">20</span>
+                <span class="lesson-title">Building Simulation Worlds</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_21.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_21" onclick="event.stopPropagation();">
+                <span class="lesson-num">21</span>
+                <span class="lesson-title">2D Slam Mapping Slam Toolbox</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_22.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_22" onclick="event.stopPropagation();">
+                <span class="lesson-num">22</span>
+                <span class="lesson-title">Nav2 Architecture And Costmaps</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_23.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_23" onclick="event.stopPropagation();">
+                <span class="lesson-num">23</span>
+                <span class="lesson-title">Nav2 Planners Controllers Tuning</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_24.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_24" onclick="event.stopPropagation();">
+                <span class="lesson-num">24</span>
+                <span class="lesson-title">Nav2 Behavior Trees And Recoveries</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_25.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_25" onclick="event.stopPropagation();">
+                <span class="lesson-num">25</span>
+                <span class="lesson-title">Autonomous Patrol Nav2 Simple Commander</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="lesson_26.html" class="lesson-item ">
+                <input type="checkbox" class="lesson-checkbox" data-lesson-id="l1_26" onclick="event.stopPropagation();">
+                <span class="lesson-num">26</span>
+                <span class="lesson-title">Physical Robot Hardware Deployment</span>
+              </a>
+            </li>
+            
+        </ul>
+        
+    </aside>
+
+    <main class="app-content">
+      <article class="markdown-body">
+        <h1>Lesson 15: Distributed ROS 2, Multi-Robot Fleets &amp; DDS Networking</h1>
+<blockquote class="alert alert-note"><strong>Focus:</strong> DDS Discovery Protocols, <code>ROS_DOMAIN_ID</code> Isolation, CycloneDDS vs FastDDS &amp; Fleet Architecture<br><strong>Course Track:</strong> NavPro Learning Hub - Level 1 (Lecture 07)<br><strong>Target Environment:</strong> ROS 2 Jazzy Jalisco</blockquote>
+<hr>
+<h2>1. Overview &amp; Learning Objectives</h2>
+<p>One of the greatest superpowers of ROS 2 is native distributed computing. Two physical computers, a Raspberry Pi on a robot chassis, an edge AI compute box, and a ground control station PC connected to the same local network can communicate seamlessly without running a central server (<code>roscore</code>).</p>
+<p>However, without proper network configuration, <strong>every student in a classroom or every AMR in a warehouse will discover and steer each other&#x27;s robots!</strong></p>
+<p>By the end of this lesson, you will:</p>
+<ol>
+<li>Understand the DDS Simple Participant Discovery Protocol (SPDP) over UDP multicast.</li>
+<li>Master network segmentation using the <code>ROS_DOMAIN_ID</code> environment variable.</li>
+<li>Understand the mathematical UDP port assignment schema used by DDS vendors.</li>
+<li>Compare and switch RMW middleware implementations: <strong>eProsima FastDDS</strong> vs. <strong>Eclipse CycloneDDS</strong>.</li>
+<li>Configure a <strong>Discovery Server</strong> for large fleets operating on restricted enterprise Wi-Fi networks.</li>
+</ol>
+<hr>
+<h2>2. How DDS Discovers Nodes: Multicast Protocol</h2>
+<p>When a ROS 2 node boots up:</p>
+<ol>
+<li>It sends periodic <strong>UDP Multicast</strong> announcement packets to standard IP address <code>239.255.0.1</code>.</li>
+<li>Any other ROS 2 node listening on the same subnet receives the packet and extracts the node&#x27;s topics, types, and QoS profiles.</li>
+<li>The nodes establish direct <strong>peer-to-peer unicast UDP connections</strong> for high-speed message transfer.</li>
+</ol>
+<div style="text-align:center; margin:1.6rem 0;"><img src="../assets/images/dds_discovery_domains.svg" alt="DDS Multicast Discovery Bus &amp; Domain Isolation" style="max-width:100%; border-radius:10px; border:1px solid #e2e8f0; box-shadow:0 2px 8px rgba(0,0,0,0.05); background:#ffffff;"></div>
+<hr>
+<h2>3. Network Isolation with <code>ROS_DOMAIN_ID</code></h2>
+<p>To isolate your robot from other robots on the same Wi-Fi network, set a unique integer ID between <code>0</code> and <code>101</code>:</p>
+<div class="code-container"><pre><button class="copy-btn">Copy</button><code class="language-bash">export ROS_DOMAIN_ID=42</code></pre></div>
+<h3>The DDS UDP Port Assignment Formula:</h3>
+<p>DDS calculates its operating UDP network ports deterministically from the Domain ID:</p>
+<p>$$\text{Multicast Port} = 7400 + (250 \times \text{Domain ID})$$</p>
+<p>$$\text{Unicast Port} = 7410 + (250 \times \text{Domain ID}) + (2 \times \text{Participant ID})$$</p>
+<p><em>For <code>ROS_DOMAIN_ID = 0</code>: Multicast Port = 7400.</em></p>
+<p><em>For <code>ROS_DOMAIN_ID = 42</code>: Multicast Port = $7400 + (250 \times 42) = 17900$.</em></p>
+<p>Because the operating system routes network traffic by port number, nodes on <code>DOMAIN_ID=42</code> can never hear or interfere with nodes on <code>DOMAIN_ID=0</code>.</p>
+<hr>
+<h2>4. Middleware Selection: FastDDS vs. CycloneDDS</h2>
+<p>ROS 2 communicates via an abstraction layer called <strong>RMW (ROS Middleware)</strong>. You can change the underlying DDS implementation without modifying a single line of your Python code!</p>
+<div class="table-wrapper"><table>
+<thead><tr>
+<th>Feature</th>
+<th>eProsima FastDDS (Default)</th>
+<th>Eclipse CycloneDDS</th>
+</tr></thead><tbody>
+<tr>
+<td><strong>Default in ROS 2</strong></td>
+<td>Yes</td>
+<td>No (requires package install)</td>
+</tr>
+<tr>
+<td><strong>Wi-Fi Loss Resilience</strong></td>
+<td>Moderate (tuned for high throughput)</td>
+<td><strong>Superior</strong> (highly robust in noisy/lossy wireless networks)</td>
+</tr>
+<tr>
+<td><strong>Discovery Mechanism</strong></td>
+<td>Multicast or Discovery Server</td>
+<td>Multicast or Peered Unicast</td>
+</tr>
+<tr>
+<td><strong>Configuration</strong></td>
+<td>Complex XML profiles</td>
+<td>Clean, lightweight XML (<code>cyclonedds.xml</code>)</td>
+</tr>
+</tbody></table></div>
+<h3>Switching to CycloneDDS:</h3>
+<p>Install the RMW package:</p>
+<div class="code-container"><pre><button class="copy-btn">Copy</button><code class="language-bash">sudo apt install -y ros-jazzy-rmw-cyclonedds-cpp</code></pre></div>
+<p>Set the environment variable in your terminal or <code>~/.bashrc</code>:</p>
+<div class="code-container"><pre><button class="copy-btn">Copy</button><code class="language-bash">export RMW_IMPLEMENTATION=rmw_cyclonedds_cpp</code></pre></div>
+<p>Verify which middleware is currently active:</p>
+<div class="code-container"><pre><button class="copy-btn">Copy</button><code class="language-bash">echo $RMW_IMPLEMENTATION</code></pre></div>
+<hr>
+<h2>5. Enterprise Fleets: The FastDDS Discovery Server</h2>
+<p>In enterprise warehouses with 50+ AMRs, UDP multicast can flood and crash corporate Wi-Fi access points. To solve this, ROS 2 supports a <strong>Discovery Server</strong> where nodes connect directly to a designated static IP address using unicast.</p>
+<div style="text-align:center; margin:1.6rem 0;"><img src="../assets/images/fastdds_discovery_server.svg" alt="FastDDS Discovery Server Architecture" style="max-width:100%; border-radius:10px; border:1px solid #e2e8f0; box-shadow:0 2px 8px rgba(0,0,0,0.05); background:#ffffff;"></div>
+<h3>Starting a Discovery Server:</h3>
+<div class="code-container"><pre><button class="copy-btn">Copy</button><code class="language-bash">fastdds discovery -i 0 -l 192.168.1.100 -p 11811</code></pre></div>
+<h3>Directing Nodes to Use the Discovery Server:</h3>
+<div class="code-container"><pre><button class="copy-btn">Copy</button><code class="language-bash">export ROS_DISCOVERY_SERVER=&quot;192.168.1.100:11811&quot;
+ros2 run navpro_basics publisher_explained</code></pre></div>
+<hr>
+<h2>6. Multi-Robot Collaboration via Namespacing</h2>
+<p>When running multiple robots that share a fleet coordinator on the same <code>ROS_DOMAIN_ID</code>, wrap each robot in a unique <strong>Namespace</strong>:</p>
+<h3>Robot Alpha Launch:</h3>
+<div class="code-container"><pre><button class="copy-btn">Copy</button><code class="language-bash">ros2 launch navpro_gazebo sim_world.launch.py robot_ns:=amr_01</code></pre></div>
+<p><em>Creates topics:</em> <code>/amr_01/cmd_vel</code>, <code>/amr_01/odom</code>, <code>/amr_01/scan</code>.</p>
+<h3>Robot Bravo Launch:</h3>
+<div class="code-container"><pre><button class="copy-btn">Copy</button><code class="language-bash">ros2 launch navpro_gazebo sim_world.launch.py robot_ns:=amr_02</code></pre></div>
+<p><em>Creates topics:</em> <code>/amr_02/cmd_vel</code>, <code>/amr_02/odom</code>, <code>/amr_02/scan</code>.</p>
+<p>The central fleet server subscribes to <code>/amr_01/odom</code> and <code>/amr_02/odom</code> simultaneously without topic collision!</p>
+<hr>
+<h2>7. Hands-on Student Challenge</h2>
+<p><strong>Task:</strong></p>
+<ol>
+<li>Open two terminals.</li>
+<li>In Terminal 1, set <code>export ROS_DOMAIN_ID=10</code> and start <code>publisher_explained</code>.</li>
+<li>In Terminal 2, set <code>export ROS_DOMAIN_ID=20</code> and run <code>ros2 topic list</code>.</li>
+<li>Verify that Terminal 2 cannot see <code>/cmd_vel</code>!</li>
+<li>In Terminal 2, change to <code>export ROS_DOMAIN_ID=10</code> and verify that <code>/cmd_vel</code> appears immediately.</li>
+</ol>
+      </article>
+
+      <footer class="lesson-nav-footer">
+        <a href="lesson_14.html" class="nav-link-btn" >&larr; Previous Lesson</a>
+        <a href="../index.html" class="nav-link-btn">🧭 Course Hub</a>
+        <a href="lesson_16.html" class="nav-link-btn" >Next Lesson &rarr;</a>
+      </footer>
+    </main>
+  </div>
+
+  <script src="../assets/js/highlight.min.js"></script>
+  <script src="../assets/js/app.js"></script>
+  <script src="../assets/js/quiz_engine.js"></script>
+  <script src="../assets/js/instructor_sync.js"></script>
+</body>
+</html>
