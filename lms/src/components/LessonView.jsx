@@ -188,7 +188,7 @@ export function LessonView({
       )}
 
       {/* Capstone Student Feedback & Ratings Form on Final Lesson */}
-      {(!lesson.next_id || lesson.id === 'lesson_26') && onSubmitFeedback && (
+      {(!lesson.next_id || lesson.id === 'lesson_23' || lesson.id === 'lesson_26') && (
         <section className="lesson-feedback-section" style={{ margin: '2.5rem 0' }}>
           <StudentFeedbackForm
             studentInfo={studentInfo || {}}

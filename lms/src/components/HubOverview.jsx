@@ -145,7 +145,7 @@ export function HubOverview({
 
         <div className="modules-grid">
           {modules.map((mod) => {
-            const modLessons = lessons.filter((l) => l.module_id === mod.id);
+            const modLessons = lessons.filter((l) => l.module_id === mod.id || Number(String(l.module_id).replace(/\D/g, '')) === mod.id);
             const modCompleted = modLessons.filter((l) =>
               completedLessons.includes(l.id),
             ).length;
@@ -314,14 +314,12 @@ export function HubOverview({
       </section>
 
       {/* Capstone Course Feedback & Rating Form */}
-      {onSubmitFeedback && (
-        <section className="hub-feedback-section" style={{ marginTop: "2.5rem" }}>
-          <StudentFeedbackForm
-            studentInfo={studentInfo || {}}
-            onSubmitFeedback={onSubmitFeedback}
-          />
-        </section>
-      )}
+      <section className="hub-feedback-section" style={{ marginTop: "2.5rem" }}>
+        <StudentFeedbackForm
+          studentInfo={studentInfo || {}}
+          onSubmitFeedback={onSubmitFeedback}
+        />
+      </section>
     </div>
   );
 }

@@ -38,10 +38,10 @@ for l in old_lessons:
         l['filename'] = filename_map[new_num]
         l['slug'] = filename_map[new_num].replace(".md", "")
         if new_num <= 17:
-            l['module_id'] = "module_03"
+            l['module_id'] = 3
             l['module'] = "Module 3: 3D Robot Modeling & Physics Simulation"
         else:
-            l['module_id'] = "module_04"
+            l['module_id'] = 4
             l['module'] = "Module 4: Autonomous Navigation with Nav2"
         kept_lessons.append(l)
 

@@ -16,7 +16,7 @@ const STORAGE_KEY_FEEDBACK = 'navpro_l1_submitted_feedback';
 export function StudentFeedbackForm({ studentInfo, onSubmitFeedback }) {
   const [rating, setRating] = useState(5);
   const [hoverRating, setHoverRating] = useState(0);
-  const [favoriteModule, setFavoriteModule] = useState('Module 6: Autonomous Navigation (Nav2 & BT)');
+  const [favoriteModule, setFavoriteModule] = useState('Module 4: Autonomous Navigation with Nav2');
   const [feedbackText, setFeedbackText] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -48,14 +48,10 @@ export function StudentFeedbackForm({ studentInfo, onSubmitFeedback }) {
   };
 
   const modules = [
-    'Module 1: Linux Fundamentals & ROS 2 Architecture',
-    'Module 2: Communication Mechanics (Topics, Services, Parameters)',
-    'Module 3: Kinematics, TF2 Spatial Transforms & URDF/Xacro',
-    'Module 4: 3D Simulation (Gazebo) & Sensor Raytracing',
-    'Module 5: 2D SLAM Mapping & Loop Closures',
-    'Module 6: Autonomous Navigation (Nav2, Planners & Simple Commander)',
-    'Module 7: Computer Vision & OpenCV Integration',
-    'Module 8: Physical AMR Hardware Deployment'
+    'Module 1: Foundations & Core Middleware (Linux, ROS 2, Workspace & Packages)',
+    'Module 2: Core ROS 2 Mechanics & Communication (Pub/Sub, Services, Params, Actions, Bags, CLI)',
+    'Module 3: 3D Robot Modeling & Physics Simulation (URDF, Xacro, RViz2, Gazebo, Worlds)',
+    'Module 4: Autonomous Navigation with Nav2 (SLAM Toolbox, Costmaps, Planners, Behavior Trees, Nav2 Simple Commander, Physical Deployment)'
   ];
 
   const handleSubmit = async (e) => {
@@ -63,12 +59,18 @@ export function StudentFeedbackForm({ studentInfo, onSubmitFeedback }) {
     if (!feedbackText.trim()) return;
 
     setIsSubmitting(true);
-    const success = await onSubmitFeedback(rating, favoriteModule, feedbackText);
+    if (onSubmitFeedback) {
+      try {
+        await onSubmitFeedback(rating, favoriteModule, feedbackText);
+      } catch (err) {
+        console.warn('Feedback sync error:', err);
+      }
+    }
     setIsSubmitting(false);
 
     const submission = {
-      student_id: studentInfo.student_id || studentInfo.email_roll,
-      student_name: studentInfo.name || 'Student',
+      student_id: studentInfo?.student_id || studentInfo?.email_roll || 'student_guest',
+      student_name: studentInfo?.name || 'Student',
       rating,
       favorite_module: favoriteModule,
       feedback_text: feedbackText,

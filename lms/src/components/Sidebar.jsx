@@ -101,7 +101,7 @@ export function Sidebar({
         <div className="sidebar-modules-list">
           {modules.map((mod) => {
             const isExpanded = expandedModules[mod.id];
-            const modLessons = lessons.filter(l => l.module_id === mod.id);
+            const modLessons = lessons.filter(l => l.module_id === mod.id || Number(String(l.module_id).replace(/\D/g, '')) === mod.id);
             const modCompletedCount = modLessons.filter(l => completedLessons.includes(l.id)).length;
             const isModComplete = modCompletedCount === modLessons.length && modLessons.length > 0;
 
