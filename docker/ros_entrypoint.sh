@@ -17,8 +17,8 @@ if [ "$START_SERVICES" = "true" ]; then
     # Clean up any stale lock files from previous runs
     vncserver -kill :1 2>/dev/null || rm -rf /tmp/.X1-lock /tmp/.X11-unix/X1 2>/dev/null || true
 
-    echo "[Entrypoint] Starting TigerVNC server on :1 (Display port 5901)..."
-    vncserver :1 -geometry 1920x1080 -depth 24 -localhost no
+    echo "[Entrypoint] Starting TigerVNC server on :1 (Display port 5901, Passwordless)..."
+    vncserver :1 -geometry 1920x1080 -depth 24 -localhost no -SecurityTypes None
 
     echo "[Entrypoint] Starting noVNC web proxy on port 6080..."
     websockify --web /usr/share/novnc/ 6080 localhost:5901 &
@@ -44,7 +44,7 @@ if [ "$START_SERVICES" = "true" ]; then
     echo "=================================================================="
     echo "  🚀 NavPro Learning Hub Environment is Ready!"
     echo "  - Learning Web Platform:      http://localhost:8000"
-    echo "  - Desktop GUI (noVNC):        http://localhost:6080/vnc.html (password: password)"
+    echo "  - Desktop GUI (noVNC):        http://localhost:6080/vnc.html?autoconnect=true&resize=remote (Passwordless)"
     echo "  - Web Code Editor (VS Code):  http://localhost:8443/?folder=/home/student/ros2_ws"
     echo "=================================================================="
 fi

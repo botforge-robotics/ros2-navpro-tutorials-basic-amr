@@ -250,13 +250,12 @@ You do not need to memorize URLs. Notice the **quick-launch buttons on the top s
 
 | Status Bar Button | Destination URL | Purpose & Environment |
 |---|---|---|
-| **`🖥️ Desktop GUI`** | `http://localhost:6080/vnc.html` | Opens full Ubuntu 24.04 XFCE desktop with Gazebo, RViz2, and Terminator. |
+| **`🖥️ Desktop GUI`** | `http://localhost:6080/vnc.html?autoconnect=true&resize=remote` | Opens full Ubuntu 24.04 XFCE desktop with Gazebo, RViz2, and Terminator. |
 | **`💻 VS Code`** | `http://localhost:8443/?folder=/home/student/ros2_ws` | Opens in-browser VS Code editor directly rooted in your ROS 2 workspace. |
 
 > [!IMPORTANT]
-> **Authentication & Passwords:**  
-> * **noVNC Desktop GUI Password:** `password`  
->   When the noVNC browser tab opens, click **Connect** and enter password `password`. You will immediately see the Ubuntu desktop, ready to launch Gazebo and RViz2.  
+> **Authentication & Credentials:**  
+> * **noVNC Desktop GUI:** **No password required (Passwordless Instant Connect)**. When the browser tab opens, it connects automatically to your Ubuntu desktop.  
 > * **In-Browser VS Code IDE:** **No password required** (pre-authenticated). It opens directly into `/home/student/ros2_ws`.
 
 ---

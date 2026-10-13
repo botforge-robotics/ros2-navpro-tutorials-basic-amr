@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   X, 
   Radio, 
@@ -9,8 +9,10 @@ import {
   Server,
   User,
   Mail,
-  Building2
+  Building2,
+  Laptop
 } from 'lucide-react';
+import { detectLocalIp } from '../hooks/useInstructorSync';
 
 export function RegistrationModal({ 
   isOpen, 
@@ -26,9 +28,21 @@ export function RegistrationModal({
     name: studentInfo.name || '',
     email_roll: studentInfo.email_roll || '',
     org_college: studentInfo.org_college || '',
-    host_ip: studentInfo.host_ip || 'localhost'
+    host_ip: studentInfo.host_ip && studentInfo.host_ip !== 'localhost' ? studentInfo.host_ip : '',
+    client_ip: studentInfo.client_ip || ''
   });
 
+  useEffect(() => {
+    if (!formData.client_ip) {
+      detectLocalIp().then((ip) => {
+        if (ip) {
+          setFormData((prev) => ({ ...prev, client_ip: ip }));
+        }
+      });
+    }
+  }, []);
+
+  const [errorMessage, setErrorMessage] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [feedbackRating, setFeedbackRating] = useState(5);
   const [feedbackComments, setFeedbackComments] = useState('');
@@ -39,11 +53,32 @@ export function RegistrationModal({
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!formData.name || !formData.email_roll) return;
+    setErrorMessage('');
+    if (!formData.name.trim() || !formData.email_roll.trim()) {
+      setErrorMessage('Please enter both your full name and student email / roll number.');
+      return;
+    }
+    const cleanIp = formData.host_ip.trim().replace(/^https?:\/\//i, '').split('/')[0].split(':')[0];
+    if (!cleanIp) {
+      setErrorMessage('Please enter the Instructor Host Wi-Fi IP address shown on the projector.');
+      return;
+    }
+
     setIsSubmitting(true);
-    await onRegister(formData);
+    const result = await onRegister({
+      ...formData,
+      host_ip: cleanIp,
+      client_ip: formData.client_ip?.trim() || undefined
+    });
     setIsSubmitting(false);
-    onClose();
+
+    if (result && result.success) {
+      setErrorMessage('');
+      onClose();
+    } else {
+      const errDetail = result?.error ? ` (${result.error})` : '';
+      setErrorMessage(`❌ Could not connect to Instructor Host at http://${cleanIp}:9000${errDetail}. Please verify the Wi-Fi IP address shown on the instructor screen and ensure your laptop is on the same network.`);
+    }
   };
 
   const handleFeedbackSubmit = async (e) => {
@@ -55,7 +90,7 @@ export function RegistrationModal({
   };
 
   return (
-    <div className="modal-overlay fade-in" onClick={onClose}>
+    <div className="modal-overlay fade-in" onClick={onClose} style={{ zIndex: 10000 }}>
       <div className="modal-card" onClick={e => e.stopPropagation()}>
         <div className="modal-header">
           <div className="modal-title-wrap">
@@ -142,9 +177,12 @@ export function RegistrationModal({
                 </label>
                 <input
                   type="text"
-                  placeholder="e.g. 192.168.1.100 or localhost"
+                  placeholder="e.g. 192.168.1.100 or 192.168.0.101"
                   value={formData.host_ip}
-                  onChange={e => setFormData({ ...formData, host_ip: e.target.value })}
+                  onChange={e => {
+                    setFormData({ ...formData, host_ip: e.target.value });
+                    if (errorMessage) setErrorMessage('');
+                  }}
                   onBlur={e => {
                     let v = e.target.value.trim().replace(/^https?:\/\//i, '').split('/')[0].split(':')[0];
                     if (v) setFormData({ ...formData, host_ip: v });
@@ -164,12 +202,41 @@ export function RegistrationModal({
                     💡 Do I need to enter the port (:9000)?
                   </div>
                   <div>
-                    <strong>NO, enter the IP address only</strong> (e.g. <code>192.168.1.100</code> or <code>localhost</code>). 
+                    <strong>NO, enter the Wi-Fi IP address only</strong> (e.g. <code>192.168.1.100</code> or <code>192.168.0.101</code> as shown on the instructor screen). 
                     Port 9000 is automatically connected in the background. 
                     <em>(If you accidentally type <code>:9000</code> or <code>http://</code>, it will be automatically formatted for you).</em>
                   </div>
                 </div>
               </div>
+
+              <div className="form-group">
+                <label>
+                  <Laptop size={14} />
+                  <span>Your Device / Station IP (Auto-Detected)</span>
+                </label>
+                <input
+                  type="text"
+                  placeholder="e.g. 192.168.1.45 (Auto-detected)"
+                  value={formData.client_ip}
+                  onChange={e => setFormData({ ...formData, client_ip: e.target.value })}
+                />
+              </div>
+
+              {errorMessage && (
+                <div style={{
+                  background: '#fef2f2',
+                  border: '1px solid #f87171',
+                  color: '#b91c1c',
+                  padding: '0.75rem 1rem',
+                  borderRadius: '8px',
+                  fontSize: '0.85rem',
+                  lineHeight: '1.45',
+                  fontWeight: 600,
+                  marginTop: '0.5rem'
+                }}>
+                  {errorMessage}
+                </div>
+              )}
 
               <div className="sync-status-banner">
                 <div className={`status-indicator ${connectionStatus}`}></div>

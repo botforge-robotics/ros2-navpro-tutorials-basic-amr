@@ -14,6 +14,44 @@ export function sanitizeHostIp(raw) {
   return clean || 'localhost';
 }
 
+export function detectLocalIp() {
+  return new Promise((resolve) => {
+    try {
+      const host = window.location.hostname;
+      if (host && host !== 'localhost' && host !== '127.0.0.1' && /^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$/.test(host)) {
+        return resolve(host);
+      }
+      const RTCPc = window.RTCPeerConnection || window.mozRTCPeerConnection || window.webkitRTCPeerConnection;
+      if (!RTCPc) return resolve(null);
+      const pc = new RTCPc({ iceServers: [] });
+      let done = false;
+      pc.createDataChannel('');
+      pc.createOffer().then((o) => pc.setLocalDescription(o)).catch(() => resolve(null));
+      pc.onicecandidate = (evt) => {
+        if (!evt || !evt.candidate || !evt.candidate.candidate) return;
+        const line = evt.candidate.candidate;
+        const match = line.match(/([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3})/);
+        if (match && !match[1].startsWith('127.') && !match[1].startsWith('0.')) {
+          if (!done) {
+            done = true;
+            try { pc.close(); } catch {}
+            return resolve(match[1]);
+          }
+        }
+      };
+      setTimeout(() => {
+        if (!done) {
+          done = true;
+          try { pc.close(); } catch {}
+          resolve(null);
+        }
+      }, 1200);
+    } catch {
+      resolve(null);
+    }
+  });
+}
+
 export function useInstructorSync(completedLessons, quizScores, currentLessonId) {
   const [studentInfo, setStudentInfo] = useState(() => {
     try {
@@ -45,6 +83,7 @@ export function useInstructorSync(completedLessons, quizScores, currentLessonId)
   const [unreadChatCount, setUnreadChatCount] = useState(0);
   const [isHandRaised, setIsHandRaised] = useState(false);
   const [isChatOpen, setIsChatOpen] = useState(false);
+  const [heartbeatCount, setHeartbeatCount] = useState(0);
 
   const heartbeatRef = useRef(null);
   const chatPollRef = useRef(null);
@@ -68,11 +107,13 @@ export function useInstructorSync(completedLessons, quizScores, currentLessonId)
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
+          student_id: info.student_id || info.email_roll,
           name: info.name,
           email: info.email_roll,
           email_roll: info.email_roll,
           organization: info.org_college,
           org_college: info.org_college,
+          client_ip: info.client_ip || undefined,
           level: 'level1'
         })
       });
@@ -93,13 +134,13 @@ export function useInstructorSync(completedLessons, quizScores, currentLessonId)
       if (data.workshop_name) setWorkshopName(data.workshop_name);
       return { success: true };
     } catch (err) {
-      console.warn('Workshop registration failed (continuing in offline mode):', err.message);
+      console.warn('Workshop registration failed (host unreachable):', err.message);
       const cleanIp = sanitizeHostIp(info.host_ip);
       const updated = {
         ...info,
         host_ip: cleanIp,
-        registered: true,
-        student_id: info.email_roll || `local_${Date.now()}`
+        registered: false,
+        student_id: null
       };
       setStudentInfo(updated);
       localStorage.setItem(STORAGE_KEY_STUDENT, JSON.stringify(updated));
@@ -125,7 +166,10 @@ export function useInstructorSync(completedLessons, quizScores, currentLessonId)
           workshop_id: studentInfo.workshop_id || undefined,
           student_id: studentInfo.student_id,
           name: studentInfo.name,
+          email: studentInfo.email_roll,
+          email_roll: studentInfo.email_roll,
           level: 'level1',
+          client_ip: studentInfo.client_ip || undefined,
           active_lesson: lessonToSync || 'overview',
           completed_count: lessonsToSync.length,
           completed_lessons: lessonsToSync,
@@ -136,6 +180,7 @@ export function useInstructorSync(completedLessons, quizScores, currentLessonId)
       if (res.ok) {
         const data = await res.json();
         setConnectionStatus('connected');
+        setHeartbeatCount(prev => prev + 1);
         if (data.workshop_name) setWorkshopName(data.workshop_name);
         if (data.gates) setGates(data.gates);
         return true;
@@ -340,6 +385,7 @@ export function useInstructorSync(completedLessons, quizScores, currentLessonId)
     submitFeedback,
     sendHeartbeat,
     syncProgressNow,
+    heartbeatCount,
     // Chat & Raise Hand exports
     chatMessages,
     unreadChatCount,

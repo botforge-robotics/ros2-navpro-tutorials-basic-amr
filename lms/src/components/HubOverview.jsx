@@ -70,7 +70,7 @@ export function HubOverview({
             </button>
 
             <a
-              href="http://localhost:6080/vnc.html"
+              href="http://localhost:6080/vnc.html?autoconnect=true&resize=remote"
               target="_blank"
               rel="noopener noreferrer"
               className="hero-secondary-btn"

@@ -59,6 +59,24 @@ In Linux, all files, hardware devices, and network sockets are organized into a 
 
 Follow this continuous hands-on workflow in your terminal. Every single command builds directly upon the folders and files created in the preceding step, ensuring zero *"file not found"* errors.
 
+### 3.0 Step 0: How to Open the Terminal & Switch to Home Directory
+
+Before executing any commands, you need an open terminal window:
+
+* **In the Browser Desktop (noVNC / TigerVNC):** Click the **Terminal** (or **Terminator**) icon on the desktop dock/panel, or press the universal shortcut <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>T</kbd>.
+* **In the Cloud VS Code IDE (Code Server):** Press <kbd>Ctrl</kbd> + <kbd>`</kbd> (Backtick) or select **Terminal &rarr; New Terminal** from the top menu bar.
+
+> [!IMPORTANT]
+> **Crucial First Step: Switch to Your Home Directory (`cd ~`)**  
+> In containerized robotics environments, new terminals often launch inside the pre-configured ROS 2 workspace folder (`/home/student/ros2_ws`).  
+> **Before running the Linux fundamentals commands below, return to your user home directory root (`/home/student`) by entering:**
+> ```bash
+> cd ~
+> ```
+> Run `pwd` to confirm your terminal prompt displays `/home/student`, then proceed with the exercises below!
+
+---
+
 ### 3.1 Step 1: Navigating & Inspecting Your Workspace
 
 <div class="cmd-card">

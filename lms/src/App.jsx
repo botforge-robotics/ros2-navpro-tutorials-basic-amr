@@ -44,7 +44,8 @@ export function App() {
     closeChatModal,
     sendChatMessage,
     raiseHand,
-    lowerHand
+    lowerHand,
+    heartbeatCount
   } = useInstructorSync(completedLessons, quizScores, currentLessonId);
 
   // Immediate sync wrapper for marking lessons completed
@@ -142,6 +143,7 @@ export function App() {
         onOpenChatModal={openChatModal}
         unreadChatCount={unreadChatCount}
         isHandRaised={isHandRaised}
+        heartbeatCount={heartbeatCount}
       />
 
       <div className="app-main-layout">
@@ -192,44 +194,46 @@ export function App() {
       </div>
 
       {/* Floating Quick Action Button for Group Chat & Raise Hand */}
-      <button
-        onClick={openChatModal}
-        className={`floating-chat-trigger ${isHandRaised ? 'hand-raised' : ''}`}
-        title="Open Live Workshop Group Chat & Doubts"
-        style={{
-          position: 'fixed',
-          bottom: '1.75rem',
-          right: '1.75rem',
-          zIndex: 99,
-          display: 'flex',
-          alignItems: 'center',
-          gap: '8px',
-          padding: '0.75rem 1.15rem',
-          borderRadius: '30px',
-          background: isHandRaised ? '#d97706' : 'var(--accent-primary)',
-          color: '#ffffff',
-          border: 'none',
-          boxShadow: '0 4px 14px rgba(0, 0, 0, 0.25)',
-          cursor: 'pointer',
-          fontWeight: 700,
-          fontSize: '0.88rem'
-        }}
-      >
-        {isHandRaised ? <Hand size={18} /> : <MessageSquare size={18} />}
-        <span>{isHandRaised ? 'Hand Raised' : 'Group Chat'}</span>
-        {unreadChatCount > 0 && !isHandRaised && (
-          <span style={{
-            background: '#ef4444',
-            color: '#fff',
-            borderRadius: '10px',
-            padding: '2px 6px',
-            fontSize: '0.72rem',
-            fontWeight: 800
-          }}>
-            {unreadChatCount}
-          </span>
-        )}
-      </button>
+      {!isChatOpen && (
+        <button
+          onClick={openChatModal}
+          className={`floating-chat-trigger ${isHandRaised ? 'hand-raised' : ''}`}
+          title="Open Live Workshop Group Chat & Doubts"
+          style={{
+            position: 'fixed',
+            bottom: '1.75rem',
+            right: '1.75rem',
+            zIndex: 99,
+            display: 'flex',
+            alignItems: 'center',
+            gap: '8px',
+            padding: '0.75rem 1.15rem',
+            borderRadius: '30px',
+            background: isHandRaised ? '#d97706' : 'var(--accent-primary)',
+            color: '#ffffff',
+            border: 'none',
+            boxShadow: '0 4px 14px rgba(0, 0, 0, 0.25)',
+            cursor: 'pointer',
+            fontWeight: 700,
+            fontSize: '0.88rem'
+          }}
+        >
+          {isHandRaised ? <Hand size={18} /> : <MessageSquare size={18} />}
+          <span>{isHandRaised ? 'Hand Raised' : 'Group Chat'}</span>
+          {unreadChatCount > 0 && !isHandRaised && (
+            <span style={{
+              background: '#ef4444',
+              color: '#fff',
+              borderRadius: '10px',
+              padding: '2px 6px',
+              fontSize: '0.72rem',
+              fontWeight: 800
+            }}>
+              {unreadChatCount}
+            </span>
+          )}
+        </button>
+      )}
 
       {/* Workshop Registration Modal */}
       <RegistrationModal

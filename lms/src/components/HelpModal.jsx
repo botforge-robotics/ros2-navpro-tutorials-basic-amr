@@ -123,8 +123,8 @@ export function HelpModal({ isOpen, onClose }) {
               <div className="help-port-card">
                 <span className="port-badge">Port 6080</span>
                 <strong>Desktop GUI (noVNC)</strong>
-                <a href="http://localhost:6080/vnc.html" target="_blank" rel="noopener noreferrer">http://localhost:6080/vnc.html</a>
-                <span className="port-pass">Password: <code>password</code></span>
+                <a href="http://localhost:6080/vnc.html?autoconnect=true&resize=remote" target="_blank" rel="noopener noreferrer">http://localhost:6080/vnc.html</a>
+                <span className="port-pass">Password: <strong>None (Passwordless Instant Connect)</strong></span>
               </div>
               <div className="help-port-card">
                 <span className="port-badge">Port 8443</span>

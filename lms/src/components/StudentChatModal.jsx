@@ -42,12 +42,17 @@ export function StudentChatModal({
 
   const isRegisteredAndSynced = studentInfo?.registered && connectionStatus === 'connected';
 
+  const handleOpenLogin = () => {
+    onClose?.();
+    onOpenSyncModal?.();
+  };
+
   const handleSend = async (e) => {
     e?.preventDefault();
     if (!inputText.trim() || isSubmitting) return;
 
     if (!isRegisteredAndSynced) {
-      onOpenSyncModal?.();
+      handleOpenLogin();
       return;
     }
 
@@ -59,12 +64,27 @@ export function StudentChatModal({
   };
 
   return (
-    <div className="modal-overlay fade-in" onClick={onClose}>
-      <div 
-        className="modal-card student-chat-modal-card" 
-        onClick={(e) => e.stopPropagation()}
-        style={{ maxWidth: 650, width: '92%', height: '82vh', display: 'flex', flexDirection: 'column', padding: 0 }}
-      >
+    <div 
+      className="student-chat-docked-panel fade-in"
+      style={{
+        position: 'fixed',
+        bottom: '20px',
+        right: '20px',
+        width: '420px',
+        maxWidth: 'calc(100vw - 32px)',
+        height: '600px',
+        maxHeight: 'calc(100vh - 40px)',
+        zIndex: 1500,
+        display: 'flex',
+        flexDirection: 'column',
+        padding: 0,
+        background: 'var(--bg-surface)',
+        borderRadius: '16px',
+        border: '1px solid var(--border-color)',
+        boxShadow: '0 12px 40px rgba(0, 0, 0, 0.35)',
+        overflow: 'hidden'
+      }}
+    >
         {/* Header */}
         <div className="modal-header" style={{ padding: '1.1rem 1.4rem', borderBottom: '1px solid var(--border-color)', background: 'var(--bg-surface)' }}>
           <div className="modal-title-wrap">
@@ -172,7 +192,7 @@ export function StudentChatModal({
               <span>Only registered and synced students can send messages and raise hand.</span>
             </div>
             <button
-              onClick={onOpenSyncModal}
+              onClick={handleOpenLogin}
               style={{
                 background: 'var(--accent-primary)',
                 color: '#fff',
@@ -399,6 +419,5 @@ export function StudentChatModal({
           </button>
         </form>
       </div>
-    </div>
   );
 }
