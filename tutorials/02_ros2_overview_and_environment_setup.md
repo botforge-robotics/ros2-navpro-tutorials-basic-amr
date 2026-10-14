@@ -44,17 +44,22 @@ By the end of this lesson, you will:
 Every autonomous robot—from an industrial mobile robot moving warehouse boxes to an interstellar rover—relies on **three fundamental ingredients**:
 
 1. **Perception (The Robot's Eyes & Ears):** How the robot senses the world around it.
-   - *Simple Role:* Just like humans use eyes and ears to look and listen, the robot uses sensors to see where it is, detect obstacles, and measure distances to walls.
-   - *Hardware Examples:* 📷 Cameras (seeing), 🔴 LiDAR (measuring distances with lasers), 🧭 GPS and Compass (direction and location).
-   - *System Output:* Sends distance and camera sensor data (`/scan`, `/camera/image_raw`).
+   - *Simple Role:* It uses cameras to see, laser scanners to measure distances to walls, and GPS to know its position.
+   - 📷 **Cameras (seeing):** Capturing video frames, obstacle features, and visual objects.
+   - 🔴 **LiDAR (measuring distances):** 360-degree laser beams measuring precise distances to obstacles and walls.
+   - 🧭 **GPS & Compass (positioning):** Tracking robot heading direction and global coordinates.
+
 2. **Decision Making (The Robot's Brain):** How the robot thinks and plans what to do next.
-   - *Simple Role:* It takes the sensor data and makes smart choices—from simple reactions like stopping when something gets too close, to complex decisions like reading a building map and finding the shortest route to a room.
-   - *Everyday Examples:* 🛑 Stop immediately if a person walks in front • 🗺️ Read the room map • 📍 Plan the smoothest path to the destination.
-   - *System Output:* Sends movement speed and direction commands (`/cmd_vel`).
-3. **Action (The Robot's Muscles):** How the robot physically moves and changes the real world.
-   - *Simple Role:* It takes the brain's decision and powers physical hardware to do real work.
-   - *Mechanisms:* ⚙️ Spinning drive wheels to roll forward, 🦾 Moving a robotic arm to pick up objects, or 🔊 Speaking audio alerts to people through a speaker.
-   - *System Output:* Physical motion and work in the physical world.
+   - *Simple Role:* It takes the sensor information and decides what to do next—stopping before hitting obstacles or finding the best path to its goal.
+   - 🛑 **Obstacle Avoidance:** Stop or brake immediately if an unexpected obstacle or person is close.
+   - 🗺️ **Map Processing:** Read the building layout and compute 2D costmaps with danger inflation zones.
+   - 📍 **Path Planning:** Generate smooth, collision-free trajectories from current pose to the destination.
+
+3. **Action (The Robot's Muscles):** How the robot physically moves and acts.
+   - *Simple Role:* It turns the brain's decisions into real movement—spinning the drive wheels, moving an arm, or speaking alerts.
+   - ⚙️ **Spin Drive Wheels:** Send linear & angular velocity commands to wheel motor controllers.
+   - 🦾 **Actuate Joints:** Move robotic arm joints, grippers, or sensor tilt mechanisms.
+   - 🔊 **Audio & Voice Alerts:** Speak notifications or sound chimes to warn pedestrians.
 
 ---
 

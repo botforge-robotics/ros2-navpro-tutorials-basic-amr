@@ -18,14 +18,12 @@ import {
   ExternalLink,
   Copy,
   Check,
-  CheckCircle2,
   Sliders,
   Box,
   Monitor,
   Flame,
   AlertTriangle,
   Code2,
-  ArrowRight,
   Sparkles,
   HelpCircle,
   HardDrive,
@@ -337,115 +335,231 @@ export function Ros2ArchitectureInteractive() {
           </div>
         </div>
 
-        {/* Three Fundamental Ingredients Flow Pipeline (Perception -> Decision -> Action) */}
+        {/* Three Fundamental Ingredients Flow Pipeline (Vertically Arranged Column) */}
         <div style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-          gap: '14px',
-          alignItems: 'stretch'
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '1.1rem'
         }}>
           {/* Stage 1: Perception */}
           <div style={{
             background: 'var(--bg-primary)',
-            border: '1px solid #1e293b',
-            borderTop: '4px solid #0284c7',
+            border: '1px solid rgba(2, 132, 199, 0.3)',
+            borderLeft: '5px solid #0284c7',
             borderRadius: '12px',
-            padding: '1.25rem',
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'space-between',
+            padding: '1.25rem 1.4rem',
             boxShadow: 'var(--shadow-sm)'
           }}>
-            <div>
-              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '8px' }}>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '8px' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                 <span style={{ fontSize: '0.74rem', fontWeight: 800, color: '#0284c7', background: 'rgba(2, 132, 199, 0.12)', padding: '3px 8px', borderRadius: '4px' }}>
                   STAGE 1 &bull; SENSES (EYES &amp; EARS)
                 </span>
-                <Eye size={20} color="#0284c7" />
+                <h4 style={{ margin: 0, fontSize: '1.18rem', fontWeight: 800, color: 'var(--text-primary)' }}>
+                  1. Perception
+                </h4>
               </div>
-              <h4 style={{ margin: '0 0 6px', fontSize: '1.15rem', fontWeight: 800, color: 'var(--text-primary)' }}>
-                1. Perception
-              </h4>
-              <p style={{ margin: '0 0 10px', fontSize: '0.86rem', color: 'var(--text-secondary)', lineHeight: 1.55 }}>
-                How the robot senses the world around it. It uses cameras to see, laser scanners to measure distances to walls, and GPS to know its position.
-              </p>
-              <div style={{ background: 'var(--bg-code)', borderRadius: '6px', padding: '6px 10px', fontSize: '0.78rem', color: '#94a3b8', lineHeight: 1.5 }}>
-                📷 Cameras (seeing) &bull; 🔴 LiDAR (measuring distances) &bull; 🧭 GPS / Compass
-              </div>
+              <Eye size={22} color="#0284c7" />
             </div>
-            <div style={{ marginTop: '14px', paddingTop: '8px', borderTop: '1px solid rgba(255,255,255,0.06)', display: 'flex', alignItems: 'center', justifyContent: 'space-between', fontSize: '0.78rem', color: '#38bdf8', fontWeight: 700 }}>
-              <span>Outputs Sensor Data: /scan</span>
-              <ArrowRight size={16} />
+            <p style={{ margin: '0 0 12px', fontSize: '0.9rem', color: 'var(--text-secondary)', lineHeight: 1.6 }}>
+              How the robot senses the world around it. It uses cameras to see, laser scanners to measure distances to walls, and GPS to know its position.
+            </p>
+            {/* Clean List Styling (No black background) */}
+            <div style={{
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '6px'
+            }}>
+              <div style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '10px',
+                background: 'var(--bg-card, var(--bg-surface))',
+                border: '1px solid var(--border-color)',
+                borderRadius: '8px',
+                padding: '8px 12px',
+                fontSize: '0.86rem',
+                color: 'var(--text-primary)'
+              }}>
+                <span style={{ fontSize: '1.1rem' }}>📷</span>
+                <span><strong>Cameras (seeing):</strong> Capturing video frames, obstacle features, and visual objects</span>
+              </div>
+              <div style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '10px',
+                background: 'var(--bg-card, var(--bg-surface))',
+                border: '1px solid var(--border-color)',
+                borderRadius: '8px',
+                padding: '8px 12px',
+                fontSize: '0.86rem',
+                color: 'var(--text-primary)'
+              }}>
+                <span style={{ fontSize: '1.1rem' }}>🔴</span>
+                <span><strong>LiDAR (measuring distances):</strong> 360-degree laser beams measuring precise distances to obstacles and walls</span>
+              </div>
+              <div style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '10px',
+                background: 'var(--bg-card, var(--bg-surface))',
+                border: '1px solid var(--border-color)',
+                borderRadius: '8px',
+                padding: '8px 12px',
+                fontSize: '0.86rem',
+                color: 'var(--text-primary)'
+              }}>
+                <span style={{ fontSize: '1.1rem' }}>🧭</span>
+                <span><strong>GPS &amp; Compass (positioning):</strong> Tracking robot heading direction and global coordinates</span>
+              </div>
             </div>
           </div>
 
           {/* Stage 2: Decision Making */}
           <div style={{
             background: 'var(--bg-primary)',
-            border: '1px solid #1e293b',
-            borderTop: '4px solid #8b5cf6',
+            border: '1px solid rgba(139, 92, 246, 0.3)',
+            borderLeft: '5px solid #8b5cf6',
             borderRadius: '12px',
-            padding: '1.25rem',
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'space-between',
+            padding: '1.25rem 1.4rem',
             boxShadow: 'var(--shadow-sm)'
           }}>
-            <div>
-              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '8px' }}>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '8px' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                 <span style={{ fontSize: '0.74rem', fontWeight: 800, color: '#8b5cf6', background: 'rgba(139, 92, 246, 0.12)', padding: '3px 8px', borderRadius: '4px' }}>
                   STAGE 2 &bull; THE BRAIN (THINKING)
                 </span>
-                <Brain size={20} color="#8b5cf6" />
+                <h4 style={{ margin: 0, fontSize: '1.18rem', fontWeight: 800, color: 'var(--text-primary)' }}>
+                  2. Decision Making
+                </h4>
               </div>
-              <h4 style={{ margin: '0 0 6px', fontSize: '1.15rem', fontWeight: 800, color: 'var(--text-primary)' }}>
-                2. Decision Making
-              </h4>
-              <p style={{ margin: '0 0 10px', fontSize: '0.86rem', color: 'var(--text-secondary)', lineHeight: 1.55 }}>
-                How the robot thinks and plans. It takes the sensor information and decides what to do next—stopping before hitting obstacles or finding the best path to its goal.
-              </p>
-              <div style={{ background: 'var(--bg-code)', borderRadius: '6px', padding: '6px 10px', fontSize: '0.78rem', color: '#94a3b8', lineHeight: 1.5 }}>
-                🛑 Stop if obstacle is close &bull; 🗺️ Check map &bull; 📍 Plan shortest path
-              </div>
+              <Brain size={22} color="#8b5cf6" />
             </div>
-            <div style={{ marginTop: '14px', paddingTop: '8px', borderTop: '1px solid rgba(255,255,255,0.06)', display: 'flex', alignItems: 'center', justifyContent: 'space-between', fontSize: '0.78rem', color: '#c084fc', fontWeight: 700 }}>
-              <span>Outputs Movement Commands: /cmd_vel</span>
-              <ArrowRight size={16} />
+            <p style={{ margin: '0 0 12px', fontSize: '0.9rem', color: 'var(--text-secondary)', lineHeight: 1.6 }}>
+              How the robot thinks and plans. It takes the sensor information and decides what to do next—stopping before hitting obstacles or finding the best path to its goal.
+            </p>
+            {/* Clean List Styling (No black background) */}
+            <div style={{
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '6px'
+            }}>
+              <div style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '10px',
+                background: 'var(--bg-card, var(--bg-surface))',
+                border: '1px solid var(--border-color)',
+                borderRadius: '8px',
+                padding: '8px 12px',
+                fontSize: '0.86rem',
+                color: 'var(--text-primary)'
+              }}>
+                <span style={{ fontSize: '1.1rem' }}>🛑</span>
+                <span><strong>Obstacle Avoidance:</strong> Stop or brake immediately if an unexpected obstacle or person is close</span>
+              </div>
+              <div style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '10px',
+                background: 'var(--bg-card, var(--bg-surface))',
+                border: '1px solid var(--border-color)',
+                borderRadius: '8px',
+                padding: '8px 12px',
+                fontSize: '0.86rem',
+                color: 'var(--text-primary)'
+              }}>
+                <span style={{ fontSize: '1.1rem' }}>🗺️</span>
+                <span><strong>Map Processing:</strong> Read the building layout and compute 2D costmaps with danger inflation zones</span>
+              </div>
+              <div style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '10px',
+                background: 'var(--bg-card, var(--bg-surface))',
+                border: '1px solid var(--border-color)',
+                borderRadius: '8px',
+                padding: '8px 12px',
+                fontSize: '0.86rem',
+                color: 'var(--text-primary)'
+              }}>
+                <span style={{ fontSize: '1.1rem' }}>📍</span>
+                <span><strong>Path Planning:</strong> Generate smooth, collision-free trajectories from current pose to the destination</span>
+              </div>
             </div>
           </div>
 
           {/* Stage 3: Action */}
           <div style={{
             background: 'var(--bg-primary)',
-            border: '1px solid #1e293b',
-            borderTop: '4px solid #10b981',
+            border: '1px solid rgba(16, 185, 129, 0.3)',
+            borderLeft: '5px solid #10b981',
             borderRadius: '12px',
-            padding: '1.25rem',
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'space-between',
+            padding: '1.25rem 1.4rem',
             boxShadow: 'var(--shadow-sm)'
           }}>
-            <div>
-              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '8px' }}>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '8px' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                 <span style={{ fontSize: '0.74rem', fontWeight: 800, color: '#10b981', background: 'rgba(16, 185, 129, 0.12)', padding: '3px 8px', borderRadius: '4px' }}>
                   STAGE 3 &bull; THE MUSCLES (MOVING)
                 </span>
-                <Zap size={20} color="#10b981" />
+                <h4 style={{ margin: 0, fontSize: '1.18rem', fontWeight: 800, color: 'var(--text-primary)' }}>
+                  3. Action
+                </h4>
               </div>
-              <h4 style={{ margin: '0 0 6px', fontSize: '1.15rem', fontWeight: 800, color: 'var(--text-primary)' }}>
-                3. Action
-              </h4>
-              <p style={{ margin: '0 0 10px', fontSize: '0.86rem', color: 'var(--text-secondary)', lineHeight: 1.55 }}>
-                How the robot physically moves and acts. It turns the brain's decisions into real movement—spinning the drive wheels, moving an arm, or speaking alerts.
-              </p>
-              <div style={{ background: 'var(--bg-code)', borderRadius: '6px', padding: '6px 10px', fontSize: '0.78rem', color: '#94a3b8', lineHeight: 1.5 }}>
-                ⚙️ Spin the drive wheels &bull; 🦾 Move robot joints &bull; 🔊 Speak audio alerts
-              </div>
+              <Zap size={22} color="#10b981" />
             </div>
-            <div style={{ marginTop: '14px', paddingTop: '8px', borderTop: '1px solid rgba(255,255,255,0.06)', display: 'flex', alignItems: 'center', justifyContent: 'space-between', fontSize: '0.78rem', color: '#34d399', fontWeight: 700 }}>
-              <span>Physical Motion in the World</span>
-              <CheckCircle2 size={16} />
+            <p style={{ margin: '0 0 12px', fontSize: '0.9rem', color: 'var(--text-secondary)', lineHeight: 1.6 }}>
+              How the robot physically moves and acts. It turns the brain's decisions into real movement—spinning the drive wheels, moving an arm, or speaking alerts.
+            </p>
+            {/* Clean List Styling (No black background) */}
+            <div style={{
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '6px'
+            }}>
+              <div style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '10px',
+                background: 'var(--bg-card, var(--bg-surface))',
+                border: '1px solid var(--border-color)',
+                borderRadius: '8px',
+                padding: '8px 12px',
+                fontSize: '0.86rem',
+                color: 'var(--text-primary)'
+              }}>
+                <span style={{ fontSize: '1.1rem' }}>⚙️</span>
+                <span><strong>Spin Drive Wheels:</strong> Send linear &amp; angular velocity commands to wheel motor controllers</span>
+              </div>
+              <div style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '10px',
+                background: 'var(--bg-card, var(--bg-surface))',
+                border: '1px solid var(--border-color)',
+                borderRadius: '8px',
+                padding: '8px 12px',
+                fontSize: '0.86rem',
+                color: 'var(--text-primary)'
+              }}>
+                <span style={{ fontSize: '1.1rem' }}>🦾</span>
+                <span><strong>Actuate Joints:</strong> Move robotic arm joints, grippers, or sensor tilt mechanisms</span>
+              </div>
+              <div style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '10px',
+                background: 'var(--bg-card, var(--bg-surface))',
+                border: '1px solid var(--border-color)',
+                borderRadius: '8px',
+                padding: '8px 12px',
+                fontSize: '0.86rem',
+                color: 'var(--text-primary)'
+              }}>
+                <span style={{ fontSize: '1.1rem' }}>🔊</span>
+                <span><strong>Audio &amp; Voice Alerts:</strong> Speak notifications or sound chimes to warn pedestrians</span>
+              </div>
             </div>
           </div>
         </div>
