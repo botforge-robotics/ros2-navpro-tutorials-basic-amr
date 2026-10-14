@@ -77,31 +77,48 @@ Every autonomous robot—from an industrial AMR moving palettes to an interstell
 
 ### 3.3 The Story of a Robotics Developer: Why We Need a Standard
 
-Before ROS became the worldwide industry standard, robotics engineering was trapped in an endless cycle of wasted effort and abandoned projects:
+One pretty common story in robotics development is this:
 
-#### 🎬 Step 1: The Dream & Ambition
-![Step 1: The Dream & Ambition](assets/images/story_step1_dream.jpg)
-> *"I just want to build an intelligent robot that navigates on its own!"*  
-> **Goal:** AI Navigation & Computer Vision. **Dilemma:** No universal robotics middleware exists.
+#### 🎬 Step 1: The Spark & Reality Check
+![Step 1: The Spark & Reality Check](assets/images/story_step1_dream.jpg)
 
-#### 🎬 Step 2: The Plumbing Trap — Reinventing Everything
-![Step 2: The Plumbing Trap](assets/images/story_step2_plumbing.jpg)
-> *"Why am I spending 8 months writing serial drivers and network sockets instead of AI?"*  
-> **Reality:** 80% of engineering time wasted reinventing basic device communication.
+> **Someday, a student/engineer starts a new cool robotics project.** She starts planning and working on the project.  
+> Soon, she discovers that it’s not that simple: robotics is hard to learn, and it takes time to develop good software for a robot.
 
-#### 🎬 Step 3: Burnout & Abandonment
-![Step 3: Burnout & Abandonment](assets/images/story_step3_burnout.jpg)
-> *"The project is delayed by 18 months, code is undocumented, and the prototype is parked."*  
-> **Outcome:** Exhaustion and hardware abandonment in the corner of the lab.
+---
 
-#### 🎬 Step 4: The Groundhog Loop Repeats
-![Step 4: The Groundhog Loop Repeats](assets/images/story_step4_cycle.jpg)
-> *"Person X's custom framework won't compile... let's just write our own from scratch!"*  
-> **Result:** Another incompatible, single-use framework doomed to be forgotten.
+#### 🎬 Step 2: The Communication & 3D Simulation Trap
+![Step 2: The Communication & 3D Simulation Trap](assets/images/story_step2_plumbing.jpg)
+
+> **So, she starts to spend time working on how to communicate between all her programs, how she can implement a 3D simulation of the robot, etc.**  
+> Without realizing it, she is spending all her time trying to write a robotics framework, instead of working on her actual robotics application.
+
+---
+
+#### 🎬 Step 3: Project Ends: Lost Faith & Abandonment
+![Step 3: Project Ends: Lost Faith & Abandonment](assets/images/story_step3_burnout.jpg)
+
+> **The project comes to an end. No real progress was made, and the developer starts to lose faith.**  
+> She has spent all her time trying to write a robotics framework, but worked only a little on the actual project. Soon the project is abandoned, or maybe she manages to finish something with some hacked code.
+
+---
+
+#### 🎬 Step 4: Another Guy Starts: The Cycle Repeats
+![Step 4: Another Guy Starts: The Cycle Repeats](assets/images/story_step4_cycle.jpg)
+
+> **A few weeks later, another guy starts another new cool robotics project.**  
+> He thinks: *What if I find some framework I can directly use?* He finds her code on the Internet, but the code seems really not reusable for his own application.  
+> **So, he starts writing everything from scratch.**
+
+---
 
 > [!WARNING]
-> *"They develop a robotics framework that ends up being non-reusable, not supported, and quickly forgotten."*  
-> — *The recurring industry tragedy that inspired the creation of the universal ROS standard.*
+> **The Core Problem in Robotics Development:**  
+> *"And so on, and so forth. Many people who are working in robot software development don’t actually develop robotics applications. They develop robotics framework that ends up being non-reusable, not supported, not known, and quickly forgotten.*  
+> 
+> *This situation often happens for people doing a PhD, with a 2–3 years time frame for the project.*  
+> 
+> ***This is one of the main factors slowing down robotics research and development, and ROS is trying to solve this problem.***"
 
 ---
 

@@ -58,43 +58,43 @@ export function Ros2ArchitectureInteractive() {
   const storySteps = [
     {
       stepNumber: 1,
-      title: 'The Dream & Ambition',
-      subtitle: 'Person X starts an autonomous robot project',
+      title: 'The Cool Project & Reality Check',
+      subtitle: 'A student/engineer starts planning a new robotics project',
       accent: '#38bdf8',
       image: 'assets/images/story_step1_dream.jpg',
-      dialogue: '“I just want to build an intelligent robot that navigates on its own!”',
-      narrative: 'Person X is an ambitious robotics engineer eager to build an autonomous mobile robot (AMR). They envision writing cutting-edge AI, SLAM mapping, and path planning. But as soon as they unbox the hardware, reality hits: there is no standard framework to build on.',
-      impact: 'Goal: AI Navigation & Computer Vision • Dilemma: No universal middleware exists'
+      dialogue: '“I’m starting an exciting new robotics project!”',
+      narrative: 'Someday, a student/engineer starts a new cool robotics project. She starts planning and working on the project. Soon, she discovers that it’s not that simple: robotics is hard to learn, and it takes time to develop a good software for a robot.',
+      impact: 'The Reality: Robotics is hard to learn, and developing good software takes immense time'
     },
     {
       stepNumber: 2,
-      title: 'The Plumbing Trap',
-      subtitle: '8 months wasted on low-level drivers & sockets',
+      title: 'The Communication & Simulation Trap',
+      subtitle: 'Spending time on IPC and 3D simulation instead of the actual project',
       accent: '#f59e0b',
       image: 'assets/images/story_step2_plumbing.jpg',
-      dialogue: '“Why am I spending months debugging UART parity bits instead of writing autonomous features?!”',
-      narrative: 'Instead of programming robot intelligence, Person X gets buried under tangled wiring and raw protocols. They spend 8 months writing custom motor drivers, serial packet parsers, multi-threading locks, and a custom 3D debug visualizer. 80% of their project budget and time evaporates into generic infrastructure.',
-      impact: 'Trapped in Infrastructure: 80% effort spent on plumbing already solved by others'
+      dialogue: '“How do I communicate between all my programs? How do I implement a 3D simulation?”',
+      narrative: 'So, she starts to spend time working on how to communicate between all her programs, how she can implement a 3D simulation of the robot, etc. She spends almost all her time trying to write a custom robotics framework, rather than working on her actual application.',
+      impact: 'The Framework Trap: Trapped in communication plumbing & 3D simulation rather than the application'
     },
     {
       stepNumber: 3,
-      title: 'Burnout & Abandonment',
-      subtitle: 'Funding runs out, the prototype sits dormant',
+      title: 'Project Ends: Lost Faith & Abandonment',
+      subtitle: 'No real progress made; code abandoned or finished with hacks',
       accent: '#ef4444',
       image: 'assets/images/story_step3_burnout.jpg',
-      dialogue: '“The project deadline has arrived... The robot barely moves, and the code is a tangled mess.”',
-      narrative: 'Exhausted and out of time, Person X reaches the end of their grant. The robot is fragile, uncalibrated, and buggy. The monolithic custom codebase has zero documentation. Defeated, Person X unplugs the robot and abandons it in the dark corner of the laboratory.',
-      impact: 'Project Dead: Custom framework is monolithic, undocumented, and fragile'
+      dialogue: '“The project came to an end... I spent all my time writing a framework and made no real progress.”',
+      narrative: 'The project comes to an end (a situation that often happens for people doing a PhD, with a 2–3 years time frame for the project). No real progress was made, and the developer starts to lose faith. She has spent all her time trying to write a robotics framework, but worked only a little on the actual project. Soon the project is abandoned, or maybe she manages to finish something with some hacked code.',
+      impact: 'The Outcome: 2–3 years gone, developer loses faith, project abandoned or held by hacked code'
     },
     {
       stepNumber: 4,
-      title: 'The Groundhog Loop Repeats',
-      subtitle: 'Person Y arrives: The endless tragedy of robotics',
+      title: 'Another Guy Starts: The Cycle Repeats',
+      subtitle: 'Searches online for a framework, finds it not reusable, rewrites from scratch',
       accent: '#a855f7',
       image: 'assets/images/story_step4_cycle.jpg',
-      dialogue: '“BUILD FAILED! Missing Dependency. This code is impossible to run—I’ll just rewrite it from scratch!”',
-      narrative: 'One year later, a new developer (Person Y) joins the lab. They discover Person X\'s abandoned code, but it refuses to compile due to missing drivers and unique system hacks. Frustrated, Person Y tosses the entire codebase into the trash and begins writing another custom framework from scratch!',
-      impact: 'The Vicious Cycle: Every lab reinvents the wheel until ROS introduces the universal standard'
+      dialogue: '“What if I find some framework I can directly use? ...Wait, her code isn’t reusable at all. I’ll write it from scratch!”',
+      narrative: 'A few weeks later, another guy starts another new cool robotics project. He thinks: what if I find some framework I can directly use? He finds her code on the Internet, but the code seems really not reusable for his own application. So, he starts writing everything from scratch!',
+      impact: 'The Vicious Cycle: Non-reusable, unsupported, unstandardized code forces everyone to restart'
     }
   ];
 
@@ -798,21 +798,42 @@ export function Ros2ArchitectureInteractive() {
           </button>
         </div>
 
-        {/* Universal Tragedy Conclusion Quote */}
+        {/* Universal Tragedy Conclusion Callout */}
         <div style={{
-          textAlign: 'center',
-          padding: '12px 16px',
+          padding: '1.15rem 1.4rem',
           background: 'rgba(245, 158, 11, 0.08)',
-          border: '1px solid rgba(245, 158, 11, 0.25)',
-          borderRadius: '8px',
-          fontSize: '0.9rem',
+          border: '1px solid rgba(245, 158, 11, 0.28)',
+          borderRadius: '10px',
           color: 'var(--text-primary)',
-          fontStyle: 'italic',
-          fontWeight: 600
+          lineHeight: 1.6
         }}>
-          &ldquo;They develop a robotics framework that ends up being non-reusable, not supported, and quickly forgotten.&rdquo;
-          <div style={{ fontSize: '0.8rem', color: '#f59e0b', fontStyle: 'normal', fontWeight: 700, marginTop: '4px' }}>
-            &mdash; The recurring tragedy that inspired the creation of the universal ROS standard
+          <div style={{
+            fontSize: '0.98rem',
+            fontWeight: 800,
+            color: '#f59e0b',
+            marginBottom: '6px'
+          }}>
+            The Core Robotics Dilemma:
+          </div>
+          <p style={{ margin: '0 0 10px', fontSize: '0.92rem', fontStyle: 'italic', color: 'var(--text-primary)' }}>
+            &ldquo;And so on, and so forth. Many people who are working in robot software development don’t actually develop robotics applications. They develop robotics framework that ends up being non-reusable, not supported, not known, and quickly forgotten.&rdquo;
+          </p>
+          <div style={{
+            display: 'flex',
+            flexWrap: 'wrap',
+            gap: '10px',
+            alignItems: 'center',
+            fontSize: '0.82rem',
+            color: 'var(--text-secondary)',
+            borderTop: '1px solid rgba(245, 158, 11, 0.18)',
+            paddingTop: '8px'
+          }}>
+            <span style={{ background: 'rgba(239, 68, 68, 0.12)', color: '#f87171', padding: '3px 9px', borderRadius: '4px', fontWeight: 700 }}>
+              🎓 Often happens for people doing a PhD (2–3 years timeframe)
+            </span>
+            <span style={{ background: 'rgba(14, 165, 233, 0.12)', color: '#38bdf8', padding: '3px 9px', borderRadius: '4px', fontWeight: 700 }}>
+              🚀 Main factor slowing down robotics R&D — and ROS is built to solve this problem!
+            </span>
           </div>
         </div>
       </section>
