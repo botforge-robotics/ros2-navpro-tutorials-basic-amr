@@ -212,23 +212,23 @@ To intuitively understand how ROS 2 operates at runtime, visualize the AMR not a
 
 ### 3.7 ROS 1 vs. ROS 2: The Architectural Paradigm Shift & Unified RCL C Core
 
-#### The 3 Architectural Layers Explained:
+#### The 3 Architectural Layers (Side-by-Side Comparison):
 
-1. **Application Layer:**
-   - **ROS 1:** Features a centralized `Master` (`roscore`) alongside application nodes (`Node`, `Node`). Every node must register with the Master to look up subscriber and publisher addresses. If the Master dies, discovery halts.
-   - **ROS 2:** Contains pure application nodes (`Node`, `Node`, `Node`) communicating in a fully decentralized peer-to-peer mesh. **Zero central Master process!**
+##### 1. ROS 1 Architecture (Legacy Centralized Design)
+- **Master (`roscore`):** Centralized XML-RPC naming and lookup service that all nodes must query to discover peers and establish topic connections.
+- **Application Nodes:** User robotics algorithms that depend entirely on the Master for connection lookup and freeze if it fails.
+- **Client Library (`roscpp` / `rospy`):** Two independently written language codebases that suffered from feature disparities and differing threading behaviors.
+- **TCPROS / UDPROS:** Custom socket transport lacking native QoS policies, data encryption, and lossy wireless support.
+- **Nodelet API (C++):** Specialized C++ mechanism sharing memory inside one process to bypass network serialization.
+- **OS Layer (Linux Only):** Strictly bound to Linux distributions with no native support for Windows, macOS, or microcontrollers.
 
-2. **Middleware Layer:**
-   - **ROS 1:** Language client libraries (`roscpp`, `rospy`) communicate via custom `TCPROS` and `UDPROS` protocols, with a separate `Nodelet API` for thread-sharing within a single process.
-   - **ROS 2:** Wrapped cleanly in the ROS 2 boundary:
-     - **Client Library:** `rclcpp`, `rclpy`, and unified C `rcl`.
-     - **Abstract DDS Layer (`rmw`):** Decouples client libraries from specific middleware vendors.
-     - **Intra-process API:** Enables high-performance zero-copy message passing between nodes sharing process memory.
-     - **Standard DDS (Data Distribution Service):** Uses industrial OMG standards (`FastDDS`, `CycloneDDS`, `Connext`) for reliable, real-time UDP multicast discovery.
-
-3. **OS Layer:**
-   - **ROS 1:** Strictly bound to **Linux (Ubuntu)**.
-   - **ROS 2:** Multi-platform: natively supports **Linux, Windows, macOS, and RTOS** (Real-Time Operating Systems like QNX, FreeRTOS, and Zephyr).
+##### 2. ROS 2 Architecture (Modern Decentralized Standard)
+- **Application Nodes (Masterless):** Autonomous nodes that dynamically discover peers via DDS UDP multicast with zero single point of failure.
+- **Client Library (`rclcpp` / `rclpy` / `rcl`):** Thin language wrappers built upon a shared C core (`rcl`), ensuring 100% behavioral and threading parity.
+- **Abstract DDS Layer (`rmw`):** Standard middleware interface that decouples ROS 2 from specific DDS vendors, enabling zero-code vendor switching.
+- **DDS (`FastDDS` / `CycloneDDS`):** OMG industrial standard handling peer discovery, data encryption, and configurable Quality of Service (QoS).
+- **Intra-process API:** Passes direct memory pointers between co-located nodes to achieve ultra-low microsecond latency.
+- **OS Layer (Multi-Platform & RTOS):** Universal multi-platform support spanning developer workstations, cloud servers, and real-time embedded microcontrollers (FreeRTOS, Zephyr, QNX).
 
 ---
 
