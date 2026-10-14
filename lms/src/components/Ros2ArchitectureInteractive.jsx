@@ -18,6 +18,7 @@ import {
   ExternalLink,
   Copy,
   Check,
+  CheckCircle2,
   Sliders,
   Box,
   Monitor,
