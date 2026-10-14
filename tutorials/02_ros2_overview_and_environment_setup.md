@@ -111,9 +111,9 @@ One pretty common story in robotics development is this:
 
 ---
 
-### 3.3 The ROS Goal: Stop Reinventing the Wheel!
+### 3.3 Stop Reinventing the Wheel & Standardizing Communication
 
-A universal standard so you can focus on building your application instead of reinventing infrastructure.
+Why universal communication standards (Topics, Services, Actions) solve the developer crisis and enable plug-and-play robotics.
 
 ![Stop Reinventing the Wheel](assets/images/reinventing_wheel_cartoon.jpg)
 
@@ -122,10 +122,24 @@ A universal standard so you can focus on building your application instead of re
 > *"The ROS goal is to provide a standard for robotics software development, that you can use on any robot. Whether you are programming a mobile robot, robotic arm, drone, boat, vending machine… etc.*  
 > *This standard allows you to **focus on the key features of your application**, using an existing battle-tested foundation, instead of trying to do everything yourself."*
 
-#### The Three Critical Dilemmas Addressed by the ROS Standard:
-1. **Hardware Chaos & Noise:** Robots operate in physical environments with messy friction, optical reflections, shifting lighting, and mechanical back-divisibility. Standardized message schemas (`/scan`, `/odom`) isolate physical sensor quirks from your code.
-2. **The "Square Wheel" Trap:** Instead of spending 80% of budgets writing custom serial sockets and device drivers, use battle-tested open-source packages.
-3. **The Modular Middleware Solution:** Decoupled peer-to-peer nodes communicate via industrial DDS with zero single point of failure.
+#### Engineering Time Allocation: Before vs. After ROS
+* **Without ROS Standard (Square Wheels):** 80% Wasted Low-Level Plumbing (drivers, sockets, math) • 20% Actual Robot Features.
+* **With ROS 2 Standard (Round Wheels):** 10% Fast Setup • 90% Real Robotics Autonomy (computer vision, navigation, AI).
+
+#### The Three Core Communication Standards:
+1. **Topics (Publish / Subscribe):** Continuous, one-way asynchronous telemetry stream. Nodes publish messages without knowing who is listening.
+   - *AMR Examples:* `/scan` (10 Hz LiDAR distance rays), `/cmd_vel` (50 Hz motor velocity), `/odom` (wheel position).
+   - *Key Advantage:* Decoupled 1-to-many communication.
+2. **Services (Request / Response):** Synchronous 1-to-1 two-way transactions (RPC). The client sends a request and waits for an immediate answer or confirmation.
+   - *AMR Examples:* `/reset_odometry` (clear encoder counts), `/get_map` (fetch occupancy grid), `/set_camera_exposure`.
+   - *Key Advantage:* Instant confirmation for discrete tasks.
+3. **Actions (Preemptible Goals):** Long-running asynchronous goals with continuous live progress feedback and midway cancelability.
+   - *AMR Examples:* `/navigate_to_pose` (navigate to goal room), `/dock_robot` (precision charging dock alignment), `/patrol_waypoints`.
+   - *Key Advantage:* Cancelable goals with live telemetry feedback.
+
+> [!TIP]
+> **Hardware Abstraction (Plug & Play):**  
+> Because sensors publish standard messages (e.g., `sensor_msgs/msg/LaserScan` on topic `/scan`), you can swap your LiDAR from an expensive **SICK** unit to an affordable **RPLiDAR** or a 3D **Velodyne** without changing or recompiling a single line of your navigation or SLAM software!
 
 ---
 

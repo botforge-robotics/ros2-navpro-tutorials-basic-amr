@@ -52,9 +52,6 @@ export function Ros2ArchitectureInteractive() {
   const [selectedLidar, setSelectedLidar] = useState('sick'); // 'sick', 'rplidar', 'velodyne'
   const [isSwappingLidar, setIsSwappingLidar] = useState(false);
 
-  // Chapter 3: Interactive Storyboard State
-  const [activeStoryStep, setActiveStoryStep] = useState(0);
-
   const storySteps = [
     {
       stepNumber: 1,
@@ -107,7 +104,6 @@ export function Ros2ArchitectureInteractive() {
   const [lastPacketLog, setLastPacketLog] = useState('DDS Bus Initialized: Discovery active on UDP multicast');
 
   // ROS 1 vs ROS 2 Sandbox State
-  const [archMode, setArchMode] = useState('ros2'); // 'ros1' or 'ros2'
   const [roscoreCrashed, setRoscoreCrashed] = useState(false);
   const [ros2NodeCrashed, setRos2NodeCrashed] = useState(false);
 
@@ -489,212 +485,118 @@ export function Ros2ArchitectureInteractive() {
           </div>
         </div>
 
-        {/* Interactive Storyboard Step Navigation Tabs */}
-        <div style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
-          gap: '10px',
-          marginBottom: '1.25rem'
-        }}>
-          {storySteps.map((step, idx) => {
-            const isActive = activeStoryStep === idx;
-            return (
-              <button
-                key={idx}
-                onClick={() => setActiveStoryStep(idx)}
-                style={{
-                  padding: '10px 14px',
-                  borderRadius: '10px',
-                  border: isActive ? `2px solid ${step.accent}` : '1px solid var(--border-color)',
-                  borderTop: isActive ? `4px solid ${step.accent}` : '1px solid var(--border-color)',
-                  background: isActive ? 'var(--bg-primary)' : 'var(--bg-card, var(--bg-surface))',
-                  boxShadow: isActive ? `0 4px 12px ${step.accent}30` : 'none',
-                  cursor: 'pointer',
-                  textAlign: 'left',
-                  transition: 'all 0.2s cubic-bezier(0.16, 1, 0.3, 1)',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  gap: '4px'
-                }}
-              >
-                <div style={{
-                  fontSize: '0.68rem',
-                  fontWeight: 800,
-                  letterSpacing: '0.05em',
-                  color: isActive ? step.accent : 'var(--text-muted)'
-                }}>
-                  STEP {idx + 1}
-                </div>
-                <div style={{
-                  fontSize: '0.82rem',
-                  fontWeight: isActive ? 800 : 600,
-                  color: isActive ? 'var(--text-primary)' : 'var(--text-secondary)',
-                  lineHeight: 1.35
-                }}>
-                  {step.title}
-                </div>
-              </button>
-            );
-          })}
-        </div>
-
-        {/* Main Storyboard Stage: 16:9 Cinematic Visual */}
-        <div style={{
-          borderRadius: '12px',
-          overflow: 'hidden',
-          border: `1px solid ${storySteps[activeStoryStep].accent}40`,
-          background: '#0a0f1d',
-          position: 'relative',
-          boxShadow: '0 8px 30px rgba(0, 0, 0, 0.5)',
-          marginBottom: '1rem'
-        }}>
-          <img
-            key={activeStoryStep}
-            src={storySteps[activeStoryStep].image}
-            alt={storySteps[activeStoryStep].title}
-            style={{
-              width: '100%',
-              height: 'auto',
-              display: 'block'
-            }}
-          />
-          {/* Step watermark badge */}
-          <div style={{
-            position: 'absolute',
-            top: '12px',
-            left: '12px',
-            background: 'rgba(10, 15, 29, 0.85)',
-            backdropFilter: 'blur(8px)',
-            border: `1px solid ${storySteps[activeStoryStep].accent}60`,
-            borderRadius: '6px',
-            padding: '4px 12px',
-            fontSize: '0.78rem',
-            fontWeight: 800,
-            color: storySteps[activeStoryStep].accent,
-            display: 'flex',
-            alignItems: 'center',
-            gap: '6px'
-          }}>
-            <span>BEAT {activeStoryStep + 1} OF 4:</span>
-            <span style={{ color: '#f8fafc' }}>{storySteps[activeStoryStep].title.toUpperCase()}</span>
-          </div>
-        </div>
-
-        {/* Story Narrative & Dialogue Callout */}
-        <div style={{
-          background: 'var(--bg-code)',
-          border: '1px solid var(--border-color)',
-          borderRadius: '10px',
-          padding: '1rem 1.25rem',
-          marginBottom: '1rem'
-        }}>
-          {/* Character Dialogue Quote */}
-          <div style={{
-            background: `${storySteps[activeStoryStep].accent}15`,
-            borderLeft: `4px solid ${storySteps[activeStoryStep].accent}`,
-            padding: '8px 14px',
-            borderRadius: '0 6px 6px 0',
-            marginBottom: '10px',
-            fontStyle: 'italic',
-            color: storySteps[activeStoryStep].accent,
-            fontWeight: 700,
-            fontSize: '0.94rem'
-          }}>
-            {storySteps[activeStoryStep].dialogue}
-          </div>
-
-          {/* Narrative description */}
-          <p style={{ margin: '0 0 10px', fontSize: '0.9rem', color: 'var(--text-primary)', lineHeight: 1.6 }}>
-            {storySteps[activeStoryStep].narrative}
-          </p>
-
-          {/* Impact Pill */}
-          <div style={{
-            display: 'inline-flex',
-            alignItems: 'center',
-            gap: '6px',
-            fontSize: '0.76rem',
-            color: '#94a3b8',
-            background: 'rgba(255, 255, 255, 0.04)',
-            padding: '4px 10px',
-            borderRadius: '4px',
-            border: '1px solid rgba(255, 255, 255, 0.08)'
-          }}>
-            <AlertTriangle size={14} color={storySteps[activeStoryStep].accent} />
-            <span>{storySteps[activeStoryStep].impact}</span>
-          </div>
-        </div>
-
-        {/* Previous & Next Control Bar */}
+        {/* Vertical Storyboard Sequence: Beat 1 -> Beat 2 -> Beat 3 -> Beat 4 */}
         <div style={{
           display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          gap: '12px',
-          marginBottom: '1.25rem'
+          flexDirection: 'column',
+          gap: '1.25rem',
+          marginBottom: '1.5rem'
         }}>
-          <button
-            onClick={() => setActiveStoryStep(prev => Math.max(0, prev - 1))}
-            disabled={activeStoryStep === 0}
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '6px',
-              padding: '8px 16px',
-              borderRadius: '8px',
-              background: activeStoryStep === 0 ? 'var(--bg-surface)' : 'var(--bg-primary)',
-              border: '1px solid var(--border-color)',
-              color: activeStoryStep === 0 ? 'var(--text-muted)' : 'var(--text-primary)',
-              fontSize: '0.86rem',
-              fontWeight: 700,
-              cursor: activeStoryStep === 0 ? 'not-allowed' : 'pointer',
-              opacity: activeStoryStep === 0 ? 0.4 : 1,
-              transition: 'all 0.2s'
-            }}
-          >
-            <ChevronLeft size={18} />
-            <span>Previous Beat</span>
-          </button>
+          {storySteps.map((step, idx) => (
+            <div
+              key={idx}
+              style={{
+                background: 'var(--bg-primary)',
+                border: `1px solid ${step.accent}35`,
+                borderLeft: `5px solid ${step.accent}`,
+                borderRadius: '12px',
+                padding: '1.15rem 1.35rem',
+                boxShadow: 'var(--shadow-sm)'
+              }}
+            >
+              {/* Step Header: Badge + Title + Subtitle */}
+              <div style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                flexWrap: 'wrap',
+                gap: '8px',
+                marginBottom: '8px'
+              }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                  <span style={{
+                    fontSize: '0.72rem',
+                    fontWeight: 800,
+                    letterSpacing: '0.05em',
+                    color: step.accent,
+                    background: `${step.accent}18`,
+                    padding: '2px 8px',
+                    borderRadius: '4px'
+                  }}>
+                    BEAT {idx + 1} OF 4
+                  </span>
+                  <h4 style={{ margin: 0, fontSize: '1.1rem', fontWeight: 800, color: 'var(--text-primary)' }}>
+                    {step.title}
+                  </h4>
+                </div>
+                <span style={{ fontSize: '0.76rem', color: 'var(--text-muted)', fontWeight: 600 }}>
+                  {step.subtitle}
+                </span>
+              </div>
 
-          {/* Progress Step Indicator Dots */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-            {storySteps.map((step, idx) => (
-              <div
-                key={idx}
-                onClick={() => setActiveStoryStep(idx)}
-                style={{
-                  width: activeStoryStep === idx ? '24px' : '10px',
-                  height: '10px',
-                  borderRadius: '5px',
-                  background: activeStoryStep === idx ? step.accent : 'var(--border-color)',
-                  cursor: 'pointer',
-                  transition: 'all 0.25s cubic-bezier(0.16, 1, 0.3, 1)'
-                }}
-                title={`Jump to Beat ${idx + 1}`}
-              />
-            ))}
-          </div>
+              {/* 16:9 Cinematic Visual Frame */}
+              <div style={{
+                borderRadius: '8px',
+                overflow: 'hidden',
+                border: `1px solid ${step.accent}30`,
+                background: '#0a0f1d',
+                marginBottom: '8px',
+                boxShadow: '0 4px 16px rgba(0, 0, 0, 0.25)'
+              }}>
+                <img
+                  src={step.image}
+                  alt={step.title}
+                  style={{
+                    width: '100%',
+                    height: 'auto',
+                    display: 'block'
+                  }}
+                />
+              </div>
 
-          <button
-            onClick={() => setActiveStoryStep(prev => (prev < storySteps.length - 1 ? prev + 1 : 0))}
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '6px',
-              padding: '8px 18px',
-              borderRadius: '8px',
-              background: activeStoryStep === storySteps.length - 1 ? 'rgba(16, 185, 129, 0.15)' : 'var(--accent-primary)',
-              border: activeStoryStep === storySteps.length - 1 ? '1px solid #10b981' : 'none',
-              color: activeStoryStep === storySteps.length - 1 ? '#34d399' : '#ffffff',
-              fontSize: '0.86rem',
-              fontWeight: 700,
-              cursor: 'pointer',
-              transition: 'all 0.2s'
-            }}
-          >
-            <span>{activeStoryStep === storySteps.length - 1 ? 'Replay Story ↺' : 'Next Beat'}</span>
-            <ChevronRight size={18} />
-          </button>
+              {/* Character Dialogue Quote */}
+              <div style={{
+                background: `${step.accent}12`,
+                borderLeft: `3px solid ${step.accent}`,
+                padding: '6px 12px',
+                borderRadius: '0 6px 6px 0',
+                marginBottom: '6px',
+                fontStyle: 'italic',
+                color: step.accent,
+                fontWeight: 700,
+                fontSize: '0.88rem',
+                lineHeight: 1.45
+              }}>
+                {step.dialogue}
+              </div>
+
+              {/* Narrative description */}
+              <p style={{
+                margin: '0 0 6px',
+                fontSize: '0.88rem',
+                color: 'var(--text-primary)',
+                lineHeight: 1.55
+              }}>
+                {step.narrative}
+              </p>
+
+              {/* Impact Pill */}
+              <div style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '6px',
+                fontSize: '0.76rem',
+                color: '#94a3b8',
+                background: 'rgba(255, 255, 255, 0.04)',
+                padding: '4px 10px',
+                borderRadius: '4px',
+                border: '1px solid rgba(255, 255, 255, 0.08)'
+              }}>
+                <AlertTriangle size={13} color={step.accent} />
+                <span>{step.impact}</span>
+              </div>
+            </div>
+          ))}
         </div>
 
         {/* Universal Tragedy Conclusion Callout */}
@@ -738,7 +640,8 @@ export function Ros2ArchitectureInteractive() {
       </section>
 
       {/* ========================================================================= */}
-      {/* CHAPTER 3: THE ROS GOAL: STOP REINVENTING THE WHEEL */}
+      {/* ========================================================================= */}
+      {/* CHAPTER 3: STOP REINVENTING THE WHEEL & STANDARDIZING COMMUNICATION */}
       {/* ========================================================================= */}
       <section id="sec-mission" style={{
         background: 'var(--bg-surface)',
@@ -763,10 +666,10 @@ export function Ros2ArchitectureInteractive() {
           </div>
           <div>
             <h3 style={{ margin: 0, fontSize: '1.25rem', fontWeight: 800, color: 'var(--text-primary)' }}>
-              3. The ROS Goal: Stop Reinventing the Wheel!
+              3. Stop Reinventing the Wheel &amp; Standardizing Communication
             </h3>
             <span style={{ fontSize: '0.84rem', color: 'var(--text-muted)' }}>
-              A universal foundation so you can build real robotics intelligence instead of plumbing.
+              Why universal communication standards (Topics, Services, Actions) solve the developer crisis and enable plug-and-play robotics.
             </span>
           </div>
         </div>
@@ -840,36 +743,142 @@ export function Ros2ArchitectureInteractive() {
           </div>
         </div>
 
-        {/* 3 Dilemmas Resolved by ROS */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '10px' }}>
-          <div style={{ background: 'var(--bg-primary)', border: '1px solid var(--border-color)', borderRadius: '8px', padding: '10px 12px' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '6px', color: '#f59e0b', fontWeight: 700, fontSize: '0.88rem', marginBottom: '4px' }}>
-              <AlertTriangle size={15} />
-              <span>Hardware Chaos &amp; Noise</span>
-            </div>
-            <p style={{ margin: 0, fontSize: '0.8rem', color: 'var(--text-muted)' }}>
-              Standardized message schemas (<code style={{ color: '#f59e0b' }}>/scan</code>, <code style={{ color: '#f59e0b' }}>/odom</code>) isolate physical sensor quirks from your code.
-            </p>
+        {/* The 3 Core Communication Standards: Topics, Services, Actions */}
+        <div style={{ marginBottom: '1.25rem' }}>
+          <div style={{ fontSize: '0.95rem', fontWeight: 800, color: 'var(--text-primary)', marginBottom: '8px', display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <RadioTower size={18} color="#0284c7" />
+            <span>How ROS Standardizes Communication Across All Robots</span>
           </div>
 
-          <div style={{ background: 'var(--bg-primary)', border: '1px solid var(--border-color)', borderRadius: '8px', padding: '10px 12px' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '6px', color: '#ef4444', fontWeight: 700, fontSize: '0.88rem', marginBottom: '4px' }}>
-              <Flame size={15} />
-              <span>The &ldquo;Square Wheel&rdquo; Trap</span>
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))',
+            gap: '12px'
+          }}>
+            {/* Standard 1: Topics */}
+            <div style={{
+              background: 'var(--bg-primary)',
+              border: '1px solid rgba(2, 132, 199, 0.25)',
+              borderTop: '4px solid #0284c7',
+              borderRadius: '10px',
+              padding: '1.1rem',
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'space-between'
+            }}>
+              <div>
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '6px' }}>
+                  <span style={{ fontSize: '0.72rem', fontWeight: 800, color: '#0284c7', background: 'rgba(2, 132, 199, 0.12)', padding: '2px 8px', borderRadius: '4px' }}>
+                    PUB / SUB
+                  </span>
+                  <Radio size={18} color="#0284c7" />
+                </div>
+                <h4 style={{ margin: '0 0 4px', fontSize: '1.02rem', fontWeight: 800, color: 'var(--text-primary)' }}>
+                  1. Topics (Data Streams)
+                </h4>
+                <p style={{ margin: '0 0 8px', fontSize: '0.82rem', color: 'var(--text-secondary)', lineHeight: 1.45 }}>
+                  Continuous, one-way asynchronous telemetry. Nodes publish messages without knowing who is listening.
+                </p>
+                <div style={{ background: 'var(--bg-card, var(--bg-surface))', border: '1px solid var(--border-color)', borderRadius: '6px', padding: '6px 10px', fontSize: '0.76rem', fontFamily: 'var(--font-mono)', color: '#38bdf8' }}>
+                  /scan (10 Hz LiDAR)<br />
+                  /cmd_vel (50 Hz Wheel Speeds)<br />
+                  /odom (Odometry Position)
+                </div>
+              </div>
+              <div style={{ marginTop: '10px', paddingTop: '8px', borderTop: '1px solid var(--border-color)', fontSize: '0.76rem', color: '#0284c7', fontWeight: 700 }}>
+                💡 Decoupled 1-to-many communication
+              </div>
             </div>
-            <p style={{ margin: 0, fontSize: '0.8rem', color: 'var(--text-muted)' }}>
-              Instead of spending 80% of budget writing serial sockets, use battle-tested open-source packages.
-            </p>
-          </div>
 
-          <div style={{ background: 'var(--bg-primary)', border: '1px solid var(--border-color)', borderRadius: '8px', padding: '10px 12px' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '6px', color: '#10b981', fontWeight: 700, fontSize: '0.88rem', marginBottom: '4px' }}>
-              <CheckCircle2 size={15} />
-              <span>Modular Middleware Solution</span>
+            {/* Standard 2: Services */}
+            <div style={{
+              background: 'var(--bg-primary)',
+              border: '1px solid rgba(139, 92, 246, 0.25)',
+              borderTop: '4px solid #8b5cf6',
+              borderRadius: '10px',
+              padding: '1.1rem',
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'space-between'
+            }}>
+              <div>
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '6px' }}>
+                  <span style={{ fontSize: '0.72rem', fontWeight: 800, color: '#8b5cf6', background: 'rgba(139, 92, 246, 0.12)', padding: '2px 8px', borderRadius: '4px' }}>
+                    REQ / RESP
+                  </span>
+                  <RefreshCw size={18} color="#8b5cf6" />
+                </div>
+                <h4 style={{ margin: '0 0 4px', fontSize: '1.02rem', fontWeight: 800, color: 'var(--text-primary)' }}>
+                  2. Services (Quick RPC)
+                </h4>
+                <p style={{ margin: '0 0 8px', fontSize: '0.82rem', color: 'var(--text-secondary)', lineHeight: 1.45 }}>
+                  Synchronous 1-to-1 transactions. The client sends a request and waits for an immediate answer or confirmation.
+                </p>
+                <div style={{ background: 'var(--bg-card, var(--bg-surface))', border: '1px solid var(--border-color)', borderRadius: '6px', padding: '6px 10px', fontSize: '0.76rem', fontFamily: 'var(--font-mono)', color: '#a855f7' }}>
+                  /reset_odometry (Clear encoders)<br />
+                  /get_map (Fetch occupancy grid)<br />
+                  /set_camera_exposure
+                </div>
+              </div>
+              <div style={{ marginTop: '10px', paddingTop: '8px', borderTop: '1px solid var(--border-color)', fontSize: '0.76rem', color: '#8b5cf6', fontWeight: 700 }}>
+                💡 Instant confirmation for discrete tasks
+              </div>
             </div>
-            <p style={{ margin: 0, fontSize: '0.8rem', color: 'var(--text-muted)' }}>
-              Decoupled peer-to-peer nodes communicate via industrial DDS with zero single point of failure.
-            </p>
+
+            {/* Standard 3: Actions */}
+            <div style={{
+              background: 'var(--bg-primary)',
+              border: '1px solid rgba(16, 185, 129, 0.25)',
+              borderTop: '4px solid #10b981',
+              borderRadius: '10px',
+              padding: '1.1rem',
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'space-between'
+            }}>
+              <div>
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '6px' }}>
+                  <span style={{ fontSize: '0.72rem', fontWeight: 800, color: '#10b981', background: 'rgba(16, 185, 129, 0.12)', padding: '2px 8px', borderRadius: '4px' }}>
+                    GOAL + FB + RESULT
+                  </span>
+                  <Activity size={18} color="#10b981" />
+                </div>
+                <h4 style={{ margin: '0 0 4px', fontSize: '1.02rem', fontWeight: 800, color: 'var(--text-primary)' }}>
+                  3. Actions (Long Tasks)
+                </h4>
+                <p style={{ margin: '0 0 8px', fontSize: '0.82rem', color: 'var(--text-secondary)', lineHeight: 1.45 }}>
+                  Long-running asynchronous goals with continuous live progress feedback and the ability to cancel midway.
+                </p>
+                <div style={{ background: 'var(--bg-card, var(--bg-surface))', border: '1px solid var(--border-color)', borderRadius: '6px', padding: '6px 10px', fontSize: '0.76rem', fontFamily: 'var(--font-mono)', color: '#34d399' }}>
+                  /navigate_to_pose (Drive to goal)<br />
+                  /dock_robot (Auto-charge alignment)<br />
+                  /patrol_waypoints (Patrol loop)
+                </div>
+              </div>
+              <div style={{ marginTop: '10px', paddingTop: '8px', borderTop: '1px solid var(--border-color)', fontSize: '0.76rem', color: '#10b981', fontWeight: 700 }}>
+                💡 Cancelable goals with live telemetry
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Hardware Hot-Swap Plug-and-Play Benefit */}
+        <div style={{
+          background: 'rgba(2, 132, 199, 0.06)',
+          border: '1px solid rgba(2, 132, 199, 0.25)',
+          borderRadius: '10px',
+          padding: '1rem 1.25rem',
+          display: 'flex',
+          alignItems: 'center',
+          gap: '12px',
+          fontSize: '0.86rem',
+          color: 'var(--text-primary)',
+          lineHeight: 1.55
+        }}>
+          <Box size={22} color="#0284c7" style={{ flexShrink: 0 }} />
+          <div>
+            <strong style={{ color: '#0284c7' }}>Hardware Abstraction (Plug &amp; Play):</strong>{' '}
+            Because sensors publish standard messages (e.g. <code style={{ color: '#0284c7' }}>sensor_msgs/msg/LaserScan</code> on <code style={{ color: '#0284c7' }}>/scan</code>), you can swap your LiDAR from an expensive <strong>SICK</strong> unit to an affordable <strong>RPLiDAR</strong> or a 3D <strong>Velodyne</strong> without changing or recompiling a single line of your navigation or SLAM software!
           </div>
         </div>
       </section>
@@ -923,26 +932,26 @@ export function Ros2ArchitectureInteractive() {
           />
         </div>
 
-        {/* Metaphor Detailed Description Card */}
+        {/* Metaphor Detailed Description Card - High Contrast Theme-Safe */}
         <div style={{
-          background: 'var(--bg-code)',
-          border: '1px solid rgba(14, 165, 233, 0.25)',
+          background: 'var(--bg-primary)',
+          border: '1px solid rgba(2, 132, 199, 0.3)',
           borderLeft: '4px solid #0284c7',
           borderRadius: '10px',
-          padding: '1.1rem 1.35rem',
-          marginTop: '0.85rem',
+          padding: '1.15rem 1.4rem',
+          marginTop: '1rem',
           marginBottom: '1.25rem',
-          color: 'var(--text-primary)',
-          lineHeight: 1.6
+          boxShadow: 'var(--shadow-sm)'
         }}>
-          <div style={{ fontSize: '1rem', fontWeight: 800, color: '#0284c7', marginBottom: '6px' }}>
-            The Operating System Metaphor: Windows for PC ➔ ROS for Robots
+          <div style={{ fontSize: '1.05rem', fontWeight: 800, color: '#0284c7', marginBottom: '8px', display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <Laptop size={18} />
+            <span>The Operating System Metaphor: Windows for PC ➔ ROS for Robots</span>
           </div>
-          <p style={{ margin: '0 0 8px', fontSize: '0.9rem', color: 'var(--text-secondary)' }}>
-            Think about how your laptop works: When you use <strong>Chrome</strong>, <strong>Word</strong>, or <strong>Blender</strong>, you never have to write custom driver code to talk to your mouse, keyboard, or printer. The operating system handles all the hardware communication behind the scenes.
+          <p style={{ margin: '0 0 10px', fontSize: '0.92rem', color: 'var(--text-primary)', lineHeight: 1.6 }}>
+            Think about how your personal computer works: When you open <strong>Google Chrome</strong>, <strong>Microsoft Word</strong>, or <strong>Blender</strong>, you never have to write custom device drivers to talk to your mouse, keyboard, or printer. The operating system handles all the hardware communication behind the scenes through standardized interfaces.
           </p>
-          <p style={{ margin: 0, fontSize: '0.9rem', color: 'var(--text-secondary)' }}>
-            <strong>ROS does the exact same thing for robots:</strong> Instead of writing low-level code for every motor and camera, your high-level navigation and AI programs talk directly to ROS. If you switch from an expensive laser scanner to a cheaper camera, you don&apos;t rewrite your navigation software—ROS takes care of the hardware translation!
+          <p style={{ margin: 0, fontSize: '0.92rem', color: 'var(--text-primary)', lineHeight: 1.6 }}>
+            <strong style={{ color: '#0284c7' }}>ROS does the exact same thing for robots:</strong> Instead of writing low-level code for every motor and camera, your high-level navigation, computer vision, and AI programs talk directly to ROS. If you switch from an expensive industrial laser scanner to a budget sensor, you don&apos;t rewrite your navigation software—ROS takes care of the hardware translation!
           </p>
         </div>
 
@@ -1031,177 +1040,229 @@ export function Ros2ArchitectureInteractive() {
           </div>
         </div>
 
-        {/* 4 Pillars Pictographical Grid */}
+        {/* 4 Pillars Modern Responsive Grid */}
         <div style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))',
-          gap: '1rem'
+          gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+          gap: '1.25rem'
         }}>
           {/* Pillar 1: The Plumbing */}
           <div style={{
             background: 'var(--bg-primary)',
-            border: '1px solid var(--border-color)',
+            border: '1px solid rgba(2, 132, 199, 0.25)',
             borderTop: '4px solid #0284c7',
-            borderRadius: '10px',
+            borderRadius: '12px',
             padding: '1.25rem',
             display: 'flex',
             flexDirection: 'column',
-            justifyContent: 'space-between'
+            justifyContent: 'space-between',
+            boxShadow: 'var(--shadow-sm)'
           }}>
             <div>
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '8px' }}>
-                <span style={{ fontSize: '0.75rem', fontWeight: 800, color: '#0284c7', background: 'rgba(2, 132, 199, 0.12)', padding: '2px 8px', borderRadius: '4px' }}>PILLAR 1</span>
-                <Radio size={18} color="#0284c7" />
+                <span style={{ fontSize: '0.74rem', fontWeight: 800, color: '#0284c7', background: 'rgba(2, 132, 199, 0.12)', padding: '3px 8px', borderRadius: '4px' }}>
+                  PILLAR 1 &bull; MIDDLEWARE
+                </span>
+                <Radio size={20} color="#0284c7" />
               </div>
-              <h4 style={{ margin: '0 0 6px', fontSize: '1.05rem', fontWeight: 800, color: 'var(--text-primary)' }}>1. The Plumbing</h4>
-              <p style={{ margin: '0 0 12px', fontSize: '0.82rem', color: 'var(--text-secondary)', lineHeight: 1.45 }}>
-                Peer-to-peer anonymous communications running over industrial DDS middleware.
+              <h4 style={{ margin: '0 0 6px', fontSize: '1.15rem', fontWeight: 800, color: 'var(--text-primary)' }}>
+                1. The Plumbing
+              </h4>
+              <p style={{ margin: '0 0 12px', fontSize: '0.86rem', color: 'var(--text-secondary)', lineHeight: 1.5 }}>
+                Peer-to-peer anonymous communications running over industrial DDS middleware with zero central master bottleneck.
               </p>
 
-              {/* Pictogram Schematic */}
-              <div style={{ background: 'var(--bg-code)', border: '1px solid #334155', borderRadius: '8px', padding: '10px', marginBottom: '10px', fontSize: '0.78rem', fontFamily: 'var(--font-mono)' }}>
-                <div style={{ color: '#38bdf8', marginBottom: '6px' }}>
-                  <strong>[Topic]</strong> Continuous Stream<br />
-                  <span style={{ color: '#94a3b8' }}>/scan (10 Hz) ──► Node</span>
+              {/* Schematic Card */}
+              <div style={{
+                background: 'var(--bg-card, var(--bg-surface))',
+                border: '1px solid var(--border-color)',
+                borderRadius: '8px',
+                padding: '10px 12px',
+                marginBottom: '10px',
+                fontSize: '0.78rem',
+                fontFamily: 'var(--font-mono)'
+              }}>
+                <div style={{ color: '#0284c7', marginBottom: '6px', fontWeight: 700 }}>
+                  [Topic] Continuous Stream<br />
+                  <span style={{ color: 'var(--text-muted)', fontWeight: 500 }}>/scan (10 Hz) ──► Nav2 / SLAM</span>
                 </div>
-                <div style={{ color: '#818cf8', marginBottom: '6px' }}>
-                  <strong>[Service]</strong> Sync Request/Reply<br />
-                  <span style={{ color: '#94a3b8' }}>Client ◄────► Server</span>
+                <div style={{ color: '#8b5cf6', marginBottom: '6px', fontWeight: 700 }}>
+                  [Service] Sync Request/Reply<br />
+                  <span style={{ color: 'var(--text-muted)', fontWeight: 500 }}>Client ◄────► Server (/reset_odom)</span>
                 </div>
-                <div style={{ color: '#c084fc' }}>
-                  <strong>[Action]</strong> Preemptible Goal<br />
-                  <span style={{ color: '#94a3b8' }}>Goal ──► FB ──► Result</span>
+                <div style={{ color: '#10b981', fontWeight: 700 }}>
+                  [Action] Preemptible Goal<br />
+                  <span style={{ color: 'var(--text-muted)', fontWeight: 500 }}>Goal ──► Progress FB ──► Result</span>
                 </div>
               </div>
             </div>
-            <div style={{ fontSize: '0.76rem', color: '#0284c7', fontWeight: 700, borderTop: '1px solid var(--border-color)', paddingTop: '8px' }}>
-              ⚡ Decoupled Pub/Sub • Zero Master Bottleneck
+            <div style={{ fontSize: '0.78rem', color: '#0284c7', fontWeight: 700, borderTop: '1px solid var(--border-color)', paddingTop: '8px' }}>
+              ⚡ Decoupled Pub/Sub &bull; Zero Master Bottleneck
             </div>
           </div>
 
           {/* Pillar 2: The Tools */}
           <div style={{
             background: 'var(--bg-primary)',
-            border: '1px solid var(--border-color)',
+            border: '1px solid rgba(139, 92, 246, 0.25)',
             borderTop: '4px solid #8b5cf6',
-            borderRadius: '10px',
+            borderRadius: '12px',
             padding: '1.25rem',
             display: 'flex',
             flexDirection: 'column',
-            justifyContent: 'space-between'
+            justifyContent: 'space-between',
+            boxShadow: 'var(--shadow-sm)'
           }}>
             <div>
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '8px' }}>
-                <span style={{ fontSize: '0.75rem', fontWeight: 800, color: '#8b5cf6', background: 'rgba(139, 92, 246, 0.12)', padding: '2px 8px', borderRadius: '4px' }}>PILLAR 2</span>
-                <Sliders size={18} color="#8b5cf6" />
+                <span style={{ fontSize: '0.74rem', fontWeight: 800, color: '#8b5cf6', background: 'rgba(139, 92, 246, 0.12)', padding: '3px 8px', borderRadius: '4px' }}>
+                  PILLAR 2 &bull; DEV TOOLING
+                </span>
+                <Sliders size={20} color="#8b5cf6" />
               </div>
-              <h4 style={{ margin: '0 0 6px', fontSize: '1.05rem', fontWeight: 800, color: 'var(--text-primary)' }}>2. The Tools</h4>
-              <p style={{ margin: '0 0 12px', fontSize: '0.82rem', color: 'var(--text-secondary)', lineHeight: 1.45 }}>
-                Introspection, 3D visualization, and physics simulation to eliminate guesswork.
+              <h4 style={{ margin: '0 0 6px', fontSize: '1.15rem', fontWeight: 800, color: 'var(--text-primary)' }}>
+                2. The Tools
+              </h4>
+              <p style={{ margin: '0 0 12px', fontSize: '0.86rem', color: 'var(--text-secondary)', lineHeight: 1.5 }}>
+                Introspection, 3D visualization, and physics simulation to eliminate guesswork and test without hardware risk.
               </p>
 
-              {/* Pictogram Schematic */}
-              <div style={{ background: 'var(--bg-code)', border: '1px solid #334155', borderRadius: '8px', padding: '10px', marginBottom: '10px', fontSize: '0.78rem', fontFamily: 'var(--font-mono)' }}>
-                <div style={{ color: '#c084fc', marginBottom: '6px' }}>
-                  <strong>[RViz2]</strong> 3D Sensor Visualizer<br />
-                  <span style={{ color: '#94a3b8' }}>LiDAR Rays, Costmaps, TF</span>
+              {/* Schematic Card */}
+              <div style={{
+                background: 'var(--bg-card, var(--bg-surface))',
+                border: '1px solid var(--border-color)',
+                borderRadius: '8px',
+                padding: '10px 12px',
+                marginBottom: '10px',
+                fontSize: '0.78rem',
+                fontFamily: 'var(--font-mono)'
+              }}>
+                <div style={{ color: '#8b5cf6', marginBottom: '6px', fontWeight: 700 }}>
+                  [RViz2] 3D Sensor Visualizer<br />
+                  <span style={{ color: 'var(--text-muted)', fontWeight: 500 }}>LiDAR Laser Rays, Costmaps, TF</span>
                 </div>
-                <div style={{ color: '#38bdf8', marginBottom: '6px' }}>
-                  <strong>[Gazebo]</strong> Physics Simulator<br />
-                  <span style={{ color: '#94a3b8' }}>Collisions, Friction, Gravity</span>
+                <div style={{ color: '#0284c7', marginBottom: '6px', fontWeight: 700 }}>
+                  [Gazebo] Physics Simulator<br />
+                  <span style={{ color: 'var(--text-muted)', fontWeight: 500 }}>Gravity, Friction, Obstacle Collisions</span>
                 </div>
-                <div style={{ color: '#34d399' }}>
-                  <strong>[ros2 bag]</strong> Flight Recorder<br />
-                  <span style={{ color: '#94a3b8' }}>Record &amp; replay MCAP logs</span>
+                <div style={{ color: '#10b981', fontWeight: 700 }}>
+                  [ros2 bag] Flight Recorder<br />
+                  <span style={{ color: 'var(--text-muted)', fontWeight: 500 }}>Record &amp; replay MCAP telemetry</span>
                 </div>
               </div>
             </div>
-            <div style={{ fontSize: '0.76rem', color: '#8b5cf6', fontWeight: 700, borderTop: '1px solid var(--border-color)', paddingTop: '8px' }}>
-              🔍 Introspect Telemetry • Test Without Crash Risk
+            <div style={{ fontSize: '0.78rem', color: '#8b5cf6', fontWeight: 700, borderTop: '1px solid var(--border-color)', paddingTop: '8px' }}>
+              🔍 Introspect Telemetry &bull; Test Without Crash Risk
             </div>
           </div>
 
           {/* Pillar 3: The Capabilities */}
           <div style={{
             background: 'var(--bg-primary)',
-            border: '1px solid var(--border-color)',
+            border: '1px solid rgba(236, 72, 153, 0.25)',
             borderTop: '4px solid #ec4899',
-            borderRadius: '10px',
+            borderRadius: '12px',
             padding: '1.25rem',
             display: 'flex',
             flexDirection: 'column',
-            justifyContent: 'space-between'
+            justifyContent: 'space-between',
+            boxShadow: 'var(--shadow-sm)'
           }}>
             <div>
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '8px' }}>
-                <span style={{ fontSize: '0.75rem', fontWeight: 800, color: '#ec4899', background: 'rgba(236, 72, 153, 0.12)', padding: '2px 8px', borderRadius: '4px' }}>PILLAR 3</span>
-                <Cpu size={18} color="#ec4899" />
+                <span style={{ fontSize: '0.74rem', fontWeight: 800, color: '#ec4899', background: 'rgba(236, 72, 153, 0.12)', padding: '3px 8px', borderRadius: '4px' }}>
+                  PILLAR 3 &bull; AUTONOMY
+                </span>
+                <Cpu size={20} color="#ec4899" />
               </div>
-              <h4 style={{ margin: '0 0 6px', fontSize: '1.05rem', fontWeight: 800, color: 'var(--text-primary)' }}>3. The Capabilities</h4>
-              <p style={{ margin: '0 0 12px', fontSize: '0.82rem', color: 'var(--text-secondary)', lineHeight: 1.45 }}>
-                Production-ready robotics algorithms ready to deploy without PhD-level rewrites.
+              <h4 style={{ margin: '0 0 6px', fontSize: '1.15rem', fontWeight: 800, color: 'var(--text-primary)' }}>
+                3. The Capabilities
+              </h4>
+              <p style={{ margin: '0 0 12px', fontSize: '0.86rem', color: 'var(--text-secondary)', lineHeight: 1.5 }}>
+                Production-ready robotics algorithms ready to deploy out-of-the-box without PhD-level rewrites.
               </p>
 
-              {/* Pictogram Schematic */}
-              <div style={{ background: 'var(--bg-code)', border: '1px solid #334155', borderRadius: '8px', padding: '10px', marginBottom: '10px', fontSize: '0.78rem', fontFamily: 'var(--font-mono)' }}>
-                <div style={{ color: '#ec4899', marginBottom: '6px' }}>
-                  <strong>[Nav2]</strong> Autonomous Navigation<br />
-                  <span style={{ color: '#94a3b8' }}>Smac/A* Planner, DWB Controller</span>
+              {/* Schematic Card */}
+              <div style={{
+                background: 'var(--bg-card, var(--bg-surface))',
+                border: '1px solid var(--border-color)',
+                borderRadius: '8px',
+                padding: '10px 12px',
+                marginBottom: '10px',
+                fontSize: '0.78rem',
+                fontFamily: 'var(--font-mono)'
+              }}>
+                <div style={{ color: '#ec4899', marginBottom: '6px', fontWeight: 700 }}>
+                  [Nav2] Autonomous Navigation<br />
+                  <span style={{ color: 'var(--text-muted)', fontWeight: 500 }}>Smac/A* Planner, DWB Controller</span>
                 </div>
-                <div style={{ color: '#a855f7', marginBottom: '6px' }}>
-                  <strong>[SLAM Toolbox]</strong> 2D Mapping<br />
-                  <span style={{ color: '#94a3b8' }}>Graph SLAM mapping from /scan</span>
+                <div style={{ color: '#8b5cf6', marginBottom: '6px', fontWeight: 700 }}>
+                  [SLAM Toolbox] 2D Mapping<br />
+                  <span style={{ color: 'var(--text-muted)', fontWeight: 500 }}>Graph SLAM mapping from /scan</span>
                 </div>
-                <div style={{ color: '#0284c7' }}>
-                  <strong>[TF2]</strong> Coordinate Trees<br />
-                  <span style={{ color: '#94a3b8' }}>map ──► odom ──► base_link</span>
+                <div style={{ color: '#0284c7', fontWeight: 700 }}>
+                  [TF2] Coordinate Trees<br />
+                  <span style={{ color: 'var(--text-muted)', fontWeight: 500 }}>map ──► odom ──► base_link</span>
                 </div>
               </div>
             </div>
-            <div style={{ fontSize: '0.76rem', color: '#ec4899', fontWeight: 700, borderTop: '1px solid var(--border-color)', paddingTop: '8px' }}>
-              🧠 Turnkey Autonomy • Battle-Tested Algorithms
+            <div style={{ fontSize: '0.78rem', color: '#ec4899', fontWeight: 700, borderTop: '1px solid var(--border-color)', paddingTop: '8px' }}>
+              🧠 Turnkey Autonomy &bull; Battle-Tested Algorithms
             </div>
           </div>
 
           {/* Pillar 4: The Ecosystem */}
           <div style={{
             background: 'var(--bg-primary)',
-            border: '1px solid var(--border-color)',
+            border: '1px solid rgba(16, 185, 129, 0.25)',
             borderTop: '4px solid #10b981',
-            borderRadius: '10px',
+            borderRadius: '12px',
             padding: '1.25rem',
             display: 'flex',
             flexDirection: 'column',
-            justifyContent: 'space-between'
+            justifyContent: 'space-between',
+            boxShadow: 'var(--shadow-sm)'
           }}>
             <div>
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '8px' }}>
-                <span style={{ fontSize: '0.75rem', fontWeight: 800, color: '#10b981', background: 'rgba(16, 185, 129, 0.12)', padding: '2px 8px', borderRadius: '4px' }}>PILLAR 4</span>
-                <Compass size={18} color="#10b981" />
+                <span style={{ fontSize: '0.74rem', fontWeight: 800, color: '#10b981', background: 'rgba(16, 185, 129, 0.12)', padding: '3px 8px', borderRadius: '4px' }}>
+                  PILLAR 4 &bull; ECOSYSTEM
+                </span>
+                <Compass size={20} color="#10b981" />
               </div>
-              <h4 style={{ margin: '0 0 6px', fontSize: '1.05rem', fontWeight: 800, color: 'var(--text-primary)' }}>4. The Ecosystem</h4>
-              <p style={{ margin: '0 0 12px', fontSize: '0.82rem', color: 'var(--text-secondary)', lineHeight: 1.45 }}>
-                Open-source consortium standards backed by leading global robotics enterprises.
+              <h4 style={{ margin: '0 0 6px', fontSize: '1.15rem', fontWeight: 800, color: 'var(--text-primary)' }}>
+                4. The Ecosystem
+              </h4>
+              <p style={{ margin: '0 0 12px', fontSize: '0.86rem', color: 'var(--text-secondary)', lineHeight: 1.5 }}>
+                Open-source consortium standards backed by leading global robotics enterprises and hardware vendors.
               </p>
 
-              {/* Pictogram Schematic */}
-              <div style={{ background: 'var(--bg-code)', border: '1px solid #334155', borderRadius: '8px', padding: '10px', marginBottom: '10px', fontSize: '0.78rem', fontFamily: 'var(--font-mono)' }}>
-                <div style={{ color: '#34d399', marginBottom: '6px' }}>
-                  <strong>[Apache 2.0]</strong> Open Source<br />
-                  <span style={{ color: '#94a3b8' }}>Royalty-free commercial AMRs</span>
+              {/* Schematic Card */}
+              <div style={{
+                background: 'var(--bg-card, var(--bg-surface))',
+                border: '1px solid var(--border-color)',
+                borderRadius: '8px',
+                padding: '10px 12px',
+                marginBottom: '10px',
+                fontSize: '0.78rem',
+                fontFamily: 'var(--font-mono)'
+              }}>
+                <div style={{ color: '#10b981', marginBottom: '6px', fontWeight: 700 }}>
+                  [Apache 2.0] Open Source<br />
+                  <span style={{ color: 'var(--text-muted)', fontWeight: 500 }}>Royalty-free commercial AMRs</span>
                 </div>
-                <div style={{ color: '#10b981', marginBottom: '6px' }}>
-                  <strong>[Vendor Drivers]</strong> Plug &amp; Play<br />
-                  <span style={{ color: '#94a3b8' }}>SICK, RealSense, ODrive SDKs</span>
+                <div style={{ color: '#0284c7', marginBottom: '6px', fontWeight: 700 }}>
+                  [Vendor Drivers] Plug &amp; Play<br />
+                  <span style={{ color: 'var(--text-muted)', fontWeight: 500 }}>SICK, RealSense, ODrive SDKs</span>
                 </div>
-                <div style={{ color: '#38bdf8' }}>
-                  <strong>[OSRA Alliance]</strong> Community<br />
-                  <span style={{ color: '#94a3b8' }}>Open Robotics consortium</span>
+                <div style={{ color: '#8b5cf6', fontWeight: 700 }}>
+                  [OSRA Alliance] Global Consortium<br />
+                  <span style={{ color: 'var(--text-muted)', fontWeight: 500 }}>Open Robotics consortium</span>
                 </div>
               </div>
             </div>
-            <div style={{ fontSize: '0.76rem', color: '#10b981', fontWeight: 700, borderTop: '1px solid var(--border-color)', paddingTop: '8px' }}>
-              🌐 Global Standard • Multi-Vendor Interoperability
+            <div style={{ fontSize: '0.78rem', color: '#10b981', fontWeight: 700, borderTop: '1px solid var(--border-color)', paddingTop: '8px' }}>
+              🌐 Global Standard &bull; Multi-Vendor Interoperability
             </div>
           </div>
         </div>
@@ -1432,235 +1493,241 @@ export function Ros2ArchitectureInteractive() {
             </div>
           </div>
 
-          {/* Mode Switcher */}
-          <div style={{ display: 'flex', background: 'var(--bg-primary)', padding: '4px', borderRadius: '8px', border: '1px solid var(--border-color)' }}>
-            <button
-              onClick={() => { setArchMode('ros1'); setRoscoreCrashed(false); }}
-              style={{
-                padding: '6px 14px',
-                borderRadius: '6px',
-                background: archMode === 'ros1' ? '#ef4444' : 'transparent',
-                color: archMode === 'ros1' ? '#ffffff' : 'var(--text-secondary)',
-                border: 'none',
-                fontWeight: 700,
-                fontSize: '0.84rem',
-                cursor: 'pointer'
-              }}
-            >
-              ROS 1 (Legacy Master)
-            </button>
-            <button
-              onClick={() => { setArchMode('ros2'); setRos2NodeCrashed(false); }}
-              style={{
-                padding: '6px 14px',
-                borderRadius: '6px',
-                background: archMode === 'ros2' ? '#10b981' : 'transparent',
-                color: archMode === 'ros2' ? '#ffffff' : 'var(--text-secondary)',
-                border: 'none',
-                fontWeight: 700,
-                fontSize: '0.84rem',
-                cursor: 'pointer'
-              }}
-            >
-              ROS 2 Jazzy (DDS Mesh)
-            </button>
-          </div>
         </div>
 
-        {/* Sandbox Simulation Window */}
-        <div style={{
-          background: 'var(--bg-primary)',
-          border: '1px solid var(--border-color)',
-          borderRadius: '12px',
-          padding: '1.5rem',
-          marginBottom: '1.5rem'
-        }}>
-          {archMode === 'ros1' ? (
-            <div>
-              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1rem', flexWrap: 'wrap', gap: '8px' }}>
-                <div>
-                  <h4 style={{ margin: 0, fontSize: '1.05rem', fontWeight: 800, color: '#ef4444' }}>
-                    ROS 1 Centralized Architecture: Single Point of Failure
-                  </h4>
-                  <span style={{ fontSize: '0.82rem', color: 'var(--text-muted)' }}>
-                    All nodes register through the centralized <code>roscore</code> master process.
+        {/* Dual Stacked Architectural Sandboxes (Vertically Stacked for Direct Comparison) */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', marginBottom: '1.5rem' }}>
+          {/* ARCHITECTURE 1: ROS 1 Centralized Master Architecture */}
+          <div style={{
+            background: 'var(--bg-primary)',
+            border: '1px solid rgba(239, 68, 68, 0.35)',
+            borderTop: '4px solid #ef4444',
+            borderRadius: '12px',
+            padding: '1.35rem',
+            boxShadow: 'var(--shadow-sm)'
+          }}>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1rem', flexWrap: 'wrap', gap: '8px' }}>
+              <div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '4px' }}>
+                  <span style={{ fontSize: '0.74rem', fontWeight: 800, color: '#ef4444', background: 'rgba(239, 68, 68, 0.12)', padding: '2px 8px', borderRadius: '4px' }}>
+                    LEGACY ARCHITECTURE
                   </span>
-                </div>
-                <button
-                  onClick={() => setRoscoreCrashed(prev => !prev)}
-                  style={{
-                    padding: '8px 14px',
-                    borderRadius: '6px',
-                    background: roscoreCrashed ? '#10b981' : '#ef4444',
-                    color: '#ffffff',
-                    border: 'none',
-                    fontWeight: 700,
-                    fontSize: '0.82rem',
-                    cursor: 'pointer',
-                    boxShadow: '0 2px 8px rgba(0,0,0,0.2)'
-                  }}
-                >
-                  {roscoreCrashed ? 'Restart roscore' : '💥 Crash roscore Master'}
-                </button>
-              </div>
-
-              {/* ROS 1 Graph Display */}
-              <div style={{
-                background: roscoreCrashed ? '#450a0a' : 'var(--bg-code)',
-                border: roscoreCrashed ? '2px solid #ef4444' : '1px solid #334155',
-                borderRadius: '10px',
-                padding: '1.5rem',
-                textAlign: 'center',
-                transition: 'all 0.3s ease'
-              }}>
-                <div style={{
-                  display: 'inline-block',
-                  padding: '10px 24px',
-                  borderRadius: '8px',
-                  background: roscoreCrashed ? '#7f1d1d' : '#ef4444',
-                  color: '#ffffff',
-                  fontWeight: 800,
-                  fontSize: '0.95rem',
-                  marginBottom: '1.25rem',
-                  boxShadow: '0 4px 12px rgba(239, 68, 68, 0.4)'
-                }}>
-                  {roscoreCrashed ? '❌ roscore DEAD (SIGSEGV / OOM)' : 'roscore Master (Port 11311)'}
-                </div>
-
-                <div style={{ display: 'flex', justifyContent: 'center', gap: '1.5rem', flexWrap: 'wrap' }}>
-                  {['/camera_node', '/lidar_node', '/path_planner', '/motor_controller'].map(node => (
-                    <div
-                      key={node}
-                      style={{
-                        padding: '10px 16px',
-                        borderRadius: '6px',
-                        background: roscoreCrashed ? '#7f1d1d' : '#1e293b',
-                        color: roscoreCrashed ? '#fca5a5' : '#e2e8f0',
-                        border: roscoreCrashed ? '1px dashed #ef4444' : '1px solid #475569',
-                        fontSize: '0.82rem',
-                        fontFamily: 'var(--font-mono)'
-                      }}
-                    >
-                      {roscoreCrashed ? `💀 ${node} (FROZEN)` : `🟢 ${node}`}
-                    </div>
-                  ))}
-                </div>
-
-                {roscoreCrashed && (
-                  <div style={{ marginTop: '1.25rem', color: '#fca5a5', fontSize: '0.88rem', fontWeight: 700 }}>
-                    ⚠️ CRITICAL FAILURE: Central master died. Discovery halted! The entire autonomous robot has stalled.
-                  </div>
-                )}
-              </div>
-            </div>
-          ) : (
-            <div>
-              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1rem', flexWrap: 'wrap', gap: '8px' }}>
-                <div>
-                  <h4 style={{ margin: 0, fontSize: '1.05rem', fontWeight: 800, color: '#10b981' }}>
-                    ROS 2 Jazzy: Decentralized DDS Peer-to-Peer Mesh
+                  <h4 style={{ margin: 0, fontSize: '1.1rem', fontWeight: 800, color: '#ef4444' }}>
+                    1. ROS 1 Centralized Architecture: Single Point of Failure
                   </h4>
-                  <span style={{ fontSize: '0.82rem', color: 'var(--text-muted)' }}>
-                    No master process exists. Nodes discover each other via DDS UDP multicast.
-                  </span>
                 </div>
-                <button
-                  onClick={() => setRos2NodeCrashed(prev => !prev)}
-                  style={{
-                    padding: '8px 14px',
-                    borderRadius: '6px',
-                    background: ros2NodeCrashed ? '#10b981' : '#f59e0b',
-                    color: '#ffffff',
-                    border: 'none',
-                    fontWeight: 700,
-                    fontSize: '0.82rem',
-                    cursor: 'pointer'
-                  }}
-                >
-                  {ros2NodeCrashed ? 'Restore Node' : 'Kill Camera Node'}
-                </button>
+                <span style={{ fontSize: '0.82rem', color: 'var(--text-muted)' }}>
+                  All nodes register and resolve communication through the centralized <code>roscore</code> master process.
+                </span>
               </div>
-
-              {/* ROS 2 Graph Display */}
-              <div style={{
-                background: 'var(--bg-code)',
-                border: '1px solid #10b981',
-                borderRadius: '10px',
-                padding: '1.5rem',
-                textAlign: 'center'
-              }}>
-                <div style={{
-                  display: 'inline-block',
-                  padding: '8px 20px',
+              <button
+                onClick={() => setRoscoreCrashed(prev => !prev)}
+                style={{
+                  padding: '8px 16px',
                   borderRadius: '6px',
-                  background: 'rgba(16, 185, 129, 0.2)',
-                  border: '1px solid #10b981',
-                  color: '#34d399',
-                  fontWeight: 800,
-                  fontSize: '0.9rem',
-                  marginBottom: '1.25rem'
+                  background: roscoreCrashed ? '#10b981' : '#ef4444',
+                  color: '#ffffff',
+                  border: 'none',
+                  fontWeight: 700,
+                  fontSize: '0.84rem',
+                  cursor: 'pointer',
+                  boxShadow: '0 2px 8px rgba(0,0,0,0.2)',
+                  transition: 'all 0.2s ease'
+                }}
+              >
+                {roscoreCrashed ? 'Restart roscore Master' : '💥 Crash roscore Master'}
+              </button>
+            </div>
+
+            {/* ROS 1 Graph Display */}
+            <div style={{
+              background: roscoreCrashed ? '#450a0a' : 'var(--bg-card, var(--bg-surface))',
+              border: roscoreCrashed ? '2px solid #ef4444' : '1px solid var(--border-color)',
+              borderRadius: '10px',
+              padding: '1.5rem',
+              textAlign: 'center',
+              transition: 'all 0.3s ease'
+            }}>
+              <div style={{
+                display: 'inline-block',
+                padding: '10px 24px',
+                borderRadius: '8px',
+                background: roscoreCrashed ? '#7f1d1d' : '#ef4444',
+                color: '#ffffff',
+                fontWeight: 800,
+                fontSize: '0.95rem',
+                marginBottom: '1.25rem',
+                boxShadow: '0 4px 12px rgba(239, 68, 68, 0.4)'
+              }}>
+                {roscoreCrashed ? '❌ roscore DEAD (SIGSEGV / OOM)' : 'roscore Master (Port 11311)'}
+              </div>
+
+              <div style={{ display: 'flex', justifyContent: 'center', gap: '1.25rem', flexWrap: 'wrap' }}>
+                {['/camera_node', '/lidar_node', '/path_planner', '/motor_controller'].map(node => (
+                  <div
+                    key={node}
+                    style={{
+                      padding: '10px 16px',
+                      borderRadius: '6px',
+                      background: roscoreCrashed ? '#7f1d1d' : 'var(--bg-primary)',
+                      color: roscoreCrashed ? '#fca5a5' : 'var(--text-primary)',
+                      border: roscoreCrashed ? '1px dashed #ef4444' : '1px solid var(--border-color)',
+                      fontSize: '0.82rem',
+                      fontFamily: 'var(--font-mono)'
+                    }}
+                  >
+                    {roscoreCrashed ? `💀 ${node} (FROZEN)` : `🟢 ${node}`}
+                  </div>
+                ))}
+              </div>
+
+              {roscoreCrashed && (
+                <div style={{
+                  marginTop: '1.25rem',
+                  color: '#fca5a5',
+                  fontSize: '0.88rem',
+                  fontWeight: 700,
+                  background: 'rgba(239, 68, 68, 0.15)',
+                  padding: '8px 12px',
+                  borderRadius: '6px',
+                  border: '1px solid rgba(239, 68, 68, 0.3)'
                 }}>
-                  ⚡ FastDDS Global Data Space (Autonomous Peer Discovery)
+                  ⚠️ CRITICAL FAILURE: Central master died. Discovery halted! The entire autonomous robot has stalled.
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* ARCHITECTURE 2: ROS 2 Jazzy Decentralized FastDDS Peer-to-Peer Mesh */}
+          <div style={{
+            background: 'var(--bg-primary)',
+            border: '1px solid rgba(16, 185, 129, 0.35)',
+            borderTop: '4px solid #10b981',
+            borderRadius: '12px',
+            padding: '1.35rem',
+            boxShadow: 'var(--shadow-sm)'
+          }}>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1rem', flexWrap: 'wrap', gap: '8px' }}>
+              <div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '4px' }}>
+                  <span style={{ fontSize: '0.74rem', fontWeight: 800, color: '#10b981', background: 'rgba(16, 185, 129, 0.12)', padding: '2px 8px', borderRadius: '4px' }}>
+                    MODERN INDUSTRY BENCHMARK
+                  </span>
+                  <h4 style={{ margin: 0, fontSize: '1.1rem', fontWeight: 800, color: '#10b981' }}>
+                    2. ROS 2 Jazzy: Decentralized DDS Peer-to-Peer Mesh
+                  </h4>
+                </div>
+                <span style={{ fontSize: '0.82rem', color: 'var(--text-muted)' }}>
+                  No master process exists! Nodes discover each other automatically via DDS UDP multicast.
+                </span>
+              </div>
+              <button
+                onClick={() => setRos2NodeCrashed(prev => !prev)}
+                style={{
+                  padding: '8px 16px',
+                  borderRadius: '6px',
+                  background: ros2NodeCrashed ? '#10b981' : '#f59e0b',
+                  color: '#ffffff',
+                  border: 'none',
+                  fontWeight: 700,
+                  fontSize: '0.84rem',
+                  cursor: 'pointer',
+                  boxShadow: '0 2px 8px rgba(0,0,0,0.2)',
+                  transition: 'all 0.2s ease'
+                }}
+              >
+                {ros2NodeCrashed ? 'Restore Camera Node' : '💥 Kill Camera Node'}
+              </button>
+            </div>
+
+            {/* ROS 2 Graph Display */}
+            <div style={{
+              background: 'var(--bg-card, var(--bg-surface))',
+              border: '1px solid rgba(16, 185, 129, 0.3)',
+              borderRadius: '10px',
+              padding: '1.5rem',
+              textAlign: 'center'
+            }}>
+              <div style={{
+                display: 'inline-block',
+                padding: '8px 22px',
+                borderRadius: '6px',
+                background: 'rgba(16, 185, 129, 0.15)',
+                border: '1px solid #10b981',
+                color: '#10b981',
+                fontWeight: 800,
+                fontSize: '0.9rem',
+                marginBottom: '1.25rem'
+              }}>
+                ⚡ FastDDS Global Data Space (Autonomous Peer Discovery)
+              </div>
+
+              <div style={{ display: 'flex', justifyContent: 'center', gap: '1.25rem', flexWrap: 'wrap' }}>
+                <div style={{
+                  padding: '10px 16px',
+                  borderRadius: '6px',
+                  background: ros2NodeCrashed ? '#450a0a' : 'var(--bg-primary)',
+                  color: ros2NodeCrashed ? '#fca5a5' : '#0284c7',
+                  border: ros2NodeCrashed ? '1px dashed #ef4444' : '1px solid rgba(2, 132, 199, 0.3)',
+                  fontSize: '0.82rem',
+                  fontFamily: 'var(--font-mono)'
+                }}>
+                  {ros2NodeCrashed ? '💀 /camera_node (CRASHED)' : '🟢 /camera_node'}
                 </div>
 
-                <div style={{ display: 'flex', justifyContent: 'center', gap: '1.25rem', flexWrap: 'wrap' }}>
-                  <div style={{
-                    padding: '10px 16px',
-                    borderRadius: '6px',
-                    background: ros2NodeCrashed ? '#450a0a' : '#1e293b',
-                    color: ros2NodeCrashed ? '#fca5a5' : '#38bdf8',
-                    border: ros2NodeCrashed ? '1px dashed #ef4444' : '1px solid #0284c7',
-                    fontSize: '0.82rem',
-                    fontFamily: 'var(--font-mono)'
-                  }}>
-                    {ros2NodeCrashed ? '💀 /camera_node (CRASHED)' : '🟢 /camera_node'}
-                  </div>
-
-                  <div style={{
-                    padding: '10px 16px',
-                    borderRadius: '6px',
-                    background: '#1e293b',
-                    color: '#34d399',
-                    border: '1px solid #10b981',
-                    fontSize: '0.82rem',
-                    fontFamily: 'var(--font-mono)'
-                  }}>
-                    🟢 /lidar_node
-                  </div>
-
-                  <div style={{
-                    padding: '10px 16px',
-                    borderRadius: '6px',
-                    background: '#1e293b',
-                    color: '#c084fc',
-                    border: '1px solid #8b5cf6',
-                    fontSize: '0.82rem',
-                    fontFamily: 'var(--font-mono)'
-                  }}>
-                    🟢 /path_planner
-                  </div>
-
-                  <div style={{
-                    padding: '10px 16px',
-                    borderRadius: '6px',
-                    background: '#1e293b',
-                    color: '#f59e0b',
-                    border: '1px solid #d97706',
-                    fontSize: '0.82rem',
-                    fontFamily: 'var(--font-mono)'
-                  }}>
-                    🟢 /motor_controller
-                  </div>
+                <div style={{
+                  padding: '10px 16px',
+                  borderRadius: '6px',
+                  background: 'var(--bg-primary)',
+                  color: '#10b981',
+                  border: '1px solid rgba(16, 185, 129, 0.3)',
+                  fontSize: '0.82rem',
+                  fontFamily: 'var(--font-mono)'
+                }}>
+                  🟢 /lidar_node
                 </div>
 
-                <div style={{ marginTop: '1.25rem', color: '#6ee7b7', fontSize: '0.88rem', fontWeight: 600 }}>
-                  {ros2NodeCrashed
-                    ? '✅ FAULT RESILIENT: Camera node failed, but LiDAR, Planner, and Motor Controller continue driving safely without interruption!'
-                    : '✅ ALL PEERS CONNECTED: Real-time peer-to-peer data distribution across shared memory.'}
+                <div style={{
+                  padding: '10px 16px',
+                  borderRadius: '6px',
+                  background: 'var(--bg-primary)',
+                  color: '#8b5cf6',
+                  border: '1px solid rgba(139, 92, 246, 0.3)',
+                  fontSize: '0.82rem',
+                  fontFamily: 'var(--font-mono)'
+                }}>
+                  🟢 /path_planner
+                </div>
+
+                <div style={{
+                  padding: '10px 16px',
+                  borderRadius: '6px',
+                  background: 'var(--bg-primary)',
+                  color: '#f59e0b',
+                  border: '1px solid rgba(245, 158, 11, 0.3)',
+                  fontSize: '0.82rem',
+                  fontFamily: 'var(--font-mono)'
+                }}>
+                  🟢 /motor_controller
                 </div>
               </div>
+
+              <div style={{
+                marginTop: '1.25rem',
+                color: ros2NodeCrashed ? '#10b981' : 'var(--text-secondary)',
+                fontSize: '0.88rem',
+                fontWeight: 600,
+                background: ros2NodeCrashed ? 'rgba(16, 185, 129, 0.12)' : 'rgba(255, 255, 255, 0.03)',
+                padding: '8px 12px',
+                borderRadius: '6px',
+                border: ros2NodeCrashed ? '1px solid rgba(16, 185, 129, 0.25)' : '1px solid var(--border-color)'
+              }}>
+                {ros2NodeCrashed
+                  ? '✅ FAULT RESILIENT: Camera node failed, but LiDAR, Planner, and Motor Controller continue driving safely without interruption!'
+                  : '✅ ALL PEERS CONNECTED: Real-time peer-to-peer data distribution across shared memory.'}
+              </div>
             </div>
-          )}
+          </div>
         </div>
 
         {/* Unified RCL Architecture Highlight: Eliminating Language Inconsistencies */}
