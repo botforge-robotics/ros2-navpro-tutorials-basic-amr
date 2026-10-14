@@ -1049,7 +1049,7 @@ export function Ros2ArchitectureInteractive() {
           </div>
           <div>
             <h3 style={{ margin: 0, fontSize: '1.25rem', fontWeight: 800, color: 'var(--text-primary)' }}>
-              5. The 4 Pillars of ROS Architecture (Pictographical Overview)
+              5. The 4 Pillars of ROS Architecture
             </h3>
             <span style={{ fontSize: '0.84rem', color: 'var(--text-muted)' }}>
               The four foundational pillars that transform raw software into commercial autonomous robotics systems.
@@ -1063,7 +1063,7 @@ export function Ros2ArchitectureInteractive() {
           gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
           gap: '1.25rem'
         }}>
-          {/* Pillar 1: The Plumbing */}
+          {/* Pillar 1: The Plumbing (Communication) */}
           <div style={{
             background: 'var(--bg-primary)',
             border: '1px solid rgba(2, 132, 199, 0.25)',
@@ -1083,7 +1083,7 @@ export function Ros2ArchitectureInteractive() {
                 <Radio size={20} color="#0284c7" />
               </div>
               <h4 style={{ margin: '0 0 6px', fontSize: '1.15rem', fontWeight: 800, color: 'var(--text-primary)' }}>
-                1. The Plumbing
+                1. The Plumbing (Communication)
               </h4>
               <p style={{ margin: '0 0 12px', fontSize: '0.86rem', color: 'var(--text-secondary)', lineHeight: 1.5 }}>
                 Peer-to-peer anonymous communications running over industrial DDS middleware with zero central master bottleneck.
