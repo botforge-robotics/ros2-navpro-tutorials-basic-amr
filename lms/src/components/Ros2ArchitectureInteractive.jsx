@@ -1512,40 +1512,35 @@ export function Ros2ArchitectureInteractive() {
 
         </div>
 
-        {/* Layer-by-Layer Architectural Blueprint (Based on Aitronik Reference) */}
+        {/* 3-Tier Layer Color Legend Bar */}
         <div style={{
-          background: '#ffffff',
-          border: '1px solid var(--border-color)',
-          borderRadius: '14px',
-          padding: '1.25rem',
-          boxShadow: '0 8px 24px rgba(0, 0, 0, 0.15)',
-          marginBottom: '1.5rem',
           display: 'flex',
-          flexDirection: 'column',
           alignItems: 'center',
-          justifyContent: 'center'
+          justifyContent: 'center',
+          gap: '1.25rem',
+          flexWrap: 'wrap',
+          marginBottom: '1.5rem',
+          padding: '10px 18px',
+          background: 'var(--bg-primary)',
+          borderRadius: '10px',
+          border: '1px solid var(--border-color)',
+          fontSize: '0.84rem',
+          fontWeight: 700,
+          boxShadow: 'var(--shadow-sm)'
         }}>
-          <img
-            src="assets/images/ros1_ros2_architecture_layers.png"
-            alt="ROS 1 vs ROS 2 Architecture Layers: Application, Middleware, and OS"
-            style={{
-              maxWidth: '720px',
-              width: '100%',
-              height: 'auto',
-              display: 'block',
-              borderRadius: '8px'
-            }}
-          />
-          <div style={{
-            marginTop: '12px',
-            fontSize: '0.88rem',
-            color: '#334155',
-            textAlign: 'center',
-            fontWeight: 600,
-            lineHeight: 1.5,
-            maxWidth: '750px'
-          }}>
-            🏛️ <strong>The 3 Architectural Layers:</strong> Comparing <strong>Application Layer</strong> (Centralized Master vs. Peer Nodes), <strong>Middleware Layer</strong> (TCPROS vs. Abstract DDS + Intra-process API), and <strong>OS Layer</strong> (Linux-only vs. Linux / Windows / macOS / RTOS).
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <span style={{ width: 12, height: 12, borderRadius: '3px', background: '#3b82f6', display: 'inline-block' }}></span>
+            <span style={{ color: '#2563eb' }}>Layer 1: Application Layer</span>
+          </div>
+          <div style={{ color: 'var(--text-muted)' }}>&bull;</div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <span style={{ width: 12, height: 12, borderRadius: '3px', background: '#f59e0b', display: 'inline-block' }}></span>
+            <span style={{ color: '#d97706' }}>Layer 2: Middleware Layer</span>
+          </div>
+          <div style={{ color: 'var(--text-muted)' }}>&bull;</div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <span style={{ width: 12, height: 12, borderRadius: '3px', background: '#10b981', display: 'inline-block' }}></span>
+            <span style={{ color: '#059669' }}>Layer 3: OS Layer</span>
           </div>
         </div>
 
@@ -1604,15 +1599,31 @@ export function Ros2ArchitectureInteractive() {
               flexDirection: 'column',
               gap: '12px'
             }}>
-              {/* Layer 1: Application Layer */}
+              {/* Layer 1: Application Layer (Blue Theme) */}
               <div style={{
-                background: roscoreCrashed ? '#7f1d1d' : 'var(--bg-primary)',
-                border: '1px solid ' + (roscoreCrashed ? '#ef4444' : 'var(--border-color)'),
+                background: roscoreCrashed ? '#7f1d1d' : 'rgba(59, 130, 246, 0.05)',
+                border: '1px solid ' + (roscoreCrashed ? '#ef4444' : 'rgba(59, 130, 246, 0.35)'),
+                borderLeft: '4px solid ' + (roscoreCrashed ? '#ef4444' : '#3b82f6'),
                 borderRadius: '8px',
                 padding: '10px 14px'
               }}>
-                <div style={{ fontSize: '0.74rem', fontWeight: 800, color: '#ef4444', marginBottom: '8px', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
-                  Application Layer
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '8px' }}>
+                  <span style={{
+                    fontSize: '0.74rem',
+                    fontWeight: 800,
+                    color: roscoreCrashed ? '#fca5a5' : '#2563eb',
+                    background: roscoreCrashed ? 'rgba(239, 68, 68, 0.2)' : 'rgba(59, 130, 246, 0.15)',
+                    border: '1px solid ' + (roscoreCrashed ? 'rgba(239, 68, 68, 0.4)' : 'rgba(59, 130, 246, 0.35)'),
+                    padding: '2px 8px',
+                    borderRadius: '4px',
+                    textTransform: 'uppercase',
+                    letterSpacing: '0.5px'
+                  }}>
+                    Layer 1: Application Layer
+                  </span>
+                  <span style={{ fontSize: '0.74rem', color: roscoreCrashed ? '#fca5a5' : '#ef4444', fontWeight: 800 }}>
+                    ⚠️ Centralized Discovery Dependency
+                  </span>
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '12px', flexWrap: 'wrap' }}>
                   {/* Master Oval */}
@@ -1633,16 +1644,16 @@ export function Ros2ArchitectureInteractive() {
                   <div style={{
                     flex: 1,
                     minWidth: '260px',
-                    border: '1px dashed ' + (roscoreCrashed ? '#ef4444' : 'var(--border-color)'),
+                    border: '1px dashed ' + (roscoreCrashed ? '#ef4444' : 'rgba(59, 130, 246, 0.4)'),
                     borderRadius: '6px',
                     padding: '6px 10px',
                     display: 'flex',
                     alignItems: 'center',
                     gap: '8px',
                     flexWrap: 'wrap',
-                    background: 'rgba(0, 0, 0, 0.15)'
+                    background: roscoreCrashed ? 'rgba(0, 0, 0, 0.25)' : 'rgba(59, 130, 246, 0.08)'
                   }}>
-                    <span style={{ fontSize: '0.74rem', color: 'var(--text-muted)', fontWeight: 700, marginRight: '4px' }}>
+                    <span style={{ fontSize: '0.74rem', color: roscoreCrashed ? '#fca5a5' : '#2563eb', fontWeight: 800, marginRight: '4px' }}>
                       Application:
                     </span>
                     {['/camera_node', '/lidar_node', '/path_planner', '/motor_controller'].map(node => (
@@ -1653,7 +1664,7 @@ export function Ros2ArchitectureInteractive() {
                           borderRadius: '16px',
                           background: roscoreCrashed ? '#7f1d1d' : 'var(--bg-surface)',
                           color: roscoreCrashed ? '#fca5a5' : 'var(--text-primary)',
-                          border: roscoreCrashed ? '1px dashed #ef4444' : '1px solid var(--border-color)',
+                          border: roscoreCrashed ? '1px dashed #ef4444' : '1px solid rgba(59, 130, 246, 0.3)',
                           fontSize: '0.78rem',
                           fontFamily: 'var(--font-mono)'
                         }}
@@ -1665,71 +1676,97 @@ export function Ros2ArchitectureInteractive() {
                 </div>
               </div>
 
-              {/* Layer 2: Middleware Layer */}
+              {/* Layer 2: Middleware Layer (Amber Theme) */}
               <div style={{
-                background: roscoreCrashed ? '#7f1d1d' : 'var(--bg-primary)',
-                border: '1px solid ' + (roscoreCrashed ? '#ef4444' : 'var(--border-color)'),
+                background: roscoreCrashed ? '#7f1d1d' : 'rgba(245, 158, 11, 0.05)',
+                border: '1px solid ' + (roscoreCrashed ? '#ef4444' : 'rgba(245, 158, 11, 0.35)'),
+                borderLeft: '4px solid ' + (roscoreCrashed ? '#ef4444' : '#f59e0b'),
                 borderRadius: '8px',
                 padding: '10px 14px'
               }}>
-                <div style={{ fontSize: '0.74rem', fontWeight: 800, color: '#f59e0b', marginBottom: '8px', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
-                  Middleware Layer (ROS 1 Boundary)
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '8px' }}>
+                  <span style={{
+                    fontSize: '0.74rem',
+                    fontWeight: 800,
+                    color: roscoreCrashed ? '#fca5a5' : '#d97706',
+                    background: roscoreCrashed ? 'rgba(239, 68, 68, 0.2)' : 'rgba(245, 158, 11, 0.15)',
+                    border: '1px solid ' + (roscoreCrashed ? 'rgba(239, 68, 68, 0.4)' : 'rgba(245, 158, 11, 0.35)'),
+                    padding: '2px 8px',
+                    borderRadius: '4px',
+                    textTransform: 'uppercase',
+                    letterSpacing: '0.5px'
+                  }}>
+                    Layer 2: Middleware Layer (ROS 1 Boundary)
+                  </span>
+                  <span style={{ fontSize: '0.72rem', background: '#334155', color: '#f8fafc', padding: '1px 6px', borderRadius: '4px', fontWeight: 800 }}>
+                    ROS 1 Stack
+                  </span>
                 </div>
                 <div style={{
-                  background: 'rgba(0, 0, 0, 0.15)',
-                  border: '1px solid var(--border-color)',
+                  background: roscoreCrashed ? 'rgba(0, 0, 0, 0.25)' : 'rgba(245, 158, 11, 0.12)',
+                  border: '1px solid ' + (roscoreCrashed ? '#ef4444' : 'rgba(245, 158, 11, 0.3)'),
                   borderRadius: '6px',
                   padding: '8px',
                   textAlign: 'center',
                   marginBottom: '8px',
                   fontSize: '0.82rem',
                   fontWeight: 700,
-                  color: roscoreCrashed ? '#fca5a5' : 'var(--text-primary)'
+                  color: roscoreCrashed ? '#fca5a5' : '#d97706'
                 }}>
                   Client Library (roscpp / rospy — Independent Codebases)
                 </div>
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px' }}>
                   <div style={{
-                    background: roscoreCrashed ? '#991b1b' : 'rgba(239, 68, 68, 0.12)',
-                    border: '1px solid ' + (roscoreCrashed ? '#ef4444' : 'rgba(239, 68, 68, 0.3)'),
+                    background: roscoreCrashed ? '#991b1b' : 'rgba(245, 158, 11, 0.15)',
+                    border: '1px solid ' + (roscoreCrashed ? '#ef4444' : 'rgba(245, 158, 11, 0.35)'),
                     borderRadius: '6px',
                     padding: '8px',
                     textAlign: 'center',
                     fontSize: '0.8rem',
                     fontWeight: 700,
-                    color: roscoreCrashed ? '#ffffff' : '#ef4444'
+                    color: roscoreCrashed ? '#ffffff' : '#d97706'
                   }}>
-                    TCPROS / UDPROS (Custom Protocol)
+                    {roscoreCrashed ? '❌ TCPROS Broken (Master Dead)' : 'TCPROS / UDPROS (Custom Protocol)'}
                   </div>
                   <div style={{
-                    background: 'rgba(0, 0, 0, 0.15)',
-                    border: '1px solid var(--border-color)',
+                    background: roscoreCrashed ? 'rgba(0, 0, 0, 0.25)' : 'rgba(245, 158, 11, 0.08)',
+                    border: '1px solid ' + (roscoreCrashed ? 'rgba(239, 68, 68, 0.4)' : 'rgba(245, 158, 11, 0.25)'),
                     borderRadius: '6px',
                     padding: '8px',
                     textAlign: 'center',
                     fontSize: '0.8rem',
                     fontWeight: 600,
-                    color: 'var(--text-secondary)'
+                    color: roscoreCrashed ? '#fca5a5' : 'var(--text-secondary)'
                   }}>
                     Nodelet API (C++ Shared Process)
                   </div>
                 </div>
               </div>
 
-              {/* Layer 3: OS Layer */}
+              {/* Layer 3: OS Layer (Emerald Theme) */}
               <div style={{
-                background: 'rgba(0, 0, 0, 0.2)',
-                border: '1px solid var(--border-color)',
+                background: 'rgba(16, 185, 129, 0.05)',
+                border: '1px solid rgba(16, 185, 129, 0.35)',
+                borderLeft: '4px solid #10b981',
                 borderRadius: '8px',
                 padding: '8px 14px',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'space-between'
               }}>
-                <span style={{ fontSize: '0.74rem', fontWeight: 800, color: 'var(--text-muted)', textTransform: 'uppercase' }}>
-                  OS Layer
+                <span style={{
+                  fontSize: '0.74rem',
+                  fontWeight: 800,
+                  color: '#059669',
+                  background: 'rgba(16, 185, 129, 0.15)',
+                  border: '1px solid rgba(16, 185, 129, 0.35)',
+                  padding: '2px 8px',
+                  borderRadius: '4px',
+                  textTransform: 'uppercase'
+                }}>
+                  Layer 3: OS Layer
                 </span>
-                <span style={{ fontSize: '0.84rem', fontWeight: 700, color: 'var(--text-primary)' }}>
+                <span style={{ fontSize: '0.84rem', fontWeight: 700, color: '#059669' }}>
                   Linux (Ubuntu Only &bull; No Native Windows/RTOS)
                 </span>
               </div>
@@ -1802,32 +1839,43 @@ export function Ros2ArchitectureInteractive() {
               flexDirection: 'column',
               gap: '12px'
             }}>
-              {/* Layer 1: Application Layer */}
+              {/* Layer 1: Application Layer (Blue Theme) */}
               <div style={{
-                background: 'var(--bg-primary)',
-                border: '1px solid rgba(16, 185, 129, 0.25)',
+                background: 'rgba(59, 130, 246, 0.05)',
+                border: '1px solid rgba(59, 130, 246, 0.35)',
+                borderLeft: '4px solid #3b82f6',
                 borderRadius: '8px',
                 padding: '10px 14px'
               }}>
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '8px' }}>
-                  <span style={{ fontSize: '0.74rem', fontWeight: 800, color: '#10b981', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
-                    Application Layer (Masterless Peer-to-Peer)
+                  <span style={{
+                    fontSize: '0.74rem',
+                    fontWeight: 800,
+                    color: '#2563eb',
+                    background: 'rgba(59, 130, 246, 0.15)',
+                    border: '1px solid rgba(59, 130, 246, 0.35)',
+                    padding: '2px 8px',
+                    borderRadius: '4px',
+                    textTransform: 'uppercase',
+                    letterSpacing: '0.5px'
+                  }}>
+                    Layer 1: Application Layer (Masterless Peer-to-Peer)
                   </span>
-                  <span style={{ fontSize: '0.74rem', color: '#10b981', fontWeight: 700 }}>
+                  <span style={{ fontSize: '0.74rem', color: '#10b981', fontWeight: 800 }}>
                     ⭐ Zero Master Node
                   </span>
                 </div>
                 <div style={{
-                  border: '1px dashed rgba(16, 185, 129, 0.3)',
+                  border: '1px dashed rgba(59, 130, 246, 0.4)',
                   borderRadius: '6px',
                   padding: '8px 12px',
                   display: 'flex',
                   alignItems: 'center',
                   gap: '8px',
                   flexWrap: 'wrap',
-                  background: 'rgba(0, 0, 0, 0.15)'
+                  background: 'rgba(59, 130, 246, 0.08)'
                 }}>
-                  <span style={{ fontSize: '0.74rem', color: 'var(--text-muted)', fontWeight: 700, marginRight: '4px' }}>
+                  <span style={{ fontSize: '0.74rem', color: '#2563eb', fontWeight: 800, marginRight: '4px' }}>
                     Application:
                   </span>
                   <div style={{
@@ -1848,9 +1896,9 @@ export function Ros2ArchitectureInteractive() {
                       style={{
                         padding: '6px 12px',
                         borderRadius: '16px',
-                        background: 'rgba(16, 185, 129, 0.12)',
-                        color: '#10b981',
-                        border: '1px solid rgba(16, 185, 129, 0.3)',
+                        background: 'rgba(59, 130, 246, 0.12)',
+                        color: '#2563eb',
+                        border: '1px solid rgba(59, 130, 246, 0.3)',
                         fontSize: '0.78rem',
                         fontFamily: 'var(--font-mono)'
                       }}
@@ -1861,17 +1909,28 @@ export function Ros2ArchitectureInteractive() {
                 </div>
               </div>
 
-              {/* Layer 2: Middleware Layer (Yellow/Gold ROS 2 Boundary) */}
+              {/* Layer 2: Middleware Layer (Amber Theme - ROS 2 Boundary) */}
               <div style={{
-                background: 'var(--bg-primary)',
-                border: '2px solid #eab308',
+                background: 'rgba(245, 158, 11, 0.05)',
+                border: '1px solid rgba(245, 158, 11, 0.35)',
+                borderLeft: '4px solid #f59e0b',
                 borderRadius: '8px',
                 padding: '10px 14px',
                 position: 'relative'
               }}>
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '8px' }}>
-                  <span style={{ fontSize: '0.74rem', fontWeight: 800, color: '#eab308', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
-                    Middleware Layer (ROS 2 Yellow Boundary)
+                  <span style={{
+                    fontSize: '0.74rem',
+                    fontWeight: 800,
+                    color: '#d97706',
+                    background: 'rgba(245, 158, 11, 0.15)',
+                    border: '1px solid rgba(245, 158, 11, 0.35)',
+                    padding: '2px 8px',
+                    borderRadius: '4px',
+                    textTransform: 'uppercase',
+                    letterSpacing: '0.5px'
+                  }}>
+                    Layer 2: Middleware Layer (ROS 2 Boundary)
                   </span>
                   <span style={{ fontSize: '0.72rem', background: '#eab308', color: '#000000', padding: '1px 6px', borderRadius: '4px', fontWeight: 800 }}>
                     ROS 2 Core
@@ -1879,65 +1938,66 @@ export function Ros2ArchitectureInteractive() {
                 </div>
                 {/* Client Library */}
                 <div style={{
-                  background: 'rgba(234, 179, 8, 0.1)',
-                  border: '1px solid rgba(234, 179, 8, 0.3)',
+                  background: 'rgba(245, 158, 11, 0.12)',
+                  border: '1px solid rgba(245, 158, 11, 0.3)',
                   borderRadius: '6px',
                   padding: '8px',
                   textAlign: 'center',
                   marginBottom: '8px',
                   fontSize: '0.82rem',
                   fontWeight: 700,
-                  color: 'var(--text-primary)'
+                  color: '#d97706'
                 }}>
                   Client Library (rclcpp / rclpy / unified C rcl)
                 </div>
                 {/* Abstract DDS Layer */}
                 <div style={{
-                  background: 'rgba(2, 132, 199, 0.12)',
-                  border: '1px solid rgba(2, 132, 199, 0.3)',
+                  background: 'rgba(245, 158, 11, 0.18)',
+                  border: '1px solid rgba(245, 158, 11, 0.35)',
                   borderRadius: '6px',
                   padding: '8px',
                   textAlign: 'center',
                   marginBottom: '8px',
                   fontSize: '0.82rem',
-                  fontWeight: 700,
-                  color: '#0284c7'
+                  fontWeight: 800,
+                  color: '#b45309'
                 }}>
                   Abstract DDS Layer (rmw — ROS Middleware Interface)
                 </div>
-                {/* Split Row: DDS (Gray standard) & Intra-process API */}
+                {/* Split Row: DDS (Standard) & Intra-process API */}
                 <div style={{ display: 'grid', gridTemplateColumns: '1.2fr 1fr', gap: '8px' }}>
                   <div style={{
-                    background: '#334155',
-                    border: '1px solid #475569',
+                    background: 'rgba(245, 158, 11, 0.12)',
+                    border: '1px solid rgba(245, 158, 11, 0.3)',
                     borderRadius: '6px',
                     padding: '8px',
                     textAlign: 'center',
                     fontSize: '0.8rem',
                     fontWeight: 700,
-                    color: '#f8fafc'
+                    color: '#d97706'
                   }}>
                     DDS (OMG Standard &bull; FastDDS / CycloneDDS)
                   </div>
                   <div style={{
-                    background: 'rgba(234, 179, 8, 0.15)',
-                    border: '1px solid #eab308',
+                    background: 'rgba(245, 158, 11, 0.12)',
+                    border: '1px solid rgba(245, 158, 11, 0.3)',
                     borderRadius: '6px',
                     padding: '8px',
                     textAlign: 'center',
                     fontSize: '0.8rem',
                     fontWeight: 700,
-                    color: '#eab308'
+                    color: '#d97706'
                   }}>
                     Intra-process API (Zero-Copy)
                   </div>
                 </div>
               </div>
 
-              {/* Layer 3: OS Layer */}
+              {/* Layer 3: OS Layer (Emerald Theme) */}
               <div style={{
-                background: 'rgba(0, 0, 0, 0.2)',
-                border: '1px solid rgba(16, 185, 129, 0.3)',
+                background: 'rgba(16, 185, 129, 0.05)',
+                border: '1px solid rgba(16, 185, 129, 0.35)',
+                borderLeft: '4px solid #10b981',
                 borderRadius: '8px',
                 padding: '8px 14px',
                 display: 'flex',
@@ -1946,10 +2006,19 @@ export function Ros2ArchitectureInteractive() {
                 flexWrap: 'wrap',
                 gap: '8px'
               }}>
-                <span style={{ fontSize: '0.74rem', fontWeight: 800, color: 'var(--text-muted)', textTransform: 'uppercase' }}>
-                  OS Layer
+                <span style={{
+                  fontSize: '0.74rem',
+                  fontWeight: 800,
+                  color: '#059669',
+                  background: 'rgba(16, 185, 129, 0.15)',
+                  border: '1px solid rgba(16, 185, 129, 0.35)',
+                  padding: '2px 8px',
+                  borderRadius: '4px',
+                  textTransform: 'uppercase'
+                }}>
+                  Layer 3: OS Layer
                 </span>
-                <span style={{ fontSize: '0.84rem', fontWeight: 700, color: '#10b981' }}>
+                <span style={{ fontSize: '0.84rem', fontWeight: 700, color: '#059669' }}>
                   Linux / Windows / macOS / RTOS (Real-Time OS: FreeRTOS, Zephyr, QNX)
                 </span>
               </div>

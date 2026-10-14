@@ -212,9 +212,6 @@ To intuitively understand how ROS 2 operates at runtime, visualize the AMR not a
 
 ### 3.7 ROS 1 vs. ROS 2: The Architectural Paradigm Shift & Unified RCL C Core
 
-![ROS 1 vs. ROS 2 Architecture Layers: Application, Middleware, and OS](assets/images/ros1_ros2_architecture_layers.png)
-*Figure: The 3-tier architectural comparison between ROS 1 and ROS 2 across the Application Layer, Middleware Layer, and OS Layer (Reference: Aitronik).*
-
 #### The 3 Architectural Layers Explained:
 
 1. **Application Layer:**
