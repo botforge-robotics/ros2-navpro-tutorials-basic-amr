@@ -79,46 +79,52 @@ Every autonomous robot—from an industrial AMR moving palettes to an interstell
 
 One pretty common story in robotics development is this:
 
-#### 🎬 Step 1: The Spark & Reality Check
-![Step 1: The Spark & Reality Check](assets/images/story_step1_dream.jpg)
+#### 🎬 Step 1: The Dream: Autonomous Medicine Delivery Robot
+![Step 1: The Dream: Autonomous Medicine Delivery Robot](assets/images/story_step1_dream.jpg)
 
-> **Someday, a student/engineer starts a new cool robotics project.** She starts planning and working on the project.  
-> Soon, she discovers that it’s not that simple: robotics is hard to learn, and it takes time to develop good software for a robot.
-
----
-
-#### 🎬 Step 2: The Communication & 3D Simulation Trap
-![Step 2: The Communication & 3D Simulation Trap](assets/images/story_step2_plumbing.jpg)
-
-> **So, she starts to spend time working on how to communicate between all her programs, how she can implement a 3D simulation of the robot, etc.**  
-> Without realizing it, she is spending all her time trying to write a robotics framework, instead of working on her actual robotics application.
+> **Someday, a student/engineer starts a new cool robotics project: She wants to build an Autonomous Medicine Delivery Robot** to transport medicine across hospital corridors and deliver supplies safely to patient beds.  
+> Soon, she discovers that it’s not that simple: robotics is hard to learn, and developing good software takes immense time.
 
 ---
 
-#### 🎬 Step 3: Project Ends: Lost Faith & Abandonment
-![Step 3: Project Ends: Lost Faith & Abandonment](assets/images/story_step3_burnout.jpg)
+#### 🎬 Step 2: The Plumbing Trap: LiDAR, Cameras, Motors & Sockets
+![Step 2: The Plumbing Trap: LiDAR, Cameras, Motors & Sockets](assets/images/story_step2_plumbing.jpg)
 
-> **The project comes to an end. No real progress was made, and the developer starts to lose faith.**  
-> She has spent all her time trying to write a robotics framework, but worked only a little on the actual project. Soon the project is abandoned, or maybe she manages to finish something with some hacked code.
+> **All her time is consumed by low-level plumbing:**  
+> - How to get raw distance data from the LiDAR?
+> - How to read images from the camera?
+> - How to control the electric drive motors?
+> - And how to make all these separate programs communicate and synchronize with each other?  
+> 
+> *Without realizing it, all her time is killed writing device drivers and IPC sockets instead of autonomous medicine delivery.*
 
 ---
 
-#### 🎬 Step 4: Another Guy Starts: The Cycle Repeats
-![Step 4: Another Guy Starts: The Cycle Repeats](assets/images/story_step4_cycle.jpg)
+#### 🎬 Step 3: Goal Abandoned: Just an RC Car
+![Step 3: Goal Abandoned: Just an RC Car](assets/images/story_step3_burnout.jpg)
 
-> **A few weeks later, another guy starts another new cool robotics project.**  
-> He thinks: *What if I find some framework I can directly use?* He finds her code on the Internet, but the code seems really not reusable for his own application.  
-> **So, he starts writing everything from scratch.**
+> **The project deadline arrives (often a 2–3 year PhD timeframe). No real progress was made on autonomous navigation.**  
+> So much time was killed trying to write communication plumbing that the main project goal—an autonomous medicine delivery robot—was completely abandoned. All she managed to make in the end was get the motors to move using a hacked remote control (a glorified RC car). Soon the project is abandoned, and the prototype sits dormant in the lab.
+
+---
+
+#### 🎬 Step 4: Another Guy Starts: The Food Delivery Robot Loop
+![Step 4: Another Guy Starts: The Food Delivery Robot Loop](assets/images/story_step4_cycle.jpg)
+
+> **A few weeks later, another guy wants to develop a Food Delivery Robot.**  
+> He thinks: *What if I find some existing code I can directly use?* He finds her project on the Internet where she worked on controlling motors and getting LiDAR data.  
+> But because her code was written without any standard framework, it is completely hardcoded, undocumented, and non-reusable for his robot.  
+> **So, he has to start writing everything from scratch all over again!**
 
 ---
 
 > [!WARNING]
 > **The Core Problem in Robotics Development:**  
-> *"And so on, and so forth. Many people who are working in robot software development don’t actually develop robotics applications. They develop robotics framework that ends up being non-reusable, not supported, not known, and quickly forgotten.*  
+> *"And so on, and so forth. Many people who work in robot software development don’t actually develop robotics applications (such as medicine delivery or food delivery). They spend years building custom motor drivers and low-level frameworks that end up non-reusable, unsupported, not known, and quickly forgotten.*  
 > 
 > *This situation often happens for people doing a PhD, with a 2–3 years time frame for the project.*  
 > 
-> ***This is one of the main factors slowing down robotics research and development, and ROS is trying to solve this problem.***"
+> ***This is one of the main factors slowing down robotics research and development — and ROS was created specifically to solve this problem!***"
 
 ---
 

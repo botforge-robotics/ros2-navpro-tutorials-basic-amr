@@ -58,43 +58,43 @@ export function Ros2ArchitectureInteractive() {
   const storySteps = [
     {
       stepNumber: 1,
-      title: 'The Cool Project & Reality Check',
-      subtitle: 'A student/engineer starts planning a new robotics project',
+      title: 'The Dream: Medicine Delivery Robot',
+      subtitle: 'Engineer plans an autonomous hospital delivery robot',
       accent: '#38bdf8',
       image: 'assets/images/story_step1_dream.jpg',
-      dialogue: '“I’m starting an exciting new robotics project!”',
-      narrative: 'Someday, a student/engineer starts a new cool robotics project. She starts planning and working on the project. Soon, she discovers that it’s not that simple: robotics is hard to learn, and it takes time to develop a good software for a robot.',
-      impact: 'The Reality: Robotics is hard to learn, and developing good software takes immense time'
+      dialogue: '“I want to build an autonomous medicine delivery robot for hospitals!”',
+      narrative: 'A student/engineer starts a new robotics project with high ambition: she wants to build an Autonomous Medicine Delivery Robot capable of navigating hospital corridors and delivering supplies safely to patients. Soon, she discovers that robotics is hard to learn and developing good software takes immense time.',
+      impact: 'The Goal: Autonomous Medicine Delivery • Reality: Robotics is hard to learn'
     },
     {
       stepNumber: 2,
-      title: 'The Communication & Simulation Trap',
-      subtitle: 'Spending time on IPC and 3D simulation instead of the actual project',
+      title: 'The Plumbing Trap: Drivers & Sockets',
+      subtitle: 'Months spent on LiDAR data, camera frames, and motor control',
       accent: '#f59e0b',
       image: 'assets/images/story_step2_plumbing.jpg',
-      dialogue: '“How do I communicate between all my programs? How do I implement a 3D simulation?”',
-      narrative: 'So, she starts to spend time working on how to communicate between all her programs, how she can implement a 3D simulation of the robot, etc. She spends almost all her time trying to write a custom robotics framework, rather than working on her actual application.',
-      impact: 'The Framework Trap: Trapped in communication plumbing & 3D simulation rather than the application'
+      dialogue: '“How do I get data from LiDAR? How do I read camera images? How do I control motors and make all programs work together?”',
+      narrative: 'Soon, all her time is consumed by low-level plumbing. Instead of writing autonomous navigation logic, she spends months trying to figure out how to get raw data from the LiDAR, how to read images from the camera, how to control the motors, and how to make all these separate programs communicate with each other.',
+      impact: 'Time Killed: Trapped in device drivers and IPC plumbing rather than autonomous delivery'
     },
     {
       stepNumber: 3,
-      title: 'Project Ends: Lost Faith & Abandonment',
-      subtitle: 'No real progress made; code abandoned or finished with hacks',
+      title: 'Goal Abandoned: Just an RC Car',
+      subtitle: 'Medicine delivery abandoned; only managed to move motors via remote control',
       accent: '#ef4444',
       image: 'assets/images/story_step3_burnout.jpg',
-      dialogue: '“The project came to an end... I spent all my time writing a framework and made no real progress.”',
-      narrative: 'The project comes to an end (a situation that often happens for people doing a PhD, with a 2–3 years time frame for the project). No real progress was made, and the developer starts to lose faith. She has spent all her time trying to write a robotics framework, but worked only a little on the actual project. Soon the project is abandoned, or maybe she manages to finish something with some hacked code.',
-      impact: 'The Outcome: 2–3 years gone, developer loses faith, project abandoned or held by hacked code'
+      dialogue: '“The deadline is here. The autonomous medicine delivery robot is abandoned—all I managed to make is an RC car with hacked code.”',
+      narrative: 'The project deadline arrives (often a 2–3 year PhD timeframe). So much time was killed trying to write communication plumbing that the main goal—an autonomous medicine delivery robot—was completely abandoned. All she managed to do was make the motors move using a hacked remote control. The code is fragile, unmaintainable, and the robot sits dormant in the lab.',
+      impact: 'Outcome: Autonomy abandoned • Only moved motors via remote control with hacked code'
     },
     {
       stepNumber: 4,
-      title: 'Another Guy Starts: The Cycle Repeats',
-      subtitle: 'Searches online for a framework, finds it not reusable, rewrites from scratch',
+      title: 'Another Boy: Food Delivery Robot Loop',
+      subtitle: 'Finds her motor & LiDAR code unusable, starts from scratch all over again',
       accent: '#a855f7',
       image: 'assets/images/story_step4_cycle.jpg',
-      dialogue: '“What if I find some framework I can directly use? ...Wait, her code isn’t reusable at all. I’ll write it from scratch!”',
-      narrative: 'A few weeks later, another guy starts another new cool robotics project. He thinks: what if I find some framework I can directly use? He finds her code on the Internet, but the code seems really not reusable for his own application. So, he starts writing everything from scratch!',
-      impact: 'The Vicious Cycle: Non-reusable, unsupported, unstandardized code forces everyone to restart'
+      dialogue: '“I want to build a Food Delivery Robot! ...Wait, her motor and LiDAR code is tangled and unusable. I have to start from scratch!”',
+      narrative: 'A few weeks later, another boy sets out to develop a Food Delivery Robot. Looking to save time, he finds her project online where she worked on controlling motors and getting LiDAR data. But because her code was written without any standard framework, it is completely hardcoded, fragile, and non-reusable. So, he has to start writing everything from scratch all over again!',
+      impact: 'The Vicious Cycle: Everyone reinvents motor and LiDAR drivers from scratch instead of building applications'
     }
   ];
 
@@ -816,7 +816,7 @@ export function Ros2ArchitectureInteractive() {
             The Core Robotics Dilemma:
           </div>
           <p style={{ margin: '0 0 10px', fontSize: '0.92rem', fontStyle: 'italic', color: 'var(--text-primary)' }}>
-            &ldquo;And so on, and so forth. Many people who are working in robot software development don’t actually develop robotics applications. They develop robotics framework that ends up being non-reusable, not supported, not known, and quickly forgotten.&rdquo;
+            &ldquo;And so on, and so forth. Many people who work in robot software development don’t actually develop robotics applications (such as medicine delivery or food delivery). They spend years building custom motor drivers and low-level frameworks that end up non-reusable, unsupported, not known, and quickly forgotten.&rdquo;
           </p>
           <div style={{
             display: 'flex',
@@ -832,7 +832,7 @@ export function Ros2ArchitectureInteractive() {
               🎓 Often happens for people doing a PhD (2–3 years timeframe)
             </span>
             <span style={{ background: 'rgba(14, 165, 233, 0.12)', color: '#38bdf8', padding: '3px 9px', borderRadius: '4px', fontWeight: 700 }}>
-              🚀 Main factor slowing down robotics R&D — and ROS is built to solve this problem!
+              🚀 ROS Solution: Standardized topics (/scan, /cmd_vel) let you build the real application on Day 1!
             </span>
           </div>
         </div>
