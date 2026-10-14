@@ -1614,7 +1614,7 @@ export function Ros2ArchitectureInteractive() {
                 border: '1px solid ' + (roscoreCrashed ? '#ef4444' : 'rgba(59, 130, 246, 0.35)'),
                 borderLeft: '4px solid ' + (roscoreCrashed ? '#ef4444' : '#3b82f6'),
                 borderRadius: '8px',
-                padding: '12px 14px'
+                padding: '10px 14px'
               }}>
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '8px' }}>
                   <span style={{
@@ -1634,63 +1634,53 @@ export function Ros2ArchitectureInteractive() {
                     ⚠️ Centralized Discovery Dependency
                   </span>
                 </div>
-
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                  {/* Master Oval + 1-Sentence Explanation */}
+                <div style={{ display: 'flex', alignItems: 'center', gap: '10px', flexWrap: 'wrap' }}>
+                  {/* Master Oval */}
                   <div style={{
-                    background: roscoreCrashed ? '#991b1b' : 'rgba(239, 68, 68, 0.12)',
-                    border: '1px solid ' + (roscoreCrashed ? '#ef4444' : 'rgba(239, 68, 68, 0.35)'),
-                    borderRadius: '8px',
-                    padding: '8px 12px'
+                    padding: '8px 18px',
+                    borderRadius: '20px',
+                    background: roscoreCrashed ? '#991b1b' : '#ef4444',
+                    color: '#ffffff',
+                    fontWeight: 800,
+                    fontSize: '0.86rem',
+                    boxShadow: '0 2px 8px rgba(239, 68, 68, 0.4)',
+                    border: '1px solid rgba(255,255,255,0.2)'
                   }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '3px' }}>
-                      <span style={{
-                        padding: '2px 10px',
-                        borderRadius: '12px',
-                        background: roscoreCrashed ? '#7f1d1d' : '#ef4444',
-                        color: '#ffffff',
-                        fontWeight: 800,
-                        fontSize: '0.78rem'
-                      }}>
-                        {roscoreCrashed ? '❌ Master (DEAD)' : 'Master (roscore)'}
-                      </span>
-                    </div>
-                    <div style={{ fontSize: '0.74rem', color: roscoreCrashed ? '#fecaca' : 'var(--text-secondary)', lineHeight: '1.3' }}>
-                      Centralized XML-RPC naming and lookup service that all nodes must query to discover peers and establish topic connections.
-                    </div>
+                    {roscoreCrashed ? '❌ Master (DEAD)' : 'Master (roscore)'}
                   </div>
 
-                  {/* Application Nodes Box + 1-Sentence Explanation */}
+                  {/* Application Nodes Box */}
                   <div style={{
+                    flex: 1,
+                    minWidth: '220px',
                     border: '1px dashed ' + (roscoreCrashed ? '#ef4444' : 'rgba(59, 130, 246, 0.4)'),
-                    borderRadius: '8px',
-                    padding: '8px 12px',
+                    borderRadius: '6px',
+                    padding: '6px 10px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '6px',
+                    flexWrap: 'wrap',
                     background: roscoreCrashed ? 'rgba(0, 0, 0, 0.25)' : 'rgba(59, 130, 246, 0.08)'
                   }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '6px', flexWrap: 'wrap', marginBottom: '4px' }}>
-                      <span style={{ fontSize: '0.75rem', color: roscoreCrashed ? '#fca5a5' : '#2563eb', fontWeight: 800, marginRight: '2px' }}>
-                        Nodes:
-                      </span>
-                      {['/camera_node', '/lidar_node', '/path_planner', '/motor_controller'].map(node => (
-                        <span
-                          key={node}
-                          style={{
-                            padding: '3px 8px',
-                            borderRadius: '12px',
-                            background: roscoreCrashed ? '#7f1d1d' : 'var(--bg-surface)',
-                            color: roscoreCrashed ? '#fca5a5' : 'var(--text-primary)',
-                            border: roscoreCrashed ? '1px dashed #ef4444' : '1px solid rgba(59, 130, 246, 0.3)',
-                            fontSize: '0.72rem',
-                            fontFamily: 'var(--font-mono)'
-                          }}
-                        >
-                          {roscoreCrashed ? `💀 ${node}` : node}
-                        </span>
-                      ))}
-                    </div>
-                    <div style={{ fontSize: '0.74rem', color: roscoreCrashed ? '#fecaca' : 'var(--text-secondary)', lineHeight: '1.3' }}>
-                      User robotics algorithms that depend entirely on the Master for connection lookup and freeze if it fails.
-                    </div>
+                    <span style={{ fontSize: '0.74rem', color: roscoreCrashed ? '#fca5a5' : '#2563eb', fontWeight: 800, marginRight: '2px' }}>
+                      Nodes:
+                    </span>
+                    {['/camera_node', '/lidar_node', '/path_planner', '/motor_controller'].map(node => (
+                      <div
+                        key={node}
+                        style={{
+                          padding: '4px 8px',
+                          borderRadius: '12px',
+                          background: roscoreCrashed ? '#7f1d1d' : 'var(--bg-surface)',
+                          color: roscoreCrashed ? '#fca5a5' : 'var(--text-primary)',
+                          border: roscoreCrashed ? '1px dashed #ef4444' : '1px solid rgba(59, 130, 246, 0.3)',
+                          fontSize: '0.74rem',
+                          fontFamily: 'var(--font-mono)'
+                        }}
+                      >
+                        {roscoreCrashed ? `💀 ${node}` : node}
+                      </div>
+                    ))}
                   </div>
                 </div>
               </div>
@@ -1701,7 +1691,7 @@ export function Ros2ArchitectureInteractive() {
                 border: '1px solid ' + (roscoreCrashed ? '#ef4444' : 'rgba(245, 158, 11, 0.35)'),
                 borderLeft: '4px solid ' + (roscoreCrashed ? '#ef4444' : '#f59e0b'),
                 borderRadius: '8px',
-                padding: '12px 14px'
+                padding: '10px 14px'
               }}>
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '8px' }}>
                   <span style={{
@@ -1721,50 +1711,43 @@ export function Ros2ArchitectureInteractive() {
                     ROS 1 Stack
                   </span>
                 </div>
-
-                {/* Client Library */}
                 <div style={{
                   background: roscoreCrashed ? 'rgba(0, 0, 0, 0.25)' : 'rgba(245, 158, 11, 0.12)',
                   border: '1px solid ' + (roscoreCrashed ? '#ef4444' : 'rgba(245, 158, 11, 0.3)'),
                   borderRadius: '6px',
-                  padding: '8px 10px',
-                  marginBottom: '8px'
+                  padding: '8px',
+                  textAlign: 'center',
+                  marginBottom: '8px',
+                  fontSize: '0.82rem',
+                  fontWeight: 700,
+                  color: roscoreCrashed ? '#fca5a5' : '#d97706'
                 }}>
-                  <div style={{ fontSize: '0.8rem', fontWeight: 700, color: roscoreCrashed ? '#fca5a5' : '#d97706', marginBottom: '2px' }}>
-                    Client Library (roscpp / rospy)
-                  </div>
-                  <div style={{ fontSize: '0.73rem', color: roscoreCrashed ? '#fecaca' : 'var(--text-secondary)', lineHeight: '1.3' }}>
-                    Two independently written language codebases that suffered from feature disparities and differing threading behaviors.
-                  </div>
+                  Client Library (roscpp / rospy — Independent Codebases)
                 </div>
-
-                {/* Transport & Nodelet Row */}
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px' }}>
                   <div style={{
                     background: roscoreCrashed ? '#991b1b' : 'rgba(245, 158, 11, 0.15)',
                     border: '1px solid ' + (roscoreCrashed ? '#ef4444' : 'rgba(245, 158, 11, 0.35)'),
                     borderRadius: '6px',
-                    padding: '8px 10px'
+                    padding: '8px',
+                    textAlign: 'center',
+                    fontSize: '0.8rem',
+                    fontWeight: 700,
+                    color: roscoreCrashed ? '#ffffff' : '#d97706'
                   }}>
-                    <div style={{ fontSize: '0.78rem', fontWeight: 700, color: roscoreCrashed ? '#ffffff' : '#d97706', marginBottom: '2px' }}>
-                      {roscoreCrashed ? '❌ TCPROS Broken' : 'TCPROS / UDPROS'}
-                    </div>
-                    <div style={{ fontSize: '0.71rem', color: roscoreCrashed ? '#fecaca' : 'var(--text-secondary)', lineHeight: '1.25' }}>
-                      Custom socket transport lacking native QoS policies, data encryption, and lossy wireless support.
-                    </div>
+                    {roscoreCrashed ? '❌ TCPROS Broken (Master Dead)' : 'TCPROS / UDPROS (Custom Protocol)'}
                   </div>
                   <div style={{
                     background: roscoreCrashed ? 'rgba(0, 0, 0, 0.25)' : 'rgba(245, 158, 11, 0.08)',
                     border: '1px solid ' + (roscoreCrashed ? 'rgba(239, 68, 68, 0.4)' : 'rgba(245, 158, 11, 0.25)'),
                     borderRadius: '6px',
-                    padding: '8px 10px'
+                    padding: '8px',
+                    textAlign: 'center',
+                    fontSize: '0.8rem',
+                    fontWeight: 600,
+                    color: roscoreCrashed ? '#fca5a5' : 'var(--text-secondary)'
                   }}>
-                    <div style={{ fontSize: '0.78rem', fontWeight: 700, color: roscoreCrashed ? '#fca5a5' : 'var(--text-primary)', marginBottom: '2px' }}>
-                      Nodelet API (C++)
-                    </div>
-                    <div style={{ fontSize: '0.71rem', color: roscoreCrashed ? '#fecaca' : 'var(--text-secondary)', lineHeight: '1.25' }}>
-                      Specialized C++ mechanism sharing memory inside one process to bypass network serialization.
-                    </div>
+                    Nodelet API (C++ Shared Process)
                   </div>
                 </div>
               </div>
@@ -1775,28 +1758,26 @@ export function Ros2ArchitectureInteractive() {
                 border: '1px solid rgba(16, 185, 129, 0.35)',
                 borderLeft: '4px solid #10b981',
                 borderRadius: '8px',
-                padding: '10px 14px'
+                padding: '8px 14px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between'
               }}>
-                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '3px' }}>
-                  <span style={{
-                    fontSize: '0.74rem',
-                    fontWeight: 800,
-                    color: '#059669',
-                    background: 'rgba(16, 185, 129, 0.15)',
-                    border: '1px solid rgba(16, 185, 129, 0.35)',
-                    padding: '2px 8px',
-                    borderRadius: '4px',
-                    textTransform: 'uppercase'
-                  }}>
-                    Layer 3: OS Layer
-                  </span>
-                  <span style={{ fontSize: '0.82rem', fontWeight: 700, color: '#059669' }}>
-                    Linux (Ubuntu Only)
-                  </span>
-                </div>
-                <div style={{ fontSize: '0.74rem', color: 'var(--text-secondary)', lineHeight: '1.3' }}>
-                  Strictly bound to Linux distributions with no native support for Windows, macOS, or microcontrollers.
-                </div>
+                <span style={{
+                  fontSize: '0.74rem',
+                  fontWeight: 800,
+                  color: '#059669',
+                  background: 'rgba(16, 185, 129, 0.15)',
+                  border: '1px solid rgba(16, 185, 129, 0.35)',
+                  padding: '2px 8px',
+                  borderRadius: '4px',
+                  textTransform: 'uppercase'
+                }}>
+                  Layer 3: OS Layer
+                </span>
+                <span style={{ fontSize: '0.84rem', fontWeight: 700, color: '#059669' }}>
+                  Linux (Ubuntu Only &bull; No Native Windows/RTOS)
+                </span>
               </div>
 
               {roscoreCrashed && (
@@ -1876,7 +1857,7 @@ export function Ros2ArchitectureInteractive() {
                 border: '1px solid rgba(59, 130, 246, 0.35)',
                 borderLeft: '4px solid #3b82f6',
                 borderRadius: '8px',
-                padding: '12px 14px'
+                padding: '10px 14px'
               }}>
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '8px' }}>
                   <span style={{
@@ -1890,54 +1871,53 @@ export function Ros2ArchitectureInteractive() {
                     textTransform: 'uppercase',
                     letterSpacing: '0.5px'
                   }}>
-                    Layer 1: Application Layer
+                    Layer 1: Application Layer (Masterless Peer-to-Peer)
                   </span>
                   <span style={{ fontSize: '0.74rem', color: '#10b981', fontWeight: 800 }}>
-                    ⭐ Zero Master (Masterless Peer-to-Peer)
+                    ⭐ Zero Master Node
                   </span>
                 </div>
-
                 <div style={{
                   border: '1px dashed rgba(59, 130, 246, 0.4)',
-                  borderRadius: '8px',
-                  padding: '8px 12px',
+                  borderRadius: '6px',
+                  padding: '6px 10px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '6px',
+                  flexWrap: 'wrap',
                   background: 'rgba(59, 130, 246, 0.08)'
                 }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '6px', flexWrap: 'wrap', marginBottom: '4px' }}>
-                    <span style={{ fontSize: '0.75rem', color: '#2563eb', fontWeight: 800, marginRight: '2px' }}>
-                      Nodes:
-                    </span>
-                    <span style={{
-                      padding: '3px 8px',
-                      borderRadius: '12px',
-                      background: ros2NodeCrashed ? '#450a0a' : 'rgba(2, 132, 199, 0.15)',
-                      color: ros2NodeCrashed ? '#fca5a5' : '#0284c7',
-                      border: ros2NodeCrashed ? '1px dashed #ef4444' : '1px solid rgba(2, 132, 199, 0.3)',
-                      fontSize: '0.72rem',
-                      fontFamily: 'var(--font-mono)'
-                    }}>
-                      {ros2NodeCrashed ? '💀 /camera_node (CRASHED)' : '/camera_node'}
-                    </span>
-                    {['/lidar_node', '/path_planner', '/motor_controller'].map(node => (
-                      <span
-                        key={node}
-                        style={{
-                          padding: '3px 8px',
-                          borderRadius: '12px',
-                          background: 'rgba(59, 130, 246, 0.12)',
-                          color: '#2563eb',
-                          border: '1px solid rgba(59, 130, 246, 0.3)',
-                          fontSize: '0.72rem',
-                          fontFamily: 'var(--font-mono)'
-                        }}
-                      >
-                        {node}
-                      </span>
-                    ))}
+                  <span style={{ fontSize: '0.74rem', color: '#2563eb', fontWeight: 800, marginRight: '4px' }}>
+                    Application:
+                  </span>
+                  <div style={{
+                    padding: '4px 10px',
+                    borderRadius: '16px',
+                    background: ros2NodeCrashed ? '#450a0a' : 'rgba(2, 132, 199, 0.15)',
+                    color: ros2NodeCrashed ? '#fca5a5' : '#0284c7',
+                    border: ros2NodeCrashed ? '1px dashed #ef4444' : '1px solid rgba(2, 132, 199, 0.3)',
+                    fontSize: '0.76rem',
+                    fontFamily: 'var(--font-mono)'
+                  }}>
+                    {ros2NodeCrashed ? '💀 Node: /camera_node (CRASHED)' : 'Node: /camera_node'}
                   </div>
-                  <div style={{ fontSize: '0.74rem', color: 'var(--text-secondary)', lineHeight: '1.3' }}>
-                    Autonomous nodes that dynamically discover peers via DDS UDP multicast with zero single point of failure.
-                  </div>
+
+                  {['/lidar_node', '/path_planner', '/motor_controller'].map(node => (
+                    <div
+                      key={node}
+                      style={{
+                        padding: '4px 10px',
+                        borderRadius: '16px',
+                        background: 'rgba(59, 130, 246, 0.12)',
+                        color: '#2563eb',
+                        border: '1px solid rgba(59, 130, 246, 0.3)',
+                        fontSize: '0.76rem',
+                        fontFamily: 'var(--font-mono)'
+                      }}
+                    >
+                      Node: {node}
+                    </div>
+                  ))}
                 </div>
               </div>
 
@@ -1947,7 +1927,8 @@ export function Ros2ArchitectureInteractive() {
                 border: '1px solid rgba(245, 158, 11, 0.35)',
                 borderLeft: '4px solid #f59e0b',
                 borderRadius: '8px',
-                padding: '12px 14px'
+                padding: '10px 14px',
+                position: 'relative'
               }}>
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '8px' }}>
                   <span style={{
@@ -1967,66 +1948,59 @@ export function Ros2ArchitectureInteractive() {
                     ROS 2 Core
                   </span>
                 </div>
-
                 {/* Client Library */}
                 <div style={{
                   background: 'rgba(245, 158, 11, 0.12)',
                   border: '1px solid rgba(245, 158, 11, 0.3)',
                   borderRadius: '6px',
-                  padding: '8px 10px',
-                  marginBottom: '8px'
+                  padding: '8px',
+                  textAlign: 'center',
+                  marginBottom: '8px',
+                  fontSize: '0.82rem',
+                  fontWeight: 700,
+                  color: '#d97706'
                 }}>
-                  <div style={{ fontSize: '0.8rem', fontWeight: 700, color: '#d97706', marginBottom: '2px' }}>
-                    Client Library (rclcpp / rclpy / unified C rcl)
-                  </div>
-                  <div style={{ fontSize: '0.73rem', color: 'var(--text-secondary)', lineHeight: '1.3' }}>
-                    Thin language wrappers built upon a shared C core (rcl), ensuring 100% behavioral and threading parity.
-                  </div>
+                  Client Library (rclcpp / rclpy / unified C rcl)
                 </div>
-
                 {/* Abstract DDS Layer */}
                 <div style={{
                   background: 'rgba(245, 158, 11, 0.18)',
                   border: '1px solid rgba(245, 158, 11, 0.35)',
                   borderRadius: '6px',
-                  padding: '8px 10px',
-                  marginBottom: '8px'
+                  padding: '8px',
+                  textAlign: 'center',
+                  marginBottom: '8px',
+                  fontSize: '0.82rem',
+                  fontWeight: 800,
+                  color: '#b45309'
                 }}>
-                  <div style={{ fontSize: '0.8rem', fontWeight: 800, color: '#b45309', marginBottom: '2px' }}>
-                    Abstract DDS Layer (rmw — ROS Middleware Interface)
-                  </div>
-                  <div style={{ fontSize: '0.73rem', color: 'var(--text-secondary)', lineHeight: '1.3' }}>
-                    Standard middleware interface that decouples ROS 2 from specific DDS vendors, enabling zero-code vendor switching.
-                  </div>
+                  Abstract DDS Layer (rmw — ROS Middleware Interface)
                 </div>
-
-                {/* Split Row: DDS & Intra-process API */}
+                {/* Split Row: DDS (Standard) & Intra-process API */}
                 <div style={{ display: 'grid', gridTemplateColumns: '1.2fr 1fr', gap: '8px' }}>
                   <div style={{
                     background: 'rgba(245, 158, 11, 0.12)',
                     border: '1px solid rgba(245, 158, 11, 0.3)',
                     borderRadius: '6px',
-                    padding: '8px 10px'
+                    padding: '8px',
+                    textAlign: 'center',
+                    fontSize: '0.8rem',
+                    fontWeight: 700,
+                    color: '#d97706'
                   }}>
-                    <div style={{ fontSize: '0.78rem', fontWeight: 700, color: '#d97706', marginBottom: '2px' }}>
-                      DDS (FastDDS / CycloneDDS)
-                    </div>
-                    <div style={{ fontSize: '0.71rem', color: 'var(--text-secondary)', lineHeight: '1.25' }}>
-                      OMG industrial standard handling peer discovery, data encryption, and configurable QoS.
-                    </div>
+                    DDS (OMG Standard &bull; FastDDS / CycloneDDS)
                   </div>
                   <div style={{
                     background: 'rgba(245, 158, 11, 0.12)',
                     border: '1px solid rgba(245, 158, 11, 0.3)',
                     borderRadius: '6px',
-                    padding: '8px 10px'
+                    padding: '8px',
+                    textAlign: 'center',
+                    fontSize: '0.8rem',
+                    fontWeight: 700,
+                    color: '#d97706'
                   }}>
-                    <div style={{ fontSize: '0.78rem', fontWeight: 700, color: '#d97706', marginBottom: '2px' }}>
-                      Intra-process API (Zero-Copy)
-                    </div>
-                    <div style={{ fontSize: '0.71rem', color: 'var(--text-secondary)', lineHeight: '1.25' }}>
-                      Passes direct memory pointers between co-located nodes to achieve ultra-low microsecond latency.
-                    </div>
+                    Intra-process API (Zero-Copy)
                   </div>
                 </div>
               </div>
@@ -2037,28 +2011,28 @@ export function Ros2ArchitectureInteractive() {
                 border: '1px solid rgba(16, 185, 129, 0.35)',
                 borderLeft: '4px solid #10b981',
                 borderRadius: '8px',
-                padding: '10px 14px'
+                padding: '8px 14px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                flexWrap: 'wrap',
+                gap: '8px'
               }}>
-                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '3px', flexWrap: 'wrap', gap: '4px' }}>
-                  <span style={{
-                    fontSize: '0.74rem',
-                    fontWeight: 800,
-                    color: '#059669',
-                    background: 'rgba(16, 185, 129, 0.15)',
-                    border: '1px solid rgba(16, 185, 129, 0.35)',
-                    padding: '2px 8px',
-                    borderRadius: '4px',
-                    textTransform: 'uppercase'
-                  }}>
-                    Layer 3: OS Layer
-                  </span>
-                  <span style={{ fontSize: '0.82rem', fontWeight: 700, color: '#059669' }}>
-                    Linux / Windows / macOS / RTOS
-                  </span>
-                </div>
-                <div style={{ fontSize: '0.74rem', color: 'var(--text-secondary)', lineHeight: '1.3' }}>
-                  Universal multi-platform support spanning developer workstations, cloud servers, and real-time embedded microcontrollers (FreeRTOS/Zephyr).
-                </div>
+                <span style={{
+                  fontSize: '0.74rem',
+                  fontWeight: 800,
+                  color: '#059669',
+                  background: 'rgba(16, 185, 129, 0.15)',
+                  border: '1px solid rgba(16, 185, 129, 0.35)',
+                  padding: '2px 8px',
+                  borderRadius: '4px',
+                  textTransform: 'uppercase'
+                }}>
+                  Layer 3: OS Layer
+                </span>
+                <span style={{ fontSize: '0.84rem', fontWeight: 700, color: '#059669' }}>
+                  Linux / Windows / macOS / RTOS (Real-Time OS: FreeRTOS, Zephyr, QNX)
+                </span>
               </div>
 
               <div style={{
@@ -2073,6 +2047,173 @@ export function Ros2ArchitectureInteractive() {
                 {ros2NodeCrashed
                   ? '✅ FAULT RESILIENT: Camera node crashed, but because DDS uses decentralized participant announcements and the Abstract DDS Layer handles discovery, the LiDAR, Planner, and Motor Controller continue operating safely!'
                   : '✅ DECENTRALIZED MESH: Nodes discover peers dynamically over DDS multicast. No central master required.'}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Component Architecture Breakdown: 1-Sentence Summary per Component */}
+        <div style={{
+          background: 'var(--bg-primary)',
+          border: '1px solid var(--border-color)',
+          borderRadius: '12px',
+          padding: '1.35rem',
+          marginBottom: '1.5rem',
+          boxShadow: 'var(--shadow-sm)'
+        }}>
+          <h4 style={{ margin: '0 0 1rem', fontSize: '1.05rem', fontWeight: 800, color: 'var(--text-primary)', display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <span>🏛️</span>
+            <span>Architectural Breakdown: 1-Sentence Explanation per Component</span>
+          </h4>
+
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(420px, 1fr))',
+            gap: '1.25rem'
+          }}>
+            {/* ROS 1 Column */}
+            <div style={{
+              background: 'var(--bg-card, var(--bg-surface))',
+              border: '1px solid rgba(239, 68, 68, 0.3)',
+              borderTop: '3px solid #ef4444',
+              borderRadius: '10px',
+              padding: '1rem',
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '12px'
+            }}>
+              <div style={{ fontWeight: 800, fontSize: '0.92rem', color: '#ef4444', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                <span>ROS 1 Components (Legacy Centralized)</span>
+              </div>
+
+              {/* Layer 1 Items */}
+              <div style={{ borderLeft: '3px solid #3b82f6', paddingLeft: '10px' }}>
+                <div style={{ fontSize: '0.82rem', fontWeight: 800, color: '#2563eb', marginBottom: '2px' }}>
+                  • Master (roscore)
+                </div>
+                <div style={{ fontSize: '0.78rem', color: 'var(--text-secondary)', lineHeight: 1.4 }}>
+                  Centralized XML-RPC naming and lookup service that all nodes must query to discover peers and establish topic connections.
+                </div>
+              </div>
+
+              <div style={{ borderLeft: '3px solid #3b82f6', paddingLeft: '10px' }}>
+                <div style={{ fontSize: '0.82rem', fontWeight: 800, color: '#2563eb', marginBottom: '2px' }}>
+                  • Application Nodes
+                </div>
+                <div style={{ fontSize: '0.78rem', color: 'var(--text-secondary)', lineHeight: 1.4 }}>
+                  User robotics algorithms that depend entirely on the Master for connection lookup and freeze if it fails.
+                </div>
+              </div>
+
+              {/* Layer 2 Items */}
+              <div style={{ borderLeft: '3px solid #f59e0b', paddingLeft: '10px' }}>
+                <div style={{ fontSize: '0.82rem', fontWeight: 800, color: '#d97706', marginBottom: '2px' }}>
+                  • Client Library (roscpp / rospy)
+                </div>
+                <div style={{ fontSize: '0.78rem', color: 'var(--text-secondary)', lineHeight: 1.4 }}>
+                  Two independently written language codebases that suffered from feature disparities and differing threading behaviors.
+                </div>
+              </div>
+
+              <div style={{ borderLeft: '3px solid #f59e0b', paddingLeft: '10px' }}>
+                <div style={{ fontSize: '0.82rem', fontWeight: 800, color: '#d97706', marginBottom: '2px' }}>
+                  • TCPROS / UDPROS
+                </div>
+                <div style={{ fontSize: '0.78rem', color: 'var(--text-secondary)', lineHeight: 1.4 }}>
+                  Custom socket transport lacking native QoS policies, data encryption, and lossy wireless support.
+                </div>
+              </div>
+
+              <div style={{ borderLeft: '3px solid #f59e0b', paddingLeft: '10px' }}>
+                <div style={{ fontSize: '0.82rem', fontWeight: 800, color: '#d97706', marginBottom: '2px' }}>
+                  • Nodelet API (C++)
+                </div>
+                <div style={{ fontSize: '0.78rem', color: 'var(--text-secondary)', lineHeight: 1.4 }}>
+                  Specialized C++ mechanism sharing memory inside one process to bypass network serialization.
+                </div>
+              </div>
+
+              {/* Layer 3 Items */}
+              <div style={{ borderLeft: '3px solid #10b981', paddingLeft: '10px' }}>
+                <div style={{ fontSize: '0.82rem', fontWeight: 800, color: '#059669', marginBottom: '2px' }}>
+                  • OS Layer
+                </div>
+                <div style={{ fontSize: '0.78rem', color: 'var(--text-secondary)', lineHeight: 1.4 }}>
+                  Strictly bound to Linux distributions with no native support for Windows, macOS, or microcontrollers.
+                </div>
+              </div>
+            </div>
+
+            {/* ROS 2 Column */}
+            <div style={{
+              background: 'var(--bg-card, var(--bg-surface))',
+              border: '1px solid rgba(16, 185, 129, 0.3)',
+              borderTop: '3px solid #10b981',
+              borderRadius: '10px',
+              padding: '1rem',
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '12px'
+            }}>
+              <div style={{ fontWeight: 800, fontSize: '0.92rem', color: '#10b981', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                <span>ROS 2 Components (Modern Decentralized)</span>
+              </div>
+
+              {/* Layer 1 Items */}
+              <div style={{ borderLeft: '3px solid #3b82f6', paddingLeft: '10px' }}>
+                <div style={{ fontSize: '0.82rem', fontWeight: 800, color: '#2563eb', marginBottom: '2px' }}>
+                  • Application Nodes (Masterless)
+                </div>
+                <div style={{ fontSize: '0.78rem', color: 'var(--text-secondary)', lineHeight: 1.4 }}>
+                  Autonomous nodes that dynamically discover peers via DDS UDP multicast with zero single point of failure.
+                </div>
+              </div>
+
+              {/* Layer 2 Items */}
+              <div style={{ borderLeft: '3px solid #f59e0b', paddingLeft: '10px' }}>
+                <div style={{ fontSize: '0.82rem', fontWeight: 800, color: '#d97706', marginBottom: '2px' }}>
+                  • Client Library (rclcpp / rclpy / rcl)
+                </div>
+                <div style={{ fontSize: '0.78rem', color: 'var(--text-secondary)', lineHeight: 1.4 }}>
+                  Thin language wrappers built upon a shared C core (rcl), ensuring 100% behavioral and threading parity.
+                </div>
+              </div>
+
+              <div style={{ borderLeft: '3px solid #f59e0b', paddingLeft: '10px' }}>
+                <div style={{ fontSize: '0.82rem', fontWeight: 800, color: '#d97706', marginBottom: '2px' }}>
+                  • Abstract DDS Layer (rmw)
+                </div>
+                <div style={{ fontSize: '0.78rem', color: 'var(--text-secondary)', lineHeight: 1.4 }}>
+                  Standard middleware interface that decouples ROS 2 from specific DDS vendors, enabling zero-code vendor switching.
+                </div>
+              </div>
+
+              <div style={{ borderLeft: '3px solid #f59e0b', paddingLeft: '10px' }}>
+                <div style={{ fontSize: '0.82rem', fontWeight: 800, color: '#d97706', marginBottom: '2px' }}>
+                  • DDS (FastDDS / CycloneDDS)
+                </div>
+                <div style={{ fontSize: '0.78rem', color: 'var(--text-secondary)', lineHeight: 1.4 }}>
+                  OMG industrial standard handling peer discovery, data encryption, and configurable Quality of Service (QoS).
+                </div>
+              </div>
+
+              <div style={{ borderLeft: '3px solid #f59e0b', paddingLeft: '10px' }}>
+                <div style={{ fontSize: '0.82rem', fontWeight: 800, color: '#d97706', marginBottom: '2px' }}>
+                  • Intra-process API (Zero-Copy)
+                </div>
+                <div style={{ fontSize: '0.78rem', color: 'var(--text-secondary)', lineHeight: 1.4 }}>
+                  Passes direct memory pointers between co-located nodes to achieve ultra-low microsecond latency.
+                </div>
+              </div>
+
+              {/* Layer 3 Items */}
+              <div style={{ borderLeft: '3px solid #10b981', paddingLeft: '10px' }}>
+                <div style={{ fontSize: '0.82rem', fontWeight: 800, color: '#059669', marginBottom: '2px' }}>
+                  • OS Layer (Multi-Platform &amp; RTOS)
+                </div>
+                <div style={{ fontSize: '0.78rem', color: 'var(--text-secondary)', lineHeight: 1.4 }}>
+                  Universal multi-platform support spanning developer workstations, cloud servers, and real-time embedded microcontrollers (FreeRTOS/Zephyr).
+                </div>
               </div>
             </div>
           </div>
@@ -2127,51 +2268,6 @@ export function Ros2ArchitectureInteractive() {
           <div style={{ marginTop: '10px', fontSize: '0.8rem', color: '#10b981', fontWeight: 600 }}>
             ✅ Result: 100% behavioral parity, identical threading models, and synchronized updates across Python and C++!
           </div>
-        </div>
-
-        {/* Architectural Comparison Matrix */}
-        <div style={{ overflowX: 'auto' }}>
-          <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.88rem' }}>
-            <thead>
-              <tr style={{ background: 'var(--bg-primary)', textAlign: 'left', borderBottom: '2px solid var(--border-color)' }}>
-                <th style={{ padding: '10px 14px', color: 'var(--text-primary)', fontWeight: 800 }}>Feature Dimension</th>
-                <th style={{ padding: '10px 14px', color: '#ef4444', fontWeight: 800 }}>ROS 1 (Legacy)</th>
-                <th style={{ padding: '10px 14px', color: '#10b981', fontWeight: 800 }}>ROS 2 Jazzy (Industry Standard)</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr style={{ borderBottom: '1px solid var(--border-color)' }}>
-                <td style={{ padding: '10px 14px', fontWeight: 700, color: 'var(--text-primary)' }}>Discovery Protocol</td>
-                <td style={{ padding: '10px 14px', color: 'var(--text-secondary)' }}>Centralized <code>roscore</code> master registry</td>
-                <td style={{ padding: '10px 14px', color: '#10b981', fontWeight: 600 }}>Decentralized peer-to-peer DDS multicast</td>
-              </tr>
-              <tr style={{ borderBottom: '1px solid var(--border-color)' }}>
-                <td style={{ padding: '10px 14px', fontWeight: 700, color: 'var(--text-primary)' }}>Fault Tolerance</td>
-                <td style={{ padding: '10px 14px', color: '#ef4444' }}>Single Point of Failure (Master crash halts robot)</td>
-                <td style={{ padding: '10px 14px', color: '#10b981', fontWeight: 600 }}>Fault Tolerant (Individual node isolation)</td>
-              </tr>
-              <tr style={{ borderBottom: '1px solid var(--border-color)' }}>
-                <td style={{ padding: '10px 14px', fontWeight: 700, color: 'var(--text-primary)' }}>Language Libraries (C++ vs Python)</td>
-                <td style={{ padding: '10px 14px', color: '#ef4444' }}><strong>High Inconsistency:</strong> Separate codebases (<code>roscpp</code> vs <code>rospy</code>) with feature disparities</td>
-                <td style={{ padding: '10px 14px', color: '#10b981', fontWeight: 600 }}><strong>100% Unified:</strong> Thin wrappers (<code>rclcpp</code>/<code>rclpy</code>) over shared C core (<code>rcl</code>)</td>
-              </tr>
-              <tr style={{ borderBottom: '1px solid var(--border-color)' }}>
-                <td style={{ padding: '10px 14px', fontWeight: 700, color: 'var(--text-primary)' }}>Quality of Service (QoS)</td>
-                <td style={{ padding: '10px 14px', color: 'var(--text-secondary)' }}>TCP/UDP without delivery guarantees</td>
-                <td style={{ padding: '10px 14px', color: '#10b981', fontWeight: 600 }}>Configurable QoS (Best Effort vs. Reliable)</td>
-              </tr>
-              <tr style={{ borderBottom: '1px solid var(--border-color)' }}>
-                <td style={{ padding: '10px 14px', fontWeight: 700, color: 'var(--text-primary)' }}>Multi-Robot Fleets</td>
-                <td style={{ padding: '10px 14px', color: 'var(--text-secondary)' }}>Complex bridging hacks (multimaster)</td>
-                <td style={{ padding: '10px 14px', color: '#10b981', fontWeight: 600 }}>Native multi-robot with <code>ROS_DOMAIN_ID</code></td>
-              </tr>
-              <tr>
-                <td style={{ padding: '10px 14px', fontWeight: 700, color: 'var(--text-primary)' }}>Python Stack</td>
-                <td style={{ padding: '10px 14px', color: 'var(--text-secondary)' }}>Legacy Python 2.7</td>
-                <td style={{ padding: '10px 14px', color: '#10b981', fontWeight: 600 }}>Modern Python 3.12+ (Asyncio &amp; OOP Node Lifecycle)</td>
-              </tr>
-            </tbody>
-          </table>
         </div>
       </section>
 

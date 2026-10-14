@@ -249,16 +249,6 @@ In **ROS 2**, Open Robotics solved this by building a unified C core: `rcl` (ROS
 
 > **Result:** 100% behavioral parity, identical threading models, and synchronized updates across Python and C++!
 
-| Architectural Dimension | ROS 1 (Legacy) | ROS 2 (Modern Industrial Standard) |
-|:---|:---|:---|
-| **Discovery Mechanism** | Centralized `roscore` master registry. | **Peer-to-Peer DDS**: Decentralized automatic discovery. |
-| **Fault Tolerance** | **Single Point of Failure**: If `roscore` crashes, all nodes lose connection. | **Fault-Tolerant**: No master node exists. If any single node crashes, all other nodes continue communicating. |
-| **Language Libraries (C++ vs Python)** | **High Inconsistency**: Separate codebases (`roscpp` vs `rospy`) with feature disparities. | **100% Unified**: Thin wrappers (`rclcpp`/`rclpy`) over shared C core (`rcl`). |
-| **Network Reliability** | TCP/UDP without delivery guarantees over lossy Wi-Fi. | **Configurable QoS (Quality of Service)**: Best Effort (sensors) vs. Reliable (commands). |
-| **Multi-Robot Fleets** | Complex hacks (multimaster_fkie, bridging). | **Native Isolation**: `ROS_DOMAIN_ID=0..101` partitions robots cleanly on the same LAN. |
-| **Real-Time Capability** | No real-time support. | **Real-Time Deterministic**: Compatible with RTOS and Linux PREEMPT_RT kernels. |
-| **Programming Core** | Python 2.7 / legacy C++03. | **Modern Python 3.12+** / Modern C++17. |
-
 ---
 
 ## 4. ROS 2 Release Timeline
