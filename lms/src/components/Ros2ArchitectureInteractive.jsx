@@ -814,13 +814,15 @@ export function Ros2ArchitectureInteractive() {
             }}
           />
           <div style={{
-            marginTop: '10px',
-            fontSize: '0.86rem',
-            color: '#475569',
+            marginTop: '12px',
+            fontSize: '0.9rem',
+            color: '#334155',
             textAlign: 'center',
-            fontWeight: 600
+            fontWeight: 600,
+            lineHeight: 1.5,
+            maxWidth: '700px'
           }}>
-            &ldquo;No thanks! We are too busy!&rdquo; &mdash; The dilemma of robotics developers dragging square wheels.
+            💡 If you are busy making everything from scratch and rebuilding parts that someone has already worked on, you cannot make every part of your robot perfect.
           </div>
         </div>
 

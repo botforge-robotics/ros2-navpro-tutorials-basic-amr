@@ -120,7 +120,8 @@ One pretty common story in robotics development is this:
 
 How universal message standards and global community sharing solve the developer crisis and enable plug-and-play robotics.
 
-![Reinventing the Wheel - No thanks! We are too busy!](assets/images/reinvent_the_wheel.jpg)
+![Reinventing the Wheel](assets/images/reinvent_the_wheel.jpg)
+*“If you are busy making everything from scratch and rebuilding parts that someone has already worked on, you cannot make every part of your robot perfect.”*
 
 > [!IMPORTANT]
 > **The Paradigm Shift: From Custom Square Wheels to a Universal ROS 2 Bus**  
