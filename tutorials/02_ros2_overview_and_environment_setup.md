@@ -172,18 +172,15 @@ To intuitively understand how ROS 2 operates at runtime, visualize the AMR not a
 
 #### 🎬 Motion Flow Stage Breakdown:
 ```text
-[ 1. SENSES (Perception) ]  ---> ( /scan, /image_raw )
-             |
-             v
-[ 2. NERVES (The DDS Highway) ] (Zero Bottleneck, Sub-ms Multicast)
-             |
-             +---> [ 3. BRAIN (Cognition & SLAM/Nav2) ]
-             |                    |
-             |                    v ( /cmd_vel )
-             +<-------------------+
-             |
-             v
-[ 4. MUSCLES (Actuation & Motors) ] ---> Physical Wheel Motion
+[ 1. SENSES (Perception) ] --------> ( /scan, /image_raw ) --------> [ 2. DDS HIGHWAY ]
+                                                                             |
+[ 3. BRAIN (SLAM & Nav2) ] <------- ( /scan, /odom ) <-----------------------+
+        |
+        +-------------------------> ( /cmd_vel ) -------------------------> [ 2. DDS HIGHWAY ]
+                                                                             |
+[ 4. MUSCLES (Motors/Encoders) ] <-- ( /cmd_vel ) <--------------------------+
+        |
+        +-------------------------> ( /odom Feedback ) -------------------> [ 2. DDS HIGHWAY ]
 ```
 
 1. **Stage 1: Senses (Sensory Perception / Telemetry Input)**

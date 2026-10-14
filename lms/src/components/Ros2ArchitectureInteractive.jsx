@@ -1399,7 +1399,7 @@ export function Ros2ArchitectureInteractive() {
           <img
             src="assets/images/ros2_motion_architecture.svg"
             alt="ROS 2 Motion Architecture and Data Highway"
-            style={{ width: '100%', height: 'auto', display: 'block' }}
+            style={{ width: '100%', height: 'auto', aspectRatio: '1000 / 410', display: 'block' }}
           />
 
           {/* Live Telemetry Overlay Bar */}
@@ -1598,8 +1598,8 @@ export function Ros2ArchitectureInteractive() {
 
             {/* ROS 1 3-Layer Stack Display */}
             <div style={{
-              background: roscoreCrashed ? '#450a0a' : 'var(--bg-card, var(--bg-surface))',
-              border: roscoreCrashed ? '2px solid #ef4444' : '1px solid var(--border-color)',
+              background: 'var(--bg-card, var(--bg-surface))',
+              border: '1px solid var(--border-color)',
               borderRadius: '10px',
               padding: '1.25rem',
               transition: 'all 0.3s ease',
@@ -1608,30 +1608,31 @@ export function Ros2ArchitectureInteractive() {
               gap: '12px',
               flex: 1
             }}>
-              {/* Layer 1: Application Layer (Blue Theme) */}
+              {/* Layer 1: Application Layer (Blue Theme -> Crashed/Halted when roscore is killed) */}
               <div style={{
-                background: roscoreCrashed ? '#7f1d1d' : 'rgba(59, 130, 246, 0.05)',
-                border: '1px solid ' + (roscoreCrashed ? '#ef4444' : 'rgba(59, 130, 246, 0.35)'),
+                background: roscoreCrashed ? 'rgba(239, 68, 68, 0.08)' : 'rgba(59, 130, 246, 0.05)',
+                border: '1px solid ' + (roscoreCrashed ? 'rgba(239, 68, 68, 0.5)' : 'rgba(59, 130, 246, 0.35)'),
                 borderLeft: '4px solid ' + (roscoreCrashed ? '#ef4444' : '#3b82f6'),
                 borderRadius: '8px',
-                padding: '10px 14px'
+                padding: '10px 14px',
+                transition: 'all 0.3s ease'
               }}>
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '8px' }}>
                   <span style={{
                     fontSize: '0.74rem',
                     fontWeight: 800,
-                    color: roscoreCrashed ? '#fca5a5' : '#2563eb',
-                    background: roscoreCrashed ? 'rgba(239, 68, 68, 0.2)' : 'rgba(59, 130, 246, 0.15)',
+                    color: roscoreCrashed ? '#ef4444' : '#2563eb',
+                    background: roscoreCrashed ? 'rgba(239, 68, 68, 0.15)' : 'rgba(59, 130, 246, 0.15)',
                     border: '1px solid ' + (roscoreCrashed ? 'rgba(239, 68, 68, 0.4)' : 'rgba(59, 130, 246, 0.35)'),
                     padding: '2px 8px',
                     borderRadius: '4px',
                     textTransform: 'uppercase',
                     letterSpacing: '0.5px'
                   }}>
-                    Layer 1: Application Layer
+                    {roscoreCrashed ? 'Layer 1: Application Layer (HALTED & SEVERED)' : 'Layer 1: Application Layer'}
                   </span>
-                  <span style={{ fontSize: '0.74rem', color: roscoreCrashed ? '#fca5a5' : '#ef4444', fontWeight: 800 }}>
-                    ⚠️ Centralized Discovery Dependency
+                  <span style={{ fontSize: '0.74rem', color: roscoreCrashed ? '#ef4444' : '#ef4444', fontWeight: 800 }}>
+                    {roscoreCrashed ? '💥 Single Point of Failure Triggered' : '⚠️ Centralized Discovery Dependency'}
                   </span>
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '10px', flexWrap: 'wrap' }}>
@@ -1639,31 +1640,31 @@ export function Ros2ArchitectureInteractive() {
                   <div style={{
                     padding: '8px 18px',
                     borderRadius: '20px',
-                    background: roscoreCrashed ? '#991b1b' : '#ef4444',
+                    background: roscoreCrashed ? '#dc2626' : '#ef4444',
                     color: '#ffffff',
                     fontWeight: 800,
                     fontSize: '0.86rem',
-                    boxShadow: '0 2px 8px rgba(239, 68, 68, 0.4)',
+                    boxShadow: roscoreCrashed ? '0 0 12px rgba(239, 68, 68, 0.6)' : '0 2px 8px rgba(239, 68, 68, 0.4)',
                     border: '1px solid rgba(255,255,255,0.2)'
                   }}>
-                    {roscoreCrashed ? '❌ Master (DEAD)' : 'Master (roscore)'}
+                    {roscoreCrashed ? '❌ Master (PROCESS KILLED)' : 'Master (roscore)'}
                   </div>
 
                   {/* Application Nodes Box */}
                   <div style={{
                     flex: 1,
                     minWidth: '220px',
-                    border: '1px dashed ' + (roscoreCrashed ? '#ef4444' : 'rgba(59, 130, 246, 0.4)'),
+                    border: '1px dashed ' + (roscoreCrashed ? 'rgba(239, 68, 68, 0.6)' : 'rgba(59, 130, 246, 0.4)'),
                     borderRadius: '6px',
                     padding: '6px 10px',
                     display: 'flex',
                     alignItems: 'center',
                     gap: '6px',
                     flexWrap: 'wrap',
-                    background: roscoreCrashed ? 'rgba(0, 0, 0, 0.25)' : 'rgba(59, 130, 246, 0.08)'
+                    background: roscoreCrashed ? 'rgba(239, 68, 68, 0.05)' : 'rgba(59, 130, 246, 0.08)'
                   }}>
-                    <span style={{ fontSize: '0.74rem', color: roscoreCrashed ? '#fca5a5' : '#2563eb', fontWeight: 800, marginRight: '2px' }}>
-                      Nodes:
+                    <span style={{ fontSize: '0.74rem', color: roscoreCrashed ? '#ef4444' : '#2563eb', fontWeight: 800, marginRight: '2px' }}>
+                      {roscoreCrashed ? 'Disconnected Nodes:' : 'Nodes:'}
                     </span>
                     {['/camera_node', '/lidar_node', '/path_planner', '/motor_controller'].map(node => (
                       <div
@@ -1671,25 +1672,25 @@ export function Ros2ArchitectureInteractive() {
                         style={{
                           padding: '4px 8px',
                           borderRadius: '12px',
-                          background: roscoreCrashed ? '#7f1d1d' : 'var(--bg-surface)',
-                          color: roscoreCrashed ? '#fca5a5' : 'var(--text-primary)',
+                          background: roscoreCrashed ? 'rgba(239, 68, 68, 0.15)' : 'var(--bg-surface)',
+                          color: roscoreCrashed ? '#f87171' : 'var(--text-primary)',
                           border: roscoreCrashed ? '1px dashed #ef4444' : '1px solid rgba(59, 130, 246, 0.3)',
                           fontSize: '0.74rem',
                           fontFamily: 'var(--font-mono)'
                         }}
                       >
-                        {roscoreCrashed ? `💀 ${node}` : node}
+                        {roscoreCrashed ? `⚠️ ${node}` : node}
                       </div>
                     ))}
                   </div>
                 </div>
               </div>
 
-              {/* Layer 2: Middleware Layer (Amber Theme) */}
+              {/* Layer 2: Middleware Layer (Amber Theme - Libraries in RAM, XML-RPC lookup unreachable) */}
               <div style={{
-                background: roscoreCrashed ? '#7f1d1d' : 'rgba(245, 158, 11, 0.05)',
-                border: '1px solid ' + (roscoreCrashed ? '#ef4444' : 'rgba(245, 158, 11, 0.35)'),
-                borderLeft: '4px solid ' + (roscoreCrashed ? '#ef4444' : '#f59e0b'),
+                background: 'rgba(245, 158, 11, 0.05)',
+                border: '1px solid rgba(245, 158, 11, 0.35)',
+                borderLeft: '4px solid #f59e0b',
                 borderRadius: '8px',
                 padding: '10px 14px'
               }}>
@@ -1697,9 +1698,9 @@ export function Ros2ArchitectureInteractive() {
                   <span style={{
                     fontSize: '0.74rem',
                     fontWeight: 800,
-                    color: roscoreCrashed ? '#fca5a5' : '#d97706',
-                    background: roscoreCrashed ? 'rgba(239, 68, 68, 0.2)' : 'rgba(245, 158, 11, 0.15)',
-                    border: '1px solid ' + (roscoreCrashed ? 'rgba(239, 68, 68, 0.4)' : 'rgba(245, 158, 11, 0.35)'),
+                    color: '#d97706',
+                    background: 'rgba(245, 158, 11, 0.15)',
+                    border: '1px solid rgba(245, 158, 11, 0.35)',
                     padding: '2px 8px',
                     borderRadius: '4px',
                     textTransform: 'uppercase',
@@ -1712,47 +1713,47 @@ export function Ros2ArchitectureInteractive() {
                   </span>
                 </div>
                 <div style={{
-                  background: roscoreCrashed ? 'rgba(0, 0, 0, 0.25)' : 'rgba(245, 158, 11, 0.12)',
-                  border: '1px solid ' + (roscoreCrashed ? '#ef4444' : 'rgba(245, 158, 11, 0.3)'),
+                  background: 'rgba(245, 158, 11, 0.12)',
+                  border: '1px solid rgba(245, 158, 11, 0.3)',
                   borderRadius: '6px',
                   padding: '8px',
                   textAlign: 'center',
                   marginBottom: '8px',
                   fontSize: '0.82rem',
                   fontWeight: 700,
-                  color: roscoreCrashed ? '#fca5a5' : '#d97706'
+                  color: '#d97706'
                 }}>
-                  Client Library (roscpp / rospy — Independent Codebases)
+                  Client Library (roscpp / rospy — Independent Codebases in Memory)
                 </div>
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px' }}>
                   <div style={{
-                    background: roscoreCrashed ? '#991b1b' : 'rgba(245, 158, 11, 0.15)',
-                    border: '1px solid ' + (roscoreCrashed ? '#ef4444' : 'rgba(245, 158, 11, 0.35)'),
+                    background: roscoreCrashed ? 'rgba(239, 68, 68, 0.12)' : 'rgba(245, 158, 11, 0.15)',
+                    border: roscoreCrashed ? '1px dashed #ef4444' : '1px solid rgba(245, 158, 11, 0.35)',
                     borderRadius: '6px',
                     padding: '8px',
                     textAlign: 'center',
                     fontSize: '0.8rem',
                     fontWeight: 700,
-                    color: roscoreCrashed ? '#ffffff' : '#d97706'
+                    color: roscoreCrashed ? '#ef4444' : '#d97706'
                   }}>
-                    {roscoreCrashed ? '❌ TCPROS Broken (Master Dead)' : 'TCPROS / UDPROS (Custom Protocol)'}
+                    {roscoreCrashed ? '❌ XML-RPC Lookup Severed (roscore Dead)' : 'TCPROS / UDPROS (Custom Protocol)'}
                   </div>
                   <div style={{
-                    background: roscoreCrashed ? 'rgba(0, 0, 0, 0.25)' : 'rgba(245, 158, 11, 0.08)',
-                    border: '1px solid ' + (roscoreCrashed ? 'rgba(239, 68, 68, 0.4)' : 'rgba(245, 158, 11, 0.25)'),
+                    background: 'rgba(245, 158, 11, 0.08)',
+                    border: '1px solid rgba(245, 158, 11, 0.25)',
                     borderRadius: '6px',
                     padding: '8px',
                     textAlign: 'center',
                     fontSize: '0.8rem',
                     fontWeight: 600,
-                    color: roscoreCrashed ? '#fca5a5' : 'var(--text-secondary)'
+                    color: 'var(--text-secondary)'
                   }}>
                     Nodelet API (C++ Shared Process)
                   </div>
                 </div>
               </div>
 
-              {/* Layer 3: OS Layer (Emerald Theme) */}
+              {/* Layer 3: OS Layer (Emerald Theme - 100% Alive & Running) */}
               <div style={{
                 background: 'rgba(16, 185, 129, 0.05)',
                 border: '1px solid rgba(16, 185, 129, 0.35)',
@@ -1775,22 +1776,33 @@ export function Ros2ArchitectureInteractive() {
                 }}>
                   Layer 3: OS Layer
                 </span>
-                <span style={{ fontSize: '0.84rem', fontWeight: 700, color: '#059669' }}>
-                  Linux (Ubuntu Only &bull; No Native Windows/RTOS)
+                <span style={{ fontSize: '0.84rem', fontWeight: 700, color: '#059669', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                  <span>Linux (Ubuntu Only &bull; No Native Windows/RTOS)</span>
+                  <span style={{
+                    fontSize: '0.72rem',
+                    background: 'rgba(16, 185, 129, 0.2)',
+                    color: '#059669',
+                    padding: '2px 8px',
+                    borderRadius: '4px',
+                    fontWeight: 800
+                  }}>
+                    {roscoreCrashed ? '🟢 Host OS 100% Operational' : 'Ubuntu 20.04/18.04'}
+                  </span>
                 </span>
               </div>
 
               {roscoreCrashed && (
                 <div style={{
-                  color: '#fca5a5',
-                  fontSize: '0.84rem',
-                  fontWeight: 700,
-                  background: 'rgba(239, 68, 68, 0.15)',
-                  padding: '8px 12px',
-                  borderRadius: '6px',
-                  border: '1px solid rgba(239, 68, 68, 0.3)'
+                  color: '#f87171',
+                  fontSize: '0.82rem',
+                  fontWeight: 600,
+                  background: 'rgba(239, 68, 68, 0.1)',
+                  padding: '10px 14px',
+                  borderRadius: '8px',
+                  border: '1px solid rgba(239, 68, 68, 0.3)',
+                  lineHeight: 1.5
                 }}>
-                  ⚠️ CRITICAL FAILURE: Master process died! In ROS 1, TCPROS relies on the Master XML-RPC lookup table. With the Master dead, node registration stops and the entire robot halts.
+                  <strong>⚠️ Master Failure Scope:</strong> Only the <strong>Application Layer</strong> and <strong>Master XML-RPC Lookup</strong> crash! The host <strong>Linux OS (Layer 3)</strong> and system kernel remain 100% operational. However, because ROS 1 requires the centralized Master process for node registration and topic handshake discovery, application nodes cannot find peers or register new topics &mdash; halting the robotics application.
                 </div>
               )}
             </div>
@@ -2305,8 +2317,8 @@ export function Ros2ArchitectureInteractive() {
           </div>
         </div>
 
-        {/* 3 Step Interactive Workflow */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '1.25rem', marginBottom: '1.25rem' }}>
+        {/* 3 Step Interactive Workflow (Stacked Vertically in Column Flow) */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', marginBottom: '1.25rem' }}>
           
           {/* Step 1: Check Unsourced */}
           <div style={{
