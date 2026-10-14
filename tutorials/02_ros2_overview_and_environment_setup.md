@@ -58,36 +58,20 @@ Every autonomous robot—from an industrial AMR moving palettes to an interstell
 
 ### 3.2 What is ROS? The Windows OS Metaphor
 
-Understanding Robot Operating System by comparing it to standard desktop operating systems:
+![The Operating System Metaphor: Windows vs ROS](assets/images/ros_metaphor_pc_vs_robot.jpg)
 
-![Windows vs ROS Metaphor](assets/images/ros_windows_metaphor.png)
-
-When you use a personal computer running **Windows or Linux**, you don't expect Microsoft Word or Google Chrome to write custom electrical drivers for your HP printer or USB mouse. The operating system provides a standardized middleware layer that connects software applications with hardware devices. **ROS does the exact same thing for robots!**
-
-| Dimension | Standard Computer (e.g., Windows OS) | Autonomous Robot (ROS Middleware) |
-|:---|:---|:---|
-| **Software Applications** | MS Word, Google Chrome, Blender, VLC Media Player | Face Recognition, Text-to-Speech (TTS), Nav2 Path Planning, SLAM Toolbox |
-| **Operating Layer / APIs** | **Windows OS Drivers & APIs** | **ROS 2 Standardized Middleware (DDS)** |
-| **Hardware Devices** | Mouse, Keyboard, Laser Printer, GPU Display | Motors (CAN/PWM), 2D LiDAR, RGB-D Camera, Joystick Teleop |
-
-> *Example:* Chrome prints a document without needing to know the low-level USB commands of your printer. Similarly, Nav2 steers the robot by publishing `/cmd_vel` without needing to know the wheel diameter or motor driver brand!
+> **The Operating System Metaphor:**  
+> Just as **Windows** connects PC software (Word, Chrome, Blender) with mice and printers, **ROS** connects robot autonomy (face recognition, speech, navigation) with motors, cameras, and sensors. Swapping physical hardware (e.g. from an industrial SICK LiDAR to a budget RPLiDAR) requires **zero code changes** in autonomous navigation algorithms!
 
 ---
 
-### 3.2.1 Is ROS Really an Operating System? (Framework vs Bare-Metal OS)
+### 3.2.1 The Core Reality: A Framework, Not a Bare-Metal OS
 
-![ROS OS Compatibility](assets/images/ros_os_compatibility_ubuntu.png)
+![ROS 2 Framework on Top of Host Operating Systems](assets/images/ros_framework_os_layers.jpg)
 
 > [!IMPORTANT]
-> **CRITICAL CONCEPT: ROS IS NOT A BARE-METAL OPERATING SYSTEM!**  
-> Despite the word **"Operating System"** in its name, ROS is **not** an OS like Windows or Linux that installs directly onto bare-metal computer hardware to boot your PC.  
-> 
-> Instead, **ROS is a software framework and communication middleware** that runs **on top of** a host operating system. It is called an "Operating System" metaphorically because it provides the exact same services as an OS: hardware abstraction, device drivers, low-level process management, inter-node message passing (via DDS), package distribution, and debugging tools.
-
-#### OS Compatibility & Tier Support:
-- 🐧 **Ubuntu Linux (Tier 1 - Primary & Recommended):** The gold standard of robotics engineering. Native APT package distribution, full hardware driver ecosystem, real-time PREEMPT_RT kernel support, and default standard for ROS 2 LTS releases (e.g., Ubuntu 24.04 Noble for ROS 2 Jazzy).
-- 🪟 **Windows 10/11 (Tier 2 - Supported):** Supported for simulation, RViz2 debugging, and desktop tooling, but most commercial robot hardware vendors do not provide Windows drivers.
-- 🍎 **macOS (Tier 3 - Community):** Experimental community source builds. Excellent for testing algorithms or GUI visualization on Apple Silicon, but not deployed on physical robot controllers.
+> **"Robot Operating System, despite its name, is not an operating system; rather, it’s a framework that works on top of an existing operating system."**  
+> ⭐ **Ubuntu Linux** is the official Tier-1, best-supported, and industry-standard operating system for robotics engineering.
 
 ---
 

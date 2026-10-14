@@ -558,65 +558,66 @@ export function Ros2ArchitectureInteractive() {
           </div>
         </div>
 
-        {/* Visual Metaphor Illustration Card */}
+        {/* Visual Metaphor 1: Windows OS vs ROS Inside Robot */}
         <div style={{
           borderRadius: '12px',
           overflow: 'hidden',
-          border: '1px solid var(--border-color)',
-          background: '#ffffff',
-          marginBottom: '1.25rem',
-          boxShadow: 'var(--shadow-sm)',
-          textAlign: 'center'
+          border: '1px solid #1e293b',
+          background: '#0a0f1d',
+          boxShadow: '0 8px 24px rgba(0, 0, 0, 0.4)'
         }}>
           <img
-            src="assets/images/ros_windows_metaphor.png"
-            alt="ROS Metaphor: Windows OS vs ROS Inside a Robot"
-            style={{ width: '100%', maxHeight: '420px', objectFit: 'contain', display: 'block', margin: '0 auto' }}
+            src="assets/images/ros_metaphor_pc_vs_robot.jpg"
+            alt="The Operating System Metaphor: Windows OS vs ROS Inside a Robot"
+            style={{ width: '100%', height: 'auto', display: 'block' }}
           />
         </div>
 
-        {/* Metaphor Explanation Note */}
+        {/* Metaphor 1-Line Statement */}
+        <div style={{
+          background: 'rgba(14, 165, 233, 0.08)',
+          border: '1px solid rgba(14, 165, 233, 0.25)',
+          borderRadius: '8px',
+          padding: '0.85rem 1.25rem',
+          marginTop: '0.75rem',
+          marginBottom: '1rem',
+          textAlign: 'center',
+          fontSize: '0.95rem',
+          color: 'var(--text-primary)',
+          lineHeight: 1.5
+        }}>
+          <strong style={{ color: '#38bdf8' }}>The Operating System Metaphor:</strong>{' '}
+          Just as <strong>Windows</strong> connects PC apps to mice and printers, <strong>ROS</strong> connects robot autonomy to motors, cameras, and sensors.
+        </div>
+
+        {/* Compact Interactive Hardware Hot-Swap Simulator */}
         <div style={{
           background: 'var(--bg-code)',
           border: '1px solid var(--border-color)',
           borderRadius: '10px',
-          padding: '1rem 1.25rem',
-          marginBottom: '1.25rem',
-          fontSize: '0.88rem',
-          color: 'var(--text-secondary)',
-          lineHeight: 1.6
+          padding: '0.75rem 1rem',
+          marginBottom: '1.75rem',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          flexWrap: 'wrap',
+          gap: '10px'
         }}>
-          <p style={{ margin: '0 0 8px' }}>
-            When you use a personal computer running <strong>Windows or Linux</strong>, application software like <em>MS Word, Google Chrome, or Blender</em> does not communicate with electrical pins on your mouse, keyboard, or printer directly. Instead, <strong>Windows OS provides standardized device drivers and system APIs</strong> that mediate all communication.
-          </p>
-          <p style={{ margin: 0 }}>
-            <strong>ROS (Robot Operating System) does the exact same thing for robots!</strong> Autonomy applications like <em>Face Recognition, Speech Recognition (STT), Text-to-Speech (TTS), and Nav2 Path Planning</em> don't write custom serial communication packets for DC motors, webcams, or joysticks. ROS provides a standardized middleware highway that bridges high-level algorithms with physical actuators and sensors.
-          </p>
-        </div>
-
-        {/* Interactive Hardware Hot-Swap Simulator */}
-        <div style={{
-          background: 'var(--bg-primary)',
-          border: '1px solid var(--border-color)',
-          borderRadius: '10px',
-          padding: '1.25rem',
-          marginBottom: '1.5rem'
-        }}>
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '10px', marginBottom: '1rem' }}>
-            <div style={{ fontSize: '0.9rem', fontWeight: 700, color: 'var(--text-primary)' }}>
-              Interactive Test: Swap the Robot's Sensor Hardware
-            </div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <span style={{ fontSize: '0.82rem', fontWeight: 700, color: 'var(--text-secondary)' }}>
+              Hardware Hot-Swap Test:
+            </span>
             <div style={{ display: 'flex', gap: '6px' }}>
               <button
                 onClick={() => handleLidarSwap('sick')}
                 style={{
-                  padding: '6px 10px',
+                  padding: '5px 10px',
                   borderRadius: '6px',
-                  fontSize: '0.78rem',
+                  fontSize: '0.76rem',
                   fontWeight: 700,
                   cursor: 'pointer',
                   border: selectedLidar === 'sick' ? '2px solid #0284c7' : '1px solid var(--border-color)',
-                  background: selectedLidar === 'sick' ? 'rgba(2, 132, 199, 0.2)' : 'var(--bg-code)',
+                  background: selectedLidar === 'sick' ? 'rgba(2, 132, 199, 0.25)' : 'var(--bg-surface)',
                   color: selectedLidar === 'sick' ? '#38bdf8' : 'var(--text-secondary)'
                 }}
               >
@@ -625,13 +626,13 @@ export function Ros2ArchitectureInteractive() {
               <button
                 onClick={() => handleLidarSwap('rplidar')}
                 style={{
-                  padding: '6px 10px',
+                  padding: '5px 10px',
                   borderRadius: '6px',
-                  fontSize: '0.78rem',
+                  fontSize: '0.76rem',
                   fontWeight: 700,
                   cursor: 'pointer',
                   border: selectedLidar === 'rplidar' ? '2px solid #0284c7' : '1px solid var(--border-color)',
-                  background: selectedLidar === 'rplidar' ? 'rgba(2, 132, 199, 0.2)' : 'var(--bg-code)',
+                  background: selectedLidar === 'rplidar' ? 'rgba(2, 132, 199, 0.25)' : 'var(--bg-surface)',
                   color: selectedLidar === 'rplidar' ? '#38bdf8' : 'var(--text-secondary)'
                 }}
               >
@@ -640,13 +641,13 @@ export function Ros2ArchitectureInteractive() {
               <button
                 onClick={() => handleLidarSwap('velodyne')}
                 style={{
-                  padding: '6px 10px',
+                  padding: '5px 10px',
                   borderRadius: '6px',
-                  fontSize: '0.78rem',
+                  fontSize: '0.76rem',
                   fontWeight: 700,
                   cursor: 'pointer',
                   border: selectedLidar === 'velodyne' ? '2px solid #0284c7' : '1px solid var(--border-color)',
-                  background: selectedLidar === 'velodyne' ? 'rgba(2, 132, 199, 0.2)' : 'var(--bg-code)',
+                  background: selectedLidar === 'velodyne' ? 'rgba(2, 132, 199, 0.25)' : 'var(--bg-surface)',
                   color: selectedLidar === 'velodyne' ? '#38bdf8' : 'var(--text-secondary)'
                 }}
               >
@@ -655,178 +656,66 @@ export function Ros2ArchitectureInteractive() {
             </div>
           </div>
 
-          {/* Side-by-Side Metaphor Grid */}
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '1rem' }}>
-            {/* Desktop PC Box */}
-            <div style={{ background: 'var(--bg-code)', border: '1px solid #334155', borderRadius: '8px', padding: '12px' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '6px', color: '#0ea5e9', fontWeight: 800, fontSize: '0.9rem', marginBottom: '8px' }}>
-                <Monitor size={16} />
-                <span>Personal Computer (Windows OS)</span>
-              </div>
-              <div style={{ padding: '8px', background: 'rgba(255,255,255,0.03)', borderRadius: '6px', marginBottom: '6px' }}>
-                <div style={{ fontSize: '0.74rem', color: '#94a3b8' }}>Applications:</div>
-                <div style={{ fontSize: '0.82rem', fontWeight: 600, color: '#e2e8f0' }}>MS Word &bull; Google Chrome &bull; Blender</div>
-              </div>
-              <div style={{ textAlign: 'center', color: '#0ea5e9', fontSize: '0.78rem', fontWeight: 800, margin: '4px 0' }}>
-                &darr; Windows Print Spooler &amp; USB APIs &darr;
-              </div>
-              <div style={{ padding: '8px', background: 'rgba(255,255,255,0.03)', borderRadius: '6px' }}>
-                <div style={{ fontSize: '0.74rem', color: '#94a3b8' }}>Hardware:</div>
-                <div style={{ fontSize: '0.82rem', fontWeight: 600, color: '#38bdf8' }}>HP, Epson, or Canon Printer &bull; USB Mouse</div>
-              </div>
-            </div>
-
-            {/* Autonomous Robot Box */}
-            <div style={{
-              background: 'var(--bg-code)',
-              border: isSwappingLidar ? '1px solid #10b981' : '1px solid #334155',
-              borderRadius: '8px',
-              padding: '12px',
-              transition: 'border 0.3s'
-            }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '6px', color: '#10b981', fontWeight: 800, fontSize: '0.9rem', marginBottom: '8px' }}>
-                <Bot size={16} />
-                <span>Autonomous Mobile Robot (ROS 2)</span>
-              </div>
-              <div style={{ padding: '8px', background: 'rgba(255,255,255,0.03)', borderRadius: '6px', marginBottom: '6px' }}>
-                <div style={{ fontSize: '0.74rem', color: '#94a3b8' }}>Autonomy Apps:</div>
-                <div style={{ fontSize: '0.82rem', fontWeight: 600, color: '#34d399' }}>Nav2 Path Planner &bull; SLAM Toolbox</div>
-              </div>
-              <div style={{ textAlign: 'center', color: '#10b981', fontSize: '0.78rem', fontWeight: 800, margin: '4px 0' }}>
-                &darr; ROS 2 Standard Topic /scan (DDS) &darr;
-              </div>
-              <div style={{ padding: '8px', background: 'rgba(16, 185, 129, 0.1)', border: '1px dashed #10b981', borderRadius: '6px' }}>
-                <div style={{ fontSize: '0.74rem', color: '#94a3b8' }}>Active Hardware:</div>
-                <div style={{ fontSize: '0.82rem', fontWeight: 700, color: '#34d399' }}>
-                  {selectedLidar === 'sick' && 'SICK TiM571 (Ethernet driver -> ROS 2 standard /scan)'}
-                  {selectedLidar === 'rplidar' && 'RPLiDAR A3 (UART/USB driver -> ROS 2 standard /scan)'}
-                  {selectedLidar === 'velodyne' && 'Velodyne Puck (UDP driver -> PointCloud2 -> ROS 2 /scan)'}
-                </div>
-              </div>
-            </div>
-          </div>
-
           <div style={{
-            marginTop: '12px',
-            background: 'rgba(16, 185, 129, 0.08)',
-            border: '1px solid rgba(16, 185, 129, 0.25)',
-            borderRadius: '6px',
-            padding: '8px 12px',
-            fontSize: '0.82rem',
+            fontSize: '0.8rem',
             color: '#34d399',
+            fontWeight: 700,
             display: 'flex',
             alignItems: 'center',
-            gap: '8px'
+            gap: '6px'
           }}>
             <CheckCircle2 size={16} />
-            <span><strong>Zero Code Changes in Nav2!</strong> Swapping sensors only switches the lightweight driver node. Nav2 navigation never knows or cares about the hardware brand!</span>
+            <span>Active: {selectedLidar === 'sick' ? 'SICK Driver' : selectedLidar === 'rplidar' ? 'RPLiDAR Driver' : 'Velodyne Driver'} &rarr; <strong>/scan</strong> &rarr; <strong>Nav2 (0 Code Changes)</strong></span>
           </div>
         </div>
 
-        {/* Visual OS Compatibility Illustration Card */}
+        {/* Visual Metaphor 2: Framework Running on Top of Operating System */}
         <div style={{
           borderRadius: '12px',
           overflow: 'hidden',
-          border: '1px solid var(--border-color)',
-          background: '#ffffff',
-          marginBottom: '1.25rem',
-          boxShadow: 'var(--shadow-sm)',
-          textAlign: 'center'
+          border: '1px solid #1e293b',
+          background: '#0a0f1d',
+          boxShadow: '0 8px 24px rgba(0, 0, 0, 0.4)'
         }}>
           <img
-            src="assets/images/ros_os_compatibility_ubuntu.png"
-            alt="Robot Operating System Compatible with Ubuntu, Windows, and macOS - Ubuntu Highly Recommended"
-            style={{ width: '100%', maxHeight: '400px', objectFit: 'contain', display: 'block', margin: '0 auto' }}
+            src="assets/images/ros_framework_os_layers.jpg"
+            alt="ROS 2 Framework Running on Top of Host Operating Systems - Ubuntu Highly Recommended"
+            style={{ width: '100%', height: 'auto', display: 'block' }}
           />
         </div>
 
-        {/* Crucial Concept Callout: ROS is NOT an OS Installed on Bare-Metal */}
+        {/* Clean 1-2 Line Core Statement Callout */}
         <div style={{
-          background: 'linear-gradient(135deg, rgba(234, 88, 12, 0.08) 0%, rgba(37, 99, 235, 0.06) 100%)',
-          border: '1px solid rgba(234, 88, 12, 0.3)',
-          borderRadius: '12px',
-          padding: '1.25rem',
-          boxShadow: 'var(--shadow-sm)'
+          background: 'linear-gradient(135deg, rgba(234, 88, 12, 0.12) 0%, rgba(14, 165, 233, 0.08) 100%)',
+          border: '1px solid rgba(234, 88, 12, 0.35)',
+          borderRadius: '10px',
+          padding: '1.15rem 1.5rem',
+          marginTop: '1rem',
+          textAlign: 'center'
         }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#ea580c', fontWeight: 800, fontSize: '1.05rem', marginBottom: '8px' }}>
-            <AlertTriangle size={20} color="#ea580c" />
-            <span>Crucial Concept: ROS is NOT an OS You Install on Bare-Metal PC Hardware!</span>
-          </div>
-
-          <p style={{ margin: '0 0 10px', fontSize: '0.92rem', color: 'var(--text-primary)', lineHeight: 1.6 }}>
-            Despite the word <strong>"Operating System"</strong> in its title, ROS is <strong>not</strong> an OS like Windows, Linux, or macOS that you install onto a bare-metal hard drive to boot your PC.
-          </p>
-
-          <p style={{ margin: '0 0 14px', fontSize: '0.9rem', color: 'var(--text-secondary)', lineHeight: 1.6 }}>
-            ROS is a <strong>software framework and communication middleware</strong> that runs <strong>on top of an existing host operating system</strong>. It is called an operating system metaphorically because it provides the same fundamental services that an OS gives to PCs: <em>hardware abstraction, device driver management, process isolation, inter-node message passing (DDS), package distribution, and system utilities.</em>
-          </p>
-
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))',
-            gap: '12px',
-            marginTop: '10px'
+          <p style={{
+            margin: '0 0 8px',
+            fontSize: '1.1rem',
+            fontWeight: 800,
+            color: 'var(--text-primary)',
+            letterSpacing: '-0.01em',
+            lineHeight: 1.45
           }}>
-            {/* Ubuntu Linux */}
-            <div style={{
-              background: 'var(--bg-code)',
-              border: '2px solid #e11d48',
-              borderRadius: '8px',
-              padding: '12px',
-              position: 'relative'
-            }}>
-              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '6px' }}>
-                <strong style={{ color: '#fb7185', fontSize: '0.92rem', display: 'flex', alignItems: 'center', gap: '6px' }}>
-                  <span>🐧</span> Ubuntu Linux (Tier 1)
-                </strong>
-                <span style={{ fontSize: '0.7rem', background: 'rgba(225, 29, 72, 0.2)', color: '#fb7185', padding: '2px 8px', borderRadius: '4px', fontWeight: 800 }}>
-                  ⭐⭐⭐ BEST SUPPORTED
-                </span>
-              </div>
-              <p style={{ margin: 0, fontSize: '0.8rem', color: '#cbd5e1', lineHeight: 1.55 }}>
-                <strong>The primary and recommended platform.</strong> Official pre-compiled Debian/APT packages, bleeding-edge sensor driver support, real-time PREEMPT_RT kernel extensions, and the industry standard across modern robotics labs and AMRs.
-              </p>
-            </div>
-
-            {/* Windows */}
-            <div style={{
-              background: 'var(--bg-code)',
-              border: '1px solid #334155',
-              borderRadius: '8px',
-              padding: '12px'
-            }}>
-              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '6px' }}>
-                <strong style={{ color: '#38bdf8', fontSize: '0.92rem', display: 'flex', alignItems: 'center', gap: '6px' }}>
-                  <span>🪟</span> Windows 10 / 11 (Tier 2)
-                </strong>
-                <span style={{ fontSize: '0.7rem', background: 'rgba(56, 189, 248, 0.15)', color: '#38bdf8', padding: '2px 8px', borderRadius: '4px', fontWeight: 700 }}>
-                  Supported
-                </span>
-              </div>
-              <p style={{ margin: 0, fontSize: '0.8rem', color: '#cbd5e1', lineHeight: 1.55 }}>
-                Supported for workstation development, UI simulation, and academic study. However, many industrial hardware vendors only provide Linux driver libraries for CAN/Ethernet sensors.
-              </p>
-            </div>
-
-            {/* macOS */}
-            <div style={{
-              background: 'var(--bg-code)',
-              border: '1px solid #334155',
-              borderRadius: '8px',
-              padding: '12px'
-            }}>
-              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '6px' }}>
-                <strong style={{ color: '#94a3b8', fontSize: '0.92rem', display: 'flex', alignItems: 'center', gap: '6px' }}>
-                  <span>🍎</span> macOS (Tier 3)
-                </strong>
-                <span style={{ fontSize: '0.7rem', background: 'rgba(148, 163, 184, 0.15)', color: '#94a3b8', padding: '2px 8px', borderRadius: '4px', fontWeight: 700 }}>
-                  Community Build
-                </span>
-              </div>
-              <p style={{ margin: 0, fontSize: '0.8rem', color: '#cbd5e1', lineHeight: 1.55 }}>
-                Community supported; must be built from source code. Great for visualizing pointclouds on a MacBook using RViz2, but not deployed on production robot controllers.
-              </p>
-            </div>
+            "Robot Operating System, despite its name, is not an operating system; rather, it’s a framework that works on top of an existing operating system."
+          </p>
+          <div style={{
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: '8px',
+            background: 'rgba(234, 88, 12, 0.18)',
+            border: '1px solid rgba(234, 88, 12, 0.3)',
+            padding: '4px 14px',
+            borderRadius: '20px',
+            fontSize: '0.86rem',
+            color: '#fb923c',
+            fontWeight: 700
+          }}>
+            <span>⭐⭐⭐ Ubuntu Linux is the official Tier-1, best-supported host platform</span>
           </div>
         </div>
       </section>
