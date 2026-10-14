@@ -1,0 +1,290 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 440" width="100%" height="100%">
+  <defs>
+    <!-- Background Gradient -->
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0b0f19"/>
+      <stop offset="50%" stop-color="#111827"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </linearGradient>
+
+    <!-- Card Background Gradient -->
+    <linearGradient id="cardGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#1e293b"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </linearGradient>
+
+    <!-- DDS Bus Glowing Gradient -->
+    <linearGradient id="ddsGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#38bdf8"/>
+      <stop offset="50%" stop-color="#818cf8"/>
+      <stop offset="100%" stop-color="#c084fc"/>
+    </linearGradient>
+
+    <!-- Glow Filter -->
+    <filter id="glowCyan" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="4" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+
+    <filter id="glowPurple" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="5" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+
+    <filter id="shadowBox" x="-5%" y="-5%" width="110%" height="110%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#000000" flood-opacity="0.4"/>
+    </filter>
+
+    <style>
+      @keyframes dashMove {
+        from { stroke-dashoffset: 48; }
+        to { stroke-dashoffset: 0; }
+      }
+      @keyframes dashMoveReverse {
+        from { stroke-dashoffset: 0; }
+        to { stroke-dashoffset: 48; }
+      }
+      @keyframes pulseNode {
+        0%, 100% { transform: scale(1); opacity: 0.9; }
+        50% { transform: scale(1.05); opacity: 1; }
+      }
+      @keyframes radarRotate {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+      }
+      @keyframes packetBlink {
+        0%, 100% { opacity: 0.3; }
+        50% { opacity: 1; }
+      }
+      @keyframes floatChassis {
+        0%, 100% { transform: translateY(0px); }
+        50% { transform: translateY(-3px); }
+      }
+
+      .animated-flow-cyan {
+        stroke-dasharray: 8 6;
+        animation: dashMove 1.4s linear infinite;
+      }
+      .animated-flow-purple {
+        stroke-dasharray: 8 6;
+        animation: dashMove 1.2s linear infinite;
+      }
+      .animated-flow-amber {
+        stroke-dasharray: 8 6;
+        animation: dashMove 1.0s linear infinite;
+      }
+      .radar-arm {
+        transform-origin: 100px 105px;
+        animation: radarRotate 3s linear infinite;
+      }
+      .pulse-beacon {
+        animation: packetBlink 1.5s ease-in-out infinite;
+      }
+      .robot-chassis {
+        animation: floatChassis 3s ease-in-out infinite;
+      }
+    </style>
+  </defs>
+
+  <!-- Background -->
+  <rect width="960" height="440" rx="16" fill="url(#bgGrad)" stroke="#1e293b" stroke-width="1.5"/>
+
+  <!-- Grid Accent Pattern -->
+  <g opacity="0.08" stroke="#94a3b8" stroke-width="1">
+    <line x1="40" y1="40" x2="920" y2="40" />
+    <line x1="40" y1="120" x2="920" y2="120" />
+    <line x1="40" y1="200" x2="920" y2="200" />
+    <line x1="40" y1="280" x2="920" y2="280" />
+    <line x1="40" y1="360" x2="920" y2="360" />
+    <line x1="160" y1="40" x2="160" y2="400" />
+    <line x1="320" y1="40" x2="320" y2="400" />
+    <line x1="480" y1="40" x2="480" y2="400" />
+    <line x1="640" y1="40" x2="640" y2="400" />
+    <line x1="800" y1="40" x2="800" y2="400" />
+  </g>
+
+  <!-- Main Banner Header -->
+  <text x="480" y="32" fill="#f8fafc" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="15" font-weight="800" text-anchor="middle" letter-spacing="1.2">
+    THE LIVING ROBOT: ROS 2 MOTION ARCHITECTURE &amp; DATA HIGHWAY
+  </text>
+  <text x="480" y="50" fill="#64748b" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="11" font-weight="500" text-anchor="middle">
+    Asynchronous Peer-to-Peer DDS Bus &bull; Zero Central Master &bull; Sub-Millisecond Communication
+  </text>
+
+  <!-- ========================================================================= -->
+  <!-- ZONE 1: SENSORY PERCEPTION (LEFT - SENSES) -->
+  <!-- ========================================================================= -->
+  <g transform="translate(40, 70)" filter="url(#shadowBox)">
+    <!-- Zone Container -->
+    <rect width="210" height="280" rx="12" fill="url(#cardGrad)" stroke="#0284c7" stroke-width="1.5"/>
+    <rect width="210" height="30" rx="12" fill="#0369a1" fill-opacity="0.3"/>
+    <text x="105" y="20" fill="#38bdf8" font-family="system-ui, sans-serif" font-size="11" font-weight="800" text-anchor="middle" letter-spacing="0.5">
+      1. SENSORY PERCEPTION (SENSES)
+    </text>
+
+    <!-- Sensor 1: 2D LiDAR -->
+    <g transform="translate(15, 45)">
+      <rect width="180" height="95" rx="8" fill="#1e293b" stroke="#38bdf8" stroke-width="1"/>
+      <circle cx="35" cy="40" r="22" fill="#0f172a" stroke="#0284c7" stroke-width="1.5"/>
+      <!-- Radar scan circle & arm -->
+      <circle cx="35" cy="40" r="16" fill="none" stroke="#38bdf8" stroke-width="1" stroke-dasharray="3 3"/>
+      <line x1="35" y1="40" x2="35" y2="24" stroke="#38bdf8" stroke-width="2" class="radar-arm" style="transform-origin: 35px 40px;"/>
+      <circle cx="35" cy="40" r="3" fill="#38bdf8"/>
+      
+      <text x="70" y="32" fill="#f1f5f9" font-family="monospace" font-size="12" font-weight="700">/lidar_node</text>
+      <text x="70" y="48" fill="#38bdf8" font-family="system-ui, sans-serif" font-size="10" font-weight="600">Publishes: /scan</text>
+      <text x="70" y="62" fill="#94a3b8" font-family="monospace" font-size="9">LaserScan (10 Hz)</text>
+      <circle cx="165" cy="20" r="4" fill="#10b981" class="pulse-beacon"/>
+    </g>
+
+    <!-- Sensor 2: RGB-D Camera / IMU -->
+    <g transform="translate(15, 155)">
+      <rect width="180" height="105" rx="8" fill="#1e293b" stroke="#06b6d4" stroke-width="1"/>
+      <rect x="20" y="25" width="30" height="22" rx="4" fill="#0f172a" stroke="#06b6d4" stroke-width="1.5"/>
+      <circle cx="35" cy="36" r="6" fill="#0891b2"/>
+      
+      <text x="65" y="30" fill="#f1f5f9" font-family="monospace" font-size="12" font-weight="700">/camera_node</text>
+      <text x="65" y="46" fill="#22d3ee" font-family="system-ui, sans-serif" font-size="10" font-weight="600">Publishes: /image_raw</text>
+      <text x="65" y="60" fill="#94a3b8" font-family="monospace" font-size="9">sensor_msgs/Image</text>
+      <text x="65" y="74" fill="#94a3b8" font-family="monospace" font-size="9">/imu/data (100 Hz)</text>
+      <circle cx="165" cy="20" r="4" fill="#10b981" class="pulse-beacon"/>
+    </g>
+  </g>
+
+  <!-- ========================================================================= -->
+  <!-- ZONE 2: COGNITION & PLANNING (TOP CENTER - BRAIN) -->
+  <!-- ========================================================================= -->
+  <g transform="translate(350, 70)" filter="url(#shadowBox)">
+    <rect width="260" height="135" rx="12" fill="url(#cardGrad)" stroke="#818cf8" stroke-width="1.5"/>
+    <rect width="260" height="28" rx="12" fill="#4338ca" fill-opacity="0.3"/>
+    <text x="130" y="19" fill="#a5b4fc" font-family="system-ui, sans-serif" font-size="11" font-weight="800" text-anchor="middle" letter-spacing="0.5">
+      2. COGNITION &amp; NAVIGATION (BRAIN)
+    </text>
+
+    <!-- Sub-node 1: SLAM Mapping -->
+    <rect x="15" y="38" width="230" height="42" rx="6" fill="#1e293b" stroke="#6366f1" stroke-width="1"/>
+    <text x="25" y="55" fill="#e0e7ff" font-family="monospace" font-size="11" font-weight="700">/slam_toolbox</text>
+    <text x="25" y="70" fill="#818cf8" font-family="system-ui, sans-serif" font-size="9">Builds /map &bull; Computes Pose (map &rarr; odom)</text>
+    <circle cx="230" cy="58" r="4" fill="#10b981" class="pulse-beacon"/>
+
+    <!-- Sub-node 2: Nav2 Planner / Controller -->
+    <rect x="15" y="85" width="230" height="42" rx="6" fill="#1e293b" stroke="#a855f7" stroke-width="1"/>
+    <text x="25" y="102" fill="#f3e8ff" font-family="monospace" font-size="11" font-weight="700">/controller_server (Nav2)</text>
+    <text x="25" y="117" fill="#c084fc" font-family="system-ui, sans-serif" font-size="9">Global Costmap &bull; DWB Trajectory Evaluator</text>
+    <circle cx="230" cy="105" r="4" fill="#10b981" class="pulse-beacon"/>
+  </g>
+
+  <!-- ========================================================================= -->
+  <!-- ZONE 3: ACTUATION & LOCOMOTION (RIGHT - MUSCLES) -->
+  <!-- ========================================================================= -->
+  <g transform="translate(710, 70)" filter="url(#shadowBox)">
+    <rect width="210" height="280" rx="12" fill="url(#cardGrad)" stroke="#10b981" stroke-width="1.5"/>
+    <rect width="210" height="30" rx="12" fill="#065f46" fill-opacity="0.3"/>
+    <text x="105" y="20" fill="#34d399" font-family="system-ui, sans-serif" font-size="11" font-weight="800" text-anchor="middle" letter-spacing="0.5">
+      3. ACTUATION &amp; MOTORS (MUSCLES)
+    </text>
+
+    <!-- Motor Controller Node -->
+    <g transform="translate(15, 45)">
+      <rect width="180" height="90" rx="8" fill="#1e293b" stroke="#10b981" stroke-width="1"/>
+      <text x="15" y="25" fill="#f1f5f9" font-family="monospace" font-size="12" font-weight="700">/diff_drive_controller</text>
+      <text x="15" y="44" fill="#34d399" font-family="system-ui, sans-serif" font-size="10" font-weight="600">Subscribes: /cmd_vel</text>
+      <text x="15" y="58" fill="#94a3b8" font-family="monospace" font-size="9">Twist: (linear.x, angular.z)</text>
+      <text x="15" y="74" fill="#10b981" font-family="system-ui, sans-serif" font-size="9">&rarr; Converts to Wheel RPM</text>
+      <circle cx="165" cy="20" r="4" fill="#10b981" class="pulse-beacon"/>
+    </g>
+
+    <!-- Physical AMR Base Icon -->
+    <g transform="translate(45, 155)" class="robot-chassis">
+      <rect width="120" height="95" rx="10" fill="#1e293b" stroke="#34d399" stroke-width="1.5"/>
+      <!-- Left wheel -->
+      <rect x="-10" y="15" width="12" height="32" rx="3" fill="#047857" stroke="#10b981" stroke-width="1"/>
+      <!-- Right wheel -->
+      <rect x="118" y="15" width="12" height="32" rx="3" fill="#047857" stroke="#10b981" stroke-width="1"/>
+      <!-- Caster wheel -->
+      <circle cx="60" cy="78" r="8" fill="#334155" stroke="#94a3b8" stroke-width="1"/>
+      
+      <!-- Robot Heading Arrow -->
+      <path d="M 60 50 L 60 25 M 54 33 L 60 23 L 66 33" stroke="#34d399" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <text x="60" y="68" fill="#f8fafc" font-family="system-ui, sans-serif" font-size="9" font-weight="700" text-anchor="middle">NAVPRO AMR</text>
+    </g>
+  </g>
+
+  <!-- ========================================================================= -->
+  <!-- ZONE 4: THE DDS NERVOUS SYSTEM (CENTRAL BUS - NERVES) -->
+  <!-- ========================================================================= -->
+  <g transform="translate(80, 230)" filter="url(#glowPurple)">
+    <rect width="800" height="52" rx="10" fill="#13122b" stroke="url(#ddsGrad)" stroke-width="2"/>
+    <text x="400" y="24" fill="#e2e8f0" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="13" font-weight="800" text-anchor="middle" letter-spacing="1">
+      ⚡ DDS COMMUNICATION HIGHWAY (DATA DISTRIBUTION SERVICE &bull; PEER-TO-PEER)
+    </text>
+    <text x="400" y="42" fill="#a78bfa" font-family="system-ui, sans-serif" font-size="10" font-weight="600" text-anchor="middle">
+      Zero Master Bottleneck &bull; Automatic UDP Multicast Discovery &bull; Deterministic QoS Policies &bull; Sub-Millisecond Shared Memory
+    </text>
+  </g>
+
+  <!-- ========================================================================= -->
+  <!-- ANIMATED DATA FLOW CONNECTORS (MOTION BEAMS) -->
+  <!-- ========================================================================= -->
+
+  <!-- Flow 1: LiDAR /scan down to DDS -->
+  <path d="M 140 210 L 140 230" fill="none" stroke="#38bdf8" stroke-width="2.5" class="animated-flow-cyan"/>
+  <polygon points="136,226 140,234 144,226" fill="#38bdf8"/>
+  <rect x="150" y="210" width="55" height="16" rx="4" fill="#0284c7" fill-opacity="0.2"/>
+  <text x="177" y="222" fill="#38bdf8" font-family="monospace" font-size="8" font-weight="700" text-anchor="middle">/scan</text>
+
+  <!-- Flow 2: DDS up to SLAM / Nav2 (Brain) -->
+  <path d="M 430 230 L 430 205" fill="none" stroke="#818cf8" stroke-width="2.5" class="animated-flow-purple"/>
+  <polygon points="426,209 430,201 434,209" fill="#818cf8"/>
+  <rect x="365" y="210" width="60" height="16" rx="4" fill="#4f46e5" fill-opacity="0.2"/>
+  <text x="395" y="222" fill="#a5b4fc" font-family="monospace" font-size="8" font-weight="700" text-anchor="middle">&uarr; telemetry</text>
+
+  <!-- Flow 3: Nav2 /cmd_vel down to DDS -->
+  <path d="M 530 205 L 530 230" fill="none" stroke="#c084fc" stroke-width="2.5" class="animated-flow-purple"/>
+  <polygon points="526,226 530,234 534,226" fill="#c084fc"/>
+  <rect x="535" y="210" width="60" height="16" rx="4" fill="#9333ea" fill-opacity="0.2"/>
+  <text x="565" y="222" fill="#d8b4fe" font-family="monospace" font-size="8" font-weight="700" text-anchor="middle">/cmd_vel &darr;</text>
+
+  <!-- Flow 4: DDS up to Motor Controller (Muscles) -->
+  <path d="M 800 230 L 800 205" fill="none" stroke="#10b981" stroke-width="2.5" class="animated-flow-amber"/>
+  <polygon points="796,209 800,201 804,209" fill="#10b981"/>
+  <rect x="805" y="210" width="60" height="16" rx="4" fill="#059669" fill-opacity="0.2"/>
+  <text x="835" y="222" fill="#34d399" font-family="monospace" font-size="8" font-weight="700" text-anchor="middle">/cmd_vel &uarr;</text>
+
+  <!-- Flow 5: Horizontal Data Pulse along the DDS Bus -->
+  <line x1="160" y1="256" x2="800" y2="256" stroke="#38bdf8" stroke-width="2" class="animated-flow-cyan" opacity="0.6"/>
+
+  <!-- ========================================================================= -->
+  <!-- BOTTOM SUMMARY BADGES: 4 PILLARS QUICK KEY -->
+  <!-- ========================================================================= -->
+  <g transform="translate(60, 370)">
+    <!-- Badge 1: Plumbing -->
+    <g transform="translate(0, 0)">
+      <rect width="195" height="42" rx="8" fill="#1e293b" stroke="#38bdf8" stroke-width="1"/>
+      <text x="14" y="18" fill="#38bdf8" font-family="system-ui, sans-serif" font-size="11" font-weight="700">1. THE PLUMBING</text>
+      <text x="14" y="32" fill="#94a3b8" font-family="system-ui, sans-serif" font-size="9">DDS Pub/Sub &bull; Services &bull; Actions</text>
+    </g>
+
+    <!-- Badge 2: Tools -->
+    <g transform="translate(215, 0)">
+      <rect width="195" height="42" rx="8" fill="#1e293b" stroke="#818cf8" stroke-width="1"/>
+      <text x="14" y="18" fill="#a5b4fc" font-family="system-ui, sans-serif" font-size="11" font-weight="700">2. THE TOOLS</text>
+      <text x="14" y="32" fill="#94a3b8" font-family="system-ui, sans-serif" font-size="9">RViz2 &bull; Gazebo &bull; ros2 bag &bull; CLI</text>
+    </g>
+
+    <!-- Badge 3: Capabilities -->
+    <g transform="translate(430, 0)">
+      <rect width="195" height="42" rx="8" fill="#1e293b" stroke="#c084fc" stroke-width="1"/>
+      <text x="14" y="18" fill="#e879f9" font-family="system-ui, sans-serif" font-size="11" font-weight="700">3. CAPABILITIES</text>
+      <text x="14" y="32" fill="#94a3b8" font-family="system-ui, sans-serif" font-size="9">Nav2 &bull; SLAM Toolbox &bull; TF2 Trees</text>
+    </g>
+
+    <!-- Badge 4: Ecosystem -->
+    <g transform="translate(645, 0)">
+      <rect width="195" height="42" rx="8" fill="#1e293b" stroke="#10b981" stroke-width="1"/>
+      <text x="14" y="18" fill="#34d399" font-family="system-ui, sans-serif" font-size="11" font-weight="700">4. ECOSYSTEM</text>
+      <text x="14" y="32" fill="#94a3b8" font-family="system-ui, sans-serif" font-size="9">Open Source &bull; Hardware Vendor SDKs</text>
+    </g>
+  </g>
+
+</svg>
