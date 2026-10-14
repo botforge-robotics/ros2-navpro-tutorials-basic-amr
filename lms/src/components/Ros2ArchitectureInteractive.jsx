@@ -36,7 +36,8 @@ import {
   Gauge,
   Cable,
   RadioTower,
-  ChevronRight
+  ChevronRight,
+  ChevronLeft
 } from 'lucide-react';
 
 export function Ros2ArchitectureInteractive() {
@@ -51,8 +52,51 @@ export function Ros2ArchitectureInteractive() {
   const [selectedLidar, setSelectedLidar] = useState('sick'); // 'sick', 'rplidar', 'velodyne'
   const [isSwappingLidar, setIsSwappingLidar] = useState(false);
 
-  // Chapter 3: Developer Story Beat
-  const [activeStoryBeat, setActiveStoryBeat] = useState(0); // 0: Person X, 1: Burnout, 2: Person Y, 3: The Loop
+  // Chapter 3: Interactive Storyboard State
+  const [activeStoryStep, setActiveStoryStep] = useState(0);
+
+  const storySteps = [
+    {
+      stepNumber: 1,
+      title: 'The Dream & Ambition',
+      subtitle: 'Person X starts an autonomous robot project',
+      accent: '#38bdf8',
+      image: 'assets/images/story_step1_dream.jpg',
+      dialogue: '“I just want to build an intelligent robot that navigates on its own!”',
+      narrative: 'Person X is an ambitious robotics engineer eager to build an autonomous mobile robot (AMR). They envision writing cutting-edge AI, SLAM mapping, and path planning. But as soon as they unbox the hardware, reality hits: there is no standard framework to build on.',
+      impact: 'Goal: AI Navigation & Computer Vision • Dilemma: No universal middleware exists'
+    },
+    {
+      stepNumber: 2,
+      title: 'The Plumbing Trap',
+      subtitle: '8 months wasted on low-level drivers & sockets',
+      accent: '#f59e0b',
+      image: 'assets/images/story_step2_plumbing.jpg',
+      dialogue: '“Why am I spending months debugging UART parity bits instead of writing autonomous features?!”',
+      narrative: 'Instead of programming robot intelligence, Person X gets buried under tangled wiring and raw protocols. They spend 8 months writing custom motor drivers, serial packet parsers, multi-threading locks, and a custom 3D debug visualizer. 80% of their project budget and time evaporates into generic infrastructure.',
+      impact: 'Trapped in Infrastructure: 80% effort spent on plumbing already solved by others'
+    },
+    {
+      stepNumber: 3,
+      title: 'Burnout & Abandonment',
+      subtitle: 'Funding runs out, the prototype sits dormant',
+      accent: '#ef4444',
+      image: 'assets/images/story_step3_burnout.jpg',
+      dialogue: '“The project deadline has arrived... The robot barely moves, and the code is a tangled mess.”',
+      narrative: 'Exhausted and out of time, Person X reaches the end of their grant. The robot is fragile, uncalibrated, and buggy. The monolithic custom codebase has zero documentation. Defeated, Person X unplugs the robot and abandons it in the dark corner of the laboratory.',
+      impact: 'Project Dead: Custom framework is monolithic, undocumented, and fragile'
+    },
+    {
+      stepNumber: 4,
+      title: 'The Groundhog Loop Repeats',
+      subtitle: 'Person Y arrives: The endless tragedy of robotics',
+      accent: '#a855f7',
+      image: 'assets/images/story_step4_cycle.jpg',
+      dialogue: '“BUILD FAILED! Missing Dependency. This code is impossible to run—I’ll just rewrite it from scratch!”',
+      narrative: 'One year later, a new developer (Person Y) joins the lab. They discover Person X\'s abandoned code, but it refuses to compile due to missing drivers and unique system hacks. Frustrated, Person Y tosses the entire codebase into the trash and begins writing another custom framework from scratch!',
+      impact: 'The Vicious Cycle: Every lab reinvents the wheel until ROS introduces the universal standard'
+    }
+  ];
 
   // Motion Flow Simulator State
   const [simActive, setSimActive] = useState(true);
@@ -297,230 +341,117 @@ export function Ros2ArchitectureInteractive() {
           </div>
         </div>
 
-        {/* Interactive 3-Ingredient Selector Tabs */}
+        {/* Three Fundamental Ingredients Flow Pipeline (Perception -> Decision -> Action) */}
         <div style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(3, 1fr)',
-          gap: '10px',
-          marginBottom: '1.25rem'
+          gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+          gap: '14px',
+          alignItems: 'stretch'
         }}>
-          <button
-            onClick={() => setSelectedIngredient(0)}
-            style={{
-              padding: '12px',
-              borderRadius: '10px',
-              border: selectedIngredient === 0 ? '2px solid #0284c7' : '1px solid var(--border-color)',
-              background: selectedIngredient === 0 ? 'rgba(2, 132, 199, 0.12)' : 'var(--bg-primary)',
-              cursor: 'pointer',
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              gap: '6px',
-              transition: 'all 0.2s cubic-bezier(0.16, 1, 0.3, 1)'
-            }}
-          >
-            <div style={{ display: 'flex', alignItems: 'center', gap: '6px', color: '#0284c7', fontWeight: 800, fontSize: '0.95rem' }}>
-              <Eye size={18} />
-              <span>1. Perception</span>
-            </div>
-            <span style={{ fontSize: '0.76rem', color: 'var(--text-muted)' }}>The Senses (Telemetry)</span>
-          </button>
-
-          <button
-            onClick={() => setSelectedIngredient(1)}
-            style={{
-              padding: '12px',
-              borderRadius: '10px',
-              border: selectedIngredient === 1 ? '2px solid #8b5cf6' : '1px solid var(--border-color)',
-              background: selectedIngredient === 1 ? 'rgba(139, 92, 246, 0.12)' : 'var(--bg-primary)',
-              cursor: 'pointer',
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              gap: '6px',
-              transition: 'all 0.2s cubic-bezier(0.16, 1, 0.3, 1)'
-            }}
-          >
-            <div style={{ display: 'flex', alignItems: 'center', gap: '6px', color: '#8b5cf6', fontWeight: 800, fontSize: '0.95rem' }}>
-              <Brain size={18} />
-              <span>2. Decision Making</span>
-            </div>
-            <span style={{ fontSize: '0.76rem', color: 'var(--text-muted)' }}>The Brain (Cognition)</span>
-          </button>
-
-          <button
-            onClick={() => setSelectedIngredient(2)}
-            style={{
-              padding: '12px',
-              borderRadius: '10px',
-              border: selectedIngredient === 2 ? '2px solid #10b981' : '1px solid var(--border-color)',
-              background: selectedIngredient === 2 ? 'rgba(16, 185, 129, 0.12)' : 'var(--bg-primary)',
-              cursor: 'pointer',
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              gap: '6px',
-              transition: 'all 0.2s cubic-bezier(0.16, 1, 0.3, 1)'
-            }}
-          >
-            <div style={{ display: 'flex', alignItems: 'center', gap: '6px', color: '#10b981', fontWeight: 800, fontSize: '0.95rem' }}>
-              <Zap size={18} />
-              <span>3. Action</span>
-            </div>
-            <span style={{ fontSize: '0.76rem', color: 'var(--text-muted)' }}>The Muscles (Actuation)</span>
-          </button>
-        </div>
-
-        {/* Active Ingredient Interactive Sandbox */}
-        <div style={{
-          background: 'var(--bg-primary)',
-          border: '1px solid var(--border-color)',
-          borderRadius: '10px',
-          padding: '1.25rem'
-        }}>
-          {selectedIngredient === 0 && (
+          {/* Stage 1: Perception */}
+          <div style={{
+            background: 'var(--bg-primary)',
+            border: '1px solid #1e293b',
+            borderTop: '4px solid #0284c7',
+            borderRadius: '12px',
+            padding: '1.25rem',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'space-between',
+            boxShadow: 'var(--shadow-sm)'
+          }}>
             <div>
-              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '12px' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#0284c7', fontWeight: 800, fontSize: '1rem' }}>
-                  <Eye size={18} />
-                  <span>Perception &bull; Ingesting Environmental Signals</span>
-                </div>
-                <span style={{ fontSize: '0.75rem', background: 'rgba(2, 132, 199, 0.15)', color: '#0284c7', padding: '3px 8px', borderRadius: '4px', fontWeight: 700 }}>
-                  Active Stream: 10 Hz / 360 rays
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '8px' }}>
+                <span style={{ fontSize: '0.74rem', fontWeight: 800, color: '#0284c7', background: 'rgba(2, 132, 199, 0.12)', padding: '3px 8px', borderRadius: '4px' }}>
+                  STAGE 1 &bull; SENSES
                 </span>
+                <Eye size={20} color="#0284c7" />
               </div>
-              <p style={{ margin: '0 0 12px', fontSize: '0.88rem', color: 'var(--text-secondary)', lineHeight: 1.5 }}>
-                The robot converts physical photons, acoustic reflections, and magnetic fields into digital arrays.
+              <h4 style={{ margin: '0 0 6px', fontSize: '1.15rem', fontWeight: 800, color: 'var(--text-primary)' }}>
+                1. Perception
+              </h4>
+              <p style={{ margin: '0 0 10px', fontSize: '0.86rem', color: 'var(--text-secondary)', lineHeight: 1.55 }}>
+                Understands surroundings by ingesting physical photons, acoustic reflections, and distances into digital arrays.
               </p>
-              {/* Pictographical Sensor Grid */}
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: '8px', marginBottom: '12px' }}>
-                <div style={{ background: 'var(--bg-code)', border: '1px solid #334155', borderRadius: '6px', padding: '8px', textAlign: 'center' }}>
-                  <div style={{ fontSize: '1.2rem', marginBottom: '2px' }}>🔴</div>
-                  <div style={{ fontSize: '0.8rem', fontWeight: 700, color: '#38bdf8' }}>2D/3D LiDAR</div>
-                  <div style={{ fontSize: '0.72rem', color: '#94a3b8' }}>Distance &amp; Obstacles</div>
-                </div>
-                <div style={{ background: 'var(--bg-code)', border: '1px solid #334155', borderRadius: '6px', padding: '8px', textAlign: 'center' }}>
-                  <div style={{ fontSize: '1.2rem', marginBottom: '2px' }}>📷</div>
-                  <div style={{ fontSize: '0.8rem', fontWeight: 700, color: '#38bdf8' }}>RGB-D Camera</div>
-                  <div style={{ fontSize: '0.72rem', color: '#94a3b8' }}>Visual 3D Pointcloud</div>
-                </div>
-                <div style={{ background: 'var(--bg-code)', border: '1px solid #334155', borderRadius: '6px', padding: '8px', textAlign: 'center' }}>
-                  <div style={{ fontSize: '1.2rem', marginBottom: '2px' }}>⚖️</div>
-                  <div style={{ fontSize: '0.8rem', fontWeight: 700, color: '#38bdf8' }}>IMU Sensor</div>
-                  <div style={{ fontSize: '0.72rem', color: '#94a3b8' }}>Acceleration &amp; Yaw Rate</div>
-                </div>
-                <div style={{ background: 'var(--bg-code)', border: '1px solid #334155', borderRadius: '6px', padding: '8px', textAlign: 'center' }}>
-                  <div style={{ fontSize: '1.2rem', marginBottom: '2px' }}>🧭</div>
-                  <div style={{ fontSize: '0.8rem', fontWeight: 700, color: '#38bdf8' }}>GPS &amp; Compass</div>
-                  <div style={{ fontSize: '0.72rem', color: '#94a3b8' }}>Global Geolocation</div>
-                </div>
+              <div style={{ background: 'var(--bg-code)', borderRadius: '6px', padding: '6px 10px', fontSize: '0.78rem', color: '#94a3b8', lineHeight: 1.5 }}>
+                📷 RGB-D Cameras &bull; 🔴 2D/3D LiDAR &bull; 🧭 IMU / GPS
               </div>
             </div>
-          )}
+            <div style={{ marginTop: '14px', paddingTop: '8px', borderTop: '1px solid rgba(255,255,255,0.06)', display: 'flex', alignItems: 'center', justifyContent: 'space-between', fontSize: '0.78rem', color: '#38bdf8', fontWeight: 700 }}>
+              <span>Outputs Telemetry: /scan</span>
+              <ArrowRight size={16} />
+            </div>
+          </div>
 
-          {selectedIngredient === 1 && (
+          {/* Stage 2: Decision Making */}
+          <div style={{
+            background: 'var(--bg-primary)',
+            border: '1px solid #1e293b',
+            borderTop: '4px solid #8b5cf6',
+            borderRadius: '12px',
+            padding: '1.25rem',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'space-between',
+            boxShadow: 'var(--shadow-sm)'
+          }}>
             <div>
-              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '12px' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#8b5cf6', fontWeight: 800, fontSize: '1rem' }}>
-                  <Brain size={18} />
-                  <span>Decision Making &bull; Interactive Logic Simulator</span>
-                </div>
-                <span style={{ fontSize: '0.75rem', background: 'rgba(139, 92, 246, 0.15)', color: '#8b5cf6', padding: '3px 8px', borderRadius: '4px', fontWeight: 700 }}>
-                  Drag Slider to Test Reflexes
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '8px' }}>
+                <span style={{ fontSize: '0.74rem', fontWeight: 800, color: '#8b5cf6', background: 'rgba(139, 92, 246, 0.12)', padding: '3px 8px', borderRadius: '4px' }}>
+                  STAGE 2 &bull; THE BRAIN
                 </span>
+                <Brain size={20} color="#8b5cf6" />
               </div>
-              <p style={{ margin: '0 0 12px', fontSize: '0.88rem', color: 'var(--text-secondary)', lineHeight: 1.5 }}>
-                Synthesizes perception data into actionable safety decisions and navigation trajectories.
+              <h4 style={{ margin: '0 0 6px', fontSize: '1.15rem', fontWeight: 800, color: 'var(--text-primary)' }}>
+                2. Decision Making
+              </h4>
+              <p style={{ margin: '0 0 10px', fontSize: '0.86rem', color: 'var(--text-secondary)', lineHeight: 1.55 }}>
+                Synthesizes sensor streams into costmaps, evaluates obstacle collision danger, and computes collision-free trajectories.
               </p>
-
-              {/* Interactive Obstacle Distance Slider */}
-              <div style={{ background: 'var(--bg-code)', border: '1px solid #334155', borderRadius: '8px', padding: '12px', marginBottom: '12px' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.82rem', marginBottom: '6px' }}>
-                  <span style={{ color: 'var(--text-secondary)' }}>Simulate Proximity to Nearest Obstacle:</span>
-                  <strong style={{ color: obstacleDistance <= 30 ? '#ef4444' : obstacleDistance <= 80 ? '#f59e0b' : '#10b981' }}>
-                    {obstacleDistance} cm
-                  </strong>
-                </div>
-                <input
-                  type="range"
-                  min="10"
-                  max="200"
-                  value={obstacleDistance}
-                  onChange={(e) => setObstacleDistance(Number(e.target.value))}
-                  style={{ width: '100%', cursor: 'pointer', accentColor: '#8b5cf6' }}
-                />
-
-                <div style={{ marginTop: '10px', padding: '8px 12px', borderRadius: '6px', background: obstacleDistance <= 30 ? 'rgba(239, 68, 68, 0.2)' : obstacleDistance <= 80 ? 'rgba(245, 158, 11, 0.2)' : 'rgba(16, 185, 129, 0.2)', border: `1px solid ${obstacleDistance <= 30 ? '#ef4444' : obstacleDistance <= 80 ? '#f59e0b' : '#10b981'}` }}>
-                  {obstacleDistance <= 30 ? (
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#ef4444', fontWeight: 700, fontSize: '0.85rem' }}>
-                      <AlertTriangle size={16} />
-                      <span>Binary Safety Logic: Obstacle &le; 30cm &rarr; EMERGENCY STOP! Command: /cmd_vel linear.x = 0.0</span>
-                    </div>
-                  ) : obstacleDistance <= 80 ? (
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#f59e0b', fontWeight: 700, fontSize: '0.85rem' }}>
-                      <Workflow size={16} />
-                      <span>Costmap Inflation: Local Avoidance activated. Steering yaw angular.z = +0.5 rad/s</span>
-                    </div>
-                  ) : (
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#10b981', fontWeight: 700, fontSize: '0.85rem' }}>
-                      <CheckCircle2 size={16} />
-                      <span>Nominal Path Following: Global Nav2 spline active. Cruising velocity linear.x = 0.50 m/s</span>
-                    </div>
-                  )}
-                </div>
+              <div style={{ background: 'var(--bg-code)', borderRadius: '6px', padding: '6px 10px', fontSize: '0.78rem', color: '#94a3b8', lineHeight: 1.5 }}>
+                🛡️ Safety Reflexes &bull; 🗺️ Costmap SLAM &bull; 🧭 Nav2 Splines
               </div>
             </div>
-          )}
+            <div style={{ marginTop: '14px', paddingTop: '8px', borderTop: '1px solid rgba(255,255,255,0.06)', display: 'flex', alignItems: 'center', justifyContent: 'space-between', fontSize: '0.78rem', color: '#c084fc', fontWeight: 700 }}>
+              <span>Outputs Directives: /cmd_vel</span>
+              <ArrowRight size={16} />
+            </div>
+          </div>
 
-          {selectedIngredient === 2 && (
+          {/* Stage 3: Action */}
+          <div style={{
+            background: 'var(--bg-primary)',
+            border: '1px solid #1e293b',
+            borderTop: '4px solid #10b981',
+            borderRadius: '12px',
+            padding: '1.25rem',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'space-between',
+            boxShadow: 'var(--shadow-sm)'
+          }}>
             <div>
-              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '12px' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#10b981', fontWeight: 800, fontSize: '1rem' }}>
-                  <Zap size={18} />
-                  <span>Action &bull; Mechanical Actuation &amp; Expression</span>
-                </div>
-                <span style={{ fontSize: '0.75rem', background: 'rgba(16, 185, 129, 0.15)', color: '#10b981', padding: '3px 8px', borderRadius: '4px', fontWeight: 700 }}>
-                  Output: /cmd_vel &rarr; Wheel CAN
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '8px' }}>
+                <span style={{ fontSize: '0.74rem', fontWeight: 800, color: '#10b981', background: 'rgba(16, 185, 129, 0.12)', padding: '3px 8px', borderRadius: '4px' }}>
+                  STAGE 3 &bull; THE MUSCLES
                 </span>
+                <Zap size={20} color="#10b981" />
               </div>
-              <p style={{ margin: '0 0 12px', fontSize: '0.88rem', color: 'var(--text-secondary)', lineHeight: 1.5 }}>
-                Translates mathematical velocity curves into motor torques, physical work, and human audio communication.
+              <h4 style={{ margin: '0 0 6px', fontSize: '1.15rem', fontWeight: 800, color: 'var(--text-primary)' }}>
+                3. Action
+              </h4>
+              <p style={{ margin: '0 0 10px', fontSize: '0.86rem', color: 'var(--text-secondary)', lineHeight: 1.55 }}>
+                Translates velocity math into physical wheel motor torque, propeller thrust, mechanical joint articulation, and voice feedback.
               </p>
-
-              {/* Pictographical Actuator Telemetry */}
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: '10px' }}>
-                <div style={{ background: 'var(--bg-code)', border: '1px solid #334155', borderRadius: '8px', padding: '10px', display: 'flex', alignItems: 'center', gap: '10px' }}>
-                  <div style={{ animation: 'spinTach 2s linear infinite', color: '#10b981' }}>
-                    <RotateCcw size={24} />
-                  </div>
-                  <div>
-                    <div style={{ fontSize: '0.75rem', color: '#94a3b8' }}>Left Hub Motor</div>
-                    <div style={{ fontSize: '0.95rem', fontWeight: 800, color: '#34d399' }}>142 RPM (CAN)</div>
-                  </div>
-                </div>
-
-                <div style={{ background: 'var(--bg-code)', border: '1px solid #334155', borderRadius: '8px', padding: '10px', display: 'flex', alignItems: 'center', gap: '10px' }}>
-                  <div style={{ animation: 'spinTach 2s linear infinite', color: '#10b981' }}>
-                    <RotateCcw size={24} />
-                  </div>
-                  <div>
-                    <div style={{ fontSize: '0.75rem', color: '#94a3b8' }}>Right Hub Motor</div>
-                    <div style={{ fontSize: '0.95rem', fontWeight: 800, color: '#34d399' }}>142 RPM (CAN)</div>
-                  </div>
-                </div>
-
-                <div style={{ background: 'var(--bg-code)', border: '1px solid #334155', borderRadius: '8px', padding: '10px', display: 'flex', alignItems: 'center', gap: '10px' }}>
-                  <div style={{ color: '#38bdf8' }}>
-                    <Gauge size={24} />
-                  </div>
-                  <div>
-                    <div style={{ fontSize: '0.75rem', color: '#94a3b8' }}>Linear Ground Speed</div>
-                    <div style={{ fontSize: '0.95rem', fontWeight: 800, color: '#38bdf8' }}>0.45 m/s</div>
-                  </div>
-                </div>
+              <div style={{ background: 'var(--bg-code)', borderRadius: '6px', padding: '6px 10px', fontSize: '0.78rem', color: '#94a3b8', lineHeight: 1.5 }}>
+                ⚙️ Electric Hub Motors &bull; 🦾 Arm Joints &bull; 🔊 TTS Audio
               </div>
             </div>
-          )}
+            <div style={{ marginTop: '14px', paddingTop: '8px', borderTop: '1px solid rgba(255,255,255,0.06)', display: 'flex', alignItems: 'center', justifyContent: 'space-between', fontSize: '0.78rem', color: '#34d399', fontWeight: 700 }}>
+              <span>Physical Actuation on Ground</span>
+              <CheckCircle2 size={16} />
+            </div>
+          </div>
         </div>
       </section>
 
@@ -590,84 +521,6 @@ export function Ros2ArchitectureInteractive() {
           Just as <strong>Windows</strong> connects PC apps to mice and printers, <strong>ROS</strong> connects robot autonomy to motors, cameras, and sensors.
         </div>
 
-        {/* Compact Interactive Hardware Hot-Swap Simulator */}
-        <div style={{
-          background: 'var(--bg-code)',
-          border: '1px solid var(--border-color)',
-          borderRadius: '10px',
-          padding: '0.75rem 1rem',
-          marginBottom: '1.75rem',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          flexWrap: 'wrap',
-          gap: '10px'
-        }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-            <span style={{ fontSize: '0.82rem', fontWeight: 700, color: 'var(--text-secondary)' }}>
-              Hardware Hot-Swap Test:
-            </span>
-            <div style={{ display: 'flex', gap: '6px' }}>
-              <button
-                onClick={() => handleLidarSwap('sick')}
-                style={{
-                  padding: '5px 10px',
-                  borderRadius: '6px',
-                  fontSize: '0.76rem',
-                  fontWeight: 700,
-                  cursor: 'pointer',
-                  border: selectedLidar === 'sick' ? '2px solid #0284c7' : '1px solid var(--border-color)',
-                  background: selectedLidar === 'sick' ? 'rgba(2, 132, 199, 0.25)' : 'var(--bg-surface)',
-                  color: selectedLidar === 'sick' ? '#38bdf8' : 'var(--text-secondary)'
-                }}
-              >
-                SICK TiM571 (Industrial)
-              </button>
-              <button
-                onClick={() => handleLidarSwap('rplidar')}
-                style={{
-                  padding: '5px 10px',
-                  borderRadius: '6px',
-                  fontSize: '0.76rem',
-                  fontWeight: 700,
-                  cursor: 'pointer',
-                  border: selectedLidar === 'rplidar' ? '2px solid #0284c7' : '1px solid var(--border-color)',
-                  background: selectedLidar === 'rplidar' ? 'rgba(2, 132, 199, 0.25)' : 'var(--bg-surface)',
-                  color: selectedLidar === 'rplidar' ? '#38bdf8' : 'var(--text-secondary)'
-                }}
-              >
-                RPLiDAR A3 (Budget)
-              </button>
-              <button
-                onClick={() => handleLidarSwap('velodyne')}
-                style={{
-                  padding: '5px 10px',
-                  borderRadius: '6px',
-                  fontSize: '0.76rem',
-                  fontWeight: 700,
-                  cursor: 'pointer',
-                  border: selectedLidar === 'velodyne' ? '2px solid #0284c7' : '1px solid var(--border-color)',
-                  background: selectedLidar === 'velodyne' ? 'rgba(2, 132, 199, 0.25)' : 'var(--bg-surface)',
-                  color: selectedLidar === 'velodyne' ? '#38bdf8' : 'var(--text-secondary)'
-                }}
-              >
-                Velodyne Puck (3D)
-              </button>
-            </div>
-          </div>
-
-          <div style={{
-            fontSize: '0.8rem',
-            color: '#34d399',
-            fontWeight: 700,
-            display: 'flex',
-            alignItems: 'center',
-            gap: '6px'
-          }}>
-            <CheckCircle2 size={16} />
-            <span>Active: {selectedLidar === 'sick' ? 'SICK Driver' : selectedLidar === 'rplidar' ? 'RPLiDAR Driver' : 'Velodyne Driver'} &rarr; <strong>/scan</strong> &rarr; <strong>Nav2 (0 Code Changes)</strong></span>
-          </div>
-        </div>
 
         {/* Visual Metaphor 2: Framework Running on Top of Operating System */}
         <div style={{
@@ -754,101 +607,213 @@ export function Ros2ArchitectureInteractive() {
           </div>
         </div>
 
-        {/* Story Diagram Image Card */}
+        {/* Interactive Storyboard Step Navigation Tabs */}
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(4, minmax(0, 1fr))',
+          gap: '8px',
+          marginBottom: '1rem'
+        }}>
+          {storySteps.map((step, idx) => (
+            <button
+              key={idx}
+              onClick={() => setActiveStoryStep(idx)}
+              style={{
+                padding: '8px 10px',
+                borderRadius: '8px',
+                border: activeStoryStep === idx ? `2px solid ${step.accent}` : '1px solid var(--border-color)',
+                background: activeStoryStep === idx ? `${step.accent}20` : 'var(--bg-primary)',
+                color: activeStoryStep === idx ? step.accent : 'var(--text-secondary)',
+                fontWeight: 700,
+                fontSize: '0.78rem',
+                cursor: 'pointer',
+                textAlign: 'center',
+                transition: 'all 0.2s cubic-bezier(0.16, 1, 0.3, 1)'
+              }}
+            >
+              <div style={{ fontSize: '0.7rem', opacity: 0.8 }}>STEP {idx + 1}</div>
+              <div style={{ fontSize: '0.76rem', color: activeStoryStep === idx ? '#f8fafc' : 'var(--text-muted)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                {step.title}
+              </div>
+            </button>
+          ))}
+        </div>
+
+        {/* Main Storyboard Stage: 16:9 Cinematic Visual */}
         <div style={{
           borderRadius: '12px',
           overflow: 'hidden',
-          border: '1px solid var(--border-color)',
-          background: '#090d16',
-          marginBottom: '1.25rem',
-          boxShadow: '0 8px 24px rgba(0, 0, 0, 0.25)'
-        }}>
-          <img
-            src="assets/images/story_of_robotics_developer.png"
-            alt="Story of a Robotics Developer - The Cycle of Rewriting Frameworks"
-            style={{ width: '100%', height: 'auto', display: 'block' }}
-          />
-        </div>
-
-        {/* 4-Beat Storyboard Stepper */}
-        <div style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
-          gap: '10px',
+          border: `1px solid ${storySteps[activeStoryStep].accent}40`,
+          background: '#0a0f1d',
+          position: 'relative',
+          boxShadow: '0 8px 30px rgba(0, 0, 0, 0.5)',
           marginBottom: '1rem'
         }}>
-          <div
-            onClick={() => setActiveStoryBeat(0)}
+          <img
+            key={activeStoryStep}
+            src={storySteps[activeStoryStep].image}
+            alt={storySteps[activeStoryStep].title}
             style={{
-              padding: '12px',
-              borderRadius: '8px',
-              background: activeStoryBeat === 0 ? 'rgba(245, 158, 11, 0.15)' : 'var(--bg-primary)',
-              border: activeStoryBeat === 0 ? '2px solid #f59e0b' : '1px solid var(--border-color)',
-              cursor: 'pointer'
+              width: '100%',
+              height: 'auto',
+              display: 'block'
             }}
-          >
-            <div style={{ fontSize: '0.75rem', fontWeight: 800, color: '#f59e0b', marginBottom: '4px' }}>BEAT 1: PERSON X STARTS</div>
-            <div style={{ fontSize: '0.82rem', color: 'var(--text-primary)', fontWeight: 600 }}>Writes Custom Sockets</div>
-            <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginTop: '4px' }}>Spends 8 weeks debugging serial UART and TCP packet protocols.</div>
-          </div>
-
-          <div
-            onClick={() => setActiveStoryBeat(1)}
-            style={{
-              padding: '12px',
-              borderRadius: '8px',
-              background: activeStoryBeat === 1 ? 'rgba(239, 68, 68, 0.15)' : 'var(--bg-primary)',
-              border: activeStoryBeat === 1 ? '2px solid #ef4444' : '1px solid var(--border-color)',
-              cursor: 'pointer'
-            }}
-          >
-            <div style={{ fontSize: '0.75rem', fontWeight: 800, color: '#ef4444', marginBottom: '4px' }}>BEAT 2: THE BURNOUT</div>
-            <div style={{ fontSize: '0.82rem', color: 'var(--text-primary)', fontWeight: 600 }}>Project Abandoned</div>
-            <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginTop: '4px' }}>Runs out of time and energy before ever building autonomous features.</div>
-          </div>
-
-          <div
-            onClick={() => setActiveStoryBeat(2)}
-            style={{
-              padding: '12px',
-              borderRadius: '8px',
-              background: activeStoryBeat === 2 ? 'rgba(59, 130, 246, 0.15)' : 'var(--bg-primary)',
-              border: activeStoryBeat === 2 ? '2px solid #3b82f6' : '1px solid var(--border-color)',
-              cursor: 'pointer'
-            }}
-          >
-            <div style={{ fontSize: '0.75rem', fontWeight: 800, color: '#3b82f6', marginBottom: '4px' }}>BEAT 3: PERSON Y'S QUEST</div>
-            <div style={{ fontSize: '0.82rem', color: 'var(--text-primary)', fontWeight: 600 }}>Searches For Code</div>
-            <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginTop: '4px' }}>Finds Person X's code completely undocumented, brittle, and incompatible.</div>
-          </div>
-
-          <div
-            onClick={() => setActiveStoryBeat(3)}
-            style={{
-              padding: '12px',
-              borderRadius: '8px',
-              background: activeStoryBeat === 3 ? 'rgba(168, 85, 247, 0.15)' : 'var(--bg-primary)',
-              border: activeStoryBeat === 3 ? '2px solid #a855f7' : '1px solid var(--border-color)',
-              cursor: 'pointer'
-            }}
-          >
-            <div style={{ fontSize: '0.75rem', fontWeight: 800, color: '#a855f7', marginBottom: '4px' }}>BEAT 4: THE GROUNDHOG LOOP</div>
-            <div style={{ fontSize: '0.82rem', color: 'var(--text-primary)', fontWeight: 600 }}>Rewrites from Scratch!</div>
-            <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginTop: '4px' }}>Starts yet another custom framework that will also be forgotten.</div>
+          />
+          {/* Step watermark badge */}
+          <div style={{
+            position: 'absolute',
+            top: '12px',
+            left: '12px',
+            background: 'rgba(10, 15, 29, 0.85)',
+            backdropFilter: 'blur(8px)',
+            border: `1px solid ${storySteps[activeStoryStep].accent}60`,
+            borderRadius: '6px',
+            padding: '4px 12px',
+            fontSize: '0.78rem',
+            fontWeight: 800,
+            color: storySteps[activeStoryStep].accent,
+            display: 'flex',
+            alignItems: 'center',
+            gap: '6px'
+          }}>
+            <span>BEAT {activeStoryStep + 1} OF 4:</span>
+            <span style={{ color: '#f8fafc' }}>{storySteps[activeStoryStep].title.toUpperCase()}</span>
           </div>
         </div>
 
+        {/* Story Narrative & Dialogue Callout */}
+        <div style={{
+          background: 'var(--bg-code)',
+          border: '1px solid var(--border-color)',
+          borderRadius: '10px',
+          padding: '1rem 1.25rem',
+          marginBottom: '1rem'
+        }}>
+          {/* Character Dialogue Quote */}
+          <div style={{
+            background: `${storySteps[activeStoryStep].accent}15`,
+            borderLeft: `4px solid ${storySteps[activeStoryStep].accent}`,
+            padding: '8px 14px',
+            borderRadius: '0 6px 6px 0',
+            marginBottom: '10px',
+            fontStyle: 'italic',
+            color: storySteps[activeStoryStep].accent,
+            fontWeight: 700,
+            fontSize: '0.94rem'
+          }}>
+            {storySteps[activeStoryStep].dialogue}
+          </div>
+
+          {/* Narrative description */}
+          <p style={{ margin: '0 0 10px', fontSize: '0.9rem', color: 'var(--text-primary)', lineHeight: 1.6 }}>
+            {storySteps[activeStoryStep].narrative}
+          </p>
+
+          {/* Impact Pill */}
+          <div style={{
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: '6px',
+            fontSize: '0.76rem',
+            color: '#94a3b8',
+            background: 'rgba(255, 255, 255, 0.04)',
+            padding: '4px 10px',
+            borderRadius: '4px',
+            border: '1px solid rgba(255, 255, 255, 0.08)'
+          }}>
+            <AlertTriangle size={14} color={storySteps[activeStoryStep].accent} />
+            <span>{storySteps[activeStoryStep].impact}</span>
+          </div>
+        </div>
+
+        {/* Previous & Next Control Bar */}
+        <div style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          gap: '12px',
+          marginBottom: '1.25rem'
+        }}>
+          <button
+            onClick={() => setActiveStoryStep(prev => Math.max(0, prev - 1))}
+            disabled={activeStoryStep === 0}
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '6px',
+              padding: '8px 16px',
+              borderRadius: '8px',
+              background: activeStoryStep === 0 ? 'var(--bg-surface)' : 'var(--bg-primary)',
+              border: '1px solid var(--border-color)',
+              color: activeStoryStep === 0 ? 'var(--text-muted)' : 'var(--text-primary)',
+              fontSize: '0.86rem',
+              fontWeight: 700,
+              cursor: activeStoryStep === 0 ? 'not-allowed' : 'pointer',
+              opacity: activeStoryStep === 0 ? 0.4 : 1,
+              transition: 'all 0.2s'
+            }}
+          >
+            <ChevronLeft size={18} />
+            <span>Previous Beat</span>
+          </button>
+
+          {/* Progress Step Indicator Dots */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+            {storySteps.map((step, idx) => (
+              <div
+                key={idx}
+                onClick={() => setActiveStoryStep(idx)}
+                style={{
+                  width: activeStoryStep === idx ? '24px' : '10px',
+                  height: '10px',
+                  borderRadius: '5px',
+                  background: activeStoryStep === idx ? step.accent : 'var(--border-color)',
+                  cursor: 'pointer',
+                  transition: 'all 0.25s cubic-bezier(0.16, 1, 0.3, 1)'
+                }}
+                title={`Jump to Beat ${idx + 1}`}
+              />
+            ))}
+          </div>
+
+          <button
+            onClick={() => setActiveStoryStep(prev => (prev < storySteps.length - 1 ? prev + 1 : 0))}
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '6px',
+              padding: '8px 18px',
+              borderRadius: '8px',
+              background: activeStoryStep === storySteps.length - 1 ? 'rgba(16, 185, 129, 0.15)' : 'var(--accent-primary)',
+              border: activeStoryStep === storySteps.length - 1 ? '1px solid #10b981' : 'none',
+              color: activeStoryStep === storySteps.length - 1 ? '#34d399' : '#ffffff',
+              fontSize: '0.86rem',
+              fontWeight: 700,
+              cursor: 'pointer',
+              transition: 'all 0.2s'
+            }}
+          >
+            <span>{activeStoryStep === storySteps.length - 1 ? 'Replay Story ↺' : 'Next Beat'}</span>
+            <ChevronRight size={18} />
+          </button>
+        </div>
+
+        {/* Universal Tragedy Conclusion Quote */}
         <div style={{
           textAlign: 'center',
-          padding: '8px 12px',
+          padding: '12px 16px',
           background: 'rgba(245, 158, 11, 0.08)',
-          borderRadius: '6px',
-          fontSize: '0.85rem',
+          border: '1px solid rgba(245, 158, 11, 0.25)',
+          borderRadius: '8px',
+          fontSize: '0.9rem',
           color: 'var(--text-primary)',
           fontStyle: 'italic',
           fontWeight: 600
         }}>
           &ldquo;They develop a robotics framework that ends up being non-reusable, not supported, and quickly forgotten.&rdquo;
+          <div style={{ fontSize: '0.8rem', color: '#f59e0b', fontStyle: 'normal', fontWeight: 700, marginTop: '4px' }}>
+            &mdash; The recurring tragedy that inspired the creation of the universal ROS standard
+          </div>
         </div>
       </section>
 

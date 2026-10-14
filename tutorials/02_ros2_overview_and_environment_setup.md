@@ -77,13 +77,31 @@ Every autonomous robot—from an industrial AMR moving palettes to an interstell
 
 ### 3.3 The Story of a Robotics Developer: Why We Need a Standard
 
-Before ROS became the worldwide industry standard, robotics was trapped in an endless loop of wasted engineering effort:
+Before ROS became the worldwide industry standard, robotics engineering was trapped in an endless cycle of wasted effort and abandoned projects:
 
-![Story of a Robotics Developer](assets/images/story_of_robotics_developer.png)
+#### 🎬 Step 1: The Dream & Ambition
+![Step 1: The Dream & Ambition](assets/images/story_step1_dream.jpg)
+> *"I just want to build an intelligent robot that navigates on its own!"*  
+> **Goal:** AI Navigation & Computer Vision. **Dilemma:** No universal robotics middleware exists.
 
-> **The Dev Tragedy:** Person X builds a robot, but gets overwhelmed writing low-level communication sockets and 3D simulation tools, eventually abandoning the project. Person Y starts a new project, searches for code to reuse, finds Person X's codebase completely incompatible and undocumented, and begins writing another custom framework from scratch.
->
-> *"They develop a robotics framework that ends up being non-reusable, not supported, and quickly forgotten."*
+#### 🎬 Step 2: The Plumbing Trap — Reinventing Everything
+![Step 2: The Plumbing Trap](assets/images/story_step2_plumbing.jpg)
+> *"Why am I spending 8 months writing serial drivers and network sockets instead of AI?"*  
+> **Reality:** 80% of engineering time wasted reinventing basic device communication.
+
+#### 🎬 Step 3: Burnout & Abandonment
+![Step 3: Burnout & Abandonment](assets/images/story_step3_burnout.jpg)
+> *"The project is delayed by 18 months, code is undocumented, and the prototype is parked."*  
+> **Outcome:** Exhaustion and hardware abandonment in the corner of the lab.
+
+#### 🎬 Step 4: The Groundhog Loop Repeats
+![Step 4: The Groundhog Loop Repeats](assets/images/story_step4_cycle.jpg)
+> *"Person X's custom framework won't compile... let's just write our own from scratch!"*  
+> **Result:** Another incompatible, single-use framework doomed to be forgotten.
+
+> [!WARNING]
+> *"They develop a robotics framework that ends up being non-reusable, not supported, and quickly forgotten."*  
+> — *The recurring industry tragedy that inspired the creation of the universal ROS standard.*
 
 ---
 
