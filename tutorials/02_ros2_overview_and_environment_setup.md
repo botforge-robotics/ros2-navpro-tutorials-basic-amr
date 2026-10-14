@@ -212,6 +212,29 @@ To intuitively understand how ROS 2 operates at runtime, visualize the AMR not a
 
 ### 3.7 ROS 1 vs. ROS 2: The Architectural Paradigm Shift & Unified RCL C Core
 
+![ROS 1 vs. ROS 2 Architecture Layers: Application, Middleware, and OS](assets/images/ros1_ros2_architecture_layers.png)
+*Figure: The 3-tier architectural comparison between ROS 1 and ROS 2 across the Application Layer, Middleware Layer, and OS Layer (Reference: Aitronik).*
+
+#### The 3 Architectural Layers Explained:
+
+1. **Application Layer:**
+   - **ROS 1:** Features a centralized `Master` (`roscore`) alongside application nodes (`Node`, `Node`). Every node must register with the Master to look up subscriber and publisher addresses. If the Master dies, discovery halts.
+   - **ROS 2:** Contains pure application nodes (`Node`, `Node`, `Node`) communicating in a fully decentralized peer-to-peer mesh. **Zero central Master process!**
+
+2. **Middleware Layer:**
+   - **ROS 1:** Language client libraries (`roscpp`, `rospy`) communicate via custom `TCPROS` and `UDPROS` protocols, with a separate `Nodelet API` for thread-sharing within a single process.
+   - **ROS 2:** Wrapped cleanly in the ROS 2 boundary:
+     - **Client Library:** `rclcpp`, `rclpy`, and unified C `rcl`.
+     - **Abstract DDS Layer (`rmw`):** Decouples client libraries from specific middleware vendors.
+     - **Intra-process API:** Enables high-performance zero-copy message passing between nodes sharing process memory.
+     - **Standard DDS (Data Distribution Service):** Uses industrial OMG standards (`FastDDS`, `CycloneDDS`, `Connext`) for reliable, real-time UDP multicast discovery.
+
+3. **OS Layer:**
+   - **ROS 1:** Strictly bound to **Linux (Ubuntu)**.
+   - **ROS 2:** Multi-platform: natively supports **Linux, Windows, macOS, and RTOS** (Real-Time Operating Systems like QNX, FreeRTOS, and Zephyr).
+
+---
+
 #### Eliminating Language Inconsistencies: The Unified C Core (`rcl`)
 In **ROS 1**, `roscpp` and `rospy` were two completely independent codebases written from scratch. Features added to C++ were often missing in Python, multithreading worked differently, and bugs fixed in one language lingered in the other for years.
 
