@@ -29,10 +29,31 @@ import {
   Sparkles,
   HelpCircle,
   HardDrive,
-  Laptop
+  Laptop,
+  Workflow,
+  RefreshCw,
+  SlidersHorizontal,
+  Gauge,
+  Cable,
+  RadioTower,
+  ChevronRight
 } from 'lucide-react';
 
 export function Ros2ArchitectureInteractive() {
+  // Story Chapter / Active Tab State
+  const [activeStoryChapter, setActiveStoryChapter] = useState('sec-anatomy');
+
+  // Chapter 1: Selected Robotic Ingredient & Interactive Demo
+  const [selectedIngredient, setSelectedIngredient] = useState(0); // 0: Perception, 1: Decision, 2: Action
+  const [obstacleDistance, setObstacleDistance] = useState(75); // cm, for decision-making demo
+
+  // Chapter 2: Hardware Hot-Swap Simulator State
+  const [selectedLidar, setSelectedLidar] = useState('sick'); // 'sick', 'rplidar', 'velodyne'
+  const [isSwappingLidar, setIsSwappingLidar] = useState(false);
+
+  // Chapter 3: Developer Story Beat
+  const [activeStoryBeat, setActiveStoryBeat] = useState(0); // 0: Person X, 1: Burnout, 2: Person Y, 3: The Loop
+
   // Motion Flow Simulator State
   const [simActive, setSimActive] = useState(true);
   const [simSpeed, setSimSpeed] = useState(1); // 0.5, 1, 2
@@ -96,13 +117,104 @@ export function Ros2ArchitectureInteractive() {
     return () => clearInterval(interval);
   }, [simActive, simSpeed, packetCounter, obstacleActive]);
 
+  const storyChapters = [
+    { id: 'sec-anatomy', num: '1', title: 'Robot Anatomy', icon: Bot },
+    { id: 'sec-metaphor', num: '2', title: 'OS Metaphor', icon: Laptop },
+    { id: 'sec-tragedy', num: '3', title: "Dev Tragedy", icon: AlertTriangle },
+    { id: 'sec-mission', num: '4', title: 'ROS Mission', icon: Flame },
+    { id: 'sec-pillars', num: '5', title: '4 Pillars', icon: Layers },
+    { id: 'sec-simulator', num: '6', title: 'Living Robot Sim', icon: Activity },
+    { id: 'sec-architecture', num: '7', title: 'ROS 1 vs 2', icon: ShieldCheck },
+    { id: 'sec-lab', num: '8', title: 'Hands-on Lab', icon: Terminal }
+  ];
+
+  const scrollToChapter = (chapterId) => {
+    setActiveStoryChapter(chapterId);
+    const element = document.getElementById(chapterId);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  };
+
+  const handleLidarSwap = (lidarType) => {
+    if (lidarType === selectedLidar) return;
+    setIsSwappingLidar(true);
+    setSelectedLidar(lidarType);
+    setTimeout(() => setIsSwappingLidar(false), 450);
+  };
+
   return (
     <div className="ros2-interactive-studio" style={{ margin: '0 0 3rem' }}>
+      {/* Dynamic Keyframes for Animation Disciplines */}
+      <style>{`
+        @keyframes radarSweep {
+          from { transform: rotate(0deg); }
+          to { transform: rotate(360deg); }
+        }
+        @keyframes pulseGlow {
+          0%, 100% { opacity: 0.6; transform: scale(1); }
+          50% { opacity: 1; transform: scale(1.04); }
+        }
+        @keyframes flowBeam {
+          0% { stroke-dashoffset: 40; }
+          100% { stroke-dashoffset: 0; }
+        }
+        @keyframes spinTach {
+          from { transform: rotate(0deg); }
+          to { transform: rotate(360deg); }
+        }
+      `}</style>
 
       {/* ========================================================================= */}
-      {/* SECTION 1: WHAT IS A ROBOT? & THE 3 ROBOTIC INGREDIENTS */}
+      {/* STORY CHAPTERS NAVIGATION TIMELINE */}
       {/* ========================================================================= */}
-      <section style={{
+      <nav aria-label="Story Chapters" style={{
+        background: 'var(--bg-surface)',
+        border: '1px solid var(--border-color)',
+        borderRadius: '12px',
+        padding: '0.75rem 1rem',
+        marginBottom: '1.75rem',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        overflowX: 'auto',
+        gap: '8px',
+        boxShadow: 'var(--shadow-sm)'
+      }}>
+        {storyChapters.map((ch) => {
+          const IconComponent = ch.icon;
+          const isActive = activeStoryChapter === ch.id;
+          return (
+            <button
+              key={ch.id}
+              onClick={() => scrollToChapter(ch.id)}
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '6px',
+                background: isActive ? 'var(--accent-primary)' : 'transparent',
+                color: isActive ? '#ffffff' : 'var(--text-secondary)',
+                border: 'none',
+                borderRadius: '8px',
+                padding: '6px 12px',
+                fontSize: '0.82rem',
+                fontWeight: isActive ? 700 : 500,
+                cursor: 'pointer',
+                whiteSpace: 'nowrap',
+                transition: 'all 0.2s cubic-bezier(0.16, 1, 0.3, 1)'
+              }}
+            >
+              <IconComponent size={15} />
+              <span>{ch.num}. {ch.title}</span>
+            </button>
+          );
+        })}
+      </nav>
+
+      {/* ========================================================================= */}
+      {/* CHAPTER 1: WHAT IS A ROBOT? & THE 3 ROBOTIC INGREDIENTS */}
+      {/* ========================================================================= */}
+      <section id="sec-anatomy" style={{
         background: 'var(--bg-surface)',
         border: '1px solid var(--border-color)',
         borderRadius: '14px',
@@ -128,145 +240,294 @@ export function Ros2ArchitectureInteractive() {
               1. What is a Robot? &amp; The Three Core Ingredients
             </h3>
             <span style={{ fontSize: '0.84rem', color: 'var(--text-muted)' }}>
-              The universal definition and the tripartite architecture of all autonomous machines.
+              The universal definition and tripartite anatomy of all autonomous machines.
             </span>
           </div>
         </div>
 
-        {/* Definition Highlight Box */}
+        {/* Definition Banner */}
         <div style={{
           background: 'linear-gradient(135deg, rgba(37, 99, 235, 0.08) 0%, rgba(16, 185, 129, 0.06) 100%)',
           border: '1px solid rgba(37, 99, 235, 0.25)',
           borderRadius: '10px',
-          padding: '1.25rem',
+          padding: '1rem 1.25rem',
           marginBottom: '1.5rem',
-          fontSize: '1.05rem',
+          fontSize: '1rem',
           color: 'var(--text-primary)',
-          lineHeight: 1.6
+          lineHeight: 1.55,
+          display: 'flex',
+          alignItems: 'center',
+          gap: '12px'
         }}>
-          <strong style={{ color: 'var(--accent-primary)', fontWeight: 800 }}>Definition:</strong>{' '}
-          A <strong>robot</strong> is a machine capable of carrying out a complex series of actions automatically, especially one programmable by a computer.
+          <Sparkles size={20} color="var(--accent-primary)" style={{ flexShrink: 0 }} />
+          <div>
+            <strong style={{ color: 'var(--accent-primary)', fontWeight: 800 }}>Definition:</strong>{' '}
+            A <strong>robot</strong> is a machine capable of carrying out a complex series of actions automatically, especially one programmable by a computer.
+          </div>
         </div>
 
-        {/* 3 Robotic Ingredients Header */}
-        <h4 style={{ margin: '0 0 0.85rem', fontSize: '1rem', fontWeight: 800, color: 'var(--text-primary)' }}>
-          The Three Fundamental Robotic Ingredients:
-        </h4>
+        {/* Hero Visual: AMR Cutaway Graphic */}
+        <div style={{
+          borderRadius: '12px',
+          overflow: 'hidden',
+          border: '1px solid var(--border-color)',
+          background: '#0a0f1d',
+          marginBottom: '1.5rem',
+          boxShadow: '0 8px 24px rgba(0, 0, 0, 0.35)',
+          position: 'relative'
+        }}>
+          <img
+            src="assets/images/robot_anatomy_ingredients.png"
+            alt="AMR Anatomy Cutaway - Senses, Brain, and Actuation"
+            style={{ width: '100%', height: 'auto', display: 'block' }}
+          />
+          <div style={{
+            position: 'absolute',
+            bottom: '12px',
+            right: '12px',
+            background: 'rgba(10, 15, 29, 0.85)',
+            backdropFilter: 'blur(6px)',
+            border: '1px solid rgba(255, 255, 255, 0.15)',
+            borderRadius: '6px',
+            padding: '4px 10px',
+            fontSize: '0.74rem',
+            color: '#94a3b8'
+          }}>
+            Autonomous Mobile Robot (AMR) Tripartite Subsystem Blueprint
+          </div>
+        </div>
 
-        {/* 3 Ingredients Cards Grid */}
+        {/* Interactive 3-Ingredient Selector Tabs */}
         <div style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))',
-          gap: '1.25rem'
+          gridTemplateColumns: 'repeat(3, 1fr)',
+          gap: '10px',
+          marginBottom: '1.25rem'
         }}>
-          {/* Ingredient 1: Perception */}
-          <div style={{
-            background: 'var(--bg-primary)',
-            border: '1px solid var(--border-color)',
-            borderTop: '4px solid #0284c7',
-            borderRadius: '10px',
-            padding: '1.25rem',
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'space-between'
-          }}>
-            <div>
-              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '8px' }}>
-                <span style={{ fontSize: '0.75rem', fontWeight: 800, color: '#0284c7', background: 'rgba(2, 132, 199, 0.12)', padding: '2px 8px', borderRadius: '4px' }}>
-                  INGREDIENT 1
-                </span>
-                <Eye size={20} color="#0284c7" />
-              </div>
-              <h4 style={{ margin: '0 0 6px', fontSize: '1.1rem', fontWeight: 800, color: 'var(--text-primary)' }}>
-                Perception
-              </h4>
-              <p style={{ margin: '0 0 10px', fontSize: '0.86rem', color: 'var(--text-secondary)', lineHeight: 1.5 }}>
-                <strong>Understanding surroundings:</strong> The robot ingests real-world physical phenomena and converts them into digital telemetry.
-              </p>
-              <div style={{ background: 'var(--bg-code)', borderRadius: '6px', padding: '8px 10px', fontSize: '0.8rem', color: '#38bdf8', fontFamily: 'var(--font-mono)' }}>
-                📷 Camera • 🎙️ Microphone • 🧭 Compass • 🛰️ GPS • 🔴 2D/3D LiDAR • ⚖️ IMU
-              </div>
+          <button
+            onClick={() => setSelectedIngredient(0)}
+            style={{
+              padding: '12px',
+              borderRadius: '10px',
+              border: selectedIngredient === 0 ? '2px solid #0284c7' : '1px solid var(--border-color)',
+              background: selectedIngredient === 0 ? 'rgba(2, 132, 199, 0.12)' : 'var(--bg-primary)',
+              cursor: 'pointer',
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              gap: '6px',
+              transition: 'all 0.2s cubic-bezier(0.16, 1, 0.3, 1)'
+            }}
+          >
+            <div style={{ display: 'flex', alignItems: 'center', gap: '6px', color: '#0284c7', fontWeight: 800, fontSize: '0.95rem' }}>
+              <Eye size={18} />
+              <span>1. Perception</span>
             </div>
-            <div style={{ fontSize: '0.76rem', color: 'var(--text-muted)', marginTop: '10px' }}>
-              Inputs sensory measurements of light, sound, acceleration, and distance.
-            </div>
-          </div>
+            <span style={{ fontSize: '0.76rem', color: 'var(--text-muted)' }}>The Senses (Telemetry)</span>
+          </button>
 
-          {/* Ingredient 2: Decision Making */}
-          <div style={{
-            background: 'var(--bg-primary)',
-            border: '1px solid var(--border-color)',
-            borderTop: '4px solid #8b5cf6',
-            borderRadius: '10px',
-            padding: '1.25rem',
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'space-between'
-          }}>
-            <div>
-              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '8px' }}>
-                <span style={{ fontSize: '0.75rem', fontWeight: 800, color: '#8b5cf6', background: 'rgba(139, 92, 246, 0.12)', padding: '2px 8px', borderRadius: '4px' }}>
-                  INGREDIENT 2
-                </span>
-                <Brain size={20} color="#8b5cf6" />
-              </div>
-              <h4 style={{ margin: '0 0 6px', fontSize: '1.1rem', fontWeight: 800, color: 'var(--text-primary)' }}>
-                Decision Making
-              </h4>
-              <p style={{ margin: '0 0 10px', fontSize: '0.86rem', color: 'var(--text-secondary)', lineHeight: 1.5 }}>
-                <strong>Cognition &amp; Reasoning:</strong> Synthesizes perception data into actionable directives.
-              </p>
-              <ul style={{ margin: 0, paddingLeft: '1.1rem', fontSize: '0.82rem', color: 'var(--text-secondary)', lineHeight: 1.5 }}>
-                <li><strong>Simple Decisions:</strong> Binary Yes/No logic (e.g. <em>Obstacle within 20cm? Yes &rarr; Emergency Stop</em>).</li>
-                <li><strong>Complex Decisions:</strong> Global path planning, costmap inflation, SLAM mapping, and navigating unknown dynamic environments.</li>
-              </ul>
+          <button
+            onClick={() => setSelectedIngredient(1)}
+            style={{
+              padding: '12px',
+              borderRadius: '10px',
+              border: selectedIngredient === 1 ? '2px solid #8b5cf6' : '1px solid var(--border-color)',
+              background: selectedIngredient === 1 ? 'rgba(139, 92, 246, 0.12)' : 'var(--bg-primary)',
+              cursor: 'pointer',
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              gap: '6px',
+              transition: 'all 0.2s cubic-bezier(0.16, 1, 0.3, 1)'
+            }}
+          >
+            <div style={{ display: 'flex', alignItems: 'center', gap: '6px', color: '#8b5cf6', fontWeight: 800, fontSize: '0.95rem' }}>
+              <Brain size={18} />
+              <span>2. Decision Making</span>
             </div>
-            <div style={{ fontSize: '0.76rem', color: 'var(--text-muted)', marginTop: '10px' }}>
-              Evaluates options and computes safe velocity commands (<code style={{ color: '#c084fc' }}>/cmd_vel</code>).
-            </div>
-          </div>
+            <span style={{ fontSize: '0.76rem', color: 'var(--text-muted)' }}>The Brain (Cognition)</span>
+          </button>
 
-          {/* Ingredient 3: Action */}
-          <div style={{
-            background: 'var(--bg-primary)',
-            border: '1px solid var(--border-color)',
-            borderTop: '4px solid #10b981',
-            borderRadius: '10px',
-            padding: '1.25rem',
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'space-between'
-          }}>
+          <button
+            onClick={() => setSelectedIngredient(2)}
+            style={{
+              padding: '12px',
+              borderRadius: '10px',
+              border: selectedIngredient === 2 ? '2px solid #10b981' : '1px solid var(--border-color)',
+              background: selectedIngredient === 2 ? 'rgba(16, 185, 129, 0.12)' : 'var(--bg-primary)',
+              cursor: 'pointer',
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              gap: '6px',
+              transition: 'all 0.2s cubic-bezier(0.16, 1, 0.3, 1)'
+            }}
+          >
+            <div style={{ display: 'flex', alignItems: 'center', gap: '6px', color: '#10b981', fontWeight: 800, fontSize: '0.95rem' }}>
+              <Zap size={18} />
+              <span>3. Action</span>
+            </div>
+            <span style={{ fontSize: '0.76rem', color: 'var(--text-muted)' }}>The Muscles (Actuation)</span>
+          </button>
+        </div>
+
+        {/* Active Ingredient Interactive Sandbox */}
+        <div style={{
+          background: 'var(--bg-primary)',
+          border: '1px solid var(--border-color)',
+          borderRadius: '10px',
+          padding: '1.25rem'
+        }}>
+          {selectedIngredient === 0 && (
             <div>
-              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '8px' }}>
-                <span style={{ fontSize: '0.75rem', fontWeight: 800, color: '#10b981', background: 'rgba(16, 185, 129, 0.12)', padding: '2px 8px', borderRadius: '4px' }}>
-                  INGREDIENT 3
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '12px' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#0284c7', fontWeight: 800, fontSize: '1rem' }}>
+                  <Eye size={18} />
+                  <span>Perception &bull; Ingesting Environmental Signals</span>
+                </div>
+                <span style={{ fontSize: '0.75rem', background: 'rgba(2, 132, 199, 0.15)', color: '#0284c7', padding: '3px 8px', borderRadius: '4px', fontWeight: 700 }}>
+                  Active Stream: 10 Hz / 360 rays
                 </span>
-                <Zap size={20} color="#10b981" />
               </div>
-              <h4 style={{ margin: '0 0 6px', fontSize: '1.1rem', fontWeight: 800, color: 'var(--text-primary)' }}>
-                Action
-              </h4>
-              <p style={{ margin: '0 0 10px', fontSize: '0.86rem', color: 'var(--text-secondary)', lineHeight: 1.5 }}>
-                <strong>Physical Execution:</strong> Executing physical work and altering the environment.
+              <p style={{ margin: '0 0 12px', fontSize: '0.88rem', color: 'var(--text-secondary)', lineHeight: 1.5 }}>
+                The robot converts physical photons, acoustic reflections, and magnetic fields into digital arrays.
               </p>
-              <ul style={{ margin: 0, paddingLeft: '1.1rem', fontSize: '0.82rem', color: 'var(--text-secondary)', lineHeight: 1.5 }}>
-                <li>Moving from one place to another, speeding up, braking, or turning.</li>
-                <li>Turning electric motors, spinning drone propellers, or actuating arm joints.</li>
-                <li>Communicating with humans via synthesized speech (TTS), screens, or audio cues.</li>
-              </ul>
+              {/* Pictographical Sensor Grid */}
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: '8px', marginBottom: '12px' }}>
+                <div style={{ background: 'var(--bg-code)', border: '1px solid #334155', borderRadius: '6px', padding: '8px', textAlign: 'center' }}>
+                  <div style={{ fontSize: '1.2rem', marginBottom: '2px' }}>🔴</div>
+                  <div style={{ fontSize: '0.8rem', fontWeight: 700, color: '#38bdf8' }}>2D/3D LiDAR</div>
+                  <div style={{ fontSize: '0.72rem', color: '#94a3b8' }}>Distance &amp; Obstacles</div>
+                </div>
+                <div style={{ background: 'var(--bg-code)', border: '1px solid #334155', borderRadius: '6px', padding: '8px', textAlign: 'center' }}>
+                  <div style={{ fontSize: '1.2rem', marginBottom: '2px' }}>📷</div>
+                  <div style={{ fontSize: '0.8rem', fontWeight: 700, color: '#38bdf8' }}>RGB-D Camera</div>
+                  <div style={{ fontSize: '0.72rem', color: '#94a3b8' }}>Visual 3D Pointcloud</div>
+                </div>
+                <div style={{ background: 'var(--bg-code)', border: '1px solid #334155', borderRadius: '6px', padding: '8px', textAlign: 'center' }}>
+                  <div style={{ fontSize: '1.2rem', marginBottom: '2px' }}>⚖️</div>
+                  <div style={{ fontSize: '0.8rem', fontWeight: 700, color: '#38bdf8' }}>IMU Sensor</div>
+                  <div style={{ fontSize: '0.72rem', color: '#94a3b8' }}>Acceleration &amp; Yaw Rate</div>
+                </div>
+                <div style={{ background: 'var(--bg-code)', border: '1px solid #334155', borderRadius: '6px', padding: '8px', textAlign: 'center' }}>
+                  <div style={{ fontSize: '1.2rem', marginBottom: '2px' }}>🧭</div>
+                  <div style={{ fontSize: '0.8rem', fontWeight: 700, color: '#38bdf8' }}>GPS &amp; Compass</div>
+                  <div style={{ fontSize: '0.72rem', color: '#94a3b8' }}>Global Geolocation</div>
+                </div>
+              </div>
             </div>
-            <div style={{ fontSize: '0.76rem', color: 'var(--text-muted)', marginTop: '10px' }}>
-              Translates mathematical trajectories into physical mechanical motion.
+          )}
+
+          {selectedIngredient === 1 && (
+            <div>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '12px' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#8b5cf6', fontWeight: 800, fontSize: '1rem' }}>
+                  <Brain size={18} />
+                  <span>Decision Making &bull; Interactive Logic Simulator</span>
+                </div>
+                <span style={{ fontSize: '0.75rem', background: 'rgba(139, 92, 246, 0.15)', color: '#8b5cf6', padding: '3px 8px', borderRadius: '4px', fontWeight: 700 }}>
+                  Drag Slider to Test Reflexes
+                </span>
+              </div>
+              <p style={{ margin: '0 0 12px', fontSize: '0.88rem', color: 'var(--text-secondary)', lineHeight: 1.5 }}>
+                Synthesizes perception data into actionable safety decisions and navigation trajectories.
+              </p>
+
+              {/* Interactive Obstacle Distance Slider */}
+              <div style={{ background: 'var(--bg-code)', border: '1px solid #334155', borderRadius: '8px', padding: '12px', marginBottom: '12px' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.82rem', marginBottom: '6px' }}>
+                  <span style={{ color: 'var(--text-secondary)' }}>Simulate Proximity to Nearest Obstacle:</span>
+                  <strong style={{ color: obstacleDistance <= 30 ? '#ef4444' : obstacleDistance <= 80 ? '#f59e0b' : '#10b981' }}>
+                    {obstacleDistance} cm
+                  </strong>
+                </div>
+                <input
+                  type="range"
+                  min="10"
+                  max="200"
+                  value={obstacleDistance}
+                  onChange={(e) => setObstacleDistance(Number(e.target.value))}
+                  style={{ width: '100%', cursor: 'pointer', accentColor: '#8b5cf6' }}
+                />
+
+                <div style={{ marginTop: '10px', padding: '8px 12px', borderRadius: '6px', background: obstacleDistance <= 30 ? 'rgba(239, 68, 68, 0.2)' : obstacleDistance <= 80 ? 'rgba(245, 158, 11, 0.2)' : 'rgba(16, 185, 129, 0.2)', border: `1px solid ${obstacleDistance <= 30 ? '#ef4444' : obstacleDistance <= 80 ? '#f59e0b' : '#10b981'}` }}>
+                  {obstacleDistance <= 30 ? (
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#ef4444', fontWeight: 700, fontSize: '0.85rem' }}>
+                      <AlertTriangle size={16} />
+                      <span>Binary Safety Logic: Obstacle &le; 30cm &rarr; EMERGENCY STOP! Command: /cmd_vel linear.x = 0.0</span>
+                    </div>
+                  ) : obstacleDistance <= 80 ? (
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#f59e0b', fontWeight: 700, fontSize: '0.85rem' }}>
+                      <Workflow size={16} />
+                      <span>Costmap Inflation: Local Avoidance activated. Steering yaw angular.z = +0.5 rad/s</span>
+                    </div>
+                  ) : (
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#10b981', fontWeight: 700, fontSize: '0.85rem' }}>
+                      <CheckCircle2 size={16} />
+                      <span>Nominal Path Following: Global Nav2 spline active. Cruising velocity linear.x = 0.50 m/s</span>
+                    </div>
+                  )}
+                </div>
+              </div>
             </div>
-          </div>
+          )}
+
+          {selectedIngredient === 2 && (
+            <div>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '12px' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#10b981', fontWeight: 800, fontSize: '1rem' }}>
+                  <Zap size={18} />
+                  <span>Action &bull; Mechanical Actuation &amp; Expression</span>
+                </div>
+                <span style={{ fontSize: '0.75rem', background: 'rgba(16, 185, 129, 0.15)', color: '#10b981', padding: '3px 8px', borderRadius: '4px', fontWeight: 700 }}>
+                  Output: /cmd_vel &rarr; Wheel CAN
+                </span>
+              </div>
+              <p style={{ margin: '0 0 12px', fontSize: '0.88rem', color: 'var(--text-secondary)', lineHeight: 1.5 }}>
+                Translates mathematical velocity curves into motor torques, physical work, and human audio communication.
+              </p>
+
+              {/* Pictographical Actuator Telemetry */}
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: '10px' }}>
+                <div style={{ background: 'var(--bg-code)', border: '1px solid #334155', borderRadius: '8px', padding: '10px', display: 'flex', alignItems: 'center', gap: '10px' }}>
+                  <div style={{ animation: 'spinTach 2s linear infinite', color: '#10b981' }}>
+                    <RotateCcw size={24} />
+                  </div>
+                  <div>
+                    <div style={{ fontSize: '0.75rem', color: '#94a3b8' }}>Left Hub Motor</div>
+                    <div style={{ fontSize: '0.95rem', fontWeight: 800, color: '#34d399' }}>142 RPM (CAN)</div>
+                  </div>
+                </div>
+
+                <div style={{ background: 'var(--bg-code)', border: '1px solid #334155', borderRadius: '8px', padding: '10px', display: 'flex', alignItems: 'center', gap: '10px' }}>
+                  <div style={{ animation: 'spinTach 2s linear infinite', color: '#10b981' }}>
+                    <RotateCcw size={24} />
+                  </div>
+                  <div>
+                    <div style={{ fontSize: '0.75rem', color: '#94a3b8' }}>Right Hub Motor</div>
+                    <div style={{ fontSize: '0.95rem', fontWeight: 800, color: '#34d399' }}>142 RPM (CAN)</div>
+                  </div>
+                </div>
+
+                <div style={{ background: 'var(--bg-code)', border: '1px solid #334155', borderRadius: '8px', padding: '10px', display: 'flex', alignItems: 'center', gap: '10px' }}>
+                  <div style={{ color: '#38bdf8' }}>
+                    <Gauge size={24} />
+                  </div>
+                  <div>
+                    <div style={{ fontSize: '0.75rem', color: '#94a3b8' }}>Linear Ground Speed</div>
+                    <div style={{ fontSize: '0.95rem', fontWeight: 800, color: '#38bdf8' }}>0.45 m/s</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
       </section>
 
       {/* ========================================================================= */}
-      {/* SECTION 2: WHAT IS ROS? THE WINDOWS OS METAPHOR */}
+      {/* CHAPTER 2: WHAT IS ROS? THE WINDOWS OS METAPHOR */}
       {/* ========================================================================= */}
-      <section style={{
+      <section id="sec-metaphor" style={{
         background: 'var(--bg-surface)',
         border: '1px solid var(--border-color)',
         borderRadius: '14px',
@@ -274,7 +535,7 @@ export function Ros2ArchitectureInteractive() {
         marginBottom: '2rem',
         boxShadow: 'var(--shadow-sm)'
       }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '1.25rem' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '1rem' }}>
           <div style={{
             width: 38,
             height: 38,
@@ -292,99 +553,145 @@ export function Ros2ArchitectureInteractive() {
               2. What is ROS? The Windows OS Metaphor
             </h3>
             <span style={{ fontSize: '0.84rem', color: 'var(--text-muted)' }}>
-              Understanding Robot Operating System by comparing it to standard desktop operating systems.
+              Just as Windows abstracts printers from Google Chrome, ROS abstracts robot hardware from autonomous navigation.
             </span>
           </div>
         </div>
 
-        <p style={{ margin: '0 0 1.25rem', fontSize: '0.92rem', color: 'var(--text-secondary)', lineHeight: 1.6 }}>
-          When you use a personal computer running <strong>Windows or Linux</strong>, you don't expect Microsoft Word or Google Chrome to write custom electrical drivers for your HP printer or USB mouse. The operating system provides a standardized middleware layer that connects software applications with hardware devices. <strong>ROS does the exact same thing for robots!</strong>
-        </p>
-
-        {/* Side-by-Side Comparison: Windows OS vs ROS */}
+        {/* Interactive Hardware Hot-Swap Simulator */}
         <div style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
-          gap: '1.5rem'
+          background: 'var(--bg-primary)',
+          border: '1px solid var(--border-color)',
+          borderRadius: '10px',
+          padding: '1.25rem',
+          marginBottom: '1.25rem'
         }}>
-          {/* Column A: Traditional PC (Windows) */}
-          <div style={{
-            background: 'var(--bg-primary)',
-            border: '1px solid var(--border-color)',
-            borderRadius: '10px',
-            padding: '1.25rem'
-          }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#0ea5e9', fontWeight: 800, fontSize: '1rem', marginBottom: '10px' }}>
-              <Monitor size={18} />
-              <span>Standard Computer: Windows OS</span>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '10px', marginBottom: '1rem' }}>
+            <div style={{ fontSize: '0.9rem', fontWeight: 700, color: 'var(--text-primary)' }}>
+              Interactive Test: Swap the Robot's Sensor Hardware
             </div>
-
-            <div style={{ background: 'var(--bg-code)', border: '1px solid #334155', borderRadius: '8px', padding: '12px', fontSize: '0.82rem', fontFamily: 'var(--font-mono)' }}>
-              <div style={{ color: '#38bdf8', fontWeight: 700, marginBottom: '4px' }}>
-                [Software Applications]
-              </div>
-              <div style={{ color: '#94a3b8', marginBottom: '10px' }}>
-                MS Word • Google Chrome • Blender • VLC
-              </div>
-
-              <div style={{ background: 'rgba(14, 165, 233, 0.2)', border: '1px solid #0ea5e9', color: '#38bdf8', padding: '6px 12px', borderRadius: '6px', textAlign: 'center', fontWeight: 800, marginBottom: '10px' }}>
-                ⬇ Windows OS Drivers &amp; APIs ⬇
-              </div>
-
-              <div style={{ color: '#10b981', fontWeight: 700, marginBottom: '4px' }}>
-                [Hardware Devices]
-              </div>
-              <div style={{ color: '#94a3b8' }}>
-                Mouse • Keyboard • Laser Printer • GPU Display
-              </div>
+            <div style={{ display: 'flex', gap: '6px' }}>
+              <button
+                onClick={() => handleLidarSwap('sick')}
+                style={{
+                  padding: '6px 10px',
+                  borderRadius: '6px',
+                  fontSize: '0.78rem',
+                  fontWeight: 700,
+                  cursor: 'pointer',
+                  border: selectedLidar === 'sick' ? '2px solid #0284c7' : '1px solid var(--border-color)',
+                  background: selectedLidar === 'sick' ? 'rgba(2, 132, 199, 0.2)' : 'var(--bg-code)',
+                  color: selectedLidar === 'sick' ? '#38bdf8' : 'var(--text-secondary)'
+                }}
+              >
+                SICK TiM571 (Industrial)
+              </button>
+              <button
+                onClick={() => handleLidarSwap('rplidar')}
+                style={{
+                  padding: '6px 10px',
+                  borderRadius: '6px',
+                  fontSize: '0.78rem',
+                  fontWeight: 700,
+                  cursor: 'pointer',
+                  border: selectedLidar === 'rplidar' ? '2px solid #0284c7' : '1px solid var(--border-color)',
+                  background: selectedLidar === 'rplidar' ? 'rgba(2, 132, 199, 0.2)' : 'var(--bg-code)',
+                  color: selectedLidar === 'rplidar' ? '#38bdf8' : 'var(--text-secondary)'
+                }}
+              >
+                RPLiDAR A3 (Budget)
+              </button>
+              <button
+                onClick={() => handleLidarSwap('velodyne')}
+                style={{
+                  padding: '6px 10px',
+                  borderRadius: '6px',
+                  fontSize: '0.78rem',
+                  fontWeight: 700,
+                  cursor: 'pointer',
+                  border: selectedLidar === 'velodyne' ? '2px solid #0284c7' : '1px solid var(--border-color)',
+                  background: selectedLidar === 'velodyne' ? 'rgba(2, 132, 199, 0.2)' : 'var(--bg-code)',
+                  color: selectedLidar === 'velodyne' ? '#38bdf8' : 'var(--text-secondary)'
+                }}
+              >
+                Velodyne Puck (3D)
+              </button>
             </div>
-            <p style={{ margin: '10px 0 0', fontSize: '0.8rem', color: 'var(--text-muted)' }}>
-              Chrome prints a document without needing to know the low-level USB commands of your printer.
-            </p>
           </div>
 
-          {/* Column B: Autonomous Robot (ROS) */}
+          {/* Side-by-Side Metaphor Grid */}
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '1rem' }}>
+            {/* Desktop PC Box */}
+            <div style={{ background: 'var(--bg-code)', border: '1px solid #334155', borderRadius: '8px', padding: '12px' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '6px', color: '#0ea5e9', fontWeight: 800, fontSize: '0.9rem', marginBottom: '8px' }}>
+                <Monitor size={16} />
+                <span>Personal Computer (Windows OS)</span>
+              </div>
+              <div style={{ padding: '8px', background: 'rgba(255,255,255,0.03)', borderRadius: '6px', marginBottom: '6px' }}>
+                <div style={{ fontSize: '0.74rem', color: '#94a3b8' }}>Applications:</div>
+                <div style={{ fontSize: '0.82rem', fontWeight: 600, color: '#e2e8f0' }}>MS Word &bull; Google Chrome &bull; Blender</div>
+              </div>
+              <div style={{ textAlign: 'center', color: '#0ea5e9', fontSize: '0.78rem', fontWeight: 800, margin: '4px 0' }}>
+                &darr; Windows Print Spooler &amp; USB APIs &darr;
+              </div>
+              <div style={{ padding: '8px', background: 'rgba(255,255,255,0.03)', borderRadius: '6px' }}>
+                <div style={{ fontSize: '0.74rem', color: '#94a3b8' }}>Hardware:</div>
+                <div style={{ fontSize: '0.82rem', fontWeight: 600, color: '#38bdf8' }}>HP, Epson, or Canon Printer &bull; USB Mouse</div>
+              </div>
+            </div>
+
+            {/* Autonomous Robot Box */}
+            <div style={{
+              background: 'var(--bg-code)',
+              border: isSwappingLidar ? '1px solid #10b981' : '1px solid #334155',
+              borderRadius: '8px',
+              padding: '12px',
+              transition: 'border 0.3s'
+            }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '6px', color: '#10b981', fontWeight: 800, fontSize: '0.9rem', marginBottom: '8px' }}>
+                <Bot size={16} />
+                <span>Autonomous Mobile Robot (ROS 2)</span>
+              </div>
+              <div style={{ padding: '8px', background: 'rgba(255,255,255,0.03)', borderRadius: '6px', marginBottom: '6px' }}>
+                <div style={{ fontSize: '0.74rem', color: '#94a3b8' }}>Autonomy Apps:</div>
+                <div style={{ fontSize: '0.82rem', fontWeight: 600, color: '#34d399' }}>Nav2 Path Planner &bull; SLAM Toolbox</div>
+              </div>
+              <div style={{ textAlign: 'center', color: '#10b981', fontSize: '0.78rem', fontWeight: 800, margin: '4px 0' }}>
+                &darr; ROS 2 Standard Topic /scan (DDS) &darr;
+              </div>
+              <div style={{ padding: '8px', background: 'rgba(16, 185, 129, 0.1)', border: '1px dashed #10b981', borderRadius: '6px' }}>
+                <div style={{ fontSize: '0.74rem', color: '#94a3b8' }}>Active Hardware:</div>
+                <div style={{ fontSize: '0.82rem', fontWeight: 700, color: '#34d399' }}>
+                  {selectedLidar === 'sick' && 'SICK TiM571 (Ethernet driver -> ROS 2 standard /scan)'}
+                  {selectedLidar === 'rplidar' && 'RPLiDAR A3 (UART/USB driver -> ROS 2 standard /scan)'}
+                  {selectedLidar === 'velodyne' && 'Velodyne Puck (UDP driver -> PointCloud2 -> ROS 2 /scan)'}
+                </div>
+              </div>
+            </div>
+          </div>
+
           <div style={{
-            background: 'var(--bg-primary)',
-            border: '1px solid var(--border-color)',
-            borderRadius: '10px',
-            padding: '1.25rem'
+            marginTop: '12px',
+            background: 'rgba(16, 185, 129, 0.08)',
+            border: '1px solid rgba(16, 185, 129, 0.25)',
+            borderRadius: '6px',
+            padding: '8px 12px',
+            fontSize: '0.82rem',
+            color: '#34d399',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '8px'
           }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#10b981', fontWeight: 800, fontSize: '1rem', marginBottom: '10px' }}>
-              <Bot size={18} />
-              <span>Autonomous Robot: ROS Middleware</span>
-            </div>
-
-            <div style={{ background: 'var(--bg-code)', border: '1px solid #334155', borderRadius: '8px', padding: '12px', fontSize: '0.82rem', fontFamily: 'var(--font-mono)' }}>
-              <div style={{ color: '#34d399', fontWeight: 700, marginBottom: '4px' }}>
-                [Robotics Software Modules]
-              </div>
-              <div style={{ color: '#94a3b8', marginBottom: '10px' }}>
-                Face Recognition • TTS &amp; Speech (SR) • Nav2 Path Planning • SLAM
-              </div>
-
-              <div style={{ background: 'rgba(16, 185, 129, 0.2)', border: '1px solid #10b981', color: '#34d399', padding: '6px 12px', borderRadius: '6px', textAlign: 'center', fontWeight: 800, marginBottom: '10px' }}>
-                ⬇ ROS 2 Standardized Middleware (DDS) ⬇
-              </div>
-
-              <div style={{ color: '#f59e0b', fontWeight: 700, marginBottom: '4px' }}>
-                [Robot Hardware Components]
-              </div>
-              <div style={{ color: '#94a3b8' }}>
-                Motors (CAN/PWM) • 2D LiDAR • RGB-D Camera • Joystick Teleop
-              </div>
-            </div>
-            <p style={{ margin: '10px 0 0', fontSize: '0.8rem', color: 'var(--text-muted)' }}>
-              Nav2 steers the robot by publishing <code>/cmd_vel</code> without knowing the wheel diameter or motor driver brand!
-            </p>
+            <CheckCircle2 size={16} />
+            <span><strong>Zero Code Changes in Nav2!</strong> Swapping sensors only switches the lightweight driver node. Nav2 navigation never knows or cares about the hardware brand!</span>
           </div>
         </div>
       </section>
 
       {/* ========================================================================= */}
-      {/* SECTION 3: STORY OF A ROBOTICS DEVELOPER & THE TRAP */}
+      {/* CHAPTER 3: THE STORY OF A ROBOTICS DEVELOPER */}
       {/* ========================================================================= */}
-      <section style={{
+      <section id="sec-tragedy" style={{
         background: 'var(--bg-surface)',
         border: '1px solid var(--border-color)',
         borderRadius: '14px',
@@ -392,7 +699,7 @@ export function Ros2ArchitectureInteractive() {
         marginBottom: '2rem',
         boxShadow: 'var(--shadow-sm)'
       }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '1.25rem' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '1rem' }}>
           <div style={{
             width: 38,
             height: 38,
@@ -415,10 +722,6 @@ export function Ros2ArchitectureInteractive() {
           </div>
         </div>
 
-        <p style={{ margin: '0 0 1.25rem', fontSize: '0.92rem', color: 'var(--text-secondary)', lineHeight: 1.6 }}>
-          Before ROS became the worldwide industry standard, robotics was trapped in an endless loop of wasted engineering effort:
-        </p>
-
         {/* Story Diagram Image Card */}
         <div style={{
           borderRadius: '12px',
@@ -435,27 +738,92 @@ export function Ros2ArchitectureInteractive() {
           />
         </div>
 
+        {/* 4-Beat Storyboard Stepper */}
         <div style={{
-          background: 'var(--bg-primary)',
-          border: '1px solid var(--border-color)',
-          borderRadius: '10px',
-          padding: '1.25rem',
-          fontSize: '0.88rem',
-          color: 'var(--text-secondary)',
-          lineHeight: 1.55
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
+          gap: '10px',
+          marginBottom: '1rem'
         }}>
-          <strong style={{ color: '#f59e0b' }}>The Dev Tragedy:</strong> Person X builds a robot, but gets overwhelmed writing low-level communication sockets and 3D simulation tools, eventually abandoning the project. Person Y starts a new project, searches for code to reuse, finds Person X's codebase completely incompatible and undocumented, and begins writing another custom framework from scratch.
-          <br /><br />
-          <em style={{ color: 'var(--text-primary)', fontWeight: 600 }}>
-            "They develop a robotics framework that ends up being non-reusable, not supported, and quickly forgotten."
-          </em>
+          <div
+            onClick={() => setActiveStoryBeat(0)}
+            style={{
+              padding: '12px',
+              borderRadius: '8px',
+              background: activeStoryBeat === 0 ? 'rgba(245, 158, 11, 0.15)' : 'var(--bg-primary)',
+              border: activeStoryBeat === 0 ? '2px solid #f59e0b' : '1px solid var(--border-color)',
+              cursor: 'pointer'
+            }}
+          >
+            <div style={{ fontSize: '0.75rem', fontWeight: 800, color: '#f59e0b', marginBottom: '4px' }}>BEAT 1: PERSON X STARTS</div>
+            <div style={{ fontSize: '0.82rem', color: 'var(--text-primary)', fontWeight: 600 }}>Writes Custom Sockets</div>
+            <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginTop: '4px' }}>Spends 8 weeks debugging serial UART and TCP packet protocols.</div>
+          </div>
+
+          <div
+            onClick={() => setActiveStoryBeat(1)}
+            style={{
+              padding: '12px',
+              borderRadius: '8px',
+              background: activeStoryBeat === 1 ? 'rgba(239, 68, 68, 0.15)' : 'var(--bg-primary)',
+              border: activeStoryBeat === 1 ? '2px solid #ef4444' : '1px solid var(--border-color)',
+              cursor: 'pointer'
+            }}
+          >
+            <div style={{ fontSize: '0.75rem', fontWeight: 800, color: '#ef4444', marginBottom: '4px' }}>BEAT 2: THE BURNOUT</div>
+            <div style={{ fontSize: '0.82rem', color: 'var(--text-primary)', fontWeight: 600 }}>Project Abandoned</div>
+            <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginTop: '4px' }}>Runs out of time and energy before ever building autonomous features.</div>
+          </div>
+
+          <div
+            onClick={() => setActiveStoryBeat(2)}
+            style={{
+              padding: '12px',
+              borderRadius: '8px',
+              background: activeStoryBeat === 2 ? 'rgba(59, 130, 246, 0.15)' : 'var(--bg-primary)',
+              border: activeStoryBeat === 2 ? '2px solid #3b82f6' : '1px solid var(--border-color)',
+              cursor: 'pointer'
+            }}
+          >
+            <div style={{ fontSize: '0.75rem', fontWeight: 800, color: '#3b82f6', marginBottom: '4px' }}>BEAT 3: PERSON Y'S QUEST</div>
+            <div style={{ fontSize: '0.82rem', color: 'var(--text-primary)', fontWeight: 600 }}>Searches For Code</div>
+            <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginTop: '4px' }}>Finds Person X's code completely undocumented, brittle, and incompatible.</div>
+          </div>
+
+          <div
+            onClick={() => setActiveStoryBeat(3)}
+            style={{
+              padding: '12px',
+              borderRadius: '8px',
+              background: activeStoryBeat === 3 ? 'rgba(168, 85, 247, 0.15)' : 'var(--bg-primary)',
+              border: activeStoryBeat === 3 ? '2px solid #a855f7' : '1px solid var(--border-color)',
+              cursor: 'pointer'
+            }}
+          >
+            <div style={{ fontSize: '0.75rem', fontWeight: 800, color: '#a855f7', marginBottom: '4px' }}>BEAT 4: THE GROUNDHOG LOOP</div>
+            <div style={{ fontSize: '0.82rem', color: 'var(--text-primary)', fontWeight: 600 }}>Rewrites from Scratch!</div>
+            <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginTop: '4px' }}>Starts yet another custom framework that will also be forgotten.</div>
+          </div>
+        </div>
+
+        <div style={{
+          textAlign: 'center',
+          padding: '8px 12px',
+          background: 'rgba(245, 158, 11, 0.08)',
+          borderRadius: '6px',
+          fontSize: '0.85rem',
+          color: 'var(--text-primary)',
+          fontStyle: 'italic',
+          fontWeight: 600
+        }}>
+          &ldquo;They develop a robotics framework that ends up being non-reusable, not supported, and quickly forgotten.&rdquo;
         </div>
       </section>
 
       {/* ========================================================================= */}
-      {/* SECTION 4: THE ROS GOAL — STOP REINVENTING THE WHEEL */}
+      {/* CHAPTER 4: THE ROS GOAL: STOP REINVENTING THE WHEEL */}
       {/* ========================================================================= */}
-      <section style={{
+      <section id="sec-mission" style={{
         background: 'var(--bg-surface)',
         border: '1px solid var(--border-color)',
         borderRadius: '14px',
@@ -463,7 +831,7 @@ export function Ros2ArchitectureInteractive() {
         marginBottom: '2rem',
         boxShadow: 'var(--shadow-sm)'
       }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '1.25rem' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '1rem' }}>
           <div style={{
             width: 38,
             height: 38,
@@ -481,18 +849,47 @@ export function Ros2ArchitectureInteractive() {
               4. The ROS Goal: Stop Reinventing the Wheel!
             </h3>
             <span style={{ fontSize: '0.84rem', color: 'var(--text-muted)' }}>
-              A universal standard so you can focus on building your application instead of reinventing infrastructure.
+              A universal foundation so you can build real robotics intelligence instead of plumbing.
             </span>
+          </div>
+        </div>
+
+        {/* Visual Efficiency Ratio Comparison Bar */}
+        <div style={{ background: 'var(--bg-primary)', border: '1px solid var(--border-color)', borderRadius: '10px', padding: '1.25rem', marginBottom: '1.25rem' }}>
+          <div style={{ fontSize: '0.85rem', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '8px' }}>
+            Engineering Time Allocation: Before vs. After ROS
+          </div>
+
+          <div style={{ marginBottom: '10px' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.76rem', color: '#94a3b8', marginBottom: '4px' }}>
+              <span>WITHOUT ROS STANDARD (Square Wheels)</span>
+              <span style={{ color: '#ef4444', fontWeight: 700 }}>80% Wasted Plumbing &bull; 20% Autonomy</span>
+            </div>
+            <div style={{ display: 'flex', height: '14px', borderRadius: '4px', overflow: 'hidden' }}>
+              <div style={{ width: '80%', background: '#ef4444' }} title="Writing custom drivers, sockets, math" />
+              <div style={{ width: '20%', background: '#475569' }} title="Actual robot features" />
+            </div>
+          </div>
+
+          <div>
+            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.76rem', color: '#94a3b8', marginBottom: '4px' }}>
+              <span>WITH ROS 2 STANDARD (Round Wheels)</span>
+              <span style={{ color: '#10b981', fontWeight: 700 }}>10% Setup &bull; 90% Real Robotics Autonomy</span>
+            </div>
+            <div style={{ display: 'flex', height: '14px', borderRadius: '4px', overflow: 'hidden' }}>
+              <div style={{ width: '10%', background: '#0284c7' }} title="Configure standard ROS nodes" />
+              <div style={{ width: '90%', background: '#10b981' }} title="Build navigation, computer vision, AI tasks" />
+            </div>
           </div>
         </div>
 
         {/* Reinventing the Wheel Cartoon Image Card & Mission Statement */}
         <div style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
-          gap: '1.5rem',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+          gap: '1.25rem',
           alignItems: 'center',
-          marginBottom: '1.5rem'
+          marginBottom: '1.25rem'
         }}>
           <div style={{
             borderRadius: '12px',
@@ -512,67 +909,49 @@ export function Ros2ArchitectureInteractive() {
             border: '1px solid var(--border-color)',
             borderLeft: '4px solid var(--accent-primary)',
             borderRadius: '10px',
-            padding: '1.5rem'
+            padding: '1.25rem'
           }}>
-            <div style={{ fontSize: '0.8rem', fontWeight: 800, color: 'var(--accent-primary)', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: '6px' }}>
-              The ROS Mission
+            <div style={{ fontSize: '0.78rem', fontWeight: 800, color: 'var(--accent-primary)', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: '6px' }}>
+              THE ROS MISSION MANIFESTO
             </div>
-            <blockquote style={{ margin: '0 0 12px', fontSize: '0.96rem', fontStyle: 'italic', color: 'var(--text-primary)', lineHeight: 1.6 }}>
-              "The ROS goal is to provide a standard for robotics software development that you can use on any robot. Whether you are programming a mobile robot, robotic arm, drone, boat, vending machine... etc."
+            <blockquote style={{ margin: '0 0 10px', fontSize: '0.92rem', fontStyle: 'italic', color: 'var(--text-primary)', lineHeight: 1.55 }}>
+              &ldquo;The ROS goal is to provide a standard for robotics software development, that you can use on any robot. Whether you are programming a mobile robot, robotic arm, drone, boat, vending machine&hellip; etc.&rdquo;
             </blockquote>
-            <p style={{ margin: 0, fontSize: '0.9rem', color: 'var(--text-secondary)', lineHeight: 1.55 }}>
+            <p style={{ margin: 0, fontSize: '0.86rem', color: 'var(--text-secondary)', lineHeight: 1.5 }}>
               This standard allows you to <strong>focus on the key features of your application</strong>, using an existing battle-tested foundation, instead of trying to do everything yourself.
             </p>
           </div>
         </div>
 
-        {/* The 3 Problem Cards: Hardware Chaos, The Wheel Trap, The Middleware Solution */}
-        <h4 style={{ margin: '0 0 0.85rem', fontSize: '1rem', fontWeight: 800, color: 'var(--text-primary)' }}>
-          The Three Critical Dilemmas Addressed by the ROS Standard:
-        </h4>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1rem' }}>
-          <div style={{
-            background: 'var(--bg-primary)',
-            border: '1px solid var(--border-color)',
-            borderRadius: '10px',
-            padding: '1.15rem'
-          }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#f59e0b', fontWeight: 700, fontSize: '0.92rem', marginBottom: '6px' }}>
-              <AlertTriangle size={16} />
+        {/* 3 Dilemmas Resolved by ROS */}
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '10px' }}>
+          <div style={{ background: 'var(--bg-primary)', border: '1px solid var(--border-color)', borderRadius: '8px', padding: '10px 12px' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '6px', color: '#f59e0b', fontWeight: 700, fontSize: '0.88rem', marginBottom: '4px' }}>
+              <AlertTriangle size={15} />
               <span>Hardware Chaos &amp; Noise</span>
             </div>
-            <p style={{ margin: 0, fontSize: '0.85rem', color: 'var(--text-secondary)', lineHeight: 1.5 }}>
-              Robots operate in physical environments with messy friction, optical reflections, shifting lighting, and mechanical back-drivability.
+            <p style={{ margin: 0, fontSize: '0.8rem', color: 'var(--text-muted)' }}>
+              Standardized message schemas (<code style={{ color: '#f59e0b' }}>/scan</code>, <code style={{ color: '#f59e0b' }}>/odom</code>) isolate physical sensor quirks from your code.
             </p>
           </div>
 
-          <div style={{
-            background: 'var(--bg-primary)',
-            border: '1px solid var(--border-color)',
-            borderRadius: '10px',
-            padding: '1.15rem'
-          }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#ef4444', fontWeight: 700, fontSize: '0.92rem', marginBottom: '6px' }}>
-              <Flame size={16} />
-              <span>The "Reinventing the Wheel" Trap</span>
+          <div style={{ background: 'var(--bg-primary)', border: '1px solid var(--border-color)', borderRadius: '8px', padding: '10px 12px' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '6px', color: '#ef4444', fontWeight: 700, fontSize: '0.88rem', marginBottom: '4px' }}>
+              <Flame size={15} />
+              <span>The &ldquo;Square Wheel&rdquo; Trap</span>
             </div>
-            <p style={{ margin: 0, fontSize: '0.85rem', color: 'var(--text-secondary)', lineHeight: 1.5 }}>
-              Historically, companies spent 80% of budgets writing basic motor drivers, coordinate converters, and network sockets instead of real autonomy.
+            <p style={{ margin: 0, fontSize: '0.8rem', color: 'var(--text-muted)' }}>
+              Instead of spending 80% of budget writing serial sockets, use battle-tested open-source packages.
             </p>
           </div>
 
-          <div style={{
-            background: 'var(--bg-primary)',
-            border: '1px solid var(--border-color)',
-            borderRadius: '10px',
-            padding: '1.15rem'
-          }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#10b981', fontWeight: 700, fontSize: '0.92rem', marginBottom: '6px' }}>
-              <CheckCircle2 size={16} />
-              <span>The Middleware Solution</span>
+          <div style={{ background: 'var(--bg-primary)', border: '1px solid var(--border-color)', borderRadius: '8px', padding: '10px 12px' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '6px', color: '#10b981', fontWeight: 700, fontSize: '0.88rem', marginBottom: '4px' }}>
+              <CheckCircle2 size={15} />
+              <span>Modular Middleware Solution</span>
             </div>
-            <p style={{ margin: 0, fontSize: '0.85rem', color: 'var(--text-secondary)', lineHeight: 1.5 }}>
-              ROS turns the robot into a modular network of decoupled nodes that communicate over standardized message schemas (<code style={{ color: '#10b981' }}>/cmd_vel</code>, <code style={{ color: '#10b981' }}>/scan</code>).
+            <p style={{ margin: 0, fontSize: '0.8rem', color: 'var(--text-muted)' }}>
+              Decoupled peer-to-peer nodes communicate via industrial DDS with zero single point of failure.
             </p>
           </div>
         </div>
@@ -581,7 +960,7 @@ export function Ros2ArchitectureInteractive() {
       {/* ========================================================================= */}
       {/* SECTION 5: THE 4 FOUNDATIONAL PILLARS (PICTOGRAPHICAL ARCHITECTURE) */}
       {/* ========================================================================= */}
-      <section style={{
+      <section id="sec-pillars" style={{
         background: 'var(--bg-surface)',
         border: '1px solid var(--border-color)',
         borderRadius: '14px',
@@ -791,7 +1170,7 @@ export function Ros2ArchitectureInteractive() {
       {/* ========================================================================= */}
       {/* SECTION 6: THE LIVING ROBOT MOTION SIMULATOR */}
       {/* ========================================================================= */}
-      <section style={{
+      <section id="sec-simulator" style={{
         background: 'var(--bg-surface)',
         border: '1px solid var(--border-color)',
         borderRadius: '14px',
@@ -981,7 +1360,7 @@ export function Ros2ArchitectureInteractive() {
       {/* ========================================================================= */}
       {/* SECTION 7: ROS 1 VS ROS 2 ARCHITECTURAL SANDBOX & UNIFIED RCL CORE */}
       {/* ========================================================================= */}
-      <section style={{
+      <section id="sec-architecture" style={{
         background: 'var(--bg-surface)',
         border: '1px solid var(--border-color)',
         borderRadius: '14px',
@@ -1344,7 +1723,7 @@ export function Ros2ArchitectureInteractive() {
       {/* ========================================================================= */}
       {/* SECTION 8: SOURCING THE ENVIRONMENT (STREAMLINED 3-STEP LAB) */}
       {/* ========================================================================= */}
-      <section style={{
+      <section id="sec-lab" style={{
         background: 'var(--bg-surface)',
         border: '1px solid var(--border-color)',
         borderRadius: '14px',

@@ -39,6 +39,8 @@ By the end of this lesson, you will:
 
 > **Definition:** A **robot** is a machine capable of carrying out a complex series of actions automatically, especially one programmable by a computer.
 
+![AMR Anatomy Cutaway](assets/images/robot_anatomy_ingredients.png)
+
 Every autonomous robot—from an industrial AMR moving palettes to an interstellar rover—relies on **three fundamental ingredients**:
 
 1. **Perception (Understanding surroundings):** The robot ingests real-world physical phenomena and converts them into digital telemetry.
