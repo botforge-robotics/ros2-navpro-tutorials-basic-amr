@@ -120,15 +120,13 @@ One pretty common story in robotics development is this:
 
 How universal message standards and global community sharing solve the developer crisis and enable plug-and-play robotics.
 
-![Stop Reinventing the Wheel & Standardize Communication for Community Sharing](assets/images/standardized_robotics_hub.png)
+![Reinventing the Wheel - No thanks! We are too busy!](assets/images/reinvent_the_wheel.jpg)
 
 > [!IMPORTANT]
 > **The Paradigm Shift: From Custom Square Wheels to a Universal ROS 2 Bus**  
 > * **1. Stop Reinventing the Wheel:** Before ROS, developers spent 80% of project time writing custom motor drivers and serial protocols from scratch, only to abandon them when the project ended.
 > * **2. Standardize Communication:** ROS 2 defines universal message interfaces (`/scan`, `/cmd_vel`, `/odom`) across Topics, Services, and Actions—completely decoupling high-level software from hardware.
 > * **3. Global Community Sharing:** Because all robots speak the same standard, you instantly reuse community packages (`Nav2`, `SLAM Toolbox`, `MoveIt 2`) and focus 90% of your time on real autonomy.
-
-![Reinventing the Wheel in Robotics - No thanks! We are too busy!](assets/images/reinvent_the_wheel_robotics.png)
 
 ---
 

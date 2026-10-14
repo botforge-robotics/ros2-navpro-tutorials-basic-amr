@@ -789,42 +789,38 @@ export function Ros2ArchitectureInteractive() {
           </div>
         </div>
 
-        {/* Hero Pictorial Representation (16:9 Presentation Graphic) */}
+        {/* Reinventing the Wheel Classic Cartoon Card */}
         <div style={{
-          background: 'rgba(10, 15, 29, 0.6)',
-          border: '1px solid rgba(14, 165, 233, 0.25)',
+          background: '#ffffff',
+          border: '1px solid var(--border-color)',
           borderRadius: '14px',
-          padding: '8px',
-          boxShadow: '0 12px 32px rgba(0, 0, 0, 0.35)',
-          marginBottom: '1.5rem'
+          padding: '1.25rem',
+          boxShadow: '0 8px 24px rgba(0, 0, 0, 0.25)',
+          marginBottom: '1.5rem',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center'
         }}>
+          <img
+            src="assets/images/reinvent_the_wheel.jpg"
+            alt="Reinventing the Wheel - No thanks! We are too busy!"
+            style={{
+              maxWidth: '650px',
+              width: '100%',
+              height: 'auto',
+              display: 'block',
+              borderRadius: '8px'
+            }}
+          />
           <div style={{
-            borderRadius: '10px',
-            overflow: 'hidden',
-            border: '1px solid rgba(255, 255, 255, 0.08)'
+            marginTop: '10px',
+            fontSize: '0.86rem',
+            color: '#475569',
+            textAlign: 'center',
+            fontWeight: 600
           }}>
-            <img
-              src="assets/images/standardized_robotics_hub.png"
-              alt="Stop Reinventing the Wheel & Standardize Communication for Community Sharing"
-              style={{ width: '100%', height: 'auto', display: 'block' }}
-            />
-          </div>
-          <div style={{
-            padding: '10px 14px 4px',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            flexWrap: 'wrap',
-            gap: '8px',
-            fontSize: '0.84rem',
-            color: 'var(--text-secondary)'
-          }}>
-            <span>
-              💡 <strong style={{ color: 'var(--text-primary)' }}>The Paradigm Shift:</strong> From custom square wheels to a universal ROS 2 communication bus.
-            </span>
-            <span style={{ color: '#10b981', fontWeight: 700 }}>
-              90% Time Focused on Real Autonomy &bull; 10% Fast Setup
-            </span>
+            &ldquo;No thanks! We are too busy!&rdquo; &mdash; The dilemma of robotics developers dragging square wheels.
           </div>
         </div>
 
@@ -832,8 +828,7 @@ export function Ros2ArchitectureInteractive() {
         <div style={{
           display: 'grid',
           gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-          gap: '1rem',
-          marginBottom: '1.5rem'
+          gap: '1rem'
         }}>
           {/* Card 1: Stop Reinventing the Wheel */}
           <div style={{
@@ -899,44 +894,6 @@ export function Ros2ArchitectureInteractive() {
             <p style={{ margin: 0, fontSize: '0.86rem', color: 'var(--text-secondary)', lineHeight: 1.5 }}>
               Because all robots speak the same standard, you instantly reuse community packages (<code style={{ color: '#34d399' }}>Nav2</code>, <code style={{ color: '#34d399' }}>SLAM Toolbox</code>, <code style={{ color: '#34d399' }}>MoveIt</code>) on any robot on Day 1.
             </p>
-          </div>
-        </div>
-
-        {/* Reinventing the Wheel Cartoon Graphic ("No thanks! We are too busy!") */}
-        <div style={{
-          background: 'rgba(10, 15, 29, 0.6)',
-          border: '1px solid rgba(245, 158, 11, 0.25)',
-          borderRadius: '14px',
-          padding: '8px',
-          boxShadow: '0 12px 32px rgba(0, 0, 0, 0.35)'
-        }}>
-          <div style={{
-            borderRadius: '10px',
-            overflow: 'hidden',
-            border: '1px solid rgba(255, 255, 255, 0.08)'
-          }}>
-            <img
-              src="assets/images/reinvent_the_wheel_robotics.png"
-              alt="Reinventing the Wheel in Robotics - No thanks, we are too busy writing custom drivers"
-              style={{ width: '100%', height: 'auto', display: 'block' }}
-            />
-          </div>
-          <div style={{
-            padding: '10px 14px 4px',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            flexWrap: 'wrap',
-            gap: '8px',
-            fontSize: '0.84rem',
-            color: 'var(--text-secondary)'
-          }}>
-            <span>
-              😂 <strong style={{ color: 'var(--text-primary)' }}>The Classic Trap:</strong> Dragging square wheels because you are &ldquo;too busy&rdquo; writing custom serial drivers.
-            </span>
-            <span style={{ color: '#38bdf8', fontWeight: 700 }}>
-              🚀 ROS 2 gives you the round wheels on Day 1
-            </span>
           </div>
         </div>
       </section>
