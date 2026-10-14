@@ -38,12 +38,8 @@ By the end of this lesson, you will:
 ### 3.1 Watch: Official Open Robotics Introduction
 Before writing code, watch the foundational overview by **Open Robotics** explaining why robotics is uniquely difficult and how ROS transforms robot software engineering:
 
-<div class="video-embed-wrapper" style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%; border-radius: 12px; margin: 1.5rem 0; box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.25); border: 1px solid #e2e8f0;">
-  <iframe src="https://player.vimeo.com/video/639236696?h=740f412ce5&title=0&byline=0&portrait=0" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0;" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen title="ROS Introduction by Open Robotics"></iframe>
-</div>
-
 > [!NOTE]
-> **Source:** [Open Robotics / ros.org (Vimeo: 639236696)](https://vimeo.com/639236696) &bull; *Official introductory video on Robot Operating System architecture.*
+> **Video Resource:** [Watch Open Robotics ROS Introduction on Vimeo (639236696)](https://vimeo.com/639236696) &bull; *Official video on Robot Operating System architecture.*
 
 ---
 

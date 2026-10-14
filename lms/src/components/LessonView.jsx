@@ -14,6 +14,7 @@ import {
 } from 'lucide-react';
 import { QuizCard } from './QuizCard';
 import { PermissionCalculator } from './PermissionCalculator';
+import { Ros2ArchitectureInteractive } from './Ros2ArchitectureInteractive';
 
 export function LessonView({ 
   lesson, 
@@ -162,12 +163,16 @@ export function LessonView({
         </div>
       )}
 
-      {/* Main Educational Markdown Body */}
-      <article 
-        ref={contentRef} 
-        className="markdown-body lesson-body-content"
-        dangerouslySetInnerHTML={{ __html: lesson.html_content }}
-      />
+      {/* Main Educational Content: Fully Interactive Component for Lesson 02, or Markdown Body */}
+      {lesson.id === 'lesson_02' ? (
+        <Ros2ArchitectureInteractive />
+      ) : (
+        <article 
+          ref={contentRef} 
+          className="markdown-body lesson-body-content"
+          dangerouslySetInnerHTML={{ __html: lesson.html_content }}
+        />
+      )}
 
       {/* Interactive Permission Calculator for Lesson 01 (Portaled into Section 4.1 or inline fallback) */}
       {lesson.id === 'lesson_01' && (
