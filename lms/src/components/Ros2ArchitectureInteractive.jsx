@@ -163,9 +163,9 @@ export function Ros2ArchitectureInteractive() {
 
   const storyChapters = [
     { id: 'sec-anatomy', num: '1', title: 'Robot Anatomy', icon: Bot },
-    { id: 'sec-metaphor', num: '2', title: 'OS Metaphor', icon: Laptop },
-    { id: 'sec-tragedy', num: '3', title: "Dev Tragedy", icon: AlertTriangle },
-    { id: 'sec-mission', num: '4', title: 'ROS Mission', icon: Flame },
+    { id: 'sec-tragedy', num: '2', title: "Dev Tragedy", icon: AlertTriangle },
+    { id: 'sec-mission', num: '3', title: 'ROS Mission', icon: Flame },
+    { id: 'sec-metaphor', num: '4', title: 'What is ROS?', icon: Laptop },
     { id: 'sec-pillars', num: '5', title: '4 Pillars', icon: Layers },
     { id: 'sec-simulator', num: '6', title: 'Living Robot Sim', icon: Activity },
     { id: 'sec-architecture', num: '7', title: 'ROS 1 vs 2', icon: ShieldCheck },
@@ -363,7 +363,7 @@ export function Ros2ArchitectureInteractive() {
             <div>
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '8px' }}>
                 <span style={{ fontSize: '0.74rem', fontWeight: 800, color: '#0284c7', background: 'rgba(2, 132, 199, 0.12)', padding: '3px 8px', borderRadius: '4px' }}>
-                  STAGE 1 &bull; SENSES
+                  STAGE 1 &bull; SENSES (EYES &amp; EARS)
                 </span>
                 <Eye size={20} color="#0284c7" />
               </div>
@@ -371,14 +371,14 @@ export function Ros2ArchitectureInteractive() {
                 1. Perception
               </h4>
               <p style={{ margin: '0 0 10px', fontSize: '0.86rem', color: 'var(--text-secondary)', lineHeight: 1.55 }}>
-                Understands surroundings by ingesting physical photons, acoustic reflections, and distances into digital arrays.
+                How the robot senses the world around it. It uses cameras to see, laser scanners to measure distances to walls, and GPS to know its position.
               </p>
               <div style={{ background: 'var(--bg-code)', borderRadius: '6px', padding: '6px 10px', fontSize: '0.78rem', color: '#94a3b8', lineHeight: 1.5 }}>
-                📷 RGB-D Cameras &bull; 🔴 2D/3D LiDAR &bull; 🧭 IMU / GPS
+                📷 Cameras (seeing) &bull; 🔴 LiDAR (measuring distances) &bull; 🧭 GPS / Compass
               </div>
             </div>
             <div style={{ marginTop: '14px', paddingTop: '8px', borderTop: '1px solid rgba(255,255,255,0.06)', display: 'flex', alignItems: 'center', justifyContent: 'space-between', fontSize: '0.78rem', color: '#38bdf8', fontWeight: 700 }}>
-              <span>Outputs Telemetry: /scan</span>
+              <span>Outputs Sensor Data: /scan</span>
               <ArrowRight size={16} />
             </div>
           </div>
@@ -398,7 +398,7 @@ export function Ros2ArchitectureInteractive() {
             <div>
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '8px' }}>
                 <span style={{ fontSize: '0.74rem', fontWeight: 800, color: '#8b5cf6', background: 'rgba(139, 92, 246, 0.12)', padding: '3px 8px', borderRadius: '4px' }}>
-                  STAGE 2 &bull; THE BRAIN
+                  STAGE 2 &bull; THE BRAIN (THINKING)
                 </span>
                 <Brain size={20} color="#8b5cf6" />
               </div>
@@ -406,14 +406,14 @@ export function Ros2ArchitectureInteractive() {
                 2. Decision Making
               </h4>
               <p style={{ margin: '0 0 10px', fontSize: '0.86rem', color: 'var(--text-secondary)', lineHeight: 1.55 }}>
-                Synthesizes sensor streams into costmaps, evaluates obstacle collision danger, and computes collision-free trajectories.
+                How the robot thinks and plans. It takes the sensor information and decides what to do next—stopping before hitting obstacles or finding the best path to its goal.
               </p>
               <div style={{ background: 'var(--bg-code)', borderRadius: '6px', padding: '6px 10px', fontSize: '0.78rem', color: '#94a3b8', lineHeight: 1.5 }}>
-                🛡️ Safety Reflexes &bull; 🗺️ Costmap SLAM &bull; 🧭 Nav2 Splines
+                🛑 Stop if obstacle is close &bull; 🗺️ Check map &bull; 📍 Plan shortest path
               </div>
             </div>
             <div style={{ marginTop: '14px', paddingTop: '8px', borderTop: '1px solid rgba(255,255,255,0.06)', display: 'flex', alignItems: 'center', justifyContent: 'space-between', fontSize: '0.78rem', color: '#c084fc', fontWeight: 700 }}>
-              <span>Outputs Directives: /cmd_vel</span>
+              <span>Outputs Movement Commands: /cmd_vel</span>
               <ArrowRight size={16} />
             </div>
           </div>
@@ -433,7 +433,7 @@ export function Ros2ArchitectureInteractive() {
             <div>
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '8px' }}>
                 <span style={{ fontSize: '0.74rem', fontWeight: 800, color: '#10b981', background: 'rgba(16, 185, 129, 0.12)', padding: '3px 8px', borderRadius: '4px' }}>
-                  STAGE 3 &bull; THE MUSCLES
+                  STAGE 3 &bull; THE MUSCLES (MOVING)
                 </span>
                 <Zap size={20} color="#10b981" />
               </div>
@@ -441,14 +441,14 @@ export function Ros2ArchitectureInteractive() {
                 3. Action
               </h4>
               <p style={{ margin: '0 0 10px', fontSize: '0.86rem', color: 'var(--text-secondary)', lineHeight: 1.55 }}>
-                Translates velocity math into physical wheel motor torque, propeller thrust, mechanical joint articulation, and voice feedback.
+                How the robot physically moves and acts. It turns the brain's decisions into real movement—spinning the drive wheels, moving an arm, or speaking alerts.
               </p>
               <div style={{ background: 'var(--bg-code)', borderRadius: '6px', padding: '6px 10px', fontSize: '0.78rem', color: '#94a3b8', lineHeight: 1.5 }}>
-                ⚙️ Electric Hub Motors &bull; 🦾 Arm Joints &bull; 🔊 TTS Audio
+                ⚙️ Spin the drive wheels &bull; 🦾 Move robot joints &bull; 🔊 Speak audio alerts
               </div>
             </div>
             <div style={{ marginTop: '14px', paddingTop: '8px', borderTop: '1px solid rgba(255,255,255,0.06)', display: 'flex', alignItems: 'center', justifyContent: 'space-between', fontSize: '0.78rem', color: '#34d399', fontWeight: 700 }}>
-              <span>Physical Actuation on Ground</span>
+              <span>Physical Motion in the World</span>
               <CheckCircle2 size={16} />
             </div>
           </div>
@@ -456,125 +456,7 @@ export function Ros2ArchitectureInteractive() {
       </section>
 
       {/* ========================================================================= */}
-      {/* CHAPTER 2: WHAT IS ROS? THE WINDOWS OS METAPHOR */}
-      {/* ========================================================================= */}
-      <section id="sec-metaphor" style={{
-        background: 'var(--bg-surface)',
-        border: '1px solid var(--border-color)',
-        borderRadius: '14px',
-        padding: '1.75rem',
-        marginBottom: '2rem',
-        boxShadow: 'var(--shadow-sm)'
-      }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '1rem' }}>
-          <div style={{
-            width: 38,
-            height: 38,
-            borderRadius: '8px',
-            background: 'rgba(14, 165, 233, 0.12)',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            color: '#0ea5e9'
-          }}>
-            <Laptop size={20} />
-          </div>
-          <div>
-            <h3 style={{ margin: 0, fontSize: '1.25rem', fontWeight: 800, color: 'var(--text-primary)' }}>
-              2. What is ROS? The Windows OS Metaphor
-            </h3>
-            <span style={{ fontSize: '0.84rem', color: 'var(--text-muted)' }}>
-              Just as Windows abstracts printers from Google Chrome, ROS abstracts robot hardware from autonomous navigation.
-            </span>
-          </div>
-        </div>
-
-        {/* Visual Metaphor 1: Windows OS vs ROS Inside Robot */}
-        <div style={{
-          borderRadius: '12px',
-          overflow: 'hidden',
-          border: '1px solid #1e293b',
-          background: '#0a0f1d',
-          boxShadow: '0 8px 24px rgba(0, 0, 0, 0.4)'
-        }}>
-          <img
-            src="assets/images/ros_metaphor_pc_vs_robot.jpg"
-            alt="The Operating System Metaphor: Windows OS vs ROS Inside a Robot"
-            style={{ width: '100%', height: 'auto', display: 'block' }}
-          />
-        </div>
-
-        {/* Metaphor 1-Line Statement */}
-        <div style={{
-          background: 'rgba(14, 165, 233, 0.08)',
-          border: '1px solid rgba(14, 165, 233, 0.25)',
-          borderRadius: '8px',
-          padding: '0.85rem 1.25rem',
-          marginTop: '0.75rem',
-          marginBottom: '1rem',
-          textAlign: 'center',
-          fontSize: '0.95rem',
-          color: 'var(--text-primary)',
-          lineHeight: 1.5
-        }}>
-          <strong style={{ color: '#38bdf8' }}>The Operating System Metaphor:</strong>{' '}
-          Just as <strong>Windows</strong> connects PC apps to mice and printers, <strong>ROS</strong> connects robot autonomy to motors, cameras, and sensors.
-        </div>
-
-
-        {/* Visual Metaphor 2: Framework Running on Top of Operating System */}
-        <div style={{
-          borderRadius: '12px',
-          overflow: 'hidden',
-          border: '1px solid #1e293b',
-          background: '#0a0f1d',
-          boxShadow: '0 8px 24px rgba(0, 0, 0, 0.4)'
-        }}>
-          <img
-            src="assets/images/ros_framework_os_layers.jpg"
-            alt="ROS 2 Framework Running on Top of Host Operating Systems - Ubuntu Highly Recommended"
-            style={{ width: '100%', height: 'auto', display: 'block' }}
-          />
-        </div>
-
-        {/* Clean 1-2 Line Core Statement Callout */}
-        <div style={{
-          background: 'linear-gradient(135deg, rgba(234, 88, 12, 0.12) 0%, rgba(14, 165, 233, 0.08) 100%)',
-          border: '1px solid rgba(234, 88, 12, 0.35)',
-          borderRadius: '10px',
-          padding: '1.15rem 1.5rem',
-          marginTop: '1rem',
-          textAlign: 'center'
-        }}>
-          <p style={{
-            margin: '0 0 8px',
-            fontSize: '1.1rem',
-            fontWeight: 800,
-            color: 'var(--text-primary)',
-            letterSpacing: '-0.01em',
-            lineHeight: 1.45
-          }}>
-            "Robot Operating System, despite its name, is not an operating system; rather, it’s a framework that works on top of an existing operating system."
-          </p>
-          <div style={{
-            display: 'inline-flex',
-            alignItems: 'center',
-            gap: '8px',
-            background: 'rgba(234, 88, 12, 0.18)',
-            border: '1px solid rgba(234, 88, 12, 0.3)',
-            padding: '4px 14px',
-            borderRadius: '20px',
-            fontSize: '0.86rem',
-            color: '#fb923c',
-            fontWeight: 700
-          }}>
-            <span>⭐⭐⭐ Ubuntu Linux is the official Tier-1, best-supported host platform</span>
-          </div>
-        </div>
-      </section>
-
-      {/* ========================================================================= */}
-      {/* CHAPTER 3: THE STORY OF A ROBOTICS DEVELOPER */}
+      {/* CHAPTER 2: THE STORY OF A ROBOTICS DEVELOPER */}
       {/* ========================================================================= */}
       <section id="sec-tragedy" style={{
         background: 'var(--bg-surface)',
@@ -599,7 +481,7 @@ export function Ros2ArchitectureInteractive() {
           </div>
           <div>
             <h3 style={{ margin: 0, fontSize: '1.25rem', fontWeight: 800, color: 'var(--text-primary)' }}>
-              3. The Story of a Robotics Developer: Why We Need a Standard
+              2. The Story of a Robotics Developer: Why We Need a Standard
             </h3>
             <span style={{ fontSize: '0.84rem', color: 'var(--text-muted)' }}>
               The recurring cycle of abandoned projects and un-reusable code before the robotics revolution.
@@ -610,33 +492,50 @@ export function Ros2ArchitectureInteractive() {
         {/* Interactive Storyboard Step Navigation Tabs */}
         <div style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(4, minmax(0, 1fr))',
-          gap: '8px',
-          marginBottom: '1rem'
+          gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+          gap: '10px',
+          marginBottom: '1.25rem'
         }}>
-          {storySteps.map((step, idx) => (
-            <button
-              key={idx}
-              onClick={() => setActiveStoryStep(idx)}
-              style={{
-                padding: '8px 10px',
-                borderRadius: '8px',
-                border: activeStoryStep === idx ? `2px solid ${step.accent}` : '1px solid var(--border-color)',
-                background: activeStoryStep === idx ? `${step.accent}20` : 'var(--bg-primary)',
-                color: activeStoryStep === idx ? step.accent : 'var(--text-secondary)',
-                fontWeight: 700,
-                fontSize: '0.78rem',
-                cursor: 'pointer',
-                textAlign: 'center',
-                transition: 'all 0.2s cubic-bezier(0.16, 1, 0.3, 1)'
-              }}
-            >
-              <div style={{ fontSize: '0.7rem', opacity: 0.8 }}>STEP {idx + 1}</div>
-              <div style={{ fontSize: '0.76rem', color: activeStoryStep === idx ? '#f8fafc' : 'var(--text-muted)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-                {step.title}
-              </div>
-            </button>
-          ))}
+          {storySteps.map((step, idx) => {
+            const isActive = activeStoryStep === idx;
+            return (
+              <button
+                key={idx}
+                onClick={() => setActiveStoryStep(idx)}
+                style={{
+                  padding: '10px 14px',
+                  borderRadius: '10px',
+                  border: isActive ? `2px solid ${step.accent}` : '1px solid var(--border-color)',
+                  borderTop: isActive ? `4px solid ${step.accent}` : '1px solid var(--border-color)',
+                  background: isActive ? 'var(--bg-primary)' : 'var(--bg-card, var(--bg-surface))',
+                  boxShadow: isActive ? `0 4px 12px ${step.accent}30` : 'none',
+                  cursor: 'pointer',
+                  textAlign: 'left',
+                  transition: 'all 0.2s cubic-bezier(0.16, 1, 0.3, 1)',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: '4px'
+                }}
+              >
+                <div style={{
+                  fontSize: '0.68rem',
+                  fontWeight: 800,
+                  letterSpacing: '0.05em',
+                  color: isActive ? step.accent : 'var(--text-muted)'
+                }}>
+                  STEP {idx + 1}
+                </div>
+                <div style={{
+                  fontSize: '0.82rem',
+                  fontWeight: isActive ? 800 : 600,
+                  color: isActive ? 'var(--text-primary)' : 'var(--text-secondary)',
+                  lineHeight: 1.35
+                }}>
+                  {step.title}
+                </div>
+              </button>
+            );
+          })}
         </div>
 
         {/* Main Storyboard Stage: 16:9 Cinematic Visual */}
@@ -839,7 +738,7 @@ export function Ros2ArchitectureInteractive() {
       </section>
 
       {/* ========================================================================= */}
-      {/* CHAPTER 4: THE ROS GOAL: STOP REINVENTING THE WHEEL */}
+      {/* CHAPTER 3: THE ROS GOAL: STOP REINVENTING THE WHEEL */}
       {/* ========================================================================= */}
       <section id="sec-mission" style={{
         background: 'var(--bg-surface)',
@@ -864,7 +763,7 @@ export function Ros2ArchitectureInteractive() {
           </div>
           <div>
             <h3 style={{ margin: 0, fontSize: '1.25rem', fontWeight: 800, color: 'var(--text-primary)' }}>
-              4. The ROS Goal: Stop Reinventing the Wheel!
+              3. The ROS Goal: Stop Reinventing the Wheel!
             </h3>
             <span style={{ fontSize: '0.84rem', color: 'var(--text-muted)' }}>
               A universal foundation so you can build real robotics intelligence instead of plumbing.
@@ -971,6 +870,129 @@ export function Ros2ArchitectureInteractive() {
             <p style={{ margin: 0, fontSize: '0.8rem', color: 'var(--text-muted)' }}>
               Decoupled peer-to-peer nodes communicate via industrial DDS with zero single point of failure.
             </p>
+          </div>
+        </div>
+      </section>
+
+      {/* ========================================================================= */}
+      {/* CHAPTER 4: WHAT IS ROS? THE WINDOWS OS METAPHOR & FRAMEWORK ARCHITECTURE */}
+      {/* ========================================================================= */}
+      <section id="sec-metaphor" style={{
+        background: 'var(--bg-surface)',
+        border: '1px solid var(--border-color)',
+        borderRadius: '14px',
+        padding: '1.75rem',
+        marginBottom: '2rem',
+        boxShadow: 'var(--shadow-sm)'
+      }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '1rem' }}>
+          <div style={{
+            width: 38,
+            height: 38,
+            borderRadius: '8px',
+            background: 'rgba(14, 165, 233, 0.12)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            color: '#0ea5e9'
+          }}>
+            <Laptop size={20} />
+          </div>
+          <div>
+            <h3 style={{ margin: 0, fontSize: '1.25rem', fontWeight: 800, color: 'var(--text-primary)' }}>
+              4. What is ROS? The Windows OS Metaphor
+            </h3>
+            <span style={{ fontSize: '0.84rem', color: 'var(--text-muted)' }}>
+              Just as Windows abstracts printers from Google Chrome, ROS abstracts robot hardware from autonomous navigation.
+            </span>
+          </div>
+        </div>
+
+        {/* Visual Metaphor 1: Windows OS vs ROS Inside Robot */}
+        <div style={{
+          borderRadius: '12px',
+          overflow: 'hidden',
+          border: '1px solid #1e293b',
+          background: '#0a0f1d',
+          boxShadow: '0 8px 24px rgba(0, 0, 0, 0.4)'
+        }}>
+          <img
+            src="assets/images/ros_metaphor_pc_vs_robot.jpg"
+            alt="The Operating System Metaphor: Windows OS vs ROS Inside a Robot"
+            style={{ width: '100%', height: 'auto', display: 'block' }}
+          />
+        </div>
+
+        {/* Metaphor Detailed Description Card */}
+        <div style={{
+          background: 'var(--bg-code)',
+          border: '1px solid rgba(14, 165, 233, 0.25)',
+          borderLeft: '4px solid #0284c7',
+          borderRadius: '10px',
+          padding: '1.1rem 1.35rem',
+          marginTop: '0.85rem',
+          marginBottom: '1.25rem',
+          color: 'var(--text-primary)',
+          lineHeight: 1.6
+        }}>
+          <div style={{ fontSize: '1rem', fontWeight: 800, color: '#0284c7', marginBottom: '6px' }}>
+            The Operating System Metaphor: Windows for PC ➔ ROS for Robots
+          </div>
+          <p style={{ margin: '0 0 8px', fontSize: '0.9rem', color: 'var(--text-secondary)' }}>
+            Think about how your laptop works: When you use <strong>Chrome</strong>, <strong>Word</strong>, or <strong>Blender</strong>, you never have to write custom driver code to talk to your mouse, keyboard, or printer. The operating system handles all the hardware communication behind the scenes.
+          </p>
+          <p style={{ margin: 0, fontSize: '0.9rem', color: 'var(--text-secondary)' }}>
+            <strong>ROS does the exact same thing for robots:</strong> Instead of writing low-level code for every motor and camera, your high-level navigation and AI programs talk directly to ROS. If you switch from an expensive laser scanner to a cheaper camera, you don&apos;t rewrite your navigation software—ROS takes care of the hardware translation!
+          </p>
+        </div>
+
+        {/* Visual Metaphor 2: Framework Running on Top of Operating System */}
+        <div style={{
+          borderRadius: '12px',
+          overflow: 'hidden',
+          border: '1px solid #1e293b',
+          background: '#0a0f1d',
+          boxShadow: '0 8px 24px rgba(0, 0, 0, 0.4)'
+        }}>
+          <img
+            src="assets/images/ros_framework_os_layers.jpg"
+            alt="ROS 2 Framework Running on Top of Host Operating Systems - Ubuntu Highly Recommended"
+            style={{ width: '100%', height: 'auto', display: 'block' }}
+          />
+        </div>
+
+        {/* Clean 1-2 Line Core Statement Callout */}
+        <div style={{
+          background: 'linear-gradient(135deg, rgba(234, 88, 12, 0.12) 0%, rgba(14, 165, 233, 0.08) 100%)',
+          border: '1px solid rgba(234, 88, 12, 0.35)',
+          borderRadius: '10px',
+          padding: '1.15rem 1.5rem',
+          marginTop: '1rem',
+          textAlign: 'center'
+        }}>
+          <p style={{
+            margin: '0 0 8px',
+            fontSize: '1.1rem',
+            fontWeight: 800,
+            color: 'var(--text-primary)',
+            letterSpacing: '-0.01em',
+            lineHeight: 1.45
+          }}>
+            &quot;Robot Operating System, despite its name, is not an operating system; rather, it’s a framework that works on top of an existing operating system.&quot;
+          </p>
+          <div style={{
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: '8px',
+            background: 'rgba(234, 88, 12, 0.18)',
+            border: '1px solid rgba(234, 88, 12, 0.3)',
+            padding: '4px 14px',
+            borderRadius: '20px',
+            fontSize: '0.86rem',
+            color: '#fb923c',
+            fontWeight: 700
+          }}>
+            <span>⭐⭐⭐ Ubuntu Linux is the official Tier-1, best-supported host platform</span>
           </div>
         </div>
       </section>
