@@ -116,35 +116,26 @@ One pretty common story in robotics development is this:
 
 ---
 
-### 3.3 Stop Reinventing the Wheel & Standardizing Communication
+### 3.3 Stop Reinventing the Wheel & Standardize Communication for Community Sharing
 
-Why universal communication standards (Topics, Services, Actions) solve the developer crisis and enable plug-and-play robotics.
+How universal message standards and global community sharing solve the developer crisis and enable plug-and-play robotics.
 
-![Stop Reinventing the Wheel](assets/images/reinventing_wheel_cartoon.jpg)
+![Stop Reinventing the Wheel & Standardize Communication for Community Sharing](assets/images/standardized_robotics_hub.png)
 
 > [!IMPORTANT]
-> **THE ROS MISSION:**  
-> *"The ROS goal is to provide a standard for robotics software development, that you can use on any robot. Whether you are programming a mobile robot, robotic arm, drone, boat, vending machine… etc.*  
-> *This standard allows you to **focus on the key features of your application**, using an existing battle-tested foundation, instead of trying to do everything yourself."*
+> **The Paradigm Shift: From Custom Square Wheels to a Universal ROS 2 Bus**  
+> * **1. Stop Reinventing the Wheel:** Before ROS, developers spent 80% of project time writing custom motor drivers and serial protocols from scratch, only to abandon them when the project ended.
+> * **2. Standardize Communication:** ROS 2 defines universal message interfaces (`/scan`, `/cmd_vel`, `/odom`) across Topics, Services, and Actions—completely decoupling high-level software from hardware.
+> * **3. Global Community Sharing:** Because all robots speak the same standard, you instantly reuse community packages (`Nav2`, `SLAM Toolbox`, `MoveIt 2`) and focus 90% of your time on real autonomy.
 
-#### Engineering Time Allocation: Before vs. After ROS
-* **Without ROS Standard (Square Wheels):** 80% Wasted Low-Level Plumbing (drivers, sockets, math) • 20% Actual Robot Features.
-* **With ROS 2 Standard (Round Wheels):** 10% Fast Setup • 90% Real Robotics Autonomy (computer vision, navigation, AI).
-
-#### The Three Core Communication Standards:
-1. **Topics (Publish / Subscribe):** Continuous, one-way asynchronous telemetry stream. Nodes publish messages without knowing who is listening.
-   - *AMR Examples:* `/scan` (10 Hz LiDAR distance rays), `/cmd_vel` (50 Hz motor velocity), `/odom` (wheel position).
-   - *Key Advantage:* Decoupled 1-to-many communication.
-2. **Services (Request / Response):** Synchronous 1-to-1 two-way transactions (RPC). The client sends a request and waits for an immediate answer or confirmation.
-   - *AMR Examples:* `/reset_odometry` (clear encoder counts), `/get_map` (fetch occupancy grid), `/set_camera_exposure`.
-   - *Key Advantage:* Instant confirmation for discrete tasks.
-3. **Actions (Preemptible Goals):** Long-running asynchronous goals with continuous live progress feedback and midway cancelability.
-   - *AMR Examples:* `/navigate_to_pose` (navigate to goal room), `/dock_robot` (precision charging dock alignment), `/patrol_waypoints`.
-   - *Key Advantage:* Cancelable goals with live telemetry feedback.
+#### The Three Core Universal Communication Modalities:
+1. **Topics (Publish / Subscribe):** Continuous 1-way streams (e.g., `/scan` LiDAR rays at 10 Hz, `/cmd_vel` motor speed at 50 Hz).
+2. **Services (Request / Response):** Instant 1-to-1 synchronous requests (e.g., `/reset_odometry`, `/get_map`).
+3. **Actions (Goals & Feedback):** Long-running missions with live progress and cancelability (e.g., `/navigate_to_pose`, `/dock_robot`).
 
 > [!TIP]
-> **Hardware Abstraction (Plug & Play):**  
-> Because sensors publish standard messages (e.g., `sensor_msgs/msg/LaserScan` on topic `/scan`), you can swap your LiDAR from an expensive **SICK** unit to an affordable **RPLiDAR** or a 3D **Velodyne** without changing or recompiling a single line of your navigation or SLAM software!
+> **Hardware Plug & Play:**  
+> Because sensors publish standard messages (such as `sensor_msgs/msg/LaserScan` on `/scan`), you can swap your LiDAR from an entry-level unit to an industrial 3D LiDAR without changing or recompiling a single line of your navigation or SLAM code.
 
 ---
 

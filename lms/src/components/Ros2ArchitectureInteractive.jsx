@@ -765,212 +765,203 @@ export function Ros2ArchitectureInteractive() {
         marginBottom: '2rem',
         boxShadow: 'var(--shadow-sm)'
       }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '1rem' }}>
+        {/* Section Header */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '1.25rem' }}>
           <div style={{
             width: 38,
             height: 38,
             borderRadius: '8px',
-            background: 'rgba(239, 68, 68, 0.12)',
+            background: 'rgba(14, 165, 233, 0.12)',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            color: '#ef4444'
+            color: '#0ea5e9'
           }}>
-            <Flame size={20} />
+            <Sparkles size={20} />
           </div>
           <div>
             <h3 style={{ margin: 0, fontSize: '1.25rem', fontWeight: 800, color: 'var(--text-primary)' }}>
-              3. Stop Reinventing the Wheel &amp; Standardizing Communication
+              3. Stop Reinventing the Wheel &amp; Standardize Communication
             </h3>
             <span style={{ fontSize: '0.84rem', color: 'var(--text-muted)' }}>
-              Why universal communication standards (Topics, Services, Actions) solve the developer crisis and enable plug-and-play robotics.
+              How universal message standards and global community sharing solve the developer crisis and enable plug-and-play robotics.
             </span>
           </div>
         </div>
 
-        {/* Visual Efficiency Ratio Comparison Bar */}
-        <div style={{ background: 'var(--bg-primary)', border: '1px solid var(--border-color)', borderRadius: '10px', padding: '1.25rem', marginBottom: '1.25rem' }}>
-          <div style={{ fontSize: '0.85rem', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '8px' }}>
-            Engineering Time Allocation: Before vs. After ROS
-          </div>
-
-          <div style={{ marginBottom: '10px' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.76rem', color: '#94a3b8', marginBottom: '4px' }}>
-              <span>WITHOUT ROS STANDARD (Square Wheels)</span>
-              <span style={{ color: '#ef4444', fontWeight: 700 }}>80% Wasted Plumbing &bull; 20% Autonomy</span>
-            </div>
-            <div style={{ display: 'flex', height: '14px', borderRadius: '4px', overflow: 'hidden' }}>
-              <div style={{ width: '80%', background: '#ef4444' }} title="Writing custom drivers, sockets, math" />
-              <div style={{ width: '20%', background: '#475569' }} title="Actual robot features" />
-            </div>
-          </div>
-
-          <div>
-            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.76rem', color: '#94a3b8', marginBottom: '4px' }}>
-              <span>WITH ROS 2 STANDARD (Round Wheels)</span>
-              <span style={{ color: '#10b981', fontWeight: 700 }}>10% Setup &bull; 90% Real Robotics Autonomy</span>
-            </div>
-            <div style={{ display: 'flex', height: '14px', borderRadius: '4px', overflow: 'hidden' }}>
-              <div style={{ width: '10%', background: '#0284c7' }} title="Configure standard ROS nodes" />
-              <div style={{ width: '90%', background: '#10b981' }} title="Build navigation, computer vision, AI tasks" />
-            </div>
-          </div>
-        </div>
-
-        {/* Reinventing the Wheel Cartoon Image Card & Mission Statement */}
+        {/* Hero Pictorial Representation (16:9 Presentation Graphic) */}
         <div style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
-          gap: '1.25rem',
-          alignItems: 'center',
-          marginBottom: '1.25rem'
+          background: 'rgba(10, 15, 29, 0.6)',
+          border: '1px solid rgba(14, 165, 233, 0.25)',
+          borderRadius: '14px',
+          padding: '8px',
+          boxShadow: '0 12px 32px rgba(0, 0, 0, 0.35)',
+          marginBottom: '1.5rem'
         }}>
           <div style={{
-            borderRadius: '12px',
+            borderRadius: '10px',
             overflow: 'hidden',
-            border: '1px solid var(--border-color)',
-            boxShadow: '0 8px 24px rgba(0, 0, 0, 0.25)'
+            border: '1px solid rgba(255, 255, 255, 0.08)'
           }}>
             <img
-              src="assets/images/reinventing_wheel_cartoon.jpg"
-              alt="Reinventing the Wheel - Too busy pulling square wheels"
+              src="assets/images/standardized_robotics_hub.png"
+              alt="Stop Reinventing the Wheel & Standardize Communication for Community Sharing"
               style={{ width: '100%', height: 'auto', display: 'block' }}
             />
           </div>
+          <div style={{
+            padding: '10px 14px 4px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            flexWrap: 'wrap',
+            gap: '8px',
+            fontSize: '0.84rem',
+            color: 'var(--text-secondary)'
+          }}>
+            <span>
+              💡 <strong style={{ color: 'var(--text-primary)' }}>The Paradigm Shift:</strong> From custom square wheels to a universal ROS 2 communication bus.
+            </span>
+            <span style={{ color: '#10b981', fontWeight: 700 }}>
+              90% Time Focused on Real Autonomy &bull; 10% Fast Setup
+            </span>
+          </div>
+        </div>
 
+        {/* 3 High-Impact Presentation Statements */}
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+          gap: '1rem',
+          marginBottom: '1.5rem'
+        }}>
+          {/* Card 1: Stop Reinventing the Wheel */}
           <div style={{
             background: 'var(--bg-primary)',
-            border: '1px solid var(--border-color)',
-            borderLeft: '4px solid var(--accent-primary)',
+            border: '1px solid rgba(239, 68, 68, 0.25)',
+            borderTop: '4px solid #ef4444',
             borderRadius: '10px',
-            padding: '1.25rem'
+            padding: '1.1rem'
           }}>
-            <div style={{ fontSize: '0.78rem', fontWeight: 800, color: 'var(--accent-primary)', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: '6px' }}>
-              THE ROS MISSION MANIFESTO
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '6px' }}>
+              <span style={{ fontSize: '0.72rem', fontWeight: 800, color: '#ef4444', background: 'rgba(239, 68, 68, 0.12)', padding: '2px 8px', borderRadius: '4px' }}>
+                THE TRAP (BEFORE ROS)
+              </span>
+              <AlertTriangle size={16} color="#ef4444" />
             </div>
-            <blockquote style={{ margin: '0 0 10px', fontSize: '0.92rem', fontStyle: 'italic', color: 'var(--text-primary)', lineHeight: 1.55 }}>
-              &ldquo;The ROS goal is to provide a standard for robotics software development, that you can use on any robot. Whether you are programming a mobile robot, robotic arm, drone, boat, vending machine&hellip; etc.&rdquo;
-            </blockquote>
+            <h4 style={{ margin: '0 0 6px', fontSize: '1rem', fontWeight: 800, color: 'var(--text-primary)' }}>
+              1. Stop Reinventing the Wheel
+            </h4>
             <p style={{ margin: 0, fontSize: '0.86rem', color: 'var(--text-secondary)', lineHeight: 1.5 }}>
-              This standard allows you to <strong>focus on the key features of your application</strong>, using an existing battle-tested foundation, instead of trying to do everything yourself.
+              Developers spent 80% of project time writing custom motor drivers and serial protocols from scratch, only to abandon them when the project ended.
+            </p>
+          </div>
+
+          {/* Card 2: Standardize Communication */}
+          <div style={{
+            background: 'var(--bg-primary)',
+            border: '1px solid rgba(14, 165, 233, 0.25)',
+            borderTop: '4px solid #0ea5e9',
+            borderRadius: '10px',
+            padding: '1.1rem'
+          }}>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '6px' }}>
+              <span style={{ fontSize: '0.72rem', fontWeight: 800, color: '#0ea5e9', background: 'rgba(14, 165, 233, 0.12)', padding: '2px 8px', borderRadius: '4px' }}>
+                UNIVERSAL BUS STANDARD
+              </span>
+              <RadioTower size={16} color="#0ea5e9" />
+            </div>
+            <h4 style={{ margin: '0 0 6px', fontSize: '1rem', fontWeight: 800, color: 'var(--text-primary)' }}>
+              2. Standardize Communication
+            </h4>
+            <p style={{ margin: 0, fontSize: '0.86rem', color: 'var(--text-secondary)', lineHeight: 1.5 }}>
+              ROS 2 defines universal message interfaces (<code style={{ color: '#38bdf8' }}>/scan</code>, <code style={{ color: '#38bdf8' }}>/cmd_vel</code>, <code style={{ color: '#38bdf8' }}>/odom</code>)—completely decoupling high-level software from hardware.
+            </p>
+          </div>
+
+          {/* Card 3: Global Community Sharing */}
+          <div style={{
+            background: 'var(--bg-primary)',
+            border: '1px solid rgba(16, 185, 129, 0.25)',
+            borderTop: '4px solid #10b981',
+            borderRadius: '10px',
+            padding: '1.1rem'
+          }}>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '6px' }}>
+              <span style={{ fontSize: '0.72rem', fontWeight: 800, color: '#10b981', background: 'rgba(16, 185, 129, 0.12)', padding: '2px 8px', borderRadius: '4px' }}>
+                OPEN-SOURCE ECOSYSTEM
+              </span>
+              <Sparkles size={16} color="#10b981" />
+            </div>
+            <h4 style={{ margin: '0 0 6px', fontSize: '1rem', fontWeight: 800, color: 'var(--text-primary)' }}>
+              3. Global Community Sharing
+            </h4>
+            <p style={{ margin: 0, fontSize: '0.86rem', color: 'var(--text-secondary)', lineHeight: 1.5 }}>
+              Because all robots speak the same standard, you instantly reuse community packages (<code style={{ color: '#34d399' }}>Nav2</code>, <code style={{ color: '#34d399' }}>SLAM Toolbox</code>, <code style={{ color: '#34d399' }}>MoveIt</code>) on any robot on Day 1.
             </p>
           </div>
         </div>
 
-        {/* The 3 Core Communication Standards: Topics, Services, Actions */}
-        <div style={{ marginBottom: '1.25rem' }}>
-          <div style={{ fontSize: '0.95rem', fontWeight: 800, color: 'var(--text-primary)', marginBottom: '8px', display: 'flex', alignItems: 'center', gap: '8px' }}>
-            <RadioTower size={18} color="#0284c7" />
-            <span>How ROS Standardizes Communication Across All Robots</span>
+        {/* The 3 Core Communication Standards: Topics, Services, Actions (Streamlined Presentation Format) */}
+        <div style={{
+          background: 'var(--bg-primary)',
+          border: '1px solid var(--border-color)',
+          borderRadius: '12px',
+          padding: '1.25rem',
+          marginBottom: '1rem'
+        }}>
+          <div style={{ fontSize: '0.88rem', fontWeight: 800, color: 'var(--text-primary)', marginBottom: '10px', display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <Radio size={16} color="#0284c7" />
+            <span>The 3 Universal Communication Modalities in ROS 2</span>
           </div>
 
           <div style={{
             display: 'grid',
             gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))',
-            gap: '12px'
+            gap: '10px'
           }}>
-            {/* Standard 1: Topics */}
             <div style={{
-              background: 'var(--bg-primary)',
-              border: '1px solid rgba(2, 132, 199, 0.25)',
-              borderTop: '4px solid #0284c7',
-              borderRadius: '10px',
-              padding: '1.1rem',
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'space-between'
+              background: 'var(--bg-card, var(--bg-surface))',
+              border: '1px solid var(--border-color)',
+              borderLeft: '3px solid #0284c7',
+              borderRadius: '8px',
+              padding: '10px 12px'
             }}>
-              <div>
-                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '6px' }}>
-                  <span style={{ fontSize: '0.72rem', fontWeight: 800, color: '#0284c7', background: 'rgba(2, 132, 199, 0.12)', padding: '2px 8px', borderRadius: '4px' }}>
-                    PUB / SUB
-                  </span>
-                  <Radio size={18} color="#0284c7" />
-                </div>
-                <h4 style={{ margin: '0 0 4px', fontSize: '1.02rem', fontWeight: 800, color: 'var(--text-primary)' }}>
-                  1. Topics (Data Streams)
-                </h4>
-                <p style={{ margin: '0 0 8px', fontSize: '0.82rem', color: 'var(--text-secondary)', lineHeight: 1.45 }}>
-                  Continuous, one-way asynchronous telemetry. Nodes publish messages without knowing who is listening.
-                </p>
-                <div style={{ background: 'var(--bg-card, var(--bg-surface))', border: '1px solid var(--border-color)', borderRadius: '6px', padding: '6px 10px', fontSize: '0.76rem', fontFamily: 'var(--font-mono)', color: '#38bdf8' }}>
-                  /scan (10 Hz LiDAR)<br />
-                  /cmd_vel (50 Hz Wheel Speeds)<br />
-                  /odom (Odometry Position)
-                </div>
+              <div style={{ fontSize: '0.82rem', fontWeight: 800, color: '#0284c7', marginBottom: '2px' }}>
+                1. Topics (Pub / Sub)
               </div>
-              <div style={{ marginTop: '10px', paddingTop: '8px', borderTop: '1px solid var(--border-color)', fontSize: '0.76rem', color: '#0284c7', fontWeight: 700 }}>
-                💡 Decoupled 1-to-many communication
+              <div style={{ fontSize: '0.82rem', color: 'var(--text-secondary)' }}>
+                Continuous 1-way streams: <code style={{ color: '#38bdf8' }}>/scan</code> (LiDAR rays), <code style={{ color: '#38bdf8' }}>/cmd_vel</code> (motor speed)
               </div>
             </div>
 
-            {/* Standard 2: Services */}
             <div style={{
-              background: 'var(--bg-primary)',
-              border: '1px solid rgba(139, 92, 246, 0.25)',
-              borderTop: '4px solid #8b5cf6',
-              borderRadius: '10px',
-              padding: '1.1rem',
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'space-between'
+              background: 'var(--bg-card, var(--bg-surface))',
+              border: '1px solid var(--border-color)',
+              borderLeft: '3px solid #8b5cf6',
+              borderRadius: '8px',
+              padding: '10px 12px'
             }}>
-              <div>
-                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '6px' }}>
-                  <span style={{ fontSize: '0.72rem', fontWeight: 800, color: '#8b5cf6', background: 'rgba(139, 92, 246, 0.12)', padding: '2px 8px', borderRadius: '4px' }}>
-                    REQ / RESP
-                  </span>
-                  <RefreshCw size={18} color="#8b5cf6" />
-                </div>
-                <h4 style={{ margin: '0 0 4px', fontSize: '1.02rem', fontWeight: 800, color: 'var(--text-primary)' }}>
-                  2. Services (Quick RPC)
-                </h4>
-                <p style={{ margin: '0 0 8px', fontSize: '0.82rem', color: 'var(--text-secondary)', lineHeight: 1.45 }}>
-                  Synchronous 1-to-1 transactions. The client sends a request and waits for an immediate answer or confirmation.
-                </p>
-                <div style={{ background: 'var(--bg-card, var(--bg-surface))', border: '1px solid var(--border-color)', borderRadius: '6px', padding: '6px 10px', fontSize: '0.76rem', fontFamily: 'var(--font-mono)', color: '#a855f7' }}>
-                  /reset_odometry (Clear encoders)<br />
-                  /get_map (Fetch occupancy grid)<br />
-                  /set_camera_exposure
-                </div>
+              <div style={{ fontSize: '0.82rem', fontWeight: 800, color: '#8b5cf6', marginBottom: '2px' }}>
+                2. Services (Req / Resp)
               </div>
-              <div style={{ marginTop: '10px', paddingTop: '8px', borderTop: '1px solid var(--border-color)', fontSize: '0.76rem', color: '#8b5cf6', fontWeight: 700 }}>
-                💡 Instant confirmation for discrete tasks
+              <div style={{ fontSize: '0.82rem', color: 'var(--text-secondary)' }}>
+                Instant 1-to-1 requests: <code style={{ color: '#a855f7' }}>/reset_odometry</code>, <code style={{ color: '#a855f7' }}>/get_map</code>
               </div>
             </div>
 
-            {/* Standard 3: Actions */}
             <div style={{
-              background: 'var(--bg-primary)',
-              border: '1px solid rgba(16, 185, 129, 0.25)',
-              borderTop: '4px solid #10b981',
-              borderRadius: '10px',
-              padding: '1.1rem',
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'space-between'
+              background: 'var(--bg-card, var(--bg-surface))',
+              border: '1px solid var(--border-color)',
+              borderLeft: '3px solid #10b981',
+              borderRadius: '8px',
+              padding: '10px 12px'
             }}>
-              <div>
-                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '6px' }}>
-                  <span style={{ fontSize: '0.72rem', fontWeight: 800, color: '#10b981', background: 'rgba(16, 185, 129, 0.12)', padding: '2px 8px', borderRadius: '4px' }}>
-                    GOAL + FB + RESULT
-                  </span>
-                  <Activity size={18} color="#10b981" />
-                </div>
-                <h4 style={{ margin: '0 0 4px', fontSize: '1.02rem', fontWeight: 800, color: 'var(--text-primary)' }}>
-                  3. Actions (Long Tasks)
-                </h4>
-                <p style={{ margin: '0 0 8px', fontSize: '0.82rem', color: 'var(--text-secondary)', lineHeight: 1.45 }}>
-                  Long-running asynchronous goals with continuous live progress feedback and the ability to cancel midway.
-                </p>
-                <div style={{ background: 'var(--bg-card, var(--bg-surface))', border: '1px solid var(--border-color)', borderRadius: '6px', padding: '6px 10px', fontSize: '0.76rem', fontFamily: 'var(--font-mono)', color: '#34d399' }}>
-                  /navigate_to_pose (Drive to goal)<br />
-                  /dock_robot (Auto-charge alignment)<br />
-                  /patrol_waypoints (Patrol loop)
-                </div>
+              <div style={{ fontSize: '0.82rem', fontWeight: 800, color: '#10b981', marginBottom: '2px' }}>
+                3. Actions (Goals &amp; Feedback)
               </div>
-              <div style={{ marginTop: '10px', paddingTop: '8px', borderTop: '1px solid var(--border-color)', fontSize: '0.76rem', color: '#10b981', fontWeight: 700 }}>
-                💡 Cancelable goals with live telemetry
+              <div style={{ fontSize: '0.82rem', color: 'var(--text-secondary)' }}>
+                Long-running missions with cancel &amp; feedback: <code style={{ color: '#34d399' }}>/navigate_to_pose</code>, <code style={{ color: '#34d399' }}>/dock_robot</code>
               </div>
             </div>
           </div>
@@ -981,18 +972,18 @@ export function Ros2ArchitectureInteractive() {
           background: 'rgba(2, 132, 199, 0.06)',
           border: '1px solid rgba(2, 132, 199, 0.25)',
           borderRadius: '10px',
-          padding: '1rem 1.25rem',
+          padding: '0.85rem 1.25rem',
           display: 'flex',
           alignItems: 'center',
           gap: '12px',
           fontSize: '0.86rem',
           color: 'var(--text-primary)',
-          lineHeight: 1.55
+          lineHeight: 1.5
         }}>
-          <Box size={22} color="#0284c7" style={{ flexShrink: 0 }} />
+          <Box size={20} color="#0284c7" style={{ flexShrink: 0 }} />
           <div>
-            <strong style={{ color: '#0284c7' }}>Hardware Abstraction (Plug &amp; Play):</strong>{' '}
-            Because sensors publish standard messages (e.g. <code style={{ color: '#0284c7' }}>sensor_msgs/msg/LaserScan</code> on <code style={{ color: '#0284c7' }}>/scan</code>), you can swap your LiDAR from an expensive <strong>SICK</strong> unit to an affordable <strong>RPLiDAR</strong> or a 3D <strong>Velodyne</strong> without changing or recompiling a single line of your navigation or SLAM software!
+            <strong style={{ color: '#0284c7' }}>Hardware Plug &amp; Play:</strong>{' '}
+            Because sensors publish standard messages (such as <code style={{ color: '#0284c7' }}>sensor_msgs/msg/LaserScan</code> on <code style={{ color: '#0284c7' }}>/scan</code>), you can swap your LiDAR from an entry-level unit to an industrial 3D LiDAR without changing or recompiling a single line of your navigation or SLAM code.
           </div>
         </div>
       </section>
