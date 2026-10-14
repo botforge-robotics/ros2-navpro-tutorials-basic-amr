@@ -43,8 +43,7 @@ export function Ros2ArchitectureInteractive() {
   // Story Chapter / Active Tab State
   const [activeStoryChapter, setActiveStoryChapter] = useState('sec-anatomy');
 
-  // Chapter 1: Selected Robotic Ingredient & Interactive Demo
-  const [selectedIngredient, setSelectedIngredient] = useState(0); // 0: Perception, 1: Decision, 2: Action
+  // Chapter 1: Decision-making demo proximity state
   const [obstacleDistance, setObstacleDistance] = useState(75); // cm, for decision-making demo
 
   // Chapter 2: Hardware Hot-Swap Simulator State
@@ -163,6 +162,17 @@ export function Ros2ArchitectureInteractive() {
           from { transform: rotate(0deg); }
           to { transform: rotate(360deg); }
         }
+        .ingredients-trio-grid {
+          display: grid;
+          grid-template-columns: repeat(3, minmax(0, 1fr));
+          gap: 1rem;
+          align-items: stretch;
+        }
+        @media (max-width: 960px) {
+          .ingredients-trio-grid {
+            grid-template-columns: 1fr;
+          }
+        }
       `}</style>
 
       {/* ========================================================================= */}
@@ -266,177 +276,137 @@ export function Ros2ArchitectureInteractive() {
           </div>
         </div>
 
-        {/* Hero Visual: AMR Cutaway Graphic */}
-        <div style={{
-          borderRadius: '12px',
-          overflow: 'hidden',
-          border: '1px solid var(--border-color)',
-          background: '#0a0f1d',
-          marginBottom: '1.5rem',
-          boxShadow: '0 8px 24px rgba(0, 0, 0, 0.35)',
-          position: 'relative'
-        }}>
-          <img
-            src="assets/images/robot_anatomy_ingredients.png"
-            alt="AMR Anatomy Cutaway - Senses, Brain, and Actuation"
-            style={{ width: '100%', height: 'auto', display: 'block' }}
-          />
+        {/* Three Fundamental Robotic Ingredients: Side-by-Side Cards (No Tabs) */}
+        <div className="ingredients-trio-grid">
+          {/* Card 1: Perception */}
           <div style={{
-            position: 'absolute',
-            bottom: '12px',
-            right: '12px',
-            background: 'rgba(10, 15, 29, 0.85)',
-            backdropFilter: 'blur(6px)',
-            border: '1px solid rgba(255, 255, 255, 0.15)',
-            borderRadius: '6px',
-            padding: '4px 10px',
-            fontSize: '0.74rem',
-            color: '#94a3b8'
+            background: 'var(--bg-primary)',
+            border: '1px solid var(--border-color)',
+            borderTop: '4px solid #0284c7',
+            borderRadius: '12px',
+            padding: '1.25rem',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'space-between',
+            boxShadow: 'var(--shadow-sm)'
           }}>
-            Autonomous Mobile Robot (AMR) Tripartite Subsystem Blueprint
+            <div>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '8px' }}>
+                <span style={{ fontSize: '0.74rem', fontWeight: 800, color: '#0284c7', background: 'rgba(2, 132, 199, 0.12)', padding: '3px 8px', borderRadius: '4px' }}>
+                  INGREDIENT 1
+                </span>
+                <Eye size={20} color="#0284c7" />
+              </div>
+              <h4 style={{ margin: '0 0 4px', fontSize: '1.15rem', fontWeight: 800, color: 'var(--text-primary)' }}>
+                Perception (The Senses)
+              </h4>
+              <p style={{ margin: '0 0 12px', fontSize: '0.84rem', color: 'var(--text-muted)' }}>
+                Understanding surroundings &amp; ingesting physical signals into digital telemetry.
+              </p>
+
+              {/* Perception Visual Illustration */}
+              <div style={{
+                borderRadius: '8px',
+                overflow: 'hidden',
+                border: '1px solid #334155',
+                marginBottom: '12px',
+                background: '#0a0f1d'
+              }}>
+                <img
+                  src="assets/images/robot_ingredient_perception.jpg"
+                  alt="Robot Perception &amp; Senses - LiDAR, Cameras &amp; Ultrasonic"
+                  style={{ width: '100%', height: 'auto', display: 'block' }}
+                />
+              </div>
+
+              {/* Sensor Modalities */}
+              <div style={{ background: 'var(--bg-code)', borderRadius: '8px', padding: '10px', marginBottom: '10px', fontSize: '0.8rem', fontFamily: 'var(--font-mono)' }}>
+                <div style={{ color: '#38bdf8', fontWeight: 700, marginBottom: '4px' }}>
+                  [Sensory Modalities]
+                </div>
+                <div style={{ color: '#94a3b8', lineHeight: 1.5 }}>
+                  🔴 <strong>2D/3D LiDAR:</strong> 360&deg; laser sweep distance rays<br />
+                  📷 <strong>RGB-D Camera:</strong> 3D visual pointcloud &amp; object bounding boxes<br />
+                  ⚖️ <strong>IMU &amp; GPS:</strong> 6-DOF acceleration &amp; global coordinates<br />
+                  🎙️ <strong>Microphone:</strong> Speech commands &amp; acoustic echoes
+                </div>
+              </div>
+            </div>
+
+            <div style={{
+              background: 'rgba(2, 132, 199, 0.1)',
+              border: '1px solid rgba(2, 132, 199, 0.25)',
+              borderRadius: '6px',
+              padding: '6px 10px',
+              fontSize: '0.76rem',
+              color: '#38bdf8',
+              fontWeight: 700,
+              display: 'flex',
+              alignItems: 'center',
+              gap: '6px'
+            }}>
+              <Activity size={14} />
+              <span>Active Streams: /scan (10 Hz) &bull; /image_raw (30 FPS)</span>
+            </div>
           </div>
-        </div>
 
-        {/* Interactive 3-Ingredient Selector Tabs */}
-        <div style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(3, 1fr)',
-          gap: '10px',
-          marginBottom: '1.25rem'
-        }}>
-          <button
-            onClick={() => setSelectedIngredient(0)}
-            style={{
-              padding: '12px',
-              borderRadius: '10px',
-              border: selectedIngredient === 0 ? '2px solid #0284c7' : '1px solid var(--border-color)',
-              background: selectedIngredient === 0 ? 'rgba(2, 132, 199, 0.12)' : 'var(--bg-primary)',
-              cursor: 'pointer',
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              gap: '6px',
-              transition: 'all 0.2s cubic-bezier(0.16, 1, 0.3, 1)'
-            }}
-          >
-            <div style={{ display: 'flex', alignItems: 'center', gap: '6px', color: '#0284c7', fontWeight: 800, fontSize: '0.95rem' }}>
-              <Eye size={18} />
-              <span>1. Perception</span>
-            </div>
-            <span style={{ fontSize: '0.76rem', color: 'var(--text-muted)' }}>The Senses (Telemetry)</span>
-          </button>
-
-          <button
-            onClick={() => setSelectedIngredient(1)}
-            style={{
-              padding: '12px',
-              borderRadius: '10px',
-              border: selectedIngredient === 1 ? '2px solid #8b5cf6' : '1px solid var(--border-color)',
-              background: selectedIngredient === 1 ? 'rgba(139, 92, 246, 0.12)' : 'var(--bg-primary)',
-              cursor: 'pointer',
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              gap: '6px',
-              transition: 'all 0.2s cubic-bezier(0.16, 1, 0.3, 1)'
-            }}
-          >
-            <div style={{ display: 'flex', alignItems: 'center', gap: '6px', color: '#8b5cf6', fontWeight: 800, fontSize: '0.95rem' }}>
-              <Brain size={18} />
-              <span>2. Decision Making</span>
-            </div>
-            <span style={{ fontSize: '0.76rem', color: 'var(--text-muted)' }}>The Brain (Cognition)</span>
-          </button>
-
-          <button
-            onClick={() => setSelectedIngredient(2)}
-            style={{
-              padding: '12px',
-              borderRadius: '10px',
-              border: selectedIngredient === 2 ? '2px solid #10b981' : '1px solid var(--border-color)',
-              background: selectedIngredient === 2 ? 'rgba(16, 185, 129, 0.12)' : 'var(--bg-primary)',
-              cursor: 'pointer',
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              gap: '6px',
-              transition: 'all 0.2s cubic-bezier(0.16, 1, 0.3, 1)'
-            }}
-          >
-            <div style={{ display: 'flex', alignItems: 'center', gap: '6px', color: '#10b981', fontWeight: 800, fontSize: '0.95rem' }}>
-              <Zap size={18} />
-              <span>3. Action</span>
-            </div>
-            <span style={{ fontSize: '0.76rem', color: 'var(--text-muted)' }}>The Muscles (Actuation)</span>
-          </button>
-        </div>
-
-        {/* Active Ingredient Interactive Sandbox */}
-        <div style={{
-          background: 'var(--bg-primary)',
-          border: '1px solid var(--border-color)',
-          borderRadius: '10px',
-          padding: '1.25rem'
-        }}>
-          {selectedIngredient === 0 && (
+          {/* Card 2: Decision Making */}
+          <div style={{
+            background: 'var(--bg-primary)',
+            border: '1px solid var(--border-color)',
+            borderTop: '4px solid #8b5cf6',
+            borderRadius: '12px',
+            padding: '1.25rem',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'space-between',
+            boxShadow: 'var(--shadow-sm)'
+          }}>
             <div>
-              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '12px' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#0284c7', fontWeight: 800, fontSize: '1rem' }}>
-                  <Eye size={18} />
-                  <span>Perception &bull; Ingesting Environmental Signals</span>
-                </div>
-                <span style={{ fontSize: '0.75rem', background: 'rgba(2, 132, 199, 0.15)', color: '#0284c7', padding: '3px 8px', borderRadius: '4px', fontWeight: 700 }}>
-                  Active Stream: 10 Hz / 360 rays
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '8px' }}>
+                <span style={{ fontSize: '0.74rem', fontWeight: 800, color: '#8b5cf6', background: 'rgba(139, 92, 246, 0.12)', padding: '3px 8px', borderRadius: '4px' }}>
+                  INGREDIENT 2
                 </span>
+                <Brain size={20} color="#8b5cf6" />
               </div>
-              <p style={{ margin: '0 0 12px', fontSize: '0.88rem', color: 'var(--text-secondary)', lineHeight: 1.5 }}>
-                The robot converts physical photons, acoustic reflections, and magnetic fields into digital arrays.
-              </p>
-              {/* Pictographical Sensor Grid */}
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: '8px', marginBottom: '12px' }}>
-                <div style={{ background: 'var(--bg-code)', border: '1px solid #334155', borderRadius: '6px', padding: '8px', textAlign: 'center' }}>
-                  <div style={{ fontSize: '1.2rem', marginBottom: '2px' }}>🔴</div>
-                  <div style={{ fontSize: '0.8rem', fontWeight: 700, color: '#38bdf8' }}>2D/3D LiDAR</div>
-                  <div style={{ fontSize: '0.72rem', color: '#94a3b8' }}>Distance &amp; Obstacles</div>
-                </div>
-                <div style={{ background: 'var(--bg-code)', border: '1px solid #334155', borderRadius: '6px', padding: '8px', textAlign: 'center' }}>
-                  <div style={{ fontSize: '1.2rem', marginBottom: '2px' }}>📷</div>
-                  <div style={{ fontSize: '0.8rem', fontWeight: 700, color: '#38bdf8' }}>RGB-D Camera</div>
-                  <div style={{ fontSize: '0.72rem', color: '#94a3b8' }}>Visual 3D Pointcloud</div>
-                </div>
-                <div style={{ background: 'var(--bg-code)', border: '1px solid #334155', borderRadius: '6px', padding: '8px', textAlign: 'center' }}>
-                  <div style={{ fontSize: '1.2rem', marginBottom: '2px' }}>⚖️</div>
-                  <div style={{ fontSize: '0.8rem', fontWeight: 700, color: '#38bdf8' }}>IMU Sensor</div>
-                  <div style={{ fontSize: '0.72rem', color: '#94a3b8' }}>Acceleration &amp; Yaw Rate</div>
-                </div>
-                <div style={{ background: 'var(--bg-code)', border: '1px solid #334155', borderRadius: '6px', padding: '8px', textAlign: 'center' }}>
-                  <div style={{ fontSize: '1.2rem', marginBottom: '2px' }}>🧭</div>
-                  <div style={{ fontSize: '0.8rem', fontWeight: 700, color: '#38bdf8' }}>GPS &amp; Compass</div>
-                  <div style={{ fontSize: '0.72rem', color: '#94a3b8' }}>Global Geolocation</div>
-                </div>
-              </div>
-            </div>
-          )}
-
-          {selectedIngredient === 1 && (
-            <div>
-              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '12px' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#8b5cf6', fontWeight: 800, fontSize: '1rem' }}>
-                  <Brain size={18} />
-                  <span>Decision Making &bull; Interactive Logic Simulator</span>
-                </div>
-                <span style={{ fontSize: '0.75rem', background: 'rgba(139, 92, 246, 0.15)', color: '#8b5cf6', padding: '3px 8px', borderRadius: '4px', fontWeight: 700 }}>
-                  Drag Slider to Test Reflexes
-                </span>
-              </div>
-              <p style={{ margin: '0 0 12px', fontSize: '0.88rem', color: 'var(--text-secondary)', lineHeight: 1.5 }}>
-                Synthesizes perception data into actionable safety decisions and navigation trajectories.
+              <h4 style={{ margin: '0 0 4px', fontSize: '1.15rem', fontWeight: 800, color: 'var(--text-primary)' }}>
+                Decision Making (The Brain)
+              </h4>
+              <p style={{ margin: '0 0 12px', fontSize: '0.84rem', color: 'var(--text-muted)' }}>
+                Cognition &amp; reasoning: Synthesizing perception into safe velocity commands.
               </p>
 
-              {/* Interactive Obstacle Distance Slider */}
-              <div style={{ background: 'var(--bg-code)', border: '1px solid #334155', borderRadius: '8px', padding: '12px', marginBottom: '12px' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.82rem', marginBottom: '6px' }}>
-                  <span style={{ color: 'var(--text-secondary)' }}>Simulate Proximity to Nearest Obstacle:</span>
+              {/* Decision Making Visual Illustration */}
+              <div style={{
+                borderRadius: '8px',
+                overflow: 'hidden',
+                border: '1px solid #334155',
+                marginBottom: '12px',
+                background: '#0a0f1d'
+              }}>
+                <img
+                  src="assets/images/robot_ingredient_decision.jpg"
+                  alt="Robot Decision Making &amp; Path Planning"
+                  style={{ width: '100%', height: 'auto', display: 'block' }}
+                />
+              </div>
+
+              {/* Decision Layers */}
+              <div style={{ background: 'var(--bg-code)', borderRadius: '8px', padding: '10px', marginBottom: '10px', fontSize: '0.8rem', fontFamily: 'var(--font-mono)' }}>
+                <div style={{ color: '#c084fc', fontWeight: 700, marginBottom: '4px' }}>
+                  [Cognitive Layers]
+                </div>
+                <div style={{ color: '#94a3b8', lineHeight: 1.5 }}>
+                  🛡️ <strong>Safety Reflexes:</strong> Instant binary checks (&le;30cm &rarr; Stop)<br />
+                  🗺️ <strong>SLAM Mapping:</strong> 2D costmaps &amp; dynamic obstacle inflation<br />
+                  🧭 <strong>Nav2 Path Planner:</strong> Computes optimal collision-free splines
+                </div>
+              </div>
+
+              {/* Interactive Obstacle Distance Reflex Simulator */}
+              <div style={{ background: 'rgba(139, 92, 246, 0.08)', border: '1px solid rgba(139, 92, 246, 0.25)', borderRadius: '8px', padding: '10px', marginBottom: '10px' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.78rem', marginBottom: '4px' }}>
+                  <span style={{ color: 'var(--text-secondary)' }}>Test Obstacle Proximity:</span>
                   <strong style={{ color: obstacleDistance <= 30 ? '#ef4444' : obstacleDistance <= 80 ? '#f59e0b' : '#10b981' }}>
                     {obstacleDistance} cm
                   </strong>
@@ -447,80 +417,135 @@ export function Ros2ArchitectureInteractive() {
                   max="200"
                   value={obstacleDistance}
                   onChange={(e) => setObstacleDistance(Number(e.target.value))}
-                  style={{ width: '100%', cursor: 'pointer', accentColor: '#8b5cf6' }}
+                  style={{ width: '100%', cursor: 'pointer', accentColor: '#8b5cf6', marginBottom: '6px' }}
                 />
-
-                <div style={{ marginTop: '10px', padding: '8px 12px', borderRadius: '6px', background: obstacleDistance <= 30 ? 'rgba(239, 68, 68, 0.2)' : obstacleDistance <= 80 ? 'rgba(245, 158, 11, 0.2)' : 'rgba(16, 185, 129, 0.2)', border: `1px solid ${obstacleDistance <= 30 ? '#ef4444' : obstacleDistance <= 80 ? '#f59e0b' : '#10b981'}` }}>
-                  {obstacleDistance <= 30 ? (
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#ef4444', fontWeight: 700, fontSize: '0.85rem' }}>
-                      <AlertTriangle size={16} />
-                      <span>Binary Safety Logic: Obstacle &le; 30cm &rarr; EMERGENCY STOP! Command: /cmd_vel linear.x = 0.0</span>
-                    </div>
-                  ) : obstacleDistance <= 80 ? (
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#f59e0b', fontWeight: 700, fontSize: '0.85rem' }}>
-                      <Workflow size={16} />
-                      <span>Costmap Inflation: Local Avoidance activated. Steering yaw angular.z = +0.5 rad/s</span>
-                    </div>
-                  ) : (
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#10b981', fontWeight: 700, fontSize: '0.85rem' }}>
-                      <CheckCircle2 size={16} />
-                      <span>Nominal Path Following: Global Nav2 spline active. Cruising velocity linear.x = 0.50 m/s</span>
-                    </div>
-                  )}
+                <div style={{
+                  fontSize: '0.74rem',
+                  fontWeight: 700,
+                  padding: '4px 8px',
+                  borderRadius: '4px',
+                  background: obstacleDistance <= 30 ? 'rgba(239, 68, 68, 0.2)' : obstacleDistance <= 80 ? 'rgba(245, 158, 11, 0.2)' : 'rgba(16, 185, 129, 0.2)',
+                  color: obstacleDistance <= 30 ? '#ef4444' : obstacleDistance <= 80 ? '#f59e0b' : '#10b981'
+                }}>
+                  {obstacleDistance <= 30
+                    ? '🚨 EMERGENCY STOP! (/cmd_vel = 0.0)'
+                    : obstacleDistance <= 80
+                    ? '⚠️ LOCAL AVOIDANCE: Steering yaw +0.5 rad/s'
+                    : '🟢 NOMINAL CRUISE: Global Nav2 Spline Active (0.5 m/s)'}
                 </div>
               </div>
             </div>
-          )}
 
-          {selectedIngredient === 2 && (
+            <div style={{
+              background: 'rgba(139, 92, 246, 0.1)',
+              border: '1px solid rgba(139, 92, 246, 0.25)',
+              borderRadius: '6px',
+              padding: '6px 10px',
+              fontSize: '0.76rem',
+              color: '#c084fc',
+              fontWeight: 700,
+              display: 'flex',
+              alignItems: 'center',
+              gap: '6px'
+            }}>
+              <Brain size={14} />
+              <span>Processing: Evaluates Options &rarr; Publishes /cmd_vel</span>
+            </div>
+          </div>
+
+          {/* Card 3: Action */}
+          <div style={{
+            background: 'var(--bg-primary)',
+            border: '1px solid var(--border-color)',
+            borderTop: '4px solid #10b981',
+            borderRadius: '12px',
+            padding: '1.25rem',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'space-between',
+            boxShadow: 'var(--shadow-sm)'
+          }}>
             <div>
-              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '12px' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#10b981', fontWeight: 800, fontSize: '1rem' }}>
-                  <Zap size={18} />
-                  <span>Action &bull; Mechanical Actuation &amp; Expression</span>
-                </div>
-                <span style={{ fontSize: '0.75rem', background: 'rgba(16, 185, 129, 0.15)', color: '#10b981', padding: '3px 8px', borderRadius: '4px', fontWeight: 700 }}>
-                  Output: /cmd_vel &rarr; Wheel CAN
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '8px' }}>
+                <span style={{ fontSize: '0.74rem', fontWeight: 800, color: '#10b981', background: 'rgba(16, 185, 129, 0.12)', padding: '3px 8px', borderRadius: '4px' }}>
+                  INGREDIENT 3
                 </span>
+                <Zap size={20} color="#10b981" />
               </div>
-              <p style={{ margin: '0 0 12px', fontSize: '0.88rem', color: 'var(--text-secondary)', lineHeight: 1.5 }}>
-                Translates mathematical velocity curves into motor torques, physical work, and human audio communication.
+              <h4 style={{ margin: '0 0 4px', fontSize: '1.15rem', fontWeight: 800, color: 'var(--text-primary)' }}>
+                Action (The Muscles)
+              </h4>
+              <p style={{ margin: '0 0 12px', fontSize: '0.84rem', color: 'var(--text-muted)' }}>
+                Physical execution &amp; mechanical actuation: Moving, working &amp; interacting.
               </p>
 
-              {/* Pictographical Actuator Telemetry */}
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: '10px' }}>
-                <div style={{ background: 'var(--bg-code)', border: '1px solid #334155', borderRadius: '8px', padding: '10px', display: 'flex', alignItems: 'center', gap: '10px' }}>
+              {/* Action Visual Illustration */}
+              <div style={{
+                borderRadius: '8px',
+                overflow: 'hidden',
+                border: '1px solid #334155',
+                marginBottom: '12px',
+                background: '#0a0f1d'
+              }}>
+                <img
+                  src="assets/images/robot_ingredient_action.jpg"
+                  alt="Robot Action &amp; Actuation - Hub Motors, Velocity Vectors"
+                  style={{ width: '100%', height: 'auto', display: 'block' }}
+                />
+              </div>
+
+              {/* Actuation Modalities */}
+              <div style={{ background: 'var(--bg-code)', borderRadius: '8px', padding: '10px', marginBottom: '10px', fontSize: '0.8rem', fontFamily: 'var(--font-mono)' }}>
+                <div style={{ color: '#34d399', fontWeight: 700, marginBottom: '4px' }}>
+                  [Actuation Mechanisms]
+                </div>
+                <div style={{ color: '#94a3b8', lineHeight: 1.5 }}>
+                  ⚙️ <strong>Electric Hub Motors:</strong> High-torque differential drive wheels<br />
+                  🚁 <strong>Propellers &amp; Joints:</strong> Drones and articulated robotic arm links<br />
+                  🔊 <strong>Human Interaction:</strong> Text-to-speech (TTS), warning LEDs &amp; displays
+                </div>
+              </div>
+
+              {/* Live Tachometer Readout */}
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '8px', marginBottom: '10px' }}>
+                <div style={{ background: 'var(--bg-code)', border: '1px solid #334155', borderRadius: '6px', padding: '8px', display: 'flex', alignItems: 'center', gap: '8px' }}>
                   <div style={{ animation: 'spinTach 2s linear infinite', color: '#10b981' }}>
-                    <RotateCcw size={24} />
+                    <RotateCcw size={18} />
                   </div>
                   <div>
-                    <div style={{ fontSize: '0.75rem', color: '#94a3b8' }}>Left Hub Motor</div>
-                    <div style={{ fontSize: '0.95rem', fontWeight: 800, color: '#34d399' }}>142 RPM (CAN)</div>
+                    <div style={{ fontSize: '0.7rem', color: '#94a3b8' }}>Wheel Motors</div>
+                    <div style={{ fontSize: '0.82rem', fontWeight: 800, color: '#34d399' }}>142 RPM (CAN)</div>
                   </div>
                 </div>
 
-                <div style={{ background: 'var(--bg-code)', border: '1px solid #334155', borderRadius: '8px', padding: '10px', display: 'flex', alignItems: 'center', gap: '10px' }}>
-                  <div style={{ animation: 'spinTach 2s linear infinite', color: '#10b981' }}>
-                    <RotateCcw size={24} />
-                  </div>
-                  <div>
-                    <div style={{ fontSize: '0.75rem', color: '#94a3b8' }}>Right Hub Motor</div>
-                    <div style={{ fontSize: '0.95rem', fontWeight: 800, color: '#34d399' }}>142 RPM (CAN)</div>
-                  </div>
-                </div>
-
-                <div style={{ background: 'var(--bg-code)', border: '1px solid #334155', borderRadius: '8px', padding: '10px', display: 'flex', alignItems: 'center', gap: '10px' }}>
+                <div style={{ background: 'var(--bg-code)', border: '1px solid #334155', borderRadius: '6px', padding: '8px', display: 'flex', alignItems: 'center', gap: '8px' }}>
                   <div style={{ color: '#38bdf8' }}>
-                    <Gauge size={24} />
+                    <Gauge size={18} />
                   </div>
                   <div>
-                    <div style={{ fontSize: '0.75rem', color: '#94a3b8' }}>Linear Ground Speed</div>
-                    <div style={{ fontSize: '0.95rem', fontWeight: 800, color: '#38bdf8' }}>0.45 m/s</div>
+                    <div style={{ fontSize: '0.7rem', color: '#94a3b8' }}>Forward Velocity</div>
+                    <div style={{ fontSize: '0.82rem', fontWeight: 800, color: '#38bdf8' }}>0.45 m/s</div>
                   </div>
                 </div>
               </div>
             </div>
-          )}
+
+            <div style={{
+              background: 'rgba(16, 185, 129, 0.1)',
+              border: '1px solid rgba(16, 185, 129, 0.25)',
+              borderRadius: '6px',
+              padding: '6px 10px',
+              fontSize: '0.76rem',
+              color: '#34d399',
+              fontWeight: 700,
+              display: 'flex',
+              alignItems: 'center',
+              gap: '6px'
+            }}>
+              <Zap size={14} />
+              <span>Output: Converts Velocity Math &rarr; Mechanical Physical Motion</span>
+            </div>
+          </div>
         </div>
       </section>
 

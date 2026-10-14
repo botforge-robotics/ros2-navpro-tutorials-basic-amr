@@ -41,7 +41,12 @@ By the end of this lesson, you will:
 
 ![AMR Anatomy Cutaway](assets/images/robot_anatomy_ingredients.png)
 
-Every autonomous robot—from an industrial AMR moving palettes to an interstellar rover—relies on **three fundamental ingredients**:
+Every autonomous robot—from an industrial AMR moving palettes to an interstellar rover—relies on **three fundamental ingredients** working in tight synchrony:
+
+| 1. Perception (The Senses) | 2. Decision Making (The Brain) | 3. Action (The Muscles) |
+|:---:|:---:|:---:|
+| ![Robot Perception](assets/images/robot_ingredient_perception.jpg) | ![Robot Decision Making](assets/images/robot_ingredient_decision.jpg) | ![Robot Action](assets/images/robot_ingredient_action.jpg) |
+| **Understanding Surroundings**<br>Ingests real-world physical telemetry | **Cognitive Reasoning**<br>Synthesizes sensory streams into motion plans | **Physical Execution**<br>Actuates motors, thrusters &amp; communication |
 
 1. **Perception (Understanding surroundings):** The robot ingests real-world physical phenomena and converts them into digital telemetry.
    - *Sensors:* Cameras, Microphones, Compass, GPS, 2D/3D LiDAR, IMU (Inertial Measurement Unit).
