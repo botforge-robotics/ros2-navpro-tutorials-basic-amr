@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import {
+  Bot,
+  Eye,
+  Brain,
+  Zap,
   Play,
   Pause,
   RotateCcw,
   Cpu,
   Layers,
-  Zap,
   Radio,
   Activity,
   ShieldAlert,
@@ -21,8 +24,12 @@ import {
   Monitor,
   Flame,
   AlertTriangle,
+  Code2,
   ArrowRight,
-  Code2
+  Sparkles,
+  HelpCircle,
+  HardDrive,
+  Laptop
 } from 'lucide-react';
 
 export function Ros2ArchitectureInteractive() {
@@ -93,7 +100,360 @@ export function Ros2ArchitectureInteractive() {
     <div className="ros2-interactive-studio" style={{ margin: '0 0 3rem' }}>
 
       {/* ========================================================================= */}
-      {/* SECTION 1: THE CORE PROBLEM & THE MIDDLEWARE SOLUTION */}
+      {/* SECTION 1: WHAT IS A ROBOT? & THE 3 ROBOTIC INGREDIENTS */}
+      {/* ========================================================================= */}
+      <section style={{
+        background: 'var(--bg-surface)',
+        border: '1px solid var(--border-color)',
+        borderRadius: '14px',
+        padding: '1.75rem',
+        marginBottom: '2rem',
+        boxShadow: 'var(--shadow-sm)'
+      }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '1rem' }}>
+          <div style={{
+            width: 38,
+            height: 38,
+            borderRadius: '8px',
+            background: 'rgba(37, 99, 235, 0.12)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            color: 'var(--accent-primary)'
+          }}>
+            <Bot size={22} />
+          </div>
+          <div>
+            <h3 style={{ margin: 0, fontSize: '1.3rem', fontWeight: 800, color: 'var(--text-primary)' }}>
+              1. What is a Robot? &amp; The Three Core Ingredients
+            </h3>
+            <span style={{ fontSize: '0.84rem', color: 'var(--text-muted)' }}>
+              The universal definition and the tripartite architecture of all autonomous machines.
+            </span>
+          </div>
+        </div>
+
+        {/* Definition Highlight Box */}
+        <div style={{
+          background: 'linear-gradient(135deg, rgba(37, 99, 235, 0.08) 0%, rgba(16, 185, 129, 0.06) 100%)',
+          border: '1px solid rgba(37, 99, 235, 0.25)',
+          borderRadius: '10px',
+          padding: '1.25rem',
+          marginBottom: '1.5rem',
+          fontSize: '1.05rem',
+          color: 'var(--text-primary)',
+          lineHeight: 1.6
+        }}>
+          <strong style={{ color: 'var(--accent-primary)', fontWeight: 800 }}>Definition:</strong>{' '}
+          A <strong>robot</strong> is a machine capable of carrying out a complex series of actions automatically, especially one programmable by a computer.
+        </div>
+
+        {/* 3 Robotic Ingredients Header */}
+        <h4 style={{ margin: '0 0 0.85rem', fontSize: '1rem', fontWeight: 800, color: 'var(--text-primary)' }}>
+          The Three Fundamental Robotic Ingredients:
+        </h4>
+
+        {/* 3 Ingredients Cards Grid */}
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))',
+          gap: '1.25rem'
+        }}>
+          {/* Ingredient 1: Perception */}
+          <div style={{
+            background: 'var(--bg-primary)',
+            border: '1px solid var(--border-color)',
+            borderTop: '4px solid #0284c7',
+            borderRadius: '10px',
+            padding: '1.25rem',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'space-between'
+          }}>
+            <div>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '8px' }}>
+                <span style={{ fontSize: '0.75rem', fontWeight: 800, color: '#0284c7', background: 'rgba(2, 132, 199, 0.12)', padding: '2px 8px', borderRadius: '4px' }}>
+                  INGREDIENT 1
+                </span>
+                <Eye size={20} color="#0284c7" />
+              </div>
+              <h4 style={{ margin: '0 0 6px', fontSize: '1.1rem', fontWeight: 800, color: 'var(--text-primary)' }}>
+                Perception
+              </h4>
+              <p style={{ margin: '0 0 10px', fontSize: '0.86rem', color: 'var(--text-secondary)', lineHeight: 1.5 }}>
+                <strong>Understanding surroundings:</strong> The robot ingests real-world physical phenomena and converts them into digital telemetry.
+              </p>
+              <div style={{ background: 'var(--bg-code)', borderRadius: '6px', padding: '8px 10px', fontSize: '0.8rem', color: '#38bdf8', fontFamily: 'var(--font-mono)' }}>
+                📷 Camera • 🎙️ Microphone • 🧭 Compass • 🛰️ GPS • 🔴 2D/3D LiDAR • ⚖️ IMU
+              </div>
+            </div>
+            <div style={{ fontSize: '0.76rem', color: 'var(--text-muted)', marginTop: '10px' }}>
+              Inputs sensory measurements of light, sound, acceleration, and distance.
+            </div>
+          </div>
+
+          {/* Ingredient 2: Decision Making */}
+          <div style={{
+            background: 'var(--bg-primary)',
+            border: '1px solid var(--border-color)',
+            borderTop: '4px solid #8b5cf6',
+            borderRadius: '10px',
+            padding: '1.25rem',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'space-between'
+          }}>
+            <div>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '8px' }}>
+                <span style={{ fontSize: '0.75rem', fontWeight: 800, color: '#8b5cf6', background: 'rgba(139, 92, 246, 0.12)', padding: '2px 8px', borderRadius: '4px' }}>
+                  INGREDIENT 2
+                </span>
+                <Brain size={20} color="#8b5cf6" />
+              </div>
+              <h4 style={{ margin: '0 0 6px', fontSize: '1.1rem', fontWeight: 800, color: 'var(--text-primary)' }}>
+                Decision Making
+              </h4>
+              <p style={{ margin: '0 0 10px', fontSize: '0.86rem', color: 'var(--text-secondary)', lineHeight: 1.5 }}>
+                <strong>Cognition &amp; Reasoning:</strong> Synthesizes perception data into actionable directives.
+              </p>
+              <ul style={{ margin: 0, paddingLeft: '1.1rem', fontSize: '0.82rem', color: 'var(--text-secondary)', lineHeight: 1.5 }}>
+                <li><strong>Simple Decisions:</strong> Binary Yes/No logic (e.g. <em>Obstacle within 20cm? Yes &rarr; Emergency Stop</em>).</li>
+                <li><strong>Complex Decisions:</strong> Global path planning, costmap inflation, SLAM mapping, and navigating unknown dynamic environments.</li>
+              </ul>
+            </div>
+            <div style={{ fontSize: '0.76rem', color: 'var(--text-muted)', marginTop: '10px' }}>
+              Evaluates options and computes safe velocity commands (<code style={{ color: '#c084fc' }}>/cmd_vel</code>).
+            </div>
+          </div>
+
+          {/* Ingredient 3: Action */}
+          <div style={{
+            background: 'var(--bg-primary)',
+            border: '1px solid var(--border-color)',
+            borderTop: '4px solid #10b981',
+            borderRadius: '10px',
+            padding: '1.25rem',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'space-between'
+          }}>
+            <div>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '8px' }}>
+                <span style={{ fontSize: '0.75rem', fontWeight: 800, color: '#10b981', background: 'rgba(16, 185, 129, 0.12)', padding: '2px 8px', borderRadius: '4px' }}>
+                  INGREDIENT 3
+                </span>
+                <Zap size={20} color="#10b981" />
+              </div>
+              <h4 style={{ margin: '0 0 6px', fontSize: '1.1rem', fontWeight: 800, color: 'var(--text-primary)' }}>
+                Action
+              </h4>
+              <p style={{ margin: '0 0 10px', fontSize: '0.86rem', color: 'var(--text-secondary)', lineHeight: 1.5 }}>
+                <strong>Physical Execution:</strong> Executing physical work and altering the environment.
+              </p>
+              <ul style={{ margin: 0, paddingLeft: '1.1rem', fontSize: '0.82rem', color: 'var(--text-secondary)', lineHeight: 1.5 }}>
+                <li>Moving from one place to another, speeding up, braking, or turning.</li>
+                <li>Turning electric motors, spinning drone propellers, or actuating arm joints.</li>
+                <li>Communicating with humans via synthesized speech (TTS), screens, or audio cues.</li>
+              </ul>
+            </div>
+            <div style={{ fontSize: '0.76rem', color: 'var(--text-muted)', marginTop: '10px' }}>
+              Translates mathematical trajectories into physical mechanical motion.
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ========================================================================= */}
+      {/* SECTION 2: WHAT IS ROS? THE WINDOWS OS METAPHOR */}
+      {/* ========================================================================= */}
+      <section style={{
+        background: 'var(--bg-surface)',
+        border: '1px solid var(--border-color)',
+        borderRadius: '14px',
+        padding: '1.75rem',
+        marginBottom: '2rem',
+        boxShadow: 'var(--shadow-sm)'
+      }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '1.25rem' }}>
+          <div style={{
+            width: 38,
+            height: 38,
+            borderRadius: '8px',
+            background: 'rgba(14, 165, 233, 0.12)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            color: '#0ea5e9'
+          }}>
+            <Laptop size={20} />
+          </div>
+          <div>
+            <h3 style={{ margin: 0, fontSize: '1.25rem', fontWeight: 800, color: 'var(--text-primary)' }}>
+              2. What is ROS? The Windows OS Metaphor
+            </h3>
+            <span style={{ fontSize: '0.84rem', color: 'var(--text-muted)' }}>
+              Understanding Robot Operating System by comparing it to standard desktop operating systems.
+            </span>
+          </div>
+        </div>
+
+        <p style={{ margin: '0 0 1.25rem', fontSize: '0.92rem', color: 'var(--text-secondary)', lineHeight: 1.6 }}>
+          When you use a personal computer running <strong>Windows or Linux</strong>, you don't expect Microsoft Word or Google Chrome to write custom electrical drivers for your HP printer or USB mouse. The operating system provides a standardized middleware layer that connects software applications with hardware devices. <strong>ROS does the exact same thing for robots!</strong>
+        </p>
+
+        {/* Side-by-Side Comparison: Windows OS vs ROS */}
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
+          gap: '1.5rem'
+        }}>
+          {/* Column A: Traditional PC (Windows) */}
+          <div style={{
+            background: 'var(--bg-primary)',
+            border: '1px solid var(--border-color)',
+            borderRadius: '10px',
+            padding: '1.25rem'
+          }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#0ea5e9', fontWeight: 800, fontSize: '1rem', marginBottom: '10px' }}>
+              <Monitor size={18} />
+              <span>Standard Computer: Windows OS</span>
+            </div>
+
+            <div style={{ background: 'var(--bg-code)', border: '1px solid #334155', borderRadius: '8px', padding: '12px', fontSize: '0.82rem', fontFamily: 'var(--font-mono)' }}>
+              <div style={{ color: '#38bdf8', fontWeight: 700, marginBottom: '4px' }}>
+                [Software Applications]
+              </div>
+              <div style={{ color: '#94a3b8', marginBottom: '10px' }}>
+                MS Word • Google Chrome • Blender • VLC
+              </div>
+
+              <div style={{ background: 'rgba(14, 165, 233, 0.2)', border: '1px solid #0ea5e9', color: '#38bdf8', padding: '6px 12px', borderRadius: '6px', textAlign: 'center', fontWeight: 800, marginBottom: '10px' }}>
+                ⬇ Windows OS Drivers &amp; APIs ⬇
+              </div>
+
+              <div style={{ color: '#10b981', fontWeight: 700, marginBottom: '4px' }}>
+                [Hardware Devices]
+              </div>
+              <div style={{ color: '#94a3b8' }}>
+                Mouse • Keyboard • Laser Printer • GPU Display
+              </div>
+            </div>
+            <p style={{ margin: '10px 0 0', fontSize: '0.8rem', color: 'var(--text-muted)' }}>
+              Chrome prints a document without needing to know the low-level USB commands of your printer.
+            </p>
+          </div>
+
+          {/* Column B: Autonomous Robot (ROS) */}
+          <div style={{
+            background: 'var(--bg-primary)',
+            border: '1px solid var(--border-color)',
+            borderRadius: '10px',
+            padding: '1.25rem'
+          }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#10b981', fontWeight: 800, fontSize: '1rem', marginBottom: '10px' }}>
+              <Bot size={18} />
+              <span>Autonomous Robot: ROS Middleware</span>
+            </div>
+
+            <div style={{ background: 'var(--bg-code)', border: '1px solid #334155', borderRadius: '8px', padding: '12px', fontSize: '0.82rem', fontFamily: 'var(--font-mono)' }}>
+              <div style={{ color: '#34d399', fontWeight: 700, marginBottom: '4px' }}>
+                [Robotics Software Modules]
+              </div>
+              <div style={{ color: '#94a3b8', marginBottom: '10px' }}>
+                Face Recognition • TTS &amp; Speech (SR) • Nav2 Path Planning • SLAM
+              </div>
+
+              <div style={{ background: 'rgba(16, 185, 129, 0.2)', border: '1px solid #10b981', color: '#34d399', padding: '6px 12px', borderRadius: '6px', textAlign: 'center', fontWeight: 800, marginBottom: '10px' }}>
+                ⬇ ROS 2 Standardized Middleware (DDS) ⬇
+              </div>
+
+              <div style={{ color: '#f59e0b', fontWeight: 700, marginBottom: '4px' }}>
+                [Robot Hardware Components]
+              </div>
+              <div style={{ color: '#94a3b8' }}>
+                Motors (CAN/PWM) • 2D LiDAR • RGB-D Camera • Joystick Teleop
+              </div>
+            </div>
+            <p style={{ margin: '10px 0 0', fontSize: '0.8rem', color: 'var(--text-muted)' }}>
+              Nav2 steers the robot by publishing <code>/cmd_vel</code> without knowing the wheel diameter or motor driver brand!
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* ========================================================================= */}
+      {/* SECTION 3: STORY OF A ROBOTICS DEVELOPER & THE TRAP */}
+      {/* ========================================================================= */}
+      <section style={{
+        background: 'var(--bg-surface)',
+        border: '1px solid var(--border-color)',
+        borderRadius: '14px',
+        padding: '1.75rem',
+        marginBottom: '2rem',
+        boxShadow: 'var(--shadow-sm)'
+      }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '1.25rem' }}>
+          <div style={{
+            width: 38,
+            height: 38,
+            borderRadius: '8px',
+            background: 'rgba(245, 158, 11, 0.12)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            color: '#f59e0b'
+          }}>
+            <AlertTriangle size={20} />
+          </div>
+          <div>
+            <h3 style={{ margin: 0, fontSize: '1.25rem', fontWeight: 800, color: 'var(--text-primary)' }}>
+              3. The Story of a Robotics Developer: Why We Need a Standard
+            </h3>
+            <span style={{ fontSize: '0.84rem', color: 'var(--text-muted)' }}>
+              The recurring cycle of abandoned projects and un-reusable code before the robotics revolution.
+            </span>
+          </div>
+        </div>
+
+        <p style={{ margin: '0 0 1.25rem', fontSize: '0.92rem', color: 'var(--text-secondary)', lineHeight: 1.6 }}>
+          Before ROS became the worldwide industry standard, robotics was trapped in an endless loop of wasted engineering effort:
+        </p>
+
+        {/* Story Diagram Image Card */}
+        <div style={{
+          borderRadius: '12px',
+          overflow: 'hidden',
+          border: '1px solid var(--border-color)',
+          background: '#090d16',
+          marginBottom: '1.25rem',
+          boxShadow: '0 8px 24px rgba(0, 0, 0, 0.25)'
+        }}>
+          <img
+            src="assets/images/story_of_robotics_developer.png"
+            alt="Story of a Robotics Developer - The Cycle of Rewriting Frameworks"
+            style={{ width: '100%', height: 'auto', display: 'block' }}
+          />
+        </div>
+
+        <div style={{
+          background: 'var(--bg-primary)',
+          border: '1px solid var(--border-color)',
+          borderRadius: '10px',
+          padding: '1.25rem',
+          fontSize: '0.88rem',
+          color: 'var(--text-secondary)',
+          lineHeight: 1.55
+        }}>
+          <strong style={{ color: '#f59e0b' }}>The Dev Tragedy:</strong> Person X builds a robot, but gets overwhelmed writing low-level communication sockets and 3D simulation tools, eventually abandoning the project. Person Y starts a new project, searches for code to reuse, finds Person X's codebase completely incompatible and undocumented, and begins writing another custom framework from scratch.
+          <br /><br />
+          <em style={{ color: 'var(--text-primary)', fontWeight: 600 }}>
+            "They develop a robotics framework that ends up being non-reusable, not supported, and quickly forgotten."
+          </em>
+        </div>
+      </section>
+
+      {/* ========================================================================= */}
+      {/* SECTION 4: THE ROS GOAL — STOP REINVENTING THE WHEEL */}
       {/* ========================================================================= */}
       <section style={{
         background: 'var(--bg-surface)',
@@ -118,15 +478,58 @@ export function Ros2ArchitectureInteractive() {
           </div>
           <div>
             <h3 style={{ margin: 0, fontSize: '1.25rem', fontWeight: 800, color: 'var(--text-primary)' }}>
-              1. The Core Problem: Why Robotics is Hard &amp; The Middleware Solution
+              4. The ROS Goal: Stop Reinventing the Wheel!
             </h3>
             <span style={{ fontSize: '0.84rem', color: 'var(--text-muted)' }}>
-              The three critical dilemmas every robotics engineering team faces and how ROS solves them.
+              A universal standard so you can focus on building your application instead of reinventing infrastructure.
             </span>
           </div>
         </div>
 
-        {/* 3 Problem Cards: Hardware Chaos, Reinventing the Wheel, The Middleware Solution */}
+        {/* Reinventing the Wheel Cartoon Image Card & Mission Statement */}
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
+          gap: '1.5rem',
+          alignItems: 'center',
+          marginBottom: '1.5rem'
+        }}>
+          <div style={{
+            borderRadius: '12px',
+            overflow: 'hidden',
+            border: '1px solid var(--border-color)',
+            boxShadow: '0 8px 24px rgba(0, 0, 0, 0.25)'
+          }}>
+            <img
+              src="assets/images/reinventing_wheel_cartoon.jpg"
+              alt="Reinventing the Wheel - Too busy pulling square wheels"
+              style={{ width: '100%', height: 'auto', display: 'block' }}
+            />
+          </div>
+
+          <div style={{
+            background: 'var(--bg-primary)',
+            border: '1px solid var(--border-color)',
+            borderLeft: '4px solid var(--accent-primary)',
+            borderRadius: '10px',
+            padding: '1.5rem'
+          }}>
+            <div style={{ fontSize: '0.8rem', fontWeight: 800, color: 'var(--accent-primary)', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: '6px' }}>
+              The ROS Mission
+            </div>
+            <blockquote style={{ margin: '0 0 12px', fontSize: '0.96rem', fontStyle: 'italic', color: 'var(--text-primary)', lineHeight: 1.6 }}>
+              "The ROS goal is to provide a standard for robotics software development that you can use on any robot. Whether you are programming a mobile robot, robotic arm, drone, boat, vending machine... etc."
+            </blockquote>
+            <p style={{ margin: 0, fontSize: '0.9rem', color: 'var(--text-secondary)', lineHeight: 1.55 }}>
+              This standard allows you to <strong>focus on the key features of your application</strong>, using an existing battle-tested foundation, instead of trying to do everything yourself.
+            </p>
+          </div>
+        </div>
+
+        {/* The 3 Problem Cards: Hardware Chaos, The Wheel Trap, The Middleware Solution */}
+        <h4 style={{ margin: '0 0 0.85rem', fontSize: '1rem', fontWeight: 800, color: 'var(--text-primary)' }}>
+          The Three Critical Dilemmas Addressed by the ROS Standard:
+        </h4>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1rem' }}>
           <div style={{
             background: 'var(--bg-primary)',
@@ -139,7 +542,7 @@ export function Ros2ArchitectureInteractive() {
               <span>Hardware Chaos &amp; Noise</span>
             </div>
             <p style={{ margin: 0, fontSize: '0.85rem', color: 'var(--text-secondary)', lineHeight: 1.5 }}>
-              Robots exist in the physical world where friction is imperfect, LiDAR reflects off glossy surfaces, camera lighting fluctuates constantly, and motors encounter mechanical back-drivability.
+              Robots operate in physical environments with messy friction, optical reflections, shifting lighting, and mechanical back-drivability.
             </p>
           </div>
 
@@ -154,7 +557,7 @@ export function Ros2ArchitectureInteractive() {
               <span>The "Reinventing the Wheel" Trap</span>
             </div>
             <p style={{ margin: 0, fontSize: '0.85rem', color: 'var(--text-secondary)', lineHeight: 1.5 }}>
-              Historically, every robotics company spent 80% of their engineering budget writing custom device drivers, coordinate conversions, and network message sockets from scratch instead of building their autonomous application.
+              Historically, companies spent 80% of budgets writing basic motor drivers, coordinate converters, and network sockets instead of real autonomy.
             </p>
           </div>
 
@@ -169,14 +572,14 @@ export function Ros2ArchitectureInteractive() {
               <span>The Middleware Solution</span>
             </div>
             <p style={{ margin: 0, fontSize: '0.85rem', color: 'var(--text-secondary)', lineHeight: 1.5 }}>
-              ROS acts as the universal "Plumbing", turning the robot into a modular network of decoupled nodes communicating over standardized message schemas (<code style={{ color: '#10b981' }}>/cmd_vel</code>, <code style={{ color: '#10b981' }}>/scan</code>, <code style={{ color: '#10b981' }}>/odom</code>).
+              ROS turns the robot into a modular network of decoupled nodes that communicate over standardized message schemas (<code style={{ color: '#10b981' }}>/cmd_vel</code>, <code style={{ color: '#10b981' }}>/scan</code>).
             </p>
           </div>
         </div>
       </section>
 
       {/* ========================================================================= */}
-      {/* SECTION 2: THE 4 FOUNDATIONAL PILLARS (PICTOGRAPHICAL ARCHITECTURE) */}
+      {/* SECTION 5: THE 4 FOUNDATIONAL PILLARS (PICTOGRAPHICAL ARCHITECTURE) */}
       {/* ========================================================================= */}
       <section style={{
         background: 'var(--bg-surface)',
@@ -201,7 +604,7 @@ export function Ros2ArchitectureInteractive() {
           </div>
           <div>
             <h3 style={{ margin: 0, fontSize: '1.25rem', fontWeight: 800, color: 'var(--text-primary)' }}>
-              2. The 4 Pillars of ROS Architecture (Pictographical Overview)
+              5. The 4 Pillars of ROS Architecture (Pictographical Overview)
             </h3>
             <span style={{ fontSize: '0.84rem', color: 'var(--text-muted)' }}>
               The four foundational pillars that transform raw software into commercial autonomous robotics systems.
@@ -248,7 +651,7 @@ export function Ros2ArchitectureInteractive() {
                 </div>
                 <div style={{ color: '#c084fc' }}>
                   <strong>[Action]</strong> Preemptible Goal<br />
-                  <span style={{ color: '#94a3b8' }}>Goal ──► Feedback ──► Result</span>
+                  <span style={{ color: '#94a3b8' }}>Goal ──► FB ──► Result</span>
                 </div>
               </div>
             </div>
@@ -386,7 +789,7 @@ export function Ros2ArchitectureInteractive() {
       </section>
 
       {/* ========================================================================= */}
-      {/* SECTION 3: THE LIVING ROBOT MOTION SIMULATOR */}
+      {/* SECTION 6: THE LIVING ROBOT MOTION SIMULATOR */}
       {/* ========================================================================= */}
       <section style={{
         background: 'var(--bg-surface)',
@@ -412,7 +815,7 @@ export function Ros2ArchitectureInteractive() {
             </div>
             <div>
               <h3 style={{ margin: 0, fontSize: '1.25rem', fontWeight: 800, color: 'var(--text-primary)' }}>
-                3. The Living Robot: Data Highway &amp; Motion Flow Simulator
+                6. The Living Robot: Data Highway &amp; Motion Flow Simulator
               </h3>
               <span style={{ fontSize: '0.84rem', color: 'var(--text-muted)' }}>
                 Clean, non-overlapping architectural layout showing live telemetry flowing from perception to brain to motors.
@@ -576,7 +979,7 @@ export function Ros2ArchitectureInteractive() {
       </section>
 
       {/* ========================================================================= */}
-      {/* SECTION 4: ROS 1 VS ROS 2 ARCHITECTURAL SANDBOX & UNIFIED RCL CORE */}
+      {/* SECTION 7: ROS 1 VS ROS 2 ARCHITECTURAL SANDBOX & UNIFIED RCL CORE */}
       {/* ========================================================================= */}
       <section style={{
         background: 'var(--bg-surface)',
@@ -602,7 +1005,7 @@ export function Ros2ArchitectureInteractive() {
             </div>
             <div>
               <h3 style={{ margin: 0, fontSize: '1.25rem', fontWeight: 800, color: 'var(--text-primary)' }}>
-                4. Architectural Comparison: ROS 1 vs. ROS 2 &amp; Unified RCL
+                7. Architectural Comparison: ROS 1 vs. ROS 2 &amp; Unified RCL
               </h3>
               <span style={{ fontSize: '0.84rem', color: 'var(--text-muted)' }}>
                 Witness failure modes and understand how the unified C core (rcl) eliminated language inconsistencies.
@@ -939,7 +1342,7 @@ export function Ros2ArchitectureInteractive() {
       </section>
 
       {/* ========================================================================= */}
-      {/* SECTION 5: SOURCING THE ENVIRONMENT (STREAMLINED 3-STEP LAB) */}
+      {/* SECTION 8: SOURCING THE ENVIRONMENT (STREAMLINED 3-STEP LAB) */}
       {/* ========================================================================= */}
       <section style={{
         background: 'var(--bg-surface)',
@@ -964,7 +1367,7 @@ export function Ros2ArchitectureInteractive() {
           </div>
           <div>
             <h3 style={{ margin: 0, fontSize: '1.25rem', fontWeight: 800, color: 'var(--text-primary)' }}>
-              5. Sourcing the ROS 2 Environment (3-Step Quick Lab)
+              8. Sourcing the ROS 2 Environment (3-Step Quick Lab)
             </h3>
             <span style={{ fontSize: '0.84rem', color: 'var(--text-muted)' }}>
               1. Check without sourcing &rarr; 2. Source &amp; re-check &rarr; 3. Add permanently to <code>~/.bashrc</code>.
@@ -1080,7 +1483,7 @@ export function Ros2ArchitectureInteractive() {
       </section>
 
       {/* ========================================================================= */}
-      {/* SECTION 6: PRACTICAL SMOKE TEST */}
+      {/* SECTION 9: PRACTICAL SMOKE TEST */}
       {/* ========================================================================= */}
       <section style={{
         background: 'var(--bg-surface)',
@@ -1104,7 +1507,7 @@ export function Ros2ArchitectureInteractive() {
           </div>
           <div>
             <h3 style={{ margin: 0, fontSize: '1.25rem', fontWeight: 800, color: 'var(--text-primary)' }}>
-              6. Practical Smoke Test: Talker &amp; Listener
+              9. Practical Smoke Test: Talker &amp; Listener
             </h3>
             <span style={{ fontSize: '0.84rem', color: 'var(--text-muted)' }}>
               Verify that DDS peer discovery is communicating across two independent terminal processes.
