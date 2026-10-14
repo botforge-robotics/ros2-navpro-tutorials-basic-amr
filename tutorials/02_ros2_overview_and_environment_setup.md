@@ -186,16 +186,16 @@ You do not need to install local IDEs or extensions. A full Visual Studio Code I
 ### 7.1 Accessing the VS Code Editor
 * **One-Click Navbar Link:** Click the **`💻 VS Code`** button in the top navigation bar.
 * **Direct Browser URL:** Navigate to:  
-  [`http://localhost:8443/?folder=/home/student/ros2_ws`](http://localhost:8443/?folder=/home/student/ros2_ws)
+  [`http://localhost:8443/?folder=/home/student`](http://localhost:8443/?folder=/home/student)
 
 > [!NOTE]
-> **Pre-Authenticated Workspace:**  
-> No password or sign-in is required. The editor opens directly rooted inside `/home/student/ros2_ws` so you can immediately inspect robot packages, launch files, and Python scripts.
+> **Pre-Authenticated User Home Workspace:**  
+> No password or sign-in is required. The editor opens directly rooted inside `/home/student` so you can manage your files, view your terminal, and immediately see your `~/ros2_ws` directory as soon as you create it in **Lesson 03**!
 
 ### 7.2 Key In-Browser VS Code Features
 1. **Pre-Installed Robotics Extensions:** Python IntelliSense, ROS tooling, XML (for URDF/Xacro), and YAML highlighting are pre-configured.
-2. **Integrated Terminal:** Press <kbd>Ctrl</kbd> + <kbd>`</kbd> (Backtick) or select **Terminal &rarr; New Terminal** to open a bash shell already located in `~/ros2_ws`.
-3. **Real-Time Code Persistence:** Any code files you edit or save in this browser window are stored directly in your workspace on disk and preserved across container restarts.
+2. **Integrated Terminal:** Press <kbd>Ctrl</kbd> + <kbd>`</kbd> (Backtick) or select **Terminal &rarr; New Terminal** to open a bash shell in `/home/student`.
+3. **Real-Time Code Persistence:** Any code files you edit or save in this browser window are stored directly on disk and preserved across container restarts.
 
 ---
 

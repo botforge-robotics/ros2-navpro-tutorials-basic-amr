@@ -74,7 +74,7 @@ A `.world` file contains physics parameters, environmental lighting, and static 
 
 ## 4. Constructing Warehouse Elements
 
-Open [`worlds/warehouse_obstacle_world.world`](file:///home/chaitu/Projects/navpro_learning_hub/level1/ros2_ws/src/navpro_gazebo/worlds/warehouse_obstacle_world.world):
+Open `worlds/warehouse_obstacle_world.world`:
 
 ### 4.1 Boundary Walls (10m x 10m Warehouse)
 Setting `<static>true</static>` tells the physics engine that the object is fixed to the world frame and cannot be moved by robot collisions:
@@ -133,7 +133,7 @@ You can preset the initial perspective of the Gazebo 3D camera so you don't have
 ## 6. Hands-on Student Challenge
 
 **Task:**
-1. Open [`warehouse_obstacle_world.world`](file:///home/chaitu/Projects/navpro_learning_hub/level1/ros2_ws/src/navpro_gazebo/worlds/warehouse_obstacle_world.world).
+1. Open `src/navpro_gazebo/worlds/warehouse_obstacle_world.world` (or `/opt/navpro_level1/ros2_ws_reference/src/navpro_gazebo/worlds/warehouse_obstacle_world.world`).
 2. Add a new cylindrical obstacle named `inspection_target_pillar` at coordinates $(x = -2.0, y = 0.0, z = 0.5)$ with radius `0.2m` and height `1.0m`.
 3. Set its material color to Red (`<diffuse>1.0 0.1 0.1 1</diffuse>`).
 4. Re-launch `ros2 launch navpro_gazebo sim_world.launch.py` and verify your new pillar appears in the simulation!

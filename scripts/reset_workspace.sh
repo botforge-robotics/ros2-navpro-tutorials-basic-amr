@@ -26,6 +26,9 @@ fi
 # Remove obsolete packages if present
 rm -rf "$WS_DIR/src/navpro_vision" "$WS_DIR/src/navpro_description/navpro_description/task_custom_odometry_tf.py" 2>/dev/null || true
 
+# Ensure target source directories exist
+mkdir -p "$WS_DIR/src/navpro_basics/navpro_basics" "$WS_DIR/src/navpro_navigation/navpro_navigation"
+
 # 2. Re-create / overwrite Module 1 / Lesson 05 Task 1: m01_l05_task_custom_pubsub.py
 cat << 'EOF' > "$WS_DIR/src/navpro_basics/navpro_basics/m01_l05_task_custom_pubsub.py"
 #!/usr/bin/env python3

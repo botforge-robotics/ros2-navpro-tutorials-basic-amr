@@ -63,7 +63,17 @@ Unlike ROS 1 (which used TCP/UDP sockets with hardcoded parameters), ROS 2 allow
 
 ## 4. Building a Minimal Publisher Node (Python) - Step-by-Step
 
-We begin with the foundational publisher node (`m01_l05_01_publisher_member_function.py` / `talker`). It sends standard string messages (`std_msgs/msg/String`) to a topic named `'topic'`.
+We begin with the foundational publisher node (`talker`).
+
+### Step 4.1: Scaffold the `navpro_basics` Package
+In your terminal, navigate to your workspace source folder and create the `navpro_basics` package:
+```bash
+cd ~/ros2_ws/src
+ros2 pkg create --build-type ament_python --node-name talker navpro_basics
+```
+
+### Step 4.2: Write the Publisher Node (`talker.py`)
+Open `~/ros2_ws/src/navpro_basics/navpro_basics/talker.py` in your editor and implement the production `MinimalPublisher` class:
 
 ```python
 #!/usr/bin/env python3
@@ -129,7 +139,10 @@ if __name__ == '__main__':
 
 ## 5. Building a Minimal Subscriber Node (Python) - Step-by-Step
 
-Now let's build the consumer node (`m01_l05_02_subscriber_member_function.py` / `listener`) that subscribes to `'topic'` and logs incoming string messages.
+Now let's build the consumer node (`listener`).
+
+### Step 5.1: Write the Subscriber Node (`listener.py`)
+Create the file `~/ros2_ws/src/navpro_basics/navpro_basics/listener.py` in your code editor and implement `MinimalSubscriber`:
 
 ```python
 #!/usr/bin/env python3
@@ -215,6 +228,28 @@ class VelocityPublisher(Node):
 
 ---
 
+### 6.1 Configure Entry Points & Build `navpro_basics`
+Open `~/ros2_ws/src/navpro_basics/setup.py` and register your node executables in `console_scripts`:
+
+```python
+    entry_points={
+        'console_scripts': [
+            'talker = navpro_basics.talker:main',
+            'listener = navpro_basics.listener:main',
+            'task_custom_pubsub = navpro_basics.m01_l05_task_custom_pubsub:main',
+            'task_teleop_speed_limiter = navpro_basics.m01_l05_task_teleop_speed_limiter:main',
+        ],
+    },
+```
+
+Now compile your package from the workspace root:
+```bash
+cd ~/ros2_ws
+colcon build --symlink-install --packages-select navpro_basics
+source install/setup.bash
+```
+
+---
 
 ## 7. Verification with the ROS 2 Command Line Interface (CLI)
 
@@ -222,6 +257,7 @@ Open two terminal panes and run the minimal pub/sub nodes:
 
 **Terminal 1 (Publisher / Talker):**
 ```bash
+source ~/ros2_ws/install/setup.bash
 ros2 run navpro_basics talker
 # Output:
 # [INFO] [minimal_publisher]: Publishing: "Hello World: 0"
@@ -231,6 +267,7 @@ ros2 run navpro_basics talker
 
 **Terminal 2 (Subscriber / Listener):**
 ```bash
+source ~/ros2_ws/install/setup.bash
 ros2 run navpro_basics listener
 # Output:
 # [INFO] [minimal_subscriber]: I heard: "Hello World: 0"
@@ -264,23 +301,160 @@ ros2 topic pub --once /topic std_msgs/msg/String "{data: 'Hello from Student Ter
 
 ## 8. Student Hands-On Tasks & Assignments
 
-To solidify what you've learned, two progressive exercises are mounted in your workspace:
+Now it is your turn to create the practice nodes with your own hands!
 
 ### Task 1 (Beginner Foundation): `m01_l05_task_custom_pubsub.py`
-Located in `~/ros2_ws/src/navpro_basics/navpro_basics/m01_l05_task_custom_pubsub.py`.
-- **Goal:** Create a node that publishes ping messages (`std_msgs/msg/String`) on `/chatter` and subscribes to listen to them.
-- **Run your node:**
-  ```bash
-  ros2 run navpro_basics task_custom_pubsub
-  ```
-- **Reference Solution:** `ros2 run navpro_basics solution_custom_pubsub`
+
+Create a new file in your editor: `~/ros2_ws/src/navpro_basics/navpro_basics/m01_l05_task_custom_pubsub.py` and write your combined publisher/subscriber node:
+
+```python
+#!/usr/bin/env python3
+"""
+NavPro Learning Hub - Level 1: Module 1 / Lesson 05 Task 1
+Package: navpro_basics
+Task:    m01_l05_task_custom_pubsub.py (alias: task_custom_pubsub)
+"""
+
+import rclpy
+from rclpy.node import Node
+from std_msgs.msg import String
+
+
+class BeginnerPubSubNode(Node):
+    """
+    Student Starter Template: Beginner Publisher & Subscriber
+    """
+
+    def __init__(self):
+        super().__init__('beginner_pubsub_task')
+        self.get_logger().info('Initializing BeginnerPubSubNode...')
+
+        # Internal message counter
+        self.count = 0
+
+        # TODO 1: Create a Publisher on topic '/chatter' (String, queue depth 10)
+        self.publisher_ = self.create_publisher(String, '/chatter', 10)
+
+        # TODO 2: Create a periodic 1.0 second timer triggering self.timer_callback
+        self.timer_ = self.create_timer(1.0, self.timer_callback)
+
+        # TODO 3: Create a Subscription to topic '/chatter'
+        self.subscription_ = self.create_subscription(
+            String, '/chatter', self.listener_callback, 10)
+
+    def timer_callback(self):
+        self.count += 1
+        msg = String()
+        msg.data = f'Robot ping: {self.count}'
+        self.publisher_.publish(msg)
+        self.get_logger().info(f'Publishing: "{msg.data}"')
+
+    def listener_callback(self, msg: String):
+        self.get_logger().info(f'Received ping: "{msg.data}"')
+
+
+def main(args=None):
+    rclpy.init(args=args)
+    node = BeginnerPubSubNode()
+    try:
+        rclpy.spin(node)
+    except KeyboardInterrupt:
+        pass
+    finally:
+        node.destroy_node()
+        rclpy.shutdown()
+
+
+if __name__ == '__main__':
+    main()
+```
+
+Make it executable, build, and test:
+```bash
+chmod +x ~/ros2_ws/src/navpro_basics/navpro_basics/m01_l05_task_custom_pubsub.py
+cd ~/ros2_ws && colcon build --symlink-install --packages-select navpro_basics
+source install/setup.bash
+ros2 run navpro_basics task_custom_pubsub
+```
+
+---
 
 ### Task 2 (Robotics Capstone): `m01_l05_task_teleop_speed_limiter.py`
-Located in `~/ros2_ws/src/navpro_basics/navpro_basics/m01_l05_task_teleop_speed_limiter.py`.
-- **Goal:** Intercept `/input/cmd_vel` (`geometry_msgs/msg/Twist`), scale velocities by a safety factor, and republish to `/cmd_vel`.
-- **Run your node:**
-  ```bash
-  ros2 run navpro_basics task_teleop_speed_limiter
-  ```
-- **Reference Solution:** `ros2 run navpro_basics solution_teleop_speed_limiter`
+
+Create a new file in your editor: `~/ros2_ws/src/navpro_basics/navpro_basics/m01_l05_task_teleop_speed_limiter.py` and implement the velocity safety supervisor:
+
+```python
+#!/usr/bin/env python3
+"""
+NavPro Learning Hub - Level 1: Module 1 / Lesson 05 Capstone
+Teleop Speed Limiter & Battery Supervisor Node
+Task: m01_l05_task_teleop_speed_limiter.py (alias: task_teleop_speed_limiter)
+"""
+
+import rclpy
+from rclpy.node import Node
+from geometry_msgs.msg import Twist
+from std_msgs.msg import Float32
+
+
+class TeleopSpeedLimiter(Node):
+
+    def __init__(self):
+        super().__init__('teleop_speed_limiter')
+        self.get_logger().info('Initializing TeleopSpeedLimiter task node...')
+
+        # 1. Scaling factors
+        self.scale_factor = 0.8
+        self.low_bat_thresh = 20.0
+        self.current_battery_pct = 100.0
+
+        # 2. Publisher to real /cmd_vel
+        self.cmd_vel_pub = self.create_publisher(Twist, '/cmd_vel', 10)
+
+        # 3. Subscriptions to user joystick input and battery sensor
+        self.cmd_vel_sub = self.create_subscription(Twist, '/input/cmd_vel', self.on_cmd_vel, 10)
+        self.battery_sub = self.create_subscription(Float32, '/battery_voltage', self.on_battery, 10)
+
+    def on_battery(self, msg: Float32):
+        self.current_battery_pct = msg.data
+        if self.current_battery_pct < self.low_bat_thresh:
+            self.get_logger().warn(f'Low Battery Warning: {self.current_battery_pct:.1f}%! Limiting speed by 50%.')
+
+    def on_cmd_vel(self, msg: Twist):
+        out_msg = Twist()
+        effective_scale = self.scale_factor
+        if self.current_battery_pct < self.low_bat_thresh:
+            effective_scale *= 0.5
+
+        out_msg.linear.x = msg.linear.x * effective_scale
+        out_msg.angular.z = msg.angular.z * effective_scale
+        self.cmd_vel_pub.publish(out_msg)
+
+
+def main(args=None):
+    rclpy.init(args=args)
+    node = TeleopSpeedLimiter()
+    try:
+        rclpy.spin(node)
+    except KeyboardInterrupt:
+        pass
+    finally:
+        node.destroy_node()
+        rclpy.shutdown()
+
+
+if __name__ == '__main__':
+    main()
+```
+
+Make it executable, build, and test:
+```bash
+chmod +x ~/ros2_ws/src/navpro_basics/navpro_basics/m01_l05_task_teleop_speed_limiter.py
+cd ~/ros2_ws && colcon build --symlink-install --packages-select navpro_basics
+source install/setup.bash
+ros2 run navpro_basics task_teleop_speed_limiter
+```
+
+> [!NOTE]
+> Reference implementations for all tasks are archived in `/opt/navpro_level1/ros2_ws_reference/` for instructor reference and comparison.
 

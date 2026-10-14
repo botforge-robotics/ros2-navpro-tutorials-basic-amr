@@ -45,7 +45,7 @@ By the end of this lesson, you will:
 
 ## 4. Complete Autonomous Patrol Script Walkthrough
 
-Open [`ros2_ws/src/navpro_navigation/navpro_navigation/m04_l22_03_solution_multi_waypoint_patrol.py`](file:///home/chaitu/Projects/navpro_learning_hub/level1/ros2_ws/src/navpro_navigation/navpro_navigation/m04_l22_03_solution_multi_waypoint_patrol.py):
+Here is the complete autonomous patrol architecture using `BasicNavigator`:
 
 ```python
 #!/usr/bin/env python3
@@ -160,7 +160,166 @@ Watch the robot sequentially drive through every warehouse aisle, halt for inspe
 
 ---
 
-## 6. Student Task & Reference Solution
+## 6. Student Hands-On Task & Reference Solution
 
-* **Your Assignment File:** [`m04_l22_02_task_multi_waypoint_patrol.py`](file:///home/chaitu/Projects/navpro_learning_hub/level1/ros2_ws/src/navpro_navigation/navpro_navigation/m04_l22_02_task_multi_waypoint_patrol.py)
-* **Instructor Reference Answer:** [`m04_l22_03_solution_multi_waypoint_patrol.py`](file:///home/chaitu/Projects/navpro_learning_hub/level1/ros2_ws/src/navpro_navigation/navpro_navigation/m04_l22_03_solution_multi_waypoint_patrol.py)
+### Step 6.1: Create Your Assignment File
+In your code editor, create the file `~/ros2_ws/src/navpro_navigation/navpro_navigation/m04_l22_02_task_multi_waypoint_patrol.py` and implement the patrol logic:
+
+```python
+#!/usr/bin/env python3
+"""
+================================================================================
+NavPro Learning Hub - Level 1: Day 3 Student Task
+Package: navpro_navigation
+Task:    task_multi_waypoint_patrol.py
+================================================================================
+
+EXERCISE OVERVIEW:
+------------------
+Your mission is to program an autonomous inspection patrol route for the AMR
+using the Nav2 Simple Commander API. The robot must visit a sequence of three
+warehouse stations, inspect each location, and return autonomously to home dock.
+
+PATROL WAYPOINTS (map frame):
+-----------------------------
+1. Checkpoint Alpha   : x=1.5m, y=0.5m, yaw=0.0 rad
+2. Checkpoint Bravo   : x=2.0m, y=2.0m, yaw=1.57 rad (90 deg)
+3. Checkpoint Charlie : x=0.5m, y=1.8m, yaw=3.14 rad (180 deg)
+4. Home Base Dock     : x=0.0m, y=0.0m, yaw=0.0 rad
+
+OBJECTIVES:
+-----------
+1. Initialize BasicNavigator and ensure all Nav2 nodes are active.
+2. Iterate through each checkpoint:
+   - Command robot using `navigator.goToPose(goal_pose)`.
+   - Poll feedback while `not navigator.isTaskComplete()`.
+   - Implement a per-checkpoint timeout (e.g., 45 seconds).
+   - If reached, log success and pause 2 seconds for sensor inspection.
+3. Once all stations are visited, dispatch a final goal to return to (0, 0, 0).
+================================================================================
+"""
+
+import time
+import math
+import rclpy
+from geometry_msgs.msg import PoseStamped
+from nav2_simple_commander.robot_navigator import BasicNavigator, TaskResult
+
+
+def create_goal_pose(navigator: BasicNavigator, x: float, y: float, yaw: float) -> PoseStamped:
+    """
+    Helper function: Creates a stamped pose in the 'map' frame.
+    """
+    pose = PoseStamped()
+    pose.header.frame_id = 'map'
+    pose.header.stamp = navigator.get_clock().now().to_msg()
+    pose.pose.position.x = float(x)
+    pose.pose.position.y = float(y)
+    pose.pose.position.z = 0.0
+    # Planar quaternion from yaw
+    pose.pose.orientation.z = math.sin(yaw / 2.0)
+    pose.pose.orientation.w = math.cos(yaw / 2.0)
+    return pose
+
+
+def main():
+    """
+    Student Task: Multi-Waypoint Autonomous Patrol Loop.
+    """
+    rclpy.init()
+
+    # --------------------------------------------------------------------------
+    # TODO 1: Initialize Navigator and Wait for Nav2 Lifecycle
+    # --------------------------------------------------------------------------
+    # 1. Instantiate navigator = BasicNavigator()
+    # 2. Call navigator.waitUntilNav2Active()
+    # --------------------------------------------------------------------------
+    navigator = BasicNavigator()
+    navigator.get_logger().info('Waiting for Nav2 to activate...')
+    navigator.waitUntilNav2Active()
+
+    waypoints = [
+        (1.5, 0.5, 0.0, "Checkpoint Alpha"),
+        (2.0, 2.0, 1.57, "Checkpoint Bravo"),
+        (0.5, 1.8, 3.14, "Checkpoint Charlie"),
+    ]
+
+    # --------------------------------------------------------------------------
+    # TODO 2: Loop Through Waypoints and Monitor Autonomous Execution
+    # --------------------------------------------------------------------------
+    # For each waypoint in waypoints:
+    # 1. goal = create_goal_pose(navigator, x, y, yaw)
+    # 2. navigator.goToPose(goal)
+    # 3. while not navigator.isTaskComplete():
+    #      feedback = navigator.getFeedback()
+    #      time.sleep(1.0)
+    # 4. Check if navigator.getResult() == TaskResult.SUCCEEDED
+    # --------------------------------------------------------------------------
+    for x, y, yaw, name in waypoints:
+        goal = create_goal_pose(navigator, x, y, yaw)
+        navigator.get_logger().info(f'Navigating to {name} ({x}, {y})...')
+        navigator.goToPose(goal)
+
+        start_time = time.time()
+        while not navigator.isTaskComplete():
+            fb = navigator.getFeedback()
+            if fb:
+                navigator.get_logger().info(
+                    f'[{name}] Distance remaining: {fb.distance_remaining:.2f}m',
+                    throttle_duration_sec=2.0
+                )
+            if time.time() - start_time > 45.0:
+                navigator.get_logger().warn(f'Timeout at {name}! Canceling...')
+                navigator.cancelTask()
+                break
+            time.sleep(1.0)
+
+        if navigator.getResult() == TaskResult.SUCCEEDED:
+            navigator.get_logger().info(f'Reached {name}! Inspecting for 2s...')
+            time.sleep(2.0)
+        else:
+            navigator.get_logger().error(f'Failed to reach {name}! Aborting.')
+            break
+
+    # --------------------------------------------------------------------------
+    # TODO 3: Return to Home Dock (x=0.0, y=0.0, yaw=0.0)
+    # --------------------------------------------------------------------------
+    navigator.get_logger().info('Returning to Dock...')
+    dock_goal = create_goal_pose(navigator, 0.0, 0.0, 0.0)
+    navigator.goToPose(dock_goal)
+    while not navigator.isTaskComplete():
+        time.sleep(1.0)
+
+    navigator.get_logger().info('Safely returned to dock.')
+    rclpy.shutdown()
+
+
+if __name__ == '__main__':
+    main()
+```
+
+### Step 6.2: Register Entry Point & Build
+Open `~/ros2_ws/src/navpro_navigation/setup.py` and register the script in `console_scripts`:
+```python
+    entry_points={
+        'console_scripts': [
+            'task_multi_waypoint_patrol = navpro_navigation.m04_l22_02_task_multi_waypoint_patrol:main',
+        ],
+    },
+```
+
+Make your script executable and build your workspace:
+```bash
+chmod +x ~/ros2_ws/src/navpro_navigation/navpro_navigation/m04_l22_02_task_multi_waypoint_patrol.py
+cd ~/ros2_ws
+colcon build --symlink-install --packages-select navpro_navigation
+source install/setup.bash
+```
+
+Run your mission script:
+```bash
+ros2 run navpro_navigation task_multi_waypoint_patrol
+```
+
+> [!NOTE]
+> Reference implementations are archived in `/opt/navpro_level1/ros2_ws_reference/` for instructor reference and comparison.

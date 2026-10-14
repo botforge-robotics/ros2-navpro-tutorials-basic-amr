@@ -32,7 +32,7 @@ By the end of this lesson, you will:
 
 ## 3. Deep Dive: `config/slam_toolbox.yaml`
 
-Open [`config/slam_toolbox.yaml`](file:///home/chaitu/Projects/navpro_learning_hub/level1/ros2_ws/src/navpro_navigation/config/slam_toolbox.yaml):
+Open `config/slam_toolbox.yaml`:
 
 ```yaml
 slam_toolbox:

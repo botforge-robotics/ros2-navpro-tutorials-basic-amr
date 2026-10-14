@@ -125,7 +125,7 @@ robot_state_publisher_node = Node(
 ## 6. Hands-on Student Challenge
 
 **Task:**
-1. Open [`navpro_robot.urdf.xacro`](file:///home/chaitu/Projects/navpro_learning_hub/level1/ros2_ws/src/navpro_description/urdf/navpro_robot.urdf.xacro).
+1. Open `navpro_robot.urdf.xacro` in `src/navpro_description/urdf/navpro_robot.urdf.xacro` (or `/opt/navpro_level1/ros2_ws_reference/src/navpro_description/urdf/navpro_robot.urdf.xacro`).
 2. Inspect the wheel joint definitions: verify that the axis of rotation for continuous joints is set to `<axis xyz="0 1 0"/>` (rotating around the Y-axis).
 3. Test processing the Xacro file directly from terminal:
    ```bash

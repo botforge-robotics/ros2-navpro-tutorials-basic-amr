@@ -113,8 +113,18 @@ except Exception:
     echo "[Entrypoint] Starting noVNC web proxy on port 6080..."
     websockify --web /usr/share/novnc/ 6080 localhost:5901 &
 
+    # Ensure code-server default workspace folder is /home/student
+    mkdir -p /home/student/.local/share/code-server
+    cat << 'EOF' > /home/student/.local/share/code-server/coder.json
+{
+  "query": {
+    "folder": "/home/student"
+  }
+}
+EOF
+
     echo "[Entrypoint] Starting in-browser VS Code editor on port 8443..."
-    code-server --auth none --bind-addr 0.0.0.0:8443 /home/student/ros2_ws &
+    code-server --auth none --bind-addr 0.0.0.0:8443 /home/student &
 
     # Symlink reset_workspace script to /usr/local/bin so it is globally available
     if [ -f "/opt/navpro_level1/scripts/reset_workspace.sh" ]; then
@@ -151,7 +161,7 @@ except Exception:
     echo "  🚀 NavPro Learning Hub Environment is Ready!"
     echo "  - Learning Web Platform:      http://localhost:8000"
     echo "  - Desktop GUI (noVNC):        http://localhost:6080/vnc.html?autoconnect=true&resize=remote (Passwordless)"
-    echo "  - Web Code Editor (VS Code):  http://localhost:8443/?folder=/home/student/ros2_ws"
+    echo "  - Web Code Editor (VS Code):  http://localhost:8443/?folder=/home/student"
     echo "=================================================================="
 fi
 

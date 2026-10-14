@@ -129,7 +129,7 @@ export function HelpModal({ isOpen, onClose }) {
               <div className="help-port-card">
                 <span className="port-badge">Port 8443</span>
                 <strong>In-Browser VS Code</strong>
-                <a href="http://localhost:8443/?folder=/home/student/ros2_ws" target="_blank" rel="noopener noreferrer">http://localhost:8443</a>
+                <a href="http://localhost:8443/?folder=/home/student" target="_blank" rel="noopener noreferrer">http://localhost:8443</a>
               </div>
             </div>
           </div>

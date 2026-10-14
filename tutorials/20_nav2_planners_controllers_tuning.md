@@ -65,7 +65,7 @@ The trajectory with the lowest overall penalty cost is selected and published to
 
 ## 4. Key DWB Critics & Tuning Matrix
 
-Open [`config/nav2_params.yaml`](file:///home/chaitu/Projects/navpro_learning_hub/level1/ros2_ws/src/navpro_navigation/config/nav2_params.yaml):
+Open `config/nav2_params.yaml`:
 
 ```yaml
 controller_server:

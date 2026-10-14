@@ -27,7 +27,7 @@ By the end of this lesson, you will:
 
 ## 3. The Differential Drive Controller Plugin
 
-Open [`urdf/gazebo_plugins.xacro`](file:///home/chaitu/Projects/navpro_learning_hub/level1/ros2_ws/src/navpro_description/urdf/gazebo_plugins.xacro):
+Open `urdf/gazebo_plugins.xacro`:
 
 ```xml
 <gazebo>
@@ -72,7 +72,7 @@ Open [`urdf/gazebo_plugins.xacro`](file:///home/chaitu/Projects/navpro_learning_
 
 ## 4. The 2D LiDAR Ray Sensor Plugin
 
-Open [`urdf/lidar.xacro`](file:///home/chaitu/Projects/navpro_learning_hub/level1/ros2_ws/src/navpro_description/urdf/lidar.xacro):
+Open `urdf/lidar.xacro`:
 
 ```xml
 <gazebo reference="laser_frame">
@@ -115,7 +115,7 @@ Open [`urdf/lidar.xacro`](file:///home/chaitu/Projects/navpro_learning_hub/level
 
 ## 5. Spawning the Robot into Gazebo
 
-In [`launch/sim_world.launch.py`](file:///home/chaitu/Projects/navpro_learning_hub/level1/ros2_ws/src/navpro_gazebo/launch/sim_world.launch.py), the `spawn_entity.py` script queries the `/robot_description` topic and injects the model into the running physics world:
+In `launch/sim_world.launch.py`, the `spawn_entity.py` script queries the `/robot_description` topic and injects the model into the running physics world:
 
 ```python
 spawn_robot = Node(

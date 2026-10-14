@@ -191,7 +191,7 @@ export function Navbar({
         </a>
 
         <a 
-          href="http://localhost:8443/?folder=/home/student/ros2_ws" 
+          href="http://localhost:8443/?folder=/home/student" 
           target="_blank" 
           rel="noopener noreferrer" 
           className="nav-action-btn vscode-btn"

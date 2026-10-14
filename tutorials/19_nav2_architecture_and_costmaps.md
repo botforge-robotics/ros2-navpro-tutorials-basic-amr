@@ -49,7 +49,7 @@ $$\text{cost} = \exp\left(-\text{cost\_scaling\_factor} \times (\text{distance} 
 
 ## 5. Global vs. Local Costmap Configuration
 
-Open [`config/nav2_params.yaml`](file:///home/chaitu/Projects/navpro_learning_hub/level1/ros2_ws/src/navpro_navigation/config/nav2_params.yaml):
+Open `config/nav2_params.yaml`:
 
 ### 5.1 Global Costmap:
 Used by the Global Planner to compute complete long-range paths across the whole building:
@@ -85,7 +85,7 @@ local_costmap:
 ## 6. Hands-on Student Challenge
 
 **Task:**
-1. Open [`nav2_params.yaml`](file:///home/chaitu/Projects/navpro_learning_hub/level1/ros2_ws/src/navpro_navigation/config/nav2_params.yaml).
+1. Inspect `config/nav2_params.yaml`.
 2. Locate `local_costmap -> inflation_layer -> cost_scaling_factor`.
 3. Change `cost_scaling_factor` from `3.0` to `5.0`.
 4. Observe in RViz2 how the cost gradient bands around obstacles become narrower, allowing the AMR to pass through tighter doorways!

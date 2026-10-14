@@ -5,7 +5,7 @@
 # One single command launches:
 # 1. Level 1 Learning Web Platform:    http://localhost:8000
 # 2. Ubuntu 24.04 Desktop GUI (noVNC): http://localhost:6080/vnc.html?autoconnect=true&resize=remote (Passwordless)
-# 3. In-Browser VS Code IDE:           http://localhost:8443/?folder=/home/student/ros2_ws
+# 3. In-Browser VS Code IDE:           http://localhost:8443/?folder=/home/student
 # =============================================================================
 
 services:
