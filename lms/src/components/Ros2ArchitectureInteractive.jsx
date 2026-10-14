@@ -902,88 +902,41 @@ export function Ros2ArchitectureInteractive() {
           </div>
         </div>
 
-        {/* The 3 Core Communication Standards: Topics, Services, Actions (Streamlined Presentation Format) */}
+        {/* Reinventing the Wheel Cartoon Graphic ("No thanks! We are too busy!") */}
         <div style={{
-          background: 'var(--bg-primary)',
-          border: '1px solid var(--border-color)',
-          borderRadius: '12px',
-          padding: '1.25rem',
-          marginBottom: '1rem'
+          background: 'rgba(10, 15, 29, 0.6)',
+          border: '1px solid rgba(245, 158, 11, 0.25)',
+          borderRadius: '14px',
+          padding: '8px',
+          boxShadow: '0 12px 32px rgba(0, 0, 0, 0.35)'
         }}>
-          <div style={{ fontSize: '0.88rem', fontWeight: 800, color: 'var(--text-primary)', marginBottom: '10px', display: 'flex', alignItems: 'center', gap: '8px' }}>
-            <Radio size={16} color="#0284c7" />
-            <span>The 3 Universal Communication Modalities in ROS 2</span>
-          </div>
-
           <div style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))',
-            gap: '10px'
+            borderRadius: '10px',
+            overflow: 'hidden',
+            border: '1px solid rgba(255, 255, 255, 0.08)'
           }}>
-            <div style={{
-              background: 'var(--bg-card, var(--bg-surface))',
-              border: '1px solid var(--border-color)',
-              borderLeft: '3px solid #0284c7',
-              borderRadius: '8px',
-              padding: '10px 12px'
-            }}>
-              <div style={{ fontSize: '0.82rem', fontWeight: 800, color: '#0284c7', marginBottom: '2px' }}>
-                1. Topics (Pub / Sub)
-              </div>
-              <div style={{ fontSize: '0.82rem', color: 'var(--text-secondary)' }}>
-                Continuous 1-way streams: <code style={{ color: '#38bdf8' }}>/scan</code> (LiDAR rays), <code style={{ color: '#38bdf8' }}>/cmd_vel</code> (motor speed)
-              </div>
-            </div>
-
-            <div style={{
-              background: 'var(--bg-card, var(--bg-surface))',
-              border: '1px solid var(--border-color)',
-              borderLeft: '3px solid #8b5cf6',
-              borderRadius: '8px',
-              padding: '10px 12px'
-            }}>
-              <div style={{ fontSize: '0.82rem', fontWeight: 800, color: '#8b5cf6', marginBottom: '2px' }}>
-                2. Services (Req / Resp)
-              </div>
-              <div style={{ fontSize: '0.82rem', color: 'var(--text-secondary)' }}>
-                Instant 1-to-1 requests: <code style={{ color: '#a855f7' }}>/reset_odometry</code>, <code style={{ color: '#a855f7' }}>/get_map</code>
-              </div>
-            </div>
-
-            <div style={{
-              background: 'var(--bg-card, var(--bg-surface))',
-              border: '1px solid var(--border-color)',
-              borderLeft: '3px solid #10b981',
-              borderRadius: '8px',
-              padding: '10px 12px'
-            }}>
-              <div style={{ fontSize: '0.82rem', fontWeight: 800, color: '#10b981', marginBottom: '2px' }}>
-                3. Actions (Goals &amp; Feedback)
-              </div>
-              <div style={{ fontSize: '0.82rem', color: 'var(--text-secondary)' }}>
-                Long-running missions with cancel &amp; feedback: <code style={{ color: '#34d399' }}>/navigate_to_pose</code>, <code style={{ color: '#34d399' }}>/dock_robot</code>
-              </div>
-            </div>
+            <img
+              src="assets/images/reinvent_the_wheel_robotics.png"
+              alt="Reinventing the Wheel in Robotics - No thanks, we are too busy writing custom drivers"
+              style={{ width: '100%', height: 'auto', display: 'block' }}
+            />
           </div>
-        </div>
-
-        {/* Hardware Hot-Swap Plug-and-Play Benefit */}
-        <div style={{
-          background: 'rgba(2, 132, 199, 0.06)',
-          border: '1px solid rgba(2, 132, 199, 0.25)',
-          borderRadius: '10px',
-          padding: '0.85rem 1.25rem',
-          display: 'flex',
-          alignItems: 'center',
-          gap: '12px',
-          fontSize: '0.86rem',
-          color: 'var(--text-primary)',
-          lineHeight: 1.5
-        }}>
-          <Box size={20} color="#0284c7" style={{ flexShrink: 0 }} />
-          <div>
-            <strong style={{ color: '#0284c7' }}>Hardware Plug &amp; Play:</strong>{' '}
-            Because sensors publish standard messages (such as <code style={{ color: '#0284c7' }}>sensor_msgs/msg/LaserScan</code> on <code style={{ color: '#0284c7' }}>/scan</code>), you can swap your LiDAR from an entry-level unit to an industrial 3D LiDAR without changing or recompiling a single line of your navigation or SLAM code.
+          <div style={{
+            padding: '10px 14px 4px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            flexWrap: 'wrap',
+            gap: '8px',
+            fontSize: '0.84rem',
+            color: 'var(--text-secondary)'
+          }}>
+            <span>
+              😂 <strong style={{ color: 'var(--text-primary)' }}>The Classic Trap:</strong> Dragging square wheels because you are &ldquo;too busy&rdquo; writing custom serial drivers.
+            </span>
+            <span style={{ color: '#38bdf8', fontWeight: 700 }}>
+              🚀 ROS 2 gives you the round wheels on Day 1
+            </span>
           </div>
         </div>
       </section>

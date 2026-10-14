@@ -128,14 +128,7 @@ How universal message standards and global community sharing solve the developer
 > * **2. Standardize Communication:** ROS 2 defines universal message interfaces (`/scan`, `/cmd_vel`, `/odom`) across Topics, Services, and Actions—completely decoupling high-level software from hardware.
 > * **3. Global Community Sharing:** Because all robots speak the same standard, you instantly reuse community packages (`Nav2`, `SLAM Toolbox`, `MoveIt 2`) and focus 90% of your time on real autonomy.
 
-#### The Three Core Universal Communication Modalities:
-1. **Topics (Publish / Subscribe):** Continuous 1-way streams (e.g., `/scan` LiDAR rays at 10 Hz, `/cmd_vel` motor speed at 50 Hz).
-2. **Services (Request / Response):** Instant 1-to-1 synchronous requests (e.g., `/reset_odometry`, `/get_map`).
-3. **Actions (Goals & Feedback):** Long-running missions with live progress and cancelability (e.g., `/navigate_to_pose`, `/dock_robot`).
-
-> [!TIP]
-> **Hardware Plug & Play:**  
-> Because sensors publish standard messages (such as `sensor_msgs/msg/LaserScan` on `/scan`), you can swap your LiDAR from an entry-level unit to an industrial 3D LiDAR without changing or recompiling a single line of your navigation or SLAM code.
+![Reinventing the Wheel in Robotics - No thanks! We are too busy!](assets/images/reinvent_the_wheel_robotics.png)
 
 ---
 
