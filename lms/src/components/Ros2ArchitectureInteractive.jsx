@@ -558,13 +558,49 @@ export function Ros2ArchitectureInteractive() {
           </div>
         </div>
 
+        {/* Visual Metaphor Illustration Card */}
+        <div style={{
+          borderRadius: '12px',
+          overflow: 'hidden',
+          border: '1px solid var(--border-color)',
+          background: '#ffffff',
+          marginBottom: '1.25rem',
+          boxShadow: 'var(--shadow-sm)',
+          textAlign: 'center'
+        }}>
+          <img
+            src="assets/images/ros_windows_metaphor.png"
+            alt="ROS Metaphor: Windows OS vs ROS Inside a Robot"
+            style={{ width: '100%', maxHeight: '420px', objectFit: 'contain', display: 'block', margin: '0 auto' }}
+          />
+        </div>
+
+        {/* Metaphor Explanation Note */}
+        <div style={{
+          background: 'var(--bg-code)',
+          border: '1px solid var(--border-color)',
+          borderRadius: '10px',
+          padding: '1rem 1.25rem',
+          marginBottom: '1.25rem',
+          fontSize: '0.88rem',
+          color: 'var(--text-secondary)',
+          lineHeight: 1.6
+        }}>
+          <p style={{ margin: '0 0 8px' }}>
+            When you use a personal computer running <strong>Windows or Linux</strong>, application software like <em>MS Word, Google Chrome, or Blender</em> does not communicate with electrical pins on your mouse, keyboard, or printer directly. Instead, <strong>Windows OS provides standardized device drivers and system APIs</strong> that mediate all communication.
+          </p>
+          <p style={{ margin: 0 }}>
+            <strong>ROS (Robot Operating System) does the exact same thing for robots!</strong> Autonomy applications like <em>Face Recognition, Speech Recognition (STT), Text-to-Speech (TTS), and Nav2 Path Planning</em> don't write custom serial communication packets for DC motors, webcams, or joysticks. ROS provides a standardized middleware highway that bridges high-level algorithms with physical actuators and sensors.
+          </p>
+        </div>
+
         {/* Interactive Hardware Hot-Swap Simulator */}
         <div style={{
           background: 'var(--bg-primary)',
           border: '1px solid var(--border-color)',
           borderRadius: '10px',
           padding: '1.25rem',
-          marginBottom: '1.25rem'
+          marginBottom: '1.5rem'
         }}>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '10px', marginBottom: '1rem' }}>
             <div style={{ fontSize: '0.9rem', fontWeight: 700, color: 'var(--text-primary)' }}>
@@ -684,6 +720,113 @@ export function Ros2ArchitectureInteractive() {
           }}>
             <CheckCircle2 size={16} />
             <span><strong>Zero Code Changes in Nav2!</strong> Swapping sensors only switches the lightweight driver node. Nav2 navigation never knows or cares about the hardware brand!</span>
+          </div>
+        </div>
+
+        {/* Visual OS Compatibility Illustration Card */}
+        <div style={{
+          borderRadius: '12px',
+          overflow: 'hidden',
+          border: '1px solid var(--border-color)',
+          background: '#ffffff',
+          marginBottom: '1.25rem',
+          boxShadow: 'var(--shadow-sm)',
+          textAlign: 'center'
+        }}>
+          <img
+            src="assets/images/ros_os_compatibility_ubuntu.png"
+            alt="Robot Operating System Compatible with Ubuntu, Windows, and macOS - Ubuntu Highly Recommended"
+            style={{ width: '100%', maxHeight: '400px', objectFit: 'contain', display: 'block', margin: '0 auto' }}
+          />
+        </div>
+
+        {/* Crucial Concept Callout: ROS is NOT an OS Installed on Bare-Metal */}
+        <div style={{
+          background: 'linear-gradient(135deg, rgba(234, 88, 12, 0.08) 0%, rgba(37, 99, 235, 0.06) 100%)',
+          border: '1px solid rgba(234, 88, 12, 0.3)',
+          borderRadius: '12px',
+          padding: '1.25rem',
+          boxShadow: 'var(--shadow-sm)'
+        }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#ea580c', fontWeight: 800, fontSize: '1.05rem', marginBottom: '8px' }}>
+            <AlertTriangle size={20} color="#ea580c" />
+            <span>Crucial Concept: ROS is NOT an OS You Install on Bare-Metal PC Hardware!</span>
+          </div>
+
+          <p style={{ margin: '0 0 10px', fontSize: '0.92rem', color: 'var(--text-primary)', lineHeight: 1.6 }}>
+            Despite the word <strong>"Operating System"</strong> in its title, ROS is <strong>not</strong> an OS like Windows, Linux, or macOS that you install onto a bare-metal hard drive to boot your PC.
+          </p>
+
+          <p style={{ margin: '0 0 14px', fontSize: '0.9rem', color: 'var(--text-secondary)', lineHeight: 1.6 }}>
+            ROS is a <strong>software framework and communication middleware</strong> that runs <strong>on top of an existing host operating system</strong>. It is called an operating system metaphorically because it provides the same fundamental services that an OS gives to PCs: <em>hardware abstraction, device driver management, process isolation, inter-node message passing (DDS), package distribution, and system utilities.</em>
+          </p>
+
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))',
+            gap: '12px',
+            marginTop: '10px'
+          }}>
+            {/* Ubuntu Linux */}
+            <div style={{
+              background: 'var(--bg-code)',
+              border: '2px solid #e11d48',
+              borderRadius: '8px',
+              padding: '12px',
+              position: 'relative'
+            }}>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '6px' }}>
+                <strong style={{ color: '#fb7185', fontSize: '0.92rem', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                  <span>🐧</span> Ubuntu Linux (Tier 1)
+                </strong>
+                <span style={{ fontSize: '0.7rem', background: 'rgba(225, 29, 72, 0.2)', color: '#fb7185', padding: '2px 8px', borderRadius: '4px', fontWeight: 800 }}>
+                  ⭐⭐⭐ BEST SUPPORTED
+                </span>
+              </div>
+              <p style={{ margin: 0, fontSize: '0.8rem', color: '#cbd5e1', lineHeight: 1.55 }}>
+                <strong>The primary and recommended platform.</strong> Official pre-compiled Debian/APT packages, bleeding-edge sensor driver support, real-time PREEMPT_RT kernel extensions, and the industry standard across modern robotics labs and AMRs.
+              </p>
+            </div>
+
+            {/* Windows */}
+            <div style={{
+              background: 'var(--bg-code)',
+              border: '1px solid #334155',
+              borderRadius: '8px',
+              padding: '12px'
+            }}>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '6px' }}>
+                <strong style={{ color: '#38bdf8', fontSize: '0.92rem', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                  <span>🪟</span> Windows 10 / 11 (Tier 2)
+                </strong>
+                <span style={{ fontSize: '0.7rem', background: 'rgba(56, 189, 248, 0.15)', color: '#38bdf8', padding: '2px 8px', borderRadius: '4px', fontWeight: 700 }}>
+                  Supported
+                </span>
+              </div>
+              <p style={{ margin: 0, fontSize: '0.8rem', color: '#cbd5e1', lineHeight: 1.55 }}>
+                Supported for workstation development, UI simulation, and academic study. However, many industrial hardware vendors only provide Linux driver libraries for CAN/Ethernet sensors.
+              </p>
+            </div>
+
+            {/* macOS */}
+            <div style={{
+              background: 'var(--bg-code)',
+              border: '1px solid #334155',
+              borderRadius: '8px',
+              padding: '12px'
+            }}>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '6px' }}>
+                <strong style={{ color: '#94a3b8', fontSize: '0.92rem', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                  <span>🍎</span> macOS (Tier 3)
+                </strong>
+                <span style={{ fontSize: '0.7rem', background: 'rgba(148, 163, 184, 0.15)', color: '#94a3b8', padding: '2px 8px', borderRadius: '4px', fontWeight: 700 }}>
+                  Community Build
+                </span>
+              </div>
+              <p style={{ margin: 0, fontSize: '0.8rem', color: '#cbd5e1', lineHeight: 1.55 }}>
+                Community supported; must be built from source code. Great for visualizing pointclouds on a MacBook using RViz2, but not deployed on production robot controllers.
+              </p>
+            </div>
           </div>
         </div>
       </section>

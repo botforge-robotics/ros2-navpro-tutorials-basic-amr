@@ -60,6 +60,8 @@ Every autonomous robot—from an industrial AMR moving palettes to an interstell
 
 Understanding Robot Operating System by comparing it to standard desktop operating systems:
 
+![Windows vs ROS Metaphor](assets/images/ros_windows_metaphor.png)
+
 When you use a personal computer running **Windows or Linux**, you don't expect Microsoft Word or Google Chrome to write custom electrical drivers for your HP printer or USB mouse. The operating system provides a standardized middleware layer that connects software applications with hardware devices. **ROS does the exact same thing for robots!**
 
 | Dimension | Standard Computer (e.g., Windows OS) | Autonomous Robot (ROS Middleware) |
@@ -69,6 +71,23 @@ When you use a personal computer running **Windows or Linux**, you don't expect 
 | **Hardware Devices** | Mouse, Keyboard, Laser Printer, GPU Display | Motors (CAN/PWM), 2D LiDAR, RGB-D Camera, Joystick Teleop |
 
 > *Example:* Chrome prints a document without needing to know the low-level USB commands of your printer. Similarly, Nav2 steers the robot by publishing `/cmd_vel` without needing to know the wheel diameter or motor driver brand!
+
+---
+
+### 3.2.1 Is ROS Really an Operating System? (Framework vs Bare-Metal OS)
+
+![ROS OS Compatibility](assets/images/ros_os_compatibility_ubuntu.png)
+
+> [!IMPORTANT]
+> **CRITICAL CONCEPT: ROS IS NOT A BARE-METAL OPERATING SYSTEM!**  
+> Despite the word **"Operating System"** in its name, ROS is **not** an OS like Windows or Linux that installs directly onto bare-metal computer hardware to boot your PC.  
+> 
+> Instead, **ROS is a software framework and communication middleware** that runs **on top of** a host operating system. It is called an "Operating System" metaphorically because it provides the exact same services as an OS: hardware abstraction, device drivers, low-level process management, inter-node message passing (via DDS), package distribution, and debugging tools.
+
+#### OS Compatibility & Tier Support:
+- 🐧 **Ubuntu Linux (Tier 1 - Primary & Recommended):** The gold standard of robotics engineering. Native APT package distribution, full hardware driver ecosystem, real-time PREEMPT_RT kernel support, and default standard for ROS 2 LTS releases (e.g., Ubuntu 24.04 Noble for ROS 2 Jazzy).
+- 🪟 **Windows 10/11 (Tier 2 - Supported):** Supported for simulation, RViz2 debugging, and desktop tooling, but most commercial robot hardware vendors do not provide Windows drivers.
+- 🍎 **macOS (Tier 3 - Community):** Experimental community source builds. Excellent for testing algorithms or GUI visualization on Apple Silicon, but not deployed on physical robot controllers.
 
 ---
 
