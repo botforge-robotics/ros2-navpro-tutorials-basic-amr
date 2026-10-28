@@ -10,14 +10,14 @@ EXERCISE OVERVIEW:
 ------------------
 Your mission is to program an autonomous inspection patrol route for the AMR
 using the Nav2 Simple Commander API. The robot must visit a sequence of three
-warehouse stations, inspect each location, and return autonomously to home station.
+house zones, inspect each location, and return autonomously to home station.
 
 PATROL WAYPOINTS (map frame):
 -----------------------------
-1. Checkpoint Alpha   : x=1.5m, y=0.5m, yaw=0.0 rad
-2. Checkpoint Bravo   : x=2.0m, y=2.0m, yaw=1.57 rad (90 deg)
-3. Checkpoint Charlie : x=0.5m, y=1.8m, yaw=3.14 rad (180 deg)
-4. Home Base Station     : x=0.0m, y=0.0m, yaw=0.0 rad
+1. Kitchen Zone          : x=-1.5m, y=3.5m, yaw=1.57 rad (90 deg)
+2. Balcony / Study Room  : x=1.0m, y=3.5m, yaw=0.0 rad
+3. Dining Area Station   : x=0.5m, y=2.0m, yaw=-1.57 rad (-90 deg)
+4. Living Room Home Base : x=-2.0m, y=1.0m, yaw=0.0 rad
 
 OBJECTIVES:
 -----------
@@ -27,7 +27,7 @@ OBJECTIVES:
    - Poll feedback while `not navigator.isTaskComplete()`.
    - Implement a per-checkpoint timeout (e.g., 45 seconds).
    - If reached, log success and pause 2 seconds for sensor inspection.
-3. Once all stations are visited, dispatch a final goal to return to (0, 0, 0).
+3. Once all stations are visited, dispatch a final goal to return to (-2.0, 1.0, 0).
 ================================================================================
 """
 
@@ -69,9 +69,9 @@ def main():
     # TODO: STUDENT CODE HERE
 
     waypoints = [
-        (2.0, 1.0, 0.0, "Staging Area Entrance"),
-        (4.5, -2.0, 1.57, "Storage Rack Aisle B"),
-        (1.0, -3.5, 3.14, "Inspection Bay"),
+        (-1.5, 3.5, 1.57, "Kitchen Inspection Zone"),
+        (1.0, 3.5, 0.0, "Balcony / Study Room"),
+        (0.5, 2.0, -1.57, "Dining Area Station"),
     ]
 
     # --------------------------------------------------------------------------
@@ -82,9 +82,9 @@ def main():
     # TODO: STUDENT CODE HERE
 
     # --------------------------------------------------------------------------
-    # TODO 3: Return to Home Station (x=0.0, y=0.0, yaw=0.0)
+    # TODO 3: Return to Home Station (x=-2.0, y=1.0, yaw=0.0)
     # --------------------------------------------------------------------------
-    # - Hint: Create a final goal at home coordinates (0.0, 0.0, 0.0) and dispatch navigator.goToPose(home_goal) to return to base.
+    # - Hint: Create a final goal at home coordinates (-2.0, 1.0, 0.0) and dispatch navigator.goToPose(home_goal) to return to base.
     # --------------------------------------------------------------------------
     # TODO: STUDENT CODE HERE
 

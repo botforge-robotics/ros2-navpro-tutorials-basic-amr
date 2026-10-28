@@ -86,7 +86,8 @@ def main():
     # --------------------------------------------------------------------------
     # AMCL (Adaptive Monte Carlo Localization) requires an initial belief pose
     # to seed its particle filter distribution across the occupancy grid map.
-    initial_pose = create_pose_stamped(navigator, x=0.0, y=0.0, yaw=0.0)
+    # We initialize at the robot spawn point in the Living Room (-2.0m, 1.0m, yaw=0.0).
+    initial_pose = create_pose_stamped(navigator, x=-2.0, y=1.0, yaw=0.0)
     navigator.setInitialPose(initial_pose)
 
     # --------------------------------------------------------------------------
@@ -101,8 +102,8 @@ def main():
     # --------------------------------------------------------------------------
     # STEP 3: DISPATCH NAVIGATION GOAL ASYNCHRONOUSLY
     # --------------------------------------------------------------------------
-    # Target inspection pose: x=2.0m, y=1.0m, facing North (+Y, yaw=pi/2 = 1.57 rad)
-    goal_pose = create_pose_stamped(navigator, x=2.0, y=1.0, yaw=1.57)
+    # Target inspection pose: Dining Area (x=0.5m, y=2.0m, yaw=0.0 rad)
+    goal_pose = create_pose_stamped(navigator, x=0.5, y=2.0, yaw=0.0)
     navigator.get_logger().info(
         f'Dispatched goal setpoint -> X: {goal_pose.pose.position.x:.2f} m, '
         f'Y: {goal_pose.pose.position.y:.2f} m'

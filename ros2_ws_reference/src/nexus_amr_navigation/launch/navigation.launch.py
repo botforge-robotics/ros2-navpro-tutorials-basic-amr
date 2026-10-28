@@ -48,7 +48,7 @@ def generate_launch_description():
     pkg_nav2_bringup = get_package_share_directory('nav2_bringup')
 
     # Default paths for map metadata and Nav2 configuration YAML
-    default_map = os.path.join(pkg_nav, 'maps', 'warehouse_map.yaml')
+    default_map = os.path.join(pkg_nav, 'maps', 'house.yaml')
     default_params = os.path.join(pkg_nav, 'config', 'nav2_params.yaml')
 
     # --------------------------------------------------------------------------

@@ -32,7 +32,7 @@ ROBOTICS CONCEPTS TAUGHT HERE:
 import os
 from ament_index_python.packages import get_package_share_directory
 from launch import LaunchDescription
-from launch.actions import DeclareLaunchArgument, IncludeLaunchDescription
+from launch.actions import AppendEnvironmentVariable, DeclareLaunchArgument, IncludeLaunchDescription
 from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch.substitutions import LaunchConfiguration
 from launch_ros.actions import Node
@@ -49,8 +49,15 @@ def generate_launch_description():
     pkg_description = get_package_share_directory('nexus_amr_description')
     pkg_gazebo_ros = get_package_share_directory('gazebo_ros')
 
-    # Path to the warehouse environment world file containing racks, aisles, and obstacles
-    default_world = os.path.join(pkg_gazebo, 'worlds', 'warehouse_obstacle_world.world')
+    # Path to the house environment world file containing rooms and furniture
+    default_world = os.path.join(pkg_gazebo, 'worlds', 'house.world')
+
+    # Ensure Gazebo locates custom models inside share/nexus_amr_gazebo/models
+    models_dir = os.path.join(pkg_gazebo, 'models')
+    set_gazebo_model_path = AppendEnvironmentVariable(
+        name='GAZEBO_MODEL_PATH',
+        value=models_dir
+    )
 
     # --------------------------------------------------------------------------
     # 2. DECLARE CONFIGURABLE LAUNCH ARGUMENTS
@@ -59,6 +66,24 @@ def generate_launch_description():
         'world',
         default_value=default_world,
         description='Absolute path to the Gazebo world file (.world)'
+    )
+
+    x_pos_arg = DeclareLaunchArgument(
+        'x_pos',
+        default_value='-2.0',
+        description='Initial X spawn coordinate in meters'
+    )
+
+    y_pos_arg = DeclareLaunchArgument(
+        'y_pos',
+        default_value='1.0',
+        description='Initial Y spawn coordinate in meters'
+    )
+
+    z_pos_arg = DeclareLaunchArgument(
+        'z_pos',
+        default_value='0.05',
+        description='Initial Z spawn coordinate in meters'
     )
 
     use_sim_time_arg = DeclareLaunchArgument(
@@ -105,7 +130,7 @@ def generate_launch_description():
     # 6. SPAWN ROBOT ENTITY IN SIMULATION
     # --------------------------------------------------------------------------
     # Calls gazebo_ros spawn service, reading URDF from 'robot_description' topic
-    # and placing the robot at (x=0, y=0, z=0.05m) to prevent ground penetration.
+    # and placing the robot at (x=-2.0, y=1.0, z=0.05m) to prevent ground penetration.
     spawn_robot = Node(
         package='gazebo_ros',
         executable='spawn_entity.py',
@@ -114,14 +139,18 @@ def generate_launch_description():
         arguments=[
             '-topic', 'robot_description',
             '-entity', 'nexus_amr',
-            '-x', '0.0',
-            '-y', '0.0',
-            '-z', '0.05'
+            '-x', LaunchConfiguration('x_pos'),
+            '-y', LaunchConfiguration('y_pos'),
+            '-z', LaunchConfiguration('z_pos')
         ]
     )
 
     return LaunchDescription([
+        set_gazebo_model_path,
         world_arg,
+        x_pos_arg,
+        y_pos_arg,
+        z_pos_arg,
         use_sim_time_arg,
         gui_arg,
         gzserver,

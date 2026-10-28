@@ -9,35 +9,36 @@ File:    m03_l14_solution_camera_sensor.xacro
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
 
   <!-- =======================================================================
-  STEP 1: Physical Optical Camera Link
+  STEP 1: Physical Optical Camera Link with 3D CAD Mesh
   ======================================================================== -->
-  <link name="camera_link">
+  <link name="camera_1">
+    <inertial>
+      <origin xyz="0.001379 0.0 0.0" rpy="0 0 0"/>
+      <mass value="0.000343"/>
+      <inertia ixx="1e-07" iyy="1e-07" izz="1e-07" ixy="0.0" iyz="0.0" ixz="0.0"/>
+    </inertial>
     <visual>
-      <origin xyz="0 0 0" rpy="0 0 0" />
+      <origin xyz="-0.101117 -0.000379 -0.035" rpy="0 0 0"/>
       <geometry>
-        <box size="0.025 0.09 0.025" />
+        <mesh filename="package://nexus_amr_description/meshes/camera_1.stl" scale="0.001 0.001 0.001"/>
       </geometry>
-      <material name="orange">
-        <color rgba="1.0 0.45 0.0 1.0" />
-      </material>
+      <material name="black"/>
     </visual>
     <collision>
-      <origin xyz="0 0 0" rpy="0 0 0" />
+      <origin xyz="-0.101117 -0.000379 -0.035" rpy="0 0 0"/>
       <geometry>
-        <box size="0.025 0.09 0.025" />
+        <mesh filename="package://nexus_amr_description/meshes/camera_1.stl" scale="0.001 0.001 0.001"/>
       </geometry>
     </collision>
-    <xacro:box_inertia m="0.08" w="0.09" h="0.025" d="0.025" />
   </link>
 
   <!-- =======================================================================
   STEP 2: Mount Camera to Front Bumper of base_link
   ======================================================================== -->
-  <joint name="camera_joint" type="fixed">
-    <parent link="base_link" />
-    <child link="camera_link" />
-    <origin xyz="0.20 0.0 0.08" rpy="0 0 0" />
+  <joint name="cam_joint" type="fixed">
+    <origin xyz="0.101117 0.000379 0.035" rpy="0 0 0"/>
+    <parent link="base_link"/>
+    <child link="camera_1"/>
   </joint>
 
 </robot>
-

@@ -83,9 +83,9 @@ def main():
     # --------------------------------------------------------------------------
     # (Station Label, X position, Y position, Yaw orientation)
     waypoints = [
-        ("Staging Area Entrance", 2.0, 1.0, 0.0),
-        ("Storage Rack Aisle B", 4.5, -2.0, 1.57),
-        ("Inspection Bay", 1.0, -3.5, 3.14),
+        ("Kitchen Inspection Zone", -1.5, 3.5, 1.57),
+        ("Balcony / Study Room", 1.0, 3.5, 0.0),
+        ("Dining Area Station", 0.5, 2.0, -1.57),
     ]
 
     # --------------------------------------------------------------------------
@@ -126,15 +126,15 @@ def main():
     # --------------------------------------------------------------------------
     # 4. RETURN TO HOME BASE STATION
     # --------------------------------------------------------------------------
-    navigator.get_logger().info('Patrol mission completed! Returning to Home Base Station...')
-    home_pose = create_goal_pose(navigator, 0.0, 0.0, 0.0)
+    navigator.get_logger().info('Patrol mission completed! Returning to Living Room Home Base (-2.0, 1.0)...')
+    home_pose = create_goal_pose(navigator, -2.0, 1.0, 0.0)
     navigator.goToPose(home_pose)
 
     while not navigator.isTaskComplete():
         time.sleep(1.0)
 
     if navigator.getResult() == TaskResult.SUCCEEDED:
-        navigator.get_logger().info('Safely returned to home station (0, 0). Mission complete!')
+        navigator.get_logger().info('Safely returned to Living Room home station (-2.0, 1.0). Mission complete!')
 
     rclpy.shutdown()
 
