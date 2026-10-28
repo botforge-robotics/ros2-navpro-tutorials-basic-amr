@@ -1,13 +1,18 @@
 import { useState, useEffect, useCallback } from 'react';
 
-const STORAGE_KEY_COMPLETED = 'navpro_l1_completed_lessons';
-const STORAGE_KEY_QUIZZES = 'navpro_l1_quiz_scores';
-const STORAGE_KEY_CURRENT = 'navpro_l1_current_lesson';
+const STORAGE_KEY_COMPLETED = 'nexus_amr_l1_completed_lessons';
+const STORAGE_KEY_QUIZZES = 'nexus_amr_l1_quiz_scores';
+const STORAGE_KEY_CURRENT = 'nexus_amr_l1_current_lesson';
+
+// Legacy keys for seamless migration
+const LEGACY_STORAGE_KEY_COMPLETED = 'navpro_l1_completed_lessons';
+const LEGACY_STORAGE_KEY_QUIZZES = 'navpro_l1_quiz_scores';
+const LEGACY_STORAGE_KEY_CURRENT = 'navpro_l1_current_lesson';
 
 export function useProgress(totalLessons = 26) {
   const [completedLessons, setCompletedLessons] = useState(() => {
     try {
-      const saved = localStorage.getItem(STORAGE_KEY_COMPLETED);
+      const saved = localStorage.getItem(STORAGE_KEY_COMPLETED) || localStorage.getItem(LEGACY_STORAGE_KEY_COMPLETED);
       return saved ? JSON.parse(saved) : [];
     } catch {
       return [];
@@ -16,7 +21,7 @@ export function useProgress(totalLessons = 26) {
 
   const [quizScores, setQuizScores] = useState(() => {
     try {
-      const saved = localStorage.getItem(STORAGE_KEY_QUIZZES);
+      const saved = localStorage.getItem(STORAGE_KEY_QUIZZES) || localStorage.getItem(LEGACY_STORAGE_KEY_QUIZZES);
       return saved ? JSON.parse(saved) : {};
     } catch {
       return {};
@@ -121,6 +126,9 @@ export function useProgress(totalLessons = 26) {
       setQuizScores({});
       localStorage.removeItem(STORAGE_KEY_COMPLETED);
       localStorage.removeItem(STORAGE_KEY_QUIZZES);
+      localStorage.removeItem(LEGACY_STORAGE_KEY_COMPLETED);
+      localStorage.removeItem(LEGACY_STORAGE_KEY_QUIZZES);
+      localStorage.removeItem('nexus_amr_l1_quiz_answers');
       localStorage.removeItem('navpro_l1_quiz_answers');
     }
   }, []);

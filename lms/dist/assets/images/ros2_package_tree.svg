@@ -1,0 +1,139 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1260 500" width="100%" height="100%">
+  <defs>
+    <linearGradient id="pkgTreeBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="100%" stop-color="#f8fafc"/>
+    </linearGradient>
+    <filter id="pkgBoxShadow" x="-3%" y="-6%" width="106%" height="116%">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#0f172a" flood-opacity="0.07"/>
+    </filter>
+  </defs>
+
+  <!-- Background Canvas -->
+  <rect width="1260" height="500" rx="14" fill="url(#pkgTreeBg)" stroke="#cbd5e1" stroke-width="1.5"/>
+
+  <!-- Diagram Header -->
+  <text x="630" y="32" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="18" font-weight="800" fill="#0f172a" text-anchor="middle" letter-spacing="0.5">ROS 2 PYTHON PACKAGE ANATOMY (ament_python)</text>
+  <text x="630" y="52" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="12.5" font-weight="600" fill="#64748b" text-anchor="middle">Essential Package Architecture for Build, Ament Indexing, Launch &amp; Runtime Execution</text>
+
+  <!-- Root Node: Package Root -->
+  <g filter="url(#pkgBoxShadow)">
+    <rect x="460" y="68" width="340" height="46" rx="8" fill="#0284c7" stroke="#0369a1" stroke-width="1.5"/>
+    <text x="630" y="97" font-family="monospace" font-size="17" font-weight="800" fill="#ffffff" text-anchor="middle">📦 nexus_amr_basics/ (Package Root)</text>
+  </g>
+
+  <!-- Connecting Trunk lines -->
+  <path d="M 630 114 L 630 136" stroke="#94a3b8" stroke-width="2.5"/>
+  <path d="M 125 136 L 1135 136" stroke="#94a3b8" stroke-width="2.5"/>
+
+  <!-- Vertical drops to 6 main columns -->
+  <path d="M 125 136 L 125 155" stroke="#94a3b8" stroke-width="2.5"/>
+  <path d="M 327 136 L 327 155" stroke="#94a3b8" stroke-width="2.5"/>
+  <path d="M 529 136 L 529 155" stroke="#94a3b8" stroke-width="2.5"/>
+  <path d="M 731 136 L 731 155" stroke="#94a3b8" stroke-width="2.5"/>
+  <path d="M 933 136 L 933 155" stroke="#94a3b8" stroke-width="2.5"/>
+  <path d="M 1135 136 L 1135 155" stroke="#94a3b8" stroke-width="2.5"/>
+
+  <!-- Column 1: package.xml -->
+  <g filter="url(#pkgBoxShadow)">
+    <rect x="31" y="155" width="188" height="182" rx="9" fill="#ffffff" stroke="#d97706" stroke-width="2"/>
+    <rect x="39" y="163" width="172" height="30" rx="6" fill="#fef3c7"/>
+    <text x="125" y="183" font-family="monospace" font-size="14.5" font-weight="800" fill="#b45309" text-anchor="middle">package.xml</text>
+    
+    <rect x="49" y="198" width="152" height="20" rx="4" fill="#d97706"/>
+    <text x="125" y="212" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="10.5" font-weight="700" fill="#ffffff" text-anchor="middle">📋 MANIFEST (XML)</text>
+    
+    <text x="125" y="235" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" font-weight="700" fill="#1e293b" text-anchor="middle">Package Metadata</text>
+    <text x="41" y="255" font-family="monospace" font-size="11" fill="#334155">• &lt;name&gt; &amp; &lt;version&gt;</text>
+    <text x="41" y="273" font-family="monospace" font-size="11" fill="#334155">• &lt;depend&gt;rclpy</text>
+    <text x="41" y="291" font-family="monospace" font-size="11" fill="#334155">• &lt;build_type&gt;ament</text>
+    <text x="125" y="322" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11" font-weight="700" fill="#d97706" text-anchor="middle">Used by colcon/rosdep</text>
+  </g>
+
+  <!-- Column 2: setup.py & setup.cfg (COMBINED) -->
+  <g filter="url(#pkgBoxShadow)">
+    <rect x="233" y="155" width="188" height="182" rx="9" fill="#ffffff" stroke="#059669" stroke-width="2"/>
+    <rect x="241" y="163" width="172" height="30" rx="6" fill="#d1fae5"/>
+    <text x="327" y="183" font-family="monospace" font-size="13.5" font-weight="800" fill="#047857" text-anchor="middle">setup.py &amp; .cfg</text>
+    
+    <rect x="251" y="198" width="152" height="20" rx="4" fill="#059669"/>
+    <text x="327" y="212" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="10.5" font-weight="700" fill="#ffffff" text-anchor="middle">⚙️ SETUPTOOLS RULES</text>
+    
+    <text x="327" y="235" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" font-weight="700" fill="#1e293b" text-anchor="middle">Build &amp; Install Paths</text>
+    <text x="243" y="255" font-family="monospace" font-size="11" fill="#334155">• entry_points={...}</text>
+    <text x="243" y="273" font-family="monospace" font-size="11" fill="#334155">• data_files assets</text>
+    <text x="243" y="291" font-family="monospace" font-size="10.5" font-weight="bold" fill="#047857">• install: $base/lib</text>
+    <text x="327" y="322" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11" font-weight="700" fill="#059669" text-anchor="middle">Registers 'ros2 run'</text>
+  </g>
+
+  <!-- Column 3: resource/ marker -->
+  <g filter="url(#pkgBoxShadow)">
+    <rect x="435" y="155" width="188" height="182" rx="9" fill="#ffffff" stroke="#7c3aed" stroke-width="2"/>
+    <rect x="443" y="163" width="172" height="30" rx="6" fill="#ede9fe"/>
+    <text x="529" y="183" font-family="monospace" font-size="14.5" font-weight="800" fill="#6d28d9" text-anchor="middle">resource/</text>
+    
+    <rect x="453" y="198" width="152" height="20" rx="4" fill="#7c3aed"/>
+    <text x="529" y="212" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="10.5" font-weight="700" fill="#ffffff" text-anchor="middle">🔍 AMENT INDEX</text>
+    
+    <text x="529" y="235" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" font-weight="700" fill="#1e293b" text-anchor="middle">Discovery Marker</text>
+    <text x="445" y="255" font-family="monospace" font-size="11" font-weight="bold" fill="#6d28d9">├── nexus_amr_basics</text>
+    <text x="445" y="273" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="10.5" fill="#64748b">(Empty 0-byte file)</text>
+    <text x="445" y="291" font-family="monospace" font-size="11" fill="#334155">• Indexed by Ament</text>
+    <text x="529" y="322" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11" font-weight="700" fill="#7c3aed" text-anchor="middle">Powers 'ros2 pkg list'</text>
+  </g>
+
+  <!-- Column 4: nexus_amr_basics/ (Python Code) -->
+  <g filter="url(#pkgBoxShadow)">
+    <rect x="637" y="155" width="188" height="182" rx="9" fill="#ffffff" stroke="#0284c7" stroke-width="2"/>
+    <rect x="645" y="163" width="172" height="30" rx="6" fill="#e0f2fe"/>
+    <text x="731" y="183" font-family="monospace" font-size="14" font-weight="800" fill="#0369a1" text-anchor="middle">nexus_amr_basics/</text>
+    
+    <rect x="655" y="198" width="152" height="20" rx="4" fill="#0284c7"/>
+    <text x="731" y="212" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="10.5" font-weight="700" fill="#ffffff" text-anchor="middle">🐍 PYTHON CODE</text>
+    
+    <text x="731" y="235" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" font-weight="700" fill="#1e293b" text-anchor="middle">Node Source Logic</text>
+    <text x="647" y="255" font-family="monospace" font-size="11" fill="#334155">├── __init__.py</text>
+    <text x="647" y="273" font-family="monospace" font-size="11" font-weight="bold" fill="#0284c7">└── talker.py</text>
+    <text x="647" y="291" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="10.5" fill="#64748b">• Inherits rclpy Node</text>
+    <text x="731" y="322" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11" font-weight="700" fill="#0284c7" text-anchor="middle">Your robotics logic</text>
+  </g>
+
+  <!-- Column 5: launch/ (Multi-Node Startup) -->
+  <g filter="url(#pkgBoxShadow)">
+    <rect x="839" y="155" width="188" height="182" rx="9" fill="#ffffff" stroke="#4f46e5" stroke-width="2"/>
+    <rect x="847" y="163" width="172" height="30" rx="6" fill="#e0e7ff"/>
+    <text x="933" y="183" font-family="monospace" font-size="14.5" font-weight="800" fill="#3730a3" text-anchor="middle">launch/</text>
+    
+    <rect x="857" y="198" width="152" height="20" rx="4" fill="#4f46e5"/>
+    <text x="933" y="212" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="10.5" font-weight="700" fill="#ffffff" text-anchor="middle">🚀 LAUNCH FILES</text>
+    
+    <text x="933" y="235" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" font-weight="700" fill="#1e293b" text-anchor="middle">Multi-Node Startup</text>
+    <text x="849" y="255" font-family="monospace" font-size="10.5" fill="#334155">├── *.launch.py</text>
+    <text x="849" y="273" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="10.5" fill="#334155">• Starts all nodes</text>
+    <text x="849" y="291" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="10.5" fill="#334155">• In setup data_files</text>
+    <text x="933" y="322" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11" font-weight="700" fill="#4f46e5" text-anchor="middle">Powers 'ros2 launch'</text>
+  </g>
+
+  <!-- Column 6: config/ (YAML Tuning) -->
+  <g filter="url(#pkgBoxShadow)">
+    <rect x="1041" y="155" width="188" height="182" rx="9" fill="#ffffff" stroke="#db2777" stroke-width="2"/>
+    <rect x="1049" y="163" width="172" height="30" rx="6" fill="#fce7f3"/>
+    <text x="1135" y="183" font-family="monospace" font-size="14.5" font-weight="800" fill="#9d174d" text-anchor="middle">config/</text>
+    
+    <rect x="1059" y="198" width="152" height="20" rx="4" fill="#db2777"/>
+    <text x="1135" y="212" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="10.5" font-weight="700" fill="#ffffff" text-anchor="middle">⚙️ PARAMETERS</text>
+    
+    <text x="1135" y="235" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" font-weight="700" fill="#1e293b" text-anchor="middle">YAML Tuning Files</text>
+    <text x="1051" y="255" font-family="monospace" font-size="10.5" fill="#334155">├── params.yaml</text>
+    <text x="1051" y="273" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="10.5" fill="#334155">• Speeds &amp; thresholds</text>
+    <text x="1051" y="291" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="10.5" fill="#334155">• In setup data_files</text>
+    <text x="1135" y="322" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11" font-weight="700" fill="#db2777" text-anchor="middle">Dynamic parameters</text>
+  </g>
+
+  <!-- Legend & Bottom Golden Rules Box -->
+  <rect x="31" y="355" width="1198" height="125" rx="9" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="1.2"/>
+  <text x="52" y="380" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="15" font-weight="800" fill="#0f172a">🎯 Golden Rules for ROS 2 Python Packages:</text>
+  <text x="52" y="405" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="13" fill="#334155">• <tspan font-family="monospace" font-weight="bold" fill="#d97706">package.xml</tspan> and <tspan font-family="monospace" font-weight="bold" fill="#059669">setup.py</tspan> MUST stay synchronized: Every imported module must be declared in <tspan font-family="monospace">&lt;depend&gt;</tspan> tags so <tspan font-family="monospace" font-weight="bold">rosdep</tspan> can install required system dependencies.</text>
+  <text x="52" y="428" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="13" fill="#334155">• <tspan font-family="monospace" font-weight="bold" fill="#059669">setup.cfg</tspan> &amp; <tspan font-family="monospace" font-weight="bold" fill="#7c3aed">resource/&lt;pkg&gt;</tspan> are mandatory plumbing: <tspan font-family="monospace">setup.cfg</tspan> sets <tspan font-family="monospace">install_scripts=$base/lib/&lt;pkg&gt;</tspan>, while <tspan font-family="monospace">resource/</tspan> registers the package with the Ament Index.</text>
+  <text x="52" y="451" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="13" fill="#334155">• <tspan font-family="monospace" font-weight="bold" fill="#4f46e5">launch/</tspan> and <tspan font-family="monospace" font-weight="bold" fill="#db2777">config/</tspan> assets must be declared in <tspan font-family="monospace">setup.py</tspan> <tspan font-family="monospace" font-weight="bold">data_files</tspan> — otherwise <tspan font-family="monospace">colcon build</tspan> will leave them behind in <tspan font-family="monospace">src/</tspan> and ROS 2 cannot locate them.</text>
+</svg>

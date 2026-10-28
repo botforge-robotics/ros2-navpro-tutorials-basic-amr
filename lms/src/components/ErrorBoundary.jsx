@@ -16,12 +16,18 @@ export class ErrorBoundary extends React.Component {
   }
 
   componentDidCatch(error, errorInfo) {
-    console.error('[NavPro Level 1 ErrorBoundary caught an exception]:', error, errorInfo);
+    console.error('[Nexus AMR Level 1 ErrorBoundary caught an exception]:', error, errorInfo);
     this.setState({ errorInfo });
   }
 
   handleResetCache = () => {
     try {
+      localStorage.removeItem('nexus_amr_l1_current_lesson');
+      localStorage.removeItem('nexus_amr_l1_completed_lessons');
+      localStorage.removeItem('nexus_amr_l1_quiz_scores');
+      localStorage.removeItem('navpro_l1_current_lesson');
+      localStorage.removeItem('navpro_l1_completed_lessons');
+      localStorage.removeItem('navpro_l1_quiz_scores');
       localStorage.removeItem('navpro_current_lesson');
       localStorage.removeItem('navpro_completed_lessons');
       localStorage.removeItem('navpro_quiz_scores');

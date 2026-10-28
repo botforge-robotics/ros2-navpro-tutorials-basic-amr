@@ -1,0 +1,7 @@
+parameterized_controller:
+  ros__parameters:
+    robot_id: "nexus-wh-01"
+    max_linear_speed: 0.75
+    enable_proximity_brake: true
+    control_rate_hz: 20
+    obstacle_distance_threshold: 0.45

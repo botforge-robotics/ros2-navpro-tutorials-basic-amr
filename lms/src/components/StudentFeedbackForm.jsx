@@ -11,7 +11,8 @@ import {
   RefreshCw
 } from 'lucide-react';
 
-const STORAGE_KEY_FEEDBACK = 'navpro_l1_submitted_feedback';
+const STORAGE_KEY_FEEDBACK = 'nexus_amr_l1_submitted_feedback';
+const LEGACY_STORAGE_KEY_FEEDBACK = 'navpro_l1_submitted_feedback';
 
 export function StudentFeedbackForm({ studentInfo, onSubmitFeedback }) {
   const [rating, setRating] = useState(5);
@@ -25,7 +26,7 @@ export function StudentFeedbackForm({ studentInfo, onSubmitFeedback }) {
   // Restore existing submission from localStorage
   useEffect(() => {
     try {
-      const saved = localStorage.getItem(STORAGE_KEY_FEEDBACK);
+      const saved = localStorage.getItem(STORAGE_KEY_FEEDBACK) || localStorage.getItem(LEGACY_STORAGE_KEY_FEEDBACK);
       if (saved) {
         const parsed = JSON.parse(saved);
         setSubmittedData(parsed);

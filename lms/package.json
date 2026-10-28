@@ -1,5 +1,5 @@
 {
-  "name": "navpro-learning-hub-level1",
+  "name": "nexus-amr-learning-hub-level1",
   "private": true,
   "version": "1.0.0",
   "type": "module",
@@ -9,9 +9,11 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "highlight.js": "^11.12.0",
+    "lucide-react": "^0.475.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "lucide-react": "^0.475.0"
+    "three": "^0.186.1"
   },
   "devDependencies": {
     "@types/react": "^18.3.18",

@@ -1,75 +1,155 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 360" width="100%" height="100%">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 450" width="100%" height="100%">
   <defs>
-    <filter id="nodeShadow" x="-3%" y="-5%" width="106%" height="112%">
-      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#0f172a" flood-opacity="0.08"/>
+    <filter id="nodeShadow" x="-4%" y="-5%" width="108%" height="112%">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#0f172a" flood-opacity="0.06"/>
     </filter>
   </defs>
 
-  <rect width="800" height="360" rx="12" fill="#ffffff" stroke="#e2e8f0" stroke-width="1.5"/>
-  <text x="400" y="30" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="16" font-weight="800" fill="#0f172a" text-anchor="middle">URDF / XACRO ROBOT KINEMATIC TREE &amp; JOINT HIERARCHY</text>
+  <!-- Canvas Background -->
+  <rect width="960" height="450" rx="16" fill="#ffffff" stroke="#e2e8f0" stroke-width="1.5"/>
 
-  <!-- base_footprint Root Node -->
-  <g filter="url(#nodeShadow)">
-    <rect x="300" y="50" width="200" height="42" rx="6" fill="#0284c7" stroke="#0369a1" stroke-width="1.5"/>
-    <text x="400" y="76" font-family="monospace" font-size="14" font-weight="bold" fill="#ffffff" text-anchor="middle">base_footprint (Ground)</text>
+  <!-- Main Banner Header -->
+  <text x="480" y="28" font-family="system-ui, -apple-system, sans-serif" font-size="14" font-weight="800" fill="#0f172a" text-anchor="middle" letter-spacing="1">
+    NEXUS AMR URDF KINEMATIC TREE &amp; JOINT HIERARCHY (REP 105)
+  </text>
+  <text x="480" y="44" font-family="system-ui, -apple-system, sans-serif" font-size="10.5" font-weight="600" fill="#64748b" text-anchor="middle">
+    Direct Specification Matching nexus_amr.urdf.xacro • 8 Links • 7 Joints • Directed Acyclic Graph (DAG)
+  </text>
+
+  <!-- ========================================================================= -->
+  <!-- LEVEL 1: ROOT LINK (base_footprint) -->
+  <!-- ========================================================================= -->
+  <g transform="translate(360, 58)" filter="url(#nodeShadow)">
+    <rect width="240" height="42" rx="8" fill="#f0f9ff" stroke="#0284c7" stroke-width="2"/>
+    <text x="120" y="22" font-family="monospace" font-size="13" font-weight="800" fill="#0369a1" text-anchor="middle">base_footprint</text>
+    <text x="120" y="35" font-family="system-ui, sans-serif" font-size="9" font-weight="600" fill="#0284c7" text-anchor="middle">Root Datum • Ground Contact (Z=0.0m)</text>
   </g>
 
-  <!-- Joint: base_joint (fixed) -->
-  <path d="M 400 92 L 400 125" stroke="#0284c7" stroke-width="2"/>
-  <rect x="330" y="100" width="140" height="18" rx="4" fill="#e0f2fe" stroke="#38bdf8" stroke-width="1"/>
-  <text x="400" y="113" font-family="monospace" font-size="10" font-weight="bold" fill="#0369a1" text-anchor="middle">base_joint [fixed]</text>
+  <!-- Joint: base_footprint_joint (fixed) -->
+  <line x1="480" y1="100" x2="480" y2="132" stroke="#0284c7" stroke-width="2"/>
+  <polygon points="480,132 476,124 484,124" fill="#0284c7"/>
+  <rect x="375" y="106" width="210" height="18" rx="4" fill="#ffffff" stroke="#0284c7" stroke-width="1.2"/>
+  <text x="480" y="118.5" font-family="monospace" font-size="9" font-weight="700" fill="#0369a1" text-anchor="middle">base_footprint_joint [fixed] (z=+0.06)</text>
 
-  <!-- base_link Node -->
-  <g filter="url(#nodeShadow)">
-    <rect x="300" y="125" width="200" height="42" rx="6" fill="#2563eb" stroke="#1d4ed8" stroke-width="1.5"/>
-    <text x="400" y="151" font-family="monospace" font-size="14" font-weight="bold" fill="#ffffff" text-anchor="middle">base_link (Chassis)</text>
+  <!-- ========================================================================= -->
+  <!-- LEVEL 2: CHASSIS LINK (base_link) -->
+  <!-- ========================================================================= -->
+  <g transform="translate(330, 132)" filter="url(#nodeShadow)">
+    <rect width="300" height="46" rx="8" fill="#0284c7" stroke="#0369a1" stroke-width="2"/>
+    <text x="150" y="24" font-family="monospace" font-size="14" font-weight="800" fill="#ffffff" text-anchor="middle">base_link (Chassis Origin)</text>
+    <text x="150" y="38" font-family="system-ui, sans-serif" font-size="9.5" font-weight="600" fill="#e0f2fe" text-anchor="middle">Box 0.40m × 0.30m × 0.14m • 8.0 kg • Axle Centerline</text>
   </g>
 
-  <!-- Tree branch lines from base_link -->
-  <path d="M 400 167 L 400 190" stroke="#64748b" stroke-width="2"/>
-  <path d="M 120 190 L 680 190" stroke="#64748b" stroke-width="2"/>
+  <!-- ========================================================================= -->
+  <!-- KINEMATIC TREE BUS LINES (From base_link to 6 children) -->
+  <!-- ========================================================================= -->
+  <line x1="480" y1="178" x2="480" y2="200" stroke="#64748b" stroke-width="2"/>
+  <line x1="85" y1="200" x2="875" y2="200" stroke="#64748b" stroke-width="2"/>
 
-  <!-- Left drop: left_wheel -->
-  <path d="M 120 190 L 120 230" stroke="#64748b" stroke-width="2"/>
-  <rect x="50" y="200" width="140" height="18" rx="4" fill="#ecfdf5" stroke="#10b981" stroke-width="1"/>
-  <text x="120" y="213" font-family="monospace" font-size="10" font-weight="bold" fill="#065f46" text-anchor="middle">left_wheel_joint [continuous]</text>
-  <g filter="url(#nodeShadow)">
-    <rect x="40" y="230" width="160" height="50" rx="6" fill="#ffffff" stroke="#10b981" stroke-width="2"/>
-    <text x="120" y="255" font-family="monospace" font-size="12" font-weight="bold" fill="#047857" text-anchor="middle">left_wheel_link</text>
-    <text x="120" y="271" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="10" fill="#64748b" text-anchor="middle">Cylinder (r=0.033, l=0.018)</text>
+  <!-- == -->
+  <!-- CHILD 1: left_wheel_link (Port Drive Wheel) -->
+  <!-- == -->
+  <line x1="85" y1="200" x2="85" y2="242" stroke="#16a34a" stroke-width="2"/>
+  <polygon points="85,242 81,234 89,234" fill="#16a34a"/>
+  <rect x="15" y="210" width="140" height="18" rx="4" fill="#ffffff" stroke="#16a34a" stroke-width="1.2"/>
+  <text x="85" y="222.5" font-family="monospace" font-size="8" font-weight="700" fill="#15803d" text-anchor="middle">left_wheel_joint [cont]</text>
+
+  <g transform="translate(10, 242)" filter="url(#nodeShadow)">
+    <rect width="150" height="66" rx="8" fill="#f0fdf4" stroke="#16a34a" stroke-width="1.5"/>
+    <text x="75" y="20" font-family="monospace" font-size="11.5" font-weight="800" fill="#15803d" text-anchor="middle">left_wheel_link</text>
+    <text x="75" y="35" font-family="system-ui, sans-serif" font-size="9" font-weight="600" fill="#047857" text-anchor="middle">Cylinder r=0.06, w=0.035</text>
+    <text x="75" y="48" font-family="monospace" font-size="8.5" fill="#475569" text-anchor="middle">xyz="0 +0.16 0"</text>
+    <text x="75" y="60" font-family="system-ui, sans-serif" font-size="8.5" font-weight="600" fill="#15803d" text-anchor="middle">Continuous 360° • 0.8 kg</text>
   </g>
 
-  <!-- Right drop: right_wheel -->
-  <path d="M 300 190 L 300 230" stroke="#64748b" stroke-width="2"/>
-  <rect x="230" y="200" width="140" height="18" rx="4" fill="#ecfdf5" stroke="#10b981" stroke-width="1"/>
-  <text x="300" y="213" font-family="monospace" font-size="10" font-weight="bold" fill="#065f46" text-anchor="middle">right_wheel_joint [continuous]</text>
-  <g filter="url(#nodeShadow)">
-    <rect x="220" y="230" width="160" height="50" rx="6" fill="#ffffff" stroke="#10b981" stroke-width="2"/>
-    <text x="300" y="255" font-family="monospace" font-size="12" font-weight="bold" fill="#047857" text-anchor="middle">right_wheel_link</text>
-    <text x="300" y="271" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="10" fill="#64748b" text-anchor="middle">Cylinder (r=0.033, l=0.018)</text>
+  <!-- == -->
+  <!-- CHILD 2: right_wheel_link (Starboard Drive Wheel) -->
+  <!-- == -->
+  <line x1="240" y1="200" x2="240" y2="242" stroke="#16a34a" stroke-width="2"/>
+  <polygon points="240,242 236,234 244,234" fill="#16a34a"/>
+  <rect x="170" y="210" width="140" height="18" rx="4" fill="#ffffff" stroke="#16a34a" stroke-width="1.2"/>
+  <text x="240" y="222.5" font-family="monospace" font-size="8" font-weight="700" fill="#15803d" text-anchor="middle">right_wheel_joint [cont]</text>
+
+  <g transform="translate(165, 242)" filter="url(#nodeShadow)">
+    <rect width="150" height="66" rx="8" fill="#f0fdf4" stroke="#16a34a" stroke-width="1.5"/>
+    <text x="75" y="20" font-family="monospace" font-size="11.5" font-weight="800" fill="#15803d" text-anchor="middle">right_wheel_link</text>
+    <text x="75" y="35" font-family="system-ui, sans-serif" font-size="9" font-weight="600" fill="#047857" text-anchor="middle">Cylinder r=0.06, w=0.035</text>
+    <text x="75" y="48" font-family="monospace" font-size="8.5" fill="#475569" text-anchor="middle">xyz="0 -0.16 0"</text>
+    <text x="75" y="60" font-family="system-ui, sans-serif" font-size="8.5" font-weight="600" fill="#15803d" text-anchor="middle">Continuous 360° • 0.8 kg</text>
   </g>
 
-  <!-- Laser drop: laser_frame -->
-  <path d="M 500 190 L 500 230" stroke="#64748b" stroke-width="2"/>
-  <rect x="430" y="200" width="140" height="18" rx="4" fill="#fef3c7" stroke="#f59e0b" stroke-width="1"/>
-  <text x="500" y="213" font-family="monospace" font-size="10" font-weight="bold" fill="#92400e" text-anchor="middle">laser_joint [fixed]</text>
-  <g filter="url(#nodeShadow)">
-    <rect x="420" y="230" width="160" height="50" rx="6" fill="#ffffff" stroke="#f59e0b" stroke-width="2"/>
-    <text x="500" y="255" font-family="monospace" font-size="12" font-weight="bold" fill="#b45309" text-anchor="middle">laser_frame</text>
-    <text x="500" y="271" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="10" fill="#64748b" text-anchor="middle">2D LiDAR (360° Ray Scanner)</text>
+  <!-- == -->
+  <!-- CHILD 3: front_caster_link (Passive Front Caster) -->
+  <!-- == -->
+  <line x1="395" y1="200" x2="395" y2="242" stroke="#64748b" stroke-width="2"/>
+  <polygon points="395,242 391,234 399,234" fill="#64748b"/>
+  <rect x="325" y="210" width="140" height="18" rx="4" fill="#ffffff" stroke="#64748b" stroke-width="1.2"/>
+  <text x="395" y="222.5" font-family="monospace" font-size="8" font-weight="700" fill="#334155" text-anchor="middle">front_caster_joint [fixed]</text>
+
+  <g transform="translate(325, 242)" filter="url(#nodeShadow)">
+    <rect width="140" height="66" rx="8" fill="#f8fafc" stroke="#94a3b8" stroke-width="1.5"/>
+    <text x="70" y="20" font-family="monospace" font-size="11" font-weight="800" fill="#0f172a" text-anchor="middle">front_caster_link</text>
+    <text x="70" y="35" font-family="system-ui, sans-serif" font-size="9" font-weight="600" fill="#475569" text-anchor="middle">Sphere r=0.03m (Ball)</text>
+    <text x="70" y="48" font-family="monospace" font-size="8.5" fill="#64748b" text-anchor="middle">xyz="+0.14 0 -0.03"</text>
+    <text x="70" y="60" font-family="system-ui, sans-serif" font-size="8.5" font-weight="600" fill="#475569" text-anchor="middle">Frictionless • 0.3 kg</text>
   </g>
 
-  <!-- IMU drop: imu_link -->
-  <path d="M 680 190 L 680 230" stroke="#64748b" stroke-width="2"/>
-  <rect x="610" y="200" width="140" height="18" rx="4" fill="#f3e8ff" stroke="#a855f7" stroke-width="1"/>
-  <text x="680" y="213" font-family="monospace" font-size="10" font-weight="bold" fill="#6b21a8" text-anchor="middle">imu_joint [fixed]</text>
-  <g filter="url(#nodeShadow)">
-    <rect x="600" y="230" width="160" height="50" rx="6" fill="#ffffff" stroke="#a855f7" stroke-width="2"/>
-    <text x="680" y="255" font-family="monospace" font-size="12" font-weight="bold" fill="#7e22ce" text-anchor="middle">imu_link</text>
-    <text x="680" y="271" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="10" fill="#64748b" text-anchor="middle">6-DOF Inertial Sensor</text>
+  <!-- == -->
+  <!-- CHILD 4: rear_caster_link (Passive Rear Caster) -->
+  <!-- == -->
+  <line x1="550" y1="200" x2="550" y2="242" stroke="#64748b" stroke-width="2"/>
+  <polygon points="550,242 546,234 554,234" fill="#64748b"/>
+  <rect x="480" y="210" width="140" height="18" rx="4" fill="#ffffff" stroke="#64748b" stroke-width="1.2"/>
+  <text x="550" y="222.5" font-family="monospace" font-size="8" font-weight="700" fill="#334155" text-anchor="middle">rear_caster_joint [fixed]</text>
+
+  <g transform="translate(480, 242)" filter="url(#nodeShadow)">
+    <rect width="140" height="66" rx="8" fill="#f8fafc" stroke="#94a3b8" stroke-width="1.5"/>
+    <text x="70" y="20" font-family="monospace" font-size="11" font-weight="800" fill="#0f172a" text-anchor="middle">rear_caster_link</text>
+    <text x="70" y="35" font-family="system-ui, sans-serif" font-size="9" font-weight="600" fill="#475569" text-anchor="middle">Sphere r=0.03m (Ball)</text>
+    <text x="70" y="48" font-family="monospace" font-size="8.5" fill="#64748b" text-anchor="middle">xyz="-0.14 0 -0.03"</text>
+    <text x="70" y="60" font-family="system-ui, sans-serif" font-size="8.5" font-weight="600" fill="#475569" text-anchor="middle">Frictionless • 0.3 kg</text>
   </g>
 
-  <!-- Summary info box -->
-  <rect x="40" y="300" width="720" height="42" rx="6" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1"/>
-  <text x="400" y="326" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" font-weight="600" fill="#475569" text-anchor="middle">Joints connect Links: Links carry mass, inertial tensors, and collision meshes; Joints carry spatial offsets &amp; degrees of freedom.</text>
+  <!-- == -->
+  <!-- CHILD 5: laser_frame (2D LiDAR Sensor) -->
+  <!-- == -->
+  <line x1="705" y1="200" x2="705" y2="242" stroke="#f59e0b" stroke-width="2"/>
+  <polygon points="705,242 701,234 709,234" fill="#f59e0b"/>
+  <rect x="635" y="210" width="140" height="18" rx="4" fill="#ffffff" stroke="#f59e0b" stroke-width="1.2"/>
+  <text x="705" y="222.5" font-family="monospace" font-size="8" font-weight="700" fill="#b45309" text-anchor="middle">laser_joint [fixed]</text>
+
+  <g transform="translate(635, 242)" filter="url(#nodeShadow)">
+    <rect width="140" height="66" rx="8" fill="#fffbeb" stroke="#f59e0b" stroke-width="1.5"/>
+    <text x="70" y="20" font-family="monospace" font-size="11.5" font-weight="800" fill="#b45309" text-anchor="middle">laser_frame</text>
+    <text x="70" y="35" font-family="system-ui, sans-serif" font-size="9" font-weight="600" fill="#92400e" text-anchor="middle">2D LiDAR (360° Scan)</text>
+    <text x="70" y="48" font-family="monospace" font-size="8.5" fill="#475569" text-anchor="middle">xyz="+0.08 0 0.16"</text>
+    <text x="70" y="60" font-family="system-ui, sans-serif" font-size="8.5" font-weight="600" fill="#b45309" text-anchor="middle">Topic: /scan • 10 Hz</text>
+  </g>
+
+  <!-- == -->
+  <!-- CHILD 6: camera_link -->
+  <!-- == -->
+  <line x1="860" y1="200" x2="860" y2="242" stroke="#8b5cf6" stroke-width="2"/>
+  <polygon points="860,242 856,234 864,234" fill="#8b5cf6"/>
+  <rect x="790" y="210" width="140" height="18" rx="4" fill="#ffffff" stroke="#8b5cf6" stroke-width="1.2"/>
+  <text x="860" y="222.5" font-family="monospace" font-size="8" font-weight="700" fill="#6d28d9" text-anchor="middle">camera_joint [fixed]</text>
+
+  <!-- camera_link Box -->
+  <g transform="translate(790, 242)" filter="url(#nodeShadow)">
+    <rect width="140" height="66" rx="8" fill="#faf5ff" stroke="#8b5cf6" stroke-width="1.5"/>
+    <text x="70" y="20" font-family="monospace" font-size="11.5" font-weight="800" fill="#6d28d9" text-anchor="middle">camera_link</text>
+    <text x="70" y="35" font-family="system-ui, sans-serif" font-size="9" font-weight="600" fill="#7c3aed" text-anchor="middle">Front RGB Bumper Sensor</text>
+    <text x="70" y="48" font-family="monospace" font-size="8.5" fill="#475569" text-anchor="middle">xyz="+0.20 0 0.08"</text>
+    <text x="70" y="60" font-family="system-ui, sans-serif" font-size="8.5" font-weight="600" fill="#7c3aed" text-anchor="middle">Box 0.025×0.09×0.025</text>
+  </g>
+
+  <!-- ========================================================================= -->
+  <!-- SUMMARY FOOTNOTE BAR -->
+  <!-- ========================================================================= -->
+  <g transform="translate(30, 396)">
+    <rect width="900" height="40" rx="8" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.2"/>
+    <text x="450" y="24" font-family="system-ui, sans-serif" font-size="10.5" font-weight="600" fill="#334155" text-anchor="middle">
+      &#x2705; Directed Acyclic Graph (DAG): Exactly 1 root (<tspan font-family="monospace" font-weight="700" fill="#0284c7">base_footprint</tspan>), 8 links connected by 7 joints. Closed kinematic loops are strictly forbidden in URDF.
+    </text>
+  </g>
 </svg>

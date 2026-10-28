@@ -5,15 +5,15 @@ import {
   XCircle, 
   Lock, 
   Award, 
-  RotateCcw,
   Send
 } from 'lucide-react';
 
-const STORAGE_KEY_QUIZ_ANSWERS = 'navpro_l1_quiz_answers';
+const STORAGE_KEY_QUIZ_ANSWERS = 'nexus_amr_l1_quiz_answers';
+const LEGACY_STORAGE_KEY_QUIZ_ANSWERS = 'navpro_l1_quiz_answers';
 
 const getStoredQuizAnswers = (lid) => {
   try {
-    const raw = localStorage.getItem(STORAGE_KEY_QUIZ_ANSWERS);
+    const raw = localStorage.getItem(STORAGE_KEY_QUIZ_ANSWERS) || localStorage.getItem(LEGACY_STORAGE_KEY_QUIZ_ANSWERS);
     const parsed = raw ? JSON.parse(raw) : {};
     return parsed[lid] || {};
   } catch {
@@ -121,13 +121,6 @@ export function QuizCard({
     setScoreResult(result);
     setStoredQuizAnswers(lessonId, selectedAnswers);
     onRecordScore(lessonId, correctCount, quizzes.length);
-  };
-
-  const handleRetake = () => {
-    setSelectedAnswers({});
-    setIsSubmitted(false);
-    setScoreResult(null);
-    setStoredQuizAnswers(lessonId, null);
   };
 
   const allAnswered = quizzes.length > 0 && 
@@ -251,16 +244,8 @@ export function QuizCard({
               <span className="result-text">
                 {scoreResult?.passed 
                   ? '🎉 Outstanding! You passed this lesson check.' 
-                  : 'Review the explanations above and retry to solidify your knowledge.'}
+                  : 'Review the key concepts and explanations above.'}
               </span>
-              <button
-                type="button"
-                onClick={handleRetake}
-                className="quiz-retry-btn"
-              >
-                <RotateCcw size={14} />
-                <span>Retry Quiz</span>
-              </button>
             </div>
           )}
         </div>

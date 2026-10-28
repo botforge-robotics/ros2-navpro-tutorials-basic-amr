@@ -10,6 +10,7 @@ import { FeedbackView } from './components/FeedbackView';
 import { RegistrationModal } from './components/RegistrationModal';
 import { HelpModal } from './components/HelpModal';
 import { StudentChatModal } from './components/StudentChatModal';
+import { PageScrollNav } from './components/PageScrollNav';
 import { MessageSquare, Hand } from 'lucide-react';
 import './App.css';
 
@@ -229,6 +230,9 @@ export function App() {
           )}
         </main>
       </div>
+
+      {/* Floating Page Up / Page Down Direct Scroll Arrows */}
+      <PageScrollNav isChatOpen={isChatOpen} />
 
       {/* Floating Quick Action Button for Group Chat & Raise Hand */}
       {!isChatOpen && (

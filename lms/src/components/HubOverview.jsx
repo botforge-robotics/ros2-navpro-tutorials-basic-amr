@@ -16,6 +16,7 @@ import {
   Eye,
   Box,
   Network,
+  Terminal,
 } from "lucide-react";
 
 const MODULE_ICONS = {
@@ -72,7 +73,7 @@ export function HubOverview({
             </button>
 
             <a
-              href="http://localhost:6080/vnc.html?autoconnect=true&resize=remote"
+              href={`http://${typeof window !== 'undefined' ? window.location.hostname : 'localhost'}:6080/vnc.html?autoconnect=true&resize=remote`}
               target="_blank"
               rel="noopener noreferrer"
               className="hero-secondary-btn"
@@ -82,7 +83,17 @@ export function HubOverview({
             </a>
 
             <a
-              href="http://localhost:8443/?folder=/home/student"
+              href={`http://${typeof window !== 'undefined' ? window.location.hostname : 'localhost'}:7681`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hero-secondary-btn"
+            >
+              <Terminal size={17} />
+              <span>Web Terminal (:7681)</span>
+            </a>
+
+            <a
+              href={`http://${typeof window !== 'undefined' ? window.location.hostname : 'localhost'}:8443/?folder=/home/student`}
               target="_blank"
               rel="noopener noreferrer"
               className="hero-secondary-btn"
@@ -236,23 +247,23 @@ export function HubOverview({
                 </td>
                 <td>Core String Pub/Sub (Lesson 05)</td>
                 <td>
-                  <code>navpro_basics/m01_l05_task_custom_pubsub.py</code>
+                  <code>nexus_amr_basics/m01_l05_task_custom_pubsub.py</code>
                 </td>
                 <td>
-                  <code>navpro_basics/m01_l05_solution_custom_pubsub.py</code>
+                  <code>nexus_amr_basics/m01_l05_solution_custom_pubsub.py</code>
                 </td>
               </tr>
               <tr>
                 <td>
-                  <span className="badge badge-success" style={{ marginRight: '6px', fontSize: '0.7rem' }}>Beginner</span>
-                  <strong>Service Calculator Task</strong>
+                  <span className="badge badge-success" style={{ marginRight: '6px', fontSize: '0.7rem' }}>Core Service</span>
+                  <strong>AMR Speed Mode &amp; Zone Governor</strong>
                 </td>
-                <td>Core AddTwoInts Service (Lesson 08)</td>
+                <td>Services &amp; RPC (Lesson 07)</td>
                 <td>
-                  <code>navpro_basics/m02_l08_task_service_calculator.py</code>
+                  <code>nexus_amr_basics/m02_l07_task_speed_mode_server.py</code>
                 </td>
                 <td>
-                  <code>navpro_basics/m02_l08_solution_service_calculator.py</code>
+                  <code>nexus_amr_basics/m02_l07_solution_speed_mode_server.py</code>
                 </td>
               </tr>
               <tr>
@@ -262,10 +273,10 @@ export function HubOverview({
                 </td>
                 <td>Publishers, Subscribers &amp; QoS</td>
                 <td>
-                  <code>navpro_basics/m01_l05_task_teleop_speed_limiter.py</code>
+                  <code>nexus_amr_basics/m01_l05_task_teleop_speed_limiter.py</code>
                 </td>
                 <td>
-                  <code>navpro_basics/m01_l05_solution_teleop_speed_limiter.py</code>
+                  <code>nexus_amr_basics/m01_l05_solution_teleop_speed_limiter.py</code>
                 </td>
               </tr>
               <tr>
@@ -275,10 +286,10 @@ export function HubOverview({
                 </td>
                 <td>Autonomous Navigation &amp; Simple Commander</td>
                 <td>
-                  <code>navpro_navigation/m04_l22_02_task_multi_waypoint_patrol.py</code>
+                  <code>nexus_amr_navigation/m04_l22_02_task_multi_waypoint_patrol.py</code>
                 </td>
                 <td>
-                  <code>navpro_navigation/m04_l22_03_solution_multi_waypoint_patrol.py</code>
+                  <code>nexus_amr_navigation/m04_l22_03_solution_multi_waypoint_patrol.py</code>
                 </td>
               </tr>
             </tbody>
@@ -301,7 +312,7 @@ export function HubOverview({
               <span className="code-lang-tag">BASH</span>
             </div>
             <pre>
-              <code>ros2 run navpro_basics mock_telemetry_provider</code>
+              <code>ros2 run nexus_amr_basics mock_telemetry_provider</code>
             </pre>
           </div>
           <span className="mock-detail">

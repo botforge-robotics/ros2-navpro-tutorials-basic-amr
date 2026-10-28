@@ -53,6 +53,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     net-tools \
     psmisc \
     nano \
+    ttyd \
     sudo && \
     ln -sf /usr/share/novnc/vnc.html /usr/share/novnc/index.html && \
     rm -rf /var/lib/apt/lists/*
@@ -87,8 +88,10 @@ RUN mkdir -p /home/$USERNAME/.vnc && \
     printf '#!/bin/bash\nunset SESSION_MANAGER\nunset DBUS_SESSION_BUS_ADDRESS\nexport XDG_CURRENT_DESKTOP=XFCE\n[ -r $HOME/.Xresources ] && xrdb $HOME/.Xresources\nvncconfig -nowin &\nautocutsel -fork\nautocutsel -selection PRIMARY -fork\nexec startxfce4\n' > /home/$USERNAME/.vnc/xstartup && \
     chmod +x /home/$USERNAME/.vnc/xstartup
 
-# Configure baseline student environment (clean slate - student manually sources ROS 2 in Lesson 02 & 03)
-RUN echo "export TURTLEBOT3_MODEL=waffle" >> /home/$USERNAME/.bashrc
+# Configure baseline student environment (auto-source ROS 2 so CLI tools and rqt_graph are always in PATH)
+RUN echo "export TURTLEBOT3_MODEL=waffle" >> /home/$USERNAME/.bashrc && \
+    echo "if [ -f /opt/ros/jazzy/setup.bash ]; then source /opt/ros/jazzy/setup.bash; fi" >> /home/$USERNAME/.bashrc && \
+    echo "if [ -f /opt/ros/jazzy/setup.bash ]; then source /opt/ros/jazzy/setup.bash; fi" >> /etc/bash.bashrc
 
 # Copy entrypoint script and set up global environment
 USER root
@@ -98,7 +101,7 @@ RUN chmod +x /ros_entrypoint.sh
 USER $USERNAME
 WORKDIR /home/$USERNAME
 
-EXPOSE 8000 6080 8443
+EXPOSE 8000 6080 8443 7681
 
 ENTRYPOINT ["/ros_entrypoint.sh"]
 CMD ["bash"]

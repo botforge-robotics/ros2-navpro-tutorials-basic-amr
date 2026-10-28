@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   CheckCircle2, 
   Circle, 
@@ -41,11 +41,47 @@ export function Sidebar({
     5: true
   });
 
+  // Exclusive accordion: only ONE lesson can have its subtopics expanded at a time
+  const [expandedLessonId, setExpandedLessonId] = useState(currentLessonId);
+
+  // Automatically expand subtopics for the newly selected active lesson and close any other
+  useEffect(() => {
+    if (currentLessonId) {
+      setExpandedLessonId(currentLessonId);
+    }
+  }, [currentLessonId]);
+
   const toggleModule = (modId) => {
     setExpandedModules(prev => ({
       ...prev,
       [modId]: !prev[modId]
     }));
+  };
+
+  const toggleSubtopics = (e, lessonId) => {
+    e.stopPropagation();
+    // If clicking the currently open lesson, close it; otherwise open this one and close any others
+    setExpandedLessonId(prev => (prev === lessonId ? null : lessonId));
+  };
+
+  const handleSubtopicClick = (e, lessonId, subtopicId) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (lessonId !== currentLessonId) {
+      onSelectLesson(lessonId);
+      setTimeout(() => {
+        const el = document.getElementById(subtopicId);
+        if (el) {
+          el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }, 250);
+    } else {
+      const el = document.getElementById(subtopicId);
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }
+    if (isOpenMobile) onCloseMobile();
   };
 
   return (
@@ -167,7 +203,38 @@ export function Sidebar({
                                 ⭐
                               </span>
                             )}
+
+                            {l.subtopics && l.subtopics.length > 0 && (
+                              <button
+                                type="button"
+                                className="subtopic-toggle-btn"
+                                onClick={(e) => toggleSubtopics(e, l.id)}
+                                title={expandedLessonId === l.id ? "Collapse subtopics" : "Expand subtopics"}
+                                aria-label="Toggle subtopics"
+                              >
+                                {expandedLessonId === l.id ? <ChevronDown size={13} /> : <ChevronRight size={13} />}
+                              </button>
+                            )}
                           </div>
+
+                          {/* Collapsible Subtopics Under Lesson */}
+                          {expandedLessonId === l.id && l.subtopics && l.subtopics.length > 0 && (
+                            <ul className="sidebar-subtopics-list">
+                              {l.subtopics.map((st) => (
+                                <li key={st.id} className="sidebar-subtopic-item">
+                                  <a
+                                    href={`#${st.id}`}
+                                    className="sidebar-subtopic-link"
+                                    onClick={(e) => handleSubtopicClick(e, l.id, st.id)}
+                                    title={st.title}
+                                  >
+                                    <span className="subtopic-bullet" />
+                                    <span className="subtopic-text">{st.title}</span>
+                                  </a>
+                                </li>
+                              ))}
+                            </ul>
+                          )}
                         </li>
                       );
                     })}

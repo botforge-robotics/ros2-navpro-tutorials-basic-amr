@@ -10,11 +10,23 @@ import {
   Clock, 
   BookOpen,
   ArrowLeft,
-  ArrowRight
+  ArrowRight,
+  X,
+  ZoomIn
 } from 'lucide-react';
 import { QuizCard } from './QuizCard';
 import { PermissionCalculator } from './PermissionCalculator';
+import { TurtlesimTeleopFlow } from './TurtlesimTeleopFlow';
+import { PackageStructureFlow } from './PackageStructureFlow';
 import { Ros2ArchitectureInteractive } from './Ros2ArchitectureInteractive';
+import { lessonRegistry } from '../lessons/registry';
+import { PubSubFlow } from './PubSubFlow';
+import { ServiceFlow } from './ServiceFlow';
+import { ActionFlow } from './ActionFlow';
+import { LogLevelsNestedCircle } from './LogLevelsNestedCircle';
+import InertiaCalculator from './InertiaCalculator';
+import UrdfViewer3D from './UrdfViewer3D';
+import hljs from 'highlight.js';
 
 export function LessonView({ 
   lesson, 
@@ -31,14 +43,92 @@ export function LessonView({
 }) {
   const contentRef = useRef(null);
   const [permissionPortalNode, setPermissionPortalNode] = useState(null);
+  const [turtlesimPortalNode, setTurtlesimPortalNode] = useState(null);
+  const [packagePortalNode, setPackagePortalNode] = useState(null);
+  const [pubsubPortalNode, setPubsubPortalNode] = useState(null);
+  const [servicePortalNode, setServicePortalNode] = useState(null);
+  const [actionPortalNode, setActionPortalNode] = useState(null);
+  const [logLevelsPortalNode, setLogLevelsPortalNode] = useState(null);
+  const [inertiaPortalNode, setInertiaPortalNode] = useState(null);
+  const [urdfViewerPortalNode, setUrdfViewerPortalNode] = useState(null);
+  const [zoomedImage, setZoomedImage] = useState(null); // { src, alt, caption }
 
-  // Hook portal root for interactive permission calculator in Lesson 01
+  // Global Lightbox Click & Key Handler: clicking on any diagram / photo opens it in zoom view
   useEffect(() => {
-    if (lesson.id === 'lesson_01') {
-      const el = document.getElementById('interactive-permission-calculator-root');
-      setPermissionPortalNode(el);
+    const handleGlobalImageClick = (e) => {
+      const img = e.target.closest('img');
+      if (img) {
+        // Exclude image inside the lightbox itself, tiny icons, logos, or avatars
+        if (img.closest('.image-lightbox-overlay') || img.closest('.nav-logo') || img.closest('.status-icon') || img.closest('.user-avatar')) return;
+
+        e.preventDefault();
+        e.stopPropagation();
+        setZoomedImage({
+          src: img.currentSrc || img.src,
+          alt: img.alt || 'High-Resolution Diagram View',
+          caption: img.getAttribute('title') || img.alt || ''
+        });
+      }
+    };
+
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape') {
+        setZoomedImage(null);
+      }
+    };
+
+    document.addEventListener('click', handleGlobalImageClick);
+    window.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      document.removeEventListener('click', handleGlobalImageClick);
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, []);
+
+  // Prevent background scroll when image lightbox is open
+  useEffect(() => {
+    if (zoomedImage) {
+      document.body.style.overflow = 'hidden';
     } else {
-      setPermissionPortalNode(null);
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [zoomedImage]);
+
+  // Hook portal roots for interactive widgets
+  useEffect(() => {
+    // Reset all portal nodes first
+    setPermissionPortalNode(null);
+    setTurtlesimPortalNode(null);
+    setPackagePortalNode(null);
+    setPubsubPortalNode(null);
+    setServicePortalNode(null);
+    setActionPortalNode(null);
+    setLogLevelsPortalNode(null);
+    setInertiaPortalNode(null);
+    setUrdfViewerPortalNode(null);
+
+    // Query elements based on current lesson
+    if (lesson.id === 'lesson_01') {
+      setPermissionPortalNode(document.getElementById('interactive-permission-calculator-root'));
+    } else if (lesson.id === 'lesson_03') {
+      setTurtlesimPortalNode(document.getElementById('turtlesim-teleop-flow-root'));
+    } else if (lesson.id === 'lesson_04') {
+      setPackagePortalNode(document.getElementById('package-structure-flow-root'));
+    } else if (lesson.id === 'lesson_05') {
+      setPubsubPortalNode(document.getElementById('pubsub-flow-root'));
+    } else if (lesson.id === 'lesson_06') {
+      setLogLevelsPortalNode(document.getElementById('log-levels-circle-root'));
+    } else if (lesson.id === 'lesson_07') {
+      setServicePortalNode(document.getElementById('service-flow-root'));
+    } else if (lesson.id === 'lesson_10') {
+      setActionPortalNode(document.getElementById('action-flow-root'));
+    } else if (lesson.id === 'lesson_14') {
+      setInertiaPortalNode(document.getElementById('interactive-inertia-calculator-root'));
+      setUrdfViewerPortalNode(document.getElementById('interactive-urdf-viewer-root'));
     }
   }, [lesson.id, lesson.html_content]);
 
@@ -46,6 +136,124 @@ export function LessonView({
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }, [lesson.id]);
+
+  // Process all code blocks with highlight.js and wrap into IDE chrome windows
+  useEffect(() => {
+    if (!contentRef.current) return;
+
+    // Ensure all images in lesson body are centered horizontally and wrapped properly
+    const imgs = contentRef.current.querySelectorAll('img');
+    imgs.forEach((img) => {
+      img.classList.add('lesson-image');
+      const parent = img.parentElement;
+      if (parent && parent.tagName.toLowerCase() === 'p') {
+        parent.classList.add('lesson-image-wrapper');
+      }
+    });
+
+    const pres = contentRef.current.querySelectorAll('pre');
+    pres.forEach((pre) => {
+      let code = pre.querySelector('code');
+      if (!code) {
+        // Automatically wrap bare pre content in <code>
+        const newCode = document.createElement('code');
+        newCode.innerHTML = pre.innerHTML;
+        pre.innerHTML = '';
+        pre.appendChild(newCode);
+        code = newCode;
+      }
+
+      // Check if already wrapped in an ide-code-window
+      let parentWindow = pre.closest('.ide-code-window');
+      const existingContainer = pre.closest('.code-container');
+
+      // Detect language from class (e.g. language-python, language-bash, language-filepath)
+      let lang = 'code';
+      code.classList.forEach((cls) => {
+        if (cls.startsWith('language-')) {
+          lang = cls.replace('language-', '').toLowerCase();
+        }
+      });
+      if (lang === 'code' && existingContainer && existingContainer.getAttribute('data-language')) {
+        lang = existingContainer.getAttribute('data-language').toLowerCase();
+      }
+
+      // Highlight with highlight.js if not already highlighted
+      if (!code.classList.contains('hljs') && lang !== 'filepath' && lang !== 'text') {
+        const rawCode = code.textContent || '';
+        if (lang && hljs.getLanguage(lang)) {
+          try {
+            const res = hljs.highlight(rawCode, { language: lang, ignoreIllegals: true });
+            code.innerHTML = res.value;
+            code.classList.add('hljs');
+          } catch (e) {
+            hljs.highlightElement(code);
+          }
+        } else {
+          hljs.highlightElement(code);
+        }
+      }
+
+      if (!parentWindow) {
+        if (existingContainer) {
+          existingContainer.classList.add('ide-code-window');
+          parentWindow = existingContainer;
+        } else {
+          const wrapper = document.createElement('div');
+          wrapper.className = 'ide-code-window';
+          pre.parentNode.insertBefore(wrapper, pre);
+          wrapper.appendChild(pre);
+          parentWindow = wrapper;
+        }
+      }
+
+      // Create or update IDE header with window dots and tab
+      let header = parentWindow.querySelector('.ide-header, .code-header');
+      if (!header) {
+        header = document.createElement('div');
+        header.className = 'ide-header';
+        parentWindow.insertBefore(header, pre);
+      } else {
+        header.className = 'ide-header';
+      }
+
+      const langDisplay = lang === 'bash' ? 'bash — terminal' :
+                          lang === 'filepath' ? 'filepath — workspace' :
+                          lang === 'python' ? 'python — script' :
+                          lang === 'json' ? 'json — config' :
+                          lang === 'xml' ? 'xml / urdf' :
+                          lang === 'yaml' ? 'yaml — config' :
+                          lang === 'text' ? 'output / log' :
+                          lang;
+
+      const langIcon = lang === 'bash' ? '❯_' :
+                       lang === 'filepath' ? '📁' :
+                       lang === 'python' ? '🐍' :
+                       lang === 'json' ? '{ }' :
+                       lang === 'xml' ? '</>' :
+                       lang === 'yaml' ? '⚙️' :
+                       lang === 'text' ? '📋' : '📄';
+
+      header.innerHTML = `
+        <div class="ide-controls">
+          <span class="ide-dot ide-dot-red"></span>
+          <span class="ide-dot ide-dot-yellow"></span>
+          <span class="ide-dot ide-dot-green"></span>
+        </div>
+        <div class="ide-tab">
+          <span class="ide-tab-icon">${langIcon}</span>
+          <span class="ide-tab-name">${langDisplay}</span>
+        </div>
+        <button class="copy-code-btn" title="Copy code snippet">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+          </svg>
+          <span>Copy</span>
+        </button>
+      `;
+    });
+  }, [lesson.id, lesson.html_content]);
 
   // Attach interactive copy-to-clipboard behavior to all rendered code blocks
   useEffect(() => {
@@ -55,11 +263,11 @@ export function LessonView({
       const btn = e.target.closest('.copy-code-btn, .copy-btn');
       if (!btn) return;
 
-      const codeContainer = btn.closest('.code-container') || btn.closest('pre');
+      const codeContainer = btn.closest('.ide-code-window') || btn.closest('.code-container') || btn.closest('pre');
       const codeElement = codeContainer ? codeContainer.querySelector('code') : null;
       if (!codeElement) return;
 
-      const codeText = codeElement.innerText;
+      const codeText = codeElement.textContent || codeElement.innerText;
       // 1. Copy to browser clipboard
       navigator.clipboard.writeText(codeText).catch(() => {});
 
@@ -151,38 +359,93 @@ export function LessonView({
         <div className="concept-snapshot-card">
           <div className="snapshot-header">
             <Zap size={18} className="zap-icon" />
-            <h3>⚡ Quick Concept Snapshot</h3>
+            <h3>Quick Concept Snapshot</h3>
           </div>
           <ul className="snapshot-list">
-            {lesson.snapshot.map(([term, desc], idx) => (
-              <li key={idx}>
-                <strong>{term}:</strong> {desc}
-              </li>
-            ))}
+            {lesson.snapshot.map((item, idx) => {
+              if (Array.isArray(item)) {
+                return (
+                  <li key={idx}>
+                    <strong>{item[0]}:</strong> {item[1]}
+                  </li>
+                );
+              }
+              return (
+                <li key={idx}>
+                  {item}
+                </li>
+              );
+            })}
           </ul>
         </div>
       )}
 
-      {/* Main Educational Content: Fully Interactive Component for Lesson 02, or Markdown Body */}
-      {lesson.id === 'lesson_02' ? (
-        <Ros2ArchitectureInteractive />
-      ) : (
-        <article 
-          ref={contentRef} 
-          className="markdown-body lesson-body-content"
-          dangerouslySetInnerHTML={{ __html: lesson.html_content }}
-        />
+      {/* Main Educational Content: Fully Interactive React Lesson Component, or Fallback to Markdown Body */}
+      {(() => {
+        const LessonComponent = lessonRegistry[lesson.id];
+        if (LessonComponent) {
+          return (
+            <React.Suspense fallback={
+              <div className="lesson-loading-spinner" style={{ padding: '3rem', textAlign: 'center', color: 'var(--text-muted)' }}>
+                <p>Loading interactive lesson...</p>
+              </div>
+            }>
+              <LessonComponent />
+            </React.Suspense>
+          );
+        }
+        return (
+          <article 
+            ref={contentRef} 
+            className="markdown-body lesson-body-content"
+            dangerouslySetInnerHTML={{ __html: lesson.html_content }}
+          />
+        );
+      })()}
+
+      {/* Interactive Permission Calculator for Lesson 01 */}
+      {lesson.id === 'lesson_01' && !lessonRegistry['lesson_01'] && (
+        permissionPortalNode ? ReactDOM.createPortal(<PermissionCalculator />, permissionPortalNode) : null
       )}
 
-      {/* Interactive Permission Calculator for Lesson 01 (Portaled into Section 4.1 or inline fallback) */}
-      {lesson.id === 'lesson_01' && (
-        permissionPortalNode ? (
-          ReactDOM.createPortal(<PermissionCalculator />, permissionPortalNode)
-        ) : (
-          <section className="lesson-interactive-tool-section" style={{ margin: '2rem 0' }}>
-            <PermissionCalculator />
-          </section>
-        )
+      {/* Interactive Turtlesim Teleop & Computational Graph Flow for Lesson 03 */}
+      {lesson.id === 'lesson_03' && !lessonRegistry['lesson_03'] && (
+        turtlesimPortalNode ? ReactDOM.createPortal(<TurtlesimTeleopFlow />, turtlesimPortalNode) : null
+      )}
+
+      {/* Interactive Package Anatomy & Filesystem Flow for Lesson 04 */}
+      {lesson.id === 'lesson_04' && (
+        packagePortalNode ? ReactDOM.createPortal(<PackageStructureFlow />, packagePortalNode) : null
+      )}
+
+      {/* Interactive Pub/Sub Architecture & Flow for Lesson 05 */}
+      {lesson.id === 'lesson_05' && (
+        pubsubPortalNode ? ReactDOM.createPortal(<PubSubFlow />, pubsubPortalNode) : null
+      )}
+
+      {/* Interactive Log Levels Nested Circle Diagram for Lesson 06 */}
+      {lesson.id === 'lesson_06' && (
+        logLevelsPortalNode ? ReactDOM.createPortal(<LogLevelsNestedCircle />, logLevelsPortalNode) : null
+      )}
+
+      {/* Interactive Service Server & Client RPC Flow for Lesson 07 */}
+      {lesson.id === 'lesson_07' && (
+        servicePortalNode ? ReactDOM.createPortal(<ServiceFlow />, servicePortalNode) : null
+      )}
+
+      {/* Interactive Action 3-Tier Long-Running Goal/Feedback/Result Flow for Lesson 10 */}
+      {lesson.id === 'lesson_10' && (
+        actionPortalNode ? ReactDOM.createPortal(<ActionFlow />, actionPortalNode) : null
+      )}
+
+      {/* Interactive URDF Inertia Tensor Calculator for Lesson 14 */}
+      {lesson.id === 'lesson_14' && (
+        inertiaPortalNode ? ReactDOM.createPortal(<InertiaCalculator />, inertiaPortalNode) : null
+      )}
+
+      {/* Interactive 3D URDF & TF Kinematics Visualizer for Lesson 14 */}
+      {lesson.id === 'lesson_14' && (
+        urdfViewerPortalNode ? ReactDOM.createPortal(<UrdfViewer3D />, urdfViewerPortalNode) : null
       )}
 
       {/* Embedded Interactive Quiz */}
@@ -337,6 +600,46 @@ export function LessonView({
           <div style={{ width: '130px' }} />
         )}
       </footer>
+
+      {/* Global High-Resolution Image Zoom / Lightbox Modal rendered via Portal to avoid ancestor CSS transforms */}
+      {zoomedImage && typeof document !== 'undefined' && ReactDOM.createPortal(
+        <div 
+          className="image-lightbox-overlay" 
+          onClick={() => setZoomedImage(null)}
+          role="dialog"
+          aria-modal="true"
+        >
+          <div className="image-lightbox-backdrop" />
+          <div className="image-lightbox-container" onClick={(e) => e.stopPropagation()}>
+            <div className="image-lightbox-header">
+              <span className="image-lightbox-title">
+                {zoomedImage.alt || 'High-Resolution Diagram Preview'}
+              </span>
+              <button 
+                type="button" 
+                className="image-lightbox-close-btn"
+                onClick={() => setZoomedImage(null)}
+                title="Close full-screen image preview (ESC)"
+              >
+                <X size={20} />
+              </button>
+            </div>
+            <div className="image-lightbox-body">
+              <img 
+                src={zoomedImage.src} 
+                alt={zoomedImage.alt} 
+                className="image-lightbox-img" 
+              />
+            </div>
+            {zoomedImage.caption && (
+              <div className="image-lightbox-caption">
+                {zoomedImage.caption}
+              </div>
+            )}
+          </div>
+        </div>,
+        document.body
+      )}
     </div>
   );
 }

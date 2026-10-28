@@ -1,0 +1,13 @@
+# Goal: Target linear distance to traverse in meters and velocity limit
+float32 target_distance_m
+float32 max_speed_mps
+---
+# Result: Final status upon completing or aborting the motion
+bool reached_target
+float32 actual_distance_travelled_m
+string status_message
+---
+# Feedback: Real-time progress emitted during the long-running motion
+float32 distance_remaining_m
+float32 current_speed_mps
+float32 percent_complete

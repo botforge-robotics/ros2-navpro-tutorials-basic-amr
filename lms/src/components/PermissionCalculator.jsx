@@ -361,14 +361,14 @@ export function PermissionCalculator() {
         </div>
         <div className="terminal-body">
           <div className="terminal-line">
-            <span className="term-prompt">student@navpro:~/robotics_lab/scripts$</span>
+            <span className="term-prompt">student@nexus-amr:~/robotics_lab/scripts$</span>
             <span className="term-cmd">ls -l sensor_diagnostics.sh</span>
           </div>
           <div className="terminal-output ls-output">
             <span style={{ color: '#38bdf8' }}>{fullPermString}</span> 1 student student 1420 Oct 14 10:00 sensor_diagnostics.sh
           </div>
           <div className="terminal-line" style={{ marginTop: '8px' }}>
-            <span className="term-prompt">student@navpro:~/robotics_lab/scripts$</span>
+            <span className="term-prompt">student@nexus-amr:~/robotics_lab/scripts$</span>
             <span className="term-cmd">./sensor_diagnostics.sh</span>
           </div>
 

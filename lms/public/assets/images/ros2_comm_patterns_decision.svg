@@ -1,0 +1,108 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 480" width="100%" height="100%">
+  <defs>
+    <filter id="cardShadow" x="-5%" y="-5%" width="110%" height="115%">
+      <feDropShadow dx="0" dy="3" stdDeviation="4" flood-color="#0f172a" flood-opacity="0.06"/>
+    </filter>
+    <linearGradient id="headerGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0284c7"/>
+      <stop offset="100%" stop-color="#0369a1"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="960" height="480" rx="12" fill="#ffffff" stroke="#e2e8f0" stroke-width="1.5"/>
+
+  <!-- Title Header -->
+  <rect x="20" y="16" width="920" height="42" rx="8" fill="url(#headerGrad)"/>
+  <text x="480" y="42" font-family="system-ui, -apple-system, sans-serif" font-size="16" font-weight="700" fill="#ffffff" text-anchor="middle" letter-spacing="0.5">
+    ROS 2 COMMUNICATION PATTERN DECISION MATRIX: TOPICS vs. SERVICES vs. ACTIONS
+  </text>
+
+  <!-- Root Decision Node -->
+  <g transform="translate(355, 75)" filter="url(#cardShadow)">
+    <rect width="250" height="48" rx="8" fill="#f8fafc" stroke="#0284c7" stroke-width="2"/>
+    <text x="125" y="24" font-family="system-ui, sans-serif" font-size="12" font-weight="700" fill="#0369a1" text-anchor="middle">ROBOT COMMUNICATION REQUIREMENT</text>
+    <text x="125" y="39" font-family="system-ui, sans-serif" font-size="10" font-weight="500" fill="#64748b" text-anchor="middle">What is the data flow &amp; timing model?</text>
+  </g>
+
+  <!-- Connecting Lines from Root -->
+  <path d="M 410,123 L 410,150 L 220,150 L 220,175" fill="none" stroke="#94a3b8" stroke-width="2"/>
+  <path d="M 550,123 L 550,150 L 710,150 L 710,175" fill="none" stroke="#94a3b8" stroke-width="2"/>
+
+  <!-- Left Branch: Continuous Streaming -->
+  <g transform="translate(100, 175)" filter="url(#cardShadow)">
+    <rect width="240" height="42" rx="6" fill="#f0fdf4" stroke="#16a34a" stroke-width="1.5"/>
+    <text x="120" y="22" font-family="system-ui, sans-serif" font-size="11.5" font-weight="700" fill="#15803d" text-anchor="middle">Continuous Unidirectional Stream?</text>
+    <text x="120" y="35" font-family="system-ui, sans-serif" font-size="9.5" font-weight="500" fill="#166534" text-anchor="middle">Sensors, Odometry, Telemetry, Video</text>
+  </g>
+
+  <!-- Right Branch: Discrete Transaction -->
+  <g transform="translate(590, 175)" filter="url(#cardShadow)">
+    <rect width="240" height="42" rx="6" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+    <text x="120" y="22" font-family="system-ui, sans-serif" font-size="11.5" font-weight="700" fill="#1d4ed8" text-anchor="middle">Discrete Request / Trigger?</text>
+    <text x="120" y="35" font-family="system-ui, sans-serif" font-size="9.5" font-weight="500" fill="#1e40af" text-anchor="middle">State queries, Commands, Tasks</text>
+  </g>
+
+  <!-- Sub Branch Lines -->
+  <!-- Under Left: Topics -->
+  <path d="M 220,217 L 220,250" fill="none" stroke="#16a34a" stroke-width="2"/>
+  <!-- Under Right: Split into Short (Service) vs Long (Action) -->
+  <path d="M 710,217 L 710,235" fill="none" stroke="#2563eb" stroke-width="2"/>
+  <path d="M 550,235 L 870,235" fill="none" stroke="#2563eb" stroke-width="2"/>
+  <path d="M 550,235 L 550,250" fill="none" stroke="#0891b2" stroke-width="2"/>
+  <path d="M 870,235 L 870,250" fill="none" stroke="#7c3aed" stroke-width="2"/>
+
+  <!-- FINAL CARD 1: TOPICS -->
+  <g transform="translate(40, 250)" filter="url(#cardShadow)">
+    <rect width="360" height="195" rx="8" fill="#ffffff" stroke="#16a34a" stroke-width="2"/>
+    <rect x="0" y="0" width="360" height="32" rx="6" fill="#16a34a"/>
+    <text x="180" y="21" font-family="system-ui, sans-serif" font-size="12" font-weight="800" fill="#ffffff" text-anchor="middle">1. TOPICS (Publish / Subscribe)</text>
+    
+    <text x="16" y="52" font-family="system-ui, sans-serif" font-size="10.5" font-weight="700" fill="#0f172a">Pattern: Many-to-Many Asynchronous Bus</text>
+    <text x="16" y="70" font-family="system-ui, sans-serif" font-size="9.5" fill="#475569">• Continuous high-frequency telemetry</text>
+    <text x="16" y="86" font-family="system-ui, sans-serif" font-size="9.5" fill="#475569">• Zero coupling between publisher and receiver</text>
+    <text x="16" y="102" font-family="system-ui, sans-serif" font-size="9.5" fill="#475569">• Configurable QoS (Reliable vs. Best-Effort)</text>
+    <text x="16" y="118" font-family="system-ui, sans-serif" font-size="9.5" fill="#dc2626">✗ No acknowledgment or return delivery guarantees</text>
+
+    <rect x="12" y="132" width="336" height="50" rx="6" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1"/>
+    <text x="20" y="148" font-family="system-ui, sans-serif" font-size="9" font-weight="700" fill="#15803d">AMR EXAMPLES IN CURRICULUM:</text>
+    <text x="20" y="162" font-family="monospace" font-size="8.5" fill="#0f172a">/sensor/ultrasonic_front (L05), /scan (L16),</text>
+    <text x="20" y="174" font-family="monospace" font-size="8.5" fill="#0f172a">/odom (L16), /camera/image_raw (L14)</text>
+  </g>
+
+  <!-- FINAL CARD 2: SERVICES -->
+  <g transform="translate(420, 250)" filter="url(#cardShadow)">
+    <rect width="250" height="195" rx="8" fill="#ffffff" stroke="#0891b2" stroke-width="2"/>
+    <rect x="0" y="0" width="250" height="32" rx="6" fill="#0891b2"/>
+    <text x="125" y="21" font-family="system-ui, sans-serif" font-size="12" font-weight="800" fill="#ffffff" text-anchor="middle">2. SERVICES (Client / Server)</text>
+    
+    <text x="14" y="52" font-family="system-ui, sans-serif" font-size="10.5" font-weight="700" fill="#0f172a">Pattern: 1-to-1 Sync Request / Reply</text>
+    <text x="14" y="70" font-family="system-ui, sans-serif" font-size="9.5" fill="#475569">• Instantaneous &lt; 50ms transactions</text>
+    <text x="14" y="86" font-family="system-ui, sans-serif" font-size="9.5" fill="#475569">• Guaranteed response or timeout</text>
+    <text x="14" y="102" font-family="system-ui, sans-serif" font-size="9.5" fill="#475569">• Simple atomic state changes</text>
+    <text x="14" y="118" font-family="system-ui, sans-serif" font-size="9.5" fill="#dc2626">✗ Blocks thread if called synchronously</text>
+
+    <rect x="10" y="132" width="230" height="50" rx="6" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1"/>
+    <text x="16" y="148" font-family="system-ui, sans-serif" font-size="9" font-weight="700" fill="#0e7490">AMR EXAMPLES IN CURRICULUM:</text>
+    <text x="16" y="162" font-family="monospace" font-size="8.5" fill="#0f172a">/robot/emergency_stop (L07)</text>
+    <text x="16" y="174" font-family="monospace" font-size="8.5" fill="#0f172a">/amr/set_speed_mode (L07)</text>
+  </g>
+
+  <!-- FINAL CARD 3: ACTIONS -->
+  <g transform="translate(690, 250)" filter="url(#cardShadow)">
+    <rect width="250" height="195" rx="8" fill="#ffffff" stroke="#7c3aed" stroke-width="2"/>
+    <rect x="0" y="0" width="250" height="32" rx="6" fill="#7c3aed"/>
+    <text x="125" y="21" font-family="system-ui, sans-serif" font-size="12" font-weight="800" fill="#ffffff" text-anchor="middle">3. ACTIONS (Goal / Result)</text>
+    
+    <text x="14" y="52" font-family="system-ui, sans-serif" font-size="10.5" font-weight="700" fill="#0f172a">Pattern: Long-Running Asynchronous</text>
+    <text x="14" y="70" font-family="system-ui, sans-serif" font-size="9.5" fill="#475569">• Continuous progress feedback</text>
+    <text x="14" y="86" font-family="system-ui, sans-serif" font-size="9.5" fill="#475569">• Mid-flight task preemption &amp; cancel</text>
+    <text x="14" y="102" font-family="system-ui, sans-serif" font-size="9.5" fill="#475569">• State machine lifecycle</text>
+    <text x="14" y="118" font-family="system-ui, sans-serif" font-size="9.5" fill="#b45309">! High architectural complexity</text>
+
+    <rect x="10" y="132" width="230" height="50" rx="6" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1"/>
+    <text x="16" y="148" font-family="system-ui, sans-serif" font-size="9" font-weight="700" fill="#6d28d9">AMR EXAMPLES IN CURRICULUM:</text>
+    <text x="16" y="162" font-family="monospace" font-size="8.5" fill="#0f172a">/navigate_distance (L10)</text>
+    <text x="16" y="174" font-family="monospace" font-size="8.5" fill="#0f172a">/navigate_to_pose (L19-L22)</text>
+  </g>
+</svg>

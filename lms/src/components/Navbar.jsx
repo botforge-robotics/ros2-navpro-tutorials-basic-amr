@@ -12,7 +12,8 @@ import {
   Menu, 
   User, 
   HelpCircle,
-  Activity
+  Activity,
+  Terminal
 } from 'lucide-react';
 
 export function Navbar({ 
@@ -111,7 +112,6 @@ export function Navbar({
             className="ros2-logo" 
           />
           <div className="brand-text">
-            <span className="brand-title">NavPro Learning Hub</span>
             <span className="brand-badge">Level 1 &bull; ROS 2 Jazzy</span>
           </div>
         </button>
@@ -180,7 +180,7 @@ export function Navbar({
       <div className="navbar-right">
         {/* Quick Launch Buttons */}
         <a 
-          href="http://localhost:6080/vnc.html?autoconnect=true&resize=remote" 
+          href={`http://${typeof window !== 'undefined' ? window.location.hostname : 'localhost'}:6080/vnc.html?autoconnect=true&resize=remote`} 
           target="_blank" 
           rel="noopener noreferrer" 
           className="nav-action-btn desktop-btn"
@@ -191,7 +191,18 @@ export function Navbar({
         </a>
 
         <a 
-          href="http://localhost:8443/?folder=/home/student" 
+          href={`http://${typeof window !== 'undefined' ? window.location.hostname : 'localhost'}:7681`} 
+          target="_blank" 
+          rel="noopener noreferrer" 
+          className="nav-action-btn terminal-btn"
+          title="Open Dedicated Web Terminal in New Window (Port 7681)"
+        >
+          <Terminal size={16} />
+          <span>Terminal</span>
+        </a>
+
+        <a 
+          href={`http://${typeof window !== 'undefined' ? window.location.hostname : 'localhost'}:8443/?folder=/home/student`} 
           target="_blank" 
           rel="noopener noreferrer" 
           className="nav-action-btn vscode-btn"

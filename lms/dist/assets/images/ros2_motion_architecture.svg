@@ -1,41 +1,18 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 410" width="1000" height="410">
   <defs>
-    <!-- Background Gradient -->
-    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#0b0f19"/>
-      <stop offset="50%" stop-color="#111827"/>
-      <stop offset="100%" stop-color="#0f172a"/>
-    </linearGradient>
-
-    <!-- Card Background Gradient -->
-    <linearGradient id="cardGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" stop-color="#1e293b"/>
-      <stop offset="100%" stop-color="#0f172a"/>
-    </linearGradient>
-
     <!-- DDS Bus Glowing Gradient -->
     <linearGradient id="ddsGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" stop-color="#38bdf8"/>
-      <stop offset="50%" stop-color="#818cf8"/>
-      <stop offset="100%" stop-color="#c084fc"/>
+      <stop offset="0%" stop-color="#0284c7"/>
+      <stop offset="50%" stop-color="#6366f1"/>
+      <stop offset="100%" stop-color="#8b5cf6"/>
     </linearGradient>
 
-    <!-- Glow Filters -->
-    <filter id="glowCyan" x="-20%" y="-20%" width="140%" height="140%">
-      <feGaussianBlur stdDeviation="3" result="blur" />
-      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    <!-- Subtle Shadows -->
+    <filter id="shadowBox" x="-4%" y="-4%" width="108%" height="108%">
+      <feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="#0f172a" flood-opacity="0.06"/>
     </filter>
 
-    <filter id="glowPurple" x="-20%" y="-20%" width="140%" height="140%">
-      <feGaussianBlur stdDeviation="4" result="blur" />
-      <feComposite in="SourceGraphic" in2="blur" operator="over" />
-    </filter>
-
-    <filter id="shadowBox" x="-5%" y="-5%" width="110%" height="110%">
-      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#000000" flood-opacity="0.45"/>
-    </filter>
-
-    <style>
+    <style><![CDATA[
       @keyframes dashDown {
         from { stroke-dashoffset: 24; }
         to { stroke-dashoffset: 0; }
@@ -46,7 +23,7 @@
       }
       @keyframes pulseNode {
         0%, 100% { transform: scale(1); opacity: 0.9; }
-        50% { transform: scale(1.05); opacity: 1; }
+        50% { transform: scale(1.08); opacity: 1; }
       }
       @keyframes radarRotate {
         from { transform: rotate(0deg); }
@@ -83,26 +60,17 @@
       .pulse-beacon {
         animation: pulseNode 1.8s ease-in-out infinite;
       }
-    </style>
+    ]]></style>
   </defs>
 
   <!-- Canvas Background -->
-  <rect width="1000" height="410" rx="14" fill="url(#bgGrad)" stroke="#1e293b" stroke-width="1.5" />
-
-  <!-- Subtle Blueprint Grid Lines -->
-  <g opacity="0.1" stroke="#38bdf8" stroke-width="0.75" stroke-dasharray="4 4">
-    <line x1="40" y1="50" x2="960" y2="50" />
-    <line x1="40" y1="235" x2="960" y2="235" />
-    <line x1="40" y1="285" x2="960" y2="285" />
-    <line x1="340" y1="50" x2="340" y2="235" />
-    <line x1="660" y1="50" x2="660" y2="235" />
-  </g>
+  <rect width="1000" height="410" rx="16" fill="#ffffff" stroke="#e2e8f0" stroke-width="1.5" />
 
   <!-- Main Banner Header -->
-  <text x="500" y="28" fill="#f8fafc" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="13.5" font-weight="800" text-anchor="middle" letter-spacing="1">
+  <text x="500" y="28" fill="#0f172a" font-family="system-ui, -apple-system, sans-serif" font-size="14" font-weight="800" text-anchor="middle" letter-spacing="1">
     THE LIVING ROBOT: ROS 2 MOTION ARCHITECTURE &amp; DATA HIGHWAY
   </text>
-  <text x="500" y="44" fill="#94a3b8" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="10" font-weight="500" text-anchor="middle">
+  <text x="500" y="45" fill="#475569" font-family="system-ui, -apple-system, sans-serif" font-size="10.5" font-weight="600" text-anchor="middle">
     Asynchronous Peer-to-Peer DDS Bus • Zero Central Master • Fully Connected Pub/Sub Closed-Loop
   </text>
 
@@ -111,35 +79,35 @@
   <!-- ========================================================================= -->
   <g transform="translate(40, 60)" filter="url(#shadowBox)">
     <!-- Zone Container Box -->
-    <rect width="280" height="175" rx="10" fill="url(#cardGrad)" stroke="#0284c7" stroke-width="1.5"/>
-    <rect width="280" height="28" rx="10" fill="#0369a1" fill-opacity="0.3"/>
-    <text x="140" y="19" fill="#38bdf8" font-family="system-ui, sans-serif" font-size="11" font-weight="800" text-anchor="middle" letter-spacing="0.5">
+    <rect width="280" height="175" rx="12" fill="#f0f9ff" stroke="#0284c7" stroke-width="1.5"/>
+    <rect width="280" height="28" rx="12" fill="#e0f2fe"/>
+    <text x="140" y="19" fill="#0369a1" font-family="system-ui, sans-serif" font-size="11" font-weight="800" text-anchor="middle" letter-spacing="0.5">
       1. SENSORY PERCEPTION (SENSES)
     </text>
 
     <!-- Sensor 1: 2D LiDAR -->
     <g transform="translate(15, 38)">
-      <rect width="250" height="60" rx="6" fill="#1e293b" stroke="#38bdf8" stroke-width="1"/>
-      <circle cx="35" cy="30" r="18" fill="#0f172a" stroke="#0284c7" stroke-width="1.5"/>
+      <rect width="250" height="60" rx="8" fill="#ffffff" stroke="#bae6fd" stroke-width="1.2"/>
+      <circle cx="35" cy="30" r="18" fill="#f0f9ff" stroke="#0284c7" stroke-width="1.5"/>
       <circle cx="35" cy="30" r="13" fill="none" stroke="#38bdf8" stroke-width="1" stroke-dasharray="3 3"/>
-      <line x1="35" y1="30" x2="35" y2="15" stroke="#38bdf8" stroke-width="2" class="radar-arm"/>
-      <circle cx="35" cy="30" r="3" fill="#38bdf8"/>
+      <line x1="35" y1="30" x2="35" y2="15" stroke="#0284c7" stroke-width="2" class="radar-arm"/>
+      <circle cx="35" cy="30" r="3" fill="#0284c7"/>
       
-      <text x="66" y="23" fill="#f1f5f9" font-family="monospace" font-size="10.5" font-weight="700">/lidar_node</text>
-      <text x="66" y="37" fill="#38bdf8" font-family="system-ui, sans-serif" font-size="9" font-weight="600">Publishes: /scan</text>
-      <text x="66" y="50" fill="#94a3b8" font-family="monospace" font-size="8">sensor_msgs/LaserScan (10 Hz)</text>
+      <text x="66" y="23" fill="#0f172a" font-family="monospace" font-size="10.5" font-weight="700">/lidar_node</text>
+      <text x="66" y="37" fill="#0284c7" font-family="system-ui, sans-serif" font-size="9" font-weight="600">Publishes: /scan</text>
+      <text x="66" y="50" fill="#64748b" font-family="monospace" font-size="8">sensor_msgs/LaserScan (10 Hz)</text>
       <circle cx="236" cy="18" r="4" fill="#10b981" class="pulse-beacon"/>
     </g>
 
     <!-- Sensor 2: RGB-D Camera / IMU -->
     <g transform="translate(15, 105)">
-      <rect width="250" height="58" rx="6" fill="#1e293b" stroke="#06b6d4" stroke-width="1"/>
-      <rect x="20" y="18" width="28" height="20" rx="4" fill="#0f172a" stroke="#06b6d4" stroke-width="1.5"/>
+      <rect width="250" height="58" rx="8" fill="#ffffff" stroke="#bae6fd" stroke-width="1.2"/>
+      <rect x="20" y="18" width="28" height="20" rx="4" fill="#f0f9ff" stroke="#0891b2" stroke-width="1.5"/>
       <circle cx="34" cy="28" r="5" fill="#0891b2"/>
       
-      <text x="66" y="23" fill="#f1f5f9" font-family="monospace" font-size="10.5" font-weight="700">/camera_node &amp; /imu_node</text>
-      <text x="66" y="37" fill="#22d3ee" font-family="system-ui, sans-serif" font-size="9" font-weight="600">Publishes: /image_raw, /imu/data</text>
-      <text x="66" y="50" fill="#94a3b8" font-family="monospace" font-size="8">sensor_msgs/Image • Imu (30 Hz)</text>
+      <text x="66" y="23" fill="#0f172a" font-family="monospace" font-size="10.5" font-weight="700">/camera_node &amp; /imu_node</text>
+      <text x="66" y="37" fill="#0891b2" font-family="system-ui, sans-serif" font-size="9" font-weight="600">Publishes: /image_raw, /imu/data</text>
+      <text x="66" y="50" fill="#64748b" font-family="monospace" font-size="8">sensor_msgs/Image • Imu (30 Hz)</text>
       <circle cx="236" cy="18" r="4" fill="#10b981" class="pulse-beacon"/>
     </g>
   </g>
@@ -148,27 +116,27 @@
   <!-- ZONE 2: COGNITION & PLANNING (CENTER - BRAIN) -->
   <!-- ========================================================================= -->
   <g transform="translate(360, 60)" filter="url(#shadowBox)">
-    <rect width="280" height="175" rx="10" fill="url(#cardGrad)" stroke="#818cf8" stroke-width="1.5"/>
-    <rect width="280" height="28" rx="10" fill="#4338ca" fill-opacity="0.3"/>
-    <text x="140" y="19" fill="#a5b4fc" font-family="system-ui, sans-serif" font-size="11" font-weight="800" text-anchor="middle" letter-spacing="0.5">
+    <rect width="280" height="175" rx="12" fill="#faf5ff" stroke="#8b5cf6" stroke-width="1.5"/>
+    <rect width="280" height="28" rx="12" fill="#f3e8ff"/>
+    <text x="140" y="19" fill="#6d28d9" font-family="system-ui, sans-serif" font-size="11" font-weight="800" text-anchor="middle" letter-spacing="0.5">
       2. COGNITION &amp; NAVIGATION (BRAIN)
     </text>
 
     <!-- Sub-node 1: SLAM Mapping -->
     <g transform="translate(15, 38)">
-      <rect width="250" height="60" rx="6" fill="#1e293b" stroke="#6366f1" stroke-width="1"/>
-      <text x="14" y="23" fill="#e0e7ff" font-family="monospace" font-size="10.5" font-weight="700">/slam_toolbox</text>
-      <text x="14" y="37" fill="#a5b4fc" font-family="system-ui, sans-serif" font-size="9" font-weight="600">Subscribes: /scan &amp; /odom</text>
-      <text x="14" y="50" fill="#818cf8" font-family="system-ui, sans-serif" font-size="8.5" font-weight="600">Publishes: /map • Tracks (map → odom)</text>
+      <rect width="250" height="60" rx="8" fill="#ffffff" stroke="#e9d5ff" stroke-width="1.2"/>
+      <text x="14" y="23" fill="#0f172a" font-family="monospace" font-size="10.5" font-weight="700">/slam_toolbox</text>
+      <text x="14" y="37" fill="#6d28d9" font-family="system-ui, sans-serif" font-size="9" font-weight="600">Subscribes: /scan &amp; /odom</text>
+      <text x="14" y="50" fill="#7c3aed" font-family="system-ui, sans-serif" font-size="8.5" font-weight="600">Publishes: /map • Tracks (map → odom)</text>
       <circle cx="236" cy="18" r="4" fill="#10b981" class="pulse-beacon"/>
     </g>
 
     <!-- Sub-node 2: Nav2 Planner / Controller -->
     <g transform="translate(15, 105)">
-      <rect width="250" height="58" rx="6" fill="#1e293b" stroke="#a855f7" stroke-width="1"/>
-      <text x="14" y="23" fill="#f3e8ff" font-family="monospace" font-size="10.5" font-weight="700">/controller_server (Nav2)</text>
-      <text x="14" y="37" fill="#c084fc" font-family="system-ui, sans-serif" font-size="9" font-weight="600">Subscribes: /map &amp; /odom</text>
-      <text x="14" y="50" fill="#e879f9" font-family="system-ui, sans-serif" font-size="8.5" font-weight="600">Publishes: /cmd_vel (Twist 20 Hz)</text>
+      <rect width="250" height="58" rx="8" fill="#ffffff" stroke="#e9d5ff" stroke-width="1.2"/>
+      <text x="14" y="23" fill="#0f172a" font-family="monospace" font-size="10.5" font-weight="700">/controller_server (Nav2)</text>
+      <text x="14" y="37" fill="#6d28d9" font-family="system-ui, sans-serif" font-size="9" font-weight="600">Subscribes: /map &amp; /odom</text>
+      <text x="14" y="50" fill="#9333ea" font-family="system-ui, sans-serif" font-size="8.5" font-weight="600">Publishes: /cmd_vel (Twist 20 Hz)</text>
       <circle cx="236" cy="18" r="4" fill="#10b981" class="pulse-beacon"/>
     </g>
   </g>
@@ -177,27 +145,27 @@
   <!-- ZONE 3: ACTUATION & LOCOMOTION (RIGHT - MUSCLES) -->
   <!-- ========================================================================= -->
   <g transform="translate(680, 60)" filter="url(#shadowBox)">
-    <rect width="280" height="175" rx="10" fill="url(#cardGrad)" stroke="#10b981" stroke-width="1.5"/>
-    <rect width="280" height="28" rx="10" fill="#065f46" fill-opacity="0.3"/>
-    <text x="140" y="19" fill="#34d399" font-family="system-ui, sans-serif" font-size="11" font-weight="800" text-anchor="middle" letter-spacing="0.5">
+    <rect width="280" height="175" rx="12" fill="#f0fdf4" stroke="#16a34a" stroke-width="1.5"/>
+    <rect width="280" height="28" rx="12" fill="#dcfce7"/>
+    <text x="140" y="19" fill="#15803d" font-family="system-ui, sans-serif" font-size="11" font-weight="800" text-anchor="middle" letter-spacing="0.5">
       3. ACTUATION &amp; MOTORS (MUSCLES)
     </text>
 
     <!-- Sub-node 1: Motor Controller Node -->
     <g transform="translate(15, 38)">
-      <rect width="250" height="60" rx="6" fill="#1e293b" stroke="#10b981" stroke-width="1"/>
-      <text x="14" y="23" fill="#f1f5f9" font-family="monospace" font-size="10.5" font-weight="700">/diff_drive_controller</text>
-      <text x="14" y="37" fill="#34d399" font-family="system-ui, sans-serif" font-size="9" font-weight="600">Subscribes: /cmd_vel</text>
-      <text x="14" y="50" fill="#94a3b8" font-family="system-ui, sans-serif" font-size="8.5">Converts Twist → Left/Right Wheel RPM</text>
+      <rect width="250" height="60" rx="8" fill="#ffffff" stroke="#bbf7d0" stroke-width="1.2"/>
+      <text x="14" y="23" fill="#0f172a" font-family="monospace" font-size="10.5" font-weight="700">/diff_drive_controller</text>
+      <text x="14" y="37" fill="#15803d" font-family="system-ui, sans-serif" font-size="9" font-weight="600">Subscribes: /cmd_vel</text>
+      <text x="14" y="50" fill="#64748b" font-family="system-ui, sans-serif" font-size="8.5">Converts Twist → Left/Right Wheel RPM</text>
       <circle cx="236" cy="18" r="4" fill="#10b981" class="pulse-beacon"/>
     </g>
 
-    <!-- Sub-node 2: Hardware Interface & Odometry Feedback (Replaces Chassis Box) -->
+    <!-- Sub-node 2: Hardware Interface & Odometry Feedback -->
     <g transform="translate(15, 105)">
-      <rect width="250" height="58" rx="6" fill="#1e293b" stroke="#059669" stroke-width="1"/>
-      <text x="14" y="23" fill="#ecfdf5" font-family="monospace" font-size="10.5" font-weight="700">/hardware_interface (Motors &amp; Encoders)</text>
-      <text x="14" y="37" fill="#6ee7b7" font-family="system-ui, sans-serif" font-size="9" font-weight="600">Publishes: /odom &amp; /joint_states</text>
-      <text x="14" y="50" fill="#94a3b8" font-family="monospace" font-size="8">nav_msgs/Odometry (50 Hz Feedback)</text>
+      <rect width="250" height="58" rx="8" fill="#ffffff" stroke="#bbf7d0" stroke-width="1.2"/>
+      <text x="14" y="23" fill="#0f172a" font-family="monospace" font-size="10.5" font-weight="700">/hardware_interface (Motors &amp; Encoders)</text>
+      <text x="14" y="37" fill="#15803d" font-family="system-ui, sans-serif" font-size="9" font-weight="600">Publishes: /odom &amp; /joint_states</text>
+      <text x="14" y="50" fill="#64748b" font-family="monospace" font-size="8">nav_msgs/Odometry (50 Hz Feedback)</text>
       <circle cx="236" cy="18" r="4" fill="#10b981" class="pulse-beacon"/>
     </g>
   </g>
@@ -208,78 +176,78 @@
 
   <!-- Pipe 1: /scan (Perception -> DDS) -->
   <g>
-    <line x1="120" y1="235" x2="120" y2="283" stroke="#38bdf8" stroke-width="2.5" class="animated-flow-cyan"/>
-    <polygon points="116,277 120,285 124,277" fill="#38bdf8"/>
-    <rect x="75" y="247" width="90" height="18" rx="4" fill="#0f172a" stroke="#0284c7" stroke-width="1"/>
-    <text x="120" y="259" fill="#38bdf8" font-family="monospace" font-size="8" font-weight="700" text-anchor="middle">/scan ↓</text>
+    <line x1="120" y1="235" x2="120" y2="283" stroke="#0284c7" stroke-width="2.5" class="animated-flow-cyan"/>
+    <polygon points="116,277 120,285 124,277" fill="#0284c7"/>
+    <rect x="75" y="247" width="90" height="18" rx="4" fill="#ffffff" stroke="#0284c7" stroke-width="1.2"/>
+    <text x="120" y="259.5" fill="#0284c7" font-family="monospace" font-size="8.5" font-weight="700" text-anchor="middle">/scan ↓</text>
   </g>
 
   <!-- Pipe 2: /image_raw (Camera -> DDS) -->
   <g>
-    <line x1="240" y1="235" x2="240" y2="283" stroke="#06b6d4" stroke-width="2.5" class="animated-flow-teal"/>
-    <polygon points="236,277 240,285 244,277" fill="#06b6d4"/>
-    <rect x="195" y="247" width="90" height="18" rx="4" fill="#0f172a" stroke="#0891b2" stroke-width="1"/>
-    <text x="240" y="259" fill="#22d3ee" font-family="monospace" font-size="8" font-weight="700" text-anchor="middle">/image_raw ↓</text>
+    <line x1="240" y1="235" x2="240" y2="283" stroke="#0891b2" stroke-width="2.5" class="animated-flow-teal"/>
+    <polygon points="236,277 240,285 244,277" fill="#0891b2"/>
+    <rect x="190" y="247" width="100" height="18" rx="4" fill="#ffffff" stroke="#0891b2" stroke-width="1.2"/>
+    <text x="240" y="259.5" fill="#0891b2" font-family="monospace" font-size="8.5" font-weight="700" text-anchor="middle">/image_raw ↓</text>
   </g>
 
   <!-- Pipe 3: Telemetry /scan & /odom (DDS -> SLAM / Nav2) -->
   <g>
-    <line x1="420" y1="285" x2="420" y2="237" stroke="#818cf8" stroke-width="2.5" class="animated-flow-purple-up"/>
-    <polygon points="416,243 420,235 424,243" fill="#818cf8"/>
-    <rect x="365" y="247" width="110" height="18" rx="4" fill="#0f172a" stroke="#6366f1" stroke-width="1"/>
-    <text x="420" y="259" fill="#a5b4fc" font-family="monospace" font-size="8" font-weight="700" text-anchor="middle">/scan, /odom ↑</text>
+    <line x1="420" y1="285" x2="420" y2="237" stroke="#6366f1" stroke-width="2.5" class="animated-flow-purple-up"/>
+    <polygon points="416,243 420,235 424,243" fill="#6366f1"/>
+    <rect x="365" y="247" width="110" height="18" rx="4" fill="#ffffff" stroke="#6366f1" stroke-width="1.2"/>
+    <text x="420" y="259.5" fill="#6366f1" font-family="monospace" font-size="8.5" font-weight="700" text-anchor="middle">/scan, /odom ↑</text>
   </g>
 
   <!-- Pipe 4: /map (SLAM -> DDS) -->
   <g>
-    <line x1="500" y1="235" x2="500" y2="283" stroke="#a855f7" stroke-width="2.5" class="animated-flow-purple-down"/>
-    <polygon points="496,277 500,285 504,277" fill="#a855f7"/>
-    <rect x="460" y="247" width="80" height="18" rx="4" fill="#0f172a" stroke="#9333ea" stroke-width="1"/>
-    <text x="500" y="259" fill="#d8b4fe" font-family="monospace" font-size="8" font-weight="700" text-anchor="middle">/map ↓</text>
+    <line x1="500" y1="235" x2="500" y2="283" stroke="#8b5cf6" stroke-width="2.5" class="animated-flow-purple-down"/>
+    <polygon points="496,277 500,285 504,277" fill="#8b5cf6"/>
+    <rect x="460" y="247" width="80" height="18" rx="4" fill="#ffffff" stroke="#8b5cf6" stroke-width="1.2"/>
+    <text x="500" y="259.5" fill="#8b5cf6" font-family="monospace" font-size="8.5" font-weight="700" text-anchor="middle">/map ↓</text>
   </g>
 
   <!-- Pipe 5: /cmd_vel (Nav2 Controller -> DDS) -->
   <g>
-    <line x1="580" y1="235" x2="580" y2="283" stroke="#c084fc" stroke-width="2.5" class="animated-flow-purple-down"/>
-    <polygon points="576,277 580,285 584,277" fill="#c084fc"/>
-    <rect x="540" y="247" width="80" height="18" rx="4" fill="#0f172a" stroke="#a855f7" stroke-width="1"/>
-    <text x="580" y="259" fill="#e9d5ff" font-family="monospace" font-size="8" font-weight="700" text-anchor="middle">/cmd_vel ↓</text>
+    <line x1="580" y1="235" x2="580" y2="283" stroke="#9333ea" stroke-width="2.5" class="animated-flow-purple-down"/>
+    <polygon points="576,277 580,285 584,277" fill="#9333ea"/>
+    <rect x="535" y="247" width="90" height="18" rx="4" fill="#ffffff" stroke="#9333ea" stroke-width="1.2"/>
+    <text x="580" y="259.5" fill="#9333ea" font-family="monospace" font-size="8.5" font-weight="700" text-anchor="middle">/cmd_vel ↓</text>
   </g>
 
   <!-- Pipe 6: /cmd_vel (DDS -> Diff Drive Controller) -->
   <g>
-    <line x1="745" y1="285" x2="745" y2="237" stroke="#10b981" stroke-width="2.5" class="animated-flow-emerald-up"/>
-    <polygon points="741,243 745,235 749,243" fill="#10b981"/>
-    <rect x="705" y="247" width="80" height="18" rx="4" fill="#0f172a" stroke="#059669" stroke-width="1"/>
-    <text x="745" y="259" fill="#34d399" font-family="monospace" font-size="8" font-weight="700" text-anchor="middle">/cmd_vel ↑</text>
+    <line x1="745" y1="285" x2="745" y2="237" stroke="#16a34a" stroke-width="2.5" class="animated-flow-emerald-up"/>
+    <polygon points="741,243 745,235 749,243" fill="#16a34a"/>
+    <rect x="700" y="247" width="90" height="18" rx="4" fill="#ffffff" stroke="#16a34a" stroke-width="1.2"/>
+    <text x="745" y="259.5" fill="#16a34a" font-family="monospace" font-size="8.5" font-weight="700" text-anchor="middle">/cmd_vel ↑</text>
   </g>
 
-  <!-- Pipe 7: /odom & /joint_states Feedback (Motors/Encoders -> DDS) -->
+  <!-- Pipe 7: /odom Feedback (Motors/Encoders -> DDS) -->
   <g>
-    <line x1="865" y1="235" x2="865" y2="283" stroke="#34d399" stroke-width="2.5" class="animated-flow-emerald-down"/>
-    <polygon points="861,277 865,285 869,277" fill="#34d399"/>
-    <rect x="825" y="247" width="80" height="18" rx="4" fill="#0f172a" stroke="#10b981" stroke-width="1"/>
-    <text x="865" y="259" fill="#6ee7b7" font-family="monospace" font-size="8" font-weight="700" text-anchor="middle">/odom ↓</text>
+    <line x1="865" y1="235" x2="865" y2="283" stroke="#059669" stroke-width="2.5" class="animated-flow-emerald-down"/>
+    <polygon points="861,277 865,285 869,277" fill="#059669"/>
+    <rect x="825" y="247" width="80" height="18" rx="4" fill="#ffffff" stroke="#059669" stroke-width="1.2"/>
+    <text x="865" y="259.5" fill="#059669" font-family="monospace" font-size="8.5" font-weight="700" text-anchor="middle">/odom ↓</text>
   </g>
 
   <!-- ========================================================================= -->
   <!-- ZONE 4: THE DDS NERVOUS SYSTEM (CENTRAL HIGHWAY) -->
   <!-- ========================================================================= -->
-  <g transform="translate(40, 285)" filter="url(#glowPurple)">
-    <rect width="920" height="66" rx="10" fill="#13122b" stroke="url(#ddsGrad)" stroke-width="2"/>
-    <text x="460" y="26" fill="#e2e8f0" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12.5" font-weight="800" text-anchor="middle" letter-spacing="1">
-      &#x26A1; DDS COMMUNICATION HIGHWAY (DATA DISTRIBUTION SERVICE • PEER-TO-PEER MESH)
+  <g transform="translate(40, 285)" filter="url(#shadowBox)">
+    <rect width="920" height="66" rx="10" fill="#f8fafc" stroke="url(#ddsGrad)" stroke-width="2"/>
+    <text x="460" y="26" fill="#1e1b4b" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12.5" font-weight="800" text-anchor="middle" letter-spacing="1">
+      ⚡ DDS COMMUNICATION HIGHWAY (DATA DISTRIBUTION SERVICE • PEER-TO-PEER MESH)
     </text>
-    <text x="460" y="46" fill="#a78bfa" font-family="system-ui, sans-serif" font-size="9.5" font-weight="600" text-anchor="middle">
+    <text x="460" y="46" fill="#475569" font-family="system-ui, sans-serif" font-size="9.5" font-weight="600" text-anchor="middle">
       Zero Master Bottleneck • Automatic UDP Multicast Discovery • Configurable QoS Policies • Sub-Millisecond Shared Memory
     </text>
 
     <!-- Animated Longitudinal Data Highway Lane -->
-    <line x1="60" y1="56" x2="860" y2="56" stroke="#38bdf8" stroke-width="2" class="animated-flow-cyan" opacity="0.8"/>
+    <line x1="60" y1="56" x2="860" y2="56" stroke="#0284c7" stroke-width="2" class="animated-flow-cyan" opacity="0.8"/>
   </g>
 
-  <!-- Minimalist Summary Footnote (Bottom Pillars completely removed) -->
-  <text x="500" y="385" fill="#64748b" font-family="system-ui, sans-serif" font-size="9.5" text-anchor="middle">
-    Autonomous Closed-Loop: Perception (Senses) &#x2794; DDS Highway (Nerves) &#x2794; Nav2/SLAM (Brain) &#x2794; Diff-Drive (Muscles) &#x2794; Odometry Feedback &#x2794; DDS
+  <!-- Minimalist Summary Footnote -->
+  <text x="500" y="388" fill="#475569" font-family="system-ui, sans-serif" font-size="10" font-weight="600" text-anchor="middle">
+    Autonomous Closed-Loop: Perception (Senses) ➔ DDS Highway (Nerves) ➔ Nav2/SLAM (Brain) ➔ Diff-Drive (Muscles) ➔ Odometry Feedback ➔ DDS
   </text>
 </svg>

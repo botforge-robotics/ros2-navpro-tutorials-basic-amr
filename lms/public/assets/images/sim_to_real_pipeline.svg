@@ -20,7 +20,7 @@
 
     <!-- Component 2 -->
     <rect x="60" y="160" width="290" height="42" rx="6" fill="#ffffff" stroke="#bae6fd" stroke-width="1.5"/>
-    <text x="205" y="186" font-family="monospace" font-size="12" font-weight="bold" fill="#0369a1" text-anchor="middle">NavPro Mission Commander (Python SDK)</text>
+    <text x="205" y="186" font-family="monospace" font-size="12" font-weight="bold" fill="#0369a1" text-anchor="middle">Nexus AMR Mission Commander (Python SDK)</text>
 
     <!-- Component 3 -->
     <rect x="60" y="215" width="290" height="42" rx="6" fill="#ffffff" stroke="#bae6fd" stroke-width="1.5"/>

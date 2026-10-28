@@ -1,0 +1,464 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" width="100%" height="100%">
+  <defs>
+    <!-- Background and Window Gradients -->
+    <linearGradient id="gzBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#090d18" />
+      <stop offset="100%" stop-color="#060910" />
+    </linearGradient>
+    <linearGradient id="panelBg" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#111827" />
+      <stop offset="100%" stop-color="#0d131f" />
+    </linearGradient>
+    <linearGradient id="viewportBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0c1322" />
+      <stop offset="50%" stop-color="#10192b" />
+      <stop offset="100%" stop-color="#080d16" />
+    </linearGradient>
+
+    <!-- Callout Badge Gradient (Orange/Amber for Gazebo) -->
+    <linearGradient id="badgeGz" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f97316" />
+      <stop offset="100%" stop-color="#ea580c" />
+    </linearGradient>
+
+    <!-- Glow Filters -->
+    <filter id="glowOrange" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="3" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+    <filter id="glowGreen" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="2.5" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+    <filter id="glowYellow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="2.5" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+
+    <!-- Drop Shadow for GUI -->
+    <filter id="guiShadow" x="-5%" y="-5%" width="110%" height="110%">
+      <feDropShadow dx="0" dy="4" stdDeviation="8" flood-color="#000000" flood-opacity="0.6" />
+    </filter>
+  </defs>
+
+  <!-- Deep Slate Background -->
+  <rect width="1280" height="720" fill="url(#gzBg)" />
+
+  <!-- Outer Window Frame -->
+  <rect x="15" y="12" width="1250" height="696" rx="10" fill="#0b1120" stroke="rgba(249, 115, 22, 0.35)" stroke-width="1.5" filter="url(#guiShadow)" />
+
+  <!-- ========================================================================= -->
+  <!-- 1. WINDOW TITLEBAR -->
+  <!-- ========================================================================= -->
+  <path d="M 15,22 Q 15,12 25,12 L 1255,12 Q 1265,12 1265,22 L 1265,46 L 15,46 Z" fill="#0f172a" stroke="rgba(255, 255, 255, 0.08)" stroke-width="1" />
+  
+  <!-- Window Control Buttons (Red, Yellow, Green dots) -->
+  <circle cx="38" cy="29" r="6" fill="#ef4444" />
+  <circle cx="56" cy="29" r="6" fill="#f59e0b" />
+  <circle cx="74" cy="29" r="6" fill="#10b981" />
+
+  <!-- Title Text -->
+  <text x="640" y="33" text-anchor="middle" fill="#94a3b8" font-family="system-ui, -apple-system, sans-serif" font-size="13" font-weight="700" letter-spacing="0.04em">
+    Gazebo Sim (Harmonic) — Active World: <tspan fill="#fb923c">warehouse_world.sdf</tspan> | Physics: <tspan fill="#38bdf8">ODE 1000 Hz</tspan>
+  </text>
+  <rect x="1150" y="21" width="100" height="18" rx="4" fill="rgba(249, 115, 22, 0.15)" stroke="#f97316" stroke-width="0.8" />
+  <text x="1200" y="34" text-anchor="middle" fill="#fb923c" font-family="monospace" font-size="10" font-weight="700">PHYSICS ACTIVE</text>
+
+  <!-- ========================================================================= -->
+  <!-- 2. TOP TOOLBAR & 3D TRANSFORM GIZMOS RIBBON -->
+  <!-- ========================================================================= -->
+  <rect x="25" y="52" width="1230" height="42" rx="6" fill="#131d31" stroke="rgba(255, 255, 255, 0.06)" stroke-width="1" />
+  
+  <!-- Tool Buttons -->
+  <g transform="translate(35, 60)" font-family="system-ui, sans-serif" font-size="11.5" font-weight="600">
+    <!-- Select (ESC) -->
+    <rect x="0" y="0" width="75" height="26" rx="4" fill="#1e293b" stroke="#334155" stroke-width="1" />
+    <text x="37" y="17" text-anchor="middle" fill="#cbd5e1">↖ Select</text>
+
+    <!-- Translate (T) Active -->
+    <rect x="83" y="0" width="95" height="26" rx="4" fill="#ea580c" stroke="#f97316" stroke-width="1" />
+    <text x="130" y="17" text-anchor="middle" fill="#ffffff">✥ Move (T)</text>
+
+    <!-- Rotate (R) -->
+    <rect x="186" y="0" width="95" height="26" rx="4" fill="#1e293b" stroke="#334155" stroke-width="1" />
+    <text x="233" y="17" text-anchor="middle" fill="#94a3b8">⟳ Rotate (R)</text>
+
+    <!-- Scale (S) -->
+    <rect x="289" y="0" width="85" height="26" rx="4" fill="#1e293b" stroke="#334155" stroke-width="1" />
+    <text x="331" y="17" text-anchor="middle" fill="#94a3b8">⤢ Scale (S)</text>
+
+    <!-- Spawner Elements (Box, Sphere, Cylinder, Light) -->
+    <line x1="385" y1="2" x2="385" y2="24" stroke="#334155" stroke-width="1" />
+    
+    <rect x="395" y="0" width="60" height="26" rx="4" fill="#1e293b" stroke="#334155" stroke-width="1" />
+    <text x="425" y="17" text-anchor="middle" fill="#38bdf8">📦 Box</text>
+
+    <rect x="463" y="0" width="75" height="26" rx="4" fill="#1e293b" stroke="#334155" stroke-width="1" />
+    <text x="500" y="17" text-anchor="middle" fill="#38bdf8">⚪ Sphere</text>
+
+    <rect x="546" y="0" width="85" height="26" rx="4" fill="#1e293b" stroke="#334155" stroke-width="1" />
+    <text x="588" y="17" text-anchor="middle" fill="#38bdf8">🥫 Cylinder</text>
+
+    <rect x="639" y="0" width="75" height="26" rx="4" fill="#1e293b" stroke="#334155" stroke-width="1" />
+    <text x="676" y="17" text-anchor="middle" fill="#facc15">💡 Light</text>
+
+    <!-- View Visualizations Toggle (Collisions / Inertia / Wireframe) -->
+    <g transform="translate(735, 0)" font-size="10.5">
+      <rect x="0" y="0" width="115" height="26" rx="4" fill="rgba(16, 185, 129, 0.15)" stroke="#10b981" stroke-width="1" />
+      <text x="57" y="17" text-anchor="middle" fill="#34d399">🛡 Show Collisions</text>
+
+      <rect x="123" y="0" width="105" height="26" rx="4" fill="rgba(239, 68, 68, 0.15)" stroke="#ef4444" stroke-width="1" />
+      <text x="175" y="17" text-anchor="middle" fill="#f87171">⚖ Show Inertia</text>
+
+      <rect x="236" y="0" width="100" height="26" rx="4" fill="#1e293b" stroke="#334155" stroke-width="1" />
+      <text x="286" y="17" text-anchor="middle" fill="#94a3b8">🌐 Wireframe</text>
+    </g>
+  </g>
+
+  <!-- ========================================================================= -->
+  <!-- 3. LEFT PANEL: ENTITY TREE & COMPONENT INSPECTOR -->
+  <!-- ========================================================================= -->
+  <g transform="translate(25, 102)">
+    <!-- Entity Tree Frame -->
+    <rect width="295" height="545" rx="8" fill="url(#panelBg)" stroke="rgba(255, 255, 255, 0.08)" stroke-width="1" />
+    
+    <!-- Panel Header -->
+    <path d="M 0,8 Q 0,0 8,0 L 287,0 Q 295,0 295,8 L 295,30 L 0,30 Z" fill="#1e293b" />
+    <text x="14" y="20" fill="#f8fafc" font-family="system-ui, sans-serif" font-size="12" font-weight="800">
+      ENTITY TREE &amp; MODELS
+    </text>
+    <rect x="215" y="6" width="70" height="18" rx="3" fill="#ea580c" />
+    <text x="250" y="19" text-anchor="middle" fill="#ffffff" font-family="system-ui, sans-serif" font-size="10" font-weight="700">Spawn SDF</text>
+
+    <!-- Tree Content -->
+    <g transform="translate(12, 42)" font-family="system-ui, sans-serif" font-size="11">
+      <!-- World Node -->
+      <text x="0" y="10" fill="#fb923c" font-weight="800">▼ World: default</text>
+      
+      <g transform="translate(12, 22)">
+        <text x="0" y="10" fill="#94a3b8">▸ Physics (ODE Engine @ 1000Hz)</text>
+        <text x="0" y="28" fill="#94a3b8">▸ Sun (Directional Light / Shadow: ON)</text>
+        <text x="0" y="46" fill="#94a3b8">▸ ground_plane (Static Rigid Body)</text>
+      </g>
+
+      <!-- Robot Model Tree -->
+      <g transform="translate(12, 90)">
+        <rect x="-4" y="-3" width="270" height="195" rx="5" fill="rgba(249, 115, 22, 0.06)" stroke="rgba(249, 115, 22, 0.3)" stroke-width="1.2" />
+        <text x="0" y="12" fill="#fb923c" font-weight="800">▼ Model: nexus_amr</text>
+        <rect x="205" y="2" width="55" height="14" rx="2" fill="rgba(16, 185, 129, 0.2)" />
+        <text x="232" y="12" text-anchor="middle" fill="#34d399" font-size="9" font-weight="700">SPAWNED</text>
+
+        <!-- Links -->
+        <g transform="translate(12, 28)" font-size="10.5">
+          <text x="0" y="10" fill="#38bdf8">▼ Link: base_link</text>
+          <text x="12" y="24" fill="#94a3b8">• Visual Mesh (<tspan fill="#cbd5e1">nexus_amr.stl</tspan>)</text>
+          <text x="12" y="38" fill="#34d399">• Collision (<tspan fill="#cbd5e1">Box 0.4x0.3x0.14</tspan>)</text>
+          <text x="12" y="52" fill="#f87171">• Inertial (<tspan fill="#cbd5e1">m=4.5kg, Ixx=0.038</tspan>)</text>
+
+          <!-- Joints & Drivetrain -->
+          <text x="0" y="72" fill="#fb923c">▼ Joints (Differential Drivetrain):</text>
+          <text x="12" y="86" fill="#cbd5e1">• left_wheel_joint (<tspan fill="#38bdf8">continuous</tspan>)</text>
+          <text x="12" y="100" fill="#cbd5e1">• right_wheel_joint (<tspan fill="#38bdf8">continuous</tspan>)</text>
+          <text x="12" y="114" fill="#94a3b8">• front_caster_joint (<tspan fill="#64748b">fixed</tspan>)</text>
+          <text x="12" y="128" fill="#94a3b8">• rear_caster_joint (<tspan fill="#64748b">fixed</tspan>)</text>
+
+          <!-- Sensors -->
+          <text x="0" y="148" fill="#facc15">▼ Embedded Sensors (Gazebo Plugins):</text>
+          <text x="12" y="162" fill="#cbd5e1">• 2D LiDAR (<tspan fill="#ef4444">Ray Sensor / 360° @ 10Hz</tspan>)</text>
+          <text x="12" y="176" fill="#cbd5e1">• Forward Camera (<tspan fill="#38bdf8">Ogre2 RGB @ 30fps</tspan>)</text>
+        </g>
+      </g>
+
+      <!-- Component Property Inspector Card -->
+      <g transform="translate(0, 310)">
+        <rect width="270" height="150" rx="6" fill="#090e1a" stroke="rgba(255, 255, 255, 0.08)" stroke-width="1" />
+        <path d="M 0,6 Q 0,0 6,0 L 264,0 Q 270,0 270,6 L 270,22 L 0,22 Z" fill="#131c2e" />
+        <text x="10" y="15" fill="#f8fafc" font-size="10.5" font-weight="700">SELECTED: left_wheel (Physics Surface)</text>
+
+        <g transform="translate(10, 38)" font-family="monospace" font-size="10">
+          <text x="0" y="0" fill="#94a3b8">Friction mu1: <tspan fill="#34d399">1.00</tspan> (Traction)</text>
+          <text x="0" y="18" fill="#94a3b8">Friction mu2: <tspan fill="#34d399">1.00</tspan> (Lateral)</text>
+          <text x="0" y="36" fill="#94a3b8">Slip kp: <tspan fill="#38bdf8">1000000.0</tspan></text>
+          <text x="0" y="54" fill="#94a3b8">Damping kd: <tspan fill="#38bdf8">1.0</tspan></text>
+          <text x="0" y="72" fill="#94a3b8">Max Wheel Torque: <tspan fill="#f59e0b">20.0 Nm</tspan></text>
+          <text x="0" y="90" fill="#94a3b8">Velocity Limit: <tspan fill="#f59e0b">10.0 rad/s</tspan></text>
+        </g>
+      </g>
+    </g>
+
+    <!-- Bottom Action Buttons in Entity Tree Panel -->
+    <g transform="translate(14, 510)" font-family="system-ui, sans-serif" font-size="11" font-weight="700">
+      <rect x="0" y="0" width="80" height="24" rx="4" fill="#ea580c" />
+      <text x="40" y="16" text-anchor="middle" fill="#ffffff">Add Entity</text>
+
+      <rect x="88" y="0" width="85" height="24" rx="4" fill="#1e293b" stroke="#334155" stroke-width="1" />
+      <text x="130" y="16" text-anchor="middle" fill="#cbd5e1">Inspect Pose</text>
+
+      <rect x="181" y="0" width="85" height="24" rx="4" fill="#1e293b" stroke="#334155" stroke-width="1" />
+      <text x="223" y="16" text-anchor="middle" fill="#ef4444">Delete</text>
+    </g>
+  </g>
+
+  <!-- ========================================================================= -->
+  <!-- 4. CENTRAL 3D PHYSICS VIEWPORT (SIMULATED PHYSICAL REALITY) -->
+  <!-- ========================================================================= -->
+  <g transform="translate(330, 102)">
+    <!-- Viewport Frame -->
+    <rect width="665" height="545" rx="8" fill="url(#viewportBg)" stroke="rgba(255, 255, 255, 0.08)" stroke-width="1" />
+
+    <!-- Lighting: Simulated Sun / Specular Directional Highlights -->
+    <ellipse cx="500" cy="80" rx="140" ry="40" fill="rgba(253, 224, 71, 0.04)" filter="url(#glowYellow)" />
+
+    <!-- Textured Warehouse Ground Floor Grid (Physical Plane) -->
+    <g opacity="0.35" stroke="#475569" stroke-width="0.9">
+      <line x1="332" y1="140" x2="20" y2="530" />
+      <line x1="332" y1="140" x2="100" y2="530" />
+      <line x1="332" y1="140" x2="180" y2="530" />
+      <line x1="332" y1="140" x2="260" y2="530" />
+      <line x1="332" y1="140" x2="332" y2="530" stroke="#f97316" stroke-width="1.2" />
+      <line x1="332" y1="140" x2="405" y2="530" />
+      <line x1="332" y1="140" x2="485" y2="530" />
+      <line x1="332" y1="140" x2="565" y2="530" />
+      <line x1="332" y1="140" x2="645" y2="530" />
+
+      <!-- Horizontal floor grid divisions -->
+      <line x1="250" y1="220" x2="415" y2="220" />
+      <line x1="200" y1="270" x2="465" y2="270" />
+      <line x1="145" y1="330" x2="520" y2="330" />
+      <line x1="85" y1="400" x2="580" y2="400" />
+      <line x1="20" y1="480" x2="645" y2="480" />
+    </g>
+
+    <!-- Physical Obstacle Box (Rigid Collision Box in World) -->
+    <g transform="translate(140, 270)">
+      <!-- Drop Shadow -->
+      <polygon points="0,70 60,85 110,65 50,50" fill="rgba(0, 0, 0, 0.5)" />
+      <!-- Box faces -->
+      <polygon points="0,30 50,50 50,70 0,50" fill="#78350f" stroke="#92400e" stroke-width="1" />
+      <polygon points="50,50 110,30 110,50 50,70" fill="#b45309" stroke="#d97706" stroke-width="1" />
+      <polygon points="0,30 60,10 110,30 50,50" fill="#d97706" stroke="#f59e0b" stroke-width="1" />
+      <text x="35" y="45" fill="#fef3c7" font-family="system-ui, sans-serif" font-size="9" font-weight="700">CARGO</text>
+    </g>
+
+    <!-- 360° LiDAR Sensor Ray Tracing Disk (Simulating Sensor Ray Engine) -->
+    <g transform="translate(332, 345)">
+      <!-- Faint yellow sensor ray disk -->
+      <ellipse cx="0" cy="0" rx="240" ry="110" fill="rgba(250, 204, 21, 0.05)" stroke="rgba(250, 204, 21, 0.3)" stroke-width="1" stroke-dasharray="4,4" />
+      
+      <!-- Ray Casting Beams hitting the cargo box -->
+      <g stroke="#facc15" stroke-width="1.2" opacity="0.6">
+        <line x1="0" y1="0" x2="-140" y2="-30" />
+        <line x1="0" y1="0" x2="-155" y2="-15" />
+        <line x1="0" y1="0" x2="-145" y2="5" />
+        <circle cx="-140" cy="-30" r="3" fill="#ef4444" filter="url(#glowRed)" />
+        <circle cx="-155" cy="-15" r="3" fill="#ef4444" filter="url(#glowRed)" />
+        <circle cx="-145" cy="5" r="3" fill="#ef4444" filter="url(#glowRed)" />
+      </g>
+    </g>
+
+    <!-- PHYSICAL SIMULATED ROBOT (Nexus AMR with Physics Overlays) -->
+    <g transform="translate(332, 360)">
+      <!-- Ground Contact Shadow & Friction Patches -->
+      <ellipse cx="0" cy="48" rx="65" ry="24" fill="rgba(0, 0, 0, 0.6)" />
+      
+      <!-- Normal Force Contact Arrows (Physics Engine Newton Ground Reaction) -->
+      <g stroke="#10b981" stroke-width="1.8" filter="url(#glowGreen)">
+        <line x1="-48" y1="36" x2="-48" y2="15" />
+        <polygon points="-48,10 -52,18 -44,18" fill="#10b981" />
+        <text x="-75" y="24" fill="#34d399" font-family="monospace" font-size="8.5" font-weight="700">Fn (Normal)</text>
+
+        <line x1="48" y1="36" x2="48" y2="15" />
+        <polygon points="48,10 44,18 52,18" fill="#10b981" />
+      </g>
+
+      <!-- Wheels (Simulated Rigid Cylinders with Friction) -->
+      <!-- Left Drive Wheel -->
+      <ellipse cx="-48" cy="10" rx="9" ry="22" fill="#0f172a" stroke="#475569" stroke-width="1.5" />
+      <ellipse cx="-48" cy="10" rx="4" ry="12" fill="#1e293b" stroke="#f97316" stroke-width="1" />
+      <!-- Right Drive Wheel -->
+      <ellipse cx="48" cy="10" rx="9" ry="22" fill="#0f172a" stroke="#475569" stroke-width="1.5" />
+      <ellipse cx="48" cy="10" rx="4" ry="12" fill="#1e293b" stroke="#f97316" stroke-width="1" />
+
+      <!-- Casters Front and Rear (Frictionless Ball Joints) -->
+      <circle cx="0" cy="38" r="6" fill="#475569" stroke="#94a3b8" stroke-width="1.2" />
+      <circle cx="0" cy="-15" r="6" fill="#475569" stroke="#94a3b8" stroke-width="1.2" />
+
+      <!-- 3D Robot Visual Body -->
+      <polygon points="-42,15 42,15 50,-10 -50,-10" fill="#0891b2" stroke="#06b6d4" stroke-width="1.2" />
+      <polygon points="-42,15 42,15 42,32 -42,32" fill="#0e7490" stroke="#155e75" stroke-width="1.2" />
+      <polygon points="42,15 50,-10 50,7 42,32" fill="#155e75" stroke="#0891b2" stroke-width="1" />
+
+      <!-- LiDAR Sensor Puck -->
+      <ellipse cx="0" cy="-5" rx="14" ry="7" fill="#0f172a" stroke="#334155" stroke-width="1.2" />
+      <path d="M -14,-5 L -14,-15 A 14 7 0 0 1 14,-15 L 14,-5 Z" fill="#1e293b" stroke="#334155" stroke-width="1" />
+      <ellipse cx="0" cy="-15" rx="14" ry="7" fill="#090d16" stroke="#f97316" stroke-width="1.2" />
+      <circle cx="0" cy="-15" r="3" fill="#ef4444" />
+
+      <!-- Camera Sensor Enclosure -->
+      <polygon points="-8,30 8,30 10,36 -10,36" fill="#f97316" stroke="#ea580c" stroke-width="1" />
+
+      <!-- ================= PHYSICS OVERLAYS ================= -->
+      <!-- 1. Collision Wireframe (<collision> Bounding Box in Green) -->
+      <g stroke="#10b981" stroke-width="1.5" stroke-dasharray="3,3" fill="none">
+        <polygon points="-45,13 45,13 54,-13 -54,-13" />
+        <polygon points="-45,35 45,35 54,9 -54,9" />
+        <line x1="-45" y1="13" x2="-45" y2="35" />
+        <line x1="45" y1="13" x2="45" y2="35" />
+        <line x1="54" y1="-13" x2="54" y2="9" />
+        <line x1="-54" y1="-13" x2="-54" y2="9" />
+      </g>
+      <rect x="58" y="24" width="130" height="18" rx="3" fill="#064e3b" stroke="#10b981" stroke-width="1" />
+      <text x="64" y="36" fill="#34d399" font-family="monospace" font-size="9" font-weight="700">&lt;collision&gt; Hull</text>
+
+      <!-- 2. Inertial Center of Mass & Gravity Vector (<inertial>) -->
+      <circle cx="0" cy="12" r="5" fill="#ef4444" stroke="#ffffff" stroke-width="1.5" />
+      <line x1="0" y1="12" x2="0" y2="40" stroke="#ef4444" stroke-width="2.5" />
+      <polygon points="0,45 -3,38 3,38" fill="#ef4444" />
+      <rect x="-140" y="-8" width="135" height="26" rx="3" fill="#450a0a" stroke="#ef4444" stroke-width="1" />
+      <text x="-132" y="4" fill="#fca5a5" font-family="monospace" font-size="8.5" font-weight="700">Center of Mass (CoM)</text>
+      <text x="-132" y="15" fill="#f87171" font-family="monospace" font-size="8">g = -9.81 m/s² (ODE)</text>
+    </g>
+
+    <!-- Viewport HUD Overlay -->
+    <rect x="15" y="15" width="220" height="26" rx="4" fill="rgba(15, 23, 42, 0.85)" stroke="#334155" stroke-width="1" />
+    <text x="25" y="32" fill="#cbd5e1" font-family="system-ui, sans-serif" font-size="10.5" font-weight="700">
+      Physics Step: <tspan fill="#fb923c">1.0 ms</tspan> | Gravity: <tspan fill="#38bdf8">-9.81 m/s²</tspan>
+    </text>
+  </g>
+
+  <!-- ========================================================================= -->
+  <!-- 5. RIGHT PANEL: PHYSICS SOLVER & ROS 2 BRIDGE CONFIG -->
+  <!-- ========================================================================= -->
+  <g transform="translate(1005, 102)">
+    <!-- Properties Frame -->
+    <rect width="250" height="545" rx="8" fill="url(#panelBg)" stroke="rgba(255, 255, 255, 0.08)" stroke-width="1" />
+    
+    <!-- Header -->
+    <path d="M 0,8 Q 0,0 8,0 L 242,0 Q 250,0 250,8 L 250,30 L 0,30 Z" fill="#1e293b" />
+    <text x="14" y="20" fill="#f8fafc" font-family="system-ui, sans-serif" font-size="12" font-weight="800">
+      PHYSICS SOLVER &amp; BRIDGE
+    </text>
+
+    <!-- Properties Content -->
+    <g transform="translate(14, 45)" font-family="system-ui, sans-serif" font-size="11">
+      <!-- Physics Engine Section -->
+      <text x="0" y="10" fill="#fb923c" font-weight="800">▼ Physics Engine (ODE)</text>
+      
+      <g transform="translate(0, 24)" font-family="monospace" font-size="10.5">
+        <text x="0" y="10" fill="#94a3b8">Solver:</text>
+        <text x="110" y="10" fill="#cbd5e1">QuickStep</text>
+
+        <text x="0" y="28" fill="#94a3b8">Iterations:</text>
+        <text x="110" y="28" fill="#38bdf8">50</text>
+
+        <text x="0" y="46" fill="#94a3b8">Max Step Size:</text>
+        <text x="110" y="46" fill="#fb923c">0.001 s (1ms)</text>
+
+        <text x="0" y="64" fill="#94a3b8">Update Rate:</text>
+        <text x="110" y="64" fill="#34d399">1000 Hz</text>
+
+        <text x="0" y="82" fill="#94a3b8">CFM (Constraint):</text>
+        <text x="110" y="82" fill="#cbd5e1">1.0e-5</text>
+
+        <text x="0" y="100" fill="#94a3b8">ERP (Restitution):</text>
+        <text x="110" y="100" fill="#cbd5e1">0.2</text>
+      </g>
+
+      <line x1="0" y1="140" x2="225" y2="140" stroke="#1e293b" stroke-width="1" />
+
+      <!-- ROS 2 Bridge Section -->
+      <g transform="translate(0, 155)">
+        <text x="0" y="10" fill="#38bdf8" font-weight="800">▼ ROS 2 Bridge (ros_gz_bridge)</text>
+        <rect x="0" y="20" width="225" height="155" rx="6" fill="#090e1a" stroke="rgba(56, 189, 248, 0.2)" stroke-width="1" />
+        
+        <g transform="translate(10, 36)" font-family="monospace" font-size="9.5">
+          <!-- /clock -->
+          <text x="0" y="0" fill="#fb923c" font-weight="700">/clock &lt;--- Gazebo</text>
+          <text x="0" y="12" fill="#64748b">Syncs ROS nodes (use_sim_time)</text>
+
+          <!-- /cmd_vel -->
+          <text x="0" y="32" fill="#38bdf8" font-weight="700">/cmd_vel ---&gt; DiffDrive</text>
+          <text x="0" y="44" fill="#64748b">Linear vx &amp; Angular wz inputs</text>
+
+          <!-- /odom -->
+          <text x="0" y="64" fill="#34d399" font-weight="700">/odom &lt;--- Encoder Sim</text>
+          <text x="0" y="76" fill="#64748b">Calculates pose + covariance</text>
+
+          <!-- /scan -->
+          <text x="0" y="96" fill="#ef4444" font-weight="700">/scan &lt;--- Ray Sensor</text>
+          <text x="0" y="108" fill="#64748b">LaserScan 360 ranges array</text>
+        </g>
+      </g>
+
+      <!-- Educational Callout Box -->
+      <g transform="translate(0, 350)">
+        <rect width="225" height="80" rx="6" fill="#131c2e" stroke="rgba(249, 115, 22, 0.25)" stroke-width="1" />
+        <text x="10" y="18" fill="#fb923c" font-size="10.5" font-weight="700">⚡ GROUND TRUTH ENGINE:</text>
+        <text x="10" y="36" fill="#cbd5e1" font-size="9.5">Gazebo calculates true physics.</text>
+        <text x="10" y="50" fill="#cbd5e1" font-size="9.5">If wheels slip, /odom drifts,</text>
+        <text x="10" y="64" fill="#cbd5e1" font-size="9.5">replicating real AMR challenges!</text>
+      </g>
+    </g>
+  </g>
+
+  <!-- ========================================================================= -->
+  <!-- 6. BOTTOM BAR: SIMULATION TIME ENGINE & RTF CONTROLS -->
+  <!-- ========================================================================= -->
+  <g transform="translate(25, 655)">
+    <!-- Bottom Bar Frame -->
+    <rect width="1230" height="42" rx="6" fill="#0f172a" stroke="rgba(255, 255, 255, 0.08)" stroke-width="1" />
+
+    <!-- Play / Pause Controls Left -->
+    <g transform="translate(15, 10)" font-family="system-ui, sans-serif" font-size="11" font-weight="700">
+      <rect x="0" y="0" width="80" height="22" rx="4" fill="#ea580c" />
+      <text x="40" y="15" text-anchor="middle" fill="#ffffff">⏸ Pause</text>
+
+      <rect x="88" y="0" width="105" height="22" rx="4" fill="#1e293b" stroke="#334155" stroke-width="1" />
+      <text x="140" y="15" text-anchor="middle" fill="#cbd5e1">⏭ Step 1ms</text>
+    </g>
+
+    <!-- Simulation Time & RTF Indicators -->
+    <g transform="translate(240, 26)" font-family="monospace" font-size="11.5">
+      <text x="0" y="0" fill="#94a3b8">Sim Time: <tspan fill="#fb923c" font-weight="700">00:02:45.100</tspan></text>
+      <text x="210" y="0" fill="#64748b">|</text>
+      <text x="235" y="0" fill="#94a3b8">Real Time: <tspan fill="#cbd5e1">00:02:45.100</tspan></text>
+      <text x="445" y="0" fill="#64748b">|</text>
+      <text x="470" y="0" fill="#94a3b8">Real-Time Factor (RTF): <tspan fill="#34d399" font-weight="700">1.00x (100%)</tspan></text>
+      <text x="735" y="0" fill="#64748b">|</text>
+      <text x="760" y="0" fill="#94a3b8">Target Step: <tspan fill="#38bdf8">0.001 s (1000 Hz)</tspan></text>
+    </g>
+  </g>
+
+  <!-- ========================================================================= -->
+  <!-- 7. ANNOTATION CALLOUT PINS & NUMBERED BADGES -->
+  <!-- ========================================================================= -->
+  <!-- CALLOUT 1: TOP GIZMOS -->
+  <g transform="translate(360, 38)">
+    <circle cx="0" cy="0" r="14" fill="url(#badgeGz)" stroke="#ffffff" stroke-width="2" filter="url(#glowOrange)" />
+    <text x="0" y="5" text-anchor="middle" fill="#ffffff" font-family="system-ui, sans-serif" font-size="13" font-weight="900">1</text>
+  </g>
+
+  <!-- CALLOUT 2: ENTITY TREE -->
+  <g transform="translate(150, 92)">
+    <circle cx="0" cy="0" r="14" fill="url(#badgeGz)" stroke="#ffffff" stroke-width="2" filter="url(#glowOrange)" />
+    <text x="0" y="5" text-anchor="middle" fill="#ffffff" font-family="system-ui, sans-serif" font-size="13" font-weight="900">2</text>
+  </g>
+
+  <!-- CALLOUT 3: 3D VIEWPORT -->
+  <g transform="translate(660, 115)">
+    <circle cx="0" cy="0" r="14" fill="url(#badgeGz)" stroke="#ffffff" stroke-width="2" filter="url(#glowOrange)" />
+    <text x="0" y="5" text-anchor="middle" fill="#ffffff" font-family="system-ui, sans-serif" font-size="13" font-weight="900">3</text>
+  </g>
+
+  <!-- CALLOUT 4: PHYSICS SOLVER -->
+  <g transform="translate(1130, 92)">
+    <circle cx="0" cy="0" r="14" fill="url(#badgeGz)" stroke="#ffffff" stroke-width="2" filter="url(#glowOrange)" />
+    <text x="0" y="5" text-anchor="middle" fill="#ffffff" font-family="system-ui, sans-serif" font-size="13" font-weight="900">4</text>
+  </g>
+
+  <!-- CALLOUT 5: TIME ENGINE -->
+  <g transform="translate(48, 645)">
+    <circle cx="0" cy="0" r="14" fill="url(#badgeGz)" stroke="#ffffff" stroke-width="2" filter="url(#glowOrange)" />
+    <text x="0" y="5" text-anchor="middle" fill="#ffffff" font-family="system-ui, sans-serif" font-size="13" font-weight="900">5</text>
+  </g>
+</svg>

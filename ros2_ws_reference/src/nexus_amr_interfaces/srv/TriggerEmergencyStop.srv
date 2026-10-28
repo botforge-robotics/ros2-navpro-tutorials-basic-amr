@@ -1,0 +1,8 @@
+# Request
+bool emergency_stop_requested
+string reason
+---
+# Response
+bool success
+string status_message
+float32 stop_timestamp

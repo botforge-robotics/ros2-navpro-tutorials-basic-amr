@@ -35,7 +35,8 @@ import {
   Cable,
   RadioTower,
   ChevronRight,
-  ChevronLeft
+  ChevronLeft,
+  CheckCircle2
 } from 'lucide-react';
 
 export function Ros2ArchitectureInteractive() {
@@ -204,6 +205,44 @@ export function Ros2ArchitectureInteractive() {
       `}</style>
 
       {/* ========================================================================= */}
+      {/* KEY LEARNING OBJECTIVES CARD (Directly below Quick Concept Snapshot) */}
+      {/* ========================================================================= */}
+      <div className="learning-objectives-card" style={{ marginTop: 0, marginBottom: '1.75rem' }}>
+        <div className="learning-objectives-header">
+          <div className="objectives-icon-badge">
+            <CheckCircle2 size={20} />
+          </div>
+          <div className="objectives-title-group">
+            <h3 className="objectives-main-title">Key Learning Objectives</h3>
+            <span className="objectives-subtitle">By the end of this lesson, you will be able to:</span>
+          </div>
+          <span className="objectives-count-badge">5 Milestones</span>
+        </div>
+        <div className="learning-objectives-list">
+          <div className="learning-objective-item">
+            <span className="objective-num-badge">01</span>
+            <span className="objective-text">Understand the core architectural differences between ROS 1 and ROS 2 (<strong>DDS middleware</strong> vs. Master node).</span>
+          </div>
+          <div className="learning-objective-item">
+            <span className="objective-num-badge">02</span>
+            <span className="objective-text">Learn the release lifecycle and why <strong>ROS 2 Jazzy Jalisco</strong> on Ubuntu 24.04 is the industry benchmark.</span>
+          </div>
+          <div className="learning-objective-item">
+            <span className="objective-num-badge">03</span>
+            <span className="objective-text">Install and configure a complete ROS 2 development workstation using Debian packages.</span>
+          </div>
+          <div className="learning-objective-item">
+            <span className="objective-num-badge">04</span>
+            <span className="objective-text">Set up and source the ROS 2 underlay environment automatically.</span>
+          </div>
+          <div className="learning-objective-item">
+            <span className="objective-num-badge">05</span>
+            <span className="objective-text">Validate your installation with the canonical C++ and Python demo nodes.</span>
+          </div>
+        </div>
+      </div>
+
+      {/* ========================================================================= */}
       {/* STORY CHAPTERS NAVIGATION TIMELINE */}
       {/* ========================================================================= */}
       <nav aria-label="Story Chapters" style={{
@@ -312,12 +351,14 @@ export function Ros2ArchitectureInteractive() {
           background: '#0a0f1d',
           marginBottom: '1.5rem',
           boxShadow: '0 8px 24px rgba(0, 0, 0, 0.35)',
-          position: 'relative'
+          position: 'relative',
+          maxWidth: '860px',
+          margin: '0 auto 1.5rem auto'
         }}>
           <img
             src="assets/images/robot_anatomy_ingredients.png"
             alt="AMR Anatomy Cutaway - Senses, Brain, and Actuation"
-            style={{ width: '100%', height: 'auto', display: 'block' }}
+            style={{ width: '100%', height: 'auto', display: 'block', margin: '0 auto' }}
           />
           <div style={{
             position: 'absolute',
@@ -354,14 +395,9 @@ export function Ros2ArchitectureInteractive() {
             flexDirection: 'column'
           }}>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '8px' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                <span style={{ fontSize: '0.74rem', fontWeight: 800, color: '#0284c7', background: 'rgba(2, 132, 199, 0.12)', padding: '3px 8px', borderRadius: '4px' }}>
-                  STAGE 1 &bull; SENSES (EYES &amp; EARS)
-                </span>
-                <h4 style={{ margin: 0, fontSize: '1.18rem', fontWeight: 800, color: 'var(--text-primary)' }}>
-                  1. Perception
-                </h4>
-              </div>
+              <h4 style={{ margin: 0, fontSize: '1.18rem', fontWeight: 800, color: 'var(--text-primary)' }}>
+                1. Perception
+              </h4>
               <Eye size={22} color="#0284c7" />
             </div>
             <p style={{ margin: '0 0 12px', fontSize: '0.88rem', color: 'var(--text-secondary)', lineHeight: 1.55 }}>
@@ -431,14 +467,9 @@ export function Ros2ArchitectureInteractive() {
             flexDirection: 'column'
           }}>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '8px' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                <span style={{ fontSize: '0.74rem', fontWeight: 800, color: '#8b5cf6', background: 'rgba(139, 92, 246, 0.12)', padding: '3px 8px', borderRadius: '4px' }}>
-                  STAGE 2 &bull; THE BRAIN (THINKING)
-                </span>
-                <h4 style={{ margin: 0, fontSize: '1.18rem', fontWeight: 800, color: 'var(--text-primary)' }}>
-                  2. Decision Making
-                </h4>
-              </div>
+              <h4 style={{ margin: 0, fontSize: '1.18rem', fontWeight: 800, color: 'var(--text-primary)' }}>
+                2. Decision Making
+              </h4>
               <Brain size={22} color="#8b5cf6" />
             </div>
             <p style={{ margin: '0 0 12px', fontSize: '0.88rem', color: 'var(--text-secondary)', lineHeight: 1.55 }}>
@@ -508,14 +539,9 @@ export function Ros2ArchitectureInteractive() {
             flexDirection: 'column'
           }}>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '8px' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                <span style={{ fontSize: '0.74rem', fontWeight: 800, color: '#10b981', background: 'rgba(16, 185, 129, 0.12)', padding: '3px 8px', borderRadius: '4px' }}>
-                  STAGE 3 &bull; THE MUSCLES (MOVING)
-                </span>
-                <h4 style={{ margin: 0, fontSize: '1.18rem', fontWeight: 800, color: 'var(--text-primary)' }}>
-                  3. Action
-                </h4>
-              </div>
+              <h4 style={{ margin: 0, fontSize: '1.18rem', fontWeight: 800, color: 'var(--text-primary)' }}>
+                3. Action
+              </h4>
               <Zap size={22} color="#10b981" />
             </div>
             <p style={{ margin: '0 0 12px', fontSize: '0.88rem', color: 'var(--text-secondary)', lineHeight: 1.55 }}>
@@ -664,8 +690,10 @@ export function Ros2ArchitectureInteractive() {
                 overflow: 'hidden',
                 border: `1px solid ${step.accent}30`,
                 background: '#0a0f1d',
-                marginBottom: '8px',
-                boxShadow: '0 4px 16px rgba(0, 0, 0, 0.25)'
+                marginBottom: '10px',
+                boxShadow: '0 4px 16px rgba(0, 0, 0, 0.25)',
+                maxWidth: '860px',
+                margin: '0 auto 10px auto'
               }}>
                 <img
                   src={step.image}
@@ -673,7 +701,8 @@ export function Ros2ArchitectureInteractive() {
                   style={{
                     width: '100%',
                     height: 'auto',
-                    display: 'block'
+                    display: 'block',
+                    margin: '0 auto'
                   }}
                 />
               </div>
@@ -950,12 +979,14 @@ export function Ros2ArchitectureInteractive() {
           overflow: 'hidden',
           border: '1px solid #1e293b',
           background: '#0a0f1d',
-          boxShadow: '0 8px 24px rgba(0, 0, 0, 0.4)'
+          boxShadow: '0 8px 24px rgba(0, 0, 0, 0.4)',
+          maxWidth: '860px',
+          margin: '0 auto'
         }}>
           <img
             src="assets/images/ros_metaphor_pc_vs_robot.jpg"
             alt="The Operating System Metaphor: Windows OS vs ROS Inside a Robot"
-            style={{ width: '100%', height: 'auto', display: 'block' }}
+            style={{ width: '100%', height: 'auto', display: 'block', margin: '0 auto' }}
           />
         </div>
 
@@ -988,12 +1019,14 @@ export function Ros2ArchitectureInteractive() {
           overflow: 'hidden',
           border: '1px solid #1e293b',
           background: '#0a0f1d',
-          boxShadow: '0 8px 24px rgba(0, 0, 0, 0.4)'
+          boxShadow: '0 8px 24px rgba(0, 0, 0, 0.4)',
+          maxWidth: '860px',
+          margin: '0 auto'
         }}>
           <img
             src="assets/images/ros_framework_os_layers.jpg"
             alt="ROS 2 Framework Running on Top of Host Operating Systems - Ubuntu Highly Recommended"
-            style={{ width: '100%', height: 'auto', display: 'block' }}
+            style={{ width: '100%', height: 'auto', display: 'block', margin: '0 auto' }}
           />
         </div>
 
@@ -1404,12 +1437,14 @@ export function Ros2ArchitectureInteractive() {
           border: '1px solid var(--border-color)',
           background: '#090d16',
           marginBottom: '1rem',
-          boxShadow: '0 8px 24px rgba(0, 0, 0, 0.3)'
+          boxShadow: '0 8px 24px rgba(0, 0, 0, 0.3)',
+          maxWidth: '860px',
+          margin: '0 auto 1rem auto'
         }}>
           <img
             src="assets/images/ros2_motion_architecture.svg"
             alt="ROS 2 Motion Architecture and Data Highway"
-            style={{ width: '100%', height: 'auto', aspectRatio: '1000 / 410', display: 'block' }}
+            style={{ width: '100%', height: 'auto', aspectRatio: '1000 / 410', display: 'block', margin: '0 auto' }}
           />
 
           {/* Live Telemetry Overlay Bar */}

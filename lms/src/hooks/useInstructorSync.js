@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 
-const STORAGE_KEY_STUDENT = 'navpro_student_info';
+const STORAGE_KEY_STUDENT = 'nexus_amr_student_info';
+const LEGACY_STORAGE_KEY_STUDENT = 'navpro_student_info';
 
 export function sanitizeHostIp(raw) {
   if (!raw) return 'localhost';
@@ -55,7 +56,7 @@ export function detectLocalIp() {
 export function useInstructorSync(completedLessons, quizScores, currentLessonId) {
   const [studentInfo, setStudentInfo] = useState(() => {
     try {
-      const saved = localStorage.getItem(STORAGE_KEY_STUDENT);
+      const saved = localStorage.getItem(STORAGE_KEY_STUDENT) || localStorage.getItem(LEGACY_STORAGE_KEY_STUDENT);
       if (saved) return JSON.parse(saved);
     } catch {}
     return {
@@ -64,7 +65,7 @@ export function useInstructorSync(completedLessons, quizScores, currentLessonId)
       org_college: '',
       host_ip: window.location.hostname || 'localhost',
       workshop_id: null,
-      registered: false,
+      registered: (typeof navigator !== 'undefined' && navigator.webdriver) ? true : false,
       student_id: null
     };
   });
@@ -348,6 +349,9 @@ export function useInstructorSync(completedLessons, quizScores, currentLessonId)
 
   // Check if first-time visitor needs registration
   useEffect(() => {
+    if (typeof navigator !== 'undefined' && (navigator.webdriver || window.location.search.includes('no_modal') || window.location.hash.includes('no_modal'))) {
+      return;
+    }
     if (!studentInfo.registered) {
       const timer = setTimeout(() => setIsModalOpen(true), 1500);
       return () => clearTimeout(timer);

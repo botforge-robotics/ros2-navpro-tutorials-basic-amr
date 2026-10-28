@@ -28,6 +28,8 @@ services:
       - "6080:6080"
       # In-browser VS Code Code Server
       - "8443:8443"
+      # In-browser Web Terminal (ttyd)
+      - "7681:7681"
     volumes:
       # Mount Level 1 repository for web portal (read-only, out of student home space)
       - .:/opt/navpro_level1:ro

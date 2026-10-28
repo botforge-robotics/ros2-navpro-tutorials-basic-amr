@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<!--
+================================================================================
+Nexus AMR Learning Hub - Level 1: Module 3 / Lesson 14 Solution
+Package: nexus_amr_description
+File:    m03_l14_solution_camera_sensor.xacro
+================================================================================
+-->
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <!-- =======================================================================
+  STEP 1: Physical Optical Camera Link
+  ======================================================================== -->
+  <link name="camera_link">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="0.025 0.09 0.025" />
+      </geometry>
+      <material name="orange">
+        <color rgba="1.0 0.45 0.0 1.0" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="0.025 0.09 0.025" />
+      </geometry>
+    </collision>
+    <xacro:box_inertia m="0.08" w="0.09" h="0.025" d="0.025" />
+  </link>
+
+  <!-- =======================================================================
+  STEP 2: Mount Camera to Front Bumper of base_link
+  ======================================================================== -->
+  <joint name="camera_joint" type="fixed">
+    <parent link="base_link" />
+    <child link="camera_link" />
+    <origin xyz="0.20 0.0 0.08" rpy="0 0 0" />
+  </joint>
+
+</robot>

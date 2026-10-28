@@ -1,0 +1,234 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 540" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#080d1a" />
+      <stop offset="50%" stop-color="#0d1527" />
+      <stop offset="100%" stop-color="#0a1020" />
+    </linearGradient>
+
+    <!-- Zone Gradient Fills -->
+    <linearGradient id="decayGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#ef4444" stop-opacity="0.9" />
+      <stop offset="18%" stop-color="#f97316" stop-opacity="0.75" />
+      <stop offset="45%" stop-color="#eab308" stop-opacity="0.5" />
+      <stop offset="75%" stop-color="#22c55e" stop-opacity="0.25" />
+      <stop offset="100%" stop-color="#06b6d4" stop-opacity="0.02" />
+    </linearGradient>
+
+    <style><![CDATA[
+      @keyframes pulseInflation {
+        0%, 100% { transform: scale(1); opacity: 0.85; }
+        50% { transform: scale(1.04); opacity: 1; }
+      }
+
+      @keyframes amrPatrol {
+        0% { transform: translate(650px, 160px); }
+        35% { transform: translate(380px, 260px); }
+        50% { transform: translate(390px, 300px); }
+        70% { transform: translate(520px, 380px); }
+        100% { transform: translate(650px, 160px); }
+      }
+
+      @keyframes repelVectorPulse {
+        0%, 30% { opacity: 0; transform: scaleX(0.2); }
+        40%, 60% { opacity: 1; transform: scaleX(1); }
+        75%, 100% { opacity: 0; transform: scaleX(0.2); }
+      }
+
+      @keyframes scannerSweep {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
+
+      .pulse-ring {
+        animation: pulseInflation 4s ease-in-out infinite;
+        transform-origin: 160px 280px;
+      }
+
+      .moving-amr {
+        animation: amrPatrol 10s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+      }
+
+      .repulsion-arrow {
+        animation: repelVectorPulse 10s ease-in-out infinite;
+      }
+
+      .lidar-spinner {
+        animation: scannerSweep 3s linear infinite;
+        transform-origin: 0px 0px;
+      }
+    ]]></style>
+  </defs>
+
+  <!-- Background Canvas -->
+  <rect width="1000" height="540" fill="url(#bgGrad)" rx="16" />
+  <rect width="996" height="536" x="2" y="2" fill="none" stroke="#1e293b" stroke-width="2" rx="15" />
+
+  <!-- Title & Header -->
+  <g transform="translate(50, 42)">
+    <rect x="0" y="-12" width="180" height="26" rx="6" fill="rgba(239, 68, 68, 0.15)" stroke="#ef4444" stroke-width="1" />
+    <text x="90" y="5" text-anchor="middle" fill="#f87171" font-family="system-ui, sans-serif" font-size="11.5" font-weight="800" letter-spacing="0.5px">
+      COSTMAP 2D INFLATION
+    </text>
+    <text x="195" y="6" fill="#f8fafc" font-family="system-ui, sans-serif" font-size="18" font-weight="800">
+      Exponential Decay Function &amp; Safety Potential Well
+    </text>
+    <text x="0" y="32" fill="#94a3b8" font-family="system-ui, sans-serif" font-size="12">
+      cost(d) = exp(-β • (d - r_inscribed)) × 253 • Path planners repel away from dangerous obstacle boundaries
+    </text>
+  </g>
+
+  <!-- ========================================================================= -->
+  <!-- 2D TOP VIEW: EXPONENTIAL INFLATION RINGS RADIATING FROM WALL              -->
+  <!-- ========================================================================= -->
+  <g transform="translate(40, 100)">
+    <!-- Outer Viewport Container Frame -->
+    <rect width="500" height="340" rx="12" fill="#070d18" stroke="#1e293b" stroke-width="1.5" />
+    <text x="20" y="28" fill="#64748b" font-family="monospace" font-size="10.5" font-weight="700">2D COSTMAP GRID CELL SLICE (100 Hz FUSION)</text>
+
+    <!-- Zone 4: Free Space Floor (Cost = 0) -->
+    <rect x="20" y="45" width="460" height="275" fill="#0a1224" rx="8" />
+
+    <!-- Pulsing Inflation Field -->
+    <g class="pulse-ring">
+      <!-- Zone 3: Exponential Decay Buffer (Cost 1 to 252) -->
+      <path d="M 60,60 L 320,60 C 360,120 360,240 320,305 L 60,305 Z" fill="url(#decayGrad)" opacity="0.65" />
+      
+      <!-- Zone 2: Inscribed Radius (Cost = 253) -->
+      <path d="M 60,85 L 205,85 C 235,130 235,230 205,280 L 60,280 Z" fill="#f97316" opacity="0.7" />
+
+      <!-- Zone 1: Lethal Obstacle (Cost = 254) -->
+      <rect x="60" y="110" width="60" height="145" fill="#ef4444" stroke="#fca5a5" stroke-width="2" rx="4" />
+      <text x="90" y="188" text-anchor="middle" fill="#ffffff" font-family="system-ui, sans-serif" font-size="12" font-weight="900" transform="rotate(-90 90 188)">
+        LETHAL (254)
+      </text>
+    </g>
+
+    <!-- Dimension Labels across Inflation Zones -->
+    <g transform="translate(60, 275)" font-family="ui-monospace, monospace" font-size="10">
+      <!-- Inscribed Distance -->
+      <line x1="60" y1="0" x2="145" y2="0" stroke="#f97316" stroke-width="2" />
+      <circle cx="60" cy="0" r="3" fill="#f97316" />
+      <circle cx="145" cy="0" r="3" fill="#f97316" />
+      <text x="102" y="-6" text-anchor="middle" fill="#fdba74" font-weight="700">r_inscribed</text>
+
+      <!-- Inflation Radius -->
+      <line x1="145" y1="18" x2="260" y2="18" stroke="#38bdf8" stroke-width="2" />
+      <circle cx="145" cy="18" r="3" fill="#38bdf8" />
+      <circle cx="260" cy="18" r="3" fill="#38bdf8" />
+      <text x="202" y="32" text-anchor="middle" fill="#7dd3fc" font-weight="700">inflation_radius (decay zone)</text>
+    </g>
+
+    <!-- Animated Patrol AMR Robot entering inflation zone -->
+    <g class="moving-amr">
+      <!-- Circular Inscribed Footprint Radius -->
+      <circle r="28" fill="rgba(6, 182, 212, 0.2)" stroke="#06b6d4" stroke-width="1.8" stroke-dasharray="4,3" />
+      <!-- AMR Body -->
+      <rect x="-18" y="-14" width="36" height="28" rx="6" fill="#0284c7" stroke="#38bdf8" stroke-width="2" />
+      <!-- Wheels -->
+      <rect x="-10" y="-18" width="20" height="4" rx="2" fill="#0f172a" stroke="#94a3b8" />
+      <rect x="-10" y="14" width="20" height="4" rx="2" fill="#0f172a" stroke="#94a3b8" />
+      <!-- Center LiDAR -->
+      <circle r="5" fill="#ef4444" />
+      <!-- Sweeping LiDAR Cone -->
+      <g class="lidar-spinner">
+        <line x1="0" y1="0" x2="50" y2="0" stroke="#38bdf8" stroke-width="1.5" opacity="0.7" />
+        <path d="M 0,0 L 50,-15 A 50 50 0 0 1 50,15 Z" fill="rgba(56, 189, 248, 0.18)" />
+      </g>
+      <!-- Repulsion Force Vector F_rep -->
+      <g class="repulsion-arrow" transform="translate(0, 0)">
+        <line x1="0" y1="0" x2="60" y2="15" stroke="#10b981" stroke-width="3.5" marker-end="url(#arrowGreen)" />
+        <text x="65" y="28" fill="#34d399" font-family="system-ui, sans-serif" font-size="11" font-weight="800">
+          F_repel (Push outward)
+        </text>
+      </g>
+    </g>
+  </g>
+
+  <!-- ========================================================================= -->
+  <!-- RIGHT PANEL: MATHEMATICAL DECAY CURVE GRAPH                               -->
+  <!-- ========================================================================= -->
+  <g transform="translate(560, 100)">
+    <rect width="390" height="340" rx="12" fill="#070d18" stroke="#1e293b" stroke-width="1.5" />
+    <text x="20" y="28" fill="#38bdf8" font-family="monospace" font-size="11" font-weight="700">MATHEMATICAL COST DECAY PROFILE</text>
+
+    <!-- Graph Axes -->
+    <g transform="translate(45, 60)">
+      <!-- Y Axis: Cost Value [0 to 254] -->
+      <line x1="0" y1="0" x2="0" y2="210" stroke="#475569" stroke-width="2" />
+      <line x1="0" y1="210" x2="310" y2="210" stroke="#475569" stroke-width="2" />
+
+      <!-- Y Axis Ticks -->
+      <text x="-10" y="10" text-anchor="end" fill="#ef4444" font-family="monospace" font-size="10" font-weight="800">254 (Lethal)</text>
+      <text x="-10" y="45" text-anchor="end" fill="#f97316" font-family="monospace" font-size="10" font-weight="800">253 (Inscribed)</text>
+      <text x="-10" y="115" text-anchor="end" fill="#eab308" font-family="monospace" font-size="10">128 (Mid)</text>
+      <text x="-10" y="214" text-anchor="end" fill="#22c55e" font-family="monospace" font-size="10" font-weight="800">0 (Free)</text>
+
+      <!-- Exponential Decay Curve Plot -->
+      <!-- Flat at 254 from x=0 to x=35 -->
+      <!-- Inscribed drop at x=35 to x=70 -->
+      <!-- Exponential curve from x=70 (y=45) down to x=280 (y=210) -->
+      <path d="M 0,10 L 35,10 L 70,45 C 100,100 160,190 280,210 L 310,210" fill="none" stroke="#38bdf8" stroke-width="3" />
+
+      <!-- Area Under Curve filled with subtle gradient -->
+      <path d="M 0,10 L 35,10 L 70,45 C 100,100 160,190 280,210 L 310,210 L 310,210 L 0,210 Z" fill="url(#decayGrad)" opacity="0.2" />
+
+      <!-- Key Zone Boundaries on X-axis -->
+      <line x1="70" y1="45" x2="70" y2="210" stroke="#f97316" stroke-width="1.5" stroke-dasharray="3,3" />
+      <text x="70" y="226" text-anchor="middle" fill="#f97316" font-family="monospace" font-size="9.5" font-weight="700">r_inscribed</text>
+
+      <line x1="280" y1="210" x2="280" y2="210" stroke="#38bdf8" stroke-width="1.5" stroke-dasharray="3,3" />
+      <text x="270" y="226" text-anchor="middle" fill="#38bdf8" font-family="monospace" font-size="9.5" font-weight="700">inflation_radius</text>
+      <text x="160" y="245" text-anchor="middle" fill="#94a3b8" font-family="system-ui, sans-serif" font-size="11">Distance from Obstacle (meters) →</text>
+    </g>
+
+    <!-- Formula Box -->
+    <g transform="translate(35, 290)">
+      <rect width="320" height="36" rx="6" fill="#0f172a" stroke="#334155" stroke-width="1" />
+      <text x="160" y="23" text-anchor="middle" fill="#38bdf8" font-family="ui-monospace, monospace" font-size="11" font-weight="800">
+        cost = exp(-β • (d - r_i)) × (LETHAL - 1)
+      </text>
+    </g>
+  </g>
+
+  <!-- ========================================================================= -->
+  <!-- BOTTOM STRIP: 4 CRITICAL ZONES DEFINITION                                 -->
+  <!-- ========================================================================= -->
+  <g transform="translate(40, 455)">
+    <rect width="910" height="65" rx="10" fill="#0f172a" stroke="#1e293b" stroke-width="1.5" />
+
+    <g transform="translate(20, 20)" font-family="system-ui, sans-serif">
+      <!-- Col 1 -->
+      <g transform="translate(0, 0)">
+        <rect x="0" y="-4" width="75" height="20" rx="4" fill="rgba(239, 68, 68, 0.2)" stroke="#ef4444" stroke-width="1" />
+        <text x="37" y="10" text-anchor="middle" fill="#ef4444" font-size="10.5" font-weight="800">COST 254</text>
+        <text x="85" y="11" fill="#f8fafc" font-size="12" font-weight="700">Lethal Obstacle</text>
+        <text x="0" y="28" fill="#94a3b8" font-size="10.5">Physical barrier or collision cell</text>
+      </g>
+
+      <!-- Col 2 -->
+      <g transform="translate(225, 0)">
+        <rect x="0" y="-4" width="75" height="20" rx="4" fill="rgba(249, 115, 22, 0.2)" stroke="#f97316" stroke-width="1" />
+        <text x="37" y="10" text-anchor="middle" fill="#f97316" font-size="10.5" font-weight="800">COST 253</text>
+        <text x="85" y="11" fill="#f8fafc" font-size="12" font-weight="700">Inscribed Radius</text>
+        <text x="0" y="28" fill="#94a3b8" font-size="10.5">Robot center cannot cross (collision)</text>
+      </g>
+
+      <!-- Col 3 -->
+      <g transform="translate(460, 0)">
+        <rect x="0" y="-4" width="85" height="20" rx="4" fill="rgba(234, 179, 8, 0.2)" stroke="#eab308" stroke-width="1" />
+        <text x="42" y="10" text-anchor="middle" fill="#eab308" font-size="10.5" font-weight="800">COST 1-252</text>
+        <text x="95" y="11" fill="#f8fafc" font-size="12" font-weight="700">Inflation Gradient</text>
+        <text x="0" y="28" fill="#94a3b8" font-size="10.5">Exponential decay guiding planners away</text>
+      </g>
+
+      <!-- Col 4 -->
+      <g transform="translate(700, 0)">
+        <rect x="0" y="-4" width="65" height="20" rx="4" fill="rgba(34, 197, 94, 0.2)" stroke="#22c55e" stroke-width="1" />
+        <text x="32" y="10" text-anchor="middle" fill="#22c55e" font-size="10.5" font-weight="800">COST 0</text>
+        <text x="75" y="11" fill="#f8fafc" font-size="12" font-weight="700">Free Space</text>
+        <text x="0" y="28" fill="#94a3b8" font-size="10.5">Clear traversable warehouse floor</text>
+      </g>
+    </g>
+  </g>
+</svg>

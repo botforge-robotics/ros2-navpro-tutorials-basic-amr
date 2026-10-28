@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<!--
+================================================================================
+Nexus AMR Learning Hub - Level 1: Module 3 / Lesson 14 Task
+Package: nexus_amr_description
+File:    m03_l14_task_camera_sensor.xacro (alias: camera.xacro)
+================================================================================
+
+MISSION TARGETS:
+1. TODO 1: Define physical optical camera link <link name="camera_link"> with
+           box geometry (size: 0.025m x 0.09m x 0.025m) and box_inertia macro.
+2. TODO 2: Define fixed joint <joint name="camera_joint" type="fixed"> mounting
+           camera_link to base_link at xyz="0.20 0.0 0.08" with rpy="0 0 0".
+
+NOTE: Gazebo simulation plugins (libgazebo_ros_camera.so) are decoupled from pure
+      URDF kinematics and will be introduced and integrated in Lesson 16.
+================================================================================
+-->
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <!-- =======================================================================
+  TODO 1: Physical Camera Body Link (camera_link)
+  ======================================================================== -->
+  <!-- TODO 1: Define <link name="camera_link"> with visual/collision box (0.025 0.09 0.025) and box_inertia. -->
+
+  <!-- =======================================================================
+  TODO 2: Mount Camera to Chassis (camera_joint)
+  ======================================================================== -->
+  <!-- TODO 2: Define fixed joint connecting base_link to camera_link at (0.20, 0.0, 0.08). -->
+
+</robot>
+

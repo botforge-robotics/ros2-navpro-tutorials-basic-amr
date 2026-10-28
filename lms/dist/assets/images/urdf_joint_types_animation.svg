@@ -1,0 +1,351 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 460" width="100%" height="100%">
+  <defs>
+    <!-- Animation Keyframes -->
+    <style><![CDATA[
+      @keyframes spinContinuous {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+      }
+      @keyframes dashCircle {
+        from { stroke-dashoffset: 0; }
+        to { stroke-dashoffset: -40; }
+      }
+      @keyframes swingRevolute {
+        0% { transform: rotate(-55deg); }
+        50% { transform: rotate(55deg); }
+        100% { transform: rotate(-55deg); }
+      }
+      @keyframes slidePrismatic {
+        0% { transform: translateY(0px); }
+        50% { transform: translateY(-68px); }
+        100% { transform: translateY(0px); }
+      }
+      @keyframes pulseFixed {
+        0%, 100% { opacity: 0.9; transform: scale(1); }
+        50% { opacity: 1; transform: scale(1.08); }
+      }
+      @keyframes boltGlow {
+        0%, 100% { stroke: #0284c7; }
+        50% { stroke: #38bdf8; }
+      }
+
+      .wheel-spinner {
+        transform-origin: 125px 125px;
+        animation: spinContinuous 2.5s linear infinite;
+      }
+      .orbit-dash {
+        stroke-dasharray: 6 5;
+        animation: dashCircle 1.5s linear infinite;
+      }
+      .revolute-arm {
+        transform-origin: 125px 150px;
+        animation: swingRevolute 3.0s ease-in-out infinite;
+      }
+      .prismatic-carriage {
+        animation: slidePrismatic 2.8s ease-in-out infinite;
+      }
+      .fixed-lock {
+        transform-origin: 0px 0px;
+        animation: pulseFixed 2.2s ease-in-out infinite;
+      }
+      .bolt-pulse {
+        animation: boltGlow 2.0s ease-in-out infinite;
+      }
+    ]]></style>
+
+    <filter id="cardShadow" x="-5%" y="-5%" width="110%" height="110%">
+      <feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="#0f172a" flood-opacity="0.06"/>
+    </filter>
+  </defs>
+
+  <!-- Background Base Canvas -->
+  <rect width="1100" height="460" rx="16" fill="#ffffff" stroke="#e2e8f0" stroke-width="1.5"/>
+
+  <!-- Main Banner Header -->
+  <text x="550" y="28" font-family="system-ui, -apple-system, sans-serif" font-size="14.5" font-weight="800" fill="#0f172a" text-anchor="middle" letter-spacing="1">
+    ROS 2 URDF JOINT TYPES &amp; KINEMATIC MOTION
+  </text>
+  <text x="550" y="46" font-family="system-ui, -apple-system, sans-serif" font-size="10.5" font-weight="600" fill="#475569" text-anchor="middle">
+    Degrees of Freedom (DOF) • Real-Time Mechanical Animation • URDF XML Syntax
+  </text>
+
+  <!-- ========================================================================= -->
+  <!-- CARD 1: CONTINUOUS JOINT -->
+  <!-- ========================================================================= -->
+  <g transform="translate(25, 60)" filter="url(#cardShadow)">
+    <rect width="248" height="380" rx="12" fill="#f0fdf4" stroke="#16a34a" stroke-width="1.5"/>
+    
+    <!-- Title / Header Pill -->
+    <rect x="14" y="14" width="220" height="28" rx="8" fill="#dcfce7"/>
+    <text x="124" y="32" font-family="monospace" font-size="12" font-weight="800" fill="#15803d" text-anchor="middle">
+      type="continuous"
+    </text>
+
+    <!-- Subtitle badge -->
+    <rect x="24" y="48" width="200" height="18" rx="4" fill="#ffffff" stroke="#16a34a" stroke-width="1"/>
+    <text x="124" y="60.5" font-family="system-ui, sans-serif" font-size="9" font-weight="700" fill="#15803d" text-anchor="middle">
+      1 DOF • Unlimited Rotation (-∞ to +∞)
+    </text>
+
+    <!-- Animated Graphic Stage -->
+    <g transform="translate(0, 5)">
+      <!-- Background orbit track -->
+      <circle cx="125" cy="125" r="48" fill="none" stroke="#bbf7d0" stroke-width="2"/>
+      <circle cx="125" cy="125" r="48" fill="none" stroke="#16a34a" stroke-width="2" class="orbit-dash"/>
+
+      <!-- Axle Shaft Origin -->
+      <line x1="60" y1="125" x2="190" y2="125" stroke="#94a3b8" stroke-width="4" stroke-linecap="round"/>
+      <text x="195" y="129" font-family="monospace" font-size="8.5" font-weight="700" fill="#64748b">Axis: Y</text>
+
+      <!-- Spinning Wheel Assembly -->
+      <g class="wheel-spinner">
+        <!-- Wheel Rim & Tire -->
+        <circle cx="125" cy="125" r="38" fill="#1e293b" stroke="#047857" stroke-width="2"/>
+        <circle cx="125" cy="125" r="26" fill="#334155"/>
+        <circle cx="125" cy="125" r="9" fill="#10b981"/>
+
+        <!-- Spokes -->
+        <line x1="125" y1="87" x2="125" y2="163" stroke="#e2e8f0" stroke-width="2"/>
+        <line x1="87" y1="125" x2="163" y2="125" stroke="#e2e8f0" stroke-width="2"/>
+        <line x1="98" y1="98" x2="152" y2="152" stroke="#e2e8f0" stroke-width="2"/>
+        <line x1="98" y1="152" x2="152" y2="98" stroke="#e2e8f0" stroke-width="2"/>
+
+        <!-- Indicator Tread Notch -->
+        <circle cx="125" cy="89" r="3.5" fill="#facc15"/>
+      </g>
+
+      <!-- Center Axle Pin -->
+      <circle cx="125" cy="125" r="4" fill="#ffffff" stroke="#0f172a" stroke-width="1.5"/>
+
+      <!-- Joint Role Label -->
+      <text x="125" y="190" font-family="system-ui, sans-serif" font-size="9.5" font-weight="700" fill="#15803d" text-anchor="middle">
+        Drive Wheels &amp; Rotating Turrets
+      </text>
+    </g>
+
+    <!-- URDF XML Syntax Box -->
+    <rect x="14" y="210" width="220" height="154" rx="8" fill="#ffffff" stroke="#bbf7d0" stroke-width="1.2"/>
+    <text x="24" y="234" font-family="monospace" font-size="9" fill="#047857">&lt;joint name="left_wheel_joint"</text>
+    <text x="24" y="252" font-family="monospace" font-size="9" font-weight="700" fill="#15803d">       type="continuous"&gt;</text>
+    <text x="24" y="272" font-family="monospace" font-size="9" fill="#475569">  &lt;parent link="base_link"/&gt;</text>
+    <text x="24" y="292" font-family="monospace" font-size="9" fill="#475569">  &lt;child link="left_wheel_link"/&gt;</text>
+    <text x="24" y="312" font-family="monospace" font-size="9" fill="#0284c7">  &lt;origin xyz="0 0.16 0"/&gt;</text>
+    <text x="24" y="332" font-family="monospace" font-size="9" fill="#16a34a">  &lt;axis xyz="0 1 0"/&gt;</text>
+    <text x="24" y="352" font-family="monospace" font-size="9" fill="#047857">&lt;/joint&gt;</text>
+  </g>
+
+  <!-- ========================================================================= -->
+  <!-- CARD 2: REVOLUTE JOINT -->
+  <!-- ========================================================================= -->
+  <g transform="translate(293, 60)" filter="url(#cardShadow)">
+    <rect width="248" height="380" rx="12" fill="#faf5ff" stroke="#8b5cf6" stroke-width="1.5"/>
+    
+    <!-- Title / Header Pill -->
+    <rect x="14" y="14" width="220" height="28" rx="8" fill="#f3e8ff"/>
+    <text x="124" y="32" font-family="monospace" font-size="12" font-weight="800" fill="#6d28d9" text-anchor="middle">
+      type="revolute"
+    </text>
+
+    <!-- Subtitle badge -->
+    <rect x="24" y="48" width="200" height="18" rx="4" fill="#ffffff" stroke="#8b5cf6" stroke-width="1"/>
+    <text x="124" y="60.5" font-family="system-ui, sans-serif" font-size="9" font-weight="700" fill="#6d28d9" text-anchor="middle">
+      1 DOF • Angular Limits [lower, upper]
+    </text>
+
+    <!-- Animated Graphic Stage -->
+    <g transform="translate(0, 5)">
+      <!-- Base Pivot Mount -->
+      <rect x="105" y="145" width="40" height="25" rx="4" fill="#e2e8f0" stroke="#64748b" stroke-width="1.5"/>
+
+      <!-- Limit Range Sector Arc (-55° to +55°) -->
+      <path d="M 80 85 A 65 65 0 0 1 170 85 L 125 150 Z" fill="#e9d5ff" opacity="0.45"/>
+      <path d="M 72 85 A 65 65 0 0 1 178 85" fill="none" stroke="#a855f7" stroke-width="1.5" stroke-dasharray="3 3"/>
+
+      <!-- Physical Mechanical Limit Stop Pins -->
+      <circle cx="72" cy="85" r="4.5" fill="#ef4444" stroke="#991b1b" stroke-width="1"/>
+      <text x="56" y="78" font-family="monospace" font-size="7.5" font-weight="700" fill="#dc2626">-55°</text>
+
+      <circle cx="178" cy="85" r="4.5" fill="#ef4444" stroke="#991b1b" stroke-width="1"/>
+      <text x="180" y="78" font-family="monospace" font-size="7.5" font-weight="700" fill="#dc2626">+55°</text>
+
+      <!-- Center Zero Marker -->
+      <line x1="125" y1="80" x2="125" y2="92" stroke="#6b21a8" stroke-width="1.5"/>
+      <text x="125" y="75" font-family="monospace" font-size="8" font-weight="700" fill="#6b21a8" text-anchor="middle">0°</text>
+
+      <!-- Oscillating Arm Assembly -->
+      <g class="revolute-arm">
+        <line x1="125" y1="150" x2="125" y2="82" stroke="#6d28d9" stroke-width="7" stroke-linecap="round"/>
+        <line x1="125" y1="150" x2="125" y2="82" stroke="#c084fc" stroke-width="3" stroke-linecap="round"/>
+        <circle cx="125" cy="82" r="6" fill="#8b5cf6" stroke="#ffffff" stroke-width="1.5"/>
+      </g>
+
+      <!-- Pivot Hinge Pin -->
+      <circle cx="125" cy="150" r="7" fill="#ffffff" stroke="#4c1d95" stroke-width="2.5"/>
+      <circle cx="125" cy="150" r="2.5" fill="#4c1d95"/>
+
+      <!-- Joint Role Label -->
+      <text x="125" y="190" font-family="system-ui, sans-serif" font-size="9.5" font-weight="700" fill="#6d28d9" text-anchor="middle">
+        Robotic Arms &amp; Steering Knuckles
+      </text>
+    </g>
+
+    <!-- URDF XML Syntax Box -->
+    <rect x="14" y="210" width="220" height="154" rx="8" fill="#ffffff" stroke="#e9d5ff" stroke-width="1.2"/>
+    <text x="24" y="232" font-family="monospace" font-size="9" fill="#6d28d9">&lt;joint name="arm_joint"</text>
+    <text x="24" y="248" font-family="monospace" font-size="9" font-weight="700" fill="#7c3aed">       type="revolute"&gt;</text>
+    <text x="24" y="266" font-family="monospace" font-size="9" fill="#475569">  &lt;parent link="shoulder_link"/&gt;</text>
+    <text x="24" y="284" font-family="monospace" font-size="9" fill="#475569">  &lt;child link="elbow_link"/&gt;</text>
+    <text x="24" y="302" font-family="monospace" font-size="9" fill="#8b5cf6">  &lt;axis xyz="0 1 0"/&gt;</text>
+    <text x="24" y="320" font-family="monospace" font-size="8.5" fill="#dc2626">  &lt;limit lower="-1.57" upper="1.57"</text>
+    <text x="24" y="336" font-family="monospace" font-size="8.5" fill="#dc2626">         effort="10" velocity="2"/&gt;</text>
+    <text x="24" y="352" font-family="monospace" font-size="9" fill="#6d28d9">&lt;/joint&gt;</text>
+  </g>
+
+  <!-- ========================================================================= -->
+  <!-- CARD 3: PRISMATIC JOINT (Accurately Positioned Linear Slide) -->
+  <!-- ========================================================================= -->
+  <g transform="translate(561, 60)" filter="url(#cardShadow)">
+    <rect width="248" height="380" rx="12" fill="#fffbeb" stroke="#f59e0b" stroke-width="1.5"/>
+    
+    <!-- Title / Header Pill -->
+    <rect x="14" y="14" width="220" height="28" rx="8" fill="#fef3c7"/>
+    <text x="124" y="32" font-family="monospace" font-size="12" font-weight="800" fill="#b45309" text-anchor="middle">
+      type="prismatic"
+    </text>
+
+    <!-- Subtitle badge -->
+    <rect x="24" y="48" width="200" height="18" rx="4" fill="#ffffff" stroke="#f59e0b" stroke-width="1"/>
+    <text x="124" y="60.5" font-family="system-ui, sans-serif" font-size="9" font-weight="700" fill="#b45309" text-anchor="middle">
+      1 DOF • Linear Slide [lower, upper]
+    </text>
+
+    <!-- Animated Graphic Stage -->
+    <g transform="translate(0, 5)">
+      <!-- Guide Rails (Fixed Stanchions: x=80..88 and x=160..168, span y=75 to y=175) -->
+      <rect x="80" y="75" width="8" height="100" rx="2" fill="#cbd5e1" stroke="#64748b" stroke-width="1"/>
+      <rect x="160" y="75" width="8" height="100" rx="2" fill="#cbd5e1" stroke="#64748b" stroke-width="1"/>
+
+      <!-- Upper Mechanical Limit Bracket (y=82) -->
+      <line x1="72" y1="82" x2="176" y2="82" stroke="#dc2626" stroke-width="2.5"/>
+      <text x="180" y="85" font-family="monospace" font-size="7.5" font-weight="700" fill="#dc2626">Upper (0.5m)</text>
+
+      <!-- Lower Mechanical Limit Bracket (y=170) -->
+      <line x1="72" y1="170" x2="176" y2="170" stroke="#dc2626" stroke-width="2.5"/>
+      <text x="180" y="173" font-family="monospace" font-size="7.5" font-weight="700" fill="#dc2626">Lower (0.0m)</text>
+
+      <!-- Center Motion Vector Arrow (exact stroke: 155 to 90) -->
+      <line x1="124" y1="155" x2="124" y2="92" stroke="#f59e0b" stroke-width="1.8" stroke-dasharray="3 3"/>
+      <polygon points="124,86 120,94 128,94" fill="#f59e0b"/>
+
+      <!-- Sliding Carriage Assembly:
+           Outer transform: anchors carriage base at y=160.
+           Inner animation: translates 0px -> -68px smoothly between stops.
+           At 0%: bottom body touches lower limit at y=170.
+           At 50%: top body touches upper limit at y=82.
+      -->
+      <g transform="translate(0, 160)">
+        <g class="prismatic-carriage">
+          <!-- Carriage Body Plate between the rails -->
+          <rect x="86" y="-10" width="76" height="20" rx="3" fill="#f59e0b" stroke="#b45309" stroke-width="1.5"/>
+          <rect x="94" y="-7" width="60" height="14" rx="2" fill="#fbbf24"/>
+          
+          <!-- Precision Linear Roller Bearings riding the rails -->
+          <circle cx="84" cy="0" r="4.5" fill="#1e293b" stroke="#64748b" stroke-width="1"/>
+          <circle cx="164" cy="0" r="4.5" fill="#1e293b" stroke="#64748b" stroke-width="1"/>
+
+          <!-- Extended Pallet / Tooling Fork Platform -->
+          <rect x="70" y="6" width="108" height="4" rx="1.5" fill="#334155"/>
+        </g>
+      </g>
+
+      <!-- Joint Role Label -->
+      <text x="124" y="190" font-family="system-ui, sans-serif" font-size="9.5" font-weight="700" fill="#b45309" text-anchor="middle">
+        Pallet Lifters &amp; Linear Slides
+      </text>
+    </g>
+
+    <!-- URDF XML Syntax Box -->
+    <rect x="14" y="210" width="220" height="154" rx="8" fill="#ffffff" stroke="#fde68a" stroke-width="1.2"/>
+    <text x="24" y="232" font-family="monospace" font-size="9" fill="#b45309">&lt;joint name="lift_joint"</text>
+    <text x="24" y="248" font-family="monospace" font-size="9" font-weight="700" fill="#d97706">       type="prismatic"&gt;</text>
+    <text x="24" y="266" font-family="monospace" font-size="9" fill="#475569">  &lt;parent link="base_link"/&gt;</text>
+    <text x="24" y="284" font-family="monospace" font-size="9" fill="#475569">  &lt;child link="lift_carriage"/&gt;</text>
+    <text x="24" y="302" font-family="monospace" font-size="9" fill="#f59e0b">  &lt;axis xyz="0 0 1"/&gt;</text>
+    <text x="24" y="320" font-family="monospace" font-size="8.5" fill="#dc2626">  &lt;limit lower="0.0" upper="0.50"</text>
+    <text x="24" y="336" font-family="monospace" font-size="8.5" fill="#dc2626">         effort="100" velocity="0.2"/&gt;</text>
+    <text x="24" y="352" font-family="monospace" font-size="9" fill="#b45309">&lt;/joint&gt;</text>
+  </g>
+
+  <!-- ========================================================================= -->
+  <!-- CARD 4: FIXED JOINT -->
+  <!-- ========================================================================= -->
+  <g transform="translate(827, 60)" filter="url(#cardShadow)">
+    <rect width="248" height="380" rx="12" fill="#f0f9ff" stroke="#0284c7" stroke-width="1.5"/>
+    
+    <!-- Title / Header Pill -->
+    <rect x="14" y="14" width="220" height="28" rx="8" fill="#e0f2fe"/>
+    <text x="124" y="32" font-family="monospace" font-size="12" font-weight="800" fill="#0369a1" text-anchor="middle">
+      type="fixed"
+    </text>
+
+    <!-- Subtitle badge -->
+    <rect x="24" y="48" width="200" height="18" rx="4" fill="#ffffff" stroke="#0284c7" stroke-width="1"/>
+    <text x="124" y="60.5" font-family="system-ui, sans-serif" font-size="9" font-weight="700" fill="#0369a1" text-anchor="middle">
+      0 DOF • Rigid Weld (Locked Pose Offset)
+    </text>
+
+    <!-- Animated Graphic Stage -->
+    <g transform="translate(0, 5)">
+      <!-- Parent Chassis Base Plate -->
+      <rect x="50" y="145" width="150" height="22" rx="4" fill="#0284c7" stroke="#0369a1" stroke-width="1.5"/>
+      <text x="125" y="160" font-family="system-ui, sans-serif" font-size="8.5" font-weight="700" fill="#ffffff" text-anchor="middle">
+        Parent: base_link
+      </text>
+
+      <!-- Welded Mount Gussets & Seam -->
+      <polygon points="80,145 92,125 96,145" fill="#38bdf8"/>
+      <polygon points="170,145 158,125 154,145" fill="#38bdf8"/>
+      
+      <!-- Weld Beads -->
+      <path d="M 90 145 Q 94 140 98 145 Q 102 140 106 145 Q 110 140 114 145 Q 118 140 122 145 Q 126 140 130 145 Q 134 140 138 145 Q 142 140 146 145 Q 150 140 154 145 Q 158 140 162 145" 
+            fill="none" stroke="#f59e0b" stroke-width="2" stroke-linecap="round"/>
+
+      <!-- Child Sensor Mount (LiDAR Puck / Camera) -->
+      <rect x="92" y="105" width="66" height="40" rx="6" fill="#f97316" stroke="#c2410c" stroke-width="1.5"/>
+      <text x="125" y="129" font-family="monospace" font-size="8.5" font-weight="700" fill="#ffffff" text-anchor="middle">
+        laser_frame
+      </text>
+
+      <!-- Bolted Fastener Pins -->
+      <circle cx="82" cy="156" r="3.5" fill="#ffffff" stroke="#0284c7" stroke-width="1.5" class="bolt-pulse"/>
+      <circle cx="168" cy="156" r="3.5" fill="#ffffff" stroke="#0284c7" stroke-width="1.5" class="bolt-pulse"/>
+
+      <!-- Padlock Icon Overlay anchored at center -->
+      <g transform="translate(125, 92)">
+        <g class="fixed-lock">
+          <circle cx="0" cy="0" r="14" fill="#ffffff" stroke="#0284c7" stroke-width="2"/>
+          <!-- Shackle -->
+          <path d="M -5 -2 L -5 -8 A 5 5 0 0 1 5 -8 L 5 -2" fill="none" stroke="#0284c7" stroke-width="2" stroke-linecap="round"/>
+          <!-- Body -->
+          <rect x="-7" y="-2" width="14" height="10" rx="2" fill="#0284c7"/>
+          <circle cx="0" cy="3" r="1.5" fill="#ffffff"/>
+        </g>
+      </g>
+
+      <!-- Joint Role Label -->
+      <text x="125" y="190" font-family="system-ui, sans-serif" font-size="9.5" font-weight="700" fill="#0369a1" text-anchor="middle">
+        Sensor Mounts &amp; Rigid Brackets
+      </text>
+    </g>
+
+    <!-- URDF XML Syntax Box -->
+    <rect x="14" y="210" width="220" height="154" rx="8" fill="#ffffff" stroke="#bae6fd" stroke-width="1.2"/>
+    <text x="24" y="234" font-family="monospace" font-size="9" fill="#0369a1">&lt;joint name="laser_joint"</text>
+    <text x="24" y="252" font-family="monospace" font-size="9" font-weight="700" fill="#0284c7">       type="fixed"&gt;</text>
+    <text x="24" y="272" font-family="monospace" font-size="9" fill="#475569">  &lt;parent link="base_link"/&gt;</text>
+    <text x="24" y="292" font-family="monospace" font-size="9" fill="#475569">  &lt;child link="laser_frame"/&gt;</text>
+    <text x="24" y="312" font-family="monospace" font-size="9" fill="#0284c7">  &lt;origin xyz="0.08 0 0.16"/&gt;</text>
+    <text x="24" y="332" font-family="system-ui, sans-serif" font-size="8.5" fill="#64748b">  &lt;!-- Zero DOFs: no limits --&gt;</text>
+    <text x="24" y="352" font-family="monospace" font-size="9" fill="#0369a1">&lt;/joint&gt;</text>
+  </g>
+</svg>

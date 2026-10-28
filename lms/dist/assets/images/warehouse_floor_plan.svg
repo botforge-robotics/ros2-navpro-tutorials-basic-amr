@@ -1,0 +1,303 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 1020" width="1400" height="1020">
+  <defs>
+    <!-- Architectural Arrowhead Markers -->
+    <marker id="dimArrowStart" viewBox="0 0 10 10" refX="2" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 10 2 L 0 5 L 10 8 z" fill="#000000" />
+    </marker>
+    <marker id="dimArrowEnd" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 2 L 10 5 L 0 8 z" fill="#000000" />
+    </marker>
+    <marker id="coordArrow" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 2 L 8 5 L 0 8 z" fill="#000000" />
+    </marker>
+
+    <!-- Hatch Pattern for Racks -->
+    <pattern id="rackHatch" width="10" height="10" patternTransform="rotate(45 0 0)" patternUnits="userSpaceOnUse">
+      <line x1="0" y1="0" x2="0" y2="10" stroke="#000000" stroke-width="1.2" />
+    </pattern>
+
+    <!-- Wall Hatch Pattern -->
+    <pattern id="wallHatch" width="8" height="8" patternTransform="rotate(45 0 0)" patternUnits="userSpaceOnUse">
+      <line x1="0" y1="0" x2="0" y2="8" stroke="#333333" stroke-width="1.5" />
+    </pattern>
+  </defs>
+
+  <!-- Clean Architectural White Background -->
+  <rect width="1400" height="1020" fill="#ffffff" />
+  
+  <!-- Outer Drawing Border -->
+  <rect x="25" y="25" width="1350" height="970" fill="none" stroke="#000000" stroke-width="3" />
+  <rect x="30" y="30" width="1340" height="960" fill="none" stroke="#000000" stroke-width="1" />
+
+  <!-- Drawing Header -->
+  <g transform="translate(60, 68)">
+    <text x="0" y="0" font-family="'Courier New', Courier, monospace, system-ui" font-size="20" font-weight="900" fill="#000000" letter-spacing="1.5px">
+      NEXUS AMR LOGISTICS FACILITY • SIMULATION BENCHMARK WORLD
+    </text>
+    <text x="0" y="22" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="600" fill="#4b5563">
+      ARCHITECTURAL CAD FLOOR PLAN WITH GROUND-TRUTH DIMENSIONS &amp; REP 103 COORDINATES
+    </text>
+  </g>
+
+  <!-- ========================================================================= -->
+  <!-- 1.0 METER DRAFTING GRID (LIGHT GREY)                                      -->
+  <!-- ========================================================================= -->
+  <g stroke="#e5e7eb" stroke-width="0.8">
+    <!-- Vertical grid lines every 1m (65px) from X=-5m to +5m (325px to 975px) -->
+    <line x1="325" y1="175" x2="325" y2="825" />
+    <line x1="390" y1="175" x2="390" y2="825" />
+    <line x1="455" y1="175" x2="455" y2="825" />
+    <line x1="520" y1="175" x2="520" y2="825" />
+    <line x1="585" y1="175" x2="585" y2="825" />
+    <line x1="650" y1="175" x2="650" y2="825" stroke="#9ca3af" stroke-width="1.2" stroke-dasharray="4,4" /> <!-- X=0 Axis -->
+    <line x1="715" y1="175" x2="715" y2="825" />
+    <line x1="780" y1="175" x2="780" y2="825" />
+    <line x1="845" y1="175" x2="845" y2="825" />
+    <line x1="910" y1="175" x2="910" y2="825" />
+    <line x1="975" y1="175" x2="975" y2="825" />
+
+    <!-- Horizontal grid lines every 1m (65px) from Y=-5m to +5m (175px to 825px) -->
+    <line x1="325" y1="175" x2="975" y2="175" />
+    <line x1="325" y1="240" x2="975" y2="240" />
+    <line x1="325" y1="305" x2="975" y2="305" />
+    <line x1="325" y1="370" x2="975" y2="370" />
+    <line x1="325" y1="435" x2="975" y2="435" />
+    <line x1="325" y1="500" x2="975" y2="500" stroke="#9ca3af" stroke-width="1.2" stroke-dasharray="4,4" /> <!-- Y=0 Axis -->
+    <line x1="325" y1="565" x2="975" y2="565" />
+    <line x1="325" y1="630" x2="975" y2="630" />
+    <line x1="325" y1="695" x2="975" y2="695" />
+    <line x1="325" y1="760" x2="975" y2="760" />
+    <line x1="325" y1="825" x2="975" y2="825" />
+  </g>
+
+  <!-- ========================================================================= -->
+  <!-- WAREHOUSE BOUNDARY WALLS (10.0m x 10.0m, thickness 0.20m = 13px)         -->
+  <!-- ========================================================================= -->
+  <!-- Outer perimeter: x: 318.5 to 981.5, y: 168.5 to 831.5 -->
+  <!-- Inner boundary: x: 325 to 975, y: 175 to 825 -->
+  <!-- North Wall (Top: y=168.5 to 181.5) -->
+  <rect x="318.5" y="168.5" width="663" height="13" fill="#000000" stroke="#000000" stroke-width="1" />
+  <!-- South Wall (Bottom: y=818.5 to 831.5) -->
+  <rect x="318.5" y="818.5" width="663" height="13" fill="#000000" stroke="#000000" stroke-width="1" />
+  <!-- West Wall (Left: x=318.5 to 331.5) -->
+  <rect x="318.5" y="168.5" width="13" height="663" fill="#000000" stroke="#000000" stroke-width="1" />
+  <!-- East Wall (Right: x=968.5 to 981.5) -->
+  <rect x="968.5" y="168.5" width="13" height="663" fill="#000000" stroke="#000000" stroke-width="1" />
+
+  <!-- Wall Orientation Labels -->
+  <text x="650" y="160" text-anchor="middle" font-family="system-ui, sans-serif" font-size="12" font-weight="800" fill="#000000">NORTH WALL (Y = +5.0 m | Length: 10.0 m)</text>
+  <text x="650" y="852" text-anchor="middle" font-family="system-ui, sans-serif" font-size="12" font-weight="800" fill="#000000">SOUTH WALL (Y = -5.0 m | Length: 10.0 m)</text>
+  <text x="305" y="505" text-anchor="middle" font-family="system-ui, sans-serif" font-size="12" font-weight="800" fill="#000000" transform="rotate(-90 305 505)">WEST WALL (X = -5.0 m)</text>
+  <text x="1010" y="505" text-anchor="middle" font-family="system-ui, sans-serif" font-size="12" font-weight="800" fill="#000000" transform="rotate(90 995 505)">EAST WALL (X = +5.0 m)</text>
+
+  <!-- ========================================================================= -->
+  <!-- INTERNAL WAREHOUSE ELEMENTS                                               -->
+  <!-- ========================================================================= -->
+  <!-- STORAGE RACK ROW A: Center (-2.5, +1.8) -> x: 390 to 585 (195px=3.0m), y: 357 to 409 (52px=0.8m) -->
+  <rect x="390" y="357" width="195" height="52" fill="url(#rackHatch)" stroke="#000000" stroke-width="2.5" />
+  <rect x="390" y="357" width="195" height="52" fill="none" stroke="#000000" stroke-width="2.5" />
+  <!-- Pallet Division Lines on Rack A -->
+  <line x1="455" y1="357" x2="455" y2="409" stroke="#000000" stroke-width="1.5" />
+  <line x1="520" y1="357" x2="520" y2="409" stroke="#000000" stroke-width="1.5" />
+  <text x="487.5" y="345" text-anchor="middle" font-family="system-ui, sans-serif" font-size="12" font-weight="800" fill="#000000">
+    STORAGE RACK A (3.0 m × 0.8 m)
+  </text>
+  <text x="487.5" y="388" text-anchor="middle" font-family="system-ui, sans-serif" font-size="11" font-weight="700" fill="#000000">
+    pose: [-2.5, +1.8, 0.75]
+  </text>
+
+  <!-- STORAGE RACK ROW B: Center (-2.5, -1.8) -> x: 390 to 585, y: 591 to 643 -->
+  <rect x="390" y="591" width="195" height="52" fill="url(#rackHatch)" stroke="#000000" stroke-width="2.5" />
+  <line x1="455" y1="591" x2="455" y2="643" stroke="#000000" stroke-width="1.5" />
+  <line x1="520" y1="591" x2="520" y2="643" stroke="#000000" stroke-width="1.5" />
+  <text x="487.5" y="580" text-anchor="middle" font-family="system-ui, sans-serif" font-size="12" font-weight="800" fill="#000000">
+    STORAGE RACK B (3.0 m × 0.8 m)
+  </text>
+  <text x="487.5" y="622" text-anchor="middle" font-family="system-ui, sans-serif" font-size="11" font-weight="700" fill="#000000">
+    pose: [-2.5, -1.8, 0.75]
+  </text>
+
+  <!-- AISLE DIMENSION (Between Rack A & Rack B = 2.80m) -->
+  <g transform="translate(487.5, 500)">
+    <!-- Dimension line spanning from y = -91 (bottom of Rack A) to y = +91 (top of Rack B) -->
+    <line x1="0" y1="-91" x2="0" y2="91" stroke="#000000" stroke-width="1.2" marker-start="url(#dimArrowStart)" marker-end="url(#dimArrowEnd)" />
+    <rect x="-85" y="-12" width="170" height="24" fill="#ffffff" stroke="#000000" stroke-width="1" />
+    <text x="0" y="4" text-anchor="middle" font-family="system-ui, sans-serif" font-size="11" font-weight="800" fill="#000000">
+      AISLE WIDTH: 2.80 m
+    </text>
+  </g>
+
+  <!-- STRUCTURAL PILLAR 1: Center (+1.5, +1.5) -> x: 747.5, y: 402.5, radius: 19.5px (dia: 0.6m) -->
+  <circle cx="747.5" cy="402.5" r="19.5" fill="#000000" stroke="#000000" stroke-width="2" />
+  <text x="747.5" y="375" text-anchor="middle" font-family="system-ui, sans-serif" font-size="11" font-weight="800" fill="#000000">
+    PILLAR 1 (&#8960; 0.60 m)
+  </text>
+  <text x="747.5" y="435" text-anchor="middle" font-family="system-ui, sans-serif" font-size="10" font-weight="600" fill="#374151">
+    pose: [+1.5, +1.5]
+  </text>
+
+  <!-- STRUCTURAL PILLAR 2: Center (+1.5, -1.5) -> x: 747.5, y: 597.5, radius: 19.5px -->
+  <circle cx="747.5" cy="597.5" r="19.5" fill="#000000" stroke="#000000" stroke-width="2" />
+  <text x="747.5" y="570" text-anchor="middle" font-family="system-ui, sans-serif" font-size="11" font-weight="800" fill="#000000">
+    PILLAR 2 (&#8960; 0.60 m)
+  </text>
+  <text x="747.5" y="630" text-anchor="middle" font-family="system-ui, sans-serif" font-size="10" font-weight="600" fill="#374151">
+    pose: [+1.5, -1.5]
+  </text>
+
+  <!-- PILLAR SPACING DIMENSION (3.00m between Pillar 1 & Pillar 2) -->
+  <g transform="translate(800, 500)">
+    <line x1="0" y1="-97.5" x2="0" y2="97.5" stroke="#000000" stroke-width="1.2" marker-start="url(#dimArrowStart)" marker-end="url(#dimArrowEnd)" />
+    <!-- Extension lines to pillars -->
+    <line x1="-33" y1="-97.5" x2="10" y2="-97.5" stroke="#9ca3af" stroke-width="1" stroke-dasharray="2,2" />
+    <line x1="-33" y1="97.5" x2="10" y2="97.5" stroke="#9ca3af" stroke-width="1" stroke-dasharray="2,2" />
+    <rect x="8" y="-11" width="70" height="22" fill="#ffffff" stroke="#000000" stroke-width="1" />
+    <text x="43" y="4" text-anchor="middle" font-family="system-ui, sans-serif" font-size="11" font-weight="800" fill="#000000">
+      3.00 m
+    </text>
+  </g>
+
+  <!-- DYNAMIC OBSTACLE SPAWN LOCATION (Barrel at X=+2.0, Y=+0.5) -->
+  <!-- x: 650 + 130 = 780, y: 500 - 32.5 = 467.5 -->
+  <g transform="translate(780, 467.5)">
+    <circle cx="0" cy="0" r="13" fill="#ffffff" stroke="#000000" stroke-width="2" stroke-dasharray="3,3" />
+    <circle cx="0" cy="0" r="4" fill="#000000" />
+    <rect x="-75" y="-32" width="150" height="20" fill="#ffffff" stroke="#000000" stroke-width="0.8" />
+    <text x="0" y="-18" text-anchor="middle" font-family="system-ui, sans-serif" font-size="9" font-weight="800" fill="#000000">
+      OBSTACLE DROP [+2.0, +0.5]
+    </text>
+  </g>
+
+  <!-- ========================================================================= -->
+  <!-- WORLD ORIGIN (0.0, 0.0) & REP 103 COORDINATE CROSSHAIR                   -->
+  <!-- ========================================================================= -->
+  <g transform="translate(650, 500)">
+    <!-- Origin Circle -->
+    <circle cx="0" cy="0" r="8" fill="#ffffff" stroke="#000000" stroke-width="2.5" />
+    <circle cx="0" cy="0" r="3" fill="#000000" />
+    
+    <!-- +X Forward Axis (Points East/Right in plan) -->
+    <line x1="0" y1="0" x2="65" y2="0" stroke="#000000" stroke-width="3" marker-end="url(#coordArrow)" />
+    <text x="75" y="4" font-family="system-ui, sans-serif" font-size="11" font-weight="900" fill="#000000">+X (FORWARD)</text>
+
+    <!-- +Y Left Axis (Points North/Up in plan) -->
+    <line x1="0" y1="0" x2="0" y2="-65" stroke="#000000" stroke-width="3" marker-end="url(#coordArrow)" />
+    <text x="0" y="-75" text-anchor="middle" font-family="system-ui, sans-serif" font-size="11" font-weight="900" fill="#000000">+Y (LEFT)</text>
+
+    <!-- Origin Tag -->
+    <rect x="-140" y="14" width="160" height="36" fill="#ffffff" stroke="#000000" stroke-width="1.5" />
+    <text x="-60" y="28" text-anchor="middle" font-family="system-ui, sans-serif" font-size="11" font-weight="900" fill="#000000">
+      ROBOT START POSE
+    </text>
+    <text x="-60" y="42" text-anchor="middle" font-family="'Courier New', monospace" font-size="10" font-weight="700" fill="#000000">
+      WORLD ORIGIN (0.0, 0.0)
+    </text>
+  </g>
+
+  <!-- ========================================================================= -->
+  <!-- EXTERIOR ARCHITECTURAL DIMENSION LINES                                    -->
+  <!-- ========================================================================= -->
+  <!-- TOP OVERALL HORIZONTAL DIMENSION (10.00 m) -->
+  <g transform="translate(0, 115)">
+    <line x1="325" y1="0" x2="975" y2="0" stroke="#000000" stroke-width="1.5" marker-start="url(#dimArrowStart)" marker-end="url(#dimArrowEnd)" />
+    <!-- Extension lines -->
+    <line x1="325" y1="-8" x2="325" y2="53.5" stroke="#000000" stroke-width="1" />
+    <line x1="975" y1="-8" x2="975" y2="53.5" stroke="#000000" stroke-width="1" />
+    <!-- Dimension Box -->
+    <rect x="585" y="-14" width="130" height="28" fill="#ffffff" stroke="#000000" stroke-width="1.5" />
+    <text x="650" y="4" text-anchor="middle" font-family="'Courier New', Courier, monospace" font-size="14" font-weight="900" fill="#000000">
+      10.00 m
+    </text>
+  </g>
+
+  <!-- LEFT OVERALL VERTICAL DIMENSION (10.00 m) -->
+  <g transform="translate(265, 0)">
+    <line x1="0" y1="175" x2="0" y2="825" stroke="#000000" stroke-width="1.5" marker-start="url(#dimArrowStart)" marker-end="url(#dimArrowEnd)" />
+    <!-- Extension lines -->
+    <line x1="-8" y1="175" x2="53.5" y2="175" stroke="#000000" stroke-width="1" />
+    <line x1="-8" y1="825" x2="53.5" y2="825" stroke="#000000" stroke-width="1" />
+    <!-- Dimension Box -->
+    <rect x="-14" y="486" width="28" height="130" fill="#ffffff" stroke="#000000" stroke-width="1.5" />
+    <text x="0" y="555" text-anchor="middle" font-family="'Courier New', Courier, monospace" font-size="14" font-weight="900" fill="#000000" transform="rotate(-90 0 555)">
+      10.00 m
+    </text>
+  </g>
+
+  <!-- RACK A DIMENSION CALLOUTS -->
+  <!-- Rack Width (0.80 m) -->
+  <g transform="translate(365, 0)">
+    <line x1="0" y1="357" x2="0" y2="409" stroke="#000000" stroke-width="1.2" marker-start="url(#dimArrowStart)" marker-end="url(#dimArrowEnd)" />
+    <line x1="-5" y1="357" x2="25" y2="357" stroke="#6b7280" stroke-width="0.8" />
+    <line x1="-5" y1="409" x2="25" y2="409" stroke="#6b7280" stroke-width="0.8" />
+    <text x="-10" y="387" text-anchor="end" font-family="system-ui, sans-serif" font-size="10" font-weight="800" fill="#000000">0.80 m</text>
+  </g>
+
+  <!-- Rack Length (3.00 m) -->
+  <g transform="translate(0, 425)">
+    <line x1="390" y1="0" x2="585" y2="0" stroke="#000000" stroke-width="1.2" marker-start="url(#dimArrowStart)" marker-end="url(#dimArrowEnd)" />
+    <line x1="390" y1="-16" x2="390" y2="5" stroke="#6b7280" stroke-width="0.8" />
+    <line x1="585" y1="-16" x2="585" y2="5" stroke="#6b7280" stroke-width="0.8" />
+    <text x="487.5" y="14" text-anchor="middle" font-family="system-ui, sans-serif" font-size="10" font-weight="800" fill="#000000">3.00 m</text>
+  </g>
+
+  <!-- CLEARANCE TO WEST WALL (1.00 m) -->
+  <g transform="translate(0, 383)">
+    <line x1="325" y1="0" x2="390" y2="0" stroke="#000000" stroke-width="1" marker-start="url(#dimArrowStart)" marker-end="url(#dimArrowEnd)" />
+    <text x="357.5" y="-6" text-anchor="middle" font-family="system-ui, sans-serif" font-size="9" font-weight="800" fill="#000000">1.00m</text>
+  </g>
+
+  <!-- ========================================================================= -->
+  <!-- ARCHITECTURAL TITLE BLOCK (BOTTOM RIGHT CORNER)                           -->
+  <!-- ========================================================================= -->
+  <g transform="translate(1015, 755)">
+    <rect width="335" height="205" fill="#ffffff" stroke="#000000" stroke-width="2.5" />
+    
+    <!-- Title Row -->
+    <rect x="0" y="0" width="335" height="38" fill="#f3f4f6" stroke="#000000" stroke-width="1.5" />
+    <text x="167.5" y="24" text-anchor="middle" font-family="system-ui, sans-serif" font-size="12" font-weight="900" fill="#000000" letter-spacing="1px">
+      PROJECT SPECIFICATION BLOCK
+    </text>
+
+    <!-- Project Data Rows -->
+    <g transform="translate(15, 58)" font-family="system-ui, sans-serif" font-size="10.5">
+      <text y="0" font-weight="700" fill="#374151">PROJECT:</text>
+      <text x="90" y="0" font-weight="800" fill="#000000">Nexus AMR Benchmark World</text>
+
+      <text y="22" font-weight="700" fill="#374151">AREAL SIZE:</text>
+      <text x="90" y="22" font-weight="800" fill="#000000">10.00 m × 10.00 m (100.0 m²)</text>
+
+      <text y="44" font-weight="700" fill="#374151">WALL SPECS:</text>
+      <text x="90" y="44" font-weight="800" fill="#000000">Thickness 0.20 m • Height 2.00 m</text>
+
+      <text y="66" font-weight="700" fill="#374151">COORDINATES:</text>
+      <text x="90" y="66" font-weight="800" fill="#000000">ROS 2 REP 103 Standard</text>
+
+      <text y="88" font-weight="700" fill="#374151">SIM ENGINE:</text>
+      <text x="90" y="88" font-weight="800" fill="#000000">Gazebo ODE Physics Engine</text>
+
+      <text y="110" font-weight="700" fill="#374151">DRAWING ID:</text>
+      <text x="90" y="110" font-family="'Courier New', monospace" font-weight="900" fill="#000000">DWG-AMR-WH-10X10-REV2</text>
+
+      <text y="132" font-weight="700" fill="#374151">SCALE &amp; GRID:</text>
+      <text x="90" y="132" font-weight="800" fill="#000000">1 Meter = 65 Pixels • 1:50</text>
+    </g>
+  </g>
+
+  <!-- GRAPHICAL SCALE BAR (BOTTOM LEFT) -->
+  <g transform="translate(60, 930)">
+    <rect width="260" height="26" fill="#ffffff" stroke="#000000" stroke-width="1.2" />
+    <!-- 0m to 1m (65px) filled -->
+    <rect x="0" y="0" width="65" height="13" fill="#000000" />
+    <rect x="65" y="13" width="65" height="13" fill="#000000" />
+    <rect x="130" y="0" width="65" height="13" fill="#000000" />
+    <rect x="195" y="13" width="65" height="13" fill="#000000" />
+    <text x="0" y="-5" font-family="'Courier New', monospace" font-size="10" font-weight="800" fill="#000000">0m</text>
+    <text x="65" y="-5" font-family="'Courier New', monospace" font-size="10" font-weight="800" fill="#000000">1m</text>
+    <text x="130" y="-5" font-family="'Courier New', monospace" font-size="10" font-weight="800" fill="#000000">2m</text>
+    <text x="195" y="-5" font-family="'Courier New', monospace" font-size="10" font-weight="800" fill="#000000">3m</text>
+    <text x="260" y="-5" font-family="'Courier New', monospace" font-size="10" font-weight="800" fill="#000000">4m</text>
+    <text x="130" y="44" text-anchor="middle" font-family="system-ui, sans-serif" font-size="11" font-weight="700" fill="#000000">
+      GRAPHIC SCALE: 1 METER = 65 PIXELS (1:50)
+    </text>
+  </g>
+</svg>

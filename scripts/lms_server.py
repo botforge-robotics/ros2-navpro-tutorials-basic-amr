@@ -18,10 +18,14 @@ class LMSHandler(SimpleHTTPRequestHandler):
         self.send_header('Access-Control-Allow-Origin', '*')
         self.send_header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS')
         self.send_header('Access-Control-Allow-Headers', 'Content-Type')
+        # Prevent aggressive browser caching during learning sessions
+        self.send_header('Cache-Control', 'no-cache, no-store, must-revalidate')
+        self.send_header('Pragma', 'no-cache')
+        self.send_header('Expires', '0')
         super().end_headers()
 
     def do_OPTIONS(self):
-        if self.path == '/api/clipboard':
+        if self.path in ['/api/clipboard', '/api/terminator']:
             self.send_response(200)
             self.send_header('Content-Type', 'text/plain')
             self.end_headers()
@@ -64,6 +68,26 @@ class LMSHandler(SimpleHTTPRequestHandler):
                 self.end_headers()
                 resp = json.dumps({'status': 'ok', 'length': len(text)}).encode('utf-8')
                 self.wfile.write(resp)
+            except Exception as ex:
+                self.send_response(500)
+                self.send_header('Content-Type', 'application/json')
+                self.end_headers()
+                self.wfile.write(json.dumps({'error': str(ex)}).encode('utf-8'))
+        elif self.path == '/api/terminator':
+            try:
+                display = os.environ.get('DISPLAY', ':1')
+                env = os.environ.copy()
+                env['DISPLAY'] = display
+                subprocess.Popen(
+                    ['terminator'],
+                    stdout=subprocess.DEVNULL,
+                    stderr=subprocess.DEVNULL,
+                    env=env
+                )
+                self.send_response(200)
+                self.send_header('Content-Type', 'application/json')
+                self.end_headers()
+                self.wfile.write(b'{"status": "ok", "app": "terminator"}')
             except Exception as ex:
                 self.send_response(500)
                 self.send_header('Content-Type', 'application/json')

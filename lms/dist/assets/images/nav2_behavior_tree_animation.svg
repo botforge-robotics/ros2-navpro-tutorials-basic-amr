@@ -1,0 +1,252 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 540" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#080d1a" />
+      <stop offset="50%" stop-color="#0d1527" />
+      <stop offset="100%" stop-color="#0a1020" />
+    </linearGradient>
+
+    <!-- Node Glow Filters -->
+    <filter id="glowCyan" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="3" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+    <filter id="glowGreen" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="4" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+    <filter id="glowRed" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="4" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+
+    <style><![CDATA[
+      /* Animated Ticks & Recovery Sequence */
+      @keyframes tickPulseDown {
+        0% { stroke-dashoffset: 120; opacity: 0; }
+        20% { stroke-dashoffset: 0; opacity: 1; }
+        45% { stroke-dashoffset: 0; opacity: 1; }
+        60%, 100% { stroke-dashoffset: -120; opacity: 0; }
+      }
+
+      @keyframes failureFlash {
+        0%, 35% { fill: #0f172a; stroke: #38bdf8; }
+        40%, 65% { fill: #450a0a; stroke: #ef4444; filter: url(#glowRed); }
+        70%, 100% { fill: #0f172a; stroke: #38bdf8; }
+      }
+
+      @keyframes recoveryPulse {
+        0%, 45% { opacity: 0.3; }
+        55%, 85% { opacity: 1; stroke: #10b981; filter: url(#glowGreen); }
+        95%, 100% { opacity: 0.3; }
+      }
+
+      @keyframes statusMessage {
+        0%, 35% { opacity: 1; }
+        36%, 100% { opacity: 0; }
+      }
+      @keyframes statusMessage2 {
+        0%, 36% { opacity: 0; }
+        37%, 75% { opacity: 1; }
+        76%, 100% { opacity: 0; }
+      }
+      @keyframes statusMessage3 {
+        0%, 76% { opacity: 0; }
+        77%, 100% { opacity: 1; }
+      }
+
+      .tick-line {
+        stroke-dasharray: 20, 10;
+        animation: tickPulseDown 8s ease-in-out infinite;
+      }
+
+      .failing-node {
+        animation: failureFlash 8s ease-in-out infinite;
+      }
+
+      .recovery-active {
+        animation: recoveryPulse 8s ease-in-out infinite;
+      }
+
+      .bt-status-1 { animation: statusMessage 8s infinite; }
+      .bt-status-2 { animation: statusMessage2 8s infinite; }
+      .bt-status-3 { animation: statusMessage3 8s infinite; }
+    ]]></style>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1000" height="540" fill="url(#bgGrad)" rx="16" />
+  <rect width="996" height="536" x="2" y="2" fill="none" stroke="#1e293b" stroke-width="2" rx="15" />
+
+  <!-- Title & Header -->
+  <g transform="translate(50, 42)">
+    <rect x="0" y="-12" width="180" height="26" rx="6" fill="rgba(168, 85, 247, 0.15)" stroke="#a855f7" stroke-width="1" />
+    <text x="90" y="5" text-anchor="middle" fill="#c084fc" font-family="system-ui, sans-serif" font-size="11.5" font-weight="800" letter-spacing="0.5px">
+      BEHAVIOR TREE ENGINE
+    </text>
+    <text x="195" y="6" fill="#f8fafc" font-family="system-ui, sans-serif" font-size="18" font-weight="800">
+      Nav2 Reactive Recovery Fallback Pipeline (100 Hz Ticking)
+    </text>
+    <text x="0" y="32" fill="#94a3b8" font-family="system-ui, sans-serif" font-size="12">
+      Hierarchical Control Nodes (Sequence →, Fallback ?) route execution to recoveries when navigation stalls
+    </text>
+  </g>
+
+  <!-- ========================================================================= -->
+  <!-- BEHAVIOR TREE HIERARCHY DIAGRAM                                           -->
+  <!-- ========================================================================= -->
+  <!-- ROOT NODE: RecoveryFallback (Selector ?) -->
+  <g transform="translate(500, 115)">
+    <!-- Connecting lines to children -->
+    <path d="M 0,22 L -250,90" fill="none" stroke="#38bdf8" stroke-width="2.5" class="tick-line" />
+    <path d="M 0,22 L 250,90" fill="none" stroke="#a855f7" stroke-width="2.5" />
+
+    <!-- Node Badge -->
+    <rect x="-115" y="-22" width="230" height="44" rx="10" fill="#0f172a" stroke="#38bdf8" stroke-width="2.5" filter="url(#glowCyan)" />
+    <text x="0" y="-2" text-anchor="middle" fill="#38bdf8" font-family="system-ui, sans-serif" font-size="13" font-weight="900">
+      ? RecoveryFallback
+    </text>
+    <text x="0" y="14" text-anchor="middle" fill="#94a3b8" font-family="ui-monospace, monospace" font-size="10.5">
+      Root Selector (Fallback)
+    </text>
+  </g>
+
+  <!-- ================= BRANCH 1 (LEFT): PRIMARY NAVIGATION ================= -->
+  <!-- NavigateWithReplanning Sequence (->) -->
+  <g transform="translate(250, 205)">
+    <path d="M 0,22 L -100,85" fill="none" stroke="#38bdf8" stroke-width="2" class="tick-line" />
+    <path d="M 0,22 L 100,85" fill="none" stroke="#38bdf8" stroke-width="2" class="tick-line" />
+
+    <rect x="-105" y="-20" width="210" height="40" rx="8" fill="#0f172a" stroke="#0ea5e9" stroke-width="2" />
+    <text x="0" y="-2" text-anchor="middle" fill="#7dd3fc" font-family="system-ui, sans-serif" font-size="12" font-weight="800">
+      → NavigateWithReplanning
+    </text>
+    <text x="0" y="14" text-anchor="middle" fill="#94a3b8" font-family="ui-monospace, monospace" font-size="10">
+      Sequence (Primary Branch)
+    </text>
+  </g>
+
+  <!-- Leaf 1.1: ComputePathToPose (Action) -->
+  <g transform="translate(150, 290)">
+    <rect x="-85" y="-18" width="170" height="42" rx="6" fill="#0b1329" stroke="#38bdf8" stroke-width="1.8" />
+    <text x="0" y="-1" text-anchor="middle" fill="#f8fafc" font-family="system-ui, sans-serif" font-size="11" font-weight="700">
+      ComputePathToPose
+    </text>
+    <text x="0" y="15" text-anchor="middle" fill="#38bdf8" font-family="ui-monospace, monospace" font-size="9.5">
+      PlannerServer (SUCCESS)
+    </text>
+  </g>
+
+  <!-- Leaf 1.2: FollowPath (Action - Experiencing Failure) -->
+  <g transform="translate(350, 290)">
+    <rect x="-85" y="-18" width="170" height="42" rx="6" fill="#0b1329" stroke="#38bdf8" stroke-width="1.8" class="failing-node" />
+    <text x="0" y="-1" text-anchor="middle" fill="#f8fafc" font-family="system-ui, sans-serif" font-size="11" font-weight="700">
+      FollowPath (DWB)
+    </text>
+    <text x="0" y="15" text-anchor="middle" fill="#f87171" font-family="ui-monospace, monospace" font-size="9.5" font-weight="700">
+      Path Blocked (FAILURE!)
+    </text>
+  </g>
+
+  <!-- ================= BRANCH 2 (RIGHT): RECOVERY PIPELINE ================= -->
+  <!-- RecoverySequence (->) -->
+  <g transform="translate(750, 205)">
+    <!-- Branch Lines to 3 Recovery Actions -->
+    <path d="M 0,22 L -140,85" fill="none" stroke="#a855f7" stroke-width="2" class="recovery-active" />
+    <path d="M 0,22 L -45,85" fill="none" stroke="#a855f7" stroke-width="2" class="recovery-active" />
+    <path d="M 0,22 L 50,85" fill="none" stroke="#a855f7" stroke-width="2" class="recovery-active" />
+    <path d="M 0,22 L 145,85" fill="none" stroke="#a855f7" stroke-width="2" class="recovery-active" />
+
+    <rect x="-95" y="-20" width="190" height="40" rx="8" fill="#0f172a" stroke="#a855f7" stroke-width="2" class="recovery-active" />
+    <text x="0" y="-2" text-anchor="middle" fill="#c084fc" font-family="system-ui, sans-serif" font-size="12" font-weight="800">
+      → RecoverySequence
+    </text>
+    <text x="0" y="14" text-anchor="middle" fill="#94a3b8" font-family="ui-monospace, monospace" font-size="10">
+      Fallback Sequence
+    </text>
+  </g>
+
+  <!-- Recovery Step 1: ClearCostmap -->
+  <g transform="translate(610, 290)">
+    <rect x="-42" y="-18" width="84" height="42" rx="6" fill="#0b1329" stroke="#a855f7" stroke-width="1.8" class="recovery-active" />
+    <text x="0" y="-1" text-anchor="middle" fill="#f8fafc" font-family="system-ui, sans-serif" font-size="10" font-weight="700">
+      ClearCostmap
+    </text>
+    <text x="0" y="15" text-anchor="middle" fill="#c084fc" font-family="monospace" font-size="8.5">
+      Step 1
+    </text>
+  </g>
+
+  <!-- Recovery Step 2: BackUp -->
+  <g transform="translate(705, 290)">
+    <rect x="-42" y="-18" width="84" height="42" rx="6" fill="#0b1329" stroke="#a855f7" stroke-width="1.8" class="recovery-active" />
+    <text x="0" y="-1" text-anchor="middle" fill="#f8fafc" font-family="system-ui, sans-serif" font-size="10" font-weight="700">
+      BackUp (-0.3m)
+    </text>
+    <text x="0" y="15" text-anchor="middle" fill="#c084fc" font-family="monospace" font-size="8.5">
+      Step 2
+    </text>
+  </g>
+
+  <!-- Recovery Step 3: Spin -->
+  <g transform="translate(800, 290)">
+    <rect x="-42" y="-18" width="84" height="42" rx="6" fill="#0b1329" stroke="#a855f7" stroke-width="1.8" class="recovery-active" />
+    <text x="0" y="-1" text-anchor="middle" fill="#f8fafc" font-family="system-ui, sans-serif" font-size="10" font-weight="700">
+      Spin (360°)
+    </text>
+    <text x="0" y="15" text-anchor="middle" fill="#c084fc" font-family="monospace" font-size="8.5">
+      Step 3
+    </text>
+  </g>
+
+  <!-- Recovery Step 4: Wait -->
+  <g transform="translate(895, 290)">
+    <rect x="-42" y="-18" width="84" height="42" rx="6" fill="#0b1329" stroke="#a855f7" stroke-width="1.8" class="recovery-active" />
+    <text x="0" y="-1" text-anchor="middle" fill="#f8fafc" font-family="system-ui, sans-serif" font-size="10" font-weight="700">
+      Wait (5.0s)
+    </text>
+    <text x="0" y="15" text-anchor="middle" fill="#c084fc" font-family="monospace" font-size="8.5">
+      Step 4
+    </text>
+  </g>
+
+  <!-- ========================================================================= -->
+  <!-- BT EXECUTION CYCLE STATUS TICK STRIP (BOTTOM)                             -->
+  <!-- ========================================================================= -->
+  <g transform="translate(50, 445)">
+    <rect width="900" height="65" rx="10" fill="#0f172a" stroke="#1e293b" stroke-width="1.5" />
+
+    <!-- Status 1 -->
+    <g class="bt-status-1" transform="translate(25, 38)">
+      <circle cx="0" cy="-6" r="6" fill="#38bdf8" />
+      <text x="18" y="-2" fill="#38bdf8" font-family="system-ui, sans-serif" font-size="13" font-weight="700">
+        1. Normal Navigation Ticking:
+      </text>
+      <text x="245" y="-2" fill="#cbd5e1" font-family="system-ui, sans-serif" font-size="12">
+        Root ? routes tick to NavigateWithReplanning. Planner outputs global path, DWB executes /cmd_vel arcs.
+      </text>
+    </g>
+
+    <!-- Status 2 -->
+    <g class="bt-status-2" transform="translate(25, 38)">
+      <circle cx="0" cy="-6" r="6" fill="#ef4444" />
+      <text x="18" y="-2" fill="#f87171" font-family="system-ui, sans-serif" font-size="13" font-weight="700">
+        2. Obstacle Blocks AMR → FollowPath Fails:
+      </text>
+      <text x="325" y="-2" fill="#cbd5e1" font-family="system-ui, sans-serif" font-size="12">
+        Dynamic obstacle blocks path. FollowPath returns FAILURE. Selector (?) catches it and ticks RecoverySequence.
+      </text>
+    </g>
+
+    <!-- Status 3 -->
+    <g class="bt-status-3" transform="translate(25, 38)">
+      <circle cx="0" cy="-6" r="6" fill="#10b981" />
+      <text x="18" y="-2" fill="#34d399" font-family="system-ui, sans-serif" font-size="13" font-weight="700">
+        3. Recovery Escalation Executed:
+      </text>
+      <text x="260" y="-2" fill="#cbd5e1" font-family="system-ui, sans-serif" font-size="12">
+        Clears costmap, reverses 0.3m, spins 360° to re-acquire LiDAR, re-plans cleanly and mission succeeds!
+      </text>
+    </g>
+  </g>
+</svg>
