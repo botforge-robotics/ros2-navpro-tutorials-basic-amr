@@ -673,14 +673,6 @@ export function PresentationView({
           {/* ============================================================== */}
           {currentSlide.type === 'interactive' && (
             <div className="ppt-slide-content ppt-slide-interactive-view">
-              <div className="interactive-slide-header">
-                <span className="live-demo-badge">
-                  <span className="pulse-indicator"></span>
-                  Live Demonstration
-                </span>
-                <h2 className="interactive-title">{currentSlide.title}</h2>
-              </div>
-
               <div className="interactive-stage-container">
                 {renderInteractiveComponent(currentSlide.interactiveKey)}
               </div>

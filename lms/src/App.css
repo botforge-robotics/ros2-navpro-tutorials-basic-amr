@@ -3720,57 +3720,150 @@
 
 /* Slide Type 5: Interactive View */
 .ppt-slide-interactive-view {
-  padding: 1.5rem 2.25rem;
-}
-
-.interactive-slide-header {
+  padding: 0.75rem 1.75rem !important;
   display: flex;
-  align-items: center;
-  gap: 1rem;
-  margin-bottom: 1rem;
-}
-
-.live-demo-badge {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  background: rgba(16, 185, 129, 0.12);
-  border: 1px solid rgba(16, 185, 129, 0.35);
-  color: #10b981;
-  padding: 0.3rem 0.85rem;
-  border-radius: 20px;
-  font-size: 0.82rem;
-  font-weight: 800;
-  text-transform: uppercase;
-}
-
-.pulse-indicator {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: #10b981;
-  animation: pulseDot 1.5s infinite;
-}
-
-@keyframes pulseDot {
-  0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
-  70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(16, 185, 129, 0); }
-  100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
-}
-
-.interactive-title {
-  font-size: 1.85rem;
-  font-weight: 900;
-  color: var(--text-primary);
-  margin: 0;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .interactive-stage-container {
   flex: 1;
   border-radius: 14px;
-  overflow: hidden;
+  overflow: hidden !important;
   display: flex;
   flex-direction: column;
+  min-height: 0;
+  justify-content: center;
+}
+
+/* Compact presentation styling for PermissionCalculator inside PPT mode */
+.presentation-viewport .perm-calc-card {
+  margin: 0 !important;
+  padding: 0.65rem 1.25rem !important;
+  box-shadow: none !important;
+  border: 1px solid var(--border-color);
+  border-radius: 14px;
+  overflow: hidden !important;
+}
+
+.presentation-viewport .perm-calc-header {
+  margin-bottom: 0.5rem !important;
+}
+
+.presentation-viewport .perm-calc-badge {
+  display: none !important;
+}
+
+.presentation-viewport .perm-calc-title {
+  font-size: 1.15rem !important;
+  font-weight: 800;
+}
+
+.presentation-viewport .perm-calc-subtitle {
+  display: none !important;
+}
+
+.presentation-viewport .perm-display-container {
+  padding: 0.5rem 0.85rem !important;
+  margin-bottom: 0.5rem !important;
+  border-radius: 10px !important;
+}
+
+.presentation-viewport .perm-display-label {
+  font-size: 0.72rem !important;
+  margin-bottom: 0.4rem !important;
+}
+
+.presentation-viewport .perm-char-pill {
+  width: 42px !important;
+  height: 48px !important;
+  border-radius: 8px !important;
+}
+
+.presentation-viewport .perm-char-pill .char-val {
+  font-size: 1.25rem !important;
+}
+
+.presentation-viewport .perm-char-pill .char-sub {
+  font-size: 0.65rem !important;
+}
+
+.presentation-viewport .perm-legend-row {
+  margin-top: 0.35rem !important;
+  gap: 0.4rem !important;
+}
+
+.presentation-viewport .legend-chip {
+  padding: 0.15rem 0.45rem !important;
+  font-size: 0.72rem !important;
+}
+
+.presentation-viewport .perm-command-bar {
+  margin-bottom: 0.55rem !important;
+  padding: 0.35rem 0.85rem !important;
+  border-radius: 8px !important;
+}
+
+.presentation-viewport .octal-score-number {
+  font-size: 1.15rem !important;
+}
+
+.presentation-viewport .command-text {
+  font-size: 0.86rem !important;
+}
+
+.presentation-viewport .perm-columns-grid {
+  gap: 0.65rem !important;
+}
+
+.presentation-viewport .perm-col {
+  padding: 0.5rem 0.75rem !important;
+  border-radius: 8px !important;
+}
+
+.presentation-viewport .col-header-top {
+  margin-bottom: 0.15rem !important;
+}
+
+.presentation-viewport .col-badge {
+  font-size: 0.72rem !important;
+  padding: 2px 6px !important;
+}
+
+.presentation-viewport .col-desc {
+  display: none !important;
+}
+
+.presentation-viewport .checkbox-list {
+  gap: 0.25rem !important;
+}
+
+.presentation-viewport .perm-check-item {
+  padding: 0.28rem 0.6rem !important;
+  border-radius: 6px !important;
+}
+
+.presentation-viewport .perm-check-item .hint-text {
+  display: none !important;
+}
+
+.presentation-viewport .perm-presets-row {
+  margin-top: 0.45rem !important;
+  padding-top: 0.45rem !important;
+  gap: 0.4rem !important;
+}
+
+.presentation-viewport .presets-label {
+  font-size: 0.76rem !important;
+}
+
+.presentation-viewport .preset-btn {
+  padding: 0.2rem 0.55rem !important;
+  font-size: 0.74rem !important;
+}
+
+.presentation-viewport .perm-terminal-simulator {
+  display: none !important; /* Conceal long terminal trace in slide presentation for clean fit */
 }
 
 /* Slide Type 6: Concept / Subtopic View */
