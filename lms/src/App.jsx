@@ -1,17 +1,13 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import lessonsData from './data/lessonsData.json';
 import { useProgress } from './hooks/useProgress';
-import { useInstructorSync } from './hooks/useInstructorSync';
 import { Navbar } from './components/Navbar';
 import { Sidebar } from './components/Sidebar';
 import { HubOverview } from './components/HubOverview';
 import { LessonView } from './components/LessonView';
 import { FeedbackView } from './components/FeedbackView';
-import { RegistrationModal } from './components/RegistrationModal';
 import { HelpModal } from './components/HelpModal';
-import { StudentChatModal } from './components/StudentChatModal';
 import { PageScrollNav } from './components/PageScrollNav';
-import { MessageSquare, Hand } from 'lucide-react';
 import './App.css';
 
 export function App() {
@@ -28,53 +24,13 @@ export function App() {
     totalLessons
   } = useProgress(lessonsData.total_lessons);
 
-  const {
-    studentInfo,
-    isModalOpen,
-    setIsModalOpen,
-    connectionStatus,
-    workshopName,
-    gates,
-    registerStudent,
-    submitFeedback,
-    syncProgressNow,
-    chatMessages,
-    unreadChatCount,
-    isHandRaised,
-    isChatOpen,
-    openChatModal,
-    closeChatModal,
-    sendChatMessage,
-    raiseHand,
-    lowerHand,
-    heartbeatCount
-  } = useInstructorSync(completedLessons, quizScores, currentLessonId);
-
-  // Immediate sync wrapper for marking lessons completed
   const handleToggleComplete = useCallback((lessonId) => {
-    let nextCompleted;
-    if (completedLessons.includes(lessonId)) {
-      nextCompleted = completedLessons.filter(id => id !== lessonId);
-    } else {
-      nextCompleted = [...completedLessons, lessonId];
-    }
     toggleLessonComplete(lessonId);
-    syncProgressNow(nextCompleted, quizScores, currentLessonId);
-  }, [completedLessons, toggleLessonComplete, syncProgressNow, quizScores, currentLessonId]);
+  }, [toggleLessonComplete]);
 
-  // Immediate sync wrapper for quiz scoring
   const handleRecordScore = useCallback((lessonId, score, total) => {
     recordQuizScore(lessonId, score, total);
-    const passed = score === total;
-    const nextCompleted = (passed && !completedLessons.includes(lessonId)) 
-      ? [...completedLessons, lessonId] 
-      : completedLessons;
-    const nextQuizzes = {
-      ...quizScores,
-      [lessonId]: { score, total, passed, timestamp: Date.now() }
-    };
-    syncProgressNow(nextCompleted, nextQuizzes, currentLessonId);
-  }, [recordQuizScore, completedLessons, quizScores, currentLessonId, syncProgressNow]);
+  }, [recordQuizScore]);
 
   // Help modal state
   const [isHelpModalOpen, setIsHelpModalOpen] = useState(false);
@@ -157,18 +113,10 @@ export function App() {
         onNavigateHub={() => setCurrentLessonId(null)}
         onSelectLesson={(id) => setCurrentLessonId(id)}
         lessons={lessonsData.lessons}
-        studentInfo={studentInfo}
-        connectionStatus={connectionStatus}
-        workshopName={workshopName}
-        onOpenSyncModal={() => setIsModalOpen(true)}
         onOpenHelpModal={() => setIsHelpModalOpen(true)}
         theme={theme}
         onToggleTheme={toggleTheme}
         onToggleSidebarMobile={() => setIsSidebarOpenMobile(prev => !prev)}
-        onOpenChatModal={openChatModal}
-        unreadChatCount={unreadChatCount}
-        isHandRaised={isHandRaised}
-        heartbeatCount={heartbeatCount}
       />
 
       <div className="app-main-layout">
@@ -201,17 +149,11 @@ export function App() {
               onToggleComplete={handleToggleComplete}
               savedScore={quizScores[activeLesson.id]}
               onRecordScore={handleRecordScore}
-              isQuizGateOpen={gates.gate_quizzes_open}
-              onOpenSyncModal={() => setIsModalOpen(true)}
-              studentInfo={studentInfo}
-              onSubmitFeedback={submitFeedback}
             />
           ) : currentLessonId === 'feedback' ? (
             <FeedbackView
               onNavigateHub={() => setCurrentLessonId(null)}
               onSelectLesson={(id) => setCurrentLessonId(id)}
-              studentInfo={studentInfo}
-              onSubmitFeedback={submitFeedback}
               completedCount={completedCount}
               totalLessons={totalLessons}
             />
@@ -224,89 +166,18 @@ export function App() {
               progressPercent={progressPercent}
               completedCount={completedCount}
               totalLessons={totalLessons}
-              studentInfo={studentInfo}
-              onSubmitFeedback={submitFeedback}
             />
           )}
         </main>
       </div>
 
       {/* Floating Page Up / Page Down Direct Scroll Arrows */}
-      <PageScrollNav isChatOpen={isChatOpen} />
-
-      {/* Floating Quick Action Button for Group Chat & Raise Hand */}
-      {!isChatOpen && (
-        <button
-          onClick={openChatModal}
-          className={`floating-chat-trigger ${isHandRaised ? 'hand-raised' : ''}`}
-          title="Open Live Workshop Group Chat & Doubts"
-          style={{
-            position: 'fixed',
-            bottom: '1.75rem',
-            right: '1.75rem',
-            zIndex: 99,
-            display: 'flex',
-            alignItems: 'center',
-            gap: '8px',
-            padding: '0.75rem 1.15rem',
-            borderRadius: '30px',
-            background: isHandRaised ? '#d97706' : 'var(--accent-primary)',
-            color: '#ffffff',
-            border: 'none',
-            boxShadow: '0 4px 14px rgba(0, 0, 0, 0.25)',
-            cursor: 'pointer',
-            fontWeight: 700,
-            fontSize: '0.88rem'
-          }}
-        >
-          {isHandRaised ? <Hand size={18} /> : <MessageSquare size={18} />}
-          <span>{isHandRaised ? 'Hand Raised' : 'Group Chat'}</span>
-          {unreadChatCount > 0 && !isHandRaised && (
-            <span style={{
-              background: '#ef4444',
-              color: '#fff',
-              borderRadius: '10px',
-              padding: '2px 6px',
-              fontSize: '0.72rem',
-              fontWeight: 800
-            }}>
-              {unreadChatCount}
-            </span>
-          )}
-        </button>
-      )}
-
-      {/* Workshop Registration Modal */}
-      <RegistrationModal
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-        studentInfo={studentInfo}
-        onRegister={registerStudent}
-        connectionStatus={connectionStatus}
-        workshopName={workshopName}
-        gates={gates}
-        onSubmitFeedback={submitFeedback}
-      />
+      <PageScrollNav />
 
       {/* Persistence, Docker & Reset Help Modal */}
       <HelpModal
         isOpen={isHelpModalOpen}
         onClose={() => setIsHelpModalOpen(false)}
-      />
-
-      {/* Live Group Chat & Raise Hand Modal */}
-      <StudentChatModal
-        isOpen={isChatOpen}
-        onClose={closeChatModal}
-        studentInfo={studentInfo}
-        connectionStatus={connectionStatus}
-        chatMessages={chatMessages}
-        isHandRaised={isHandRaised}
-        activeLessonId={currentLessonId}
-        onSendMessage={sendChatMessage}
-        onRaiseHand={raiseHand}
-        onLowerHand={lowerHand}
-        onOpenSyncModal={() => setIsModalOpen(true)}
       />
     </div>
   );

@@ -35,11 +35,7 @@ export function LessonView({
   isCompleted, 
   onToggleComplete, 
   savedScore, 
-  onRecordScore, 
-  isQuizGateOpen,
-  onOpenSyncModal,
-  studentInfo,
-  onSubmitFeedback
+  onRecordScore
 }) {
   const contentRef = useRef(null);
   const [permissionPortalNode, setPermissionPortalNode] = useState(null);
@@ -447,8 +443,6 @@ export function LessonView({
             quizzes={lesson.quizzes}
             savedScore={savedScore}
             onRecordScore={onRecordScore}
-            isQuizGateOpen={isQuizGateOpen}
-            onOpenSyncModal={onOpenSyncModal}
           />
         </section>
       )}
@@ -486,7 +480,7 @@ export function LessonView({
             </h4>
             <p style={{ margin: 0, fontSize: '0.86rem', color: 'var(--text-secondary)' }}>
               {isCompleted 
-                ? 'Your completion is marked and synced in real-time with the instructor dashboard.'
+                ? 'Your completion is marked and saved in your local progress tracker.'
                 : 'Click below to mark complete and automatically advance to the next module.'}
             </p>
           </div>

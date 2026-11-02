@@ -3,7 +3,6 @@ import {
   HelpCircle, 
   CheckCircle, 
   XCircle, 
-  Lock, 
   Award, 
   Send
 } from 'lucide-react';
@@ -40,9 +39,7 @@ export function QuizCard({
   lessonId, 
   quizzes, 
   savedScore, 
-  onRecordScore, 
-  isQuizGateOpen,
-  onOpenSyncModal
+  onRecordScore
 }) {
   const [selectedAnswers, setSelectedAnswers] = useState(() => getStoredQuizAnswers(lessonId));
   const [isSubmitted, setIsSubmitted] = useState(() => {
@@ -69,22 +66,6 @@ export function QuizCard({
 
   if (!quizzes || quizzes.length === 0) {
     return null;
-  }
-
-  // If instructor has gated/locked quizzes
-  if (!isQuizGateOpen) {
-    return (
-      <div className="quiz-locked-card">
-        <Lock size={28} className="lock-icon" />
-        <div className="locked-text">
-          <h3>Interactive Quiz Paused</h3>
-          <p>
-            The instructor has temporarily gated quizzes for this workshop phase. 
-            Review the code exercises and instructions while the gate remains closed.
-          </p>
-        </div>
-      </div>
-    );
   }
 
   const handleSelect = (questionIndex, optionIndex) => {

@@ -6,13 +6,9 @@ import {
   Search, 
   Sun, 
   Moon, 
-  Radio, 
-  CheckCircle2, 
   X, 
   Menu, 
-  User, 
   HelpCircle,
-  Activity,
   Terminal
 } from 'lucide-react';
 
@@ -20,18 +16,10 @@ export function Navbar({
   onNavigateHub, 
   onSelectLesson, 
   lessons, 
-  studentInfo,
-  connectionStatus, 
-  workshopName,
-  onOpenSyncModal,
   onOpenHelpModal,
-  theme,
-  onToggleTheme,
-  onToggleSidebarMobile,
-  onOpenChatModal,
-  unreadChatCount = 0,
-  isHandRaised = false,
-  heartbeatCount = 0
+  theme, 
+  onToggleTheme, 
+  onToggleSidebarMobile 
 }) {
   const [searchQuery, setSearchQuery] = useState('');
   const [isSearchOpen, setIsSearchOpen] = useState(false);
@@ -220,24 +208,6 @@ export function Navbar({
         >
           <Compass size={16} />
           <span>Hub</span>
-        </button>
-
-        {/* Student Login / Attendance Button */}
-        <button 
-          onClick={onOpenSyncModal} 
-          className={`student-login-nav-btn ${studentInfo?.registered ? 'registered' : 'unregistered'} ${connectionStatus}`}
-          title={studentInfo?.registered ? `Logged in: ${studentInfo.name} (${connectionStatus}) - Live Pulse #${heartbeatCount}` : "Click to log in and submit workshop attendance"}
-        >
-          {connectionStatus === 'connected' ? (
-            <Activity size={14} className="pulsing-heart" style={{ color: 'var(--success)' }} />
-          ) : (
-            <User size={15} />
-          )}
-          <span>
-            {studentInfo?.name 
-              ? `${studentInfo.name.split(' ')[0]} (${connectionStatus === 'connected' ? `Live #${heartbeatCount}` : 'Local'})` 
-              : 'Student Login'}
-          </span>
         </button>
 
         {/* Help & FAQ Button */}

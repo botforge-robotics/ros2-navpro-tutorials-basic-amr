@@ -70,11 +70,7 @@ export function HelpModal({ isOpen, onClose }) {
               <p>Click the <code>↺ Reset Checklist</code> button at the top of the left sidebar. It will clear all completed lesson marks and quiz scores after confirmation.</p>
             </div>
             <div className="help-step-box">
-              <strong>Option B: Edit Profile or Instructor IP</strong>
-              <p>Click your student badge (e.g. <code>👤 Student Login / Profile</code>) in the top navbar anytime to update your registration details or change the instructor's IP address.</p>
-            </div>
-            <div className="help-step-box">
-              <strong>Option C: Hard Browser Reset</strong>
+              <strong>Option B: Hard Browser Reset</strong>
               <p>Open Browser DevTools (<code>F12</code>) &rarr; Console &rarr; run <code>localStorage.clear()</code> &rarr; refresh the page.</p>
             </div>
           </div>

@@ -291,49 +291,6 @@
   color: #d97706;
 }
 
-.student-login-nav-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.45rem;
-  padding: 0.42rem 0.85rem;
-  border-radius: 7px;
-  font-size: 0.825rem;
-  font-weight: 600;
-  border: 1px solid var(--border-color);
-  background: var(--bg-surface);
-  color: var(--text-secondary);
-  transition: all 0.15s ease;
-  cursor: pointer;
-}
-
-.student-login-nav-btn:hover {
-  background: var(--bg-sidebar);
-  color: var(--text-primary);
-  border-color: var(--accent-primary);
-}
-
-.student-login-nav-btn.registered {
-  border-color: rgba(16, 185, 129, 0.4);
-  background: var(--success-bg);
-  color: var(--success);
-}
-
-.student-login-nav-btn.registered:hover {
-  border-color: var(--success);
-  box-shadow: 0 0 10px rgba(16, 185, 129, 0.2);
-}
-
-.student-login-nav-btn.unregistered {
-  border-color: rgba(59, 130, 246, 0.4);
-  background: rgba(59, 130, 246, 0.08);
-  color: var(--accent-primary);
-}
-
-.student-login-nav-btn.unregistered:hover {
-  border-color: var(--accent-primary);
-  background: rgba(59, 130, 246, 0.15);
-}
-
 .sync-status-pill {
   display: inline-flex;
   align-items: center;
@@ -2447,14 +2404,6 @@
 
   .nav-action-btn {
     padding: 0.42rem 0.6rem;
-  }
-
-
-  .student-login-nav-btn span {
-    max-width: 90px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
   }
 
   .app-content-container {

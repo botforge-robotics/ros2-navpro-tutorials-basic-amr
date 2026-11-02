@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { ArrowUp, ArrowDown } from 'lucide-react';
 
-export function PageScrollNav({ isChatOpen = false }) {
+export function PageScrollNav() {
   const [scrollState, setScrollState] = useState({
     isTop: true,
     isBottom: false,
@@ -46,7 +46,7 @@ export function PageScrollNav({ isChatOpen = false }) {
       className="page-scroll-nav-cluster"
       style={{
         position: 'fixed',
-        bottom: isChatOpen ? '2rem' : '5.5rem',
+        bottom: '2rem',
         right: '2rem',
         zIndex: 980,
         display: 'flex',
