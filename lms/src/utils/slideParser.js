@@ -52,33 +52,71 @@ export function parseLessonIntoSlides(lesson) {
     { id: 'log-levels-circle-root', key: 'loglevels', title: 'ROS 2 Logging Severity Hierarchy' }
   ];
 
-  // Extract concise atomic badge for split command blocks (prevents badge splitting/wrapping)
-  const getAtomicCommandBadge = (fullBadge, blockCode) => {
-    if (!fullBadge) return '';
-    if (!fullBadge.includes('/')) return fullBadge.trim();
+  // Helper to trim verbose output dumps in multi-usage command cards (keeps all usages on 1 slide without scroll)
+  const formatCommandCodeForSlide = (rawCode) => {
+    if (!rawCode) return '';
+    const lines = rawCode.trim().split('\n');
+    if (lines.length <= 14) return rawCode.trim();
 
-    const candidates = fullBadge.split('/').map(c => c.trim()).filter(Boolean);
-    const lines = (blockCode || '').split('\n');
-    const codeLines = lines.filter(l => l.trim() && !l.trim().startsWith('#'));
-    const firstCmd = codeLines[0] || '';
+    const cleaned = [];
+    let skipOutput = false;
+    let skipHeredoc = false;
 
-    // Sort candidates by length descending so multi-flags (-rf, -lah, -p) match first
-    candidates.sort((a, b) => b.length - a.length);
+    for (let i = 0; i < lines.length; i++) {
+      const line = lines[i];
+      const s = line.trim();
 
-    for (const cand of candidates) {
-      if (firstCmd.includes(cand)) {
-        return cand;
+      // Collapse huge EOF heredocs in bash commands (like in chmod script creation)
+      if (s.includes('cat <<') && s.includes('EOF')) {
+        skipHeredoc = true;
+        cleaned.push('# [Populate script with diagnostic logic]');
+        cleaned.push('cat << \'EOF\' > sensor_diagnostics.sh ... EOF');
+        continue;
       }
+      if (skipHeredoc) {
+        if (s === 'EOF') skipHeredoc = false;
+        continue;
+      }
+
+      // Detect mock output blocks and skip multi-line terminal dumps
+      if (/^#\s*(?:Expected\s+)?Output/i.test(s) || /^#\s*Notice/i.test(s) || /^#\s*Displays complete/i.test(s)) {
+        skipOutput = true;
+        continue;
+      }
+      if (skipOutput) {
+        if (s.startsWith('#') && !/^#\s*(?:\d+\.|\bStep|\bPhase)/i.test(s)) {
+          continue;
+        } else if (s.startsWith('#')) {
+          skipOutput = false;
+        } else if (!s) {
+          skipOutput = false;
+          continue;
+        } else {
+          skipOutput = false;
+        }
+      }
+
+      // Skip non-essential commentary lines or temporary verification checks that push code past limits
+      if (s.startsWith('# (Notice:') || s.startsWith('# Without -p') || s.startsWith('# With -p') || s.startsWith('# Notice your prompt')) {
+        continue;
+      }
+      if (s.startsWith('# Clean up temporary practice folders:') || (s.startsWith('rm -rf') && s.includes('practice'))) {
+        continue;
+      }
+      if (s.startsWith('# Verify it was created:') || s.startsWith('# Verify all directories now exist:') || s.startsWith('# Verify the structured')) {
+        continue;
+      }
+      // Remove standalone intermediate ls or rm in multi-step tutorials
+      if ((s === 'ls' || s.startsWith('ls ~/robotics_lab') || s.startsWith('rm -rf my_robot_test')) && lines.length > 15) {
+        continue;
+      }
+
+      cleaned.push(line);
     }
 
-    for (const cand of candidates) {
-      const mainToken = cand.split(/\s+/)[0];
-      if (firstCmd.startsWith(mainToken)) {
-        return cand;
-      }
-    }
-
-    return candidates[0];
+    let result = cleaned.join('\n').trim();
+    result = result.replace(/\n{3,}/g, '\n\n');
+    return result;
   };
 
   // Helper to trim code blocks for slide presentations (no vertical scrolling)
@@ -157,76 +195,35 @@ export function parseLessonIntoSlides(lesson) {
       }
     });
 
-    // Check for Command Cards (Atomic Concepts like pwd, ls, cd, mkdir, chmod, ps)
+    // Check for Command Cards (Keep all usages on 1 single slide without vertical scrolling)
     const cmdCards = Array.from(section.querySelectorAll('.cmd-card'));
     if (cmdCards.length > 0) {
-      // Split commands into atomic usage slides for crystal-clear pedagogical delivery
-      const usageBlockPattern = /(?=(?:^|\n)\s*#\s*(?:\d+\.|\bStep\s+\d+:?|\bPhase\s+\d+:?))/i;
-
       cmdCards.forEach((card, cardIdx) => {
         const badge = card.querySelector('.cmd-badge')?.textContent?.trim() || '';
         const title = card.querySelector('.cmd-title')?.textContent?.trim() || `Command ${cardIdx + 1}`;
         const syntax = card.querySelector('.cmd-syntax')?.textContent?.replace(/^Syntax:\s*/i, '').trim() || '';
         const desc = card.querySelector('.cmd-desc')?.innerHTML?.trim() || '';
         const codeElem = card.querySelector('pre code');
-        const fullCode = codeElem ? codeElem.textContent.trim() : '';
+        const rawCode = codeElem ? codeElem.textContent.trim() : '';
         const lang = card.querySelector('.code-lang-tag')?.textContent?.trim() || 'bash';
 
-        // Check for multiple distinct usage steps (e.g., mkdir single vs mkdir multiple vs mkdir -p)
-        const blocks = fullCode.split(usageBlockPattern).map(b => b.trim()).filter(Boolean);
-
-        if (blocks.length > 1) {
-          blocks.forEach((blockCode, blockIdx) => {
-            const firstLine = blockCode.split('\n')[0];
-            const cleanSub = firstLine
-              .replace(/^#\s*(?:\d+\.|\bStep\s+\d+:?|\bPhase\s+\d+:?)\s*/i, '')
-              .replace(/[:—\-_]+$/, '')
-              .trim();
-
-            const atomicBadge = getAtomicCommandBadge(badge, blockCode);
-            const usageTitle = cleanSub ? `${title}: ${cleanSub}` : `${title} (Part ${blockIdx + 1}/${blocks.length})`;
-            const usageBadge = `${atomicBadge} (${blockIdx + 1}/${blocks.length})`;
-
-            slides.push({
-              id: `${lesson.id}_cmd_${cardIdx}_u${blockIdx}_${atomicBadge.replace(/[^a-zA-Z0-9]/g, '_')}`,
-              type: 'command',
-              lessonNum: lesson.num_str,
-              lessonId: lesson.id,
-              module: lesson.module,
-              sectionTitle: h2Title,
-              badge: usageBadge,
-              baseBadge: atomicBadge,
-              title: usageTitle,
-              baseTitle: title,
-              syntax,
-              desc,
-              code: blockCode,
-              lang,
-              usageStep: blockIdx + 1,
-              totalUsageSteps: blocks.length,
-              htmlContent: card.outerHTML
-            });
-          });
-        } else {
-          const atomicBadge = getAtomicCommandBadge(badge, fullCode);
-          slides.push({
-            id: `${lesson.id}_cmd_${cardIdx}_${atomicBadge.replace(/[^a-zA-Z0-9]/g, '_')}`,
-            type: 'command',
-            lessonNum: lesson.num_str,
-            lessonId: lesson.id,
-            module: lesson.module,
-            sectionTitle: h2Title,
-            badge: atomicBadge,
-            baseBadge: atomicBadge,
-            title,
-            baseTitle: title,
-            syntax,
-            desc,
-            code: fullCode,
-            lang,
-            htmlContent: card.outerHTML
-          });
-        }
+        slides.push({
+          id: `${lesson.id}_cmd_${cardIdx}_${badge.replace(/[^a-zA-Z0-9]/g, '_')}`,
+          type: 'command',
+          lessonNum: lesson.num_str,
+          lessonId: lesson.id,
+          module: lesson.module,
+          sectionTitle: h2Title,
+          badge,
+          baseBadge: badge,
+          title,
+          baseTitle: title,
+          syntax,
+          desc,
+          code: formatCommandCodeForSlide(rawCode),
+          lang,
+          htmlContent: card.outerHTML
+        });
       });
       return;
     }
