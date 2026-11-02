@@ -112,6 +112,8 @@ export function PresentationView({
 
   const [isGridOpen, setIsGridOpen] = useState(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
+  const [showFsControls, setShowFsControls] = useState(true);
+  const fsControlsTimeoutRef = useRef(null);
   const [showQuizAnswer, setShowQuizAnswer] = useState(false);
   const [copiedCode, setCopiedCode] = useState(false);
   const [selectedQuizOption, setSelectedQuizOption] = useState(null);
@@ -216,14 +218,26 @@ export function PresentationView({
 
   // Fullscreen toggler
   const toggleFullscreen = () => {
-    if (!document.fullscreenElement) {
-      document.documentElement.requestFullscreen().then(() => {
+    if (!document.fullscreenElement && !isFullscreen) {
+      if (document.documentElement.requestFullscreen) {
+        document.documentElement.requestFullscreen().then(() => {
+          setIsFullscreen(true);
+        }).catch(() => {
+          setIsFullscreen(true);
+        });
+      } else {
         setIsFullscreen(true);
-      }).catch(() => {});
+      }
     } else {
-      document.exitFullscreen().then(() => {
+      if (document.fullscreenElement && document.exitFullscreen) {
+        document.exitFullscreen().then(() => {
+          setIsFullscreen(false);
+        }).catch(() => {
+          setIsFullscreen(false);
+        });
+      } else {
         setIsFullscreen(false);
-      }).catch(() => {});
+      }
     }
   };
 
@@ -234,6 +248,34 @@ export function PresentationView({
     document.addEventListener('fullscreenchange', handleFullscreenChange);
     return () => document.removeEventListener('fullscreenchange', handleFullscreenChange);
   }, []);
+
+  // Auto-hide floating HUD in fullscreen mode
+  useEffect(() => {
+    if (!isFullscreen) {
+      setShowFsControls(true);
+      return;
+    }
+
+    setShowFsControls(true);
+
+    const handleMouseMove = () => {
+      setShowFsControls(true);
+      if (fsControlsTimeoutRef.current) {
+        clearTimeout(fsControlsTimeoutRef.current);
+      }
+      fsControlsTimeoutRef.current = setTimeout(() => {
+        setShowFsControls(false);
+      }, 2500);
+    };
+
+    window.addEventListener('mousemove', handleMouseMove);
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+      if (fsControlsTimeoutRef.current) {
+        clearTimeout(fsControlsTimeoutRef.current);
+      }
+    };
+  }, [isFullscreen]);
 
   // Keyboard navigation shortcuts
   useEffect(() => {
@@ -265,6 +307,8 @@ export function PresentationView({
       } else if (e.key === 'Escape') {
         if (isGridOpen) {
           setIsGridOpen(false);
+        } else if (isFullscreen) {
+          toggleFullscreen();
         } else if (onExitPresentation) {
           onExitPresentation();
         }
@@ -331,117 +375,123 @@ export function PresentationView({
   const progressPercent = slides.length > 0 ? ((currentSlideIndex + 1) / slides.length) * 100 : 0;
 
   return (
-    <div className={`presentation-viewport ${theme === 'dark' ? 'dark-theme' : 'light-theme'}`}>
+    <div className={`presentation-viewport ${theme === 'dark' ? 'dark-theme' : 'light-theme'} ${isFullscreen ? 'is-fullscreen' : ''}`}>
       {/* Top Deck Toolbar */}
-      <header className="ppt-header">
-        <div className="ppt-header-left">
-          <button 
-            className="ppt-brand-btn" 
-            onClick={onExitPresentation}
-            title="Exit Presentation & Return to Web LMS"
-          >
-            <img src="assets/images/ros2_logo.svg" alt="ROS 2" className="ppt-logo" />
-            <span className="ppt-brand-label">Level 1 • AMR Instructor PPT</span>
-          </button>
-
-          <div className="ppt-header-divider"></div>
-
-          {/* Lesson Selector Dropdown */}
-          <div className="ppt-lesson-selector-wrap">
-            <select 
-              value={selectedLessonId} 
-              onChange={handleLessonChange}
-              className="ppt-lesson-select"
-              title="Switch Lesson Deck"
+      {!isFullscreen && (
+        <header className="ppt-header">
+          <div className="ppt-header-left">
+            <button 
+              className="ppt-brand-btn" 
+              onClick={onExitPresentation}
+              title="Exit Presentation & Return to Web LMS"
             >
-              {lessons.map(l => (
-                <option key={l.id} value={l.id}>
-                  Lesson {l.num_str}: {l.title}
-                </option>
-              ))}
-            </select>
+              <img src="assets/images/ros2_logo.svg" alt="ROS 2" className="ppt-logo" />
+              <span className="ppt-brand-label">Level 1 • AMR Instructor PPT</span>
+            </button>
+
+            <div className="ppt-header-divider"></div>
+
+            {/* Lesson Selector Dropdown */}
+            <div className="ppt-lesson-selector-wrap">
+              <select 
+                value={selectedLessonId} 
+                onChange={handleLessonChange}
+                className="ppt-lesson-select"
+                title="Switch Lesson Deck"
+              >
+                {lessons.map(l => (
+                  <option key={l.id} value={l.id}>
+                    Lesson {l.num_str}: {l.title}
+                  </option>
+                ))}
+              </select>
+            </div>
           </div>
-        </div>
 
-        {/* Center: Slide Counter & Scrubber Badge */}
-        <div className="ppt-header-center">
-          <button 
-            className="ppt-slide-counter-btn"
-            onClick={() => setIsGridOpen(prev => !prev)}
-            title="Open Slide Grid (Press G)"
-          >
-            <span className="slide-curr-num">Slide {currentSlideIndex + 1}</span>
-            <span className="slide-sep">/</span>
-            <span className="slide-total-num">{slides.length}</span>
-            <Grid size={14} className="counter-icon" />
-          </button>
-        </div>
+          {/* Center: Slide Counter & Scrubber Badge */}
+          <div className="ppt-header-center">
+            <button 
+              className="ppt-slide-counter-btn"
+              onClick={() => setIsGridOpen(prev => !prev)}
+              title="Open Slide Grid (Press G)"
+            >
+              <span className="slide-curr-num">Slide {currentSlideIndex + 1}</span>
+              <span className="slide-sep">/</span>
+              <span className="slide-total-num">{slides.length}</span>
+              <Grid size={14} className="counter-icon" />
+            </button>
+          </div>
 
-        {/* Right Action Icons */}
-        <div className="ppt-header-right">
-          <button 
-            onClick={() => setIsGridOpen(true)}
-            className="ppt-tool-btn" 
-            title="Slide Grid Overview (Press G)"
-          >
-            <Grid size={17} />
-            <span className="btn-hotkey">G</span>
-          </button>
+          {/* Right Action Icons */}
+          <div className="ppt-header-right">
+            <button 
+              onClick={() => setIsGridOpen(true)}
+              className="ppt-tool-btn" 
+              title="Slide Grid Overview (Press G)"
+            >
+              <Grid size={17} />
+              <span className="btn-hotkey">G</span>
+            </button>
 
-          <button 
-            onClick={toggleFullscreen}
-            className="ppt-tool-btn" 
-            title={isFullscreen ? "Exit Fullscreen (Press F)" : "Fullscreen Mode (Press F)"}
-          >
-            {isFullscreen ? <Minimize2 size={17} /> : <Maximize2 size={17} />}
-            <span className="btn-hotkey">F</span>
-          </button>
+            <button 
+              onClick={toggleFullscreen}
+              className="ppt-tool-btn" 
+              title={isFullscreen ? "Exit Fullscreen (Press F)" : "Fullscreen Mode (Press F)"}
+            >
+              {isFullscreen ? <Minimize2 size={17} /> : <Maximize2 size={17} />}
+              <span className="btn-hotkey">F</span>
+            </button>
 
-          <button 
-            onClick={onToggleTheme}
-            className="ppt-tool-btn" 
-            title={`Switch to ${theme === 'dark' ? 'Light' : 'Dark'} Mode (Press T)`}
-          >
-            {theme === 'dark' ? <Sun size={17} /> : <Moon size={17} />}
-            <span className="btn-hotkey">T</span>
-          </button>
+            <button 
+              onClick={onToggleTheme}
+              className="ppt-tool-btn" 
+              title={`Switch to ${theme === 'dark' ? 'Light' : 'Dark'} Mode (Press T)`}
+            >
+              {theme === 'dark' ? <Sun size={17} /> : <Moon size={17} />}
+              <span className="btn-hotkey">T</span>
+            </button>
 
-          <button 
-            onClick={onExitPresentation}
-            className="ppt-tool-btn ppt-exit-btn" 
-            title="Exit Presentation Mode (Press Esc)"
-          >
-            <X size={18} />
-            <span className="exit-label">Exit</span>
-          </button>
-        </div>
-      </header>
+            <button 
+              onClick={onExitPresentation}
+              className="ppt-tool-btn ppt-exit-btn" 
+              title="Exit Presentation Mode (Press Esc)"
+            >
+              <X size={18} />
+              <span className="exit-label">Exit</span>
+            </button>
+          </div>
+        </header>
+      )}
 
       {/* Progress Line */}
-      <div className="ppt-progress-track">
-        <div 
-          className="ppt-progress-bar" 
-          style={{ width: `${progressPercent}%` }}
-        />
-      </div>
+      {!isFullscreen && (
+        <div className="ppt-progress-track">
+          <div 
+            className="ppt-progress-bar" 
+            style={{ width: `${progressPercent}%` }}
+          />
+        </div>
+      )}
 
       {/* Central Presentation Canvas Area */}
       <main className="ppt-main-stage">
         <div className={`ppt-card-container ppt-type-${currentSlide.type}`} ref={cardRef}>
           {/* Card Top Category & Section Bar */}
-          <div className="ppt-card-top-bar">
-            <div className="ppt-card-meta">
-              <span className="ppt-module-tag">{activeLesson.module}</span>
-              <span className="ppt-lesson-tag">Lesson {activeLesson.num_str}</span>
-              {currentSlide.badge && (
-                <span className="ppt-concept-badge">{currentSlide.badge}</span>
+          {!isFullscreen && (
+            <div className="ppt-card-top-bar">
+              <div className="ppt-card-meta">
+                <span className="ppt-module-tag">{activeLesson.module}</span>
+                <span className="ppt-lesson-tag">Lesson {activeLesson.num_str}</span>
+                {currentSlide.badge && (
+                  <span className="ppt-concept-badge">{currentSlide.badge}</span>
+                )}
+              </div>
+
+              {currentSlide.sectionTitle && (
+                <span className="ppt-section-path">{currentSlide.sectionTitle}</span>
               )}
             </div>
-
-            {currentSlide.sectionTitle && (
-              <span className="ppt-section-path">{currentSlide.sectionTitle}</span>
-            )}
-          </div>
+          )}
 
           {/* ============================================================== */}
           {/* SLIDE TYPE 1: UNIFIED LESSON LAUNCHPAD (Hero + Outcomes + Snapshot) */}
@@ -818,47 +868,113 @@ export function PresentationView({
         </div>
       </main>
 
-      {/* Bottom Deck Navigation Dock */}
-      <footer className="ppt-footer">
-        <div className="ppt-footer-left">
-          <button 
-            onClick={goToPrevSlide} 
-            className="ppt-nav-btn prev-btn"
-            disabled={currentSlideIndex === 0 && lessons.findIndex(l => l.id === selectedLessonId) === 0}
-            title="Previous Slide (Press Left Arrow)"
-          >
-            <ChevronLeft size={20} />
-            <span>Previous</span>
-            <span className="key-hint">←</span>
-          </button>
-        </div>
-
-        {/* Center: Slide Dots / Mini Scrubber */}
-        <div className="ppt-footer-center">
-          <div className="ppt-dots-container">
-            {slides.map((s, idx) => (
-              <button
-                key={s.id || idx}
-                onClick={() => goToSlide(idx)}
-                className={`ppt-dot ${idx === currentSlideIndex ? 'active' : ''} type-${s.type}`}
-                title={`Jump to Slide ${idx + 1}: ${s.title}`}
-              />
-            ))}
+      {/* Bottom Deck Navigation Dock (Standard Card Mode) */}
+      {!isFullscreen && (
+        <footer className="ppt-footer">
+          <div className="ppt-footer-left">
+            <button 
+              onClick={goToPrevSlide} 
+              className="ppt-nav-btn prev-btn"
+              disabled={currentSlideIndex === 0 && lessons.findIndex(l => l.id === selectedLessonId) === 0}
+              title="Previous Slide (Press Left Arrow)"
+            >
+              <ChevronLeft size={20} />
+              <span>Previous</span>
+              <span className="key-hint">←</span>
+            </button>
           </div>
-        </div>
 
-        <div className="ppt-footer-right">
+          {/* Center: Slide Dots / Mini Scrubber */}
+          <div className="ppt-footer-center">
+            <div className="ppt-dots-container">
+              {slides.map((s, idx) => (
+                <button
+                  key={s.id || idx}
+                  onClick={() => goToSlide(idx)}
+                  className={`ppt-dot ${idx === currentSlideIndex ? 'active' : ''} type-${s.type}`}
+                  title={`Jump to Slide ${idx + 1}: ${s.title}`}
+                />
+              ))}
+            </div>
+          </div>
+
+          <div className="ppt-footer-right">
+            <button 
+              onClick={goToNextSlide} 
+              className="ppt-nav-btn next-btn"
+              title="Next Slide (Press Right Arrow or Space)"
+            >
+              <span>Next</span>
+              <span className="key-hint">→</span>
+              <ChevronRight size={20} />
+            </button>
+          </div>
+        </footer>
+      )}
+
+      {/* Floating Presentation HUD in Fullscreen Mode */}
+      {isFullscreen && (
+        <>
+          {/* Subtle top-right exit button */}
           <button 
-            onClick={goToNextSlide} 
-            className="ppt-nav-btn next-btn"
-            title="Next Slide (Press Right Arrow or Space)"
+            className={`ppt-fs-top-exit-btn ${showFsControls ? 'visible' : ''}`}
+            onClick={toggleFullscreen}
+            title="Exit Fullscreen (Press Esc or F)"
           >
-            <span>Next</span>
-            <span className="key-hint">→</span>
-            <ChevronRight size={20} />
+            <Minimize2 size={18} />
           </button>
-        </div>
-      </footer>
+
+          {/* Floating presentation controller dock at bottom center */}
+          <div className={`ppt-fs-hud-dock ${showFsControls ? 'visible' : ''}`}>
+            <button 
+              onClick={goToPrevSlide} 
+              className="fs-hud-btn"
+              disabled={currentSlideIndex === 0 && lessons.findIndex(l => l.id === selectedLessonId) === 0}
+              title="Previous Slide (←)"
+            >
+              <ChevronLeft size={18} />
+            </button>
+
+            <button 
+              onClick={() => setIsGridOpen(true)}
+              className="fs-hud-counter-btn"
+              title="Slide Overview (Press G)"
+            >
+              <span className="fs-curr-num">{currentSlideIndex + 1}</span>
+              <span className="fs-sep">/</span>
+              <span className="fs-total-num">{slides.length}</span>
+              <Grid size={13} className="fs-grid-icon" />
+            </button>
+
+            <button 
+              onClick={goToNextSlide} 
+              className="fs-hud-btn"
+              title="Next Slide (→ or Space)"
+            >
+              <ChevronRight size={18} />
+            </button>
+
+            <div className="fs-hud-divider"></div>
+
+            <button 
+              onClick={onToggleTheme}
+              className="fs-hud-btn"
+              title={`Switch Theme (T)`}
+            >
+              {theme === 'dark' ? <Sun size={16} /> : <Moon size={16} />}
+            </button>
+
+            <button 
+              onClick={toggleFullscreen}
+              className="fs-hud-btn fs-hud-exit-btn"
+              title="Exit Fullscreen (Esc or F)"
+            >
+              <Minimize2 size={16} />
+              <span className="fs-exit-text">Exit</span>
+            </button>
+          </div>
+        </>
+      )}
 
       {/* Slide Grid / Overview Drawer Modal (Triggered by G or click on counter) */}
       {isGridOpen && (

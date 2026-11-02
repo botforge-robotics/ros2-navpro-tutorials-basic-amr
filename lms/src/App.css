@@ -5440,6 +5440,407 @@
   color: var(--text-secondary);
 }
 
+/* ============================================================== */
+/* Fullscreen Presentation Mode (Pure Slide Full Screen)           */
+/* ============================================================== */
+.presentation-viewport.is-fullscreen {
+  width: 100vw !important;
+  height: 100vh !important;
+  background: var(--bg-surface) !important;
+}
+
+.presentation-viewport.is-fullscreen .ppt-main-stage {
+  padding: 0 !important;
+  margin: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  max-width: 100vw !important;
+  max-height: 100vh !important;
+  align-items: stretch !important;
+  justify-content: stretch !important;
+}
+
+.presentation-viewport.is-fullscreen .ppt-card-container {
+  width: 100vw !important;
+  height: 100vh !important;
+  max-width: 100vw !important;
+  max-height: 100vh !important;
+  min-height: 100vh !important;
+  border: none !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  margin: 0 !important;
+  background: var(--bg-surface) !important;
+  animation: none !important;
+}
+
+.presentation-viewport.is-fullscreen .ppt-card-top-bar {
+  display: none !important;
+}
+
+.presentation-viewport.is-fullscreen .ppt-header,
+.presentation-viewport.is-fullscreen .ppt-progress-track,
+.presentation-viewport.is-fullscreen .ppt-footer {
+  display: none !important;
+}
+
+.presentation-viewport.is-fullscreen .ppt-slide-content {
+  padding: 2.5rem 4.5rem !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  max-width: 100vw !important;
+  max-height: 100vh !important;
+  box-sizing: border-box !important;
+  overflow: hidden !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+}
+
+/* Floating Fullscreen Top-Right Exit Button */
+.ppt-fs-top-exit-btn {
+  position: fixed;
+  top: 1.25rem;
+  right: 1.5rem;
+  z-index: 999999;
+  background: rgba(15, 23, 42, 0.65);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #ffffff;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1), transform 0.2s, background 0.2s;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+}
+
+.presentation-viewport.light-theme .ppt-fs-top-exit-btn {
+  background: rgba(255, 255, 255, 0.75);
+  border-color: rgba(0, 0, 0, 0.12);
+  color: #1e293b;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+}
+
+.ppt-fs-top-exit-btn.visible {
+  opacity: 0.85;
+  pointer-events: auto;
+}
+
+.ppt-fs-top-exit-btn:hover {
+  opacity: 1 !important;
+  transform: scale(1.1);
+  background: rgba(239, 68, 68, 0.85);
+  color: #ffffff;
+  border-color: #ef4444;
+}
+
+/* Floating Fullscreen HUD Controller Dock */
+.ppt-fs-hud-dock {
+  position: fixed;
+  bottom: 1.75rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 999999;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.45rem 0.85rem;
+  background: rgba(15, 23, 42, 0.75);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 9999px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1), transform 0.3s;
+}
+
+.presentation-viewport.light-theme .ppt-fs-hud-dock {
+  background: rgba(255, 255, 255, 0.85);
+  border-color: rgba(0, 0, 0, 0.1);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+}
+
+.ppt-fs-hud-dock.visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.ppt-fs-hud-dock:hover {
+  opacity: 1 !important;
+}
+
+.fs-hud-btn {
+  background: none;
+  border: none;
+  color: #cbd5e1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  padding: 0.4rem 0.65rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-weight: 600;
+  transition: all 0.2s;
+}
+
+.presentation-viewport.light-theme .fs-hud-btn {
+  color: #475569;
+}
+
+.fs-hud-btn:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.12);
+  color: #ffffff;
+}
+
+.presentation-viewport.light-theme .fs-hud-btn:hover:not(:disabled) {
+  background: rgba(0, 0, 0, 0.08);
+  color: #0f172a;
+}
+
+.fs-hud-btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.fs-hud-counter-btn {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.35rem 0.85rem;
+  border-radius: 9999px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-weight: 700;
+  transition: all 0.2s;
+}
+
+.presentation-viewport.light-theme .fs-hud-counter-btn {
+  background: rgba(0, 0, 0, 0.06);
+  border-color: rgba(0, 0, 0, 0.08);
+  color: #0f172a;
+}
+
+.fs-hud-counter-btn:hover {
+  background: #3b82f6;
+  border-color: #3b82f6;
+  color: #ffffff;
+}
+
+.fs-curr-num {
+  color: #60a5fa;
+  font-weight: 800;
+}
+
+.presentation-viewport.light-theme .fs-curr-num {
+  color: #2563eb;
+}
+
+.fs-hud-counter-btn:hover .fs-curr-num {
+  color: #ffffff;
+}
+
+.fs-sep {
+  opacity: 0.5;
+}
+
+.fs-total-num {
+  opacity: 0.85;
+}
+
+.fs-grid-icon {
+  margin-left: 0.2rem;
+  opacity: 0.7;
+}
+
+.fs-hud-divider {
+  width: 1px;
+  height: 20px;
+  background: rgba(255, 255, 255, 0.15);
+  margin: 0 0.15rem;
+}
+
+.presentation-viewport.light-theme .fs-hud-divider {
+  background: rgba(0, 0, 0, 0.12);
+}
+
+.fs-hud-exit-btn {
+  color: #f87171 !important;
+}
+
+.fs-hud-exit-btn:hover {
+  background: rgba(239, 68, 68, 0.15) !important;
+  color: #ef4444 !important;
+}
+
+.fs-exit-text {
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+/* Layout enhancements when in Fullscreen Mode */
+.presentation-viewport.is-fullscreen .terminator-merged-slide-layout {
+  max-height: calc(100vh - 140px) !important;
+  gap: 3rem !important;
+}
+
+.presentation-viewport.is-fullscreen .term-left-col img,
+.presentation-viewport.is-fullscreen .term-left-col .lesson-image {
+  max-height: calc(100vh - 240px) !important;
+}
+
+.presentation-viewport.is-fullscreen .term-left-col p {
+  font-size: 1.05rem !important;
+  line-height: 1.5 !important;
+}
+
+.presentation-viewport.is-fullscreen .term-right-col table {
+  font-size: 0.95rem !important;
+}
+
+.presentation-viewport.is-fullscreen .term-right-col th {
+  padding: 0.65rem 1rem !important;
+  font-size: 0.95rem !important;
+}
+
+.presentation-viewport.is-fullscreen .term-right-col td {
+  padding: 0.52rem 1rem !important;
+  font-size: 0.92rem !important;
+}
+
+.presentation-viewport.is-fullscreen .term-right-col td code {
+  font-size: 0.92rem !important;
+}
+
+.presentation-viewport.is-fullscreen .deck-imperatives-layout {
+  max-height: calc(100vh - 140px) !important;
+  gap: 3rem !important;
+}
+
+.presentation-viewport.is-fullscreen .wheel-hero-img {
+  max-height: calc(100vh - 280px) !important;
+}
+
+.presentation-viewport.is-fullscreen .wheel-quote-text {
+  font-size: 0.95rem !important;
+}
+
+.presentation-viewport.is-fullscreen .wheel-shift-tag {
+  font-size: 0.85rem !important;
+}
+
+.presentation-viewport.is-fullscreen .imperatives-cards-col .imperative-card {
+  padding: 1.1rem 1.4rem !important;
+}
+
+.presentation-viewport.is-fullscreen .imperatives-cards-col .imperative-title {
+  font-size: 1.1rem !important;
+}
+
+.presentation-viewport.is-fullscreen .imperatives-cards-col .imperative-card p {
+  font-size: 0.92rem !important;
+  line-height: 1.45 !important;
+}
+
+.presentation-viewport.is-fullscreen .deck-story-step-layout {
+  max-height: calc(100vh - 140px) !important;
+  gap: 3rem !important;
+}
+
+.presentation-viewport.is-fullscreen .deck-story-img {
+  max-height: calc(100vh - 240px) !important;
+}
+
+.presentation-viewport.is-fullscreen .deck-story-lead {
+  font-size: 1.15rem !important;
+}
+
+.presentation-viewport.is-fullscreen .deck-story-text {
+  font-size: 1rem !important;
+  line-height: 1.48 !important;
+}
+
+.presentation-viewport.is-fullscreen .deck-story-takeaway {
+  font-size: 0.95rem !important;
+}
+
+.presentation-viewport.is-fullscreen .deck-ingredients-grid {
+  max-height: calc(100vh - 140px) !important;
+  gap: 1.75rem !important;
+}
+
+.presentation-viewport.is-fullscreen .ingredient-card {
+  padding: 1.25rem 1.25rem !important;
+}
+
+.presentation-viewport.is-fullscreen .ingredient-card-img {
+  max-height: calc(100vh - 380px) !important;
+}
+
+.presentation-viewport.is-fullscreen .ingredient-card-title {
+  font-size: 1.2rem !important;
+}
+
+.presentation-viewport.is-fullscreen .ingredient-card-desc {
+  font-size: 0.92rem !important;
+  line-height: 1.42 !important;
+}
+
+.presentation-viewport.is-fullscreen .ppt-terminal-window,
+.presentation-viewport.is-fullscreen .ppt-ide-window {
+  max-height: calc(100vh - 220px) !important;
+}
+
+.presentation-viewport.is-fullscreen .ppt-term-body code,
+.presentation-viewport.is-fullscreen .ppt-ide-body code {
+  font-size: 1rem !important;
+  line-height: 1.55 !important;
+}
+
+.presentation-viewport.is-fullscreen .concept-main-title {
+  font-size: 2.2rem !important;
+  margin-bottom: 1.25rem !important;
+}
+
+.presentation-viewport.is-fullscreen .cmd-slide-title {
+  font-size: 2.3rem !important;
+}
+
+.presentation-viewport.is-fullscreen .cmd-slide-desc {
+  font-size: 1.05rem !important;
+  margin-bottom: 1.25rem !important;
+}
+
+.presentation-viewport.is-fullscreen .syntax-code {
+  font-size: 1.05rem !important;
+}
+
+.presentation-viewport.is-fullscreen .step-slide-title {
+  font-size: 2.2rem !important;
+}
+
+.presentation-viewport.is-fullscreen .hero-lesson-title {
+  font-size: 2.8rem !important;
+}
+
+.presentation-viewport.is-fullscreen .interactive-stage-container {
+  height: calc(100vh - 120px) !important;
+  max-height: calc(100vh - 120px) !important;
+}
+
 
 
 
