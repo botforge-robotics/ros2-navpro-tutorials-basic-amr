@@ -131,7 +131,7 @@ export function App() {
 
       if (e.key === '[' || e.key === 'p') {
         if (currentLessonId === 'feedback') {
-          setCurrentLessonId('lesson_23');
+          setCurrentLessonId('lesson_22');
         } else if (activeLesson && activeLesson.prev_id) {
           setCurrentLessonId(activeLesson.prev_id);
         }

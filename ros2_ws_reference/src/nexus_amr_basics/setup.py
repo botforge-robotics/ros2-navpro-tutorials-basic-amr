@@ -79,6 +79,8 @@ setup(
             'collision_custom_subscriber = nexus_amr_basics.m02_l07_04_collision_custom_subscriber:main',
             'm02_l07_01_task_status_publisher = nexus_amr_basics.m02_l07_01_task_status_publisher:main',
             'm02_l07_02_solution_status_publisher = nexus_amr_basics.m02_l07_02_solution_status_publisher:main',
+            'm04_l19_task_status_publisher = nexus_amr_basics.m04_l19_task_status_publisher:main',
+            'm04_l19_solution_status_publisher = nexus_amr_basics.m04_l19_solution_status_publisher:main',
             'm02_l07_03_ultrasonic_custom_publisher = nexus_amr_basics.m02_l07_03_ultrasonic_custom_publisher:main',
             'm02_l07_04_collision_custom_subscriber = nexus_amr_basics.m02_l07_04_collision_custom_subscriber:main',
 
@@ -94,6 +96,8 @@ setup(
             'speed_mode_server = nexus_amr_basics.m02_l07_solution_speed_mode_server:main',
             'task_speed_mode_server = nexus_amr_basics.m02_l07_task_speed_mode_server:main',
             'solution_speed_mode_server = nexus_amr_basics.m02_l07_solution_speed_mode_server:main',
+            'm01_l06_task_speed_mode_server = nexus_amr_basics.m01_l06_task_speed_mode_server:main',
+            'm01_l06_solution_speed_mode_server = nexus_amr_basics.m01_l06_solution_speed_mode_server:main',
             'm02_l07_task_speed_mode_server = nexus_amr_basics.m02_l07_task_speed_mode_server:main',
             'm02_l07_solution_speed_mode_server = nexus_amr_basics.m02_l07_solution_speed_mode_server:main',
             # Legacy aliases
@@ -107,6 +111,8 @@ setup(
             # Module 2 / Lesson 08: Dynamic Parameters & YAML Configuration
             'minimal_param_node = nexus_amr_basics.minimal_param_node:main',
             'param_node_explained = nexus_amr_basics.param_node_explained:main',
+            'm01_l07_01_minimal_param_node = nexus_amr_basics.m01_l07_01_minimal_param_node:main',
+            'm01_l07_02_param_node_explained = nexus_amr_basics.m01_l07_02_param_node_explained:main',
             'm02_l08_01_minimal_param_node = nexus_amr_basics.m02_l08_01_minimal_param_node:main',
             'm02_l08_02_param_node_explained = nexus_amr_basics.m02_l08_02_param_node_explained:main',
             # Legacy/Transition aliases
@@ -125,6 +131,8 @@ setup(
             'solution_navigate_action = nexus_amr_basics.m02_l12_02_solution_fibonacci_action_server:main',
             'task_fibonacci_action = nexus_amr_basics.m02_l12_01_task_fibonacci_action_server:main',
             'solution_fibonacci_action = nexus_amr_basics.m02_l12_02_solution_fibonacci_action_server:main',
+            'm01_l09_task_navigate_distance_server = nexus_amr_basics.m01_l09_task_navigate_distance_server:main',
+            'm01_l09_solution_navigate_distance_server = nexus_amr_basics.m01_l09_solution_navigate_distance_server:main',
             'm02_l11_01_fibonacci_action_server = nexus_amr_basics.m02_l11_01_fibonacci_action_server:main',
             'm02_l11_02_fibonacci_action_client = nexus_amr_basics.m02_l11_02_fibonacci_action_client:main',
             'm02_l12_01_task_fibonacci_action_server = nexus_amr_basics.m02_l12_01_task_fibonacci_action_server:main',
@@ -141,6 +149,8 @@ setup(
             'static_tf_broadcaster = nexus_amr_basics.m03_l15_02_solution_static_tf_broadcaster:main',
             'task_static_tf = nexus_amr_basics.m03_l15_01_task_static_tf_broadcaster:main',
             'solution_static_tf = nexus_amr_basics.m03_l15_02_solution_static_tf_broadcaster:main',
+            'm02_l11_task_static_tf_broadcaster = nexus_amr_basics.m02_l11_task_static_tf_broadcaster:main',
+            'm02_l11_solution_static_tf_broadcaster = nexus_amr_basics.m02_l11_solution_static_tf_broadcaster:main',
             'm03_l15_01_task_static_tf_broadcaster = nexus_amr_basics.m03_l15_01_task_static_tf_broadcaster:main',
             'm03_l15_02_solution_static_tf_broadcaster = nexus_amr_basics.m03_l15_02_solution_static_tf_broadcaster:main',
 
@@ -148,6 +158,8 @@ setup(
             'diff_drive_telemetry = nexus_amr_basics.m03_l16_02_solution_diff_drive_telemetry:main',
             'task_diff_drive = nexus_amr_basics.m03_l16_01_task_diff_drive_telemetry:main',
             'solution_diff_drive = nexus_amr_basics.m03_l16_02_solution_diff_drive_telemetry:main',
+            'm02_l12_task_diff_drive_telemetry = nexus_amr_basics.m02_l12_task_diff_drive_telemetry:main',
+            'm02_l12_solution_diff_drive_telemetry = nexus_amr_basics.m02_l12_solution_diff_drive_telemetry:main',
             'm03_l16_01_task_diff_drive_telemetry = nexus_amr_basics.m03_l16_01_task_diff_drive_telemetry:main',
             'm03_l16_02_solution_diff_drive_telemetry = nexus_amr_basics.m03_l16_02_solution_diff_drive_telemetry:main',
 
@@ -155,6 +167,8 @@ setup(
             'costmap_validator = nexus_amr_basics.m04_l19_02_solution_costmap_validator:main',
             'task_costmap_validator = nexus_amr_basics.m04_l19_01_task_costmap_validator:main',
             'solution_costmap_validator = nexus_amr_basics.m04_l19_02_solution_costmap_validator:main',
+            'm03_l15_task_costmap_validator = nexus_amr_basics.m03_l15_task_costmap_validator:main',
+            'm03_l15_solution_costmap_validator = nexus_amr_basics.m03_l15_solution_costmap_validator:main',
             'm04_l19_01_task_costmap_validator = nexus_amr_basics.m04_l19_01_task_costmap_validator:main',
             'm04_l19_02_solution_costmap_validator = nexus_amr_basics.m04_l19_02_solution_costmap_validator:main',
 
@@ -162,6 +176,8 @@ setup(
             'controller_tuner = nexus_amr_basics.m04_l20_02_solution_controller_tuner:main',
             'task_controller_tuner = nexus_amr_basics.m04_l20_01_task_controller_tuner:main',
             'solution_controller_tuner = nexus_amr_basics.m04_l20_02_solution_controller_tuner:main',
+            'm03_l16_task_controller_tuner = nexus_amr_basics.m03_l16_task_controller_tuner:main',
+            'm03_l16_solution_controller_tuner = nexus_amr_basics.m03_l16_solution_controller_tuner:main',
             'm04_l20_01_task_controller_tuner = nexus_amr_basics.m04_l20_01_task_controller_tuner:main',
             'm04_l20_02_solution_controller_tuner = nexus_amr_basics.m04_l20_02_solution_controller_tuner:main',
 
@@ -169,8 +185,14 @@ setup(
             'recovery_monitor = nexus_amr_basics.m04_l21_02_solution_recovery_monitor:main',
             'task_recovery_monitor = nexus_amr_basics.m04_l21_01_task_recovery_monitor:main',
             'solution_recovery_monitor = nexus_amr_basics.m04_l21_02_solution_recovery_monitor:main',
+            'm04_l22_task_recovery_monitor = nexus_amr_basics.m04_l22_task_recovery_monitor:main',
+            'm04_l22_solution_recovery_monitor = nexus_amr_basics.m04_l22_solution_recovery_monitor:main',
             'm04_l21_01_task_recovery_monitor = nexus_amr_basics.m04_l21_01_task_recovery_monitor:main',
             'm04_l21_02_solution_recovery_monitor = nexus_amr_basics.m04_l21_02_solution_recovery_monitor:main',
+
+            # Bonus Module / Lesson 18: Battery Logger
+            'm04_l18_task_battery_monitor_logger = nexus_amr_basics.m04_l18_task_battery_monitor_logger:main',
+            'm04_l18_solution_battery_monitor_logger = nexus_amr_basics.m04_l18_solution_battery_monitor_logger:main',
         ],
     },
 )

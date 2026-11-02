@@ -1,16 +1,16 @@
 #!/usr/bin/env bash
 # ==============================================================================
-# Nexus AMR Learning Hub - Level 1: Module 4 / Lesson 23 Task
-# Script:  m04_l23_task_hardware_check.sh
-# Purpose: Pre-Flight Physical Robot Hardware (Sim-to-Real) Readiness Check
+# Nexus AMR Learning Hub - Level 1: Module 3 / Lesson 17 Task
+# Script:  m03_l17_task_spawn_warehouse_obstacle.sh
+# Purpose: Gazebo Warehouse Simulation Entity Spawning & Verification
 # ==============================================================================
 #
 # MISSION TARGETS:
 # ----------------
-# 1. TODO 1: Verify presence of physical USB serial devices (/dev/ttyUSB* or /dev/ttyACM*).
-# 2. TODO 2: Check micro-ROS agent or motor driver communication daemon status.
-# 3. TODO 3: Verify hardware LiDAR driver topic (/scan) is emitting scan data.
-# 4. TODO 4: Print a color-coded Sim-to-Real Deployment Clearance Certificate.
+# 1. TODO 1: Verify Gazebo simulation environment is responding.
+# 2. TODO 2: Spawn an obstacle barrier at coordinates (x=2.0, y=0.5, z=0.25).
+# 3. TODO 3: Sample the /scan topic to verify the LiDAR detects the new obstacle.
+# 4. TODO 4: Display confirmation diagnostics.
 # ==============================================================================
 
 set -e
@@ -18,43 +18,42 @@ set -e
 GREEN='\033[0;32m'
 BLUE='\033[0;34m'
 YELLOW='\033[1;33m'
-RED='\033[0;31m'
 NC='\033[0m'
 
 echo -e "${BLUE}======================================================${NC}"
-echo -e "${BLUE}  Nexus AMR Sim-to-Real Physical Hardware Sanity Check${NC}"
+echo -e "${BLUE}  Gazebo Warehouse Entity Spawner & Sensor Test       ${NC}"
 echo -e "${BLUE}======================================================${NC}"
 
 # ==============================================================================
-# TODO 1: Detect USB Serial Controllers (Motor board, LiDAR)
-# - Hint: Query the /dev directory for connected USB-to-UART or ACM serial communication ports.
+# TODO 1: Check if /scan or Gazebo clock is active
+# - Hint: Use 'ros2 topic list' and check for the presence of the sensor or clock topics.
 # ==============================================================================
-echo -e "\n[Step 1/4: Scanning Physical Serial Buses]"
+echo -e "\n[Step 1/4: Checking Simulation Environment]"
 # ---> YOUR CODE HERE <---
 
 
 # ==============================================================================
-# TODO 2: Check micro-ROS or Driver Agent Process
-# - Hint: Use 'pgrep' to search running process names for the micro-ROS agent daemon.
+# TODO 2: Spawn cylindrical obstacle entity
+# - Hint: Use 'ros2 run ros_gz_sim create' specifying target world, entity name, and 3D spawn coordinates (-x, -y, -z).
 # ==============================================================================
-echo -e "\n[Step 2/4: Checking Embedded Driver Agent]"
+echo -e "\n[Step 2/4: Spawning Obstacle Entity in Warehouse]"
 # ---> YOUR CODE HERE <---
 
 
 # ==============================================================================
-# TODO 3: Verify /scan Sensor Stream
-# - Hint: Use 'ros2 topic hz' with a short window to verify the LiDAR sensor message frequency.
+# TODO 3: Sample /scan topic
+# - Hint: Use 'ros2 topic echo --once' piped into 'head' to sample initial range readings without streaming continuously.
 # ==============================================================================
-echo -e "\n[Step 3/4: Inspecting Sensor Telemetry Stream]"
+echo -e "\n[Step 3/4: Validating Sensor Reflection on Obstacle]"
 # ---> YOUR CODE HERE <---
 
 
 # ==============================================================================
-# TODO 4: Output Deployment Clearance Report
+# TODO 4: Display Confirmation
 # ==============================================================================
-echo -e "\n[Step 4/4: Sim-to-Real Readiness Report]"
+echo -e "\n[Step 4/4: Obstacle Spawner Verification]"
 # ---> YOUR CODE HERE <---
 
 echo -e "\n${BLUE}======================================================${NC}"
-echo -e "${GREEN}  Physical Hardware Inspection Completed!              ${NC}"
+echo -e "${GREEN}  Obstacle Spawning Completed!                         ${NC}"
 echo -e "${BLUE}======================================================${NC}"

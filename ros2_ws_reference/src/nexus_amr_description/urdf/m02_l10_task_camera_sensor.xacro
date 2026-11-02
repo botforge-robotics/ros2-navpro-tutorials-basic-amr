@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<!--
+================================================================================
+Nexus AMR Learning Hub - Level 1: Module 3 / Lesson 14 Task
+Package: nexus_amr_description
+File:    m03_l14_task_camera_sensor.xacro
+================================================================================
+STUDENT CHALLENGE:
+Mount an RGB Perception Camera to the front chassis bumper of the Nexus AMR.
+Follow the TODO directives below to construct the link and joint.
+================================================================================
+-->
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <!-- =======================================================================
+  TODO 1: Declare the camera_1 link
+  - Link name: "camera_1"
+  - Visual: origin xyz="-0.101117 -0.000379 -0.035" rpy="0 0 0"
+    mesh filename="package://nexus_amr_description/meshes/camera_1.stl" scale="0.001 0.001 0.001"
+    material name="black"
+  - Collision: identical geometry to visual
+  - Inertial: mass 0.000343 kg, origin xyz="0.001379 0 0", ixx="1e-7" iyy="1e-7" izz="1e-7"
+  ======================================================================== -->
+  <!-- >>> YOUR CODE HERE <<< -->
+
+
+  <!-- =======================================================================
+  TODO 2: Declare the fixed joint attaching the camera to the chassis
+  - Joint name: "cam_joint"
+  - Joint type: "fixed"
+  - Parent link: "base_link"
+  - Child link: "camera_1"
+  - Origin: xyz="0.101117 0.000379 0.035" rpy="0 0 0"
+  ======================================================================== -->
+  <!-- >>> YOUR CODE HERE <<< -->
+
+</robot>
