@@ -111,25 +111,16 @@ export function LessonView({
     setInertiaPortalNode(null);
     setUrdfViewerPortalNode(null);
 
-    // Query elements based on current lesson
-    if (lesson.id === 'lesson_01') {
-      setPermissionPortalNode(document.getElementById('interactive-permission-calculator-root'));
-    } else if (lesson.id === 'lesson_03') {
-      setTurtlesimPortalNode(document.getElementById('turtlesim-teleop-flow-root'));
-    } else if (lesson.id === 'lesson_04') {
-      setPackagePortalNode(document.getElementById('package-structure-flow-root'));
-    } else if (lesson.id === 'lesson_05') {
-      setPubsubPortalNode(document.getElementById('pubsub-flow-root'));
-    } else if (lesson.id === 'lesson_06') {
-      setLogLevelsPortalNode(document.getElementById('log-levels-circle-root'));
-    } else if (lesson.id === 'lesson_07') {
-      setServicePortalNode(document.getElementById('service-flow-root'));
-    } else if (lesson.id === 'lesson_10') {
-      setActionPortalNode(document.getElementById('action-flow-root'));
-    } else if (lesson.id === 'lesson_14') {
-      setInertiaPortalNode(document.getElementById('interactive-inertia-calculator-root'));
-      setUrdfViewerPortalNode(document.getElementById('interactive-urdf-viewer-root'));
-    }
+    // Query elements based on element presence in DOM (supporting both current and restructured lesson layouts)
+    setPermissionPortalNode(document.getElementById('interactive-permission-calculator-root'));
+    setTurtlesimPortalNode(document.getElementById('turtlesim-teleop-flow-root'));
+    setPackagePortalNode(document.getElementById('package-structure-flow-root'));
+    setPubsubPortalNode(document.getElementById('pubsub-flow-root'));
+    setServicePortalNode(document.getElementById('service-flow-root'));
+    setActionPortalNode(document.getElementById('action-flow-root'));
+    setLogLevelsPortalNode(document.getElementById('log-levels-circle-root'));
+    setInertiaPortalNode(document.getElementById('interactive-inertia-calculator-root'));
+    setUrdfViewerPortalNode(document.getElementById('interactive-urdf-viewer-root'));
   }, [lesson.id, lesson.html_content]);
 
   // Scroll to top when changing lesson
@@ -404,48 +395,48 @@ export function LessonView({
       })()}
 
       {/* Interactive Permission Calculator for Lesson 01 */}
-      {lesson.id === 'lesson_01' && !lessonRegistry['lesson_01'] && (
-        permissionPortalNode ? ReactDOM.createPortal(<PermissionCalculator />, permissionPortalNode) : null
+      {permissionPortalNode && !lessonRegistry[lesson.id] && (
+        ReactDOM.createPortal(<PermissionCalculator />, permissionPortalNode)
       )}
 
       {/* Interactive Turtlesim Teleop & Computational Graph Flow for Lesson 03 */}
-      {lesson.id === 'lesson_03' && !lessonRegistry['lesson_03'] && (
-        turtlesimPortalNode ? ReactDOM.createPortal(<TurtlesimTeleopFlow />, turtlesimPortalNode) : null
+      {turtlesimPortalNode && !lessonRegistry[lesson.id] && (
+        ReactDOM.createPortal(<TurtlesimTeleopFlow />, turtlesimPortalNode)
       )}
 
       {/* Interactive Package Anatomy & Filesystem Flow for Lesson 04 */}
-      {lesson.id === 'lesson_04' && (
-        packagePortalNode ? ReactDOM.createPortal(<PackageStructureFlow />, packagePortalNode) : null
+      {packagePortalNode && (
+        ReactDOM.createPortal(<PackageStructureFlow />, packagePortalNode)
       )}
 
       {/* Interactive Pub/Sub Architecture & Flow for Lesson 05 */}
-      {lesson.id === 'lesson_05' && (
-        pubsubPortalNode ? ReactDOM.createPortal(<PubSubFlow />, pubsubPortalNode) : null
+      {pubsubPortalNode && (
+        ReactDOM.createPortal(<PubSubFlow />, pubsubPortalNode)
       )}
 
-      {/* Interactive Log Levels Nested Circle Diagram for Lesson 06 */}
-      {lesson.id === 'lesson_06' && (
-        logLevelsPortalNode ? ReactDOM.createPortal(<LogLevelsNestedCircle />, logLevelsPortalNode) : null
+      {/* Interactive Service Server & Client RPC Flow for Lesson 06 */}
+      {servicePortalNode && (
+        ReactDOM.createPortal(<ServiceFlow />, servicePortalNode)
       )}
 
-      {/* Interactive Service Server & Client RPC Flow for Lesson 07 */}
-      {lesson.id === 'lesson_07' && (
-        servicePortalNode ? ReactDOM.createPortal(<ServiceFlow />, servicePortalNode) : null
+      {/* Interactive Action 3-Tier Long-Running Goal/Feedback/Result Flow for Lesson 09 */}
+      {actionPortalNode && (
+        ReactDOM.createPortal(<ActionFlow />, actionPortalNode)
       )}
 
-      {/* Interactive Action 3-Tier Long-Running Goal/Feedback/Result Flow for Lesson 10 */}
-      {lesson.id === 'lesson_10' && (
-        actionPortalNode ? ReactDOM.createPortal(<ActionFlow />, actionPortalNode) : null
+      {/* Interactive 3D URDF & TF Kinematics Visualizer for Lesson 10 */}
+      {urdfViewerPortalNode && (
+        ReactDOM.createPortal(<UrdfViewer3D />, urdfViewerPortalNode)
       )}
 
-      {/* Interactive URDF Inertia Tensor Calculator for Lesson 14 */}
-      {lesson.id === 'lesson_14' && (
-        inertiaPortalNode ? ReactDOM.createPortal(<InertiaCalculator />, inertiaPortalNode) : null
+      {/* Interactive URDF Inertia Tensor Calculator for Lesson 10 */}
+      {inertiaPortalNode && (
+        ReactDOM.createPortal(<InertiaCalculator />, inertiaPortalNode)
       )}
 
-      {/* Interactive 3D URDF & TF Kinematics Visualizer for Lesson 14 */}
-      {lesson.id === 'lesson_14' && (
-        urdfViewerPortalNode ? ReactDOM.createPortal(<UrdfViewer3D />, urdfViewerPortalNode) : null
+      {/* Interactive Log Levels Nested Circle Diagram for Lesson 18 */}
+      {logLevelsPortalNode && (
+        ReactDOM.createPortal(<LogLevelsNestedCircle />, logLevelsPortalNode)
       )}
 
       {/* Embedded Interactive Quiz */}
