@@ -52,6 +52,47 @@ export function parseLessonIntoSlides(lesson) {
     { id: 'log-levels-circle-root', key: 'loglevels', title: 'ROS 2 Logging Severity Hierarchy' }
   ];
 
+  // Extract concise atomic badge for split command blocks (prevents badge splitting/wrapping)
+  const getAtomicCommandBadge = (fullBadge, blockCode) => {
+    if (!fullBadge) return '';
+    if (!fullBadge.includes('/')) return fullBadge.trim();
+
+    const candidates = fullBadge.split('/').map(c => c.trim()).filter(Boolean);
+    const lines = (blockCode || '').split('\n');
+    const codeLines = lines.filter(l => l.trim() && !l.trim().startsWith('#'));
+    const firstCmd = codeLines[0] || '';
+
+    // Sort candidates by length descending so multi-flags (-rf, -lah, -p) match first
+    candidates.sort((a, b) => b.length - a.length);
+
+    for (const cand of candidates) {
+      if (firstCmd.includes(cand)) {
+        return cand;
+      }
+    }
+
+    for (const cand of candidates) {
+      const mainToken = cand.split(/\s+/)[0];
+      if (firstCmd.startsWith(mainToken)) {
+        return cand;
+      }
+    }
+
+    return candidates[0];
+  };
+
+  // Helper to trim code blocks for slide presentations (no vertical scrolling)
+  const trimCodeForPresentation = (rawCode) => {
+    if (!rawCode) return '';
+    const lines = rawCode.split('\n');
+    if (lines.length <= 16) return rawCode;
+
+    // Keep the top 14 lines and append concise note
+    const trimmed = lines.slice(0, 14);
+    trimmed.push('# ... [Full complete implementation available in Web LMS] ...');
+    return trimmed.join('\n');
+  };
+
   // Helper to check if an HTML fragment contains substantive educational payload
   const isSubstantive = (element) => {
     if (!element) return false;
@@ -142,18 +183,19 @@ export function parseLessonIntoSlides(lesson) {
               .replace(/[:—\-_]+$/, '')
               .trim();
 
+            const atomicBadge = getAtomicCommandBadge(badge, blockCode);
             const usageTitle = cleanSub ? `${title}: ${cleanSub}` : `${title} (Part ${blockIdx + 1}/${blocks.length})`;
-            const usageBadge = `${badge} (${blockIdx + 1}/${blocks.length})`;
+            const usageBadge = `${atomicBadge} (${blockIdx + 1}/${blocks.length})`;
 
             slides.push({
-              id: `${lesson.id}_cmd_${cardIdx}_u${blockIdx}_${badge.replace(/[^a-zA-Z0-9]/g, '_')}`,
+              id: `${lesson.id}_cmd_${cardIdx}_u${blockIdx}_${atomicBadge.replace(/[^a-zA-Z0-9]/g, '_')}`,
               type: 'command',
               lessonNum: lesson.num_str,
               lessonId: lesson.id,
               module: lesson.module,
               sectionTitle: h2Title,
               badge: usageBadge,
-              baseBadge: badge,
+              baseBadge: atomicBadge,
               title: usageTitle,
               baseTitle: title,
               syntax,
@@ -166,15 +208,16 @@ export function parseLessonIntoSlides(lesson) {
             });
           });
         } else {
+          const atomicBadge = getAtomicCommandBadge(badge, fullCode);
           slides.push({
-            id: `${lesson.id}_cmd_${cardIdx}_${badge.replace(/[^a-zA-Z0-9]/g, '_')}`,
+            id: `${lesson.id}_cmd_${cardIdx}_${atomicBadge.replace(/[^a-zA-Z0-9]/g, '_')}`,
             type: 'command',
             lessonNum: lesson.num_str,
             lessonId: lesson.id,
             module: lesson.module,
             sectionTitle: h2Title,
-            badge,
-            baseBadge: badge,
+            badge: atomicBadge,
+            baseBadge: atomicBadge,
             title,
             baseTitle: title,
             syntax,
@@ -194,37 +237,94 @@ export function parseLessonIntoSlides(lesson) {
       fileSteps.forEach((step, stepIdx) => {
         const stepNum = step.querySelector('.step-num-pill')?.textContent?.trim() || `Step ${stepIdx + 1}`;
         const title = step.querySelector('.file-edit-step-title')?.textContent?.trim() || `Step ${stepIdx + 1}`;
+        const cleanTitle = title.replace(stepNum, '').trim() || title;
         const desc = step.querySelector('.step-description')?.innerHTML?.trim() || '';
         const codeElem = step.querySelector('pre code');
         const code = codeElem ? codeElem.textContent : '';
         const lang = step.querySelector('.code-lang-tag')?.textContent?.trim() || 'python';
-        const breakdown = step.querySelector('.code-breakdown-card')?.outerHTML || '';
+        const breakdownCard = step.querySelector('.code-breakdown-card');
 
+        // Slide A: Code Implementation (Trimmed for explanation, zero scrolling)
         slides.push({
-          id: `${lesson.id}_step_${stepIdx}`,
+          id: `${lesson.id}_step_${stepIdx}_code`,
           type: 'code_step',
           lessonNum: lesson.num_str,
           lessonId: lesson.id,
           module: lesson.module,
           sectionTitle: h2Title,
           badge: stepNum,
-          title: title.replace(stepNum, '').trim() || title,
+          title: `${cleanTitle} (Code Implementation)`,
           desc,
-          code,
+          code: trimCodeForPresentation(code),
           lang,
-          breakdown,
+          breakdown: null, // Separated to next slide to eliminate vertical scrolling
           htmlContent: step.outerHTML
         });
+
+        // Slide B: Code Architecture & Line Breakdown (if present)
+        if (breakdownCard && breakdownCard.textContent.trim().length > 30) {
+          const cleanBreakdown = breakdownCard.cloneNode(true);
+          slides.push({
+            id: `${lesson.id}_step_${stepIdx}_breakdown`,
+            type: 'step_breakdown',
+            lessonNum: lesson.num_str,
+            lessonId: lesson.id,
+            module: lesson.module,
+            sectionTitle: h2Title,
+            badge: `${stepNum} Breakdown`,
+            title: `${cleanTitle} — Core Mechanics Breakdown`,
+            htmlContent: cleanBreakdown.outerHTML
+          });
+        }
       });
       return;
     }
 
     // Check for Hands-on Student Challenge Section
     if (h2Lower.includes('challenge') || h2Lower.includes('student lab') || h2Lower.includes('mission')) {
-      // Clean up challenge content
-      const challengeClone = section.cloneNode(true);
-      const cloneH2 = challengeClone.querySelector('h2');
-      if (cloneH2) cloneH2.remove();
+      const challengeBriefing = doc.createElement('div');
+      challengeBriefing.className = 'ppt-challenge-briefing';
+
+      // 1. Mission Intro Briefing Paragraph (trimmed for presentation clarity)
+      const introP = section.querySelector('p');
+      if (introP) {
+        const pClone = introP.cloneNode(true);
+        const text = pClone.textContent.trim();
+        if (text.length > 220) {
+          const sentences = text.split(/(?<=[.!?])\s+/);
+          pClone.textContent = sentences.slice(0, 2).join(' ');
+        }
+        challengeBriefing.appendChild(pClone);
+      }
+
+      // 2. Mission Requirements / Targets Checklist (capped to 4 core targets)
+      const targetsCard = section.querySelector('.challenge-targets, .mission-requirements, .alert ol, .alert ul, ul.checklist, ol.checklist, .callout-card ul, .callout-card ol') || section.querySelector('ol, ul');
+      if (targetsCard) {
+        const cleanCard = targetsCard.cloneNode(true);
+        cleanCard.querySelectorAll('pre, .code-container').forEach(el => el.remove());
+        const listItems = Array.from(cleanCard.querySelectorAll('li'));
+        if (listItems.length > 4) {
+          const trimmedList = doc.createElement(cleanCard.tagName.toLowerCase() === 'ol' ? 'ol' : 'ul');
+          trimmedList.className = 'challenge-targets-list';
+          listItems.slice(0, 4).forEach(li => trimmedList.appendChild(li.cloneNode(true)));
+          const moreLi = doc.createElement('li');
+          moreLi.className = 'challenge-targets-more';
+          moreLi.innerHTML = `<em>+ ${listItems.length - 4} additional verification steps detailed in Web LMS</em>`;
+          trimmedList.appendChild(moreLi);
+          challengeBriefing.appendChild(trimmedList);
+        } else if (listItems.length > 0) {
+          challengeBriefing.appendChild(cleanCard);
+        }
+      }
+
+      // 3. Artifact / Target Script Hint
+      const scriptMatch = section.textContent.match(/[\w_]+\.(?:sh|py|launch\.py|yaml)/);
+      if (scriptMatch) {
+        const artifactDiv = doc.createElement('div');
+        artifactDiv.className = 'challenge-artifact-hint';
+        artifactDiv.innerHTML = `<div class="mission-brief-footer"><span class="mission-file-pill">🎯 Target Artifact: <code>${scriptMatch[0]}</code></span><span class="mission-lms-tag">⚡ Follow step-by-step guidance & validation scripts in Web LMS</span></div>`;
+        challengeBriefing.appendChild(artifactDiv);
+      }
 
       slides.push({
         id: `${lesson.id}_challenge`,
@@ -234,7 +334,7 @@ export function parseLessonIntoSlides(lesson) {
         module: lesson.module,
         sectionTitle: h2Title,
         title: h2Title,
-        htmlContent: challengeClone.innerHTML
+        htmlContent: challengeBriefing.innerHTML
       });
       return;
     }
@@ -259,7 +359,54 @@ export function parseLessonIntoSlides(lesson) {
         const tempContainer = doc.createElement('div');
         subElements.forEach(el => tempContainer.appendChild(el));
 
-        if (isSubstantive(tempContainer)) {
+        if (!isSubstantive(tempContainer)) return;
+
+        // Check if subtopic has a large list with long items (> 450 chars)
+        const majorList = tempContainer.querySelector('ol, ul');
+        const listItems = majorList ? Array.from(majorList.querySelectorAll(':scope > li')) : [];
+
+        if (listItems.length >= 2 && majorList.textContent.trim().length > 450) {
+          // Emit Overview with pre-list content
+          const introContainer = doc.createElement('div');
+          let child = tempContainer.firstElementChild;
+          while (child && child !== majorList) {
+            introContainer.appendChild(child.cloneNode(true));
+            child = child.nextElementSibling;
+          }
+
+          if (introContainer.textContent.trim().length > 30) {
+            slides.push({
+              id: `${lesson.id}_sub_${secIdx}_${h3Idx}_intro`,
+              type: 'subtopic',
+              lessonNum: lesson.num_str,
+              lessonId: lesson.id,
+              module: lesson.module,
+              sectionTitle: h2Title,
+              title: `${subtopicTitle}: Overview`,
+              htmlContent: introContainer.innerHTML
+            });
+          }
+
+          // Split each list item into its own slide to eliminate vertical scrolling
+          listItems.forEach((li, liIdx) => {
+            const liContainer = doc.createElement('div');
+            liContainer.className = 'split-list-item-slide';
+            const strong = li.querySelector('strong, h4, h5');
+            const itemHeading = strong ? strong.textContent.trim() : `Part ${liIdx + 1}`;
+            liContainer.appendChild(li.cloneNode(true));
+
+            slides.push({
+              id: `${lesson.id}_sub_${secIdx}_${h3Idx}_li${liIdx}`,
+              type: 'subtopic',
+              lessonNum: lesson.num_str,
+              lessonId: lesson.id,
+              module: lesson.module,
+              sectionTitle: h2Title,
+              title: `${subtopicTitle}: ${itemHeading}`,
+              htmlContent: liContainer.innerHTML
+            });
+          });
+        } else {
           slides.push({
             id: `${lesson.id}_sub_${secIdx}_${h3Idx}`,
             type: 'subtopic',

@@ -3048,16 +3048,18 @@
 /* Slide Content Container */
 .ppt-slide-content {
   flex: 1;
-  padding: 2.25rem 3rem;
-  overflow-y: auto;
+  padding: 1.4rem 2.25rem;
+  overflow-y: hidden !important;
+  overflow-x: hidden !important;
   display: flex;
   flex-direction: column;
+  justify-content: center;
 }
 
 /* Slide Type 1: Title Hero View */
 .ppt-slide-title-view {
   justify-content: center;
-  gap: 2rem;
+  gap: 1rem;
 }
 
 .title-view-hero {
@@ -3069,21 +3071,21 @@
   background: var(--accent-light);
   color: var(--accent-primary);
   border: 1px solid rgba(37, 99, 235, 0.3);
-  padding: 0.35rem 0.9rem;
+  padding: 0.25rem 0.75rem;
   border-radius: 20px;
-  font-size: 0.88rem;
+  font-size: 0.8rem;
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
 }
 
 .hero-lesson-title {
-  font-size: 2.35rem;
+  font-size: 1.85rem;
   font-weight: 900;
   color: var(--text-primary);
   line-height: 1.25;
-  margin: 0 0 1.25rem;
+  margin: 0 0 0.5rem;
 }
 
 .title-accent {
@@ -3092,19 +3094,19 @@
 
 .hero-meta-row {
   display: flex;
-  gap: 0.85rem;
-  margin-bottom: 1.25rem;
+  gap: 0.6rem;
+  margin-bottom: 0.5rem;
 }
 
 .hero-meta-badge {
   display: flex;
   align-items: center;
-  gap: 0.45rem;
+  gap: 0.4rem;
   background: var(--bg-sidebar);
   border: 1px solid var(--border-color);
-  padding: 0.35rem 0.85rem;
+  padding: 0.25rem 0.7rem;
   border-radius: 8px;
-  font-size: 0.84rem;
+  font-size: 0.8rem;
   font-weight: 700;
   color: var(--text-secondary);
 }
@@ -3112,19 +3114,19 @@
 .hero-focus-box {
   background: var(--bg-sidebar);
   border-left: 4px solid var(--accent-primary);
-  padding: 0.85rem 1.25rem;
+  padding: 0.4rem 0.95rem;
   border-radius: 0 8px 8px 0;
-  font-size: 0.95rem;
+  font-size: 0.86rem;
   color: var(--text-secondary);
-  line-height: 1.5;
+  line-height: 1.4;
 }
 
 /* Launchpad Lower Deck (Outcomes & Snapshot Combined) */
 .launchpad-lower-deck {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 1.25rem;
-  margin-top: 0.5rem;
+  gap: 1rem;
+  margin-top: 0.35rem;
 }
 
 @media (max-width: 900px) {
@@ -3136,8 +3138,8 @@
 .launchpad-panel {
   background: var(--bg-sidebar);
   border: 1px solid var(--border-color);
-  border-radius: 14px;
-  padding: 1.15rem 1.35rem;
+  border-radius: 12px;
+  padding: 0.85rem 1.15rem;
   display: flex;
   flex-direction: column;
 }
@@ -3145,9 +3147,9 @@
 .panel-header {
   display: flex;
   align-items: center;
-  gap: 0.55rem;
-  margin-bottom: 0.85rem;
-  padding-bottom: 0.65rem;
+  gap: 0.5rem;
+  margin-bottom: 0.55rem;
+  padding-bottom: 0.45rem;
   border-bottom: 1px solid var(--border-color);
 }
 
@@ -3161,7 +3163,7 @@
 
 .panel-header h3 {
   margin: 0;
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   font-weight: 800;
   color: var(--text-primary);
 }
@@ -3169,26 +3171,26 @@
 .launchpad-outcomes-list {
   display: flex;
   flex-direction: column;
-  gap: 0.65rem;
+  gap: 0.45rem;
 }
 
 .launchpad-outcome-item {
   display: flex;
   align-items: flex-start;
-  gap: 0.65rem;
-  font-size: 0.92rem;
-  line-height: 1.45;
+  gap: 0.5rem;
+  font-size: 0.84rem;
+  line-height: 1.35;
   color: var(--text-primary);
 }
 
 .outcome-check {
-  width: 20px;
-  height: 20px;
+  width: 18px;
+  height: 18px;
   border-radius: 50%;
   background: rgba(16, 185, 129, 0.15);
   color: #10b981;
   font-weight: 900;
-  font-size: 0.82rem;
+  font-size: 0.76rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -3196,35 +3198,43 @@
   margin-top: 1px;
 }
 
+.launchpad-outcomes-more {
+  font-size: 0.76rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  margin-top: 0.2rem;
+  font-style: italic;
+}
+
 .launchpad-snapshot-list {
   display: flex;
   flex-direction: column;
-  gap: 0.6rem;
+  gap: 0.45rem;
 }
 
 .launchpad-snap-item {
   display: flex;
   align-items: flex-start;
-  gap: 0.65rem;
-  font-size: 0.9rem;
-  line-height: 1.4;
+  gap: 0.55rem;
+  font-size: 0.82rem;
+  line-height: 1.35;
   color: var(--text-primary);
   background: var(--bg-surface);
   border: 1px solid var(--border-color);
-  padding: 0.55rem 0.85rem;
+  padding: 0.38rem 0.7rem;
   border-radius: 8px;
 }
 
 .snap-bullet {
-  width: 20px;
-  height: 20px;
+  width: 18px;
+  height: 18px;
   border-radius: 50%;
   background: var(--accent-primary);
   color: #fff;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 0.72rem;
+  font-size: 0.7rem;
   font-weight: 800;
   flex-shrink: 0;
   margin-top: 1px;
@@ -3298,83 +3308,101 @@
 .cmd-slide-header {
   display: flex;
   align-items: center;
-  gap: 1.25rem;
-  margin-bottom: 1.25rem;
+  gap: 1.15rem;
+  margin-bottom: 0.85rem;
+  flex-wrap: nowrap !important;
 }
 
 .cmd-badge-large {
-  font-size: 1.45rem;
+  font-size: 1.25rem;
   font-weight: 900;
   font-family: var(--font-mono);
   background: linear-gradient(135deg, #2563eb, #1d4ed8);
   color: #ffffff;
-  padding: 0.55rem 1.25rem;
-  border-radius: 12px;
+  padding: 0.45rem 1rem;
+  border-radius: 10px;
   box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
+  white-space: nowrap !important;
+  flex-shrink: 0 !important;
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
 }
 
 .cmd-title-group {
   display: flex;
   flex-direction: column;
-  gap: 0.4rem;
+  gap: 0.35rem;
+  min-width: 0;
 }
 
 .cmd-title-row {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
-  flex-wrap: wrap;
+  gap: 0.65rem;
+  flex-wrap: nowrap !important;
 }
 
 .cmd-usage-pill {
   font-family: var(--font-mono);
-  font-size: 0.78rem;
+  font-size: 0.76rem;
   font-weight: 800;
   color: #38bdf8;
   background: rgba(56, 189, 248, 0.12);
   border: 1px solid rgba(56, 189, 248, 0.3);
-  padding: 0.2rem 0.65rem;
+  padding: 0.18rem 0.6rem;
   border-radius: 9999px;
   letter-spacing: 0.02em;
+  white-space: nowrap !important;
+  flex-shrink: 0;
 }
 
 .cmd-slide-title {
-  font-size: 1.65rem;
+  font-size: 1.45rem;
   font-weight: 900;
   color: var(--text-primary);
   margin: 0;
-  line-height: 1.3;
+  line-height: 1.25;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .cmd-syntax-strip {
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  gap: 0.6rem;
+  gap: 0.55rem;
+  white-space: nowrap !important;
+  overflow-x: auto;
 }
 
 .syntax-label {
-  font-size: 0.8rem;
+  font-size: 0.78rem;
   font-weight: 800;
   color: var(--text-muted);
   text-transform: uppercase;
+  white-space: nowrap !important;
+  flex-shrink: 0;
 }
 
 .syntax-code {
   font-family: var(--font-mono);
-  font-size: 0.92rem;
+  font-size: 0.88rem;
   font-weight: 700;
   background: var(--bg-sidebar);
   border: 1px solid var(--border-color);
   color: var(--accent-primary);
-  padding: 0.2rem 0.65rem;
+  padding: 0.18rem 0.6rem;
   border-radius: 6px;
+  white-space: nowrap !important;
 }
 
 .cmd-slide-desc {
-  font-size: 1.05rem;
-  line-height: 1.6;
+  font-size: 0.96rem;
+  line-height: 1.45;
   color: var(--text-secondary);
-  margin-bottom: 1.25rem;
+  margin-bottom: 0.75rem;
 }
 
 /* Presentation Terminal & IDE Window: Professional High-Contrast Theme */
@@ -3457,10 +3485,10 @@
 
 .ppt-term-body, .ppt-ide-body {
   margin: 0;
-  padding: 1.25rem 1.6rem;
+  padding: 0.9rem 1.25rem;
   font-family: ui-monospace, SFMono-Regular, "JetBrains Mono", Menlo, Consolas, "Liberation Mono", monospace;
-  font-size: 1.02rem;
-  line-height: 1.7;
+  font-size: 0.94rem;
+  line-height: 1.5;
   color: #f1f5f9;
   background: #0d1117 !important;
   overflow-x: auto;
@@ -3539,31 +3567,38 @@
 .step-slide-header {
   display: flex;
   align-items: center;
-  gap: 1rem;
-  margin-bottom: 1rem;
+  gap: 0.85rem;
+  margin-bottom: 0.65rem;
 }
 
 .step-badge-pill {
   background: #10b981;
   color: #ffffff;
-  padding: 0.35rem 0.85rem;
+  padding: 0.28rem 0.75rem;
   border-radius: 8px;
   font-weight: 800;
-  font-size: 0.92rem;
+  font-size: 0.86rem;
+  white-space: nowrap !important;
+  flex-shrink: 0;
 }
 
 .step-slide-title {
-  font-size: 1.85rem;
+  font-size: 1.45rem;
   font-weight: 900;
   color: var(--text-primary);
   margin: 0;
+  line-height: 1.25;
 }
 
 .step-slide-desc {
-  font-size: 1.02rem;
-  line-height: 1.55;
+  font-size: 0.92rem;
+  line-height: 1.45;
   color: var(--text-secondary);
-  margin-bottom: 1.25rem;
+  margin-bottom: 0.65rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 .ppt-ide-window {
@@ -3572,7 +3607,7 @@
   border-radius: 12px;
   overflow: hidden;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
-  margin-bottom: 1.25rem;
+  margin-bottom: 0;
 }
 
 .ppt-ide-header {
@@ -3601,7 +3636,86 @@
 
 /* Step breakdown list */
 .step-breakdown-wrapper {
-  margin-top: 1rem;
+  margin-top: 0.75rem;
+}
+
+.ppt-step-breakdown-view .step-slide-title {
+  font-size: 1.45rem;
+  font-weight: 900;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.breakdown-pill {
+  background: #8b5cf6 !important;
+}
+
+.ppt-breakdown-deck .code-breakdown-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 1rem 1.4rem;
+}
+
+.ppt-breakdown-deck .code-breakdown-title {
+  margin: 0 0 0.4rem 0;
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: var(--text-primary);
+}
+
+.ppt-breakdown-deck .code-breakdown-intro {
+  margin: 0 0 0.85rem 0;
+  font-size: 0.9rem;
+  line-height: 1.45;
+  color: var(--text-secondary);
+}
+
+.ppt-breakdown-deck .code-breakdown-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 0.75rem;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.ppt-breakdown-deck .code-breakdown-item {
+  background: var(--bg-sidebar);
+  border: 1px solid var(--border-color);
+  border-left: 3px solid #8b5cf6;
+  border-radius: 8px;
+  padding: 0.65rem 0.95rem;
+  font-size: 0.85rem;
+  line-height: 1.4;
+  color: var(--text-primary);
+}
+
+.ppt-breakdown-deck .code-breakdown-item strong {
+  display: block;
+  color: #8b5cf6;
+  font-size: 0.88rem;
+  margin-bottom: 0.2rem;
+}
+
+/* Split List Item Slide (from decomposed large subtopic lists) */
+.split-list-item-slide {
+  background: var(--bg-sidebar);
+  border: 1px solid var(--border-color);
+  border-left: 4px solid var(--accent-primary);
+  border-radius: 12px;
+  padding: 1.4rem 1.85rem;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--text-primary);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+}
+
+.split-list-item-slide strong {
+  color: var(--accent-primary);
+  font-size: 1.15rem;
+  display: block;
+  margin-bottom: 0.45rem;
 }
 
 /* Slide Type 5: Interactive View */
@@ -3661,26 +3775,28 @@
 
 /* Slide Type 6: Concept / Subtopic View */
 .concept-slide-header {
-  margin-bottom: 1.25rem;
+  margin-bottom: 0.85rem;
 }
 
 .concept-main-title {
-  font-size: 1.95rem;
+  font-size: 1.65rem;
   font-weight: 900;
   color: var(--text-primary);
   margin: 0;
 }
 
 .concept-html-body {
-  font-size: 1.05rem;
-  line-height: 1.65;
+  font-size: 0.98rem;
+  line-height: 1.55;
   color: var(--text-secondary);
+  max-height: 480px;
+  overflow-y: hidden;
 }
 
 .concept-html-body img.lesson-image {
-  max-height: 380px;
+  max-height: 280px;
   width: auto;
-  margin: 1.25rem auto;
+  margin: 0.75rem auto;
   border-radius: 10px;
   display: block;
 }
@@ -3692,17 +3808,18 @@
   gap: 1.25rem;
   background: linear-gradient(135deg, rgba(245, 158, 11, 0.12), rgba(234, 88, 12, 0.15));
   border: 1px solid rgba(245, 158, 11, 0.35);
-  padding: 1.25rem 1.75rem;
-  border-radius: 14px;
-  margin-bottom: 1.5rem;
+  padding: 1rem 1.4rem;
+  border-radius: 12px;
+  margin-bottom: 1rem;
 }
 
 .banner-icon {
   color: #f59e0b;
+  flex-shrink: 0;
 }
 
 .banner-sub {
-  font-size: 0.8rem;
+  font-size: 0.78rem;
   font-weight: 800;
   text-transform: uppercase;
   color: #d97706;
@@ -3710,15 +3827,89 @@
 }
 
 .banner-title {
-  font-size: 1.65rem;
+  font-size: 1.25rem;
   font-weight: 900;
   color: var(--text-primary);
-  margin: 0.2rem 0 0;
+  margin: 0.1rem 0 0;
+}
+
+/* Executive Mission Briefing in Presentation Mode */
+.ppt-challenge-briefing {
+  background: var(--bg-sidebar);
+  border: 1px solid var(--border-color);
+  border-left: 4px solid #f59e0b;
+  border-radius: 12px;
+  padding: 0.85rem 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+.ppt-challenge-briefing p {
+  margin: 0;
+  font-size: 0.88rem;
+  line-height: 1.4;
+  color: var(--text-secondary);
+}
+
+.ppt-challenge-briefing ul,
+.ppt-challenge-briefing ol {
+  margin: 0;
+  padding-left: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  font-size: 0.84rem;
+  line-height: 1.35;
+  color: var(--text-primary);
+}
+
+.challenge-targets-more {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  font-style: italic;
+  list-style-type: none;
+  margin-top: 0.15rem;
+}
+
+.challenge-artifact-hint {
+  padding-top: 0.5rem;
+  border-top: 1px dashed var(--border-color);
+  margin-top: 0.2rem;
+}
+
+.mission-brief-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+}
+
+.mission-file-pill {
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #10b981;
+  background: rgba(16, 185, 129, 0.12);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  padding: 0.28rem 0.75rem;
+  border-radius: 6px;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.mission-lms-tag {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #f59e0b;
+  font-style: italic;
 }
 
 /* Slide Type 8: Quiz Assessment View */
 .ppt-slide-quiz-view {
-  gap: 1.5rem;
+  gap: 0.85rem;
 }
 
 .quiz-badge-pill {
@@ -3728,17 +3919,17 @@
   background: rgba(139, 92, 246, 0.12);
   border: 1px solid rgba(139, 92, 246, 0.3);
   color: #8b5cf6;
-  padding: 0.3rem 0.8rem;
+  padding: 0.25rem 0.7rem;
   border-radius: 20px;
-  font-size: 0.82rem;
+  font-size: 0.78rem;
   font-weight: 800;
-  margin-bottom: 0.75rem;
+  margin-bottom: 0.35rem;
 }
 
 .quiz-question-text {
-  font-size: 1.75rem;
+  font-size: 1.35rem;
   font-weight: 800;
-  line-height: 1.35;
+  line-height: 1.3;
   color: var(--text-primary);
   margin: 0;
 }
@@ -3746,17 +3937,17 @@
 .quiz-options-deck {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 0.9rem;
+  gap: 0.55rem;
 }
 
 .quiz-option-card {
   display: flex;
   align-items: center;
-  gap: 1.15rem;
-  padding: 1.15rem 1.5rem;
+  gap: 0.85rem;
+  padding: 0.75rem 1.25rem;
   background: var(--bg-sidebar);
   border: 2px solid var(--border-color);
-  border-radius: 12px;
+  border-radius: 10px;
   cursor: pointer;
   text-align: left;
   transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
@@ -3784,15 +3975,15 @@
 }
 
 .opt-letter {
-  width: 34px;
-  height: 34px;
-  border-radius: 8px;
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
   background: var(--bg-surface);
   border: 1px solid var(--border-color);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 0.95rem;
+  font-size: 0.85rem;
   font-weight: 900;
   color: var(--accent-primary);
   flex-shrink: 0;
@@ -3800,29 +3991,30 @@
 
 .opt-label {
   flex: 1;
-  font-size: 1.05rem;
+  font-size: 0.92rem;
   font-weight: 600;
   color: var(--text-primary);
+  line-height: 1.35;
 }
 
 .status-mark.correct { color: #10b981; }
 .status-mark.wrong { color: #ef4444; }
 
 .quiz-instructor-bar {
-  margin-top: 1rem;
+  margin-top: 0.5rem;
 }
 
 .reveal-answer-btn {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  padding: 0.65rem 1.35rem;
-  border-radius: 10px;
+  gap: 0.45rem;
+  padding: 0.45rem 1.15rem;
+  border-radius: 8px;
   background: linear-gradient(135deg, #6366f1, #4f46e5);
   color: #ffffff;
   border: none;
   font-weight: 800;
-  font-size: 0.92rem;
+  font-size: 0.85rem;
   cursor: pointer;
   transition: all 0.2s;
 }
@@ -3833,11 +4025,11 @@
 }
 
 .quiz-explanation-box {
-  margin-top: 1rem;
+  margin-top: 0.5rem;
   background: rgba(16, 185, 129, 0.08);
   border: 1px solid rgba(16, 185, 129, 0.3);
-  padding: 1.25rem 1.5rem;
-  border-radius: 12px;
+  padding: 0.75rem 1.15rem;
+  border-radius: 10px;
 }
 
 .exp-header {

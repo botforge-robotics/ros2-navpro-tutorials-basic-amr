@@ -485,7 +485,7 @@ export function PresentationView({
                       <h3>Core Learning Objectives</h3>
                     </div>
                     <div className="launchpad-outcomes-list">
-                      {currentSlide.outcomes.map((item, idx) => (
+                      {currentSlide.outcomes.slice(0, 4).map((item, idx) => (
                         <div key={idx} className="launchpad-outcome-item">
                           <span className="outcome-check">✓</span>
                           <span 
@@ -494,6 +494,11 @@ export function PresentationView({
                           />
                         </div>
                       ))}
+                      {currentSlide.outcomes.length > 4 && (
+                        <div className="launchpad-outcomes-more">
+                          <span>+{currentSlide.outcomes.length - 4} additional objectives detailed in web LMS</span>
+                        </div>
+                      )}
                     </div>
                   </div>
                 )}
@@ -648,6 +653,22 @@ export function PresentationView({
           )}
 
           {/* ============================================================== */}
+          {/* SLIDE TYPE: CODE STEP ARCHITECTURE BREAKDOWN                  */}
+          {/* ============================================================== */}
+          {currentSlide.type === 'step_breakdown' && (
+            <div className="ppt-slide-content ppt-slide-breakdown-view">
+              <div className="step-slide-header">
+                <span className="step-badge-pill breakdown-pill">{currentSlide.badge}</span>
+                <h2 className="step-slide-title">{currentSlide.title}</h2>
+              </div>
+              <div 
+                className="step-breakdown-wrapper ppt-breakdown-deck"
+                dangerouslySetInnerHTML={{ __html: currentSlide.htmlContent }}
+              />
+            </div>
+          )}
+
+          {/* ============================================================== */}
           {/* SLIDE TYPE 5: INTERACTIVE LIVE COMPONENT SLIDE                  */}
           {/* ============================================================== */}
           {currentSlide.type === 'interactive' && (
@@ -696,7 +717,7 @@ export function PresentationView({
               </div>
 
               <div 
-                className="challenge-content-body markdown-body"
+                className="challenge-content-body ppt-challenge-briefing"
                 dangerouslySetInnerHTML={{ __html: currentSlide.htmlContent }}
               />
             </div>
