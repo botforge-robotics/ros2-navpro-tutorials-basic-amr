@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 ================================================================================
-Nexus AMR Learning Hub - Level 1: Module 2 / Lesson 07 Student Challenge
+Nexus AMR Learning Hub - Level 1: Module 1 / Lesson 06 Student Challenge
 Package: nexus_amr_basics
 Task:    m02_l07_task_speed_mode_server.py (alias: task_speed_mode_server)
 ================================================================================

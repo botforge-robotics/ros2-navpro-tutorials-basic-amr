@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 ================================================================================
-Nexus AMR Learning Hub - Level 1: Module 4 / Lesson 21 Solution
+Nexus AMR Learning Hub - Level 1: Module 4 (Bonus) / Lesson 22 Solution
 Package: nexus_amr_basics
 Task:    m04_l21_02_solution_recovery_monitor.py (alias: recovery_monitor)
 ================================================================================

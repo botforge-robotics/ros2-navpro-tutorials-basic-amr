@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 ================================================================================
-Nexus AMR Learning Hub - Level 1: Module 2 / Lesson 07 Task
+Nexus AMR Learning Hub - Level 1: Module 4 (Bonus) / Lesson 19 Task
 Package: nexus_amr_basics
 Task:    m02_l07_01_task_status_publisher.py (alias: task_status_publisher)
 ================================================================================

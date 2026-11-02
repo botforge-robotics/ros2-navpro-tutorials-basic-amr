@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 ================================================================================
-Nexus AMR Learning Hub - Level 1: Module 2 / Lesson 11 Solution
+Nexus AMR Learning Hub - Level 1: Module 1 / Lesson 09 Solution
 Package: nexus_amr_basics
 Task:    m02_l12_02_solution_fibonacci_action_server.py (alias: solution_navigate_action)
 ================================================================================

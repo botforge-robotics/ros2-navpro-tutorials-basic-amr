@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 ================================================================================
-Nexus AMR Learning Hub - Level 1: Module 2 / Lesson 09 Task
+Nexus AMR Learning Hub - Level 1: Module 1 / Lesson 08 Task
 Package: nexus_amr_basics
 Launch:  m02_l09_02_task_fleet_launch.py
 ================================================================================

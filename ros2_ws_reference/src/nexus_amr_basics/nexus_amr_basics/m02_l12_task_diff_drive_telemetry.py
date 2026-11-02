@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 ================================================================================
-Nexus AMR Learning Hub - Level 1: Module 3 / Lesson 16 Task
+Nexus AMR Learning Hub - Level 1: Module 2 / Lesson 12 Task
 Package: nexus_amr_basics
 Task:    m03_l16_01_task_diff_drive_telemetry.py (alias: task_diff_drive)
 ================================================================================

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 ================================================================================
-Nexus AMR Learning Hub - Level 1: Module 2 / Lesson 07 Reference Solution
+Nexus AMR Learning Hub - Level 1: Module 1 / Lesson 06 Reference Solution
 Package: nexus_amr_basics
 Task:    m02_l07_solution_speed_mode_server.py (alias: solution_speed_mode_server)
 ================================================================================

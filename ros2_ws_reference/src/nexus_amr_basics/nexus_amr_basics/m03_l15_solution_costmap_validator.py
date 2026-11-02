@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 ================================================================================
-Nexus AMR Learning Hub - Level 1: Module 4 / Lesson 19 Solution
+Nexus AMR Learning Hub - Level 1: Module 3 / Lesson 15 Solution
 Package: nexus_amr_basics
 Task:    m04_l19_02_solution_costmap_validator.py (alias: costmap_validator)
 ================================================================================

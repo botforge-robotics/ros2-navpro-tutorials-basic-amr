@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # ==============================================================================
-# Nexus AMR Learning Hub - Level 1: Module 2 / Lesson 12 Reference Solution
+# Nexus AMR Learning Hub - Level 1: Module 4 (Bonus) / Lesson 20 Reference Solution
 # Script:  m02_l12_solution_bag_recorder.sh
 # Purpose: Autonomous Mission Telemetry Recording & Playback Audit (Complete Solution)
 # ==============================================================================

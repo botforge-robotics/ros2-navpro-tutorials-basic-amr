@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # ==============================================================================
-# Nexus AMR Learning Hub - Level 1: Module 4 / Lesson 18 Solution
+# Nexus AMR Learning Hub - Level 1: Module 3 / Lesson 14 Solution
 # Script:  m04_l18_solution_slam_mapping.sh
 # Purpose: SLAM Toolbox Online Mapping & Map Serialization Automation (Complete)
 # ==============================================================================

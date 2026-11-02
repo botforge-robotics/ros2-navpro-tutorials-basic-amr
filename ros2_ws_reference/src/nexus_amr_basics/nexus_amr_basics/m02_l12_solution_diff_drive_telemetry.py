@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 ================================================================================
-Nexus AMR Learning Hub - Level 1: Module 3 / Lesson 16 Solution
+Nexus AMR Learning Hub - Level 1: Module 2 / Lesson 12 Solution
 Package: nexus_amr_basics
 Task:    m03_l16_02_solution_diff_drive_telemetry.py (alias: diff_drive_telemetry)
 ================================================================================

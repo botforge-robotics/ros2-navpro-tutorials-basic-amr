@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 ================================================================================
-Nexus AMR Learning Hub - Level 1: Module 3 / Lesson 15 Solution
+Nexus AMR Learning Hub - Level 1: Module 2 / Lesson 11 Solution
 Package: nexus_amr_basics
 Task:    m03_l15_02_solution_static_tf_broadcaster.py (alias: static_tf_broadcaster)
 ================================================================================

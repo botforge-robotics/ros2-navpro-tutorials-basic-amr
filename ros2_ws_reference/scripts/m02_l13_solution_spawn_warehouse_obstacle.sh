@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # ==============================================================================
-# Nexus AMR Learning Hub - Level 1: Module 3 / Lesson 17 Solution
+# Nexus AMR Learning Hub - Level 1: Module 2 / Lesson 13 Solution
 # Script:  m03_l17_solution_spawn_warehouse_obstacle.sh
 # Purpose: Gazebo Warehouse Simulation Entity Spawning & Verification (Complete)
 # ==============================================================================

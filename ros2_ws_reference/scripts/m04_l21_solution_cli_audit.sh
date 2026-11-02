@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # ==============================================================================
-# Nexus AMR Learning Hub - Level 1: Module 2 / Lesson 13 Reference Solution
+# Nexus AMR Learning Hub - Level 1: Module 4 (Bonus) / Lesson 21 Reference Solution
 # Script:  m02_l13_solution_cli_audit.sh
 # Purpose: Comprehensive ROS 2 CLI Introspection & Health Audit (Complete Solution)
 # ==============================================================================

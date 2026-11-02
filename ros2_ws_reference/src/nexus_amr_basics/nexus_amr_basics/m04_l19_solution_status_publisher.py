@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 ================================================================================
-Nexus AMR Learning Hub - Level 1: Module 2 / Lesson 07 Solution
+Nexus AMR Learning Hub - Level 1: Module 4 (Bonus) / Lesson 19 Solution
 Package: nexus_amr_basics
 Task:    m02_l07_02_solution_status_publisher.py (alias: robot_status_publisher)
 ================================================================================

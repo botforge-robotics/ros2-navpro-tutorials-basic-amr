@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # ==============================================================================
-# Nexus AMR Learning Hub - Level 1: Module 2 / Lesson 13
+# Nexus AMR Learning Hub - Level 1: Module 4 (Bonus) / Lesson 21
 # Script:  m02_l13_task_cli_audit.sh
 # Purpose: Comprehensive ROS 2 CLI Introspection & Health Audit (Student Task)
 # ==============================================================================

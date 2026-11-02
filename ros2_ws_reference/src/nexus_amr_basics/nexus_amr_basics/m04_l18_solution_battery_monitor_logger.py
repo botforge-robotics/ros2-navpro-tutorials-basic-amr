@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 ================================================================================
-Nexus AMR Learning Hub - Level 1: Module 1 / Lesson 06
+Nexus AMR Learning Hub - Level 1: Module 4 (Bonus) / Lesson 18
 Package: nexus_amr_basics
 Node:    SolutionBatteryMonitorLogger (solution_battery_logger)
 ================================================================================

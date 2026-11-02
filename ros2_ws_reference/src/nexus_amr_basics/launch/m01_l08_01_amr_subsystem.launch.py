@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 ================================================================================
-Nexus AMR Learning Hub - Level 1: Module 2 / Lesson 09
+Nexus AMR Learning Hub - Level 1: Module 1 / Lesson 08
 Package: nexus_amr_basics
 Launch:  m02_l09_01_amr_subsystem.launch.py (alias: teleop_supervisor.launch.py)
 ================================================================================
