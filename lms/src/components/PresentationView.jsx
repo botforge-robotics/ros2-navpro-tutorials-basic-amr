@@ -915,6 +915,15 @@ export function PresentationView({
       {/* Floating Presentation HUD in Fullscreen Mode */}
       {isFullscreen && (
         <>
+          {/* Company Brand Logo on Top Left in Fullscreen */}
+          <div className="ppt-fs-company-brand" title="Botforge Robotics">
+            <img 
+              src={theme === 'dark' ? 'assets/images/botforge_white.png' : 'assets/images/botforge_black.png'} 
+              alt="Botforge Robotics" 
+              className="ppt-fs-company-logo" 
+            />
+          </div>
+
           {/* Subtle top-right exit button */}
           <button 
             className={`ppt-fs-top-exit-btn ${showFsControls ? 'visible' : ''}`}

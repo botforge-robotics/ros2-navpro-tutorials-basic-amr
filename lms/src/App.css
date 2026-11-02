@@ -5485,7 +5485,7 @@
 }
 
 .presentation-viewport.is-fullscreen .ppt-slide-content {
-  padding: 2.5rem 4.5rem !important;
+  padding: 3.5rem 5rem 2.25rem 5rem !important;
   width: 100vw !important;
   height: 100vh !important;
   max-width: 100vw !important;
@@ -5691,114 +5691,439 @@
   font-weight: 700;
 }
 
-/* Layout enhancements when in Fullscreen Mode */
+/* Company Brand Logo on Top Left in Fullscreen */
+.ppt-fs-company-brand {
+  position: fixed;
+  top: 1.25rem;
+  left: 2.25rem;
+  z-index: 999998;
+  display: flex;
+  align-items: center;
+  pointer-events: none;
+}
+
+.ppt-fs-company-logo {
+  height: 28px;
+  width: auto;
+  max-width: 220px;
+  object-fit: contain;
+  opacity: 0.95;
+}
+
+/* ============================================================== */
+/* Fullscreen Layout Enhancements: Optimized Spacing & Dimensions   */
+/* ============================================================== */
+
+/* 1. Terminator Merged Layout (Lesson 01) */
 .presentation-viewport.is-fullscreen .terminator-merged-slide-layout {
   max-height: calc(100vh - 140px) !important;
-  gap: 3rem !important;
+  gap: 3.5rem !important;
 }
 
 .presentation-viewport.is-fullscreen .term-left-col img,
 .presentation-viewport.is-fullscreen .term-left-col .lesson-image {
-  max-height: calc(100vh - 240px) !important;
+  max-height: calc(100vh - 230px) !important;
 }
 
 .presentation-viewport.is-fullscreen .term-left-col p {
   font-size: 1.05rem !important;
-  line-height: 1.5 !important;
+  line-height: 1.52 !important;
 }
 
 .presentation-viewport.is-fullscreen .term-right-col table {
-  font-size: 0.95rem !important;
+  font-size: 0.98rem !important;
 }
 
 .presentation-viewport.is-fullscreen .term-right-col th {
-  padding: 0.65rem 1rem !important;
-  font-size: 0.95rem !important;
+  padding: 0.7rem 1.15rem !important;
+  font-size: 0.98rem !important;
 }
 
 .presentation-viewport.is-fullscreen .term-right-col td {
-  padding: 0.52rem 1rem !important;
-  font-size: 0.92rem !important;
+  padding: 0.58rem 1.15rem !important;
+  font-size: 0.94rem !important;
 }
 
 .presentation-viewport.is-fullscreen .term-right-col td code {
-  font-size: 0.92rem !important;
+  font-size: 0.94rem !important;
 }
 
-.presentation-viewport.is-fullscreen .deck-imperatives-layout {
-  max-height: calc(100vh - 140px) !important;
-  gap: 3rem !important;
-}
-
-.presentation-viewport.is-fullscreen .wheel-hero-img {
-  max-height: calc(100vh - 280px) !important;
-}
-
-.presentation-viewport.is-fullscreen .wheel-quote-text {
-  font-size: 0.95rem !important;
-}
-
-.presentation-viewport.is-fullscreen .wheel-shift-tag {
-  font-size: 0.85rem !important;
-}
-
-.presentation-viewport.is-fullscreen .imperatives-cards-col .imperative-card {
-  padding: 1.1rem 1.4rem !important;
-}
-
-.presentation-viewport.is-fullscreen .imperatives-cards-col .imperative-title {
-  font-size: 1.1rem !important;
-}
-
-.presentation-viewport.is-fullscreen .imperatives-cards-col .imperative-card p {
-  font-size: 0.92rem !important;
-  line-height: 1.45 !important;
-}
-
-.presentation-viewport.is-fullscreen .deck-story-step-layout {
-  max-height: calc(100vh - 140px) !important;
-  gap: 3rem !important;
-}
-
-.presentation-viewport.is-fullscreen .deck-story-img {
-  max-height: calc(100vh - 240px) !important;
-}
-
-.presentation-viewport.is-fullscreen .deck-story-lead {
-  font-size: 1.15rem !important;
-}
-
-.presentation-viewport.is-fullscreen .deck-story-text {
-  font-size: 1rem !important;
-  line-height: 1.48 !important;
-}
-
-.presentation-viewport.is-fullscreen .deck-story-takeaway {
-  font-size: 0.95rem !important;
-}
-
+/* 2. Section 3.1: Robot Anatomy Ingredients */
 .presentation-viewport.is-fullscreen .deck-ingredients-grid {
-  max-height: calc(100vh - 140px) !important;
-  gap: 1.75rem !important;
+  display: grid !important;
+  grid-template-columns: repeat(3, 1fr) !important;
+  gap: 2.25rem !important;
+  height: 100% !important;
+  max-height: calc(100vh - 130px) !important;
+  align-items: stretch !important;
 }
 
 .presentation-viewport.is-fullscreen .ingredient-card {
-  padding: 1.25rem 1.25rem !important;
+  padding: 1.6rem 1.5rem !important;
+  border-radius: 14px !important;
+  gap: 0.65rem !important;
+  justify-content: space-between !important;
 }
 
 .presentation-viewport.is-fullscreen .ingredient-card-img {
-  max-height: calc(100vh - 380px) !important;
+  max-height: calc(100vh - 350px) !important;
+  width: 100% !important;
+  object-fit: contain !important;
 }
 
 .presentation-viewport.is-fullscreen .ingredient-card-title {
+  font-size: 1.4rem !important;
+}
+
+.presentation-viewport.is-fullscreen .ingredient-role {
+  font-size: 0.95rem !important;
+}
+
+.presentation-viewport.is-fullscreen .ingredient-desc {
+  font-size: 0.98rem !important;
+  line-height: 1.52 !important;
+}
+
+/* 3. Section 3.2: Story of an Autonomous AMR Engineer (4 Steps) */
+.presentation-viewport.is-fullscreen .story-step-slide-layout {
+  display: grid !important;
+  grid-template-columns: 1fr 1.18fr !important;
+  gap: 3.5rem !important;
+  height: 100% !important;
+  max-height: calc(100vh - 130px) !important;
+  align-items: stretch !important;
+}
+
+.presentation-viewport.is-fullscreen .story-visual-col {
+  padding: 1.25rem !important;
+  border-radius: 14px !important;
+}
+
+.presentation-viewport.is-fullscreen .story-step-hero-img {
+  max-height: calc(100vh - 230px) !important;
+  width: 100% !important;
+  object-fit: contain !important;
+}
+
+.presentation-viewport.is-fullscreen .story-step-caption {
+  font-size: 1rem !important;
+  margin-top: 0.75rem !important;
+}
+
+.presentation-viewport.is-fullscreen .story-narrative-col {
+  gap: 1.25rem !important;
+  justify-content: space-between !important;
+}
+
+.presentation-viewport.is-fullscreen .story-quote-card {
+  padding: 1.25rem 1.5rem !important;
+  border-radius: 12px !important;
+}
+
+.presentation-viewport.is-fullscreen .story-quote-tag {
+  font-size: 0.88rem !important;
+}
+
+.presentation-viewport.is-fullscreen .story-quote-lead {
+  font-size: 1.18rem !important;
+  line-height: 1.55 !important;
+}
+
+.presentation-viewport.is-fullscreen .story-insight-box {
+  padding: 1.4rem 1.6rem !important;
+  border-radius: 12px !important;
+}
+
+.presentation-viewport.is-fullscreen .story-insight-title {
+  font-size: 1.25rem !important;
+  margin-bottom: 0.5rem !important;
+}
+
+.presentation-viewport.is-fullscreen .story-insight-box p {
+  font-size: 1rem !important;
+  line-height: 1.55 !important;
+}
+
+.presentation-viewport.is-fullscreen .story-trap-list {
+  font-size: 0.96rem !important;
+  line-height: 1.5 !important;
+}
+
+.presentation-viewport.is-fullscreen .story-pill {
+  font-size: 0.88rem !important;
+  padding: 0.3rem 0.75rem !important;
+}
+
+.presentation-viewport.is-fullscreen .story-burnout-result,
+.presentation-viewport.is-fullscreen .story-cycle-footer {
+  font-size: 0.98rem !important;
+  padding: 0.75rem 1.1rem !important;
+  line-height: 1.5 !important;
+}
+
+/* 4. Section 3.2: Story Core Solution */
+.presentation-viewport.is-fullscreen .story-core-solution-layout {
+  height: 100% !important;
+  max-height: calc(100vh - 130px) !important;
+  gap: 2rem !important;
+  justify-content: space-between !important;
+}
+
+.presentation-viewport.is-fullscreen .core-problem-box {
+  padding: 1.4rem 1.85rem !important;
+  border-radius: 14px !important;
+}
+
+.presentation-viewport.is-fullscreen .problem-badge {
+  font-size: 0.95rem !important;
+}
+
+.presentation-viewport.is-fullscreen .problem-lead-text {
+  font-size: 1.2rem !important;
+  line-height: 1.55 !important;
+}
+
+.presentation-viewport.is-fullscreen .core-solution-grid {
+  gap: 2rem !important;
+}
+
+.presentation-viewport.is-fullscreen .solution-card {
+  padding: 1.5rem !important;
+  border-radius: 12px !important;
+  gap: 0.55rem !important;
+}
+
+.presentation-viewport.is-fullscreen .solution-card .sol-icon {
+  font-size: 2rem !important;
+}
+
+.presentation-viewport.is-fullscreen .solution-card .sol-title {
+  font-size: 1.22rem !important;
+}
+
+.presentation-viewport.is-fullscreen .solution-card .sol-desc {
+  font-size: 0.98rem !important;
+  line-height: 1.52 !important;
+}
+
+/* 5. Section 3.3: Why ROS (Reinventing Wheel & 3 Imperatives) */
+.presentation-viewport.is-fullscreen .deck-imperatives-layout {
+  display: grid !important;
+  grid-template-columns: 1fr 1.18fr !important;
+  max-height: calc(100vh - 130px) !important;
+  gap: 3.5rem !important;
+  height: 100% !important;
+  align-items: stretch !important;
+}
+
+.presentation-viewport.is-fullscreen .wheel-hero-img {
+  max-height: calc(100vh - 270px) !important;
+}
+
+.presentation-viewport.is-fullscreen .wheel-quote-text {
+  font-size: 1.08rem !important;
+  line-height: 1.52 !important;
+}
+
+.presentation-viewport.is-fullscreen .wheel-shift-tag {
+  font-size: 0.92rem !important;
+}
+
+.presentation-viewport.is-fullscreen .imperatives-cards-col {
+  gap: 1rem !important;
+  justify-content: space-between !important;
+}
+
+.presentation-viewport.is-fullscreen .imperatives-cards-col .imperative-card {
+  padding: 1.25rem 1.5rem !important;
+  border-radius: 12px !important;
+}
+
+.presentation-viewport.is-fullscreen .imperatives-cards-col .imperative-title {
   font-size: 1.2rem !important;
 }
 
-.presentation-viewport.is-fullscreen .ingredient-card-desc {
+.presentation-viewport.is-fullscreen .imperatives-cards-col .imperative-card p {
+  font-size: 0.96rem !important;
+  line-height: 1.5 !important;
+}
+
+/* 6. Section 3.4 & 3.4.1: OS Metaphor & Framework Layers */
+.presentation-viewport.is-fullscreen .deck-metaphor-layout,
+.presentation-viewport.is-fullscreen .deck-framework-layout {
+  display: grid !important;
+  grid-template-columns: 1fr 1.18fr !important;
+  gap: 3.5rem !important;
+  height: 100% !important;
+  max-height: calc(100vh - 130px) !important;
+  align-items: stretch !important;
+}
+
+.presentation-viewport.is-fullscreen .metaphor-visual-wrap,
+.presentation-viewport.is-fullscreen .framework-img-wrap {
+  padding: 1.25rem !important;
+  border-radius: 14px !important;
+}
+
+.presentation-viewport.is-fullscreen .metaphor-hero-img,
+.presentation-viewport.is-fullscreen .framework-hero-img {
+  max-height: calc(100vh - 230px) !important;
+  width: 100% !important;
+  object-fit: contain !important;
+}
+
+.presentation-viewport.is-fullscreen .metaphor-cards-wrap,
+.presentation-viewport.is-fullscreen .framework-content-wrap {
+  gap: 1.35rem !important;
+  justify-content: space-between !important;
+}
+
+.presentation-viewport.is-fullscreen .metaphor-card {
+  padding: 1.5rem 1.75rem !important;
+  border-radius: 14px !important;
+  gap: 0.55rem !important;
+}
+
+.presentation-viewport.is-fullscreen .metaphor-card .card-tag {
+  font-size: 1.22rem !important;
+}
+
+.presentation-viewport.is-fullscreen .metaphor-card p {
+  font-size: 1rem !important;
+  line-height: 1.55 !important;
+}
+
+.presentation-viewport.is-fullscreen .framework-alert-box {
+  padding: 1.25rem 1.6rem !important;
+  border-radius: 12px !important;
+  font-size: 1.05rem !important;
+  line-height: 1.52 !important;
+}
+
+.presentation-viewport.is-fullscreen .framework-content-wrap p {
+  font-size: 1.05rem !important;
+  line-height: 1.52 !important;
+}
+
+.presentation-viewport.is-fullscreen .hierarchy-pill {
+  font-size: 0.95rem !important;
+  padding: 0.65rem 1.15rem !important;
+}
+
+/* 7. Section 3.5: The 4 Foundational Pillars */
+.presentation-viewport.is-fullscreen .deck-pillars-grid {
+  display: grid !important;
+  grid-template-columns: repeat(4, 1fr) !important;
+  gap: 2rem !important;
+  height: 100% !important;
+  max-height: calc(100vh - 130px) !important;
+  align-items: stretch !important;
+}
+
+.presentation-viewport.is-fullscreen .pillar-card {
+  padding: 1.6rem 1.4rem !important;
+  border-radius: 14px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: space-between !important;
+  gap: 0.65rem !important;
+}
+
+.presentation-viewport.is-fullscreen .pillar-icon {
+  font-size: 2rem !important;
+}
+
+.presentation-viewport.is-fullscreen .pillar-title {
+  font-size: 1.32rem !important;
+}
+
+.presentation-viewport.is-fullscreen .pillar-sub {
+  font-size: 1.02rem !important;
+}
+
+.presentation-viewport.is-fullscreen .pillar-desc {
+  font-size: 0.95rem !important;
+  line-height: 1.5 !important;
+}
+
+/* 8. Section 3.6: End-to-End Motion Flow Diagram (Fills Available Space!) */
+.presentation-viewport.is-fullscreen .motion-flow-slide-layout {
+  height: 100% !important;
+  max-height: calc(100vh - 120px) !important;
+  gap: 1.4rem !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: space-between !important;
+}
+
+.presentation-viewport.is-fullscreen .motion-flow-image-wrap {
+  flex: 1 !important;
+  max-height: calc(100vh - 250px) !important;
+  width: 100% !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  background: var(--bg-card) !important;
+  border: 1px solid var(--border-color) !important;
+  border-radius: 16px !important;
+  padding: 1.25rem 2rem !important;
+}
+
+.presentation-viewport.is-fullscreen .motion-flow-hero-img {
+  max-height: 100% !important;
+  width: 100% !important;
+  max-width: 1600px !important;
+  object-fit: contain !important;
+}
+
+.presentation-viewport.is-fullscreen .motion-stages-row {
+  display: grid !important;
+  grid-template-columns: repeat(4, 1fr) !important;
+  gap: 1.4rem !important;
+}
+
+.presentation-viewport.is-fullscreen .motion-stage-card {
+  padding: 0.95rem 1.25rem !important;
+  border-radius: 12px !important;
+  gap: 0.35rem !important;
+}
+
+.presentation-viewport.is-fullscreen .stage-num-badge {
+  font-size: 0.8rem !important;
+}
+
+.presentation-viewport.is-fullscreen .stage-title {
+  font-size: 1.15rem !important;
+}
+
+.presentation-viewport.is-fullscreen .stage-desc {
   font-size: 0.92rem !important;
   line-height: 1.42 !important;
 }
 
+/* 9. Section 3.7: ROS 1 vs ROS 2 Matrix */
+.presentation-viewport.is-fullscreen .deck-comparison-layout {
+  height: 100% !important;
+  max-height: calc(100vh - 120px) !important;
+  justify-content: center !important;
+}
+
+.presentation-viewport.is-fullscreen .ros1-vs-ros2-matrix {
+  font-size: 0.98rem !important;
+}
+
+.presentation-viewport.is-fullscreen .ros1-vs-ros2-matrix th {
+  padding: 0.85rem 1.35rem !important;
+  font-size: 1.1rem !important;
+}
+
+.presentation-viewport.is-fullscreen .ros1-vs-ros2-matrix td {
+  padding: 0.72rem 1.35rem !important;
+  font-size: 0.96rem !important;
+  line-height: 1.45 !important;
+}
+
+/* 10. General Typography & Window Sizing in Fullscreen */
 .presentation-viewport.is-fullscreen .ppt-terminal-window,
 .presentation-viewport.is-fullscreen .ppt-ide-window {
   max-height: calc(100vh - 220px) !important;
@@ -5806,34 +6131,34 @@
 
 .presentation-viewport.is-fullscreen .ppt-term-body code,
 .presentation-viewport.is-fullscreen .ppt-ide-body code {
-  font-size: 1rem !important;
-  line-height: 1.55 !important;
+  font-size: 1.05rem !important;
+  line-height: 1.58 !important;
 }
 
 .presentation-viewport.is-fullscreen .concept-main-title {
-  font-size: 2.2rem !important;
-  margin-bottom: 1.25rem !important;
+  font-size: 2.3rem !important;
+  margin-bottom: 1.35rem !important;
 }
 
 .presentation-viewport.is-fullscreen .cmd-slide-title {
-  font-size: 2.3rem !important;
+  font-size: 2.4rem !important;
 }
 
 .presentation-viewport.is-fullscreen .cmd-slide-desc {
-  font-size: 1.05rem !important;
-  margin-bottom: 1.25rem !important;
+  font-size: 1.1rem !important;
+  margin-bottom: 1.35rem !important;
 }
 
 .presentation-viewport.is-fullscreen .syntax-code {
-  font-size: 1.05rem !important;
+  font-size: 1.1rem !important;
 }
 
 .presentation-viewport.is-fullscreen .step-slide-title {
-  font-size: 2.2rem !important;
+  font-size: 2.3rem !important;
 }
 
 .presentation-viewport.is-fullscreen .hero-lesson-title {
-  font-size: 2.8rem !important;
+  font-size: 2.9rem !important;
 }
 
 .presentation-viewport.is-fullscreen .interactive-stage-container {
