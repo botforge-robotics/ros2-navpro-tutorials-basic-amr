@@ -1,11 +1,10 @@
 /**
  * slideParser.js
  * 
- * Dynamically parses the original lesson source (lesson object from lessonsData.json)
- * into atomic, presentation-ready concept slides for the Instructor PPT mode.
- * 
- * Slices content so each concept (e.g. mkdir, cd, publisher node, service RPC, URDF viewer)
- * is rendered as an individual fullscreen card with zero desynchronization from the web UI.
+ * Refined Pedagogical Slide Engine for Instructor Presentation Mode ("PPT").
+ * Parses original lesson source directly from lessonsData.json into purposeful,
+ * substantive concept slides without empty headings, redundant intro slides,
+ * or arbitrary breaks.
  */
 
 export function parseLessonIntoSlides(lesson) {
@@ -13,9 +12,22 @@ export function parseLessonIntoSlides(lesson) {
 
   const slides = [];
 
-  // 1. Cover / Title Slide
+  if (typeof window === 'undefined') return slides;
+
+  const parser = new DOMParser();
+  const doc = parser.parseFromString(lesson.html_content || '', 'text/html');
+
+  // Extract Learning Objectives from lesson HTML
+  const objectiveItems = Array.from(doc.querySelectorAll('.learning-objective-item'));
+  const outcomes = objectiveItems.map(item => {
+    const num = item.querySelector('.objective-num-badge')?.textContent?.trim() || '•';
+    const text = item.querySelector('.objective-text')?.innerHTML?.trim() || item.textContent?.trim();
+    return { num, text };
+  });
+
+  // 1. Unified Lesson Launchpad Slide (Combines Title, Meta, Focus, Outcomes & Snapshot)
   slides.push({
-    id: `${lesson.id}_title`,
+    id: `${lesson.id}_launchpad`,
     type: 'title',
     lessonNum: lesson.num_str,
     lessonId: lesson.id,
@@ -23,40 +35,40 @@ export function parseLessonIntoSlides(lesson) {
     module: lesson.module,
     duration: lesson.duration,
     focus: lesson.focus,
+    outcomes: outcomes.length > 0 ? outcomes : null,
     snapshot: lesson.snapshot || []
   });
 
-  if (typeof window === 'undefined') return slides;
+  // Interactive Component Portal Definitions
+  const portalIds = [
+    { id: 'interactive-permission-calculator-root', key: 'permission', title: 'Interactive Permission Calculator' },
+    { id: 'turtlesim-teleop-flow-root', key: 'turtlesim', title: 'Turtlesim Teleop & Graph Flow' },
+    { id: 'package-structure-flow-root', key: 'package', title: 'ROS 2 Package Structure & Filesystem' },
+    { id: 'pubsub-flow-root', key: 'pubsub', title: 'Publisher / Subscriber Message Flow' },
+    { id: 'service-flow-root', key: 'service', title: 'Service Server & Client Synchronous RPC' },
+    { id: 'action-flow-root', key: 'action', title: 'Action 3-Tier Execution Flow' },
+    { id: 'interactive-urdf-viewer-root', key: 'urdf', title: '3D URDF & Kinematics Visualizer' },
+    { id: 'interactive-inertia-calculator-root', key: 'inertia', title: 'URDF Inertia Tensor Calculator' },
+    { id: 'log-levels-circle-root', key: 'loglevels', title: 'ROS 2 Logging Severity Hierarchy' }
+  ];
 
-  const parser = new DOMParser();
-  const doc = parser.parseFromString(lesson.html_content || '', 'text/html');
+  // Helper to check if an HTML fragment contains substantive educational payload
+  const isSubstantive = (element) => {
+    if (!element) return false;
+    const hasCode = !!element.querySelector('pre, code, .code-container');
+    const hasImage = !!element.querySelector('img, .lesson-image, svg');
+    const hasTable = !!element.querySelector('table');
+    const hasCallout = !!element.querySelector('.alert-callout, .callout-card');
+    const hasList = !!element.querySelector('ul, ol');
+    const textLen = element.textContent.trim().length;
 
-  // 2. Learning Objectives & Outcomes Slide
-  const objectiveItems = Array.from(doc.querySelectorAll('.learning-objective-item'));
-  if (objectiveItems.length > 0) {
-    const outcomes = objectiveItems.map(item => {
-      const num = item.querySelector('.objective-num-badge')?.textContent?.trim() || '•';
-      const text = item.querySelector('.objective-text')?.innerHTML?.trim() || item.textContent?.trim();
-      return { num, text };
-    });
+    // Substantive if it contains technical media/code, or at least 160 characters of technical explanation
+    return hasCode || hasImage || hasTable || hasCallout || hasList || textLen >= 160;
+  };
 
-    slides.push({
-      id: `${lesson.id}_outcomes`,
-      type: 'outcomes',
-      lessonNum: lesson.num_str,
-      lessonId: lesson.id,
-      module: lesson.module,
-      sectionTitle: 'Learning Objectives & Core Outcomes',
-      title: 'Lesson Objectives & Expected Outcomes',
-      outcomes
-    });
-  }
-
-  // 3. Section Walkthrough & Concept Slicing
-  // Find all top-level sections or group by h2
+  // Find all sections or group by <h2>
   let sections = Array.from(doc.querySelectorAll('section'));
   if (sections.length < 2) {
-    // If no <section> containers, segment body by <h2>
     const h2Elements = Array.from(doc.querySelectorAll('h2'));
     sections = h2Elements.map((h2) => {
       const container = doc.createElement('section');
@@ -76,39 +88,19 @@ export function parseLessonIntoSlides(lesson) {
   sections.forEach((section, secIdx) => {
     const h2 = section.querySelector('h2');
     const h2Title = h2 ? h2.textContent.trim() : `Section ${secIdx + 1}`;
-    
-    // Skip Section 1 if it only duplicated the learning outcomes
-    if (secIdx === 0 && h2Title.toLowerCase().includes('learning objectives') && objectiveItems.length > 0) {
-      // Check if there is introductory text before or after objectives
-      const nonObjP = Array.from(section.querySelectorAll('p')).filter(p => !p.closest('.learning-objective-item'));
-      if (nonObjP.length > 0 && nonObjP.some(p => p.textContent.trim().length > 30)) {
-        slides.push({
-          id: `${lesson.id}_sec_${secIdx}_intro`,
-          type: 'concept',
-          lessonNum: lesson.num_str,
-          lessonId: lesson.id,
-          module: lesson.module,
-          sectionTitle: h2Title,
-          title: 'Curriculum Briefing & Overview',
-          htmlContent: nonObjP.map(p => p.outerHTML).join('\n')
-        });
-      }
+    const h2Lower = h2Title.toLowerCase();
+
+    // Skip Section 1 if it is just "Overview & Learning Objectives" (already in Launchpad)
+    if (h2Lower.includes('learning objectives') || (h2Lower.includes('overview') && secIdx === 0)) {
       return;
     }
 
-    // Check for Interactive Component Portal roots
-    const portalIds = [
-      { id: 'interactive-permission-calculator-root', key: 'permission', title: 'Interactive Permission Calculator' },
-      { id: 'turtlesim-teleop-flow-root', key: 'turtlesim', title: 'Turtlesim Teleop & Graph Flow' },
-      { id: 'package-structure-flow-root', key: 'package', title: 'ROS 2 Package Structure & Filesystem' },
-      { id: 'pubsub-flow-root', key: 'pubsub', title: 'Publisher / Subscriber Message Flow' },
-      { id: 'service-flow-root', key: 'service', title: 'Service Server & Client Synchronous RPC' },
-      { id: 'action-flow-root', key: 'action', title: 'Action 3-Tier Execution Flow' },
-      { id: 'interactive-urdf-viewer-root', key: 'urdf', title: '3D URDF & Kinematics Visualizer' },
-      { id: 'interactive-inertia-calculator-root', key: 'inertia', title: 'URDF Inertia Tensor Calculator' },
-      { id: 'log-levels-circle-root', key: 'loglevels', title: 'ROS 2 Logging Severity Hierarchy' }
-    ];
+    // Skip duplicate Summary sections (handled by dedicated summary slide at end)
+    if (h2Lower.includes('summary') || h2Lower.includes('next steps')) {
+      return;
+    }
 
+    // Check for Interactive Component Portals in this section
     portalIds.forEach(portal => {
       if (section.querySelector(`#${portal.id}`)) {
         slides.push({
@@ -127,30 +119,7 @@ export function parseLessonIntoSlides(lesson) {
     // Check for Command Cards (Atomic Concepts like pwd, ls, cd, mkdir, chmod, ps)
     const cmdCards = Array.from(section.querySelectorAll('.cmd-card'));
     if (cmdCards.length > 0) {
-      // Intro slide for the command group if explanation exists before first card
-      const preCardPs = [];
-      let sibling = section.firstElementChild;
-      while (sibling && !sibling.classList.contains('cmd-card')) {
-        if (sibling.tagName.toLowerCase() !== 'h2' && sibling.textContent.trim().length > 20) {
-          preCardPs.push(sibling.outerHTML);
-        }
-        sibling = sibling.nextElementSibling;
-      }
-
-      if (preCardPs.length > 0) {
-        slides.push({
-          id: `${lesson.id}_sec_${secIdx}_cmd_intro`,
-          type: 'concept',
-          lessonNum: lesson.num_str,
-          lessonId: lesson.id,
-          module: lesson.module,
-          sectionTitle: h2Title,
-          title: `${h2Title} - Overview`,
-          htmlContent: preCardPs.join('\n')
-        });
-      }
-
-      // Each cmd-card gets its OWN atomic concept slide
+      // Direct command slides (no redundant pre-card overview slides)
       cmdCards.forEach((card, cardIdx) => {
         const badge = card.querySelector('.cmd-badge')?.textContent?.trim() || '';
         const title = card.querySelector('.cmd-title')?.textContent?.trim() || `Command ${cardIdx + 1}`;
@@ -182,30 +151,6 @@ export function parseLessonIntoSlides(lesson) {
     // Check for File Edit Steps (Step-by-step code files: Lesson 5, 6, 7, 8, etc.)
     const fileSteps = Array.from(section.querySelectorAll('.file-edit-step'));
     if (fileSteps.length > 0) {
-      // Intro slide before steps
-      const preStepPs = [];
-      let sibling = section.firstElementChild;
-      while (sibling && !sibling.classList.contains('file-edit-step')) {
-        if (sibling.tagName.toLowerCase() !== 'h2' && sibling.textContent.trim().length > 20) {
-          preStepPs.push(sibling.outerHTML);
-        }
-        sibling = sibling.nextElementSibling;
-      }
-
-      if (preStepPs.length > 0) {
-        slides.push({
-          id: `${lesson.id}_sec_${secIdx}_step_intro`,
-          type: 'concept',
-          lessonNum: lesson.num_str,
-          lessonId: lesson.id,
-          module: lesson.module,
-          sectionTitle: h2Title,
-          title: `${h2Title} - Implementation Overview`,
-          htmlContent: preStepPs.join('\n')
-        });
-      }
-
-      // Each step gets its OWN dedicated code walkthrough slide
       fileSteps.forEach((step, stepIdx) => {
         const stepNum = step.querySelector('.step-num-pill')?.textContent?.trim() || `Step ${stepIdx + 1}`;
         const title = step.querySelector('.file-edit-step-title')?.textContent?.trim() || `Step ${stepIdx + 1}`;
@@ -235,7 +180,12 @@ export function parseLessonIntoSlides(lesson) {
     }
 
     // Check for Hands-on Student Challenge Section
-    if (h2Title.toLowerCase().includes('challenge') || h2Title.toLowerCase().includes('student lab') || h2Title.toLowerCase().includes('mission')) {
+    if (h2Lower.includes('challenge') || h2Lower.includes('student lab') || h2Lower.includes('mission')) {
+      // Clean up challenge content
+      const challengeClone = section.cloneNode(true);
+      const cloneH2 = challengeClone.querySelector('h2');
+      if (cloneH2) cloneH2.remove();
+
       slides.push({
         id: `${lesson.id}_challenge`,
         type: 'challenge',
@@ -244,7 +194,7 @@ export function parseLessonIntoSlides(lesson) {
         module: lesson.module,
         sectionTitle: h2Title,
         title: h2Title,
-        htmlContent: section.innerHTML
+        htmlContent: challengeClone.innerHTML
       });
       return;
     }
@@ -252,43 +202,24 @@ export function parseLessonIntoSlides(lesson) {
     // Check for Subsections / Subtopics (h3)
     const h3Elements = Array.from(section.querySelectorAll('h3'));
     if (h3Elements.length > 0) {
-      // Collect introductory content before first h3
-      const preH3Ps = [];
-      let sibling = section.firstElementChild;
-      while (sibling && sibling.tagName.toLowerCase() !== 'h3') {
-        if (sibling.tagName.toLowerCase() !== 'h2' && sibling.textContent.trim().length > 15) {
-          preH3Ps.push(sibling.outerHTML);
-        }
-        sibling = sibling.nextElementSibling;
-      }
-
-      if (preH3Ps.length > 0) {
-        slides.push({
-          id: `${lesson.id}_sec_${secIdx}_intro`,
-          type: 'concept',
-          lessonNum: lesson.num_str,
-          lessonId: lesson.id,
-          module: lesson.module,
-          sectionTitle: h2Title,
-          title: `${h2Title} - Overview`,
-          htmlContent: preH3Ps.join('\n')
-        });
-      }
-
-      // Split by each h3 into atomic subtopic slides
       h3Elements.forEach((h3, h3Idx) => {
         const subtopicTitle = h3.textContent.trim();
         const subElements = [];
         let curr = h3.nextElementSibling;
+        
         while (curr && curr.tagName.toLowerCase() !== 'h3' && curr.tagName.toLowerCase() !== 'h2') {
-          // Ignore portal placeholders since they have dedicated slides
+          // Exclude portal root containers since they have dedicated interactive slides
           if (!portalIds.some(p => curr.id === p.id || curr.querySelector(`#${p.id}`))) {
-            subElements.push(curr.outerHTML);
+            subElements.push(curr.cloneNode(true));
           }
           curr = curr.nextElementSibling;
         }
 
-        if (subElements.length > 0) {
+        // Test if subtopic has substantive teaching content
+        const tempContainer = doc.createElement('div');
+        subElements.forEach(el => tempContainer.appendChild(el));
+
+        if (isSubstantive(tempContainer)) {
           slides.push({
             id: `${lesson.id}_sub_${secIdx}_${h3Idx}`,
             type: 'subtopic',
@@ -297,15 +228,14 @@ export function parseLessonIntoSlides(lesson) {
             module: lesson.module,
             sectionTitle: h2Title,
             title: subtopicTitle,
-            htmlContent: subElements.join('\n')
+            htmlContent: tempContainer.innerHTML
           });
         }
       });
       return;
     }
 
-    // Default: Section as a concept slide
-    // Filter out portal roots to avoid duplicating interactive slides
+    // Fallback: Entire section as a concept slide, ONLY if substantive
     const cleanSection = section.cloneNode(true);
     const cleanH2 = cleanSection.querySelector('h2');
     if (cleanH2) cleanH2.remove();
@@ -314,7 +244,7 @@ export function parseLessonIntoSlides(lesson) {
       if (pNode) pNode.remove();
     });
 
-    if (cleanSection.textContent.trim().length > 10) {
+    if (isSubstantive(cleanSection)) {
       slides.push({
         id: `${lesson.id}_sec_${secIdx}`,
         type: 'concept',
@@ -328,7 +258,7 @@ export function parseLessonIntoSlides(lesson) {
     }
   });
 
-  // 4. Interactive Quiz Slides (1 slide per question)
+  // 2. Interactive Quiz Slides (1 slide per question)
   if (Array.isArray(lesson.quizzes) && lesson.quizzes.length > 0) {
     lesson.quizzes.forEach((quiz, qIdx) => {
       const correctIdx = quiz.correct !== undefined 
@@ -355,7 +285,7 @@ export function parseLessonIntoSlides(lesson) {
     });
   }
 
-  // 5. Lesson Wrap-up & Summary Slide
+  // 3. Lesson Wrap-up & Summary Slide
   slides.push({
     id: `${lesson.id}_summary`,
     type: 'summary',

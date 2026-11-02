@@ -305,7 +305,7 @@ export function PresentationView({
             title="Exit Presentation & Return to Web LMS"
           >
             <img src="assets/images/ros2_logo.svg" alt="ROS 2" className="ppt-logo" />
-            <span className="ppt-brand-label">Level 1 &bull; AMR Instructor PPT</span>
+            <span className="ppt-brand-label">Level 1 • AMR Instructor PPT</span>
           </button>
 
           <div className="ppt-header-divider"></div>
@@ -408,7 +408,7 @@ export function PresentationView({
           </div>
 
           {/* ============================================================== */}
-          {/* SLIDE TYPE 1: COVER / TITLE SLIDE                              */}
+          {/* SLIDE TYPE 1: UNIFIED LESSON LAUNCHPAD (Hero + Outcomes + Snapshot) */}
           {/* ============================================================== */}
           {currentSlide.type === 'title' && (
             <div className="ppt-slide-content ppt-slide-title-view">
@@ -425,7 +425,7 @@ export function PresentationView({
                   </span>
                   <span className="hero-meta-badge">
                     <Sparkles size={15} />
-                    <span>ROS 2 Jazzy &bull; Level 1</span>
+                    <span>ROS 2 Jazzy • Level 1</span>
                   </span>
                   <span className="hero-meta-badge">
                     <Layers size={15} />
@@ -440,61 +440,56 @@ export function PresentationView({
                 )}
               </div>
 
-              {/* Concept Snapshot Grid */}
-              {activeLesson.snapshot && activeLesson.snapshot.length > 0 && (
-                <div className="title-snapshot-panel">
-                  <div className="panel-header">
-                    <Zap size={18} className="zap-icon" />
-                    <h3>Quick Concept Snapshot</h3>
-                  </div>
-                  <div className="snapshot-grid">
-                    {activeLesson.snapshot.map((item, idx) => (
-                      <div key={idx} className="snapshot-card-mini">
-                        <span className="snap-bullet">{idx + 1}</span>
-                        <div className="snap-text">
-                          {Array.isArray(item) ? (
-                            <><strong>{item[0]}:</strong> {item[1]}</>
-                          ) : (
-                            item
-                          )}
+              {/* Lower Deck: Learning Outcomes & Concept Snapshot */}
+              <div className="launchpad-lower-deck">
+                {currentSlide.outcomes && currentSlide.outcomes.length > 0 && (
+                  <div className="launchpad-panel outcomes-panel">
+                    <div className="panel-header">
+                      <BookOpen size={17} className="panel-header-icon" />
+                      <h3>Core Learning Objectives</h3>
+                    </div>
+                    <div className="launchpad-outcomes-list">
+                      {currentSlide.outcomes.map((item, idx) => (
+                        <div key={idx} className="launchpad-outcome-item">
+                          <span className="outcome-check">✓</span>
+                          <span 
+                            className="outcome-item-text"
+                            dangerouslySetInnerHTML={{ __html: item.text }}
+                          />
                         </div>
-                      </div>
-                    ))}
+                      ))}
+                    </div>
                   </div>
-                </div>
-              )}
-            </div>
-          )}
+                )}
 
-          {/* ============================================================== */}
-          {/* SLIDE TYPE 2: LEARNING OUTCOMES SLIDE                           */}
-          {/* ============================================================== */}
-          {currentSlide.type === 'outcomes' && (
-            <div className="ppt-slide-content ppt-slide-outcomes-view">
-              <div className="slide-header-block">
-                <span className="slide-type-indicator">Pedagogical Blueprint</span>
-                <h2 className="slide-main-heading">{currentSlide.title}</h2>
-                <p className="slide-sub-heading">
-                  By the end of this lesson, students will successfully master the following robotics capabilities:
-                </p>
-              </div>
-
-              <div className="outcomes-presentation-grid">
-                {currentSlide.outcomes.map((item, idx) => (
-                  <div key={idx} className="outcome-slide-card">
-                    <div className="outcome-num-box">{item.num || idx + 1}</div>
-                    <div 
-                      className="outcome-text-content"
-                      dangerouslySetInnerHTML={{ __html: item.text }}
-                    />
+                {activeLesson.snapshot && activeLesson.snapshot.length > 0 && (
+                  <div className="launchpad-panel snapshot-panel">
+                    <div className="panel-header">
+                      <Zap size={17} className="panel-header-icon zap" />
+                      <h3>Key Technical Concepts</h3>
+                    </div>
+                    <div className="launchpad-snapshot-list">
+                      {activeLesson.snapshot.map((item, idx) => (
+                        <div key={idx} className="launchpad-snap-item">
+                          <span className="snap-bullet">{idx + 1}</span>
+                          <div className="snap-item-text">
+                            {Array.isArray(item) ? (
+                              <><strong>{item[0]}:</strong> {item[1]}</>
+                            ) : (
+                              item
+                            )}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
                   </div>
-                ))}
+                )}
               </div>
             </div>
           )}
 
           {/* ============================================================== */}
-          {/* SLIDE TYPE 3: ATOMIC COMMAND SLIDE (mkdir, cd, ls, chmod, etc.) */}
+          {/* SLIDE TYPE 2: ATOMIC COMMAND SLIDE (mkdir, cd, ls, chmod, etc.) */}
           {/* ============================================================== */}
           {currentSlide.type === 'command' && (
             <div className="ppt-slide-content ppt-slide-command-view">
@@ -661,7 +656,7 @@ export function PresentationView({
               <div className="quiz-slide-header">
                 <span className="quiz-badge-pill">
                   <HelpCircle size={15} />
-                  <span>Concept Assessment &bull; {currentSlide.title}</span>
+                  <span>Concept Assessment • {currentSlide.title}</span>
                 </span>
                 <h2 className="quiz-question-text">{currentSlide.question}</h2>
               </div>
@@ -767,7 +762,7 @@ export function PresentationView({
           >
             <ChevronLeft size={20} />
             <span>Previous</span>
-            <span className="key-hint">&larr;</span>
+            <span className="key-hint">←</span>
           </button>
         </div>
 
@@ -792,7 +787,7 @@ export function PresentationView({
             title="Next Slide (Press Right Arrow or Space)"
           >
             <span>Next</span>
-            <span className="key-hint">&rarr;</span>
+            <span className="key-hint">→</span>
             <ChevronRight size={20} />
           </button>
         </div>
@@ -805,7 +800,7 @@ export function PresentationView({
             <div className="grid-modal-header">
               <div className="grid-modal-title">
                 <Grid size={20} />
-                <h3>Slide Deck Overview &bull; Lesson {activeLesson.num_str} ({slides.length} Slides)</h3>
+                <h3>Slide Deck Overview • Lesson {activeLesson.num_str} ({slides.length} Slides)</h3>
               </div>
               <button 
                 className="grid-modal-close-btn" 
