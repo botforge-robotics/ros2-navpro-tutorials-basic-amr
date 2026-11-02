@@ -4757,36 +4757,199 @@
   color: var(--text-secondary);
 }
 
-/* Section 3.3 Imperatives Layout */
+/* Section 3.3 Imperatives Layout (Reinventing Wheel Image + 3 Cards) */
 .deck-imperatives-layout {
+  display: grid;
+  grid-template-columns: 1fr 1.08fr;
+  gap: 1.4rem;
+  height: 100%;
+  max-height: 490px;
+  align-items: stretch;
+}
+
+.imperatives-visual-col {
   display: flex;
   flex-direction: column;
-  gap: 0.85rem;
-  height: 100%;
   justify-content: space-between;
+  gap: 0.65rem;
 }
 
-.deck-lead-p {
-  margin: 0;
-  font-size: 0.88rem;
-  color: var(--text-secondary);
-}
-
-.deck-imperatives-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 0.85rem;
+.wheel-img-wrap {
   flex: 1;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 0.65rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
 }
 
-.imperative-card {
+.wheel-hero-img {
+  max-height: 295px;
+  width: 100%;
+  object-fit: contain;
+  border-radius: 8px;
+}
+
+.wheel-quote-box {
+  background: rgba(245, 158, 11, 0.08);
+  border: 1px solid rgba(245, 158, 11, 0.25);
+  border-left: 4px solid #f59e0b;
+  border-radius: 8px;
+  padding: 0.55rem 0.85rem;
+}
+
+.wheel-quote-text {
+  margin: 0;
+  font-size: 0.8rem;
+  line-height: 1.38;
+  color: var(--text-primary);
+  font-style: italic;
+}
+
+.wheel-shift-tag {
+  margin-top: 0.35rem;
+  font-size: 0.72rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  color: #d97706;
+}
+
+.imperatives-cards-col {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 0.55rem;
+}
+
+.imperatives-cards-col .imperative-card {
   background: var(--bg-card);
   border: 1px solid var(--border-color);
   border-radius: 10px;
-  padding: 0.85rem;
+  padding: 0.65rem 0.85rem;
   display: flex;
   flex-direction: column;
-  gap: 0.35rem;
+  gap: 0.2rem;
+}
+
+.imperative-header {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.imperatives-cards-col .imperative-icon {
+  font-size: 1.25rem;
+}
+
+.imperatives-cards-col .imperative-title {
+  margin: 0;
+  font-size: 0.88rem;
+  font-weight: 800;
+  color: var(--text-primary);
+}
+
+.imperatives-cards-col .imperative-card p {
+  margin: 0;
+  font-size: 0.78rem;
+  line-height: 1.34;
+  color: var(--text-secondary);
+}
+
+/* Lesson 01: Merged Terminator Layout (Image Left + Shortcuts Right) */
+.terminator-merged-slide-layout {
+  display: grid;
+  grid-template-columns: 1fr 1.08fr;
+  gap: 1.35rem;
+  height: 100%;
+  max-height: 490px;
+  align-items: stretch;
+}
+
+.term-left-col {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 0.65rem;
+}
+
+.term-left-col p {
+  margin: 0;
+  font-size: 0.84rem;
+  line-height: 1.4;
+  color: var(--text-secondary);
+}
+
+.term-left-col img,
+.term-left-col .lesson-image {
+  max-height: 330px !important;
+  width: 100% !important;
+  object-fit: contain !important;
+  margin: 0 !important;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 0.6rem;
+}
+
+.term-right-col {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 0.45rem;
+}
+
+.term-shortcuts-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.shortcuts-badge {
+  font-size: 0.76rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  color: #3b82f6;
+  background: rgba(59, 130, 246, 0.1);
+  padding: 0.2rem 0.6rem;
+  border-radius: 6px;
+  border: 1px solid rgba(59, 130, 246, 0.25);
+}
+
+.term-right-col .table-responsive {
+  margin: 0;
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  overflow: hidden;
+  background: var(--bg-card);
+}
+
+.term-right-col table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.78rem !important;
+}
+
+.term-right-col th {
+  padding: 0.4rem 0.65rem !important;
+  font-weight: 800;
+  background: var(--bg-sidebar) !important;
+  border-bottom: 2px solid var(--border-color);
+  color: var(--text-primary);
+}
+
+.term-right-col td {
+  padding: 0.32rem 0.65rem !important;
+  border-bottom: 1px solid var(--border-color);
+  line-height: 1.3 !important;
+  color: var(--text-secondary);
+}
+
+.term-right-col td code {
+  font-size: 0.76rem !important;
+  white-space: nowrap !important;
 }
 
 .imperative-icon { font-size: 1.4rem; }

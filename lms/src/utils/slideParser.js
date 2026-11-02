@@ -437,7 +437,7 @@ export function parseLessonIntoSlides(lesson) {
       const hasTable = !!cleanSection.querySelector('table, .table-responsive');
 
       if (hasImage && hasTable) {
-        // Slide A: Architecture Diagram / Visual Layout
+        // Merge into a single 2-column slide: Left = Large Diagram, Right = Shortcuts Table
         const partA = doc.createElement('div');
         const partB = doc.createElement('div');
         
@@ -453,31 +453,29 @@ export function parseLessonIntoSlides(lesson) {
           }
         });
 
-        if (partA.textContent.trim().length > 20 || partA.querySelector('img, svg')) {
-          slides.push({
-            id: `${lesson.id}_sec_${secIdx}_a`,
-            type: 'concept',
-            lessonNum: lesson.num_str,
-            lessonId: lesson.id,
-            module: lesson.module,
-            sectionTitle: h2Title,
-            title: `${h2Title} (Visual Layout)`,
-            htmlContent: partA.innerHTML
-          });
-        }
-
-        if (partB.textContent.trim().length > 20 || partB.querySelector('table')) {
-          slides.push({
-            id: `${lesson.id}_sec_${secIdx}_b`,
-            type: 'concept',
-            lessonNum: lesson.num_str,
-            lessonId: lesson.id,
-            module: lesson.module,
-            sectionTitle: h2Title,
-            title: `${h2Title} (Key Shortcuts & Operations)`,
-            htmlContent: partB.innerHTML
-          });
-        }
+        slides.push({
+          id: `${lesson.id}_sec_${secIdx}`,
+          type: 'concept',
+          lessonNum: lesson.num_str,
+          lessonId: lesson.id,
+          module: lesson.module,
+          sectionTitle: h2Title,
+          badge: '📟 Multi-Terminal Grid',
+          title: h2Title,
+          htmlContent: `
+            <div class="terminator-merged-slide-layout">
+              <div class="term-left-col">
+                ${partA.innerHTML}
+              </div>
+              <div class="term-right-col">
+                <div class="term-shortcuts-header">
+                  <span class="shortcuts-badge">⌨️ Essential Shortcuts</span>
+                </div>
+                ${partB.innerHTML}
+              </div>
+            </div>
+          `
+        });
       } else {
         slides.push({
           id: `${lesson.id}_sec_${secIdx}`,
@@ -812,7 +810,7 @@ function buildLesson02Slides(doc, lesson, slides) {
     `
   });
 
-  // 4. Section 3.3: Why ROS (Reinventing Wheel, Standardize, Community)
+  // 4. Section 3.3: Why ROS (Reinventing Wheel with image + 3 Imperatives)
   slides.push({
     id: `${lesson.id}_sec3_3_why_ros`,
     type: 'concept',
@@ -821,24 +819,29 @@ function buildLesson02Slides(doc, lesson, slides) {
     module: lesson.module,
     sectionTitle: '3. Robotics Fundamentals & ROS 2 Architecture',
     badge: '⚡ The ROS Value Proposition',
-    title: '3.3 Why We Need ROS: Three Architectural Imperatives',
+    title: '3.3 Why We Need ROS: Stop Reinventing the Wheel & Standardize',
     htmlContent: `
       <div class="deck-imperatives-layout">
-        <p class="deck-lead-p">The open-source robotics movement was born to solve the non-standardization crisis through three non-negotiable principles:</p>
-        <div class="deck-imperatives-grid">
+        <div class="imperatives-visual-col">
+          <div class="wheel-img-wrap">
+            <img src="assets/images/reinvent_the_wheel.jpg" alt="Stop Reinventing the Wheel" class="wheel-hero-img" />
+          </div>
+          <div class="wheel-quote-box">
+            <p class="wheel-quote-text"><em>“If you are busy making everything from scratch and rebuilding parts that someone has already worked on, you cannot make every part of your robot perfect.”</em></p>
+            <div class="wheel-shift-tag">🔄 Paradigm Shift: From Square Wheels to Universal ROS 2 Bus</div>
+          </div>
+        </div>
+        <div class="imperatives-cards-col">
           <div class="imperative-card">
-            <div class="imperative-icon">🛑</div>
-            <h4 class="imperative-title">1. Stop Reinventing the Wheel</h4>
+            <div class="imperative-header"><span class="imperative-icon">🛑</span><h4 class="imperative-title">1. Stop Reinventing the Wheel</h4></div>
             <p>Why write custom motor drivers, coordinate transform math (TF2), or laser scan filters? ROS provides battle-tested packages conforming to standard coordinate conventions (REP-103 &amp; REP-105).</p>
           </div>
           <div class="imperative-card">
-            <div class="imperative-icon">🔌</div>
-            <h4 class="imperative-title">2. Standardize Communication</h4>
+            <div class="imperative-header"><span class="imperative-icon">🔌</span><h4 class="imperative-title">2. Standardize Communication</h4></div>
             <p>Define strongly-typed message interfaces (<code>.msg</code>, <code>.srv</code>, <code>.action</code>). C++ drivers seamlessly exchange data with Python AI controllers over a distributed peer-to-peer data bus.</p>
           </div>
           <div class="imperative-card">
-            <div class="imperative-icon">🌍</div>
-            <h4 class="imperative-title">3. Global Community Sharing</h4>
+            <div class="imperative-header"><span class="imperative-icon">🌍</span><h4 class="imperative-title">3. Global Community Sharing</h4></div>
             <p>Gain instant access to state-of-the-art navigation (Nav2), mapping (SLAM Toolbox), manipulation (MoveIt 2), and physics simulation (Gazebo Harmonic)—supported by thousands of roboticists globally.</p>
           </div>
         </div>
