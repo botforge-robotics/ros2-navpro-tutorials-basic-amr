@@ -38,6 +38,44 @@ import { LogLevelsNestedCircle } from './LogLevelsNestedCircle';
 import InertiaCalculator from './InertiaCalculator';
 import UrdfViewer3D from './UrdfViewer3D';
 
+// High-Contrast Terminal & IDE Syntax Highlighter for PPT Slides
+export function highlightCodeForDisplay(rawCode, lang = 'bash') {
+  if (!rawCode) return '';
+  let html = '';
+  try {
+    html = hljs.highlight(rawCode, { language: lang || 'bash', ignoreIllegals: true }).value;
+  } catch {
+    try {
+      html = hljs.highlightAuto(rawCode).value;
+    } catch {
+      html = rawCode.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    }
+  }
+
+  // If bash / shell script, enrich tokens for rich IDE styling
+  if (lang === 'bash' || lang === 'sh' || lang === 'shell') {
+    const comments = [];
+    html = html.replace(/<span class="hljs-comment">[\s\S]*?<\/span>/g, match => {
+      comments.push(match);
+      return `___COMMENT_${comments.length - 1}___`;
+    });
+
+    // 1. Command flags: e.g. -p, -rf, -lah, -la, -i, -n, -v, --help, +x
+    html = html.replace(/(?<=\s|^)(--?[a-zA-Z0-9_\-]+|\+[xrwst]+)(?=\s|$)/g, (m, g1) => `<span class="hljs-flag">${g1}</span>`);
+
+    // 2. Paths, config files, and scripts
+    html = html.replace(/(?<=\s|^)(~?\/[a-zA-Z0-9_.\-\/]+|\b[a-zA-Z0-9_\-]+\.(?:py|yaml|yml|sh|bash|xml|launch\.py|txt|log|urdf|xacro|srv|msg|action)\b)/g, (m, g1) => `<span class="hljs-path">${g1}</span>`);
+
+    // 3. Operators: |, &&, ||, ;, >>, >
+    html = html.replace(/(?<=\s|^)(\|{1,2}|&&|>>|>|;)(?=\s|$)/g, (m, g1) => `<span class="hljs-operator">${g1}</span>`);
+
+    // Restore comments
+    html = html.replace(/___COMMENT_(\d+)___/g, (_, idx) => comments[idx]);
+  }
+
+  return html;
+}
+
 export function PresentationView({
   lessons = [],
   modules = [],
@@ -237,16 +275,14 @@ export function PresentationView({
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [goToNextSlide, goToPrevSlide, isGridOpen, onExitPresentation, onToggleTheme, slides.length]);
 
-  // Highlight all code blocks in cardRef when slide updates
+  // Highlight embedded HTML code blocks when concept/challenge slide updates
   useEffect(() => {
     if (!cardRef.current) return;
-    const codeBlocks = cardRef.current.querySelectorAll('pre code');
+    const codeBlocks = cardRef.current.querySelectorAll('.concept-html-body pre code, .challenge-body pre code');
     codeBlocks.forEach(code => {
-      if (!code.classList.contains('hljs')) {
-        hljs.highlightElement(code);
-      }
+      hljs.highlightElement(code);
     });
-  }, [currentSlideIndex, currentSlide, showQuizAnswer]);
+  }, [currentSlideIndex, currentSlide?.id]);
 
   // Code copy helper
   const handleCopyCode = (text) => {
@@ -494,9 +530,18 @@ export function PresentationView({
           {currentSlide.type === 'command' && (
             <div className="ppt-slide-content ppt-slide-command-view">
               <div className="cmd-slide-header">
-                <div className="cmd-badge-large">{currentSlide.badge}</div>
+                <div className="cmd-badge-large">
+                  {currentSlide.baseBadge || currentSlide.badge}
+                </div>
                 <div className="cmd-title-group">
-                  <h2 className="cmd-slide-title">{currentSlide.title}</h2>
+                  <div className="cmd-title-row">
+                    <h2 className="cmd-slide-title">{currentSlide.title}</h2>
+                    {currentSlide.totalUsageSteps > 1 && (
+                      <span className="cmd-usage-pill">
+                        Usage {currentSlide.usageStep} of {currentSlide.totalUsageSteps}
+                      </span>
+                    )}
+                  </div>
                   {currentSlide.syntax && (
                     <div className="cmd-syntax-strip">
                       <span className="syntax-label">Syntax:</span>
@@ -513,16 +558,19 @@ export function PresentationView({
                 />
               )}
 
-              {/* Terminal Code Presentation Window */}
+              {/* Terminal Code Presentation Window with High-Contrast Syntax Highlighting */}
               {currentSlide.code && (
-                <div className="ppt-terminal-window">
+                <div className="ppt-terminal-window" key={currentSlide.id}>
                   <div className="ppt-term-header">
                     <div className="term-dots">
                       <span className="dot red"></span>
                       <span className="dot yellow"></span>
                       <span className="dot green"></span>
                     </div>
-                    <span className="term-title">student@amr-dev-container:~ (bash)</span>
+                    <div className="term-title-wrapper">
+                      <Terminal size={14} className="term-title-icon" />
+                      <span className="term-title">student@amr-dev-container:~ (bash)</span>
+                    </div>
                     <button 
                       onClick={() => handleCopyCode(currentSlide.code)}
                       className="term-copy-btn"
@@ -533,7 +581,10 @@ export function PresentationView({
                     </button>
                   </div>
                   <pre className="ppt-term-body">
-                    <code className="language-bash">{currentSlide.code}</code>
+                    <code 
+                      className={`hljs language-${currentSlide.lang || 'bash'}`}
+                      dangerouslySetInnerHTML={{ __html: highlightCodeForDisplay(currentSlide.code, currentSlide.lang || 'bash') }}
+                    />
                   </pre>
                 </div>
               )}
@@ -558,7 +609,7 @@ export function PresentationView({
               )}
 
               {currentSlide.code && (
-                <div className="ppt-ide-window">
+                <div className="ppt-ide-window" key={currentSlide.id}>
                   <div className="ppt-ide-header">
                     <div className="ide-dots">
                       <span className="dot red"></span>
@@ -579,7 +630,10 @@ export function PresentationView({
                     </button>
                   </div>
                   <pre className="ppt-ide-body">
-                    <code className={`language-${currentSlide.lang || 'python'}`}>{currentSlide.code}</code>
+                    <code 
+                      className={`hljs language-${currentSlide.lang || 'python'}`}
+                      dangerouslySetInnerHTML={{ __html: highlightCodeForDisplay(currentSlide.code, currentSlide.lang || 'python') }}
+                    />
                   </pre>
                 </div>
               )}

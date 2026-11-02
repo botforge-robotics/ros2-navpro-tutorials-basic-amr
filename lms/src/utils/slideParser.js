@@ -119,31 +119,71 @@ export function parseLessonIntoSlides(lesson) {
     // Check for Command Cards (Atomic Concepts like pwd, ls, cd, mkdir, chmod, ps)
     const cmdCards = Array.from(section.querySelectorAll('.cmd-card'));
     if (cmdCards.length > 0) {
-      // Direct command slides (no redundant pre-card overview slides)
+      // Split commands into atomic usage slides for crystal-clear pedagogical delivery
+      const usageBlockPattern = /(?=(?:^|\n)\s*#\s*(?:\d+\.|\bStep\s+\d+:?|\bPhase\s+\d+:?))/i;
+
       cmdCards.forEach((card, cardIdx) => {
         const badge = card.querySelector('.cmd-badge')?.textContent?.trim() || '';
         const title = card.querySelector('.cmd-title')?.textContent?.trim() || `Command ${cardIdx + 1}`;
         const syntax = card.querySelector('.cmd-syntax')?.textContent?.replace(/^Syntax:\s*/i, '').trim() || '';
         const desc = card.querySelector('.cmd-desc')?.innerHTML?.trim() || '';
         const codeElem = card.querySelector('pre code');
-        const code = codeElem ? codeElem.textContent : '';
+        const fullCode = codeElem ? codeElem.textContent.trim() : '';
         const lang = card.querySelector('.code-lang-tag')?.textContent?.trim() || 'bash';
 
-        slides.push({
-          id: `${lesson.id}_cmd_${cardIdx}_${badge.replace(/[^a-zA-Z0-9]/g, '_')}`,
-          type: 'command',
-          lessonNum: lesson.num_str,
-          lessonId: lesson.id,
-          module: lesson.module,
-          sectionTitle: h2Title,
-          badge,
-          title,
-          syntax,
-          desc,
-          code,
-          lang,
-          htmlContent: card.outerHTML
-        });
+        // Check for multiple distinct usage steps (e.g., mkdir single vs mkdir multiple vs mkdir -p)
+        const blocks = fullCode.split(usageBlockPattern).map(b => b.trim()).filter(Boolean);
+
+        if (blocks.length > 1) {
+          blocks.forEach((blockCode, blockIdx) => {
+            const firstLine = blockCode.split('\n')[0];
+            const cleanSub = firstLine
+              .replace(/^#\s*(?:\d+\.|\bStep\s+\d+:?|\bPhase\s+\d+:?)\s*/i, '')
+              .replace(/[:—\-_]+$/, '')
+              .trim();
+
+            const usageTitle = cleanSub ? `${title}: ${cleanSub}` : `${title} (Part ${blockIdx + 1}/${blocks.length})`;
+            const usageBadge = `${badge} (${blockIdx + 1}/${blocks.length})`;
+
+            slides.push({
+              id: `${lesson.id}_cmd_${cardIdx}_u${blockIdx}_${badge.replace(/[^a-zA-Z0-9]/g, '_')}`,
+              type: 'command',
+              lessonNum: lesson.num_str,
+              lessonId: lesson.id,
+              module: lesson.module,
+              sectionTitle: h2Title,
+              badge: usageBadge,
+              baseBadge: badge,
+              title: usageTitle,
+              baseTitle: title,
+              syntax,
+              desc,
+              code: blockCode,
+              lang,
+              usageStep: blockIdx + 1,
+              totalUsageSteps: blocks.length,
+              htmlContent: card.outerHTML
+            });
+          });
+        } else {
+          slides.push({
+            id: `${lesson.id}_cmd_${cardIdx}_${badge.replace(/[^a-zA-Z0-9]/g, '_')}`,
+            type: 'command',
+            lessonNum: lesson.num_str,
+            lessonId: lesson.id,
+            module: lesson.module,
+            sectionTitle: h2Title,
+            badge,
+            baseBadge: badge,
+            title,
+            baseTitle: title,
+            syntax,
+            desc,
+            code: fullCode,
+            lang,
+            htmlContent: card.outerHTML
+          });
+        }
       });
       return;
     }

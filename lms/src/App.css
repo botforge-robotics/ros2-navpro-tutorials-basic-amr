@@ -3313,11 +3313,37 @@
   box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
 }
 
+.cmd-title-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.cmd-title-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.cmd-usage-pill {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  font-weight: 800;
+  color: #38bdf8;
+  background: rgba(56, 189, 248, 0.12);
+  border: 1px solid rgba(56, 189, 248, 0.3);
+  padding: 0.2rem 0.65rem;
+  border-radius: 9999px;
+  letter-spacing: 0.02em;
+}
+
 .cmd-slide-title {
-  font-size: 1.85rem;
+  font-size: 1.65rem;
   font-weight: 900;
   color: var(--text-primary);
-  margin: 0 0 0.4rem;
+  margin: 0;
+  line-height: 1.3;
 }
 
 .cmd-syntax-strip {
@@ -3348,47 +3374,64 @@
   font-size: 1.05rem;
   line-height: 1.6;
   color: var(--text-secondary);
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.25rem;
 }
 
-/* Presentation Terminal Window */
-.ppt-terminal-window {
-  background: #0b101c;
-  border: 1px solid rgba(255, 255, 255, 0.12);
+/* Presentation Terminal & IDE Window: Professional High-Contrast Theme */
+.ppt-terminal-window,
+.ppt-ide-window {
+  background: #0d1117 !important;
+  border: 1px solid rgba(255, 255, 255, 0.14) !important;
   border-radius: 12px;
   overflow: hidden;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.45);
   margin-top: 0.5rem;
 }
 
-.ppt-term-header {
+.ppt-term-header,
+.ppt-ide-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0.65rem 1rem;
-  background: #070a13;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 0.65rem 1.15rem;
+  background: #161b22 !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.09) !important;
 }
 
-.term-dots {
+.term-dots,
+.ide-dots {
   display: flex;
-  gap: 6px;
+  gap: 7px;
 }
 
-.term-dots .dot {
-  width: 10px;
-  height: 10px;
+.term-dots .dot,
+.ide-dots .dot {
+  width: 11px;
+  height: 11px;
   border-radius: 50%;
+  box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.5);
 }
 
-.dot.red { background: #ef4444; }
-.dot.yellow { background: #f59e0b; }
-.dot.green { background: #10b981; }
+.dot.red { background: #ff5f56; }
+.dot.yellow { background: #ffbd2e; }
+.dot.green { background: #27c93f; }
+
+.term-title-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.term-title-icon {
+  color: #38bdf8;
+}
 
 .term-title {
   font-family: var(--font-mono);
-  font-size: 0.78rem;
+  font-size: 0.8rem;
+  font-weight: 600;
   color: #94a3b8;
+  letter-spacing: 0.02em;
 }
 
 .term-copy-btn, .ide-copy-btn {
@@ -3396,9 +3439,9 @@
   align-items: center;
   gap: 0.35rem;
   background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  color: #cbd5e1;
-  padding: 0.25rem 0.65rem;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  color: #e2e8f0;
+  padding: 0.28rem 0.75rem;
   border-radius: 6px;
   font-size: 0.76rem;
   font-weight: 700;
@@ -3407,18 +3450,89 @@
 }
 
 .term-copy-btn:hover, .ide-copy-btn:hover {
-  background: rgba(255, 255, 255, 0.16);
+  background: rgba(255, 255, 255, 0.18);
   color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.3);
 }
 
 .ppt-term-body, .ppt-ide-body {
   margin: 0;
-  padding: 1.25rem 1.5rem;
-  font-family: var(--font-mono);
-  font-size: 0.98rem;
-  line-height: 1.6;
-  color: #e2e8f0;
+  padding: 1.25rem 1.6rem;
+  font-family: ui-monospace, SFMono-Regular, "JetBrains Mono", Menlo, Consolas, "Liberation Mono", monospace;
+  font-size: 1.02rem;
+  line-height: 1.7;
+  color: #f1f5f9;
+  background: #0d1117 !important;
   overflow-x: auto;
+}
+
+.ppt-term-body code,
+.ppt-ide-body code {
+  font-family: inherit;
+  font-size: inherit;
+  background: transparent !important;
+  color: #f1f5f9;
+  display: block;
+  white-space: pre;
+}
+
+/* ==========================================================================
+   Vibrant IDE Syntax Highlighting Tokens (VS Code / One Dark / Dracula Fusion)
+   ========================================================================== */
+.ppt-terminal-window .hljs-keyword,
+.ppt-terminal-window .hljs-built_in,
+.ppt-ide-window .hljs-keyword,
+.ppt-ide-window .hljs-built_in {
+  color: #38bdf8 !important; /* Electric Cyan / Blue */
+  font-weight: 700;
+}
+
+.ppt-terminal-window .hljs-flag {
+  color: #fb923c !important; /* Vivid Amber/Orange for command flags like -p, -r, -i, -lah, +x */
+  font-weight: 700;
+}
+
+.ppt-terminal-window .hljs-path {
+  color: #34d399 !important; /* Vibrant Mint/Emerald for filesystem paths and files */
+  font-weight: 500;
+}
+
+.ppt-terminal-window .hljs-operator {
+  color: #f472b6 !important; /* Hot Magenta/Pink for pipes |, &&, ||, ;, >, >> */
+  font-weight: 700;
+}
+
+.ppt-terminal-window .hljs-string,
+.ppt-ide-window .hljs-string {
+  color: #a3e635 !important; /* Vivid Lime Green for strings */
+}
+
+.ppt-terminal-window .hljs-number,
+.ppt-ide-window .hljs-number {
+  color: #facc15 !important; /* Radiant Gold for numbers and ports */
+}
+
+.ppt-terminal-window .hljs-comment,
+.ppt-ide-window .hljs-comment {
+  color: #94a3b8 !important; /* Distinct Slate with italics (Never muted/invisible) */
+  font-style: italic;
+  opacity: 0.95;
+}
+
+.ppt-ide-window .hljs-title,
+.ppt-ide-window .hljs-title.function_,
+.ppt-ide-window .hljs-title.class_ {
+  color: #60a5fa !important; /* Sky Blue for function and class definitions */
+  font-weight: 700;
+}
+
+.ppt-ide-window .hljs-params {
+  color: #e2e8f0 !important; /* Clean White for function parameters */
+}
+
+.ppt-ide-window .hljs-variable,
+.ppt-ide-window .hljs-attr {
+  color: #c084fc !important; /* Light Purple for variables and object keys */
 }
 
 /* Slide Type 4: Code Step View */
