@@ -9,7 +9,8 @@ import {
   X, 
   Menu, 
   HelpCircle,
-  Terminal
+  Terminal,
+  Presentation
 } from 'lucide-react';
 
 export function Navbar({ 
@@ -19,12 +20,46 @@ export function Navbar({
   onOpenHelpModal,
   theme, 
   onToggleTheme, 
-  onToggleSidebarMobile 
+  onToggleSidebarMobile,
+  currentLessonId
 }) {
   const [searchQuery, setSearchQuery] = useState('');
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const searchInputRef = useRef(null);
   const searchContainerRef = useRef(null);
+
+  // Cache variable for Instructor Presentation (PPT) Mode
+  const [showPpt, setShowPpt] = useState(() => {
+    try {
+      // Support URL query parameter override: ?ppt=true or ?ppt=false
+      const params = new URLSearchParams(window.location.search);
+      if (params.has('ppt')) {
+        const val = params.get('ppt') === 'true' || params.get('ppt') === '1';
+        localStorage.setItem('navpro_show_ppt', val ? 'true' : 'false');
+        return val;
+      }
+      const cached = localStorage.getItem('navpro_show_ppt');
+      if (cached !== null) {
+        return cached === 'true';
+      }
+      // Default to true so instructor mode is readily accessible
+      localStorage.setItem('navpro_show_ppt', 'true');
+      return true;
+    } catch {
+      return true;
+    }
+  });
+
+  // Keep state synchronized with storage across tabs
+  useEffect(() => {
+    const handleStorage = (e) => {
+      if (e.key === 'navpro_show_ppt') {
+        setShowPpt(e.newValue === 'true');
+      }
+    };
+    window.addEventListener('storage', handleStorage);
+    return () => window.removeEventListener('storage', handleStorage);
+  }, []);
 
   // Global hotkey: '/' focuses search, 'Esc' closes search
   useEffect(() => {
@@ -166,6 +201,20 @@ export function Navbar({
 
       {/* Action Buttons Right */}
       <div className="navbar-right">
+        {/* Instructor Fullscreen Presentation Mode (PPT) - Beside left of Desktop GUI */}
+        {showPpt && (
+          <a 
+            href={`#/presentation${currentLessonId ? `/${currentLessonId.replace('lesson_', '')}` : ''}`} 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            className="nav-action-btn ppt-btn"
+            title="Open Fullscreen Instructor Presentation Deck (PPT) in New Window"
+          >
+            <Presentation size={16} />
+            <span>Instructor PPT</span>
+          </a>
+        )}
+
         {/* Quick Launch Buttons */}
         <a 
           href={`http://${typeof window !== 'undefined' ? window.location.hostname : 'localhost'}:6080/vnc.html?autoconnect=true&resize=remote`} 

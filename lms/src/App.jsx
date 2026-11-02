@@ -8,6 +8,7 @@ import { LessonView } from './components/LessonView';
 import { FeedbackView } from './components/FeedbackView';
 import { HelpModal } from './components/HelpModal';
 import { PageScrollNav } from './components/PageScrollNav';
+import { PresentationView } from './components/PresentationView';
 import './App.css';
 
 export function App() {
@@ -45,6 +46,22 @@ export function App() {
   });
 
   const [isSidebarOpenMobile, setIsSidebarOpenMobile] = useState(false);
+
+  // Presentation Mode Route Handling (#/presentation or #/slides)
+  const [isPresentationMode, setIsPresentationMode] = useState(() => {
+    if (typeof window === 'undefined') return false;
+    return window.location.hash.startsWith('#/presentation') || window.location.hash.startsWith('#/slides');
+  });
+
+  useEffect(() => {
+    const handleHashCheck = () => {
+      setIsPresentationMode(
+        window.location.hash.startsWith('#/presentation') || window.location.hash.startsWith('#/slides')
+      );
+    };
+    window.addEventListener('hashchange', handleHashCheck);
+    return () => window.removeEventListener('hashchange', handleHashCheck);
+  }, []);
 
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme);
@@ -106,6 +123,23 @@ export function App() {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [activeLesson, currentLessonId, setCurrentLessonId]);
 
+  // Fullscreen Presentation Mode ("PPT") View
+  if (isPresentationMode) {
+    return (
+      <PresentationView
+        lessons={lessonsData.lessons}
+        modules={lessonsData.modules}
+        initialLessonId={currentLessonId}
+        theme={theme}
+        onToggleTheme={toggleTheme}
+        onExitPresentation={() => {
+          setIsPresentationMode(false);
+          window.location.hash = currentLessonId ? `#/lesson/${currentLessonId.replace('lesson_', '')}` : '#/';
+        }}
+      />
+    );
+  }
+
   return (
     <div className="app-root">
       {/* Top Navbar */}
@@ -113,6 +147,7 @@ export function App() {
         onNavigateHub={() => setCurrentLessonId(null)}
         onSelectLesson={(id) => setCurrentLessonId(id)}
         lessons={lessonsData.lessons}
+        currentLessonId={currentLessonId}
         onOpenHelpModal={() => setIsHelpModalOpen(true)}
         theme={theme}
         onToggleTheme={toggleTheme}

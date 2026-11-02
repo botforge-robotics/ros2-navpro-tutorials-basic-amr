@@ -30,9 +30,9 @@ export function useProgress(totalLessons = 26) {
 
   const [currentLessonId, setCurrentLessonId] = useState(() => {
     try {
-      // Check URL hash first (e.g. #/lesson/01)
+      // Check URL hash first (e.g. #/lesson/01 or #/presentation/01)
       const hash = window.location.hash;
-      const match = hash.match(/#\/lesson\/(\d+)/);
+      const match = hash.match(/#\/(?:lesson|presentation|slides)\/(\d+)/);
       if (match) {
         return `lesson_${match[1].padStart(2, '0')}`;
       }
@@ -61,6 +61,11 @@ export function useProgress(totalLessons = 26) {
 
   useEffect(() => {
     try {
+      const hash = window.location.hash;
+      if (hash.startsWith('#/presentation') || hash.startsWith('#/slides')) {
+        // Do not overwrite hash while in presentation mode
+        return;
+      }
       if (currentLessonId) {
         localStorage.setItem(STORAGE_KEY_CURRENT, currentLessonId);
         window.location.hash = `#/lesson/${currentLessonId.replace('lesson_', '')}`;
@@ -77,6 +82,13 @@ export function useProgress(totalLessons = 26) {
   useEffect(() => {
     const handleHashChange = () => {
       const hash = window.location.hash;
+      if (hash.startsWith('#/presentation') || hash.startsWith('#/slides')) {
+        const presMatch = hash.match(/#\/(?:presentation|slides)\/(\d+)/);
+        if (presMatch) {
+          setCurrentLessonId(`lesson_${presMatch[1].padStart(2, '0')}`);
+        }
+        return;
+      }
       if (!hash || hash === '#/' || hash === '#') {
         setCurrentLessonId(null);
       } else {

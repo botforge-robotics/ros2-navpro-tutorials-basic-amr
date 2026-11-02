@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { 
   X, 
   HelpCircle, 
@@ -9,10 +9,31 @@ import {
   Terminal, 
   CheckCircle2, 
   AlertTriangle,
-  ExternalLink
+  ExternalLink,
+  Presentation
 } from 'lucide-react';
 
 export function HelpModal({ isOpen, onClose }) {
+  const [isPptActive, setIsPptActive] = useState(() => {
+    try {
+      return localStorage.getItem('navpro_show_ppt') !== 'false';
+    } catch {
+      return true;
+    }
+  });
+
+  const togglePptMode = () => {
+    const nextVal = !isPptActive;
+    setIsPptActive(nextVal);
+    try {
+      localStorage.setItem('navpro_show_ppt', nextVal ? 'true' : 'false');
+      window.dispatchEvent(new StorageEvent('storage', {
+        key: 'navpro_show_ppt',
+        newValue: nextVal ? 'true' : 'false'
+      }));
+    } catch {}
+  };
+
   if (!isOpen) return null;
 
   return (
@@ -128,6 +149,43 @@ export function HelpModal({ isOpen, onClose }) {
                 <a href="http://localhost:8443/?folder=/home/student" target="_blank" rel="noopener noreferrer">http://localhost:8443</a>
               </div>
             </div>
+          </div>
+
+          {/* Section 5: Instructor Presentation Mode (Cache Variable) */}
+          <div className="help-section">
+            <div className="help-section-title">
+              <Presentation size={18} className="help-section-icon" />
+              <h4>5. Instructor Fullscreen Presentation Mode (PPT)</h4>
+            </div>
+            <p>
+              The LMS includes an instructor presentation slide deck mode with step-by-step concept cards (e.g. <code>mkdir</code>, <code>cd</code>, code walkthroughs, live architecture flows, and assessments).
+            </p>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0.85rem 1.15rem', background: 'var(--bg-sidebar)', borderRadius: '10px', border: '1px solid var(--border-color)', margin: '0.75rem 0' }}>
+              <div>
+                <strong>Navbar PPT Launch Button</strong>
+                <div style={{ fontSize: '0.82rem', color: 'var(--text-muted)' }}>Controlled by cache variable <code>navpro_show_ppt</code> in localStorage</div>
+              </div>
+              <button 
+                type="button"
+                onClick={togglePptMode} 
+                className={`btn-toggle-ppt ${isPptActive ? 'active' : ''}`}
+                style={{
+                  padding: '0.45rem 0.95rem',
+                  borderRadius: '8px',
+                  fontWeight: 700,
+                  fontSize: '0.86rem',
+                  cursor: 'pointer',
+                  border: isPptActive ? '1px solid rgba(16, 185, 129, 0.4)' : '1px solid var(--border-color)',
+                  background: isPptActive ? 'rgba(16, 185, 129, 0.15)' : 'var(--bg-surface)',
+                  color: isPptActive ? 'var(--success)' : 'var(--text-secondary)'
+                }}
+              >
+                {isPptActive ? '✓ Button Visible' : 'Hidden (Click to Enable)'}
+              </button>
+            </div>
+            <span className="help-note">
+              Shortcut: Open URL with <code>?ppt=true</code> to enable or <code>?ppt=false</code> to disable.
+            </span>
           </div>
         </div>
 
