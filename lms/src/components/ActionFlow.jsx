@@ -1,12 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
 import {
   Play,
-  Pause,
   RotateCcw,
   Send,
   XOctagon,
   CheckCircle2,
-  AlertTriangle,
   Clock,
   Compass,
   Layers,
@@ -19,7 +17,8 @@ import {
   Cpu,
   Radio,
   Navigation,
-  Check
+  Check,
+  Flag
 } from 'lucide-react';
 
 export function ActionFlow() {
@@ -69,16 +68,16 @@ export function ActionFlow() {
     });
     setGoalStatus('SENDING_GOAL');
 
-    // Goal packet glides Client ➔ Server in 2.2s
+    // Goal packet glides Client ➔ Server in 2.0s
     const t1 = setTimeout(() => {
       setGoalStatus('GOAL_ACCEPTED');
 
-      // Server accepts goal and starts driving motors in 0.8s
+      // Server accepts goal and starts driving motors in 0.7s
       const t2 = setTimeout(() => {
         setGoalStatus('EXECUTING');
-      }, 800);
+      }, 700);
       timeoutsRef.current.push(t2);
-    }, 2200);
+    }, 2000);
     timeoutsRef.current.push(t1);
   };
 
@@ -90,11 +89,11 @@ export function ActionFlow() {
     setFeedbackPackets([]);
     setGoalStatus('SENDING_CANCEL');
 
-    // Cancel packet glides Client ➔ Server in 1.6s
+    // Cancel packet glides Client ➔ Server in 1.5s
     const t1 = setTimeout(() => {
       setGoalStatus('CANCELED');
       setClientFeedback(prev => ({ ...prev, current_velocity: 0.0 }));
-    }, 1600);
+    }, 1500);
     timeoutsRef.current.push(t1);
   };
 
@@ -149,7 +148,7 @@ export function ActionFlow() {
               current_velocity: 0.0,
               count: prev.count
             }));
-          }, 2400);
+          }, 2200);
           timeoutsRef.current.push(tResult);
 
           return 100;
@@ -162,13 +161,12 @@ export function ActionFlow() {
     }, tickIntervalMs);
 
     // CONTINUOUS FEEDBACK STREAM: Server ➔ Client at ~1.1 Hz
-    // Each feedback packet glides across for 1.8s, creating a continuous rhythmic pipeline!
     feedbackTimerRef.current = setInterval(() => {
       setFeedbackCount(c => c + 1);
       const id = pulseIdRef.current++;
       const currentDist = distanceRemainingRef.current;
       setFeedbackPackets(prev => {
-        const trimmed = prev.slice(-2); // keep at most 2 flowing packets concurrently so they never collide
+        const trimmed = prev.slice(-2);
         return [...trimmed, { id, dist: currentDist.toFixed(1) }];
       });
     }, 900);
@@ -195,36 +193,36 @@ export function ActionFlow() {
     setFeedbackPackets(prev => prev.filter(p => p.id !== deliveredPkt.id));
   };
 
-  // Guided Steps Content (Clean ROS 2 Action Protocol Terminology)
+  // Guided Steps Content
   const guidedSteps = [
     {
       num: 1,
       title: "1. Goal Dispatch (Client ➔ Server)",
-      desc: "The Action Client calls send_goal_async(NavigateDistance.Goal(target=10.0m)). The Goal request dispatches from Client to Server. The Server accepts the goal handle and returns UUID #0x82f1.",
+      desc: "The Action Client calls send_goal_async(NavigateDistance.Goal(target=10.0m)). The Goal request dispatches across the DDS network. The Server accepts the goal handle and returns UUID #0x82f1.",
       target: 'goal'
     },
     {
       num: 2,
       title: "2. Periodic Feedback Stream (Server ➔ Client)",
-      desc: "While the AMR navigates, the Action Server publishes periodic feedback packets continuously back to the Client at 4 Hz. The Client's feedback_callback receives remaining distance and velocity without blocking.",
+      desc: "While the AMR drives along the corridor, the Action Server streams feedback packets at 4 Hz. The Client's feedback_callback receives distance remaining and velocity asynchronously without blocking.",
       target: 'feedback'
     },
     {
       num: 3,
       title: "3. Preemption & Cancellation Request (Client ➔ Server)",
-      desc: "If an obstacle or user emergency occurs, the Client dispatches a Cancel Request packet. The Server halts the motor controllers immediately, accepts preemption, and stops the robot.",
+      desc: "If an emergency obstacle appears, the Client calls cancel_goal_async(). The Server immediately halts motor PWM, updates the goal state machine to STATUS_CANCELED, and stops navigation.",
       target: 'cancel'
     },
     {
       num: 4,
       title: "4. Final Result Resolution (Server ➔ Client)",
-      desc: "Upon reaching 0.0m or canceling, the Server dispatches the Result packet back to the Client. The Client's get_result_async() resolves with the final status code (STATUS_SUCCEEDED or STATUS_CANCELED).",
+      desc: "Upon reaching 0.0m or completing cancellation, the Server sends the Result packet back. The Client's get_result_async() resolves with the terminal status (STATUS_SUCCEEDED or STATUS_CANCELED).",
       target: 'result'
     }
   ];
 
   return (
-    <div className="pubsub-flow-container">
+    <div className="pubsub-flow-container action-flow-root-container">
       {/* Header Bar */}
       <div className="pubsub-flow-header">
         <div className="header-title-row">
@@ -255,9 +253,7 @@ export function ActionFlow() {
             <button
               key={s.num}
               className={`walkthrough-step-btn ${activeStep === s.num ? 'active' : ''}`}
-              onClick={() => {
-                setActiveStep(s.num);
-              }}
+              onClick={() => { setActiveStep(s.num); }}
             >
               Step {s.num}
             </button>
@@ -276,11 +272,77 @@ export function ActionFlow() {
         </div>
       )}
 
-      {/* Main 3-Column Diagram Stage */}
-      <div className="diagram-stage">
-        {/* Left Column: Action Client */}
+      {/* 1. Full-Width Physical AMR Warehouse Trajectory Runway */}
+      <div className="action-physical-runway-card">
+        <div className="runway-header-row">
+          <div className="runway-header-left">
+            <span className="runway-badge">
+              <Navigation size={12} />
+              <span>Physical AMR Trajectory Corridor</span>
+            </span>
+            <span className="runway-live-status font-mono">
+              {goalStatus === 'EXECUTING' ? `Driving at 1.40 m/s · ${(targetDistance * (progressPct / 100)).toFixed(1)}m of ${targetDistance}.0m traversed` :
+               goalStatus === 'GOAL_ACCEPTED' ? 'Goal Accepted · Initializing Motor Drive...' :
+               goalStatus === 'SENDING_GOAL' ? 'Goal Dispatch In-Flight...' :
+               goalStatus === 'SENDING_CANCEL' ? 'Preemption In-Flight · Decelerating Motors...' :
+               goalStatus === 'SUCCEEDED' ? `Goal Reached! Target Waypoint Reached: ${targetDistance}.0m` :
+               goalStatus === 'CANCELED' ? 'Preemption Accepted · Motors Safely Cut' :
+               `Standby at 0.0m · Awaiting Action Goal (${targetDistance}m)`}
+            </span>
+          </div>
+
+          <div className="runway-header-right font-mono">
+            <span className="runway-speed-tag">
+              Speed: <strong>{goalStatus === 'EXECUTING' ? '1.40 m/s' : '0.00 m/s'}</strong>
+            </span>
+          </div>
+        </div>
+
+        <div className="amr-full-runway-track">
+          <div className="runway-track-rail"></div>
+          <div 
+            className="runway-track-fill" 
+            style={{ 
+              width: `${progressPct}%`,
+              background: goalStatus === 'CANCELED' 
+                ? '#ef4444' 
+                : 'linear-gradient(90deg, #0284c7, #10b981)' 
+            }}
+          ></div>
+
+          {/* Destination Waypoint Flag */}
+          <div className="runway-destination-flag" title={`Target Waypoint: ${targetDistance}.0m`}>
+            <Flag size={14} className={goalStatus === 'SUCCEEDED' ? 'text-emerald' : 'text-cyan'} />
+            <span className="flag-label">{targetDistance}m</span>
+          </div>
+
+          {/* The Driving Robot Marker */}
+          <div 
+            className={`runway-amr-marker ${goalStatus === 'EXECUTING' ? 'driving' : ''}`}
+            style={{ left: `calc(${progressPct}% - 14px)` }}
+            title={`AMR Position: ${(targetDistance * (progressPct / 100)).toFixed(1)}m`}
+          >
+            <div className="amr-icon-box">
+              <Navigation size={13} className="amr-compass-icon" />
+            </div>
+          </div>
+
+          {/* Distance Ticks */}
+          <div className="runway-distance-ticks">
+            <span>0m (Origin)</span>
+            <span>{(targetDistance * 0.25).toFixed(1)}m</span>
+            <span>{(targetDistance * 0.50).toFixed(1)}m</span>
+            <span>{(targetDistance * 0.75).toFixed(1)}m</span>
+            <span>{targetDistance}.0m (Waypoint)</span>
+          </div>
+        </div>
+      </div>
+
+      {/* 2. Main 3-Column ROS 2 Action Architecture Diagram */}
+      <div className="diagram-stage action-balanced-stage">
+        {/* Left Column: Action Client Node */}
         <div 
-          className={`diagram-card client-card ${
+          className={`diagram-card client-card action-node-card ${
             goalStatus === 'EXECUTING' || goalStatus === 'SENDING_GOAL' ? 'pulse-border' : ''
           } ${activeStep === 1 || activeStep === 3 || activeStep === null ? 'focused' : 'dimmed'}`}
         >
@@ -289,8 +351,8 @@ export function ActionFlow() {
               <Compass size={18} />
             </div>
             <div className="node-title-group">
-              <div className="node-role-tag">ACTION CLIENT (Requester)</div>
-              <h3 className="node-name" title="/patrol_action_client">patrol_action_client</h3>
+              <div className="node-role-tag">ACTION CLIENT (Caller)</div>
+              <h3 className="node-name action-node-title" title="/patrol_action_client">patrol_action_client</h3>
               <div className="node-class">NavigateDistanceClient</div>
             </div>
             <div 
@@ -325,7 +387,7 @@ export function ActionFlow() {
                          goalStatus === 'GOAL_ACCEPTED' ? '#a855f7' :
                          goalStatus === 'SENDING_GOAL' ? '#38bdf8' :
                          goalStatus === 'SENDING_CANCEL' ? '#f59e0b' : 'var(--text-muted)',
-                  fontSize: '0.70rem'
+                  fontSize: '0.68rem'
                 }}
               >
                 {goalStatus === 'EXECUTING' ? 'STATUS_EXECUTING' :
@@ -347,7 +409,7 @@ export function ActionFlow() {
             </div>
             <div className="client-fb-grid">
               <div className="client-fb-stat">
-                <span className="fb-key">distance_rem:</span>
+                <span className="fb-key">dist_rem:</span>
                 <span className="fb-val text-emerald font-mono">
                   {goalStatus === 'EXECUTING' || goalStatus === 'SUCCEEDED' || goalStatus === 'CANCELED'
                     ? `${clientFeedback.distance_remaining.toFixed(1)} m`
@@ -355,7 +417,7 @@ export function ActionFlow() {
                 </span>
               </div>
               <div className="client-fb-stat">
-                <span className="fb-key">current_vel:</span>
+                <span className="fb-key">velocity:</span>
                 <span className="fb-val text-cyan font-mono">
                   {goalStatus === 'EXECUTING' ? '1.40 m/s' : '0.00 m/s'}
                 </span>
@@ -371,35 +433,34 @@ export function ActionFlow() {
             </div>
           </div>
 
-          <div style={{ display: 'flex', gap: '8px', marginTop: '10px' }}>
-            <button 
-              className="card-action-btn"
-              onClick={handleStartGoal}
-              disabled={goalStatus === 'EXECUTING' || goalStatus === 'SENDING_GOAL' || goalStatus === 'SENDING_RESULT'}
-              title="Dispatch Action Goal to drive target distance"
-              style={{ flex: 1 }}
-            >
-              <Send size={13} />
-              <span>Send Goal ({targetDistance}m)</span>
-            </button>
-
-            {goalStatus === 'EXECUTING' && (
+          {/* Client Action Dispatch / Preempt Button */}
+          <div className="client-card-action-wrap">
+            {goalStatus === 'EXECUTING' ? (
               <button 
-                className="card-action-btn"
+                className="card-action-btn cancel-action-btn"
                 onClick={handleCancelGoal}
                 title="Preempt and cancel ongoing goal immediately"
-                style={{ background: '#ef4444', borderColor: '#ef4444', color: '#fff' }}
               >
-                <XOctagon size={13} />
-                <span>Cancel</span>
+                <XOctagon size={14} />
+                <span>Preempt Goal (Emergency Cancel)</span>
+              </button>
+            ) : (
+              <button 
+                className="card-action-btn"
+                onClick={handleStartGoal}
+                disabled={goalStatus === 'SENDING_GOAL' || goalStatus === 'SENDING_RESULT'}
+                title="Dispatch Action Goal to drive target distance"
+              >
+                <Send size={14} />
+                <span>Send Goal ({targetDistance}m)</span>
               </button>
             )}
           </div>
         </div>
 
-        {/* Center Column: Dedicated Action Pipeline (Corridor Runway + 3 Action Channels) */}
+        {/* Center Column: Dedicated 3-Channel Action Pipeline */}
         <div 
-          className={`diagram-pipeline ${
+          className={`diagram-pipeline action-pipeline-card ${
             activeStep === 2 || activeStep === 4 || activeStep === null ? 'focused' : 'dimmed'
           }`}
         >
@@ -409,60 +470,13 @@ export function ActionFlow() {
             <span className="topic-type">NavigateDistance.action</span>
           </div>
 
-          {/* Top of Center Pipeline: Physical AMR Warehouse Corridor Trajectory Track */}
-          <div className="action-channel-strip corridor-strip" style={{ marginBottom: '8px' }}>
-            <div className="channel-header-row">
-              <span className="channel-tag" style={{ background: 'rgba(56, 189, 248, 0.12)', color: '#38bdf8' }}>
-                <Navigation size={11} /> Warehouse Navigation Corridor (Physical Trajectory)
-              </span>
-              <span className="channel-desc font-mono">
-                {goalStatus === 'EXECUTING' ? `traversed: ${(targetDistance * (progressPct / 100)).toFixed(1)}m / ${targetDistance}.0m` :
-                 goalStatus === 'SUCCEEDED' ? `Goal reached: ${targetDistance}.0m` :
-                 goalStatus === 'CANCELED' ? 'Preempted / Motor Cut' : 'Standby at 0.0m'}
-              </span>
-            </div>
-
-            <div className="amr-runway-track">
-              <div className="runway-rail"></div>
-              <div 
-                className="runway-fill-progress" 
-                style={{ 
-                  width: `${progressPct}%`,
-                  background: goalStatus === 'CANCELED' 
-                    ? '#ef4444' 
-                    : 'linear-gradient(90deg, #0284c7, #10b981)' 
-                }}
-              ></div>
-
-              {/* The Driving Robot Marker */}
-              <div 
-                className={`runway-amr-marker ${goalStatus === 'EXECUTING' ? 'driving' : ''}`}
-                style={{ left: `calc(${progressPct}% - 14px)` }}
-                title={`AMR Position: ${(targetDistance * (progressPct / 100)).toFixed(1)}m`}
-              >
-                <div className="amr-icon-box">
-                  <Navigation size={13} className="amr-compass-icon" />
-                </div>
-              </div>
-
-              {/* Distance Ticks */}
-              <div className="runway-ticks">
-                <span>0m</span>
-                <span>{(targetDistance * 0.25).toFixed(0)}m</span>
-                <span>{(targetDistance * 0.5).toFixed(0)}m</span>
-                <span>{(targetDistance * 0.75).toFixed(0)}m</span>
-                <span>{targetDistance}m</span>
-              </div>
-            </div>
-          </div>
-
           {/* Channel 1: Goal Service (Client ➔ Server · Single Dispatch) */}
           <div className="action-channel-strip goal-channel">
             <div className="channel-header-row">
               <span className="channel-tag goal-tag">
-                <ArrowRight size={11} /> 1. GOAL SERVICE (Client ➔ Server · Single Dispatch)
+                <ArrowRight size={11} /> 1. GOAL SERVICE (Client ➔ Server)
               </span>
-              <span className="channel-desc">target: {targetDistance}.0m</span>
+              <span className="channel-desc font-mono">target: {targetDistance}.0m</span>
             </div>
             <div className="channel-wire">
               <div className="wire-track">
@@ -477,8 +491,8 @@ export function ActionFlow() {
                 </div>
               )}
               {goalStatus === 'SENDING_CANCEL' && (
-                <div className="sliding-action-packet slide-c2s" style={{ animationDuration: '1.6s' }}>
-                  <span className="action-packet-pill" style={{ background: '#7f1d1d', border: '1px solid #ef4444', color: '#fff' }}>
+                <div className="sliding-action-packet slide-c2s" style={{ animationDuration: '1.5s' }}>
+                  <span className="action-packet-pill cancel-pill">
                     <XOctagon size={10} />
                     <span>CancelRequest(goal_id=0x82f1)</span>
                   </span>
@@ -486,7 +500,7 @@ export function ActionFlow() {
               )}
               {goalStatus === 'GOAL_ACCEPTED' && (
                 <div className="channel-accepted-badge animate-fade-in">
-                  <Check size={11} /> Goal Accepted by Server (UUID: #0x82f1)
+                  <Check size={11} /> Goal Accepted (UUID: #0x82f1)
                 </div>
               )}
             </div>
@@ -496,9 +510,9 @@ export function ActionFlow() {
           <div className="action-channel-strip feedback-channel">
             <div className="channel-header-row">
               <span className="channel-tag feedback-tag">
-                <ArrowLeft size={11} /> 2. FEEDBACK STREAM (Server ➔ Client · Continuous Stream @ 4 Hz)
+                <ArrowLeft size={11} /> 2. FEEDBACK STREAM (Server ➔ Client · 4 Hz)
               </span>
-              <span className="channel-desc">rem: {distanceRemaining.toFixed(1)}m</span>
+              <span className="channel-desc font-mono">rem: {distanceRemaining.toFixed(1)}m</span>
             </div>
 
             <div className="channel-wire">
@@ -524,10 +538,10 @@ export function ActionFlow() {
           <div className="action-channel-strip result-channel">
             <div className="channel-header-row">
               <span className="channel-tag result-tag">
-                <ArrowLeft size={11} /> 3. RESULT SERVICE (Server ➔ Client · Single Resolution)
+                <ArrowLeft size={11} /> 3. RESULT SERVICE (Server ➔ Client)
               </span>
-              <span className="channel-desc">
-                {goalStatus === 'SUCCEEDED' ? 'STATUS_SUCCEEDED' : goalStatus === 'CANCELED' ? 'STATUS_CANCELED' : 'Awaiting End'}
+              <span className="channel-desc font-mono">
+                {goalStatus === 'SUCCEEDED' ? 'STATUS_SUCCEEDED' : goalStatus === 'CANCELED' ? 'STATUS_CANCELED' : 'Awaiting Completion'}
               </span>
             </div>
             <div className="channel-wire">
@@ -536,36 +550,36 @@ export function ActionFlow() {
               </div>
               {goalStatus === 'SENDING_RESULT' && (
                 <div className="sliding-action-packet slide-s2c">
-                  <span className="action-packet-pill" style={{ background: '#3b0764', border: '1px solid #a855f7', color: '#f3e8ff' }}>
+                  <span className="action-packet-pill result-pill">
                     <CheckCircle2 size={10} />
                     <span>Result: STATUS_SUCCEEDED (dist={targetDistance}m)</span>
                   </span>
                 </div>
               )}
               {goalStatus === 'SUCCEEDED' && (
-                <div className="channel-result-pill animate-fade-in">
+                <div className="channel-result-pill result-success animate-fade-in">
                   <CheckCircle2 size={11} className="text-emerald" /> Result Delivered: STATUS_SUCCEEDED
                 </div>
               )}
               {goalStatus === 'CANCELED' && (
-                <div className="channel-result-pill animate-fade-in" style={{ borderColor: '#ef4444', color: '#ef4444' }}>
-                  <XOctagon size={11} /> Goal Canceled: STATUS_CANCELED
+                <div className="channel-result-pill result-canceled animate-fade-in">
+                  <XOctagon size={11} /> Goal Preempted: STATUS_CANCELED
                 </div>
               )}
             </div>
           </div>
 
           {/* Action Architecture Footer Metadata */}
-          <div className="qos-badge-strip" style={{ marginTop: '8px' }}>
-            <span className="qos-chip">1. Goal: Client ➔ Server (RPC)</span>
-            <span className="qos-chip">2. Feedback: Server ➔ Client (Stream)</span>
-            <span className="qos-chip">3. Result: Server ➔ Client (RPC)</span>
+          <div className="qos-badge-strip">
+            <span className="qos-chip">1. Goal (RPC)</span>
+            <span className="qos-chip">2. Feedback (Stream)</span>
+            <span className="qos-chip">3. Result (RPC)</span>
           </div>
         </div>
 
-        {/* Right Column: Action Server */}
+        {/* Right Column: Action Server Node */}
         <div 
-          className={`diagram-card server-card ${
+          className={`diagram-card server-card action-node-card ${
             goalStatus === 'EXECUTING' || goalStatus === 'GOAL_ACCEPTED' ? 'pulse-border-green' : ''
           } ${activeStep === 1 || activeStep === 2 || activeStep === null ? 'focused' : 'dimmed'}`}
         >
@@ -575,7 +589,7 @@ export function ActionFlow() {
             </div>
             <div className="node-title-group">
               <div className="node-role-tag">ACTION SERVER (Executor)</div>
-              <h3 className="node-name" title="/nav_action_server">nav_action_server</h3>
+              <h3 className="node-name action-node-title" title="/nav_action_server">nav_action_server</h3>
               <div className="node-class">NavigateDistanceServer</div>
             </div>
             <div 
@@ -593,16 +607,16 @@ export function ActionFlow() {
             <div className="telemetry-item">
               <span className="telemetry-label">Motor Drive</span>
               <span 
-                className="telemetry-val" 
+                className="telemetry-val font-mono" 
                 style={{ color: goalStatus === 'EXECUTING' ? '#10b981' : 'var(--text-muted)' }}
               >
-                {goalStatus === 'EXECUTING' ? '1.4 m/s' : '0.0 m/s'}
+                {goalStatus === 'EXECUTING' ? '1.40 m/s' : '0.00 m/s'}
               </span>
             </div>
             <div className="telemetry-item">
               <span className="telemetry-label">Preemption</span>
               <span 
-                className="telemetry-val" 
+                className="telemetry-val font-mono" 
                 style={{ color: goalStatus === 'CANCELED' ? '#ef4444' : '#10b981' }}
               >
                 {goalStatus === 'CANCELED' ? 'PREEMPTED' : 'CLEAR'}
@@ -626,60 +640,51 @@ export function ActionFlow() {
             </div>
           </div>
 
-          <div className="card-terminal-log">
+          {/* Active Server Goal Handler Execution Log */}
+          <div className="card-terminal-log action-server-log">
             <div className="log-header">
               <Activity size={12} className="text-green" />
-              <span>Trajectory Execution Telemetry</span>
+              <span>Execution Loop Telemetry (10 Hz)</span>
             </div>
             <div className="log-content-wrap">
               <span className={`log-level-pill ${goalStatus === 'CANCELED' ? 'log-level-error' : ''}`}>
-                {goalStatus === 'EXECUTING' ? '[STATUS_EXECUTING]' : goalStatus === 'CANCELED' ? '[STATUS_CANCELED]' : '[STATUS_UNKNOWN]'}
+                {goalStatus === 'EXECUTING' ? '[EXECUTING]' : goalStatus === 'CANCELED' ? '[CANCELED]' : goalStatus === 'SUCCEEDED' ? '[SUCCEEDED]' : '[STANDBY]'}
               </span>
               <span className="log-text">
                 {goalStatus === 'EXECUTING' 
-                  ? `Active trajectory to ${targetDistance}m... Remaining: ${distanceRemaining.toFixed(1)}m` 
+                  ? `Corridor trajectory active... Dist remaining: ${distanceRemaining.toFixed(1)}m` 
                   : goalStatus === 'CANCELED'
                     ? 'Preempt request accepted. Velocity cut to 0.0 m/s.'
                     : goalStatus === 'SUCCEEDED'
-                      ? `Goal reached successfully! Dispatched ${feedbackCount} feedbacks.`
-                      : 'Server ready. Awaiting navigation action goal.'}
+                      ? `Target reached! Dispatched ${feedbackCount} feedbacks.`
+                      : 'Server listening on /navigate_distance. Ready for goal.'}
               </span>
             </div>
+          </div>
+
+          {/* Server Lifecycle State Pill */}
+          <div className="server-status-footer-pill">
+            <span className="status-indicator-tag">
+              {goalStatus === 'EXECUTING' ? '🟢 Control Loop Active · Ticking at 10 Hz' :
+               goalStatus === 'GOAL_ACCEPTED' ? '🟣 Goal Validated · Accepting Handle' :
+               goalStatus === 'CANCELED' ? '🔴 Goal Aborted · Preempt Callback Resolved' :
+               goalStatus === 'SUCCEEDED' ? '🟢 Goal Finalized · Result Published' :
+               '⚪ Standby · Ready for Action Goal'}
+            </span>
           </div>
         </div>
       </div>
 
       {/* Control Toolbar */}
-      <div className="pubsub-controls-bar" style={{ marginTop: '1.25rem' }}>
+      <div className="pubsub-controls-bar action-controls-bar">
         <div className="controls-left">
-          <button
-            className={`control-btn play-btn ${goalStatus === 'EXECUTING' ? 'active-playing' : ''}`}
-            onClick={handleStartGoal}
-            disabled={goalStatus === 'EXECUTING' || goalStatus === 'SENDING_GOAL' || goalStatus === 'SENDING_RESULT'}
-            title="Dispatch Navigation Action Goal"
-          >
-            <Send size={15} />
-            <span>Send Goal ({targetDistance}m)</span>
-          </button>
-
-          <button
-            className="control-btn"
-            style={{ color: goalStatus === 'EXECUTING' ? '#ef4444' : 'var(--text-muted)' }}
-            onClick={handleCancelGoal}
-            disabled={goalStatus !== 'EXECUTING'}
-            title="Preempt and cancel ongoing action goal"
-          >
-            <XOctagon size={15} />
-            <span>Cancel Goal (Preempt)</span>
-          </button>
-
           <button
             className="control-btn"
             onClick={handleReset}
             title="Reset action simulation"
           >
             <RotateCcw size={15} />
-            <span>Reset</span>
+            <span>Reset Simulation</span>
           </button>
         </div>
 
@@ -715,7 +720,7 @@ export function ActionFlow() {
           </div>
           <div className="concept-text">
             <strong>1. Goal Service (Client ➔ Server)</strong>
-            <p>The client requests a long-running goal (drive 10m). The server accepts the goal handle and begins executing the drive trajectory.</p>
+            <p>The client requests a long-running goal (drive {targetDistance}m). The server validates the goal parameters and returns an accepted handle.</p>
           </div>
         </div>
 
@@ -725,7 +730,7 @@ export function ActionFlow() {
           </div>
           <div className="concept-text">
             <strong>2. Feedback Stream (Server ➔ Client)</strong>
-            <p>While the robot drives, the server continuously publishes real-time telemetry (remaining distance, current velocity) back to the client at 4 Hz.</p>
+            <p>While the robot drives, the server continuously publishes real-time telemetry (distance remaining, velocity) at 4 Hz.</p>
           </div>
         </div>
 
@@ -735,7 +740,7 @@ export function ActionFlow() {
           </div>
           <div className="concept-text">
             <strong>3. Mid-Flight Preemption (Client ➔ Server)</strong>
-            <p>Unlike standard Services which cannot be interrupted, an Action allows the client to abort a goal mid-flight if an emergency stop or obstacle occurs.</p>
+            <p>Unlike standard Services, an Action allows the client to abort a goal mid-flight if an emergency stop or obstacle occurs.</p>
           </div>
         </div>
 
@@ -745,7 +750,7 @@ export function ActionFlow() {
           </div>
           <div className="concept-text">
             <strong>4. Result Service (Server ➔ Client)</strong>
-            <p>When the robot reaches the target waypoint or finishes executing, the server returns the final outcome packet back to the client.</p>
+            <p>When the robot reaches the target waypoint or aborts, the server returns the final status code and outcome packet.</p>
           </div>
         </div>
       </div>
