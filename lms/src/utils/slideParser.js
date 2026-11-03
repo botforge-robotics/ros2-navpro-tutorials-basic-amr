@@ -165,7 +165,7 @@ export function parseLessonIntoSlides(lesson) {
   };
 
   // Helper to emit substantive concept or subtopic slides with strict overflow prevention
-  const emitSubstantiveSlides = (container, baseId, title, h2Title) => {
+  const emitSubstantiveSlides = (container, baseId, title, h2Title, depth = 0) => {
     if (!container || !isSubstantive(container)) return;
 
     // 1. Remove all trailing and intermediate dividers (eliminates ~33 false bottom overflows)
@@ -184,6 +184,22 @@ export function parseLessonIntoSlides(lesson) {
         codeElem.textContent = lines.slice(0, 12).join('\n') + '\n\n# ... [Full implementation available in Web LMS] ...';
       }
     });
+
+    // Hard recursion limit: if depth >= 2, never recurse further
+    if (depth >= 2) {
+      slides.push({
+        id: baseId,
+        type: 'subtopic',
+        lessonNum: lesson.num_str,
+        lessonId: lesson.id,
+        module: lesson.module,
+        sectionTitle: h2Title,
+        title: title,
+        htmlContent: container.innerHTML
+      });
+      emitBreakdowns(breakdownCards, baseId, title, h2Title);
+      return;
+    }
 
     // 4. Special Case: Lesson 01 Terminator Shortcuts
     if (lesson.id === '01' && (container.querySelector('.terminator-image, img[src*="terminator"]') || title.toLowerCase().includes('terminator')) && container.querySelector('table')) {
@@ -240,19 +256,21 @@ export function parseLessonIntoSlides(lesson) {
       });
       if (currentPart.length > 0) parts.push(currentPart);
 
-      parts.forEach((partEls, pIdx) => {
-        const partDiv = doc.createElement('div');
-        partEls.forEach(el => partDiv.appendChild(el.cloneNode(true)));
-        if (!isSubstantive(partDiv)) return;
+      if (parts.length > 1) {
+        parts.forEach((partEls, pIdx) => {
+          const partDiv = doc.createElement('div');
+          partEls.forEach(el => partDiv.appendChild(el.cloneNode(true)));
+          if (!isSubstantive(partDiv)) return;
 
-        const strong = partDiv.querySelector('strong, h4, h5');
-        const subLabel = strong ? strong.textContent.trim() : (pIdx === 0 ? 'Simulation View' : 'Architecture Diagram');
-        const partTitle = parts.length > 1 ? `${title} (Part ${pIdx + 1}: ${subLabel})` : title;
+          const strong = partDiv.querySelector('strong, h4, h5');
+          const subLabel = strong ? strong.textContent.trim() : (pIdx === 0 ? 'Simulation View' : 'Architecture Diagram');
+          const partTitle = `${title} (Part ${pIdx + 1}: ${subLabel})`;
 
-        emitSubstantiveSlides(partDiv, `${baseId}_part${pIdx + 1}`, partTitle, h2Title);
-      });
-      emitBreakdowns(breakdownCards, baseId, title, h2Title);
-      return;
+          emitSubstantiveSlides(partDiv, `${baseId}_part${pIdx + 1}`, partTitle, h2Title, depth + 1);
+        });
+        emitBreakdowns(breakdownCards, baseId, title, h2Title);
+        return;
+      }
     }
 
     // Case B: Single image + substantial text or table
@@ -266,24 +284,30 @@ export function parseLessonIntoSlides(lesson) {
       if ((table && tableRows > 4) || (hasCode && textLen > 550)) {
         const visualSlideDiv = doc.createElement('div');
         const contentSlideDiv = doc.createElement('div');
-        let foundCodeOrTable = false;
 
         Array.from(container.children).forEach(child => {
-          if (child.querySelector('pre, .code-container, table') || ['pre', 'table'].includes(child.tagName.toLowerCase()) || child.classList.contains('code-container') || child.classList.contains('table-responsive')) {
-            foundCodeOrTable = true;
+          const childHasImg = !!child.querySelector('img, svg:not(.lucide)') || ['img', 'svg'].includes(child.tagName.toLowerCase()) || child.classList.contains('lesson-image-wrapper');
+          const childHasCodeOrTable = !!child.querySelector('pre, .code-container, table') || ['pre', 'table'].includes(child.tagName.toLowerCase()) || child.classList.contains('code-container') || child.classList.contains('table-responsive');
+
+          if (childHasImg) {
+            visualSlideDiv.appendChild(child.cloneNode(true));
+          } else if (childHasCodeOrTable) {
+            contentSlideDiv.appendChild(child.cloneNode(true));
+          } else {
+            if (visualSlideDiv.children.length === 0) {
+              visualSlideDiv.appendChild(child.cloneNode(true));
+            } else {
+              contentSlideDiv.appendChild(child.cloneNode(true));
+            }
           }
-          if (!foundCodeOrTable) visualSlideDiv.appendChild(child.cloneNode(true));
-          else contentSlideDiv.appendChild(child.cloneNode(true));
         });
 
-        if (isSubstantive(visualSlideDiv)) {
-          emitSubstantiveSlides(visualSlideDiv, `${baseId}_visual`, `${title}: Architectural Model`, h2Title);
+        if (isSubstantive(visualSlideDiv) && isSubstantive(contentSlideDiv) && visualSlideDiv.children.length < container.children.length && contentSlideDiv.children.length < container.children.length) {
+          emitSubstantiveSlides(visualSlideDiv, `${baseId}_visual`, `${title}: Architectural Model`, h2Title, depth + 1);
+          emitSubstantiveSlides(contentSlideDiv, `${baseId}_code`, `${title}: Implementation`, h2Title, depth + 1);
+          emitBreakdowns(breakdownCards, baseId, title, h2Title);
+          return;
         }
-        if (isSubstantive(contentSlideDiv)) {
-          emitSubstantiveSlides(contentSlideDiv, `${baseId}_code`, `${title}: Implementation`, h2Title);
-        }
-        emitBreakdowns(breakdownCards, baseId, title, h2Title);
-        return;
       } else {
         // Side-by-side 2-column layout
         const visualDiv = doc.createElement('div');
@@ -320,7 +344,7 @@ export function parseLessonIntoSlides(lesson) {
     // Case C: Standard content (no images, or single image with compact text)
     // If container is large (> 500 chars) and has multiple child elements, chunk into digestible slides
     const childNodes = Array.from(container.children);
-    if (rawImgs.length === 0 && childNodes.length > 1 && container.textContent.trim().length > 500) {
+    if (depth < 1 && rawImgs.length === 0 && childNodes.length > 1 && container.textContent.trim().length > 500) {
       const chunks = [];
       let currentChunk = [];
       let currentLen = 0;
@@ -351,7 +375,7 @@ export function parseLessonIntoSlides(lesson) {
           let subLabel = strong ? strong.textContent.trim() : (codeTag ? 'Implementation' : `Part ${chIdx + 1}`);
           if (subLabel.length > 35) subLabel = `Part ${chIdx + 1}`;
 
-          emitSubstantiveSlides(chDiv, `${baseId}_chk${chIdx + 1}`, `${title} (${subLabel})`, h2Title);
+          emitSubstantiveSlides(chDiv, `${baseId}_chk${chIdx + 1}`, `${title} (${subLabel})`, h2Title, depth + 1);
         });
         emitBreakdowns(breakdownCards, baseId, title, h2Title);
         return;
