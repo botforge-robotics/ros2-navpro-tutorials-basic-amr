@@ -203,16 +203,20 @@ export function parseLessonIntoSlides(lesson) {
 
     // 4. Special Case: Lesson 01 Terminator Shortcuts
     if ((lesson.id === '01' || lesson.id === 'lesson_01' || lesson.num_str === '01') && (container.querySelector('.terminator-image, img[src*="terminator"]') || title.toLowerCase().includes('terminator')) && container.querySelector('table')) {
-      const partA = doc.createElement('div');
-      const partB = doc.createElement('div');
-      let foundTable = false;
+      let introHtml = '';
+      let imgHtml = '';
+      let tableHtml = '';
+
       Array.from(container.children).forEach(child => {
         if (child.querySelector('table') || child.tagName.toLowerCase() === 'table' || child.classList.contains('table-responsive')) {
-          foundTable = true;
+          tableHtml += child.outerHTML;
+        } else if (child.querySelector('img, svg') || ['img', 'svg'].includes(child.tagName.toLowerCase()) || child.classList.contains('lesson-image-wrapper')) {
+          imgHtml += child.outerHTML;
+        } else {
+          introHtml += child.outerHTML;
         }
-        if (!foundTable) partA.appendChild(child.cloneNode(true));
-        else partB.appendChild(child.cloneNode(true));
       });
+
       slides.push({
         id: baseId,
         type: 'concept',
@@ -223,11 +227,25 @@ export function parseLessonIntoSlides(lesson) {
         badge: '📟 Multi-Terminal Grid',
         title: title,
         htmlContent: `
-          <div class="terminator-merged-slide-layout">
-            <div class="term-left-col">${partA.innerHTML}</div>
-            <div class="term-right-col">
-              <div class="term-shortcuts-header"><span class="shortcuts-badge">⌨️ Essential Shortcuts</span></div>
-              ${partB.innerHTML}
+          <div class="terminator-slide-wrapper">
+            ${introHtml ? `<div class="terminator-intro-briefing">${introHtml}</div>` : ''}
+            <div class="terminator-cols-container">
+              <div class="term-left-col">
+                <div class="term-graphic-frame">
+                  ${imgHtml}
+                </div>
+                <div class="term-pro-tip-banner">
+                  <span class="tip-badge">💡 PRO-TIP</span>
+                  <span class="tip-text">Tiling 4 panes allows concurrent monitoring of Gazebo, teleop, RViz2, and topic echo on one screen.</span>
+                </div>
+              </div>
+              <div class="term-right-col">
+                <div class="term-shortcuts-header">
+                  <span class="shortcuts-badge">⌨️ Essential Shortcuts</span>
+                  <span class="shortcuts-sub">Default Keybindings</span>
+                </div>
+                ${tableHtml}
+              </div>
             </div>
           </div>
         `

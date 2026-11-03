@@ -4987,64 +4987,136 @@
   color: var(--text-secondary);
 }
 
-/* Lesson 01: Merged Terminator Layout (Image Left + Shortcuts Right) */
+/* Lesson 01: Multi-Pane Terminator Workflow Layout */
+.terminator-slide-wrapper,
 .terminator-merged-slide-layout {
-  display: grid;
-  grid-template-columns: 1fr 1.08fr;
-  gap: 1.35rem;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
   height: 100%;
-  max-height: 490px;
-  align-items: stretch;
+  max-height: 520px;
+  justify-content: flex-start;
+  box-sizing: border-box;
+}
+
+.terminator-intro-briefing {
+  margin: 0 0 0.6rem 0;
+  padding: 0.38rem 0.85rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-left: 3px solid #3b82f6;
+  border-radius: 8px;
+}
+
+.terminator-intro-briefing p {
+  margin: 0;
+  font-size: 0.82rem;
+  line-height: 1.38;
+  color: var(--text-secondary);
+}
+
+.terminator-intro-briefing strong {
+  color: var(--text-primary);
+  font-weight: 700;
+}
+
+.terminator-cols-container {
+  display: grid;
+  grid-template-columns: 1.15fr 1fr;
+  gap: 1.25rem;
+  align-items: start;
+  width: 100%;
 }
 
 .term-left-col {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  gap: 0.65rem;
+  gap: 0.45rem;
 }
 
-.term-left-col p {
-  margin: 0;
-  font-size: 0.84rem;
-  line-height: 1.4;
+.term-graphic-frame {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  overflow: hidden;
+  background: transparent;
+}
+
+.term-graphic-frame img,
+.term-graphic-frame .lesson-image,
+.term-left-col img,
+.term-left-col .lesson-image {
+  width: auto !important;
+  max-width: 100% !important;
+  max-height: 255px !important;
+  object-fit: contain !important;
+  margin: 0 auto !important;
+  padding: 0 !important;
+  border: none !important;
+  border-radius: 8px !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18) !important;
+}
+
+.term-pro-tip-banner {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.32rem 0.65rem;
+  background: rgba(59, 130, 246, 0.06);
+  border: 1px solid rgba(59, 130, 246, 0.2);
+  border-radius: 8px;
+  font-size: 0.75rem;
+  line-height: 1.35;
   color: var(--text-secondary);
 }
 
-.term-left-col img,
-.term-left-col .lesson-image {
-  max-height: 330px !important;
-  width: 100% !important;
-  object-fit: contain !important;
-  margin: 0 !important;
-  background: var(--bg-card);
-  border: 1px solid var(--border-color);
-  border-radius: 12px;
-  padding: 0.6rem;
+.term-pro-tip-banner .tip-badge {
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.03em;
+  color: #3b82f6;
+  white-space: nowrap;
+  background: rgba(59, 130, 246, 0.12);
+  padding: 0.12rem 0.4rem;
+  border-radius: 4px;
+}
+
+.term-pro-tip-banner .tip-text {
+  flex: 1;
 }
 
 .term-right-col {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  gap: 0.45rem;
+  gap: 0.38rem;
 }
 
 .term-shortcuts-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  padding: 0 0.15rem;
 }
 
 .shortcuts-badge {
-  font-size: 0.76rem;
+  font-size: 0.74rem;
   font-weight: 800;
   text-transform: uppercase;
+  letter-spacing: 0.04em;
   color: #3b82f6;
   background: rgba(59, 130, 246, 0.1);
-  padding: 0.2rem 0.6rem;
+  padding: 0.2rem 0.55rem;
   border-radius: 6px;
   border: 1px solid rgba(59, 130, 246, 0.25);
+}
+
+.shortcuts-sub {
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
 }
 
 .term-right-col .table-responsive {
@@ -5053,6 +5125,7 @@
   border-radius: 10px;
   overflow: hidden;
   background: var(--bg-card);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
 }
 
 .term-right-col table {
@@ -5062,23 +5135,47 @@
 }
 
 .term-right-col th {
-  padding: 0.4rem 0.65rem !important;
+  padding: 0.42rem 0.65rem !important;
   font-weight: 800;
   background: var(--bg-sidebar) !important;
   border-bottom: 2px solid var(--border-color);
   color: var(--text-primary);
+  letter-spacing: 0.02em;
 }
 
 .term-right-col td {
-  padding: 0.32rem 0.65rem !important;
+  padding: 0.36rem 0.65rem !important;
   border-bottom: 1px solid var(--border-color);
-  line-height: 1.3 !important;
+  line-height: 1.35 !important;
   color: var(--text-secondary);
 }
 
-.term-right-col td code {
-  font-size: 0.76rem !important;
+.term-right-col tr:last-child td {
+  border-bottom: none;
+}
+
+.term-right-col tr:hover td {
+  background: rgba(59, 130, 246, 0.03);
+}
+
+.term-right-col td code,
+.term-right-col td .inline-code {
+  font-size: 0.75rem !important;
+  font-family: var(--font-mono) !important;
+  font-weight: 700 !important;
   white-space: nowrap !important;
+  background: rgba(59, 130, 246, 0.08) !important;
+  color: #2563eb !important;
+  border: 1px solid rgba(59, 130, 246, 0.2) !important;
+  padding: 0.15rem 0.4rem !important;
+  border-radius: 4px !important;
+}
+
+.dark-theme .term-right-col td code,
+.dark-theme .term-right-col td .inline-code {
+  color: #60a5fa !important;
+  background: rgba(59, 130, 246, 0.15) !important;
+  border-color: rgba(59, 130, 246, 0.3) !important;
 }
 
 .imperative-icon { font-size: 1.4rem; }
@@ -6093,19 +6190,55 @@
 /* ============================================================== */
 
 /* 1. Terminator Merged Layout (Lesson 01) */
+.presentation-viewport.is-fullscreen .terminator-slide-wrapper,
 .presentation-viewport.is-fullscreen .terminator-merged-slide-layout {
-  max-height: calc(100vh - 140px) !important;
+  max-height: calc(100vh - 120px) !important;
+  justify-content: center !important;
+}
+
+.presentation-viewport.is-fullscreen .terminator-intro-briefing {
+  margin-bottom: 1.4rem !important;
+  padding: 0.85rem 1.4rem !important;
+  border-radius: 10px !important;
+}
+
+.presentation-viewport.is-fullscreen .terminator-intro-briefing p {
+  font-size: 1.12rem !important;
+  line-height: 1.6 !important;
+}
+
+.presentation-viewport.is-fullscreen .terminator-cols-container {
   gap: 3.5rem !important;
 }
 
+.presentation-viewport.is-fullscreen .term-graphic-frame img,
+.presentation-viewport.is-fullscreen .term-graphic-frame .lesson-image,
 .presentation-viewport.is-fullscreen .term-left-col img,
 .presentation-viewport.is-fullscreen .term-left-col .lesson-image {
-  max-height: calc(100vh - 230px) !important;
+  max-height: 480px !important;
 }
 
-.presentation-viewport.is-fullscreen .term-left-col p {
-  font-size: 1.05rem !important;
-  line-height: 1.52 !important;
+.presentation-viewport.is-fullscreen .term-pro-tip-banner {
+  padding: 0.75rem 1.15rem !important;
+  font-size: 0.98rem !important;
+}
+
+.presentation-viewport.is-fullscreen .term-pro-tip-banner .tip-badge {
+  font-size: 0.84rem !important;
+  padding: 0.2rem 0.55rem !important;
+}
+
+.presentation-viewport.is-fullscreen .term-shortcuts-header {
+  margin-bottom: 0.4rem !important;
+}
+
+.presentation-viewport.is-fullscreen .shortcuts-badge {
+  font-size: 0.96rem !important;
+  padding: 0.32rem 0.85rem !important;
+}
+
+.presentation-viewport.is-fullscreen .shortcuts-sub {
+  font-size: 0.88rem !important;
 }
 
 .presentation-viewport.is-fullscreen .term-right-col table {
@@ -6120,10 +6253,13 @@
 .presentation-viewport.is-fullscreen .term-right-col td {
   padding: 0.58rem 1.15rem !important;
   font-size: 0.94rem !important;
+  line-height: 1.45 !important;
 }
 
-.presentation-viewport.is-fullscreen .term-right-col td code {
+.presentation-viewport.is-fullscreen .term-right-col td code,
+.presentation-viewport.is-fullscreen .term-right-col td .inline-code {
   font-size: 0.94rem !important;
+  padding: 0.2rem 0.55rem !important;
 }
 
 /* 2. Section 3.1: Robot Anatomy Ingredients */
