@@ -5212,7 +5212,7 @@
 .motion-flow-slide-layout {
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
+  gap: 0.65rem;
   height: 100%;
   justify-content: space-between;
 }
@@ -5225,13 +5225,14 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  max-height: 220px;
+  max-height: 340px;
+  flex: 1;
   overflow: hidden;
 }
 
 .motion-flow-hero-img {
-  max-height: 210px;
-  width: auto;
+  max-height: 330px;
+  width: 100%;
   object-fit: contain;
 }
 
@@ -5242,13 +5243,261 @@
 }
 
 .motion-stage-card {
-  padding: 0.6rem 0.75rem;
+  padding: 0.5rem 0.65rem;
   border-radius: 8px;
   border: 1px solid var(--border-color);
   background: var(--bg-card);
   display: flex;
   flex-direction: column;
-  gap: 0.2rem;
+  gap: 0.15rem;
+}
+
+.stage-card-head {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.stage-num-badge {
+  font-size: 0.65rem;
+  font-weight: 800;
+  padding: 0.1rem 0.35rem;
+  border-radius: 4px;
+  text-transform: uppercase;
+}
+
+.stage-senses .stage-num-badge { background: rgba(59, 130, 246, 0.15); color: #3b82f6; }
+.stage-nerves .stage-num-badge { background: rgba(245, 158, 11, 0.15); color: #f59e0b; }
+.stage-brain .stage-num-badge { background: rgba(139, 92, 246, 0.15); color: #8b5cf6; }
+.stage-muscles .stage-num-badge { background: rgba(16, 185, 129, 0.15); color: #10b981; }
+
+.stage-title { font-size: 0.8rem; font-weight: 700; color: var(--text-primary); }
+.stage-desc { margin: 0; font-size: 0.72rem; line-height: 1.25; color: var(--text-secondary); }
+
+/* Reorganized OS Metaphor (Slide 10) */
+.deck-metaphor-reorganized-layout {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  max-height: 480px;
+  justify-content: space-between;
+  gap: 0.65rem;
+}
+
+.metaphor-hero-visual-wrap {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 0.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-height: 290px;
+  flex: 1;
+  overflow: hidden;
+}
+
+.metaphor-wide-hero-img {
+  max-height: 280px;
+  width: auto;
+  max-width: 100%;
+  object-fit: contain;
+  border-radius: 8px;
+}
+
+.metaphor-cards-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.85rem;
+}
+
+.metaphor-cards-row .metaphor-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  padding: 0.6rem 0.9rem;
+}
+
+.metaphor-cards-row .card-tag {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.82rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  margin-bottom: 0.25rem;
+}
+
+.metaphor-cards-row .metaphor-card p {
+  margin: 0;
+  font-size: 0.76rem;
+  line-height: 1.35;
+  color: var(--text-secondary);
+}
+
+/* Architecture Comparison with Diagram (Slide 14) */
+.deck-ros-arch-slide-layout {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  max-height: 480px;
+  justify-content: space-between;
+  gap: 0.65rem;
+}
+
+.arch-visual-wrap {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 0.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-height: 290px;
+  flex: 1;
+  overflow: hidden;
+}
+
+.ros-arch-hero-img {
+  max-height: 280px;
+  width: auto;
+  max-width: 100%;
+  object-fit: contain;
+  border-radius: 8px;
+}
+
+.arch-key-points-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.85rem;
+}
+
+.arch-point-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  padding: 0.6rem 0.9rem;
+}
+
+.arch-point-card.ros1-point {
+  border-left: 4px solid #ef4444;
+}
+
+.arch-point-card.ros2-point {
+  border-left: 4px solid #10b981;
+}
+
+.point-badge-wrap {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.25rem;
+}
+
+.point-badge {
+  font-size: 0.7rem;
+  font-weight: 800;
+  padding: 0.12rem 0.4rem;
+  border-radius: 4px;
+  text-transform: uppercase;
+}
+
+.point-badge.ros1 { background: rgba(239, 68, 68, 0.15); color: #ef4444; }
+.point-badge.ros2 { background: rgba(16, 185, 129, 0.15); color: #10b981; }
+
+.arch-point-card strong {
+  font-size: 0.82rem;
+  color: var(--text-primary);
+}
+
+.arch-point-card p {
+  margin: 0;
+  font-size: 0.75rem;
+  line-height: 1.32;
+  color: var(--text-secondary);
+}
+
+/* Unified Developer Environment (Slide 18) */
+.deck-unified-env-layout {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  height: 100%;
+}
+
+.env-intro-bar {
+  font-size: 0.84rem;
+  color: var(--text-secondary);
+  line-height: 1.35;
+  margin: 0;
+}
+
+.env-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.75rem;
+  flex: 1;
+}
+
+.env-tool-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  padding: 0.75rem 0.85rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.env-tool-header {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.env-tool-icon { font-size: 1.25rem; }
+.env-tool-title { font-size: 0.88rem; font-weight: 800; color: var(--text-primary); }
+
+.env-tool-port-badge {
+  display: inline-block;
+  font-size: 0.72rem;
+  font-family: monospace;
+  font-weight: 700;
+  padding: 0.12rem 0.45rem;
+  border-radius: 5px;
+  background: rgba(14, 165, 233, 0.12);
+  color: #0284c7;
+  align-self: flex-start;
+}
+
+.env-tool-desc {
+  font-size: 0.76rem;
+  line-height: 1.35;
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+.env-tool-highlights {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  font-size: 0.74rem;
+  color: var(--text-muted);
+}
+
+.env-tool-highlights li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.35rem;
+}
+
+.env-tool-highlights li::before {
+  content: "•";
+  color: #0ea5e9;
+  font-weight: bold;
 }
 
 .motion-stage-card.stage-senses { border-top: 3px solid #06b6d4; }
@@ -6230,7 +6479,147 @@
   line-height: 1.42 !important;
 }
 
-/* 9. Section 3.7: ROS 1 vs ROS 2 Matrix */
+/* 9. Section 3.7: ROS 1 vs ROS 2 Matrix & Architecture Diagram */
+.presentation-viewport.is-fullscreen .deck-ros-arch-slide-layout {
+  height: 100% !important;
+  max-height: calc(100vh - 120px) !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: space-between !important;
+  gap: 1.5rem !important;
+}
+
+.presentation-viewport.is-fullscreen .arch-visual-wrap {
+  flex: 1 !important;
+  max-height: calc(100vh - 280px) !important;
+  width: 100% !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  background: var(--bg-card) !important;
+  border: 1px solid var(--border-color) !important;
+  border-radius: 16px !important;
+  padding: 1.25rem 2rem !important;
+}
+
+.presentation-viewport.is-fullscreen .ros-arch-hero-img {
+  max-height: 100% !important;
+  width: 100% !important;
+  max-width: 1400px !important;
+  object-fit: contain !important;
+}
+
+.presentation-viewport.is-fullscreen .arch-key-points-grid {
+  display: grid !important;
+  grid-template-columns: 1fr 1fr !important;
+  gap: 2rem !important;
+}
+
+.presentation-viewport.is-fullscreen .arch-point-card {
+  padding: 1.25rem 1.65rem !important;
+  border-radius: 12px !important;
+}
+
+.presentation-viewport.is-fullscreen .arch-point-card strong {
+  font-size: 1.15rem !important;
+}
+
+.presentation-viewport.is-fullscreen .arch-point-card p {
+  font-size: 0.98rem !important;
+  line-height: 1.5 !important;
+}
+
+.presentation-viewport.is-fullscreen .deck-metaphor-reorganized-layout {
+  height: 100% !important;
+  max-height: calc(100vh - 120px) !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: space-between !important;
+  gap: 1.5rem !important;
+}
+
+.presentation-viewport.is-fullscreen .metaphor-hero-visual-wrap {
+  flex: 1 !important;
+  max-height: calc(100vh - 280px) !important;
+  width: 100% !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  background: var(--bg-card) !important;
+  border: 1px solid var(--border-color) !important;
+  border-radius: 16px !important;
+  padding: 1.25rem 2rem !important;
+}
+
+.presentation-viewport.is-fullscreen .metaphor-wide-hero-img {
+  max-height: 100% !important;
+  width: auto !important;
+  max-width: 100% !important;
+  object-fit: contain !important;
+}
+
+.presentation-viewport.is-fullscreen .metaphor-cards-row {
+  display: grid !important;
+  grid-template-columns: 1fr 1fr !important;
+  gap: 2rem !important;
+}
+
+.presentation-viewport.is-fullscreen .metaphor-cards-row .metaphor-card {
+  padding: 1.25rem 1.65rem !important;
+  border-radius: 12px !important;
+}
+
+.presentation-viewport.is-fullscreen .metaphor-cards-row .card-tag {
+  font-size: 1.18rem !important;
+}
+
+.presentation-viewport.is-fullscreen .metaphor-cards-row .metaphor-card p {
+  font-size: 0.98rem !important;
+  line-height: 1.5 !important;
+}
+
+.presentation-viewport.is-fullscreen .deck-unified-env-layout {
+  height: 100% !important;
+  max-height: calc(100vh - 120px) !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 1.4rem !important;
+}
+
+.presentation-viewport.is-fullscreen .env-intro-bar {
+  font-size: 1.15rem !important;
+}
+
+.presentation-viewport.is-fullscreen .env-cards-grid {
+  display: grid !important;
+  grid-template-columns: repeat(3, 1fr) !important;
+  gap: 1.85rem !important;
+}
+
+.presentation-viewport.is-fullscreen .env-tool-card {
+  padding: 1.5rem 1.65rem !important;
+  border-radius: 14px !important;
+  gap: 0.85rem !important;
+}
+
+.presentation-viewport.is-fullscreen .env-tool-title {
+  font-size: 1.25rem !important;
+}
+
+.presentation-viewport.is-fullscreen .env-tool-port-badge {
+  font-size: 0.95rem !important;
+}
+
+.presentation-viewport.is-fullscreen .env-tool-desc {
+  font-size: 1rem !important;
+  line-height: 1.52 !important;
+}
+
+.presentation-viewport.is-fullscreen .env-tool-highlights {
+  font-size: 0.95rem !important;
+  gap: 0.5rem !important;
+}
+
 .presentation-viewport.is-fullscreen .deck-comparison-layout {
   height: 100% !important;
   max-height: calc(100vh - 120px) !important;

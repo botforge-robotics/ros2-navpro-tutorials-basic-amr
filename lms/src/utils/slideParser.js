@@ -202,7 +202,7 @@ export function parseLessonIntoSlides(lesson) {
     }
 
     // 4. Special Case: Lesson 01 Terminator Shortcuts
-    if (lesson.id === '01' && (container.querySelector('.terminator-image, img[src*="terminator"]') || title.toLowerCase().includes('terminator')) && container.querySelector('table')) {
+    if ((lesson.id === '01' || lesson.id === 'lesson_01' || lesson.num_str === '01') && (container.querySelector('.terminator-image, img[src*="terminator"]') || title.toLowerCase().includes('terminator')) && container.querySelector('table')) {
       const partA = doc.createElement('div');
       const partB = doc.createElement('div');
       let foundTable = false;
@@ -921,46 +921,7 @@ function buildLesson02Slides(doc, lesson, slides) {
     `
   });
 
-  // Step 5: Core Solution
-  slides.push({
-    id: `${lesson.id}_sec3_2_core_solution`,
-    type: 'concept',
-    lessonNum: lesson.num_str,
-    lessonId: lesson.id,
-    module: lesson.module,
-    sectionTitle: '3. Robotics Fundamentals & ROS 2 Architecture',
-    badge: '💡 Core Solution',
-    title: '3.2 Why We Need a Standard: The Core Problem in Robotics Development',
-    htmlContent: `
-      <div class="story-core-solution-layout">
-        <div class="core-problem-box">
-          <div class="problem-box-header">
-            <span class="problem-badge">⚠️ The Fundamental Industry Bottleneck</span>
-          </div>
-          <p class="problem-lead-text">"Many people who work in robot software development don't actually develop robotics applications (such as medicine or food delivery). They spend years building custom motor drivers and low-level frameworks that end up non-reusable, unsupported, and quickly forgotten."</p>
-        </div>
-        <div class="core-solution-grid">
-          <div class="solution-card">
-            <div class="sol-icon">🔌</div>
-            <div class="sol-title">1. Standardized Middleware</div>
-            <p class="sol-desc">Pre-built, rock-solid communication channels (topics, services, actions) connect every node instantly.</p>
-          </div>
-          <div class="solution-card">
-            <div class="sol-icon">📦</div>
-            <div class="sol-title">2. Battle-Tested Ecosystem</div>
-            <p class="sol-desc">Out-of-the-box sensor drivers for Velodyne, RPLiDAR, Intel RealSense, and standard motor controllers.</p>
-          </div>
-          <div class="solution-card">
-            <div class="sol-icon">🚀</div>
-            <div class="sol-title">3. Focus on Applications</div>
-            <p class="sol-desc">Never write socket plumbing again. Start on Day 1 by writing autonomous navigation & delivery behaviors!</p>
-          </div>
-        </div>
-      </div>
-    `
-  });
-
-  // 4. Section 3.3: Why ROS (Reinventing Wheel with image + 3 Imperatives)
+  // 4. Section 3.2 & 3.3: Why We Need a Standard & Why ROS (Merged: Stop Reinventing the Wheel)
   slides.push({
     id: `${lesson.id}_sec3_3_why_ros`,
     type: 'concept',
@@ -968,7 +929,7 @@ function buildLesson02Slides(doc, lesson, slides) {
     lessonId: lesson.id,
     module: lesson.module,
     sectionTitle: '3. Robotics Fundamentals & ROS 2 Architecture',
-    badge: '⚡ The ROS Value Proposition',
+    badge: '⚡ Core Solution: Why ROS',
     title: '3.3 Why We Need ROS: Stop Reinventing the Wheel & Standardize',
     htmlContent: `
       <div class="deck-imperatives-layout">
@@ -978,28 +939,28 @@ function buildLesson02Slides(doc, lesson, slides) {
           </div>
           <div class="wheel-quote-box">
             <p class="wheel-quote-text"><em>“If you are busy making everything from scratch and rebuilding parts that someone has already worked on, you cannot make every part of your robot perfect.”</em></p>
-            <div class="wheel-shift-tag">🔄 Paradigm Shift: From Square Wheels to Universal ROS 2 Bus</div>
+            <div class="wheel-shift-tag">⚠️ The Core Trap: Rebuilding Low-Level Plumbing That Gets Forgotten</div>
           </div>
         </div>
         <div class="imperatives-cards-col">
           <div class="imperative-card">
             <div class="imperative-header"><span class="imperative-icon">🛑</span><h4 class="imperative-title">1. Stop Reinventing the Wheel</h4></div>
-            <p>Why write custom motor drivers, coordinate transform math (TF2), or laser scan filters? ROS provides battle-tested packages conforming to standard coordinate conventions (REP-103 &amp; REP-105).</p>
+            <p>Never write custom motor drivers, coordinate transform math (TF2), or laser scan filters. ROS provides battle-tested packages conforming to universal coordinate conventions (REP-103 &amp; REP-105).</p>
           </div>
           <div class="imperative-card">
-            <div class="imperative-header"><span class="imperative-icon">🔌</span><h4 class="imperative-title">2. Standardize Communication</h4></div>
-            <p>Define strongly-typed message interfaces (<code>.msg</code>, <code>.srv</code>, <code>.action</code>). C++ drivers seamlessly exchange data with Python AI controllers over a distributed peer-to-peer data bus.</p>
+            <div class="imperative-header"><span class="imperative-icon">🔌</span><h4 class="imperative-title">2. Standardized Middleware</h4></div>
+            <p>Pre-built, rock-solid communication channels (topics, services, actions) connect C++ drivers and Python AI controllers seamlessly over a high-speed DDS data bus.</p>
           </div>
           <div class="imperative-card">
-            <div class="imperative-header"><span class="imperative-icon">🌍</span><h4 class="imperative-title">3. Global Community Sharing</h4></div>
-            <p>Gain instant access to state-of-the-art navigation (Nav2), mapping (SLAM Toolbox), manipulation (MoveIt 2), and physics simulation (Gazebo Harmonic)—supported by thousands of roboticists globally.</p>
+            <div class="imperative-header"><span class="imperative-icon">🚀</span><h4 class="imperative-title">3. Focus on Applications</h4></div>
+            <p>Never write socket plumbing again. Start on Day 1 by writing autonomous navigation (Nav2), mapping (SLAM Toolbox), and hospital delivery behaviors!</p>
           </div>
         </div>
       </div>
     `
   });
 
-  // 5. Section 3.4: Windows OS Metaphor
+  // 5. Section 3.4: Windows OS Metaphor (Reorganized Layout: Hero 16:9 Banner + Comparison Cards)
   slides.push({
     id: `${lesson.id}_sec3_4_os_metaphor`,
     type: 'concept',
@@ -1010,18 +971,18 @@ function buildLesson02Slides(doc, lesson, slides) {
     badge: '💻 Architectural Metaphor',
     title: '3.4 What is ROS? The Windows / PC OS Metaphor',
     htmlContent: `
-      <div class="deck-metaphor-layout">
-        <div class="metaphor-visual-wrap">
-          <img src="assets/images/ros_metaphor_pc_vs_robot.jpg" alt="PC OS vs Robot OS Metaphor" class="metaphor-hero-img" />
+      <div class="deck-metaphor-reorganized-layout">
+        <div class="metaphor-hero-visual-wrap">
+          <img src="assets/images/ros_metaphor_pc_vs_robot.jpg" alt="PC OS vs Robot OS Metaphor" class="metaphor-wide-hero-img" />
         </div>
-        <div class="metaphor-cards-wrap">
+        <div class="metaphor-cards-row">
           <div class="metaphor-card pc-card">
-            <div class="card-tag">🖥️ Personal Computers (Windows / macOS)</div>
-            <p>Provides device drivers (graphics cards, USB printers, Wi-Fi) and standardized graphics APIs (DirectX, OpenGL). Game developers focus on gameplay, not writing GPU microcode.</p>
+            <div class="card-tag"><span class="card-icon">🖥️</span><strong>Personal Computers (Windows / macOS)</strong></div>
+            <p>Standardizes hardware abstraction (GPUs, audio, USB, Wi-Fi) and graphics APIs (DirectX, Metal). Game developers focus on gameplay, not writing custom graphics card microcode.</p>
           </div>
           <div class="metaphor-card robot-card">
-            <div class="card-tag">🤖 Autonomous Mobile Robots (ROS 2)</div>
-            <p>Provides hardware abstraction (LiDAR, cameras, IMUs, motor drives) and publish-subscribe IPC. Autonomous navigation engineers focus on path planning, not low-level byte parsing.</p>
+            <div class="card-tag"><span class="card-icon">🤖</span><strong>Autonomous Mobile Robots (ROS 2)</strong></div>
+            <p>Standardizes hardware abstraction (LiDAR, cameras, IMUs, motor drives) and publish-subscribe IPC. Autonomous navigation engineers focus on path planning, not low-level byte parsing.</p>
           </div>
         </div>
       </div>
@@ -1095,7 +1056,7 @@ function buildLesson02Slides(doc, lesson, slides) {
     `
   });
 
-  // 8. Section 3.6: The Motion Flow Explanation: Robot as a Living Organism
+  // 8. Section 3.6: The Motion Flow Explanation: Robot as a Living Organism (Bigger Hero Visual)
   slides.push({
     id: `${lesson.id}_sec3_6_motion_flow`,
     type: 'concept',
@@ -1112,31 +1073,27 @@ function buildLesson02Slides(doc, lesson, slides) {
         </div>
         <div class="motion-stages-row">
           <div class="motion-stage-card stage-senses">
-            <span class="stage-num-badge">Stage 1</span>
-            <span class="stage-title">👁️ Senses</span>
-            <p class="stage-desc">LiDAR, cameras, and IMU generate raw point clouds, images, and accelerations at 10–50 Hz.</p>
+            <div class="stage-card-head"><span class="stage-num-badge">Stage 1</span><span class="stage-title">👁️ Senses</span></div>
+            <p class="stage-desc">LiDAR, IMU & Cameras (10–50 Hz)</p>
           </div>
           <div class="motion-stage-card stage-nerves">
-            <span class="stage-num-badge">Stage 2</span>
-            <span class="stage-title">⚡ Nerves</span>
-            <p class="stage-desc">The high-speed DDS middleware bus serializes and routes telemetry packets with microsecond latency.</p>
+            <div class="stage-card-head"><span class="stage-num-badge">Stage 2</span><span class="stage-title">⚡ Nerves</span></div>
+            <p class="stage-desc">DDS Bus Serialization (µs Latency)</p>
           </div>
           <div class="motion-stage-card stage-brain">
-            <span class="stage-num-badge">Stage 3</span>
-            <span class="stage-title">🧠 Brain</span>
-            <p class="stage-desc">SLAM updates map poses; Nav2 costmaps evaluate collision risks and calculate optimal path trajectory.</p>
+            <div class="stage-card-head"><span class="stage-num-badge">Stage 3</span><span class="stage-title">🧠 Brain</span></div>
+            <p class="stage-desc">SLAM & Nav2 Path Planning</p>
           </div>
           <div class="motion-stage-card stage-muscles">
-            <span class="stage-num-badge">Stage 4</span>
-            <span class="stage-title">💪 Muscles</span>
-            <p class="stage-desc">Motor controllers receive <code>/cmd_vel</code> velocities and drive wheels forward to execute the mission.</p>
+            <div class="stage-card-head"><span class="stage-num-badge">Stage 4</span><span class="stage-title">💪 Muscles</span></div>
+            <p class="stage-desc">Motor Actuators (<code>/cmd_vel</code>)</p>
           </div>
         </div>
       </div>
     `
   });
 
-  // 9. Section 3.7: ROS 1 vs. ROS 2 Architectural Paradigm Shift
+  // 9. Section 3.7: ROS 1 vs. ROS 2 Architectural Paradigm Shift (With Restored Architecture Diagram)
   slides.push({
     id: `${lesson.id}_sec3_7_ros1_vs_ros2`,
     type: 'concept',
@@ -1147,48 +1104,20 @@ function buildLesson02Slides(doc, lesson, slides) {
     badge: '⚖️ Architecture Comparison',
     title: '3.7 ROS 1 vs. ROS 2: The Architectural Paradigm Shift',
     htmlContent: `
-      <div class="deck-comparison-layout">
-        <table class="ros1-vs-ros2-matrix">
-          <thead>
-            <tr>
-              <th>Architectural Feature</th>
-              <th>Legacy ROS 1 (EOL 2025)</th>
-              <th>Modern ROS 2 Jazzy (LTS 2029)</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td class="feat-name">Network Coordinator</td>
-              <td class="ros1-col">Centralized <code>roscore</code> master (Single Point of Failure)</td>
-              <td class="ros2-col">Decentralized Peer-to-Peer Discovery (Zero single point of failure)</td>
-            </tr>
-            <tr>
-              <td class="feat-name">Underlying Transport</td>
-              <td class="ros1-col">Custom protocols (TCPROS / UDPROS)</td>
-              <td class="ros2-col">Industry-standard OMG DDS (Data Distribution Service)</td>
-            </tr>
-            <tr>
-              <td class="feat-name">Quality of Service (QoS)</td>
-              <td class="ros1-col">TCP best-effort or blocking; no loss resilience</td>
-              <td class="ros2-col">Tunable QoS (Reliable vs. Best Effort, Volatile vs. Transient Local)</td>
-            </tr>
-            <tr>
-              <td class="feat-name">Language Core</td>
-              <td class="ros1-col">Fragmented C++ (<code>roscpp</code>) and Python (<code>rospy</code>)</td>
-              <td class="ros2-col">Unified C Core (<code>rcl</code>) with high-level Python (<code>rclpy</code>) and C++ (<code>rclcpp</code>)</td>
-            </tr>
-            <tr>
-              <td class="feat-name">Multi-Robot Fleets</td>
-              <td class="ros1-col">Complex multimaster networking bridges required</td>
-              <td class="ros2-col">Native multi-robot isolation via <code>ROS_DOMAIN_ID</code> (0–101)</td>
-            </tr>
-            <tr>
-              <td class="feat-name">Supported Host OS</td>
-              <td class="ros1-col">Linux Ubuntu only (strictly tied)</td>
-              <td class="ros2-col">Cross-platform: Ubuntu Linux, Windows 10/11, macOS, RTOS</td>
-            </tr>
-          </tbody>
-        </table>
+      <div class="deck-ros-arch-slide-layout">
+        <div class="arch-visual-wrap">
+          <img src="assets/images/ros1_vs_ros2_dds.svg" alt="ROS 1 Master vs ROS 2 DDS Architecture" class="ros-arch-hero-img" />
+        </div>
+        <div class="arch-key-points-grid">
+          <div class="arch-point-card ros1-point">
+            <div class="point-badge-wrap"><span class="point-badge ros1">ROS 1 Legacy</span><strong>Centralized Master (roscore)</strong></div>
+            <p><strong>Single Point of Failure:</strong> If <code>roscore</code> master crashes, the entire robot network fails. Custom TCPROS transports with fragmented C++ (<code>roscpp</code>) and Python (<code>rospy</code>) codebases.</p>
+          </div>
+          <div class="arch-point-card ros2-point">
+            <div class="point-badge-wrap"><span class="point-badge ros2">ROS 2 Modern</span><strong>Decentralized Peer-to-Peer (DDS)</strong></div>
+            <p><strong>Industrial Grade & Fault-Tolerant:</strong> Zero single points of failure. Tunable Quality of Service (QoS). Unified C core (<code>rcl</code>) guarantees 100% feature parity across Python and C++.</p>
+          </div>
+        </div>
       </div>
     `
   });
@@ -1301,158 +1230,72 @@ rosdep update</code></pre>
     `
   });
 
-  // 13. Section 6: Desktop GUI (noVNC • Port 6080)
+  // 13. Section 6: Unified Developer Environment: Desktop GUI, In-Browser VS Code & Terminals
   slides.push({
     id: `${lesson.id}_sec6_desktop_gui`,
     type: 'concept',
     lessonNum: lesson.num_str,
     lessonId: lesson.id,
     module: lesson.module,
-    sectionTitle: '6. How to Open & Use the Desktop GUI (noVNC • Port 6080)',
-    badge: '🖥️ noVNC Desktop',
-    title: '6. Accessing the Desktop GUI & Pre-Configured Robotics Launchers',
+    sectionTitle: '6. Developer Environment & Lab Access',
+    badge: '🖥️ Lab Tooling Suite',
+    title: '6. Developer Environment: Desktop GUI, In-Browser VS Code & Terminals',
     htmlContent: `
-      <div class="deck-gui-access-layout">
-        <p>Access the full graphical Linux desktop directly inside any web browser without installing local VNC clients:</p>
-        <div class="gui-access-card">
-          <div class="access-url-badge">🌐 Browser Access URL: <code>http://localhost:6080/vnc.html</code></div>
-          <p class="access-sub">Connects instantly to an accelerated XFCE desktop running inside your Docker container.</p>
-        </div>
-        <div class="launchers-grid">
-          <div class="launcher-item">
-            <span class="launcher-icon">📟</span>
-            <strong>Terminator Terminal</strong>
-            <p>Multi-pane shell grid with hotkeys.</p>
+      <div class="deck-unified-env-layout">
+        <p class="env-intro-bar">The AMR Learning Hub provides three synchronized access methods into the containerized ROS 2 Jazzy environment:</p>
+        <div class="env-cards-grid">
+          <div class="env-tool-card">
+            <div class="env-tool-header">
+              <span class="env-tool-icon">🖥️</span>
+              <strong class="env-tool-title">noVNC Desktop GUI</strong>
+            </div>
+            <span class="env-tool-port-badge">Port 6080 • /vnc.html</span>
+            <p class="env-tool-desc">Full XFCE graphical desktop running inside your browser without installing local VNC clients.</p>
+            <ul class="env-tool-highlights">
+              <li>Launch <strong>RViz2</strong> for 3D LiDAR & TF trees</li>
+              <li>Open <strong>Gazebo</strong> for physical AMR simulation</li>
+              <li>Set <em>Remote Resizing</em> mode for crisp display</li>
+            </ul>
           </div>
-          <div class="launcher-item">
-            <span class="launcher-icon">💻</span>
-            <strong>VS Code IDE</strong>
-            <p>Full editor with ROS 2 plugins.</p>
+          <div class="env-tool-card">
+            <div class="env-tool-header">
+              <span class="env-tool-icon">💻</span>
+              <strong class="env-tool-title">In-Browser VS Code IDE</strong>
+            </div>
+            <span class="env-tool-port-badge">Port 8443 • Web IDE</span>
+            <p class="env-tool-desc">Professional code editor mounted directly to the student robotics workspace.</p>
+            <ul class="env-tool-highlights">
+              <li>Python IntelliSense for <code>rclpy</code> & nodes</li>
+              <li>URDF, Xacro & launch XML syntax coloring</li>
+              <li>Integrated shell with <code>Ctrl + \`</code></li>
+            </ul>
           </div>
-          <div class="launcher-item">
-            <span class="launcher-icon">👁️</span>
-            <strong>RViz2 3D Visualizer</strong>
-            <p>Renders LiDAR point clouds & TF trees.</p>
-          </div>
-          <div class="launcher-item">
-            <span class="launcher-icon">🌐</span>
-            <strong>Gazebo Simulation</strong>
-            <p>Dynamic AMR physics simulation.</p>
+          <div class="env-tool-card">
+            <div class="env-tool-header">
+              <span class="env-tool-icon">⌨️</span>
+              <strong class="env-tool-title">Interactive Terminals</strong>
+            </div>
+            <span class="env-tool-port-badge">Terminator & CLI</span>
+            <p class="env-tool-desc">High-efficiency shell access to build and orchestrate distributed ROS 2 nodes.</p>
+            <ul class="env-tool-highlights">
+              <li><strong>Terminator:</strong> 4-pane grid (<code>Ctrl+Shift+O/E</code>)</li>
+              <li><strong>Desktop Hotkey:</strong> <code>Ctrl + Alt + T</code> in noVNC</li>
+              <li><strong>Host Shell:</strong> <code>docker exec -it ...</code></li>
+            </ul>
           </div>
         </div>
       </div>
     `
   });
 
-  slides.push({
-    id: `${lesson.id}_sec6_novnc_tips`,
-    type: 'concept',
-    lessonNum: lesson.num_str,
-    lessonId: lesson.id,
-    module: lesson.module,
-    sectionTitle: '6. How to Open & Use the Desktop GUI (noVNC • Port 6080)',
-    badge: '⚡ noVNC Workflow',
-    title: '6.3 noVNC Productivity Controls & Best Practices',
-    htmlContent: `
-      <div class="deck-novnc-tips-grid">
-        <div class="novnc-tip-card">
-          <div class="tip-header"><span class="tip-icon">📐</span><strong>Remote Auto-Resize</strong></div>
-          <p>Click the gear icon in the left slide-out tab and set <strong>Scaling Mode</strong> to <em>Remote Resizing</em>. The container desktop will automatically match your browser window size in real-time.</p>
-        </div>
-        <div class="novnc-tip-card">
-          <div class="tip-header"><span class="tip-icon">📋</span><strong>Seamless Clipboard Sync</strong></div>
-          <p>Use the Clipboard button on the noVNC sidebar to paste commands from your host machine into the remote terminal, or select text in Terminator and use <code>Ctrl + Shift + C</code>.</p>
-        </div>
-        <div class="novnc-tip-card">
-          <div class="tip-header"><span class="tip-icon">⛶</span><strong>Fullscreen Mode</strong></div>
-          <p>Toggle noVNC fullscreen to eliminate browser chrome and work with dual-monitor precision, making the virtual desktop feel completely native.</p>
-        </div>
-      </div>
-    `
-  });
-
-  // 14. Section 7: VS Code IDE (Port 8443)
-  slides.push({
-    id: `${lesson.id}_sec7_vscode_ide`,
-    type: 'concept',
-    lessonNum: lesson.num_str,
-    lessonId: lesson.id,
-    module: lesson.module,
-    sectionTitle: '7. How to Open & Use In-Browser VS Code IDE (Port 8443)',
-    badge: '💻 Web IDE',
-    title: '7. Accessing & Configuring the In-Browser VS Code Editor',
-    htmlContent: `
-      <div class="deck-vscode-layout">
-        <div class="vscode-access-header">
-          <span class="vscode-url-pill">🌐 Browser URL: <code>http://localhost:8443</code></span>
-          <span class="vscode-ws-pill">📁 Workspace: <code>/home/student/nexus_ws</code></span>
-        </div>
-        <p>A full VS Code IDE running directly on the container filesystem with persistent state, syntax coloring, and integrated terminals:</p>
-        <div class="vscode-features-grid">
-          <div class="vscode-feat-card">
-            <strong>🐍 Python Language Server</strong>
-            <p>IntelliSense autocomplete for <code>rclpy</code> nodes, msg types, and QoS profiles.</p>
-          </div>
-          <div class="vscode-feat-card">
-            <strong>🤖 ROS 2 & XML Support</strong>
-            <p>Syntax highlighting and linting for URDF, Xacro, and launch files.</p>
-          </div>
-          <div class="vscode-feat-card">
-            <strong>⌨️ Integrated Terminal</strong>
-            <p>Press <code>Ctrl + \`</code> to open an environment-sourced shell directly beside your code.</p>
-          </div>
-          <div class="vscode-feat-card">
-            <strong>💾 Auto-Save & Sync</strong>
-            <p>File modifications immediately reflect across simulator and terminal processes.</p>
-          </div>
-        </div>
-      </div>
-    `
-  });
-
-  // 15. Section 8: Terminal Methods & Sourcing
-  slides.push({
-    id: `${lesson.id}_sec8_terminal_methods`,
-    type: 'concept',
-    lessonNum: lesson.num_str,
-    lessonId: lesson.id,
-    module: lesson.module,
-    sectionTitle: '8. How to Open & Use the Terminal',
-    badge: '⌨️ Terminal Workflows',
-    title: '8. Four Methods of Terminal Access in the AMR Lab',
-    htmlContent: `
-      <div class="deck-terminal-methods-grid">
-        <div class="term-method-card">
-          <span class="method-tag">Method 1</span>
-          <h4>🖥️ Desktop Terminal & Hotkey</h4>
-          <p>Inside noVNC, double-click the Terminal icon or press universal hotkey <code>Ctrl + Alt + T</code>.</p>
-        </div>
-        <div class="term-method-card">
-          <span class="method-tag">Method 2</span>
-          <h4>📟 Terminator (Multi-Pane)</h4>
-          <p>Split a single window into 4 panes (<code>Ctrl + Shift + O/E</code>) to orchestrate nodes side-by-side.</p>
-        </div>
-        <div class="term-method-card">
-          <span class="method-tag">Method 3</span>
-          <h4>💻 VS Code Terminal</h4>
-          <p>Press <code>Ctrl + \`</code> in browser VS Code to test and build directly alongside your script.</p>
-        </div>
-        <div class="term-method-card">
-          <span class="method-tag">Method 4</span>
-          <h4>⚡ Direct Host Shell Access</h4>
-          <p>Run <code>docker exec -it navpro_amr_lab bash</code> from your host terminal for native shell speed.</p>
-        </div>
-      </div>
-    `
-  });
-
+  // 14. Section 8: Sourcing ROS 2 Underlay
   slides.push({
     id: `${lesson.id}_sec8_sourcing`,
     type: 'command',
     lessonNum: lesson.num_str,
     lessonId: lesson.id,
     module: lesson.module,
-    sectionTitle: '8. How to Open & Use the Terminal',
+    sectionTitle: '8. Sourcing ROS 2 Environment',
     badge: 'source /opt/ros/...',
     title: 'Source ROS 2 Jazzy Underlay & Automate with ~/.bashrc',
     syntax: 'source /opt/ros/jazzy/setup.bash',
@@ -1472,7 +1315,7 @@ echo $ROS_DISTRO
     lang: 'bash'
   });
 
-  // 16. Section 9: Verification & Smoke Test
+  // 15. Section 9: Verification & Smoke Test
   slides.push({
     id: `${lesson.id}_sec9_talker_listener`,
     type: 'concept',
@@ -1507,56 +1350,6 @@ ros2 run demo_nodes_py listener
 # [INFO] [listener]: I heard: [Hello World: 1]
 # [INFO] [listener]: I heard: [Hello World: 2]</code></pre>
             </div>
-          </div>
-        </div>
-      </div>
-    `
-  });
-
-  slides.push({
-    id: `${lesson.id}_sec9_telemetry`,
-    type: 'command',
-    lessonNum: lesson.num_str,
-    lessonId: lesson.id,
-    module: lesson.module,
-    sectionTitle: '9. Verification & "Hello World" Smoke Test',
-    badge: 'ros2 node & topic',
-    title: '9.3 Active Node Inspection & Topic Echo Verification',
-    syntax: 'ros2 node list && ros2 topic echo <topic_name>',
-    desc: 'Verify live node registration and stream incoming topic message payloads in real-time:',
-    code: `# 1. List active nodes on the DDS bus:
-ros2 node list       # -> /talker, /listener
-
-# 2. Inspect active topics:
-ros2 topic list      # -> /chatter, /rosout
-
-# 3. Echo live messages from /chatter:
-ros2 topic echo /chatter
-# Output: data: 'Hello World: 14'`,
-    lang: 'bash'
-  });
-
-  // 17. Section 10: Hands-on Student Challenge
-  slides.push({
-    id: `${lesson.id}_sec10_challenge`,
-    type: 'challenge',
-    lessonNum: lesson.num_str,
-    lessonId: lesson.id,
-    module: lesson.module,
-    sectionTitle: '10. Hands-on Student Challenge',
-    title: '10. Hands-on Challenge: Multi-Robot Domain Isolation & RMW Environment Configuration',
-    htmlContent: `
-      <div class="ppt-challenge-briefing">
-        <p>Configure multiple AMR robots operating on the same local subnet to isolate DDS topic traffic and switch between FastDDS and CycloneDDS middleware.</p>
-        <ul class="challenge-targets-list">
-          <li><strong>Domain Isolation:</strong> Export <code>ROS_DOMAIN_ID=42</code> to prevent cross-talk between student robot fleets.</li>
-          <li><strong>RMW Implementation:</strong> Verify active middleware implementation using <code>RMW_IMPLEMENTATION=rmw_cyclonedds_cpp</code>.</li>
-          <li><strong>Verification:</strong> Execute talker/listener tests across isolated domains to confirm cross-talk suppression.</li>
-        </ul>
-        <div class="challenge-artifact-hint">
-          <div class="mission-brief-footer">
-            <span class="mission-file-pill">🎯 Target Artifact: <code>m01_l02_task_domain_isolation.sh</code></span>
-            <span class="mission-lms-tag">⚡ Follow step-by-step guidance & validation scripts in Web LMS</span>
           </div>
         </div>
       </div>
