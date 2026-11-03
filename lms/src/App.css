@@ -3886,12 +3886,141 @@
   overflow-y: hidden;
 }
 
-.concept-html-body img.lesson-image {
+.concept-html-body img,
+.concept-html-body img.lesson-image,
+.concept-html-body svg:not(.lucide),
+.presentation-viewport .infographic-container img,
+.presentation-viewport .infographic-container svg:not(.lucide) {
   max-height: 280px;
+  max-width: 100%;
   width: auto;
-  margin: 0.75rem auto;
+  height: auto;
+  object-fit: contain;
+  margin: 0.5rem auto;
   border-radius: 10px;
   display: block;
+}
+
+/* Subtopic & Concept Side-by-Side 2-Column Deck Layout */
+.deck-two-col-layout {
+  display: grid;
+  grid-template-columns: 1fr 1.15fr;
+  gap: 1.5rem;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  max-height: 460px;
+  box-sizing: border-box;
+}
+
+.deck-two-col-layout .col-visual {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  max-height: 440px;
+}
+
+.deck-two-col-layout .col-visual img,
+.deck-two-col-layout .col-visual svg,
+.deck-two-col-layout .col-visual .lesson-image {
+  max-height: 380px !important;
+  max-width: 100% !important;
+  width: auto !important;
+  height: auto !important;
+  object-fit: contain;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+  display: block;
+  margin: 0 auto;
+}
+
+.deck-two-col-layout .col-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+  max-height: 440px;
+  overflow: hidden;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.deck-two-col-layout .col-content table {
+  width: 100%;
+  font-size: 0.85rem;
+  margin: 0.4rem 0;
+}
+
+.deck-two-col-layout .col-content th,
+.deck-two-col-layout .col-content td {
+  padding: 0.4rem 0.55rem !important;
+}
+
+/* Guard against vertical overflow in interactive widgets in presentation mode */
+.presentation-viewport .pubsub-flow-container {
+  max-height: 460px;
+  overflow: hidden;
+}
+
+.presentation-viewport .flow-cli-introspection-bar {
+  margin-top: 0.5rem;
+}
+
+/* Card Mode Presentation Optimizations (Prevent Bottom Overflows) */
+.presentation-viewport:not(.is-fullscreen) .ppt-term-body,
+.presentation-viewport:not(.is-fullscreen) .ppt-ide-body {
+  padding: 0.65rem 1rem !important;
+  font-size: 0.88rem !important;
+  line-height: 1.42 !important;
+}
+
+.presentation-viewport:not(.is-fullscreen) .cmd-slide-header {
+  margin-bottom: 0.6rem !important;
+}
+
+.presentation-viewport:not(.is-fullscreen) .ppt-breakdown-deck .code-breakdown-list {
+  grid-template-columns: repeat(2, 1fr) !important;
+  gap: 0.45rem !important;
+}
+
+.presentation-viewport:not(.is-fullscreen) .ppt-breakdown-deck .code-breakdown-item {
+  padding: 0.45rem 0.75rem !important;
+  font-size: 0.8rem !important;
+  line-height: 1.35 !important;
+}
+
+.presentation-viewport:not(.is-fullscreen) .ppt-breakdown-deck .code-breakdown-item strong {
+  font-size: 0.82rem !important;
+  margin-bottom: 0.15rem !important;
+}
+
+.presentation-viewport:not(.is-fullscreen) .ppt-breakdown-deck .code-breakdown-card {
+  padding: 0.75rem 1rem !important;
+}
+
+.presentation-viewport:not(.is-fullscreen) .interactive-stage-container {
+  height: 100% !important;
+  max-height: 480px !important;
+  overflow: hidden !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.presentation-viewport:not(.is-fullscreen) .interactive-stage-container > * {
+  transform: scale(0.85) !important;
+  transform-origin: center center !important;
+}
+
+.presentation-viewport:not(.is-fullscreen) .concept-html-body .alert-callout,
+.presentation-viewport:not(.is-fullscreen) .concept-html-body .alert {
+  padding: 0.75rem 1.1rem !important;
+  font-size: 0.88rem !important;
+  line-height: 1.45 !important;
+  margin: 0.5rem 0 !important;
 }
 
 /* Slide Type 7: Challenge View */
@@ -6165,6 +6294,41 @@
   height: calc(100vh - 120px) !important;
   max-height: calc(100vh - 120px) !important;
 }
+
+.presentation-viewport.is-fullscreen .concept-html-body {
+  max-height: calc(100vh - 180px) !important;
+  font-size: 1.15rem !important;
+}
+
+.presentation-viewport.is-fullscreen .concept-html-body img,
+.presentation-viewport.is-fullscreen .concept-html-body svg:not(.lucide),
+.presentation-viewport.is-fullscreen .infographic-container img,
+.presentation-viewport.is-fullscreen .infographic-container svg:not(.lucide) {
+  max-height: calc(100vh - 240px) !important;
+}
+
+.presentation-viewport.is-fullscreen .deck-two-col-layout {
+  grid-template-columns: 1fr 1fr !important;
+  gap: 3.5rem !important;
+  max-height: calc(100vh - 180px) !important;
+}
+
+.presentation-viewport.is-fullscreen .deck-two-col-layout .col-visual {
+  max-height: calc(100vh - 200px) !important;
+}
+
+.presentation-viewport.is-fullscreen .deck-two-col-layout .col-visual img,
+.presentation-viewport.is-fullscreen .deck-two-col-layout .col-visual svg,
+.presentation-viewport.is-fullscreen .deck-two-col-layout .col-visual .lesson-image {
+  max-height: calc(100vh - 220px) !important;
+}
+
+.presentation-viewport.is-fullscreen .deck-two-col-layout .col-content {
+  max-height: calc(100vh - 200px) !important;
+  font-size: 1.15rem !important;
+  line-height: 1.65 !important;
+}
+
 
 
 

@@ -145,9 +145,238 @@ export function parseLessonIntoSlides(lesson) {
     return hasCode || hasImage || hasTable || hasCallout || hasList || textLen >= 160;
   };
 
+  // Helper to emit extracted breakdown cards as dedicated slides
+  const emitBreakdowns = (breakdownCards, baseId, title, h2Title) => {
+    breakdownCards.forEach((bCard, bIdx) => {
+      if (bCard.textContent.trim().length > 30) {
+        slides.push({
+          id: `${baseId}_breakdown_${bIdx}`,
+          type: 'step_breakdown',
+          lessonNum: lesson.num_str,
+          lessonId: lesson.id,
+          module: lesson.module,
+          sectionTitle: h2Title,
+          badge: 'Architecture Breakdown',
+          title: `${title} — Core Mechanics Breakdown`,
+          htmlContent: bCard.outerHTML
+        });
+      }
+    });
+  };
+
+  // Helper to emit substantive concept or subtopic slides with strict overflow prevention
+  const emitSubstantiveSlides = (container, baseId, title, h2Title) => {
+    if (!container || !isSubstantive(container)) return;
+
+    // 1. Remove all trailing and intermediate dividers (eliminates ~33 false bottom overflows)
+    container.querySelectorAll('hr, .divider').forEach(el => el.remove());
+
+    // 2. Extract any .code-breakdown-card elements so they become dedicated subsequent slides
+    const breakdownCards = Array.from(container.querySelectorAll('.code-breakdown-card'));
+    breakdownCards.forEach(card => card.remove());
+
+    // 3. Trim all <pre> code blocks to <= 14 lines to eliminate 1600-2000px code dumps on slides
+    container.querySelectorAll('pre').forEach(pre => {
+      const codeElem = pre.querySelector('code') || pre;
+      const raw = codeElem.textContent;
+      const lines = raw.split('\n');
+      if (lines.length > 14) {
+        codeElem.textContent = lines.slice(0, 12).join('\n') + '\n\n# ... [Full implementation available in Web LMS] ...';
+      }
+    });
+
+    // 4. Special Case: Lesson 01 Terminator Shortcuts
+    if (lesson.id === '01' && (container.querySelector('.terminator-image, img[src*="terminator"]') || title.toLowerCase().includes('terminator')) && container.querySelector('table')) {
+      const partA = doc.createElement('div');
+      const partB = doc.createElement('div');
+      let foundTable = false;
+      Array.from(container.children).forEach(child => {
+        if (child.querySelector('table') || child.tagName.toLowerCase() === 'table' || child.classList.contains('table-responsive')) {
+          foundTable = true;
+        }
+        if (!foundTable) partA.appendChild(child.cloneNode(true));
+        else partB.appendChild(child.cloneNode(true));
+      });
+      slides.push({
+        id: baseId,
+        type: 'concept',
+        lessonNum: lesson.num_str,
+        lessonId: lesson.id,
+        module: lesson.module,
+        sectionTitle: h2Title,
+        badge: '📟 Multi-Terminal Grid',
+        title: title,
+        htmlContent: `
+          <div class="terminator-merged-slide-layout">
+            <div class="term-left-col">${partA.innerHTML}</div>
+            <div class="term-right-col">
+              <div class="term-shortcuts-header"><span class="shortcuts-badge">⌨️ Essential Shortcuts</span></div>
+              ${partB.innerHTML}
+            </div>
+          </div>
+        `
+      });
+      emitBreakdowns(breakdownCards, baseId, title, h2Title);
+      return;
+    }
+
+    // 5. Check images in this container
+    const rawImgs = Array.from(container.querySelectorAll('img, svg:not(.lucide)'));
+
+    // Case A: Multiple images in one section (e.g., Lesson 03 Turtlesim+Teleop, Lesson 11, 13, 14, 22)
+    if (rawImgs.length > 1) {
+      const children = Array.from(container.children);
+      const parts = [];
+      let currentPart = [];
+
+      children.forEach(child => {
+        const hasImg = !!child.querySelector('img, svg:not(.lucide)') || ['img', 'svg'].includes(child.tagName.toLowerCase()) || child.classList.contains('lesson-image-wrapper');
+        if (hasImg && currentPart.some(c => !!c.querySelector('img, svg:not(.lucide)') || ['img', 'svg'].includes(c.tagName.toLowerCase()) || c.classList.contains('lesson-image-wrapper'))) {
+          parts.push(currentPart);
+          currentPart = [child];
+        } else {
+          currentPart.push(child);
+        }
+      });
+      if (currentPart.length > 0) parts.push(currentPart);
+
+      parts.forEach((partEls, pIdx) => {
+        const partDiv = doc.createElement('div');
+        partEls.forEach(el => partDiv.appendChild(el.cloneNode(true)));
+        if (!isSubstantive(partDiv)) return;
+
+        const strong = partDiv.querySelector('strong, h4, h5');
+        const subLabel = strong ? strong.textContent.trim() : (pIdx === 0 ? 'Simulation View' : 'Architecture Diagram');
+        const partTitle = parts.length > 1 ? `${title} (Part ${pIdx + 1}: ${subLabel})` : title;
+
+        emitSubstantiveSlides(partDiv, `${baseId}_part${pIdx + 1}`, partTitle, h2Title);
+      });
+      emitBreakdowns(breakdownCards, baseId, title, h2Title);
+      return;
+    }
+
+    // Case B: Single image + substantial text or table
+    if (rawImgs.length === 1 && (container.textContent.trim().length > 180 || container.querySelector('table, pre, .code-container, .alert'))) {
+      const table = container.querySelector('table, .table-responsive');
+      const tableRows = table ? table.querySelectorAll('tr').length : 0;
+      const hasCode = !!container.querySelector('pre, .code-container');
+      const textLen = container.textContent.trim().length;
+
+      // If large table (> 4 rows like Lesson 17) OR heavy content with code (> 550 chars like Lesson 05 7.3), split into Visual slide + Implementation slide
+      if ((table && tableRows > 4) || (hasCode && textLen > 550)) {
+        const visualSlideDiv = doc.createElement('div');
+        const contentSlideDiv = doc.createElement('div');
+        let foundCodeOrTable = false;
+
+        Array.from(container.children).forEach(child => {
+          if (child.querySelector('pre, .code-container, table') || ['pre', 'table'].includes(child.tagName.toLowerCase()) || child.classList.contains('code-container') || child.classList.contains('table-responsive')) {
+            foundCodeOrTable = true;
+          }
+          if (!foundCodeOrTable) visualSlideDiv.appendChild(child.cloneNode(true));
+          else contentSlideDiv.appendChild(child.cloneNode(true));
+        });
+
+        if (isSubstantive(visualSlideDiv)) {
+          emitSubstantiveSlides(visualSlideDiv, `${baseId}_visual`, `${title}: Architectural Model`, h2Title);
+        }
+        if (isSubstantive(contentSlideDiv)) {
+          emitSubstantiveSlides(contentSlideDiv, `${baseId}_code`, `${title}: Implementation`, h2Title);
+        }
+        emitBreakdowns(breakdownCards, baseId, title, h2Title);
+        return;
+      } else {
+        // Side-by-side 2-column layout
+        const visualDiv = doc.createElement('div');
+        visualDiv.className = 'col-visual';
+        const contentDiv = doc.createElement('div');
+        contentDiv.className = 'col-content';
+
+        Array.from(container.children).forEach(child => {
+          const hasImg = !!child.querySelector('img, svg:not(.lucide)') || ['img', 'svg'].includes(child.tagName.toLowerCase()) || child.classList.contains('lesson-image-wrapper');
+          if (hasImg) visualDiv.appendChild(child.cloneNode(true));
+          else contentDiv.appendChild(child.cloneNode(true));
+        });
+
+        slides.push({
+          id: baseId,
+          type: 'subtopic',
+          lessonNum: lesson.num_str,
+          lessonId: lesson.id,
+          module: lesson.module,
+          sectionTitle: h2Title,
+          title: title,
+          htmlContent: `
+            <div class="deck-two-col-layout">
+              ${visualDiv.outerHTML}
+              ${contentDiv.outerHTML}
+            </div>
+          `
+        });
+      }
+      emitBreakdowns(breakdownCards, baseId, title, h2Title);
+      return;
+    }
+
+    // Case C: Standard content (no images, or single image with compact text)
+    // If container is large (> 500 chars) and has multiple child elements, chunk into digestible slides
+    const childNodes = Array.from(container.children);
+    if (rawImgs.length === 0 && childNodes.length > 1 && container.textContent.trim().length > 500) {
+      const chunks = [];
+      let currentChunk = [];
+      let currentLen = 0;
+
+      childNodes.forEach(child => {
+        const textLen = child.textContent.trim().length;
+        const isBig = textLen > 280 || child.querySelector('pre, table') || child.classList.contains('code-breakdown-card') || child.classList.contains('alert') || child.classList.contains('code-container');
+        
+        if (currentChunk.length > 0 && (isBig || currentLen + textLen > 500)) {
+          chunks.push(currentChunk);
+          currentChunk = [child];
+          currentLen = textLen;
+        } else {
+          currentChunk.push(child);
+          currentLen += textLen;
+        }
+      });
+      if (currentChunk.length > 0) chunks.push(currentChunk);
+
+      if (chunks.length > 1) {
+        chunks.forEach((ch, chIdx) => {
+          const chDiv = doc.createElement('div');
+          ch.forEach(el => chDiv.appendChild(el.cloneNode(true)));
+          if (!isSubstantive(chDiv)) return;
+
+          const strong = chDiv.querySelector('strong, h3, h4, h5');
+          const codeTag = chDiv.querySelector('pre, .code-container');
+          let subLabel = strong ? strong.textContent.trim() : (codeTag ? 'Implementation' : `Part ${chIdx + 1}`);
+          if (subLabel.length > 35) subLabel = `Part ${chIdx + 1}`;
+
+          emitSubstantiveSlides(chDiv, `${baseId}_chk${chIdx + 1}`, `${title} (${subLabel})`, h2Title);
+        });
+        emitBreakdowns(breakdownCards, baseId, title, h2Title);
+        return;
+      }
+    }
+
+    // Single compact slide
+    slides.push({
+      id: baseId,
+      type: 'subtopic',
+      lessonNum: lesson.num_str,
+      lessonId: lesson.id,
+      module: lesson.module,
+      sectionTitle: h2Title,
+      title: title,
+      htmlContent: container.innerHTML
+    });
+
+    // 6. Emit any extracted breakdown cards as dedicated step_breakdown slides
+    emitBreakdowns(breakdownCards, baseId, title, h2Title);
+  };
+
   // Find all sections or group by <h2>
   let sections = Array.from(doc.querySelectorAll('section'));
-  if (sections.length < 2) {
+  if (sections.length < 2 || sections.length < doc.querySelectorAll('h2').length) {
     const h2Elements = Array.from(doc.querySelectorAll('h2'));
     sections = h2Elements.map((h2) => {
       const container = doc.createElement('section');
@@ -174,7 +403,7 @@ export function parseLessonIntoSlides(lesson) {
     const h2Lower = h2Title.toLowerCase();
 
     // Skip Section 1 if it is just "Overview & Learning Objectives" (already in Launchpad)
-    if (h2Lower.includes('learning objectives') || (h2Lower.includes('overview') && secIdx === 0)) {
+    if (h2Lower.includes('learning objectives') || (h2Lower.includes('overview') && secIdx <= 1)) {
       return;
     }
 
@@ -343,82 +572,35 @@ export function parseLessonIntoSlides(lesson) {
     // Check for Subsections / Subtopics (h3)
     const h3Elements = Array.from(section.querySelectorAll('h3'));
     if (h3Elements.length > 0) {
+      // Check for content before the first h3
+      const preH3Container = doc.createElement('div');
+      let preCurr = section.firstElementChild;
+      while (preCurr && preCurr.tagName.toLowerCase() !== 'h3' && preCurr.tagName.toLowerCase() !== 'h2') {
+        if (!portalIds.some(p => preCurr.id === p.id || preCurr.querySelector(`#${p.id}`))) {
+          preH3Container.appendChild(preCurr.cloneNode(true));
+        }
+        preCurr = preCurr.nextElementSibling;
+      }
+      if (isSubstantive(preH3Container)) {
+        emitSubstantiveSlides(preH3Container, `${lesson.id}_sec_${secIdx}_intro`, `${h2Title}: Overview`, h2Title);
+      }
+
+      // Process each h3 subtopic
       h3Elements.forEach((h3, h3Idx) => {
         const subtopicTitle = h3.textContent.trim();
         const subElements = [];
         let curr = h3.nextElementSibling;
         
         while (curr && curr.tagName.toLowerCase() !== 'h3' && curr.tagName.toLowerCase() !== 'h2') {
-          // Exclude portal root containers since they have dedicated interactive slides
           if (!portalIds.some(p => curr.id === p.id || curr.querySelector(`#${p.id}`))) {
             subElements.push(curr.cloneNode(true));
           }
           curr = curr.nextElementSibling;
         }
 
-        // Test if subtopic has substantive teaching content
         const tempContainer = doc.createElement('div');
         subElements.forEach(el => tempContainer.appendChild(el));
-
-        if (!isSubstantive(tempContainer)) return;
-
-        // Check if subtopic has a large list with long items (> 450 chars)
-        const majorList = tempContainer.querySelector('ol, ul');
-        const listItems = majorList ? Array.from(majorList.querySelectorAll(':scope > li')) : [];
-
-        if (listItems.length >= 2 && majorList.textContent.trim().length > 450) {
-          // Emit Overview with pre-list content
-          const introContainer = doc.createElement('div');
-          let child = tempContainer.firstElementChild;
-          while (child && child !== majorList) {
-            introContainer.appendChild(child.cloneNode(true));
-            child = child.nextElementSibling;
-          }
-
-          if (introContainer.textContent.trim().length > 30) {
-            slides.push({
-              id: `${lesson.id}_sub_${secIdx}_${h3Idx}_intro`,
-              type: 'subtopic',
-              lessonNum: lesson.num_str,
-              lessonId: lesson.id,
-              module: lesson.module,
-              sectionTitle: h2Title,
-              title: `${subtopicTitle}: Overview`,
-              htmlContent: introContainer.innerHTML
-            });
-          }
-
-          // Split each list item into its own slide to eliminate vertical scrolling
-          listItems.forEach((li, liIdx) => {
-            const liContainer = doc.createElement('div');
-            liContainer.className = 'split-list-item-slide';
-            const strong = li.querySelector('strong, h4, h5');
-            const itemHeading = strong ? strong.textContent.trim() : `Part ${liIdx + 1}`;
-            liContainer.appendChild(li.cloneNode(true));
-
-            slides.push({
-              id: `${lesson.id}_sub_${secIdx}_${h3Idx}_li${liIdx}`,
-              type: 'subtopic',
-              lessonNum: lesson.num_str,
-              lessonId: lesson.id,
-              module: lesson.module,
-              sectionTitle: h2Title,
-              title: `${subtopicTitle}: ${itemHeading}`,
-              htmlContent: liContainer.innerHTML
-            });
-          });
-        } else {
-          slides.push({
-            id: `${lesson.id}_sub_${secIdx}_${h3Idx}`,
-            type: 'subtopic',
-            lessonNum: lesson.num_str,
-            lessonId: lesson.id,
-            module: lesson.module,
-            sectionTitle: h2Title,
-            title: subtopicTitle,
-            htmlContent: tempContainer.innerHTML
-          });
-        }
+        emitSubstantiveSlides(tempContainer, `${lesson.id}_sub_${secIdx}_${h3Idx}`, subtopicTitle, h2Title);
       });
       return;
     }
@@ -432,63 +614,7 @@ export function parseLessonIntoSlides(lesson) {
       if (pNode) pNode.remove();
     });
 
-    if (isSubstantive(cleanSection)) {
-      const hasImage = !!cleanSection.querySelector('img, svg, .lesson-image');
-      const hasTable = !!cleanSection.querySelector('table, .table-responsive');
-
-      if (hasImage && hasTable) {
-        // Merge into a single 2-column slide: Left = Large Diagram, Right = Shortcuts Table
-        const partA = doc.createElement('div');
-        const partB = doc.createElement('div');
-        
-        let foundTable = false;
-        Array.from(cleanSection.children).forEach(child => {
-          if (child.querySelector('table') || child.tagName.toLowerCase() === 'table' || child.classList.contains('table-responsive')) {
-            foundTable = true;
-          }
-          if (!foundTable) {
-            partA.appendChild(child.cloneNode(true));
-          } else {
-            partB.appendChild(child.cloneNode(true));
-          }
-        });
-
-        slides.push({
-          id: `${lesson.id}_sec_${secIdx}`,
-          type: 'concept',
-          lessonNum: lesson.num_str,
-          lessonId: lesson.id,
-          module: lesson.module,
-          sectionTitle: h2Title,
-          badge: '📟 Multi-Terminal Grid',
-          title: h2Title,
-          htmlContent: `
-            <div class="terminator-merged-slide-layout">
-              <div class="term-left-col">
-                ${partA.innerHTML}
-              </div>
-              <div class="term-right-col">
-                <div class="term-shortcuts-header">
-                  <span class="shortcuts-badge">⌨️ Essential Shortcuts</span>
-                </div>
-                ${partB.innerHTML}
-              </div>
-            </div>
-          `
-        });
-      } else {
-        slides.push({
-          id: `${lesson.id}_sec_${secIdx}`,
-          type: 'concept',
-          lessonNum: lesson.num_str,
-          lessonId: lesson.id,
-          module: lesson.module,
-          sectionTitle: h2Title,
-          title: h2Title,
-          htmlContent: cleanSection.innerHTML
-        });
-      }
-    }
+    emitSubstantiveSlides(cleanSection, `${lesson.id}_sec_${secIdx}`, h2Title, h2Title);
   });
   }
 
@@ -1374,23 +1500,15 @@ ros2 run demo_nodes_py listener
     title: '9.3 Active Node Inspection & Topic Echo Verification',
     syntax: 'ros2 node list && ros2 topic echo <topic_name>',
     desc: 'Verify live node registration and stream incoming topic message payloads in real-time:',
-    code: `# 1. List all active nodes on the DDS bus:
-ros2 node list
-# Output:
-# /talker
-# /listener
+    code: `# 1. List active nodes on the DDS bus:
+ros2 node list       # -> /talker, /listener
 
 # 2. Inspect active topics:
-ros2 topic list
-# Output:
-# /chatter
-# /parameter_events
-# /rosout
+ros2 topic list      # -> /chatter, /rosout
 
-# 3. Echo live messages from the /chatter topic:
+# 3. Echo live messages from /chatter:
 ros2 topic echo /chatter
-# Output:
-# data: 'Hello World: 14'`,
+# Output: data: 'Hello World: 14'`,
     lang: 'bash'
   });
 
