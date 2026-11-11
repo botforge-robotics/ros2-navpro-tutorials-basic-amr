@@ -980,60 +980,49 @@ function buildLesson02Slides(doc, lesson, slides) {
     `
   });
 
-  // 5. Section 3.4: Windows OS Metaphor (Reorganized Layout: Hero 16:9 Banner + Comparison Cards)
+  // 5. Section 3.4: Windows / PC OS Metaphor & The 4-Tier Software Stack (Combined)
   slides.push({
-    id: `${lesson.id}_sec3_4_os_metaphor`,
+    id: `${lesson.id}_sec3_4_metaphor_and_stack`,
     type: 'concept',
     lessonNum: lesson.num_str,
     lessonId: lesson.id,
     module: lesson.module,
     sectionTitle: '3. Robotics Fundamentals & ROS 2 Architecture',
-    badge: '💻 Architectural Metaphor',
-    title: '3.4 What is ROS? The Windows / PC OS Metaphor',
+    badge: '💻 Architectural Metaphor & Stack',
+    title: '3.4 What is ROS? The PC OS Metaphor & The 4-Tier Software Stack',
     htmlContent: `
-      <div class="deck-metaphor-reorganized-layout">
-        <div class="metaphor-hero-visual-wrap">
-          <img src="assets/images/ros_metaphor_pc_vs_robot.jpg" alt="PC OS vs Robot OS Metaphor" class="metaphor-wide-hero-img" />
-        </div>
-        <div class="metaphor-cards-row">
-          <div class="metaphor-card pc-card">
-            <div class="card-tag"><span class="card-icon">🖥️</span><strong>Personal Computers (Windows / macOS)</strong></div>
-            <p>Standardizes hardware abstraction (GPUs, audio, USB, Wi-Fi) and graphics APIs (DirectX, Metal). Game developers focus on gameplay, not writing custom graphics card microcode.</p>
+      <div class="l02-metaphor-stack-layout">
+        <!-- Col 1: Metaphor -->
+        <div class="metaphor-col">
+          <div class="metaphor-visual-card">
+            <img src="assets/images/ros_metaphor_pc_vs_robot.jpg" alt="PC OS vs Robot OS Metaphor" />
           </div>
-          <div class="metaphor-card robot-card">
-            <div class="card-tag"><span class="card-icon">🤖</span><strong>Autonomous Mobile Robots (ROS 2)</strong></div>
-            <p>Standardizes hardware abstraction (LiDAR, cameras, IMUs, motor drives) and publish-subscribe IPC. Autonomous navigation engineers focus on path planning, not low-level byte parsing.</p>
+          <div class="metaphor-comparisons">
+            <div class="metaphor-compare-card">
+              <div class="card-tag"><span>🖥️</span><strong>Personal Computers (Windows / macOS)</strong></div>
+              <p>Standardizes hardware abstraction (GPUs, audio, USB, Wi-Fi) and graphics APIs (DirectX). Devs focus on gameplay, not writing graphics card microcode.</p>
+            </div>
+            <div class="metaphor-compare-card">
+              <div class="card-tag"><span>🤖</span><strong>Autonomous Mobile Robots (ROS 2)</strong></div>
+              <p>Standardizes hardware abstraction (LiDAR, cameras, IMUs, motor drives) and DDS IPC. Autonomy engineers focus on navigation, not low-level byte parsing.</p>
+            </div>
           </div>
         </div>
-      </div>
-    `
-  });
 
-  // 6. Section 3.4.1: Framework, Not Bare-Metal OS
-  slides.push({
-    id: `${lesson.id}_sec3_4_1_framework`,
-    type: 'concept',
-    lessonNum: lesson.num_str,
-    lessonId: lesson.id,
-    module: lesson.module,
-    sectionTitle: '3. Robotics Fundamentals & ROS 2 Architecture',
-    badge: '⚙️ Software Stack Reality',
-    title: '3.4.1 The Core Reality: A Middleware Framework, Not a Bare-Metal OS',
-    htmlContent: `
-      <div class="deck-framework-layout">
-        <div class="framework-img-wrap">
-          <img src="assets/images/ros_framework_os_layers.jpg" alt="ROS Framework OS Layers" class="framework-hero-img" />
-        </div>
-        <div class="framework-content-wrap">
-          <div class="framework-alert-box">
-            <strong>Key Distinction:</strong> ROS is <em>not</em> an operating system kernel like Linux or Windows. It does not manage CPU scheduling, interrupt vectors, or bare-metal memory.
+        <!-- Col 2: Stack Reality -->
+        <div class="stack-col">
+          <div class="stack-alert-box">
+            <strong>Core Reality: Middleware Framework, Not a Bare-Metal Kernel</strong><br/>
+            ROS 2 does <em>not</em> manage CPU scheduling, interrupt vectors, or raw memory. It is a <strong>meta-operating system</strong> installing in user space on top of Ubuntu Linux.
           </div>
-          <p>ROS is a <strong>meta-operating system (middleware framework)</strong>. It installs in user space on top of a host OS (primarily Ubuntu Linux), providing a standardized communication bus, build system (<code>colcon</code>), and visualization tools.</p>
-          <div class="layer-hierarchy-pill-box">
-            <span class="hierarchy-pill user">1. User Application (Nav2, Vision, Control)</span>
-            <span class="hierarchy-pill ros">2. ROS 2 Middleware &amp; Client Libraries (RCL, DDS)</span>
-            <span class="hierarchy-pill os">3. Host Operating System (Ubuntu 24.04 LTS Kernel)</span>
-            <span class="hierarchy-pill hw">4. Physical Robot Hardware (Motors, Sensors, AMR)</span>
+          <div class="stack-pills">
+            <div class="stack-pill user"><span>1. User Applications</span><span>Nav2, SLAM Toolbox, Vision, AI Behaviors</span></div>
+            <div class="stack-pill ros"><span>2. ROS 2 Middleware &amp; RCL</span><span>rclcpp, rclpy, FastDDS Inter-Process Bus</span></div>
+            <div class="stack-pill os"><span>3. Host Operating System</span><span>Ubuntu 24.04 LTS Kernel &amp; POSIX APIs</span></div>
+            <div class="stack-pill hw"><span>4. Physical Robot Hardware</span><span>Motors, LiDAR, IMU, Chassis &amp; Microcontrollers</span></div>
+          </div>
+          <div class="stack-takeaway">
+            <strong>💡 Unified Engineering Takeaway:</strong> The PC OS metaphor explains <em>why</em> we standardize (hardware independence); the 4-tier stack explains <em>how</em> it runs (modular user-space processes over DDS).
           </div>
         </div>
       </div>
@@ -1183,68 +1172,61 @@ function buildLesson02Slides(doc, lesson, slides) {
     `
   });
 
-  // 11. Section 5: Installation Steps 5.1-5.3 (Repositories, Locale, GPG)
+  // 11. Section 5: Complete Installation Pipeline (Repositories & Desktop Suite Merged)
   slides.push({
-    id: `${lesson.id}_sec5_repo_setup`,
+    id: `${lesson.id}_sec5_install_pipeline`,
     type: 'concept',
     lessonNum: lesson.num_str,
     lessonId: lesson.id,
     module: lesson.module,
     sectionTitle: '5. Step-by-Step Installation on Ubuntu 24.04 LTS',
-    badge: '📦 Setup Steps 5.1–5.3',
-    title: '5. Installation: Repositories, Locale & GPG Security Keys',
+    badge: '📦 Installation Pipeline',
+    title: '5. Complete Installation Pipeline: APT Repositories to ROS 2 Desktop Suite',
     htmlContent: `
-      <div class="deck-install-step-layout">
-        <p>Prepare Ubuntu 24.04 by ensuring UTF-8 locale support, enabling the Universe repository, and importing the authorized ROS 2 GPG signing key:</p>
-        <div class="code-container" data-language="bash">
-          <div class="code-header"><span class="code-lang-tag">bash</span></div>
-          <pre><code class="language-bash"># 1. Verify and enforce UTF-8 locale encoding
-locale  # Must output UTF-8
-
-# 2. Enable the Ubuntu Universe repository
-sudo apt install software-properties-common
-sudo add-apt-repository universe
-
-# 3. Add the official ROS 2 GPG signing key
-sudo apt update && sudo apt install curl -y
+      <div class="l02-install-pipeline-layout">
+        <!-- Col 1: Repositories & Security GPG -->
+        <div class="l02-install-col">
+          <div class="l03-subcol-header">
+            <span class="l03-subcol-badge">5.1–5.3 Repositories &amp; GPG Keys</span>
+            <span class="l03-subcol-sub">APT Sources Configuration</span>
+          </div>
+          <div class="l03-cmd-card">
+            <div class="l03-cmd-header"><span class="l03-term-badge">bash</span><strong>Configure Repositories &amp; Keys</strong></div>
+            <pre><code class="language-bash"># 1. Enable Universe & Import GPG Key
+sudo add-apt-repository universe -y
 sudo curl -sSL https://raw.githubusercontent.com/ros/rosdistro/master/ros.key -o /usr/share/keyrings/ros-archive-keyring.gpg
 
-# 4. Add the repository to your APT sources list
-echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/ros-archive-keyring.gpg] http://packages.ros.org/ros2/ubuntu $(. /etc/os-release && echo $UBUNTU_CODENAME) main" | sudo tee /etc/apt/sources.list.d/ros2.list > /dev/null</code></pre>
+# 2. Add Official APT Repository
+echo "deb [signed-by=.../ros.gpg] http://packages.ros.org/ros2/ubuntu noble main" | sudo tee /etc/apt/sources.list.d/ros2.list</code></pre>
+          </div>
         </div>
-      </div>
-    `
-  });
 
-  // 12. Section 5: Installation Steps 5.4-5.5 (Desktop Jazzy & Rosdep)
-  slides.push({
-    id: `${lesson.id}_sec5_desktop_install`,
-    type: 'concept',
-    lessonNum: lesson.num_str,
-    lessonId: lesson.id,
-    module: lesson.module,
-    sectionTitle: '5. Step-by-Step Installation on Ubuntu 24.04 LTS',
-    badge: '📦 Setup Steps 5.4–5.5',
-    title: '5. Installation: ROS 2 Jazzy Desktop & Rosdep Initialization',
-    htmlContent: `
-      <div class="deck-install-step-layout">
-        <p>Install the complete desktop package suite (including RViz2, demo nodes, and simulation tutorials) and initialize the package dependency resolver:</p>
-        <div class="code-container" data-language="bash">
-          <div class="code-header"><span class="code-lang-tag">bash</span></div>
-          <pre><code class="language-bash"># 1. Update package indexes with the newly added ROS 2 repository
-sudo apt update
+        <!-- Col 2: Desktop Suite & Rosdep Init -->
+        <div class="l02-install-col">
+          <div class="l03-subcol-header">
+            <span class="l03-subcol-badge">5.4–5.5 Desktop Suite &amp; Rosdep</span>
+            <span class="l03-subcol-sub">Package Installation</span>
+          </div>
+          <div class="l03-cmd-card">
+            <div class="l03-cmd-header"><span class="l03-term-badge">bash</span><strong>Install Desktop &amp; Initialize Rosdep</strong></div>
+            <pre><code class="language-bash"># 1. Update Indexes & Install Desktop Suite
+sudo apt update && sudo apt install -y ros-jazzy-desktop python3-colcon-common-extensions
 
-# 2. Install ROS 2 Jazzy Desktop and colcon build tools
-sudo apt install -y ros-jazzy-desktop python3-colcon-common-extensions
-
-# 3. Initialize and update rosdep (system dependency manager)
-sudo apt install -y python3-rosdep
-sudo rosdep init
-rosdep update</code></pre>
+# 2. Initialize Dependency Resolver (rosdep)
+sudo apt install -y python3-rosdep && sudo rosdep init && rosdep update</code></pre>
+          </div>
         </div>
-        <div class="install-tip-footer">
-          <span class="tip-badge">💡 Note</span>
-          <span>In your lab container environment, ROS 2 Jazzy Desktop and rosdep are already fully initialized and pre-cached!</span>
+
+        <!-- Row 2: Verification & Lab Outcome -->
+        <div class="l02-install-bottom-bar">
+          <div class="l03-concept-card">
+            <div class="l03-concept-header"><span class="l03-card-icon">🔐</span><strong>Cryptographic Verification</strong></div>
+            <p>GPG keyring guarantees package authenticity from <code>packages.ros.org</code>, preventing untrusted package tampering.</p>
+          </div>
+          <div class="l03-concept-card" style="background: rgba(16, 185, 129, 0.08); border-color: rgba(16, 185, 129, 0.25);">
+            <div class="l03-concept-header"><span class="l03-card-icon">📦</span><strong>Installed Outcome (Lab Pre-Configured)</strong></div>
+            <p>Deploys RViz2, DDS libraries, and <code>colcon</code> to <code>/opt/ros/jazzy</code>. Pre-installed &amp; cached in your lab container!</p>
+          </div>
         </div>
       </div>
     `
@@ -1308,81 +1290,66 @@ rosdep update</code></pre>
     `
   });
 
-  // 14. Section 8: Sourcing ROS 2 Underlay
+  // 13. Section 8 & 9: Environment Activation & Verification Smoke Test (Combined)
   slides.push({
-    id: `${lesson.id}_sec8_sourcing`,
-    type: 'command',
-    lessonNum: lesson.num_str,
-    lessonId: lesson.id,
-    module: lesson.module,
-    sectionTitle: '8. Sourcing ROS 2 Environment',
-    badge: 'source /opt/ros/...',
-    title: 'Source ROS 2 Jazzy Underlay & Automate with ~/.bashrc',
-    syntax: 'source /opt/ros/jazzy/setup.bash',
-    desc: 'Load all standard ROS 2 CLI commands, libraries, and environment variables into your active shell session:',
-    code: `# 1. Source the base ROS 2 Jazzy underlay manually in current terminal:
-source /opt/ros/jazzy/setup.bash
-
-# 2. Automate sourcing permanently for every newly opened terminal:
-echo "source /opt/ros/jazzy/setup.bash" >> ~/.bashrc
-
-# 3. Reload configuration in the active terminal:
-source ~/.bashrc
-
-# 4. Verify ROS 2 environment is loaded:
-echo $ROS_DISTRO
-# Expected Output: jazzy`,
-    lang: 'bash'
-  });
-
-  // 15. Section 9: Verification & Smoke Test
-  slides.push({
-    id: `${lesson.id}_sec9_talker_listener`,
+    id: `${lesson.id}_sec8_9_sourcing_verification`,
     type: 'concept',
     lessonNum: lesson.num_str,
     lessonId: lesson.id,
     module: lesson.module,
-    sectionTitle: '9. Verification & "Hello World" Smoke Test',
-    badge: '🧪 Verification Smoke Test',
-    title: '9. Verification: Launching Talker & Listener Smoke Test',
+    sectionTitle: '8 & 9. Sourcing Environment & Multi-Terminal Verification',
+    badge: '🧪 Activation & Smoke Test',
+    title: '8 & 9. Environment Activation & Multi-Terminal Smoke Test Verification',
     htmlContent: `
-      <div class="deck-smoke-test-layout">
-        <p>Confirm that the ROS 2 DDS transport is functioning by running two separate C++ and Python demo nodes communicating over the <code>/chatter</code> topic:</p>
-        <div class="smoke-steps-columns">
-          <div class="smoke-col">
-            <span class="smoke-badge talker">Terminal 1: Publisher</span>
-            <div class="code-container" data-language="bash">
-              <pre><code class="language-bash"># Launch the C++ talker node
-ros2 run demo_nodes_cpp talker
-
-# Output:
-# [INFO] [talker]: Publishing: 'Hello World: 1'
-# [INFO] [talker]: Publishing: 'Hello World: 2'</code></pre>
-            </div>
+      <div class="l02-sourcing-smoke-layout">
+        <!-- Col 1: Sourcing & Automation -->
+        <div class="l02-install-col">
+          <div class="l03-subcol-header">
+            <span class="l03-subcol-badge">8. Shell Activation</span>
+            <span class="l03-subcol-sub">Underlay Sourcing</span>
           </div>
-          <div class="smoke-col">
-            <span class="smoke-badge listener">Terminal 2: Subscriber</span>
-            <div class="code-container" data-language="bash">
-              <pre><code class="language-bash"># Launch the Python listener node
-ros2 run demo_nodes_py listener
+          <div class="l03-cmd-card">
+            <div class="l03-cmd-header"><span class="l03-term-badge">bash</span><strong>Source &amp; Automate with ~/.bashrc</strong></div>
+            <pre><code class="language-bash"># 1. Source ROS 2 underlay
+source /opt/ros/jazzy/setup.bash
 
-# Output:
-# [INFO] [listener]: I heard: [Hello World: 1]
-# [INFO] [listener]: I heard: [Hello World: 2]</code></pre>
-            </div>
+# 2. Automate in ~/.bashrc
+echo "source /opt/ros/jazzy/setup.bash" >> ~/.bashrc
+
+# 3. Confirm active distribution variable
+echo $ROS_DISTRO  # Expected Output: jazzy</code></pre>
+          </div>
+          <div class="l03-concept-card">
+            <div class="l03-concept-header"><span class="l03-card-icon">⚙️</span><strong>Underlay Mechanics &amp; Automation</strong></div>
+            <p>Injects <code>ros2</code> CLI into <code>$PATH</code> and sets <code>$AMENT_PREFIX_PATH</code>. Appending to <code>~/.bashrc</code> ensures all new terminal panes auto-load the environment.</p>
+          </div>
+        </div>
+
+        <!-- Col 2: Verification Smoke Test -->
+        <div class="l02-install-col">
+          <div class="l03-subcol-header">
+            <span class="l03-subcol-badge">9. Distributed Smoke Test</span>
+            <span class="l03-subcol-sub">Multi-Terminal Verification</span>
+          </div>
+          <div class="l03-cmd-card">
+            <div class="l03-cmd-header"><span class="l03-term-badge" style="background:#3b82f6;color:#fff;">Terminal 1: C++ Talker</span><strong>Publisher Node</strong></div>
+            <pre><code class="language-bash">ros2 run demo_nodes_cpp talker
+# Telemetry: [INFO] [talker]: Publishing: 'Hello World: 1'</code></pre>
+          </div>
+          <div class="l03-cmd-card">
+            <div class="l03-cmd-header"><span class="l03-term-badge" style="background:#10b981;color:#fff;">Terminal 2: Python Listener</span><strong>Subscriber Node</strong></div>
+            <pre><code class="language-bash">ros2 run demo_nodes_py listener
+# Telemetry: [INFO] [listener]: I heard: [Hello World: 1]</code></pre>
+          </div>
+          <div class="l03-concept-card" style="background: rgba(59, 130, 246, 0.08); border-color: rgba(59, 130, 246, 0.25);">
+            <div class="l03-concept-header"><span class="l03-card-icon">🚀</span><strong>Specific Outcome: DDS Bus Integrity Verified</strong></div>
+            <p>Demonstrates cross-language peer-to-peer DDS telemetry exchange between independent C++ and Python OS processes with zero central master failure points.</p>
           </div>
         </div>
       </div>
     `
   });
 }
-
-/**
- * Dedicated High-Yield Pedagogical Deck Builder for Lesson 03:
- * Turtlesim Simulation & Essential ROS 2 CLI Tools.
- * Solves image cropping, eliminates micro-fragmentation, and restores
- * the master CLI comparison reference table.
- */
 function buildLesson03Slides(doc, lesson, slides) {
   // 1. Interactive Telesim & Graph Flow Simulation Stage
   slides.push({

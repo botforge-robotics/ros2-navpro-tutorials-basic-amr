@@ -6094,6 +6094,207 @@
   border-radius: 4px;
 }
 
+/* Lesson 02 Merged Layout 1: Metaphor & Stack Reality (3.4) */
+.l02-metaphor-stack-layout {
+  display: grid;
+  grid-template-columns: 1fr 1.05fr;
+  gap: 1.15rem;
+  width: 100%;
+  height: 100%;
+  max-height: 520px;
+  align-items: stretch;
+  box-sizing: border-box;
+}
+
+.l02-metaphor-stack-layout .metaphor-col {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.l02-metaphor-stack-layout .metaphor-visual-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  padding: 0.45rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  max-height: 180px;
+  overflow: hidden;
+}
+
+.l02-metaphor-stack-layout .metaphor-visual-card img {
+  max-height: 170px;
+  width: auto;
+  max-width: 100%;
+  object-fit: contain;
+  border-radius: 6px;
+}
+
+.l02-metaphor-stack-layout .metaphor-comparisons {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.l02-metaphor-stack-layout .metaphor-compare-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 0.5rem 0.75rem;
+}
+
+.l02-metaphor-stack-layout .metaphor-compare-card .card-tag {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.78rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  margin-bottom: 0.2rem;
+}
+
+.l02-metaphor-stack-layout .metaphor-compare-card p {
+  margin: 0;
+  font-size: 0.73rem;
+  line-height: 1.32;
+  color: var(--text-secondary);
+}
+
+.l02-metaphor-stack-layout .stack-col {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.l02-metaphor-stack-layout .stack-alert-box {
+  background: rgba(59, 130, 246, 0.08);
+  border: 1px solid rgba(59, 130, 246, 0.25);
+  border-left: 4px solid #3b82f6;
+  border-radius: 8px;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.75rem;
+  line-height: 1.35;
+  color: var(--text-primary);
+}
+
+.l02-metaphor-stack-layout .stack-pills {
+  display: flex;
+  flex-direction: column;
+  gap: 0.32rem;
+}
+
+.l02-metaphor-stack-layout .stack-pill {
+  font-size: 0.73rem;
+  font-weight: 700;
+  padding: 0.38rem 0.75rem;
+  border-radius: 6px;
+  border: 1px solid var(--border-color);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.l02-metaphor-stack-layout .stack-pill.user { background: rgba(139, 92, 246, 0.1); color: #8b5cf6; border-color: rgba(139, 92, 246, 0.25); }
+.l02-metaphor-stack-layout .stack-pill.ros { background: rgba(59, 130, 246, 0.1); color: #3b82f6; border-color: rgba(59, 130, 246, 0.25); }
+.l02-metaphor-stack-layout .stack-pill.os { background: rgba(16, 185, 129, 0.1); color: #10b981; border-color: rgba(16, 185, 129, 0.25); }
+.l02-metaphor-stack-layout .stack-pill.hw { background: rgba(245, 158, 11, 0.1); color: #f59e0b; border-color: rgba(245, 158, 11, 0.25); }
+
+.l02-metaphor-stack-layout .stack-takeaway {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.73rem;
+  line-height: 1.32;
+  color: var(--text-secondary);
+}
+
+/* Lesson 02 Merged Layout 2: Complete Installation Pipeline (5) */
+.l02-install-pipeline-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto auto;
+  gap: 0.65rem 1.15rem;
+  width: 100%;
+  height: 100%;
+  max-height: 520px;
+  box-sizing: border-box;
+}
+
+.l02-install-bottom-bar {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.15rem;
+}
+
+.l02-install-col {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  width: 100%;
+}
+
+.l02-install-col .l03-cmd-card {
+  margin-bottom: 0;
+}
+
+.l02-install-col .l03-cmd-card pre {
+  padding: 0.38rem 0.6rem;
+  font-size: 0.70rem;
+  line-height: 1.26;
+}
+
+.l02-install-col .l03-cmd-card pre code {
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+.l02-install-col .l03-concept-card,
+.l02-install-bottom-bar .l03-concept-card {
+  padding: 0.42rem 0.65rem;
+  margin-bottom: 0;
+}
+
+.l02-install-col .l03-concept-card p,
+.l02-install-bottom-bar .l03-concept-card p {
+  margin: 0;
+  font-size: 0.74rem;
+  line-height: 1.3;
+}
+
+/* Lesson 02 Merged Layout 3: Environment Sourcing & Multi-Terminal Smoke Test (8 & 9) */
+.l02-sourcing-smoke-layout {
+  display: grid;
+  grid-template-columns: 1fr 1.15fr;
+  gap: 1.15rem;
+  width: 100%;
+  height: 100%;
+  max-height: 520px;
+  align-items: stretch;
+  box-sizing: border-box;
+}
+
+.l02-sourcing-smoke-layout .l02-install-col {
+  justify-content: space-between;
+}
+
+.l02-smoke-terminal-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.55rem;
+}
+
+.l02-smoke-terminal-grid .l03-cmd-card pre {
+  padding: 0.45rem 0.65rem;
+  font-size: 0.72rem;
+  line-height: 1.3;
+}
+
 /* Subcolumn Headers for Combined Topic Slides */
 .l03-subcol {
   display: flex;
@@ -7516,6 +7717,46 @@
 .presentation-viewport.is-fullscreen .l03-combined-pub-layout .l03-cmd-card pre code {
   font-size: 0.95rem !important;
 }
+
+/* Fullscreen Overrides for Lesson 02 Merged Slides */
+.presentation-viewport.is-fullscreen .l02-metaphor-stack-layout,
+.presentation-viewport.is-fullscreen .l02-install-pipeline-layout,
+.presentation-viewport.is-fullscreen .l02-sourcing-smoke-layout {
+  gap: 2.25rem !important;
+  max-height: calc(100vh - 130px) !important;
+}
+
+.presentation-viewport.is-fullscreen .l02-metaphor-stack-layout .metaphor-visual-card {
+  max-height: 280px !important;
+}
+
+.presentation-viewport.is-fullscreen .l02-metaphor-stack-layout .metaphor-visual-card img {
+  max-height: 270px !important;
+}
+
+.presentation-viewport.is-fullscreen .l02-metaphor-stack-layout .metaphor-compare-card p,
+.presentation-viewport.is-fullscreen .l02-metaphor-stack-layout .stack-takeaway,
+.presentation-viewport.is-fullscreen .l02-metaphor-stack-layout .stack-alert-box {
+  font-size: 0.95rem !important;
+  line-height: 1.45 !important;
+}
+
+.presentation-viewport.is-fullscreen .l02-metaphor-stack-layout .stack-pill {
+  font-size: 0.95rem !important;
+  padding: 0.6rem 1rem !important;
+}
+
+.presentation-viewport.is-fullscreen .l02-install-col .l03-cmd-card pre,
+.presentation-viewport.is-fullscreen .l02-sourcing-smoke-layout .l03-cmd-card pre {
+  font-size: 0.88rem !important;
+  line-height: 1.4 !important;
+}
+
+.presentation-viewport.is-fullscreen .l02-install-bottom-bar {
+  gap: 2.25rem !important;
+}
+
+
 
 
 
