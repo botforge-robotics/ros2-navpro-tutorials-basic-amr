@@ -2738,6 +2738,8 @@
 .presentation-viewport.dark-theme {
   --bg-primary: #070a13;
   --bg-surface: #0e1526;
+  --bg-card: #0e1526;
+  --bg-canvas: #0a0f1d;
   --bg-sidebar: #0a0f1d;
   --border-color: rgba(255, 255, 255, 0.1);
   --text-primary: #f8fafc;
@@ -2748,6 +2750,8 @@
 .presentation-viewport.light-theme {
   --bg-primary: #f1f5f9;
   --bg-surface: #ffffff;
+  --bg-card: #ffffff;
+  --bg-canvas: #f8fafc;
   --bg-sidebar: #f8fafc;
   --border-color: #e2e8f0;
   --text-primary: #0f172a;
@@ -5893,6 +5897,385 @@
   border-radius: 4px;
 }
 
+/* ============================================================== */
+/* Lesson 03: Turtlesim Simulation & Essential ROS 2 CLI Tools Deck */
+/* ============================================================== */
+
+.l03-two-col-layout {
+  display: grid;
+  grid-template-columns: 1fr 1.15fr;
+  gap: 1.25rem;
+  align-items: start;
+  width: 100%;
+  height: 100%;
+  max-height: 520px;
+  box-sizing: border-box;
+}
+
+.l03-two-col-layout.l03-graph-layout {
+  grid-template-columns: 1.15fr 1fr;
+}
+
+.l03-visual-col {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.l03-visual-frame {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  padding: 0.65rem;
+  box-sizing: border-box;
+}
+
+.l03-visual-frame img,
+.l03-hero-img {
+  width: auto !important;
+  max-width: 100% !important;
+  max-height: 270px !important;
+  object-fit: contain !important;
+  border-radius: 6px !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.16) !important;
+  margin: 0 auto !important;
+  display: block !important;
+}
+
+.l03-visual-caption {
+  margin-top: 0.45rem;
+  font-size: 0.74rem;
+  color: var(--text-tertiary);
+  text-align: center;
+  font-style: italic;
+  line-height: 1.3;
+}
+
+.l03-content-col,
+.l03-left-code-col {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.l03-cmd-card {
+  background: #0f172a;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 0.55rem;
+}
+
+.l03-cmd-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.35rem 0.65rem;
+  background: rgba(255, 255, 255, 0.05);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  font-size: 0.74rem;
+  color: #cbd5e1 !important;
+}
+
+.l03-cmd-header strong {
+  color: #f8fafc !important;
+}
+
+.l03-term-badge {
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  padding: 0.1rem 0.35rem;
+  border-radius: 4px;
+  background: #3b82f6;
+  color: #ffffff;
+}
+
+.l03-cmd-card pre {
+  margin: 0;
+  padding: 0.55rem 0.75rem;
+  font-size: 0.78rem;
+  line-height: 1.35;
+  background: transparent;
+  color: #38bdf8;
+  font-family: var(--font-mono, monospace);
+  overflow-x: auto;
+}
+
+.l03-output-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 0.55rem;
+}
+
+.l03-output-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.35rem 0.65rem;
+  background: var(--bg-canvas, rgba(0, 0, 0, 0.03));
+  border-bottom: 1px solid var(--border-color);
+  font-size: 0.74rem;
+  color: var(--text-secondary);
+}
+
+.l03-output-header strong {
+  color: var(--text-primary);
+}
+
+.l03-output-card pre {
+  margin: 0;
+  padding: 0.55rem 0.75rem;
+  font-size: 0.74rem;
+  line-height: 1.32;
+  color: var(--text-primary);
+  font-family: var(--font-mono, monospace);
+  overflow-x: auto;
+  max-height: 290px;
+}
+
+.l03-concept-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 0.6rem 0.75rem;
+  margin-bottom: 0.55rem;
+}
+
+.l03-concept-header {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.82rem;
+  color: var(--text-primary);
+  margin-bottom: 0.25rem;
+}
+
+.l03-concept-card p {
+  margin: 0;
+  font-size: 0.76rem;
+  line-height: 1.35;
+  color: var(--text-secondary);
+}
+
+.l03-kinematics-list {
+  margin: 0.3rem 0 0 1.1rem;
+  padding: 0;
+  font-size: 0.74rem;
+  line-height: 1.35;
+  color: var(--text-secondary);
+}
+
+.l03-hz-tag-banner {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.35rem 0.65rem;
+  background: rgba(16, 185, 129, 0.08);
+  border: 1px solid rgba(16, 185, 129, 0.25);
+  border-radius: 6px;
+  font-size: 0.76rem;
+  color: #10b981;
+}
+
+.l03-hz-badge {
+  font-weight: 700;
+  font-size: 0.76rem;
+  background: #10b981;
+  color: white;
+  padding: 0.1rem 0.4rem;
+  border-radius: 4px;
+}
+
+/* Section 7 Single-Command Layout */
+.l03-single-cmd-layout {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 0.75rem;
+}
+
+.l03-lead-desc {
+  margin: 0;
+  font-size: 0.84rem;
+  line-height: 1.4;
+  color: var(--text-secondary);
+}
+
+.l03-cmd-card.wide {
+  width: 100%;
+  margin-bottom: 0.25rem;
+}
+
+.l03-cmd-card.wide pre code {
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+.l03-behavior-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.75rem;
+  margin-top: 0.25rem;
+}
+
+.l03-behavior-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 0.65rem 0.75rem;
+}
+
+.l03-behavior-card .l03-card-header {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.8rem;
+  color: var(--text-primary);
+  margin-bottom: 0.25rem;
+}
+
+.l03-behavior-card p {
+  margin: 0;
+  font-size: 0.75rem;
+  line-height: 1.35;
+  color: var(--text-secondary);
+}
+
+/* Section 8 Master Comparison Table */
+.l03-cli-table-layout {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+}
+
+.l03-cli-table-wrap {
+  width: 100%;
+  overflow: hidden;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  background: var(--bg-card);
+}
+
+.l03-summary-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.76rem;
+  text-align: left;
+}
+
+.l03-summary-table thead {
+  background: var(--bg-sidebar, rgba(0, 0, 0, 0.04));
+  border-bottom: 1px solid var(--border-color);
+}
+
+.l03-summary-table th {
+  padding: 0.4rem 0.65rem;
+  font-size: 0.76rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.l03-summary-table td {
+  padding: 0.34rem 0.65rem;
+  border-bottom: 1px solid var(--border-color);
+  color: var(--text-secondary);
+  line-height: 1.3;
+}
+
+.l03-summary-table tr:last-child td {
+  border-bottom: none;
+}
+
+.l03-summary-table td code {
+  font-family: var(--font-mono, monospace);
+  font-size: 0.74rem;
+  padding: 0.1rem 0.3rem;
+  border-radius: 4px;
+  background: rgba(59, 130, 246, 0.08);
+  color: #2563eb;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.dark-theme .l03-summary-table td code {
+  background: rgba(59, 130, 246, 0.16);
+  color: #60a5fa;
+}
+
+/* Section 9 Student Lab Layout */
+.l03-student-lab-layout {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 0.65rem;
+}
+
+.l03-lab-header-banner {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.45rem 0.85rem;
+  background: rgba(59, 130, 246, 0.06);
+  border: 1px solid rgba(59, 130, 246, 0.2);
+  border-radius: 8px;
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+}
+
+.l03-mission-badge {
+  font-weight: 700;
+  color: #3b82f6;
+  font-size: 0.84rem;
+}
+
+.l03-lab-steps-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.65rem;
+}
+
+.l03-lab-step-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 0.6rem 0.75rem;
+}
+
+.l03-step-badge {
+  font-size: 0.76rem;
+  font-weight: 700;
+  color: #3b82f6;
+  margin-bottom: 0.2rem;
+}
+
+.l03-lab-step-card p {
+  margin: 0 0 0.35rem 0;
+  font-size: 0.74rem;
+  color: var(--text-secondary);
+  line-height: 1.3;
+}
+
+.l03-lab-step-card pre {
+  margin: 0;
+  padding: 0.35rem 0.55rem;
+  background: #0f172a;
+  border-radius: 5px;
+  font-size: 0.72rem;
+  line-height: 1.3;
+  color: #38bdf8;
+  overflow-x: auto;
+}
+
 /* Terminator & Responsive Tables in Slides */
 .presentation-viewport .table-responsive table {
   width: 100%;
@@ -6852,6 +7235,167 @@
   max-height: calc(100vh - 200px) !important;
   font-size: 1.15rem !important;
   line-height: 1.65 !important;
+}
+
+/* ============================================================== */
+/* Fullscreen Overrides for Lesson 03 Deck */
+/* ============================================================== */
+
+.presentation-viewport.is-fullscreen .l03-two-col-layout {
+  gap: 3.5rem !important;
+  max-height: calc(100vh - 130px) !important;
+}
+
+.presentation-viewport.is-fullscreen .l03-visual-frame {
+  padding: 1rem !important;
+  border-radius: 14px !important;
+}
+
+.presentation-viewport.is-fullscreen .l03-visual-frame img,
+.presentation-viewport.is-fullscreen .l03-hero-img {
+  max-height: 480px !important;
+  border-radius: 10px !important;
+}
+
+.presentation-viewport.is-fullscreen .l03-visual-caption {
+  font-size: 0.96rem !important;
+  margin-top: 0.75rem !important;
+}
+
+.presentation-viewport.is-fullscreen .l03-cmd-card,
+.presentation-viewport.is-fullscreen .l03-output-card {
+  margin-bottom: 1rem !important;
+  border-radius: 12px !important;
+}
+
+.presentation-viewport.is-fullscreen .l03-cmd-header,
+.presentation-viewport.is-fullscreen .l03-output-header {
+  font-size: 0.95rem !important;
+  padding: 0.55rem 0.95rem !important;
+}
+
+.presentation-viewport.is-fullscreen .l03-term-badge {
+  font-size: 0.82rem !important;
+  padding: 0.2rem 0.5rem !important;
+}
+
+.presentation-viewport.is-fullscreen .l03-cmd-card pre,
+.presentation-viewport.is-fullscreen .l03-output-card pre {
+  font-size: 1.05rem !important;
+  line-height: 1.48 !important;
+  padding: 0.85rem 1.15rem !important;
+}
+
+.presentation-viewport.is-fullscreen .l03-concept-card {
+  padding: 0.95rem 1.25rem !important;
+  margin-bottom: 0.95rem !important;
+  border-radius: 12px !important;
+}
+
+.presentation-viewport.is-fullscreen .l03-concept-header {
+  font-size: 1.15rem !important;
+  margin-bottom: 0.4rem !important;
+}
+
+.presentation-viewport.is-fullscreen .l03-concept-card p,
+.presentation-viewport.is-fullscreen .l03-kinematics-list {
+  font-size: 0.98rem !important;
+  line-height: 1.5 !important;
+}
+
+.presentation-viewport.is-fullscreen .l03-hz-tag-banner {
+  padding: 0.65rem 1.15rem !important;
+  font-size: 0.98rem !important;
+  border-radius: 8px !important;
+}
+
+.presentation-viewport.is-fullscreen .l03-hz-badge {
+  font-size: 0.95rem !important;
+  padding: 0.2rem 0.55rem !important;
+}
+
+.presentation-viewport.is-fullscreen .l03-lead-desc {
+  font-size: 1.15rem !important;
+  line-height: 1.55 !important;
+  margin-bottom: 0.5rem !important;
+}
+
+.presentation-viewport.is-fullscreen .l03-behavior-cards-grid {
+  gap: 1.5rem !important;
+  margin-top: 0.75rem !important;
+}
+
+.presentation-viewport.is-fullscreen .l03-behavior-card {
+  padding: 1.15rem 1.35rem !important;
+  border-radius: 12px !important;
+}
+
+.presentation-viewport.is-fullscreen .l03-behavior-card .l03-card-header {
+  font-size: 1.1rem !important;
+  margin-bottom: 0.45rem !important;
+}
+
+.presentation-viewport.is-fullscreen .l03-behavior-card p {
+  font-size: 0.96rem !important;
+  line-height: 1.5 !important;
+}
+
+.presentation-viewport.is-fullscreen .l03-summary-table {
+  font-size: 0.98rem !important;
+}
+
+.presentation-viewport.is-fullscreen .l03-summary-table th {
+  font-size: 1.05rem !important;
+  padding: 0.75rem 1.15rem !important;
+}
+
+.presentation-viewport.is-fullscreen .l03-summary-table td {
+  font-size: 0.96rem !important;
+  padding: 0.65rem 1.15rem !important;
+  line-height: 1.48 !important;
+}
+
+.presentation-viewport.is-fullscreen .l03-summary-table td code {
+  font-size: 0.94rem !important;
+  padding: 0.15rem 0.45rem !important;
+}
+
+.presentation-viewport.is-fullscreen .l03-student-lab-layout {
+  gap: 1.25rem !important;
+}
+
+.presentation-viewport.is-fullscreen .l03-lab-header-banner {
+  font-size: 1.15rem !important;
+  padding: 0.85rem 1.35rem !important;
+  border-radius: 12px !important;
+}
+
+.presentation-viewport.is-fullscreen .l03-mission-badge {
+  font-size: 1.15rem !important;
+}
+
+.presentation-viewport.is-fullscreen .l03-lab-steps-grid {
+  gap: 1.25rem !important;
+}
+
+.presentation-viewport.is-fullscreen .l03-lab-step-card {
+  padding: 1rem 1.25rem !important;
+  border-radius: 12px !important;
+}
+
+.presentation-viewport.is-fullscreen .l03-step-badge {
+  font-size: 0.98rem !important;
+  margin-bottom: 0.35rem !important;
+}
+
+.presentation-viewport.is-fullscreen .l03-lab-step-card p {
+  font-size: 0.95rem !important;
+  margin-bottom: 0.5rem !important;
+}
+
+.presentation-viewport.is-fullscreen .l03-lab-step-card pre {
+  font-size: 0.94rem !important;
+  padding: 0.65rem 0.95rem !important;
 }
 
 

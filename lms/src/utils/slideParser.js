@@ -436,8 +436,10 @@ export function parseLessonIntoSlides(lesson) {
   }
 
   // Special Pedagogical Architecture for Lesson 02: ROS 2 Overview & Environment Setup
-  if (lesson.id === '02' || lesson.num_str === '02') {
+  if (lesson.id === '02' || lesson.num_str === '02' || lesson.id === 'lesson_02') {
     buildLesson02Slides(doc, lesson, slides);
+  } else if (lesson.id === '03' || lesson.num_str === '03' || lesson.id === 'lesson_03') {
+    buildLesson03Slides(doc, lesson, slides);
   } else {
     sections.forEach((section, secIdx) => {
     const h2 = section.querySelector('h2');
@@ -1368,6 +1370,574 @@ ros2 run demo_nodes_py listener
 # [INFO] [listener]: I heard: [Hello World: 1]
 # [INFO] [listener]: I heard: [Hello World: 2]</code></pre>
             </div>
+          </div>
+        </div>
+      </div>
+    `
+  });
+}
+
+/**
+ * Dedicated High-Yield Pedagogical Deck Builder for Lesson 03:
+ * Turtlesim Simulation & Essential ROS 2 CLI Tools.
+ * Solves image cropping, eliminates micro-fragmentation, and restores
+ * the master CLI comparison reference table.
+ */
+function buildLesson03Slides(doc, lesson, slides) {
+  // 1. Interactive Telesim & Graph Flow Simulation Stage
+  slides.push({
+    id: `${lesson.id}_interactive_turtlesim`,
+    type: 'interactive',
+    interactiveKey: 'turtlesim',
+    lessonNum: lesson.num_str,
+    lessonId: lesson.id,
+    module: lesson.module,
+    sectionTitle: 'Interactive Simulation & Computational Graph Flow',
+    title: 'Turtlesim Teleop & Computational Graph Architecture'
+  });
+
+  // 2. Section 2.1: Launching Turtlesim Canvas
+  slides.push({
+    id: `${lesson.id}_sec2_1_canvas`,
+    type: 'concept',
+    lessonNum: lesson.num_str,
+    lessonId: lesson.id,
+    module: lesson.module,
+    sectionTitle: '2. Launching Turtlesim: The Simulation Playground',
+    badge: '🐢 Simulation Canvas',
+    title: '2.1 Launching Turtlesim Simulation Canvas Node',
+    htmlContent: `
+      <div class="l03-two-col-layout">
+        <div class="l03-visual-col">
+          <div class="l03-visual-frame">
+            <img src="assets/images/turtlesim_simulation_canvas.png" alt="Turtlesim Simulation Canvas" class="l03-hero-img" />
+            <span class="l03-visual-caption">Turtlesim 2D Canvas (Origin at center: x = 5.54, y = 5.54, &theta; = 0.0 rad)</span>
+          </div>
+        </div>
+        <div class="l03-content-col">
+          <div class="l03-cmd-card">
+            <div class="l03-cmd-header"><span class="l03-term-badge">Terminal 1</span><strong>Launch Canvas Node</strong></div>
+            <pre><code class="language-bash">ros2 run turtlesim turtlesim_node</code></pre>
+          </div>
+          <div class="l03-concept-card">
+            <div class="l03-concept-header"><span class="l03-card-icon">🗺️</span><strong>2D Coordinate Arena</strong></div>
+            <p>Spawns an 11.08 &times; 11.08 unit coordinate grid following ROS <strong>REP-103</strong> conventions (+X forward, +Y left, +&theta; counter-clockwise).</p>
+          </div>
+          <div class="l03-concept-card">
+            <div class="l03-concept-header"><span class="l03-card-icon">🤖</span><strong>Kinematic Representation</strong></div>
+            <p>Emulates an autonomous differential-drive robot (<code>/turtle1</code>) ready to receive velocity inputs and stream live pose odometry.</p>
+          </div>
+        </div>
+      </div>
+    `
+  });
+
+  // 3. Section 2.2: Keyboard Teleoperation Node
+  slides.push({
+    id: `${lesson.id}_sec2_2_teleop`,
+    type: 'concept',
+    lessonNum: lesson.num_str,
+    lessonId: lesson.id,
+    module: lesson.module,
+    sectionTitle: '2. Launching Turtlesim: The Simulation Playground',
+    badge: '⌨️ Teleoperation Control',
+    title: '2.2 Keyboard Teleoperation Control (turtle_teleop_key)',
+    htmlContent: `
+      <div class="l03-two-col-layout">
+        <div class="l03-visual-col">
+          <div class="l03-visual-frame">
+            <img src="assets/images/turtle_teleop_key_running.png" alt="Keyboard Teleop Running" class="l03-hero-img" />
+            <span class="l03-visual-caption">turtle_teleop_key: Real-Time Arrow Key Capture &amp; Velocity Publishing</span>
+          </div>
+        </div>
+        <div class="l03-content-col">
+          <div class="l03-cmd-card">
+            <div class="l03-cmd-header"><span class="l03-term-badge">Terminal 2</span><strong>Launch Teleoperation Node</strong></div>
+            <pre><code class="language-bash">ros2 run turtlesim turtle_teleop_key</code></pre>
+          </div>
+          <div class="l03-concept-card">
+            <div class="l03-concept-header"><span class="l03-card-icon">🎮</span><strong>Arrow Key Teleop Mapping</strong></div>
+            <p><strong>Up / Down:</strong> Linear velocity (&plusmn;2.0 m/s).<br/><strong>Left / Right:</strong> Angular yaw velocity (&plusmn;2.0 rad/s).</p>
+          </div>
+          <div class="l03-concept-card">
+            <div class="l03-concept-header"><span class="l03-card-icon">⚠️</span><strong>OS Window Focus Requirement</strong></div>
+            <p>The terminal executing <code>turtle_teleop_key</code> must retain active desktop window focus to capture keystrokes and broadcast commands.</p>
+          </div>
+        </div>
+      </div>
+    `
+  });
+
+  // 4. Section 3: rqt_graph Visualizer
+  slides.push({
+    id: `${lesson.id}_sec3_rqt_graph`,
+    type: 'concept',
+    lessonNum: lesson.num_str,
+    lessonId: lesson.id,
+    module: lesson.module,
+    sectionTitle: '3. Visualizing the Computational Graph (rqt_graph)',
+    badge: '🌐 Computational Graph',
+    title: '3. Visualizing the Computational Graph (rqt_graph)',
+    htmlContent: `
+      <div class="l03-two-col-layout l03-graph-layout">
+        <div class="l03-visual-col">
+          <div class="l03-visual-frame">
+            <img src="assets/images/turtlesim_rqt_graph.png" alt="Turtlesim rqt_graph Computational Graph" class="l03-hero-img" />
+            <span class="l03-visual-caption">rqt_graph: Active Nodes &amp; Inter-Process Topic Wiring</span>
+          </div>
+        </div>
+        <div class="l03-content-col">
+          <div class="l03-cmd-card">
+            <div class="l03-cmd-header"><span class="l03-term-badge">Terminal 3</span><strong>Launch Graph Visualizer</strong></div>
+            <pre><code class="language-bash">rqt_graph  # Or: ros2 run rqt_graph rqt_graph</code></pre>
+          </div>
+          <div class="l03-concept-card">
+            <div class="l03-concept-header"><span class="l03-card-icon">🟢</span><strong>Nodes (Ovals)</strong></div>
+            <p>Distinct executable processes (<code>/teleop_turtle</code> publisher and <code>/turtlesim</code> subscriber) running independently in OS user space.</p>
+          </div>
+          <div class="l03-concept-card">
+            <div class="l03-concept-header"><span class="l03-card-icon">🟦</span><strong>Topics (Rectangles / Arrows)</strong></div>
+            <p>Uni-directional message channel (<code>/turtle1/cmd_vel</code>) routing velocity data packets over the peer-to-peer DDS bus without a central master.</p>
+          </div>
+        </div>
+      </div>
+    `
+  });
+
+  // 5. Section 4.1: Discovering Nodes (ros2 node list)
+  slides.push({
+    id: `${lesson.id}_sec4_1_node_list`,
+    type: 'concept',
+    lessonNum: lesson.num_str,
+    lessonId: lesson.id,
+    module: lesson.module,
+    sectionTitle: '4. Core Concept 1: Node Introspection (ros2 node)',
+    badge: '🔍 Node Discovery',
+    title: '4.1 Discovering Active Nodes (ros2 node list)',
+    htmlContent: `
+      <div class="l03-two-col-layout">
+        <div class="l03-left-code-col">
+          <div class="l03-cmd-card">
+            <div class="l03-cmd-header"><span class="l03-term-badge">bash</span><strong>Query Active Nodes</strong></div>
+            <pre><code class="language-bash">ros2 node list</code></pre>
+          </div>
+          <div class="l03-output-card">
+            <div class="l03-output-header"><span class="l03-term-badge">output</span><strong>Active Graph Nodes</strong></div>
+            <pre><code class="language-text">/teleop_turtle
+/turtlesim</code></pre>
+          </div>
+        </div>
+        <div class="l03-content-col">
+          <div class="l03-concept-card">
+            <div class="l03-concept-header"><span class="l03-card-icon">⚙️</span><strong>Process Modularization</strong></div>
+            <p>In ROS 2, every distinct robotic function (sensor acquisition, SLAM, path planning, motor actuation) runs as an isolated process called a <strong>Node</strong>.</p>
+          </div>
+          <div class="l03-concept-card">
+            <div class="l03-concept-header"><span class="l03-card-icon">🩺</span><strong>Production Heartbeat Audit</strong></div>
+            <p>Whenever an autonomous robot fails to respond or stops tracking trajectories, your first diagnostic check is running <code>ros2 node list</code> to verify all required subsystem nodes are alive.</p>
+          </div>
+        </div>
+      </div>
+    `
+  });
+
+  // 6. Section 4.2: Deep Node Audit (ros2 node info)
+  slides.push({
+    id: `${lesson.id}_sec4_2_node_info`,
+    type: 'concept',
+    lessonNum: lesson.num_str,
+    lessonId: lesson.id,
+    module: lesson.module,
+    sectionTitle: '4. Core Concept 1: Node Introspection (ros2 node)',
+    badge: '📋 Node Audit',
+    title: '4.2 Deep Node Interface Audit (ros2 node info)',
+    htmlContent: `
+      <div class="l03-two-col-layout">
+        <div class="l03-left-code-col">
+          <div class="l03-cmd-card">
+            <div class="l03-cmd-header"><span class="l03-term-badge">bash</span><strong>Deep Node Inspection</strong></div>
+            <pre><code class="language-bash">ros2 node info /turtlesim</code></pre>
+          </div>
+          <div class="l03-output-card">
+            <div class="l03-output-header"><span class="l03-term-badge">yaml</span><strong>Interface Topology</strong></div>
+            <pre><code class="language-yaml">/turtlesim
+  Subscribers:
+    /turtle1/cmd_vel: geometry_msgs/msg/Twist
+  Publishers:
+    /turtle1/color_sensor: turtlesim/msg/Color
+    /turtle1/pose: turtlesim/msg/Pose
+  Service Servers:
+    /clear: std_srvs/srv/Empty
+    /reset: std_srvs/srv/Empty
+    /spawn: turtlesim/srv/Spawn
+    /turtle1/set_pen: turtlesim/srv/SetPen</code></pre>
+          </div>
+        </div>
+        <div class="l03-content-col">
+          <div class="l03-concept-card">
+            <div class="l03-concept-header"><span class="l03-card-icon">📥</span><strong>Subscribers vs Publishers</strong></div>
+            <p><strong>Subscribers:</strong> Topics consumed to drive state (e.g., velocity commands).<br/><strong>Publishers:</strong> Outgoing telemetry streams (e.g., robot pose and color sensor data).</p>
+          </div>
+          <div class="l03-concept-card">
+            <div class="l03-concept-header"><span class="l03-card-icon">⚡</span><strong>Service &amp; Action Endpoints</strong></div>
+            <p><strong>Services:</strong> Synchronous request-reply remote procedure calls (<code>/clear</code>, <code>/spawn</code>).<br/><strong>Actions:</strong> Long-duration preemptible goals with feedback.</p>
+          </div>
+        </div>
+      </div>
+    `
+  });
+
+  // 7. Section 5.1: Topic Discovery & Interface Typing (ros2 topic list -t)
+  slides.push({
+    id: `${lesson.id}_sec5_1_topic_list`,
+    type: 'concept',
+    lessonNum: lesson.num_str,
+    lessonId: lesson.id,
+    module: lesson.module,
+    sectionTitle: '5. Core Concept 2: Topic Introspection (ros2 topic)',
+    badge: '🚌 Topic Discovery',
+    title: '5.1 Topic Discovery & Interface Typing (ros2 topic list -t)',
+    htmlContent: `
+      <div class="l03-two-col-layout">
+        <div class="l03-left-code-col">
+          <div class="l03-cmd-card">
+            <div class="l03-cmd-header"><span class="l03-term-badge">bash</span><strong>List Topics with Interface Types</strong></div>
+            <pre><code class="language-bash">ros2 topic list -t</code></pre>
+          </div>
+          <div class="l03-output-card">
+            <div class="l03-output-header"><span class="l03-term-badge">output</span><strong>Active Topics &amp; Data Types</strong></div>
+            <pre><code class="language-text">/parameter_events [rcl_interfaces/msg/ParameterEvent]
+/rosout [rcl_interfaces/msg/Log]
+/turtle1/cmd_vel [geometry_msgs/msg/Twist]
+/turtle1/color_sensor [turtlesim/msg/Color]
+/turtle1/pose [turtlesim/msg/Pose]</code></pre>
+          </div>
+        </div>
+        <div class="l03-content-col">
+          <div class="l03-concept-card">
+            <div class="l03-concept-header"><span class="l03-card-icon">📡</span><strong>Named Message Buses</strong></div>
+            <p>Nodes do not talk directly. They communicate anonymously over named buses called <strong>Topics</strong> using a publish-subscribe pattern.</p>
+          </div>
+          <div class="l03-concept-card">
+            <div class="l03-concept-header"><span class="l03-card-icon">🏷️</span><strong>Interface Contract (-t)</strong></div>
+            <p>The <code>-t</code> flag reveals the exact message type required by each bus. In ROS 2, mismatched types prevent node communication and trigger DDS serialization errors.</p>
+          </div>
+        </div>
+      </div>
+    `
+  });
+
+  // 8. Section 5.2: Echoing Live Telemetry (ros2 topic echo)
+  slides.push({
+    id: `${lesson.id}_sec5_2_topic_echo`,
+    type: 'concept',
+    lessonNum: lesson.num_str,
+    lessonId: lesson.id,
+    module: lesson.module,
+    sectionTitle: '5. Core Concept 2: Topic Introspection (ros2 topic)',
+    badge: '📡 Telemetry Echo',
+    title: '5.2 Streaming Real-Time Telemetry (ros2 topic echo)',
+    htmlContent: `
+      <div class="l03-two-col-layout">
+        <div class="l03-left-code-col">
+          <div class="l03-cmd-card">
+            <div class="l03-cmd-header"><span class="l03-term-badge">bash</span><strong>Listen to Pose Stream</strong></div>
+            <pre><code class="language-bash">ros2 topic echo /turtle1/pose</code></pre>
+          </div>
+          <div class="l03-output-card">
+            <div class="l03-output-header"><span class="l03-term-badge">yaml</span><strong>Live Incoming Telemetry</strong></div>
+            <pre><code class="language-yaml">x: 5.820444583892822
+y: 5.544444561004639
+theta: 0.0
+linear_velocity: 0.0
+angular_velocity: 0.0
+---</code></pre>
+          </div>
+        </div>
+        <div class="l03-content-col">
+          <div class="l03-concept-card">
+            <div class="l03-concept-header"><span class="l03-card-icon">📍</span><strong>Pose Telemetry Breakdown</strong></div>
+            <p><strong>x, y:</strong> Planar position in meters from origin.<br/><strong>theta:</strong> Heading angle in radians (&minus;&pi; to &plus;&pi;).<br/><strong>velocities:</strong> Current linear and angular speed.</p>
+          </div>
+          <div class="l03-concept-card">
+            <div class="l03-concept-header"><span class="l03-card-icon">🔬</span><strong>Live Debugging Value</strong></div>
+            <p>Drive the turtle with teleop keys to observe live streaming updates. Essential for verifying wheel encoders, IMUs, and GPS receivers.</p>
+          </div>
+        </div>
+      </div>
+    `
+  });
+
+  // 9. Section 5.3: Measuring Frequency (ros2 topic hz)
+  slides.push({
+    id: `${lesson.id}_sec5_3_topic_hz`,
+    type: 'concept',
+    lessonNum: lesson.num_str,
+    lessonId: lesson.id,
+    module: lesson.module,
+    sectionTitle: '5. Core Concept 2: Topic Introspection (ros2 topic)',
+    badge: '⏱️ Rate Audit',
+    title: '5.3 Measuring Topic Publishing Frequency (ros2 topic hz)',
+    htmlContent: `
+      <div class="l03-two-col-layout">
+        <div class="l03-left-code-col">
+          <div class="l03-cmd-card">
+            <div class="l03-cmd-header"><span class="l03-term-badge">bash</span><strong>Audit Topic Frequency</strong></div>
+            <pre><code class="language-bash">ros2 topic hz /turtle1/pose</code></pre>
+          </div>
+          <div class="l03-output-card">
+            <div class="l03-output-header"><span class="l03-term-badge">output</span><strong>Frequency Metrics</strong></div>
+            <pre><code class="language-text">average rate: 62.503
+	min: 0.015s max: 0.017s std dev: 0.00049s window: 64</code></pre>
+          </div>
+          <div class="l03-hz-tag-banner">
+            <span class="l03-hz-badge">~62.5 Hz</span>
+            <span>Deterministic Pose Telemetry Output</span>
+          </div>
+        </div>
+        <div class="l03-content-col">
+          <div class="l03-concept-card">
+            <div class="l03-concept-header"><span class="l03-card-icon">🎯</span><strong>Real-Time Determinism</strong></div>
+            <p>Robotic control loops require consistent update rates. Turtlesim calculates and emits pose at exactly 62.5 Hz (16 ms cycle time).</p>
+          </div>
+          <div class="l03-concept-card">
+            <div class="l03-concept-header"><span class="l03-card-icon">🚨</span><strong>Production Sensor Benchmarks</strong></div>
+            <p><strong>LiDAR:</strong> 10–20 Hz.<br/><strong>Camera Streams:</strong> 30 Hz.<br/><strong>IMU / Wheel Encoders:</strong> 50–200 Hz.<br/>Drops in rate indicate CPU throttling or DDS transport saturation.</p>
+          </div>
+        </div>
+      </div>
+    `
+  });
+
+  // 10. Section 6: Interface Types & Twist Kinematics (ros2 interface)
+  slides.push({
+    id: `${lesson.id}_sec6_interface_twist`,
+    type: 'concept',
+    lessonNum: lesson.num_str,
+    lessonId: lesson.id,
+    module: lesson.module,
+    sectionTitle: '6. Core Concept 3: Topic Interface Types (ros2 interface)',
+    badge: '📐 Message IDL',
+    title: '6. Topic Interface Types & Ground Kinematics (ros2 interface)',
+    htmlContent: `
+      <div class="l03-two-col-layout">
+        <div class="l03-left-code-col">
+          <div class="l03-cmd-card">
+            <div class="l03-cmd-header"><span class="l03-term-badge">bash</span><strong>Inspect Interface Definition</strong></div>
+            <pre><code class="language-bash">ros2 interface show geometry_msgs/msg/Twist</code></pre>
+          </div>
+          <div class="l03-output-card">
+            <div class="l03-output-header"><span class="l03-term-badge">idl</span><strong>Twist Message Structure</strong></div>
+            <pre><code class="language-text">Vector3  linear
+    float64 x
+    float64 y
+    float64 z
+Vector3  angular
+    float64 x
+    float64 y
+    float64 z</code></pre>
+          </div>
+        </div>
+        <div class="l03-content-col">
+          <div class="l03-concept-card">
+            <div class="l03-concept-header"><span class="l03-card-icon">🏎️</span><strong>Planar Ground Kinematics</strong></div>
+            <p>For differential-drive AMRs and Turtlesim, only <strong>2 degrees of freedom</strong> are controllable:</p>
+            <ul class="l03-kinematics-list">
+              <li><code>linear.x</code>: Forward (+) and Reverse (&minus;) velocity in m/s</li>
+              <li><code>angular.z</code>: Yaw rotation steering speed in rad/s</li>
+            </ul>
+          </div>
+          <div class="l03-concept-card">
+            <div class="l03-concept-header"><span class="l03-card-icon">🔒</span><strong>Constrained Degrees of Freedom</strong></div>
+            <p><code>linear.y</code>, <code>linear.z</code>, <code>angular.x</code>, and <code>angular.y</code> are strictly zero because ground robots cannot strafe laterally or fly.</p>
+          </div>
+        </div>
+      </div>
+    `
+  });
+
+  // 11. Section 7.1: Moving Forward Once (--once)
+  slides.push({
+    id: `${lesson.id}_sec7_1_pub_once`,
+    type: 'concept',
+    lessonNum: lesson.num_str,
+    lessonId: lesson.id,
+    module: lesson.module,
+    sectionTitle: '7. Moving the Robot Hands-On via CLI (ros2 topic pub)',
+    badge: '⚡ Actuator Injection',
+    title: '7.1 Direct Actuator Injection: Moving Forward Once (--once)',
+    htmlContent: `
+      <div class="l03-single-cmd-layout">
+        <p class="l03-lead-desc">Inject a velocity command directly into the AMR actuator topic from your command line without writing Python or launching teleop:</p>
+        <div class="l03-cmd-card wide">
+          <div class="l03-cmd-header"><span class="l03-term-badge">bash</span><strong>Command Forward Movement for One Single Timestep</strong></div>
+          <pre><code class="language-bash">ros2 topic pub --once /turtle1/cmd_vel geometry_msgs/msg/Twist "{linear: {x: 2.0, y: 0.0, z: 0.0}, angular: {x: 0.0, y: 0.0, z: 0.0}}"</code></pre>
+        </div>
+        <div class="l03-behavior-cards-grid">
+          <div class="l03-behavior-card">
+            <div class="l03-card-header"><span class="l03-card-icon">⚡</span><strong>Single Message Injection (--once)</strong></div>
+            <p>Sends exactly one message packet across DDS and terminates the publisher immediately.</p>
+          </div>
+          <div class="l03-behavior-card">
+            <div class="l03-card-header"><span class="l03-card-icon">🛑</span><strong>Kinematic Deceleration</strong></div>
+            <p>The turtle surges forward at 2.0 m/s for one velocity timestep, then comes to a complete halt.</p>
+          </div>
+          <div class="l03-behavior-card">
+            <div class="l03-card-header"><span class="l03-card-icon">🛠️</span><strong>Hardware Commissioning</strong></div>
+            <p>Used by robotics engineers to verify wheel spin directions and emergency brakes on bare hardware.</p>
+          </div>
+        </div>
+      </div>
+    `
+  });
+
+  // 12. Section 7.2: Continuous Circle (-r 10)
+  slides.push({
+    id: `${lesson.id}_sec7_2_pub_rate`,
+    type: 'concept',
+    lessonNum: lesson.num_str,
+    lessonId: lesson.id,
+    module: lesson.module,
+    sectionTitle: '7. Moving the Robot Hands-On via CLI (ros2 topic pub)',
+    badge: '🔄 Continuous Circle',
+    title: '7.2 Continuous Motion: Driving in a Circle (-r 10)',
+    htmlContent: `
+      <div class="l03-single-cmd-layout">
+        <p class="l03-lead-desc">Stream periodic velocity commands at a steady frequency of 10 Hz to maintain continuous movement:</p>
+        <div class="l03-cmd-card wide">
+          <div class="l03-cmd-header"><span class="l03-term-badge">bash</span><strong>Publish Steady Velocity at 10 Hz</strong></div>
+          <pre><code class="language-bash">ros2 topic pub -r 10 /turtle1/cmd_vel geometry_msgs/msg/Twist "{linear: {x: 2.0, y: 0.0, z: 0.0}, angular: {x: 0.0, y: 0.0, z: 1.8}}"</code></pre>
+        </div>
+        <div class="l03-behavior-cards-grid">
+          <div class="l03-behavior-card">
+            <div class="l03-card-header"><span class="l03-card-icon">⏱️</span><strong>Continuous Rate (-r 10)</strong></div>
+            <p>Publishes a message every 100 ms (10 Hz). The turtle drives continuously, drawing an ink circle.</p>
+          </div>
+          <div class="l03-behavior-card">
+            <div class="l03-card-header"><span class="l03-card-icon">📐</span><strong>Arc Radius Formula</strong></div>
+            <p>Radius of curvature is given by: <code>R = v / &omega; = 2.0 / 1.8 &approx; 1.11 m</code>.</p>
+          </div>
+          <div class="l03-behavior-card">
+            <div class="l03-card-header"><span class="l03-card-icon">🛑</span><strong>Interrupt Execution</strong></div>
+            <p>Press <code>Ctrl + C</code> in the terminal to stop publishing; the robot smoothly coasts to a stop.</p>
+          </div>
+        </div>
+      </div>
+    `
+  });
+
+  // 13. Section 8: Summary Comparison Table of Essential CLI Tools
+  slides.push({
+    id: `${lesson.id}_sec8_cli_table`,
+    type: 'concept',
+    lessonNum: lesson.num_str,
+    lessonId: lesson.id,
+    module: lesson.module,
+    sectionTitle: '8. Summary Comparison Table of Essential CLI Tools',
+    badge: '📊 Master Reference',
+    title: '8. Essential ROS 2 CLI Tools & Production Use Cases',
+    htmlContent: `
+      <div class="l03-cli-table-layout">
+        <div class="l03-cli-table-wrap">
+          <table class="l03-summary-table">
+            <thead>
+              <tr>
+                <th style="width: 28%;">Command</th>
+                <th style="width: 36%;">Purpose</th>
+                <th style="width: 36%;">Production Use Case</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>rqt_graph</code></td>
+                <td>Visualizes computational graph nodes &amp; topic wiring</td>
+                <td>Auditing communication topology &amp; detecting disconnected nodes</td>
+              </tr>
+              <tr>
+                <td><code>ros2 run &lt;pkg&gt; &lt;exec&gt;</code></td>
+                <td>Launches a specific executable node from a package</td>
+                <td>Starting drivers, simulators, or single test scripts</td>
+              </tr>
+              <tr>
+                <td><code>ros2 node list</code></td>
+                <td>Lists all active nodes across the network</td>
+                <td>Auditing if all expected subsystem nodes are alive</td>
+              </tr>
+              <tr>
+                <td><code>ros2 node info &lt;node&gt;</code></td>
+                <td>Details subscribers, publishers, services, actions</td>
+                <td>Verifying interface names and endpoint wiring</td>
+              </tr>
+              <tr>
+                <td><code>ros2 topic list -t</code></td>
+                <td>Lists all active topics with their message types</td>
+                <td>Discovering sensor and telemetry buses</td>
+              </tr>
+              <tr>
+                <td><code>ros2 topic echo &lt;topic&gt;</code></td>
+                <td>Prints incoming message payloads to the console</td>
+                <td>Live debugging of sensor values or trajectory points</td>
+              </tr>
+              <tr>
+                <td><code>ros2 topic hz &lt;topic&gt;</code></td>
+                <td>Measures publish rate in Hertz</td>
+                <td>Verifying camera / LiDAR sensor update rates</td>
+              </tr>
+              <tr>
+                <td><code>ros2 interface show &lt;type&gt;</code></td>
+                <td>Shows message fields and structural types</td>
+                <td>Inspecting data format before writing Python code</td>
+              </tr>
+              <tr>
+                <td><code>ros2 topic pub &lt;topic&gt; &lt;type&gt; &lt;yaml&gt;</code></td>
+                <td>Injects messages onto a topic from the CLI</td>
+                <td>Testing actuators or emergency stop commands</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    `
+  });
+
+  // 14. Section 9: Hands-On Student Lab: Flight Operations Mission
+  slides.push({
+    id: `${lesson.id}_sec9_student_lab`,
+    type: 'concept',
+    lessonNum: lesson.num_str,
+    lessonId: lesson.id,
+    module: lesson.module,
+    sectionTitle: '9. Hands-On Student Lab: The Turtlesim Operations Mission',
+    badge: '🎯 Flight Mission',
+    title: '9. Student Lab: Flight Operations & Dynamic Reconfiguration',
+    htmlContent: `
+      <div class="l03-student-lab-layout">
+        <div class="l03-lab-header-banner">
+          <span class="l03-mission-badge">🎯 Flight Operations Briefing</span>
+          <span>Reconfigure simulation parameters &amp; pen telemetry dynamically over the ROS 2 bus:</span>
+        </div>
+        <div class="l03-lab-steps-grid">
+          <div class="l03-lab-step-card">
+            <div class="l03-step-badge">Step 1: Audit Parameters</div>
+            <p>Query parameters exposed by the simulation:</p>
+            <pre><code class="language-bash">ros2 param list /turtlesim</code></pre>
+          </div>
+          <div class="l03-lab-step-card">
+            <div class="l03-step-badge">Step 2: Night-Ops Navy Theme</div>
+            <p>Set background color to dark navy (#0f172a):</p>
+            <pre><code class="language-bash">ros2 param set /turtlesim background_r 15
+ros2 param set /turtlesim background_g 23
+ros2 param set /turtlesim background_b 42</code></pre>
+          </div>
+          <div class="l03-lab-step-card">
+            <div class="l03-step-badge">Step 3: Refresh Canvas</div>
+            <p>Call the /clear service to re-render background:</p>
+            <pre><code class="language-bash">ros2 service call /clear std_srvs/srv/Empty</code></pre>
+          </div>
+          <div class="l03-lab-step-card">
+            <div class="l03-step-badge">Step 4: Neon Cyan Pen</div>
+            <p>Set pen to 4px electric cyan ink:</p>
+            <pre><code class="language-bash">ros2 service call /turtle1/set_pen turtlesim/srv/SetPen "{r: 56, g: 189, b: 248, width: 4, 'off': 0}"</code></pre>
           </div>
         </div>
       </div>
