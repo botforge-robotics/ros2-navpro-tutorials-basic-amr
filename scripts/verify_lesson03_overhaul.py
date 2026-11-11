@@ -147,29 +147,30 @@ def verify():
         time.sleep(1.0)
 
         fs_results = []
-        for s in [1, 2, 3, 4, 10, 13, 14]:
-            if s < total_slides:
-                send_cmd("Runtime.evaluate", {
-                    "expression": f"window.location.hash = '#/presentation/03?slide={s}';"
-                })
-                time.sleep(0.8)
+        for s in range(total_slides):
+            send_cmd("Runtime.evaluate", {
+                "expression": f"window.location.hash = '#/presentation/03?slide={s}';"
+            })
+            time.sleep(0.8)
 
-                data = send_cmd("Runtime.evaluate", {
-                    "expression": """
-                        (() => {
-                            const content = document.querySelector('.ppt-slide-content');
-                            const titleEl = document.querySelector('.ppt-title') || document.querySelector('h1, h2, h3');
-                            const title = titleEl ? titleEl.innerText.trim() : 'Unknown';
-                            const overflowDiff = content ? (content.scrollHeight - content.clientHeight) : 0;
-                            return { title, overflowDiff };
-                        })()
-                    """,
-                    "returnByValue": True
-                })
-                res = data.get("result", {}).get("value", {})
-                fs_results.append(res)
-                print(f"FS Slide {s:02d}: {res.get('title')[:40]} | Overflow: {res.get('overflowDiff')}px")
-                take_screenshot(f"l03_overhaul_fs_slide_{s:02d}.png")
+            data = send_cmd("Runtime.evaluate", {
+                "expression": """
+                    (() => {
+                        const content = document.querySelector('.ppt-slide-content') || document.querySelector('.interactive-stage-container');
+                        const titleEl = document.querySelector('.ppt-title') || document.querySelector('.hero-lesson-title') || document.querySelector('h1, h2, h3');
+                        const title = titleEl ? titleEl.innerText.trim() : 'Unknown';
+                        const badgeEl = document.querySelector('.ppt-slide-badge');
+                        const badge = badgeEl ? badgeEl.innerText.trim() : '';
+                        const overflowDiff = content ? (content.scrollHeight - content.clientHeight) : 0;
+                        return { title, badge, overflowDiff };
+                    })()
+                """,
+                "returnByValue": True
+            })
+            res = data.get("result", {}).get("value", {})
+            fs_results.append(res)
+            print(f"FS Slide {s:02d}: {res.get('badge')} | {res.get('title')[:40]} | Overflow: {res.get('overflowDiff')}px")
+            take_screenshot(f"l03_overhaul_fs_slide_{s:02d}.png")
 
         ws.close()
         print("\nVerification completed successfully!")
