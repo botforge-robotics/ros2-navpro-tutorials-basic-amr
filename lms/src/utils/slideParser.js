@@ -440,6 +440,8 @@ export function parseLessonIntoSlides(lesson) {
     buildLesson02Slides(doc, lesson, slides);
   } else if (lesson.id === '03' || lesson.num_str === '03' || lesson.id === 'lesson_03') {
     buildLesson03Slides(doc, lesson, slides);
+  } else if (lesson.id === '04' || lesson.num_str === '04' || lesson.id === 'lesson_04') {
+    buildLesson04Slides(doc, lesson, slides);
   } else {
     sections.forEach((section, secIdx) => {
     const h2 = section.querySelector('h2');
@@ -1836,3 +1838,483 @@ ros2 param set /turtlesim background_b 42</code></pre>
     `
   });
 }
+
+/**
+ * Dedicated Pedagogical Deck Builder for Lesson 04:
+ * ROS 2 Workspace & Package Architecture Deep Dive.
+ * Consolidates fragmented single-command micro-splits into unified,
+ * high-yield architectural overviews with commands and outcomes side-by-side.
+ */
+function buildLesson04Slides(doc, lesson, slides) {
+  // 1. Learning Objectives & Curriculum Road Map
+  slides.push({
+    id: `${lesson.id}_sec1_objectives`,
+    type: 'concept',
+    lessonNum: lesson.num_str,
+    lessonId: lesson.id,
+    module: lesson.module,
+    sectionTitle: '1. Overview & Learning Objectives',
+    badge: '🎯 Architecture Goals',
+    title: '1. Learning Objectives & Curriculum Road Map',
+    htmlContent: `
+      <div class="l04-banner-intro">
+        <strong>Autonomous Robotics Core Requirement:</strong> In ROS 2, code cannot exist as loose Python scripts. All production robot nodes, launch files, parameter configurations, and URDF models must live within structured <strong>Packages</strong> compiled inside a <strong>Workspace</strong>.
+      </div>
+      <div class="l04-card-grid-2x2">
+        <div class="l04-pillar-card">
+          <div class="l04-pillar-header"><span class="l03-card-icon">📁</span><span>The Workspace Quartet</span></div>
+          <p>Master the 4-tier lifecycle separation: <code>src/</code> (human code), <code>build/</code> (intermediate cache), <code>install/</code> (runtime scripts), and <code>log/</code> (diagnostics).</p>
+        </div>
+        <div class="l04-pillar-card">
+          <div class="l04-pillar-header"><span class="l03-card-icon">⛓️</span><span>Environment Chaining</span></div>
+          <p>Layer development Overlays (<code>~/ros2_ws</code>) seamlessly atop base Underlays (<code>/opt/ros/jazzy</code>) via <code>AMENT_PREFIX_PATH</code> priority shadowing.</p>
+        </div>
+        <div class="l04-pillar-card">
+          <div class="l04-pillar-header"><span class="l03-card-icon">📦</span><span>Package Manifest &amp; Anatomy</span></div>
+          <p>Structure an <code>ament_python</code> package with <code>package.xml</code> (Format 3 schema), entry point console scripts in <code>setup.py</code>, and ament resource markers.</p>
+        </div>
+        <div class="l04-pillar-card">
+          <div class="l04-pillar-header"><span class="l03-card-icon">🛠️</span><span>Build &amp; Introspection Pipeline</span></div>
+          <p>Execute selective parallel compilation with <code>colcon build</code>, resolve missing system dependencies via <code>rosdep</code>, and query installed packages with <code>ros2 pkg</code>.</p>
+        </div>
+      </div>
+    `
+  });
+
+  // 2. Section 2: The ROS 2 Workspace Architecture (~/ros2_ws)
+  slides.push({
+    id: `${lesson.id}_sec2_workspace_hierarchy`,
+    type: 'concept',
+    lessonNum: lesson.num_str,
+    lessonId: lesson.id,
+    module: lesson.module,
+    sectionTitle: '2. The ROS 2 Workspace Architecture',
+    badge: '📁 Workspace Quartet',
+    title: '2. The ROS 2 Workspace Architecture (~/ros2_ws)',
+    htmlContent: `
+      <div class="l04-two-col-layout">
+        <div class="l04-visual-col">
+          <div class="l04-visual-frame">
+            <img src="assets/images/ros2_workspace_tree.svg" alt="ROS 2 Workspace Hierarchy" class="l04-hero-svg" />
+            <span class="l04-visual-caption">Standard 4-directory hierarchy managed by the colcon meta-build tool.</span>
+          </div>
+          <div class="l04-golden-card warning" style="margin-top: 0.35rem;">
+            <div class="l04-golden-header"><span>⚠️</span><strong>Workspace Golden Rule</strong></div>
+            <p>Never commit <code>build/</code>, <code>install/</code>, or <code>log/</code> to Git! Add them to <code>.gitignore</code>. Only <code>src/</code> is version-controlled.</p>
+          </div>
+        </div>
+        <div class="l04-content-col">
+          <div class="l03-concept-card">
+            <div class="l03-concept-header"><span class="l03-card-icon">📂</span><strong>src/ (Source Code)</strong></div>
+            <p>The <strong>only directory you write code in</strong>. Houses cloned Git repositories, scaffolded packages, Python modules, and C++ source files.</p>
+          </div>
+          <div class="l03-concept-card">
+            <div class="l03-concept-header"><span class="l03-card-icon">⚙️</span><strong>build/ (Build Artifacts)</strong></div>
+            <p>Created by <code>colcon</code>. Stores intermediate build caches, CMake files, and object binaries. Never edit files in this folder manually.</p>
+          </div>
+          <div class="l03-concept-card">
+            <div class="l03-concept-header"><span class="l03-card-icon">🚀</span><strong>install/ (Installed Runtime)</strong></div>
+            <p>Where <code>colcon</code> stages executable scripts, shared libraries, and <code>setup.bash</code> files. Sourced into your active terminal.</p>
+          </div>
+          <div class="l03-concept-card">
+            <div class="l03-concept-header"><span class="l03-card-icon">📋</span><strong>log/ (Diagnostic Records)</strong></div>
+            <p>Sequential execution logs per package. Contains detailed stdout/stderr dumps to pinpoint compilation or test failures.</p>
+          </div>
+        </div>
+      </div>
+    `
+  });
+
+  // 3. Section 3: Underlays vs. Overlays: Environment Chaining Model
+  slides.push({
+    id: `${lesson.id}_sec3_overlay_underlay`,
+    type: 'concept',
+    lessonNum: lesson.num_str,
+    lessonId: lesson.id,
+    module: lesson.module,
+    sectionTitle: '3. Underlays vs. Overlays: The Environment Chaining Model',
+    badge: '⛓️ Environment Chaining',
+    title: '3. Underlays vs. Overlays: Environment Chaining',
+    htmlContent: `
+      <div class="l04-two-col-layout">
+        <div class="l04-visual-col">
+          <div class="l04-visual-frame">
+            <img src="assets/images/ros2_overlay_underlay.svg" alt="Overlay vs Underlay Chaining" class="l04-hero-svg" />
+            <span class="l04-visual-caption">Environment Chaining: Sourced overlays shadow base underlays via AMENT_PREFIX_PATH.</span>
+          </div>
+        </div>
+        <div class="l04-content-col">
+          <div class="l03-concept-card">
+            <div class="l03-concept-header"><span class="l03-card-icon">🏛️</span><strong>The Underlay (/opt/ros/jazzy)</strong></div>
+            <p>The system-wide immutable ROS 2 distribution installed via Ubuntu <code>apt</code>. Houses core middleware (DDS), standard CLI tools, and official hardware drivers.</p>
+          </div>
+          <div class="l03-concept-card">
+            <div class="l03-concept-header"><span class="l03-card-icon">📦</span><strong>The Overlay (~/ros2_ws)</strong></div>
+            <p>Your local user development workspace. When you source <code>~/ros2_ws/install/setup.bash</code>, your packages layer on top of the underlay.</p>
+          </div>
+          <div class="l03-concept-card">
+            <div class="l03-concept-header"><span class="l03-card-icon">🔄</span><strong>Priority Shadowing &amp; Safety</strong></div>
+            <p>If an overlay package shares the exact same name as an underlay package, ROS 2 selects the overlay version first. You can patch upstream packages without root permissions!</p>
+          </div>
+        </div>
+      </div>
+    `
+  });
+
+  // 4. Section 4: Initializing, Building & Sourcing Workspace (Unified Workflow)
+  slides.push({
+    id: `${lesson.id}_sec4_init_and_build`,
+    type: 'concept',
+    lessonNum: lesson.num_str,
+    lessonId: lesson.id,
+    module: lesson.module,
+    sectionTitle: '4. Initializing & Building a Workspace',
+    badge: '⚙️ Workspace Setup',
+    title: '4. Initializing, Building & Sourcing Workspace',
+    htmlContent: `
+      <div class="l04-two-col-layout">
+        <div class="l04-content-col">
+          <div class="l03-cmd-card">
+            <div class="l03-cmd-header"><span class="l03-term-badge">Step 1</span><strong>Create Source Tree</strong></div>
+            <pre><code class="language-bash">mkdir -p ~/ros2_ws/src</code></pre>
+          </div>
+          <div class="l03-cmd-card">
+            <div class="l03-cmd-header"><span class="l03-term-badge">Step 2</span><strong>Meta-Build from Root</strong></div>
+            <pre><code class="language-bash">cd ~/ros2_ws && colcon build</code></pre>
+          </div>
+          <div class="l03-cmd-card">
+            <div class="l03-cmd-header"><span class="l03-term-badge">Step 3</span><strong>Source Local Overlay</strong></div>
+            <pre><code class="language-bash">source ~/ros2_ws/install/setup.bash</code></pre>
+          </div>
+        </div>
+        <div class="l04-content-col">
+          <div class="l03-output-card">
+            <div class="l03-output-header"><span class="l03-card-icon">🖥️</span><strong>Specific Observable Outcome</strong></div>
+            <pre><code class="language-text">Summary: 0 packages finished [0.25s]
+
+$ ls ~/ros2_ws
+build  install  log  src</code></pre>
+          </div>
+          <div class="l03-concept-card">
+            <div class="l03-concept-header"><span class="l03-card-icon">⚙️</span><strong>colcon 5-Phase Lifecycle</strong></div>
+            <p><strong>1. Discovery:</strong> Scans <code>src/</code> for <code>package.xml</code>.<br/>
+            <strong>2. Dependency Graph:</strong> Resolves topological ordering.<br/>
+            <strong>3. Parallel Execution:</strong> Invokes build tool (setuptools/CMake).<br/>
+            <strong>4. Isolation:</strong> Stages binaries cleanly into <code>install/</code>.</p>
+          </div>
+        </div>
+      </div>
+    `
+  });
+
+  // 5. Section 5: What Makes a Folder a ROS 2 Package?
+  slides.push({
+    id: `${lesson.id}_sec5_package_definition`,
+    type: 'concept',
+    lessonNum: lesson.num_str,
+    lessonId: lesson.id,
+    module: lesson.module,
+    sectionTitle: '5. What Makes a Folder a ROS 2 Package?',
+    badge: '📦 Package Concepts',
+    title: '5.1 Package Definition & Build Types',
+    htmlContent: `
+      <div class="l04-two-col-layout">
+        <div class="l04-content-col">
+          <div class="l03-concept-card">
+            <div class="l03-concept-header"><span class="l03-card-icon">📦</span><strong>What is a ROS 2 Package?</strong></div>
+            <p>The atomic unit of software distribution, compilation, and dependency tracking in ROS 2. Nodes cannot exist as loose files—they must belong to a package.</p>
+          </div>
+          <div class="l03-concept-card">
+            <div class="l03-concept-header"><span class="l03-card-icon">🐍</span><strong>ament_python Build Type</strong></div>
+            <p>Designed for pure Python nodes, launch scripts, and CLI utilities. Uses Python standard <code>setup.py</code> and setuptools. Provides instant hot-reloading with <code>--symlink-install</code>.</p>
+          </div>
+          <div class="l03-concept-card">
+            <div class="l03-concept-header"><span class="l03-card-icon">⚡</span><strong>ament_cmake Build Type</strong></div>
+            <p>Designed for C++ performance nodes, real-time motor controllers, and <strong>custom message/service definitions</strong> (<code>.msg</code>, <code>.srv</code>, <code>.action</code>). Uses <code>CMakeLists.txt</code>.</p>
+          </div>
+        </div>
+        <div class="l04-content-col">
+          <div class="l04-golden-card">
+            <div class="l04-golden-header"><span>📋</span><strong>3 Inviolable Package Requirements</strong></div>
+            <p>To be recognized as a valid ROS 2 package by <code>colcon</code>, a folder must fulfill:</p>
+            <ul style="margin: 0.4rem 0 0 1rem; padding: 0; font-size: 0.76rem; line-height: 1.4; color: var(--text-secondary);">
+              <li><strong>1. package.xml Manifest:</strong> Must declare schema Format 3 (<code>&lt;package format="3"&gt;</code>) and package dependencies.</li>
+              <li><strong>2. Build Configuration:</strong> Must contain either <code>setup.py</code> (Python) or <code>CMakeLists.txt</code> (C++).</li>
+              <li><strong>3. Filesystem Location:</strong> Must reside inside the workspace's <code>src/</code> directory tree.</li>
+            </ul>
+          </div>
+          <div class="l03-concept-card" style="margin-top: 0.35rem;">
+            <div class="l03-concept-header"><span class="l03-card-icon">💡</span><strong>AMR Architecture Pattern</strong></div>
+            <p>Autonomous robots typically pair high-level Python packages (behavior trees, mission dispatch) with low-level C++ packages (kinematics, LiDAR drivers).</p>
+          </div>
+        </div>
+      </div>
+    `
+  });
+
+  // 6. Section 5: Python Package Anatomy & Essential Files
+  slides.push({
+    id: `${lesson.id}_sec5_package_anatomy`,
+    type: 'concept',
+    lessonNum: lesson.num_str,
+    lessonId: lesson.id,
+    module: lesson.module,
+    sectionTitle: '5. What Makes a Folder a ROS 2 Package?',
+    badge: '🔍 Package Anatomy',
+    title: '5.2 Python Package Anatomy & Essential Files',
+    htmlContent: `
+      <div class="l04-two-col-layout">
+        <div class="l04-visual-col">
+          <div class="l04-visual-frame">
+            <img src="assets/images/ros2_package_tree.svg" alt="ROS 2 Python Package Anatomy" class="l04-hero-svg" />
+            <span class="l04-visual-caption">Essential anatomy of an ament_python package: Manifest, entry points, and marker files.</span>
+          </div>
+        </div>
+        <div class="l04-content-col">
+          <div class="l03-concept-card">
+            <div class="l03-concept-header"><span class="l03-card-icon">📋</span><strong>package.xml (The Manifest)</strong></div>
+            <p>Declares package name, version, license, and build/runtime dependencies (<code>&lt;depend&gt;</code>) parsed by <code>colcon</code> and <code>rosdep</code>.</p>
+          </div>
+          <div class="l03-concept-card">
+            <div class="l03-concept-header"><span class="l03-card-icon">⚙️</span><strong>setup.py &amp; setup.cfg (Build Rules)</strong></div>
+            <p>Configures setuptools and maps executable CLI names to Python functions via <code>entry_points={'console_scripts': ['node = pkg.mod:main']}</code>.</p>
+          </div>
+          <div class="l03-concept-card">
+            <div class="l03-concept-header"><span class="l03-card-icon">🏷️</span><strong>resource/&lt;pkg&gt; (Ament Index Marker)</strong></div>
+            <p>An empty marker file placed inside <code>resource/</code> that registers the package with the Ament Index so <code>ros2 pkg</code> can locate it.</p>
+          </div>
+        </div>
+      </div>
+    `
+  });
+
+  // 7. Section 6 & 7: Package Introspection CLI & rosdep
+  slides.push({
+    id: `${lesson.id}_sec6_7_introspection_rosdep`,
+    type: 'concept',
+    lessonNum: lesson.num_str,
+    lessonId: lesson.id,
+    module: lesson.module,
+    sectionTitle: '6 & 7. Package Introspection & rosdep',
+    badge: '🛠️ CLI & Dependencies',
+    title: '6 & 7. Package Introspection CLI & rosdep',
+    htmlContent: `
+      <div class="l04-two-col-layout">
+        <div class="l04-content-col">
+          <div class="l03-cmd-card">
+            <div class="l03-cmd-header"><span class="l03-term-badge">CLI</span><strong>Package Query Commands</strong></div>
+            <pre><code class="language-bash"># 1. List all discovered packages in environment
+ros2 pkg list
+
+# 2. Query exact install prefix directory
+ros2 pkg prefix turtlesim
+# Output: /opt/ros/jazzy
+
+# 3. Query declared package.xml metadata
+ros2 pkg xml turtlesim</code></pre>
+          </div>
+          <div class="l03-concept-card">
+            <div class="l03-concept-header"><span class="l03-card-icon">🔎</span><strong>Runtime Package Discovery</strong></div>
+            <p><code>ros2 pkg</code> inspects the directories listed in <code>$AMENT_PREFIX_PATH</code> to immediately report installed packages and their paths.</p>
+          </div>
+        </div>
+        <div class="l04-content-col">
+          <div class="l03-cmd-card">
+            <div class="l03-cmd-header"><span class="l03-term-badge">rosdep</span><strong>Automated Dependency Resolution</strong></div>
+            <pre><code class="language-bash">cd ~/ros2_ws
+rosdep update
+rosdep install --from-paths src --ignore-src -y</code></pre>
+          </div>
+          <div class="l03-concept-card">
+            <div class="l03-concept-header"><span class="l03-card-icon">📌</span><strong>Flag-by-Flag Breakdown</strong></div>
+            <p><strong>--from-paths src:</strong> Recursively parses <code>&lt;depend&gt;</code> in all packages inside <code>src/</code>.<br/>
+            <strong>--ignore-src:</strong> Skips packages already present in local source.<br/>
+            <strong>-y:</strong> Automatically confirms all Ubuntu <code>apt</code> installations.</p>
+          </div>
+        </div>
+      </div>
+    `
+  });
+
+  // 8. Section 8: Scaffolding the nexus_amr_basics Package
+  slides.push({
+    id: `${lesson.id}_sec8_scaffold_package`,
+    type: 'concept',
+    lessonNum: lesson.num_str,
+    lessonId: lesson.id,
+    module: lesson.module,
+    sectionTitle: '8. Create ROS 2 Package (Python)',
+    badge: '🔨 Package Creation',
+    title: '8.1 Scaffolding the nexus_amr_basics Package',
+    htmlContent: `
+      <div class="l04-two-col-layout">
+        <div class="l04-content-col">
+          <div class="l03-cmd-card">
+            <div class="l03-cmd-header"><span class="l03-term-badge">Terminal</span><strong>Scaffold Python Package</strong></div>
+            <pre><code class="language-bash">cd ~/ros2_ws/src
+ros2 pkg create --build-type ament_python nexus_amr_basics \\
+  --dependencies rclpy geometry_msgs std_msgs \\
+  --description "Nexus AMR Robotics Core Basics Package"</code></pre>
+          </div>
+          <div class="l03-concept-card">
+            <div class="l03-concept-header"><span class="l03-card-icon">⚡</span><strong>Command Anatomy</strong></div>
+            <p><strong>--build-type ament_python:</strong> Generates Python skeleton.<br/>
+            <strong>--dependencies:</strong> Auto-populates <code>&lt;depend&gt;</code> in <code>package.xml</code> with <code>rclpy</code>, <code>geometry_msgs</code>, and <code>std_msgs</code>.</p>
+          </div>
+        </div>
+        <div class="l04-content-col">
+          <div class="l03-output-card">
+            <div class="l03-output-header"><span class="l03-card-icon">🖥️</span><strong>Scaffold Verification Outcome</strong></div>
+            <pre><code class="language-text">going to create a new package
+package name: nexus_amr_basics
+destination directory: /home/student/ros2_ws/src
+
+$ ls nexus_amr_basics/
+nexus_amr_basics  package.xml  resource  setup.cfg  setup.py  test</code></pre>
+          </div>
+          <div class="l04-golden-card success">
+            <div class="l04-golden-header"><span>✅</span><strong>Scaffold Ready</strong></div>
+            <p>The package manifest and setuptools build files are initialized. You are ready to build the package into the workspace overlay.</p>
+          </div>
+        </div>
+      </div>
+    `
+  });
+
+  // 9. Section 8: Compiling with colcon & Build Telemetry
+  slides.push({
+    id: `${lesson.id}_sec8_colcon_build`,
+    type: 'concept',
+    lessonNum: lesson.num_str,
+    lessonId: lesson.id,
+    module: lesson.module,
+    sectionTitle: '8. Create ROS 2 Package (Python)',
+    badge: '⚡ Meta-Build Execution',
+    title: '8.2 Compiling with colcon & Build Telemetry',
+    htmlContent: `
+      <div class="l04-two-col-layout">
+        <div class="l04-content-col">
+          <div class="l03-cmd-card">
+            <div class="l03-cmd-header"><span class="l03-term-badge">Workspace Root</span><strong>Selective Meta-Build</strong></div>
+            <pre><code class="language-bash">cd ~/ros2_ws
+colcon build --symlink-install --packages-select nexus_amr_basics</code></pre>
+          </div>
+          <div class="l03-concept-card">
+            <div class="l03-concept-header"><span class="l03-card-icon">🔗</span><strong>--symlink-install (Developer Superpower)</strong></div>
+            <p>Symlinks Python files from <code>src/</code> into <code>install/</code>. Changes you make to Python code take effect immediately without re-running colcon build!</p>
+          </div>
+          <div class="l03-concept-card">
+            <div class="l03-concept-header"><span class="l03-card-icon">🎯</span><strong>--packages-select (Targeted Build)</strong></div>
+            <p>Builds only <code>nexus_amr_basics</code>. In large robot workspaces with 50+ packages, this reduces build time from minutes to 1.2 seconds.</p>
+          </div>
+        </div>
+        <div class="l04-content-col">
+          <div class="l03-output-card">
+            <div class="l03-output-header"><span class="l03-card-icon">📊</span><strong>Specific Build Telemetry</strong></div>
+            <pre><code class="language-text">Starting >>> nexus_amr_basics
+Finished <<< nexus_amr_basics [1.15s]
+Summary: 1 package finished [1.32s]</code></pre>
+          </div>
+          <div class="l03-concept-card">
+            <div class="l03-concept-header"><span class="l03-card-icon">🚀</span><strong>Lifecycle Output Stages</strong></div>
+            <p><strong>Starting &gt;&gt;&gt;:</strong> Worker thread initialized, package verified.<br/>
+            <strong>Finished &lt;&lt;&lt; [time]:</strong> Bytecode compiled, entry points registered.<br/>
+            <strong>Summary:</strong> Total elapsed time and error status (code 0).</p>
+          </div>
+        </div>
+      </div>
+    `
+  });
+
+  // 10. Section 8 & 9: Sourcing Contrast Drill & Health Audit
+  slides.push({
+    id: `${lesson.id}_sec8_9_sourcing_verification`,
+    type: 'concept',
+    lessonNum: lesson.num_str,
+    lessonId: lesson.id,
+    module: lesson.module,
+    sectionTitle: '8 & 9. Sourcing & Verification',
+    badge: '🔍 Sourcing & Verification',
+    title: '8.3 Sourcing Contrast Drill & Health Audit',
+    htmlContent: `
+      <div class="l04-two-col-layout">
+        <div class="l04-content-col">
+          <div class="l03-cmd-card">
+            <div class="l03-cmd-header"><span class="l03-term-badge">Drill</span><strong>The Overlay Sourcing Contrast Test</strong></div>
+            <pre><code class="language-bash"># Test 1: BEFORE sourcing install/setup.bash:
+ros2 pkg prefix nexus_amr_basics
+# -> Package 'nexus_amr_basics' not found
+
+# Test 2: Source local workspace overlay:
+source ~/ros2_ws/install/setup.bash
+
+# Test 3: Re-query package prefix:
+ros2 pkg prefix nexus_amr_basics
+# -> /home/student/ros2_ws/install/nexus_amr_basics</code></pre>
+          </div>
+        </div>
+        <div class="l04-content-col">
+          <div class="l03-cmd-card">
+            <div class="l03-cmd-header"><span class="l03-term-badge">Audit</span><strong>Query Declared Dependencies</strong></div>
+            <pre><code class="language-bash">ros2 pkg xml nexus_amr_basics --tag depend</code></pre>
+          </div>
+          <div class="l03-output-card">
+            <div class="l03-output-header"><span class="l03-card-icon">🖥️</span><strong>Expected Verification Output</strong></div>
+            <pre><code class="language-xml">&lt;depend&gt;rclpy&lt;/depend&gt;
+&lt;depend&gt;geometry_msgs&lt;/depend&gt;
+&lt;depend&gt;std_msgs&lt;/depend&gt;</code></pre>
+          </div>
+          <div class="l04-golden-card success">
+            <div class="l04-golden-header"><span>✅</span><strong>Overlay Active</strong></div>
+            <p><code>nexus_amr_basics</code> is now indexed in the ROS 2 computational graph and ready for Python node development in Lesson 05!</p>
+          </div>
+        </div>
+      </div>
+    `
+  });
+
+  // 11. Interactive Architecture Explorer: ROS 2 Package Filesystem
+  slides.push({
+    id: `${lesson.id}_interactive_package`,
+    type: 'interactive',
+    interactiveKey: 'package',
+    lessonNum: lesson.num_str,
+    lessonId: lesson.id,
+    module: lesson.module,
+    sectionTitle: 'Interactive Architecture: ROS 2 Package Filesystem',
+    title: 'Interactive Package Structure & Execution Trace'
+  });
+
+  // 12. Section 10: Production Best Practices & Golden Rules
+  slides.push({
+    id: `${lesson.id}_sec10_golden_rules`,
+    type: 'concept',
+    lessonNum: lesson.num_str,
+    lessonId: lesson.id,
+    module: lesson.module,
+    sectionTitle: 'Production Best Practices',
+    badge: '🛡️ Production Rules',
+    title: 'ROS 2 Workspace & Build Golden Rules',
+    htmlContent: `
+      <div class="l04-card-grid-2x2">
+        <div class="l04-golden-card">
+          <div class="l04-golden-header"><span>📍</span><strong>1. Always Build from Root</strong></div>
+          <p>Always execute <code>colcon build</code> from <code>~/ros2_ws</code>, never inside <code>src/</code>. Running build inside <code>src/</code> creates nested orphan build folders.</p>
+        </div>
+        <div class="l04-golden-card">
+          <div class="l04-golden-header"><span>🔄</span><strong>2. Always Source the Overlay</strong></div>
+          <p>Every newly opened terminal session must source <code>~/ros2_ws/install/setup.bash</code> to discover newly built packages and executables.</p>
+        </div>
+        <div class="l04-golden-card">
+          <div class="l04-golden-header"><span>🔗</span><strong>3. Use --symlink-install</strong></div>
+          <p>Always pass <code>--symlink-install</code> during Python development so edits to Python scripts run immediately without rebuilding.</p>
+        </div>
+        <div class="l04-golden-card">
+          <div class="l04-golden-header"><span>🚫</span><strong>4. Never Commit Build Folders</strong></div>
+          <p>Always include <code>build/</code>, <code>install/</code>, and <code>log/</code> in your <code>.gitignore</code>. Only human-written source files in <code>src/</code> belong in version control.</p>
+        </div>
+      </div>
+    `
+  });
+}
+
