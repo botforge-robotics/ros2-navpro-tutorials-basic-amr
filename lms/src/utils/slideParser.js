@@ -444,6 +444,8 @@ export function parseLessonIntoSlides(lesson) {
     buildLesson04Slides(doc, lesson, slides);
   } else if (lesson.id === '05' || lesson.num_str === '05' || lesson.id === 'lesson_05') {
     buildLesson05Slides(doc, lesson, slides);
+  } else if (lesson.id === '06' || lesson.num_str === '06' || lesson.id === 'lesson_06') {
+    buildLesson06Slides(doc, lesson, slides);
   } else {
     sections.forEach((section, secIdx) => {
     const h2 = section.querySelector('h2');
@@ -2915,5 +2917,544 @@ ros2 topic echo /turtle1/cmd_vel</code></pre>
     `
   });
 }
+
+/**
+ * Dedicated High-Yield Pedagogical Deck Builder for Lesson 06:
+ * Communication Mechanism II: Service Servers & Clients in Python.
+ * Replaces fragmented 23-slide micro-splits with executive-quality,
+ * high-yield 2-column slides, compact code presentation, and interactive RPC simulator.
+ */
+function buildLesson06Slides(doc, lesson, slides) {
+  // 1. Interactive Service Architecture Stage (2-Way Request ➔ Response RPC Simulator)
+  slides.push({
+    id: `${lesson.id}_interactive_service`,
+    type: 'interactive',
+    interactiveKey: 'service',
+    lessonNum: lesson.num_str,
+    lessonId: lesson.id,
+    module: lesson.module,
+    sectionTitle: '2. Service Architecture & Communication Flow',
+    badge: '🔄 Interactive Simulator',
+    title: 'Interactive Service Architecture: 2-Way Request ➔ Response (RPC)'
+  });
+
+  // 2. Section 2: Decision Matrix (Topics vs Services vs Actions)
+  slides.push({
+    id: `${lesson.id}_sec2_decision_matrix`,
+    type: 'concept',
+    lessonNum: lesson.num_str,
+    lessonId: lesson.id,
+    module: lesson.module,
+    sectionTitle: '2. Communication Pattern Selection',
+    badge: '🧭 Architecture Selection',
+    title: '2. Decision Matrix: Topics vs Services vs Actions',
+    htmlContent: `
+      <div class="l06-two-col-layout">
+        <div class="l06-visual-col">
+          <div class="l06-visual-frame">
+            <img src="assets/images/ros2_comm_patterns_decision.svg" alt="ROS 2 Communication Patterns Decision Architecture" class="l06-hero-svg" />
+            <div class="l06-visual-caption">Figure 6.1: Deterministic Decision Flow for ROS 2 Communication Primitives</div>
+          </div>
+          <div class="l06-golden-card success" style="margin-top: 0.15rem;">
+            <div class="l06-golden-header"><span>🎯</span><strong>Primary Decision Rule: Synchronous Confirmation</strong></div>
+            <p>Use <strong>Services</strong> for short (&lt;50ms) bidirectional Request-Response transactions where explicit execution confirmation is required before proceeding.</p>
+          </div>
+        </div>
+        <div class="l06-content-col">
+          <div class="l06-table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Pattern</th>
+                  <th>Data Flow</th>
+                  <th>Feedback?</th>
+                  <th>Robotics Production Use Case</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><code>Topics</code></td>
+                  <td>Many-to-Many Stream (Unidirectional)</td>
+                  <td>None</td>
+                  <td>Continuous sensor feeds (<code>/scan</code>, <code>/odom</code>), velocity setpoints (<code>/cmd_vel</code>)</td>
+                </tr>
+                <tr>
+                  <td><code>Services</code></td>
+                  <td><strong>1-to-1 Unicast (Request ➔ Response)</strong></td>
+                  <td><strong>Receipt Only</strong></td>
+                  <td><strong>Atomic safety interlocks (<code>/robot/emergency_stop</code>), mode changes, zeroing IMU</strong></td>
+                </tr>
+                <tr>
+                  <td><code>Actions</code></td>
+                  <td>1-to-1 Client-Server (Goal / Feedback / Result)</td>
+                  <td>Continuous Progress</td>
+                  <td>Long-duration tasks: Nav2 waypoint navigation (<code>/navigate_to_pose</code>), arm manipulation</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="l06-golden-card warning" style="margin-top: 0.2rem;">
+            <div class="l06-golden-header"><span>⚠️</span><strong>Anti-Pattern: Never Stream over Services</strong></div>
+            <p>Never stream continuous 50Hz sensor data over Services. Services block until round-trip completes, introducing catastrophic latency and queue starving.</p>
+          </div>
+        </div>
+      </div>
+    `
+  });
+
+  // 3. Section 3.1: Service Interface Discovery & Contract (TriggerEmergencyStop.srv)
+  slides.push({
+    id: `${lesson.id}_sec3_interface_contract`,
+    type: 'concept',
+    lessonNum: lesson.num_str,
+    lessonId: lesson.id,
+    module: lesson.module,
+    sectionTitle: '3. Interface Discovery & Contract',
+    badge: '📋 Interface Contract',
+    title: '3.1 Service Interface Discovery: TriggerEmergencyStop',
+    htmlContent: `
+      <div class="l06-two-col-layout">
+        <div class="l06-content-col">
+          <div class="l03-concept-card">
+            <div class="l03-concept-header"><span class="l03-card-icon">💡</span><strong>Robotics Best Practice: Inspect Before Coding</strong></div>
+            <p>Always query interfaces via CLI to inspect field names, data types, and the <code>---</code> request/response separator.</p>
+          </div>
+          <div class="l03-cmd-card">
+            <div class="l03-cmd-header"><span class="l03-term-badge">CLI Discovery</span><strong>Query Service Interfaces</strong></div>
+            <pre><code class="language-bash"># Search service types and inspect schema:
+ros2 interface list | grep srv | grep -i emergency
+ros2 interface show nexus_amr_interfaces/srv/TriggerEmergencyStop</code></pre>
+          </div>
+          <div class="l03-output-card">
+            <div class="l03-output-header"><span class="l03-card-icon">📄</span><strong>Interface Definition (.srv Schema)</strong></div>
+            <pre><code class="language-plaintext"># Request (Input payload sent by Client)
+bool emergency_stop_requested
+string reason
+---
+# Response (Output payload returned by Server)
+bool success
+string status_message
+float32 stop_timestamp</code></pre>
+          </div>
+        </div>
+        <div class="l06-content-col">
+          <div class="l06-table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Field</th>
+                  <th>Type</th>
+                  <th>Robotics Semantic Meaning</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><code>emergency_stop_requested</code></td>
+                  <td>bool</td>
+                  <td><code>True</code> engages motor brakes; <code>False</code> clears halt</td>
+                </tr>
+                <tr>
+                  <td><code>reason</code></td>
+                  <td>string</td>
+                  <td>Diagnostic rationale for safety compliance (ISO 3691-4)</td>
+                </tr>
+                <tr>
+                  <td><code>---</code></td>
+                  <td>separator</td>
+                  <td><strong>Mandatory boundary:</strong> Top = Request; Bottom = Response</td>
+                </tr>
+                <tr>
+                  <td><code>success</code></td>
+                  <td>bool</td>
+                  <td>Acknowledgment flag verifying physical relay engagement</td>
+                </tr>
+                <tr>
+                  <td><code>status_message</code></td>
+                  <td>string</td>
+                  <td>Human-readable receipt (e.g. <code>'EMERGENCY BRAKE ENGAGED'</code>)</td>
+                </tr>
+                <tr>
+                  <td><code>stop_timestamp</code></td>
+                  <td>float32</td>
+                  <td>Epoch timestamp in seconds for audit trails</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="l06-golden-card success" style="margin-top: 0.16rem;">
+            <div class="l06-golden-header"><span>🎯</span><strong>Deterministic Safety Contract</strong></div>
+            <p>Every service call produces exactly one strongly-typed response receipt, ensuring deterministic safety verification.</p>
+          </div>
+        </div>
+      </div>
+    `
+  });
+
+  // 4. Section 3.2: Authoring the Emergency Stop Server Node
+  slides.push({
+    id: `${lesson.id}_sec3_server_implementation`,
+    type: 'concept',
+    lessonNum: lesson.num_str,
+    lessonId: lesson.id,
+    module: lesson.module,
+    sectionTitle: '3. Service Server Implementation',
+    badge: '🛡️ Safety Server Node',
+    title: '3.2 Authoring the Emergency Stop Server (emergency_stop_server.py)',
+    htmlContent: `
+      <div class="l06-two-col-layout">
+        <div class="l06-content-col">
+          <div class="l03-cmd-card">
+            <div class="l03-cmd-header"><span class="l03-term-badge">Python Node</span><strong>emergency_stop_server.py</strong></div>
+            <pre><code class="language-python">import rclpy
+from rclpy.node import Node
+from nexus_amr_interfaces.srv import TriggerEmergencyStop
+
+class EmergencyStopServer(Node):
+    def __init__(self):
+        super().__init__('emergency_stop_server')
+        self.emergency_stop_active = False
+        self.srv = self.create_service(
+            TriggerEmergencyStop, '/robot/emergency_stop', self.handle_emergency_stop
+        )
+        self.get_logger().info('EmergencyStopServer ready on /robot/emergency_stop')
+
+    def handle_emergency_stop(self, request, response):
+        now_sec = self.get_clock().now().nanoseconds * 1e-9
+        response.success = True
+        response.stop_timestamp = float(round(now_sec, 3))
+        if request.emergency_stop_requested:
+            self.emergency_stop_active = True
+            response.status_message = f'EMERGENCY BRAKE ENGAGED: "{request.reason}"'
+            self.get_logger().error(f'[SAFETY] E-STOP ACTIVATED! Reason: {request.reason}')
+        else:
+            self.emergency_stop_active = False
+            response.status_message = 'SAFETY RESET: Power restored. Drive authorized.'
+            self.get_logger().info('[SAFETY] E-STOP CLEARED. Drive systems ready.')
+        return response  # MANDATORY: Always return populated response</code></pre>
+          </div>
+        </div>
+        <div class="l06-content-col">
+          <div class="l05-card-grid-2x2" style="margin-top: 0; gap: 0.45rem;">
+            <div class="l05-pillar-card">
+              <div class="l05-pillar-header"><span>🔒</span><strong>1. Latching Safety State</strong></div>
+              <p><code>self.emergency_stop_active</code> maintains node state. Once triggered, it latches until an explicit reset arrives.</p>
+            </div>
+            <div class="l05-pillar-card">
+              <div class="l05-pillar-header"><span>⚙️</span><strong>2. create_service()</strong></div>
+              <p>Registers endpoint on <code>/robot/emergency_stop</code> with interface type and binds the synchronous callback.</p>
+            </div>
+            <div class="l05-pillar-card">
+              <div class="l05-pillar-header"><span>⚡</span><strong>3. Executor Callback</strong></div>
+              <p>Callback receives <code>(request, response)</code> automatically. Executes fast motor brake cutoff without blocking other threads.</p>
+            </div>
+            <div class="l05-pillar-card">
+              <div class="l05-pillar-header"><span>📬</span><strong>4. Mandatory Return & Spin</strong></div>
+              <p>Must <code>return response</code> over DDS. <code>rclpy.spin(node)</code> handles incoming service calls until SIGINT teardown.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    `
+  });
+
+  // 5. Section 4: Configuring setup.py, Building & Testing with ROS 2 CLI
+  slides.push({
+    id: `${lesson.id}_sec4_server_build_cli`,
+    type: 'concept',
+    lessonNum: lesson.num_str,
+    lessonId: lesson.id,
+    module: lesson.module,
+    sectionTitle: '4. Build & CLI Introspection',
+    badge: '🛠️ Build & CLI Testing',
+    title: '4. setup.py Entry Point, colcon Build & Service CLI Testing',
+    htmlContent: `
+      <div class="l06-two-col-layout">
+        <div class="l06-content-col">
+          <div class="l03-cmd-card">
+            <div class="l03-cmd-header"><span class="l03-term-badge">setup.py</span><strong>Register Console Script Entry Point</strong></div>
+            <pre><code class="language-python">entry_points={
+    'console_scripts': [
+        'ultrasonic_publisher = nexus_amr_basics.ultrasonic_publisher:main',
+        'emergency_stop_server = nexus_amr_basics.emergency_stop_server:main',
+    ],
+},</code></pre>
+          </div>
+          <div class="l03-cmd-card">
+            <div class="l03-cmd-header"><span class="l03-term-badge">Terminal 1</span><strong>Build & Launch Server</strong></div>
+            <pre><code class="language-bash">cd ~/ros2_ws
+colcon build --symlink-install --packages-select nexus_amr_basics
+source install/setup.bash
+ros2 run nexus_amr_basics emergency_stop_server</code></pre>
+          </div>
+        </div>
+        <div class="l06-content-col">
+          <div class="l03-cmd-card">
+            <div class="l03-cmd-header"><span class="l03-term-badge">Terminal 2</span><strong>CLI Introspection & Live Test</strong></div>
+            <pre><code class="language-bash">source /opt/ros/jazzy/setup.bash
+
+# 1. Verify service appears in registry and check type:
+ros2 service list | grep emergency_stop
+ros2 service type /robot/emergency_stop
+
+# 2. Call service endpoint with YAML payload:
+ros2 service call /robot/emergency_stop nexus_amr_interfaces/srv/TriggerEmergencyStop \\
+  "{emergency_stop_requested: true, reason: 'CLI Manual Safety Test'}"</code></pre>
+          </div>
+          <div class="l03-output-card">
+            <div class="l03-output-header"><span class="l03-card-icon">📥</span><strong>Received Response Receipt</strong></div>
+            <pre><code class="language-plaintext">response: nexus_amr_interfaces.srv.TriggerEmergencyStop_Response(
+  success=True,
+  status_message='EMERGENCY BRAKE ENGAGED: Actuators halted...',
+  stop_timestamp=1730000000.123
+)</code></pre>
+          </div>
+        </div>
+      </div>
+    `
+  });
+
+  // 6. Section 5: Authoring the Asynchronous Emergency Stop Client
+  slides.push({
+    id: `${lesson.id}_sec5_client_implementation`,
+    type: 'concept',
+    lessonNum: lesson.num_str,
+    lessonId: lesson.id,
+    module: lesson.module,
+    sectionTitle: '5. Asynchronous Client Implementation',
+    badge: '⚡ Non-Blocking Client',
+    title: '5. Authoring the Asynchronous Emergency Stop Client (emergency_stop_client.py)',
+    htmlContent: `
+      <div class="l06-two-col-layout">
+        <div class="l06-content-col">
+          <div class="l03-cmd-card">
+            <div class="l03-cmd-header"><span class="l03-term-badge">Python Node</span><strong>emergency_stop_client.py</strong></div>
+            <pre><code class="language-python">import sys, rclpy
+from rclpy.node import Node
+from nexus_amr_interfaces.srv import TriggerEmergencyStop
+
+class EmergencyStopClient(Node):
+    def __init__(self):
+        super().__init__('emergency_stop_client')
+        self.client = self.create_client(
+            TriggerEmergencyStop, '/robot/emergency_stop'
+        )
+        while not self.client.wait_for_service(timeout_sec=1.0):
+            self.get_logger().info('Waiting for /robot/emergency_stop...')
+        self.get_logger().info('EmergencyStopClient connected to server.')
+
+    def send_emergency_stop_request(self, stop_requested: bool, reason: str):
+        req = TriggerEmergencyStop.Request()
+        req.emergency_stop_requested = stop_requested
+        req.reason = reason
+        self.future = self.client.call_async(req)
+        return self.future
+
+def main(args=None):
+    rclpy.init(args=args)
+    node = EmergencyStopClient()
+    future = node.send_emergency_stop_request(True, "Obstacle in safety envelope")
+    rclpy.spin_until_future_complete(node, future)
+    if future.result() is not None:
+        node.get_logger().info(f'Receipt: {future.result().status_message}')
+    node.destroy_node()
+    rclpy.shutdown()</code></pre>
+          </div>
+        </div>
+        <div class="l06-content-col">
+          <div class="l05-card-grid-2x2" style="margin-top: 0; gap: 0.45rem;">
+            <div class="l05-pillar-card">
+              <div class="l05-pillar-header"><span>⏳</span><strong>1. wait_for_service()</strong></div>
+              <p>Polls DDS discovery with a timeout before transmitting requests, avoiding premature call failures.</p>
+            </div>
+            <div class="l05-pillar-card">
+              <div class="l05-pillar-header"><span>🚫</span><strong>2. Anti-Deadlock Rule</strong></div>
+              <p><strong>Never use synchronous <code>call()</code> in a callback!</strong> It freezes the thread, permanently deadlocking the node.</p>
+            </div>
+            <div class="l05-pillar-card">
+              <div class="l05-pillar-header"><span>⚡</span><strong>3. call_async()</strong></div>
+              <p>Queues request onto DDS and immediately returns a non-blocking <code>Future</code> object without halting execution.</p>
+            </div>
+            <div class="l05-pillar-card">
+              <div class="l05-pillar-header"><span>🔄</span><strong>4. spin_until_future_complete</strong></div>
+              <p>Pumps the node executor event loop specifically until the response packet arrives and resolves <code>future.result()</code>.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    `
+  });
+
+  // 7. Section 6: Configuring setup.py & Verifying the Client-Server Pair
+  slides.push({
+    id: `${lesson.id}_sec6_dual_node_verification`,
+    type: 'concept',
+    lessonNum: lesson.num_str,
+    lessonId: lesson.id,
+    module: lesson.module,
+    sectionTitle: '6. End-to-End Verification',
+    badge: '🚀 Dual-Node Drill',
+    title: '6. setup.py Registration & Dual-Node Safety Verification Drill',
+    htmlContent: `
+      <div class="l06-two-col-layout">
+        <div class="l06-content-col">
+          <div class="l03-cmd-card">
+            <div class="l03-cmd-header"><span class="l03-term-badge">setup.py</span><strong>Register Client Executable</strong></div>
+            <pre><code class="language-python">entry_points={
+    'console_scripts': [
+        'ultrasonic_publisher = nexus_amr_basics.ultrasonic_publisher:main',
+        'emergency_stop_server = nexus_amr_basics.emergency_stop_server:main',
+        'emergency_stop_client = nexus_amr_basics.emergency_stop_client:main',
+    ],
+},</code></pre>
+          </div>
+          <div class="l03-cmd-card">
+            <div class="l03-cmd-header"><span class="l03-term-badge">Deployment Commands</span><strong>2-Terminal Execution Run Sheet</strong></div>
+            <pre><code class="language-bash"># Terminal 1: Run Server
+colcon build --symlink-install --packages-select nexus_amr_basics
+source install/setup.bash && ros2 run nexus_amr_basics emergency_stop_server
+
+# Terminal 2: Run Client with Custom Reason
+source install/setup.bash
+ros2 run nexus_amr_basics emergency_stop_client "Obstacle within 0.35m"</code></pre>
+          </div>
+        </div>
+        <div class="l06-content-col">
+          <div class="l03-output-card">
+            <div class="l03-output-header"><span class="l03-term-badge">Terminal 1: Server Log</span></div>
+            <pre><code class="language-plaintext">[INFO] [emergency_stop_server]: EmergencyStopServer initialized. Ready...
+[ERROR] [emergency_stop_server]: [CRITICAL SAFETY EVENT] Emergency Stop ACTIVATED! Reason: Obstacle within 0.35m</code></pre>
+          </div>
+          <div class="l03-output-card">
+            <div class="l03-output-header"><span class="l03-term-badge">Terminal 2: Client Log</span></div>
+            <pre><code class="language-plaintext">[INFO] [emergency_stop_client]: Connected to safety service. Dispatching request...
+[INFO] [emergency_stop_client]: SAFETY RESPONSE RECEIVED: Success: True | Status: EMERGENCY BRAKE ENGAGED</code></pre>
+          </div>
+          <div class="l06-golden-card success">
+            <div class="l06-golden-header"><span>✅</span><strong>Verification Complete</strong></div>
+            <p>Confirmed full bidirectional round-trip RPC over DDS with zero executor thread deadlocking.</p>
+          </div>
+        </div>
+      </div>
+    `
+  });
+
+  // 8. Section 7: Hands-on Student Challenge: AMR Speed Mode & Zone Governor
+  slides.push({
+    id: `${lesson.id}_sec7_student_challenge`,
+    type: 'challenge',
+    lessonNum: lesson.num_str,
+    lessonId: lesson.id,
+    module: lesson.module,
+    sectionTitle: '7. Student Challenge',
+    badge: '🎯 Industrial Challenge',
+    title: '7. Hands-on Challenge: AMR Operational Speed Mode & Zone Governor Server',
+    htmlContent: `
+      <div class="l06-two-col-layout">
+        <div class="l06-content-col">
+          <div class="l03-concept-card">
+            <div class="l03-concept-header"><span class="l03-card-icon">🏭</span><strong>Industrial Context: Multi-Zone AMR Speed Governor</strong></div>
+            <p>AMR fleets dynamically throttle velocities based on warehouse zone geofences (intersections, express corridors, pedestrian crossings).</p>
+          </div>
+          <div class="l06-table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Mode Name</th>
+                  <th>Speed Scale</th>
+                  <th>Operational Zone Context</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><code>TURBO</code></td>
+                  <td><strong>100%</strong> (2.0 m/s)</td>
+                  <td>Express corridors; segregated high-speed transport</td>
+                </tr>
+                <tr>
+                  <td><code>NORMAL</code></td>
+                  <td><strong>70%</strong> (1.4 m/s)</td>
+                  <td>Standard fulfillment aisles; normal transit mode</td>
+                </tr>
+                <tr>
+                  <td><code>CREEP</code></td>
+                  <td><strong>30%</strong> (0.6 m/s)</td>
+                  <td>High-traffic pedestrian zones, dock approaches</td>
+                </tr>
+                <tr>
+                  <td><code>STOP</code></td>
+                  <td><strong>0%</strong> (0.0 m/s)</td>
+                  <td>Safety exclusion zones, loading hold, emergency lock</td>
+                </tr>
+                <tr>
+                  <td><code>CUSTOM</code></td>
+                  <td>User Defined</td>
+                  <td>Dynamic speed override via <code>custom_speed_percent</code></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="l06-content-col">
+          <div class="l03-cmd-card">
+            <div class="l03-cmd-header"><span class="l03-term-badge">Workflow</span><strong>Copy Starter &amp; Register Entrypoint</strong></div>
+            <pre><code class="language-bash"># Copy starter template to student workspace:
+cp ~/ros2_ws_reference/src/nexus_amr_basics/nexus_amr_basics/m01_l06_task_speed_mode_server.py \\
+   ~/ros2_ws/src/nexus_amr_basics/nexus_amr_basics/m01_l06_task_speed_mode_server.py
+
+# Add to setup.py console_scripts:
+# 'task_speed_mode_server = nexus_amr_basics.m01_l06_task_speed_mode_server:main'
+colcon build --symlink-install --packages-select nexus_amr_basics</code></pre>
+          </div>
+          <div class="l03-cmd-card">
+            <div class="l03-cmd-header"><span class="l03-term-badge">CLI Verification</span><strong>Test Zone Dispatch via CLI</strong></div>
+            <pre><code class="language-bash"># Terminal 1: Launch speed mode server
+ros2 run nexus_amr_basics task_speed_mode_server
+
+# Terminal 2: Request TURBO mode transition
+ros2 service call /amr/set_speed_mode nexus_amr_interfaces/srv/SetSpeedMode \\
+  "{mode_name: 'TURBO', custom_speed_percent: 0.0}"</code></pre>
+          </div>
+          <div class="l06-golden-card success" style="margin-top: 0.2rem;">
+            <div class="l06-golden-header"><span>🏆</span><strong>Challenge Goal</strong></div>
+            <p>Implement the <code>cb_set_speed_mode</code> callback to validate mode strings, calculate effective linear m/s, and return a verified <code>SetSpeedMode.Response</code>.</p>
+          </div>
+        </div>
+      </div>
+    `
+  });
+
+  // 9. Section 8: Production Best Practices & Golden Rules
+  slides.push({
+    id: `${lesson.id}_sec8_golden_rules`,
+    type: 'concept',
+    lessonNum: lesson.num_str,
+    lessonId: lesson.id,
+    module: lesson.module,
+    sectionTitle: 'Production Best Practices',
+    badge: '🏆 Production Rules',
+    title: 'Production Golden Rules for ROS 2 Services',
+    htmlContent: `
+      <div class="l05-card-grid-2x2">
+        <div class="l05-golden-card">
+          <div class="l05-golden-header"><span>⚡</span><strong>1. Asynchronous Client Mandate</strong></div>
+          <p>Always use <code>call_async()</code> and Python <code>Future</code> callbacks in production. Never invoke synchronous <code>call()</code> inside a node's event loop, which causes permanent thread deadlock.</p>
+        </div>
+        <div class="l05-golden-card">
+          <div class="l05-golden-header"><span>⏱️</span><strong>2. Sub-50ms Execution Budget</strong></div>
+          <p>Service callbacks must execute rapidly (&lt;50ms). If a procedure requires prolonged computation, trajectory execution, or physical movement, migrate to a <strong>ROS 2 Action</strong>.</p>
+        </div>
+        <div class="l05-golden-card">
+          <div class="l05-golden-header"><span>🔒</span><strong>3. Latching Safety State Machines</strong></div>
+          <p>Safety-critical services (like emergency halt) must alter persistent node states that latch and require explicit clearance commands before normal motion resumes.</p>
+        </div>
+        <div class="l05-golden-card">
+          <div class="l05-golden-header"><span>📬</span><strong>4. Mandatory Response Return</strong></div>
+          <p>In Python service callbacks, omitting <code>return response</code> causes DDS transport failure, leaving calling clients permanently hanging in an unfulfilled Future state.</p>
+        </div>
+      </div>
+    `
+  });
+}
+
 
 
