@@ -149,6 +149,32 @@ export function parseLessonIntoSlides(lesson) {
   const emitBreakdowns = (breakdownCards, baseId, title, h2Title) => {
     breakdownCards.forEach((bCard, bIdx) => {
       if (bCard.textContent.trim().length > 30) {
+        const listItems = Array.from(bCard.querySelectorAll('.code-breakdown-item'));
+        if (listItems.length > 3) {
+          const mid = Math.ceil(listItems.length / 2);
+          const parts = [listItems.slice(0, mid), listItems.slice(mid)];
+          parts.forEach((pItems, pIdx) => {
+            const clone = bCard.cloneNode(true);
+            const cloneList = clone.querySelector('.code-breakdown-list');
+            if (cloneList) {
+              cloneList.innerHTML = '';
+              pItems.forEach(it => cloneList.appendChild(it.cloneNode(true)));
+            }
+            slides.push({
+              id: `${baseId}_breakdown_${bIdx}_p${pIdx + 1}`,
+              type: 'step_breakdown',
+              lessonNum: lesson.num_str,
+              lessonId: lesson.id,
+              module: lesson.module,
+              sectionTitle: h2Title,
+              badge: 'Architecture Breakdown',
+              title: `${title} — Mechanics (Part ${pIdx + 1})`,
+              htmlContent: clone.outerHTML
+            });
+          });
+          return;
+        }
+
         slides.push({
           id: `${baseId}_breakdown_${bIdx}`,
           type: 'step_breakdown',
@@ -171,17 +197,54 @@ export function parseLessonIntoSlides(lesson) {
     // 1. Remove all trailing and intermediate dividers (eliminates ~33 false bottom overflows)
     container.querySelectorAll('hr, .divider').forEach(el => el.remove());
 
+    // 1b. If an alert-callout wraps multiple code blocks or major content, flatten it so children can chunk
+    container.querySelectorAll('.alert-callout, .alert').forEach(alert => {
+      const internalCode = alert.querySelectorAll('.code-container, pre');
+      if (internalCode.length > 1 || alert.textContent.trim().length > 600) {
+        const body = alert.querySelector('.alert-body') || alert;
+        const frag = doc.createDocumentFragment();
+        while (body.firstChild) {
+          frag.appendChild(body.firstChild);
+        }
+        alert.replaceWith(frag);
+      }
+    });
+
+    // 1c. If a grid has >= 4 complex cards, split into 2 smaller grids so chunker can distribute them as siblings
+    container.querySelectorAll('div[style*="grid"]').forEach(grid => {
+      const items = Array.from(grid.children).filter(c => c.nodeType === 1);
+      if (items.length >= 5 || (items.length >= 4 && grid.querySelector('pre, code'))) {
+        const mid = Math.ceil(items.length / 2);
+        const grid1 = grid.cloneNode(false);
+        const grid2 = grid.cloneNode(false);
+        items.slice(0, mid).forEach(it => grid1.appendChild(it.cloneNode(true)));
+        items.slice(mid).forEach(it => grid2.appendChild(it.cloneNode(true)));
+        
+        if (grid.parentNode) {
+          grid.parentNode.insertBefore(grid1, grid);
+          grid.parentNode.insertBefore(grid2, grid);
+          grid.remove();
+        }
+      }
+    });
+
+    // 1d. Reset excessive inline margins on tables and responsive wrappers
+    container.querySelectorAll('.table-responsive, table').forEach(t => {
+      t.style.marginTop = '0.2rem';
+      t.style.marginBottom = '0.2rem';
+    });
+
     // 2. Extract any .code-breakdown-card elements so they become dedicated subsequent slides
     const breakdownCards = Array.from(container.querySelectorAll('.code-breakdown-card'));
     breakdownCards.forEach(card => card.remove());
 
-    // 3. Trim all <pre> code blocks to <= 14 lines to eliminate 1600-2000px code dumps on slides
+    // 3. Trim all <pre> code blocks to <= 10 lines to eliminate 1600-2000px code dumps on slides
     container.querySelectorAll('pre').forEach(pre => {
       const codeElem = pre.querySelector('code') || pre;
       const raw = codeElem.textContent;
       const lines = raw.split('\n');
-      if (lines.length > 14) {
-        codeElem.textContent = lines.slice(0, 12).join('\n') + '\n\n# ... [Full implementation available in Web LMS] ...';
+      if (lines.length > 10) {
+        codeElem.textContent = lines.slice(0, 9).join('\n') + '\n\n# ... [Full implementation available in Web LMS] ...';
       }
     });
 
@@ -360,18 +423,28 @@ export function parseLessonIntoSlides(lesson) {
     }
 
     // Case C: Standard content (no images, or single image with compact text)
-    // If container is large (> 500 chars) and has multiple child elements, chunk into digestible slides
+    // Intelligent chunking: split if text is excessively long or if multiple bulky elements (code, tables) are present
     const childNodes = Array.from(container.children);
-    if (depth < 1 && rawImgs.length === 0 && childNodes.length > 1 && container.textContent.trim().length > 500) {
+    const codeBlocksInContainer = container.querySelectorAll('pre, .code-container');
+    const shouldChunk = depth < 1 && rawImgs.length === 0 && childNodes.length > 1 && (
+      container.textContent.trim().length > 680 ||
+      (codeBlocksInContainer.length > 1 && container.textContent.trim().length > 350) ||
+      (container.querySelector('table') && container.textContent.trim().length > 380)
+    );
+
+    if (shouldChunk) {
       const chunks = [];
       let currentChunk = [];
       let currentLen = 0;
 
       childNodes.forEach(child => {
         const textLen = child.textContent.trim().length;
-        const isBig = textLen > 280 || child.querySelector('pre, table') || child.classList.contains('code-breakdown-card') || child.classList.contains('alert') || child.classList.contains('code-container');
-        
-        if (currentChunk.length > 0 && (isBig || currentLen + textLen > 500)) {
+        const hasCode = !!child.querySelector('pre, .code-container') || child.tagName.toLowerCase() === 'pre';
+        const hasTable = !!child.querySelector('table') || child.tagName.toLowerCase() === 'table';
+        const isBig = textLen > 400 || (hasCode && textLen > 200) || hasTable;
+        const chunkHasCode = currentChunk.some(c => c.querySelector('pre, .code-container') || c.tagName.toLowerCase() === 'pre');
+
+        if (currentChunk.length > 0 && (isBig || currentLen + textLen > 650 || (hasCode && chunkHasCode))) {
           chunks.push(currentChunk);
           currentChunk = [child];
           currentLen = textLen;
@@ -452,8 +525,24 @@ export function parseLessonIntoSlides(lesson) {
     const h2Title = h2 ? h2.textContent.trim() : `Section ${secIdx + 1}`;
     const h2Lower = h2Title.toLowerCase();
 
-    // Skip Section 1 if it is just "Overview & Learning Objectives" (already in Launchpad)
-    if (h2Lower.includes('learning objectives') || (h2Lower.includes('overview') && secIdx <= 1)) {
+    // Skip Section 1 if it is just "Overview & Learning Objectives" or "Roadmap" (already in Launchpad)
+    if (
+      h2Lower.includes('learning objectives') ||
+      h2Lower.includes('road map') ||
+      h2Lower.includes('roadmap') ||
+      (h2Lower.includes('overview') && secIdx <= 1)
+    ) {
+      return;
+    }
+
+    // Skip Hands-on Student Challenges and Practical Labs (3-Day Workshop PPT requirement)
+    if (
+      h2Lower.includes('challenge') ||
+      h2Lower.includes('practical lab') ||
+      h2Lower.includes('student lab') ||
+      h2Lower.includes('mission') ||
+      h2Lower.includes('hands-on student')
+    ) {
       return;
     }
 
@@ -511,111 +600,79 @@ export function parseLessonIntoSlides(lesson) {
       return;
     }
 
-    // Check for File Edit Steps (Step-by-step code files: Lesson 5, 6, 7, 8, etc.)
+    // Check for File Edit Steps (Consolidate multi-step files: Lesson 7, 17, 19, etc.)
     const fileSteps = Array.from(section.querySelectorAll('.file-edit-step'));
     if (fileSteps.length > 0) {
-      fileSteps.forEach((step, stepIdx) => {
-        const stepNum = step.querySelector('.step-num-pill')?.textContent?.trim() || `Step ${stepIdx + 1}`;
-        const title = step.querySelector('.file-edit-step-title')?.textContent?.trim() || `Step ${stepIdx + 1}`;
-        const cleanTitle = title.replace(stepNum, '').trim() || title;
-        const desc = step.querySelector('.step-description')?.innerHTML?.trim() || '';
-        const codeElem = step.querySelector('pre code');
-        const code = codeElem ? codeElem.textContent : '';
-        const lang = step.querySelector('.code-lang-tag')?.textContent?.trim() || 'python';
-        const breakdownCard = step.querySelector('.code-breakdown-card');
+      const fileGroups = [];
+      let currentGroup = null;
 
-        // Slide A: Code Implementation (Trimmed for explanation, zero scrolling)
+      fileSteps.forEach((step) => {
+        const titleText = step.querySelector('.file-edit-step-title')?.textContent?.trim() || '';
+        const descElem = step.querySelector('.step-description');
+        const codeElem = step.querySelector('pre code');
+        const code = codeElem ? codeElem.textContent.trim() : '';
+        const lang = step.querySelector('.code-lang-tag')?.textContent?.trim() || 'python';
+
+        const pathMatch = descElem?.textContent?.match(/([~./\w_-]+\.[a-zA-Z0-9]+)/);
+        const isOpenStep = titleText.toLowerCase().includes('open') || code.length === 0;
+
+        if (isOpenStep || !currentGroup) {
+          if (currentGroup && currentGroup.codes.length > 0) {
+            fileGroups.push(currentGroup);
+          }
+          const targetPath = pathMatch ? pathMatch[1] : '';
+          const fileName = targetPath ? targetPath.split('/').pop() : 'Configuration File';
+          currentGroup = {
+            targetPath,
+            fileName,
+            descriptions: [],
+            codes: [],
+            lang: lang || 'python'
+          };
+          if (descElem && !isOpenStep) {
+            currentGroup.descriptions.push(descElem.textContent.trim());
+          }
+        } else if (titleText.toLowerCase().includes('verify') || titleText.toLowerCase().includes('full file')) {
+          if (currentGroup.codes.length === 0 && code.length > 0) {
+            currentGroup.codes.push(code);
+          }
+        } else {
+          if (descElem) {
+            currentGroup.descriptions.push(descElem.textContent.trim());
+          }
+          if (code.length > 0) {
+            currentGroup.codes.push(code);
+            if (lang) currentGroup.lang = lang;
+          }
+        }
+      });
+
+      if (currentGroup && (currentGroup.codes.length > 0 || currentGroup.descriptions.length > 0)) {
+        fileGroups.push(currentGroup);
+      }
+
+      fileGroups.forEach((group, gIdx) => {
+        const combinedCode = group.codes.join('\n\n');
+        const summaryDesc = group.descriptions.slice(0, 2).join(' ') || `Update ${group.fileName} configuration.`;
+        const pathBadge = group.targetPath ? `<code>${group.targetPath}</code>` : `<code>${group.fileName}</code>`;
+
         slides.push({
-          id: `${lesson.id}_step_${stepIdx}_code`,
+          id: `${lesson.id}_file_${secIdx}_${gIdx}_${group.fileName.replace(/[^a-zA-Z0-9]/g, '_')}`,
           type: 'code_step',
           lessonNum: lesson.num_str,
           lessonId: lesson.id,
           module: lesson.module,
           sectionTitle: h2Title,
-          badge: stepNum,
-          title: `${cleanTitle} (Code Implementation)`,
-          desc,
-          code: trimCodeForPresentation(code),
-          lang,
-          breakdown: null, // Separated to next slide to eliminate vertical scrolling
-          htmlContent: step.outerHTML
+          badge: group.fileName,
+          title: `${h2Title.replace(/^\d+\.\s*/, '')}: ${group.fileName}`,
+          desc: `<div class="file-path-strip"><span class="file-path-label">📁 Target:</span> ${pathBadge}</div><p class="file-edit-summary">${summaryDesc}</p>`,
+          code: trimCodeForPresentation(combinedCode),
+          lang: group.lang,
+          breakdown: null,
+          htmlContent: ''
         });
-
-        // Slide B: Code Architecture & Line Breakdown (if present)
-        if (breakdownCard && breakdownCard.textContent.trim().length > 30) {
-          const cleanBreakdown = breakdownCard.cloneNode(true);
-          slides.push({
-            id: `${lesson.id}_step_${stepIdx}_breakdown`,
-            type: 'step_breakdown',
-            lessonNum: lesson.num_str,
-            lessonId: lesson.id,
-            module: lesson.module,
-            sectionTitle: h2Title,
-            badge: `${stepNum} Breakdown`,
-            title: `${cleanTitle} — Core Mechanics Breakdown`,
-            htmlContent: cleanBreakdown.outerHTML
-          });
-        }
       });
-      return;
-    }
 
-    // Check for Hands-on Student Challenge Section
-    if (h2Lower.includes('challenge') || h2Lower.includes('student lab') || h2Lower.includes('mission')) {
-      const challengeBriefing = doc.createElement('div');
-      challengeBriefing.className = 'ppt-challenge-briefing';
-
-      // 1. Mission Intro Briefing Paragraph (trimmed for presentation clarity)
-      const introP = section.querySelector('p');
-      if (introP) {
-        const pClone = introP.cloneNode(true);
-        const text = pClone.textContent.trim();
-        if (text.length > 220) {
-          const sentences = text.split(/(?<=[.!?])\s+/);
-          pClone.textContent = sentences.slice(0, 2).join(' ');
-        }
-        challengeBriefing.appendChild(pClone);
-      }
-
-      // 2. Mission Requirements / Targets Checklist (capped to 4 core targets)
-      const targetsCard = section.querySelector('.challenge-targets, .mission-requirements, .alert ol, .alert ul, ul.checklist, ol.checklist, .callout-card ul, .callout-card ol') || section.querySelector('ol, ul');
-      if (targetsCard) {
-        const cleanCard = targetsCard.cloneNode(true);
-        cleanCard.querySelectorAll('pre, .code-container').forEach(el => el.remove());
-        const listItems = Array.from(cleanCard.querySelectorAll('li'));
-        if (listItems.length > 4) {
-          const trimmedList = doc.createElement(cleanCard.tagName.toLowerCase() === 'ol' ? 'ol' : 'ul');
-          trimmedList.className = 'challenge-targets-list';
-          listItems.slice(0, 4).forEach(li => trimmedList.appendChild(li.cloneNode(true)));
-          const moreLi = doc.createElement('li');
-          moreLi.className = 'challenge-targets-more';
-          moreLi.innerHTML = `<em>+ ${listItems.length - 4} additional verification steps detailed in Web LMS</em>`;
-          trimmedList.appendChild(moreLi);
-          challengeBriefing.appendChild(trimmedList);
-        } else if (listItems.length > 0) {
-          challengeBriefing.appendChild(cleanCard);
-        }
-      }
-
-      // 3. Artifact / Target Script Hint
-      const scriptMatch = section.textContent.match(/[\w_]+\.(?:sh|py|launch\.py|yaml)/);
-      if (scriptMatch) {
-        const artifactDiv = doc.createElement('div');
-        artifactDiv.className = 'challenge-artifact-hint';
-        artifactDiv.innerHTML = `<div class="mission-brief-footer"><span class="mission-file-pill">🎯 Target Artifact: <code>${scriptMatch[0]}</code></span><span class="mission-lms-tag">⚡ Follow step-by-step guidance & validation scripts in Web LMS</span></div>`;
-        challengeBriefing.appendChild(artifactDiv);
-      }
-
-      slides.push({
-        id: `${lesson.id}_challenge`,
-        type: 'challenge',
-        lessonNum: lesson.num_str,
-        lessonId: lesson.id,
-        module: lesson.module,
-        sectionTitle: h2Title,
-        title: h2Title,
-        htmlContent: challengeBriefing.innerHTML
-      });
       return;
     }
 
@@ -638,6 +695,19 @@ export function parseLessonIntoSlides(lesson) {
       // Process each h3 subtopic
       h3Elements.forEach((h3, h3Idx) => {
         const subtopicTitle = h3.textContent.trim();
+        const subtopicLower = subtopicTitle.toLowerCase();
+
+        // Skip challenge subtopics (e.g. Starter Template, Verification Steps for student challenge)
+        if (
+          subtopicLower.includes('challenge') ||
+          subtopicLower.includes('starter template') ||
+          subtopicLower.includes('student lab') ||
+          subtopicLower.includes('solution breakdown') ||
+          subtopicLower.includes('task_spawn')
+        ) {
+          return;
+        }
+
         const subElements = [];
         let curr = h3.nextElementSibling;
         
@@ -1797,50 +1867,6 @@ Vector3  angular
       </div>
     `
   });
-
-  // 14. Section 9: Hands-On Student Lab: Flight Operations Mission
-  slides.push({
-    id: `${lesson.id}_sec9_student_lab`,
-    type: 'concept',
-    lessonNum: lesson.num_str,
-    lessonId: lesson.id,
-    module: lesson.module,
-    sectionTitle: '9. Hands-On Student Lab: The Turtlesim Operations Mission',
-    badge: '🎯 Flight Mission',
-    title: '9. Student Lab: Flight Operations & Dynamic Reconfiguration',
-    htmlContent: `
-      <div class="l03-student-lab-layout">
-        <div class="l03-lab-header-banner">
-          <span class="l03-mission-badge">🎯 Flight Operations Briefing</span>
-          <span>Reconfigure simulation parameters &amp; pen telemetry dynamically over the ROS 2 bus:</span>
-        </div>
-        <div class="l03-lab-steps-grid">
-          <div class="l03-lab-step-card">
-            <div class="l03-step-badge">Step 1: Audit Parameters</div>
-            <p>Query parameters exposed by the simulation:</p>
-            <pre><code class="language-bash">ros2 param list /turtlesim</code></pre>
-          </div>
-          <div class="l03-lab-step-card">
-            <div class="l03-step-badge">Step 2: Night-Ops Navy Theme</div>
-            <p>Set background color to dark navy (#0f172a):</p>
-            <pre><code class="language-bash">ros2 param set /turtlesim background_r 15
-ros2 param set /turtlesim background_g 23
-ros2 param set /turtlesim background_b 42</code></pre>
-          </div>
-          <div class="l03-lab-step-card">
-            <div class="l03-step-badge">Step 3: Refresh Canvas</div>
-            <p>Call the /clear service to re-render background:</p>
-            <pre><code class="language-bash">ros2 service call /clear std_srvs/srv/Empty</code></pre>
-          </div>
-          <div class="l03-lab-step-card">
-            <div class="l03-step-badge">Step 4: Neon Cyan Pen</div>
-            <p>Set pen to 4px electric cyan ink:</p>
-            <pre><code class="language-bash">ros2 service call /turtle1/set_pen turtlesim/srv/SetPen "{r: 56, g: 189, b: 248, width: 4, 'off': 0}"</code></pre>
-          </div>
-        </div>
-      </div>
-    `
-  });
 }
 
 /**
@@ -1850,42 +1876,7 @@ ros2 param set /turtlesim background_b 42</code></pre>
  * high-yield architectural overviews with commands and outcomes side-by-side.
  */
 function buildLesson04Slides(doc, lesson, slides) {
-  // 1. ROS 2 Workspace & Package Architecture Road Map
-  slides.push({
-    id: `${lesson.id}_sec1_objectives`,
-    type: 'concept',
-    lessonNum: lesson.num_str,
-    lessonId: lesson.id,
-    module: lesson.module,
-    sectionTitle: '1. Workspace Architecture Road Map',
-    badge: '📁 Architecture Pillars',
-    title: '1. ROS 2 Workspace & Package Architecture Road Map',
-    htmlContent: `
-      <div class="l04-banner-intro">
-        <strong>Autonomous Robotics Core Requirement:</strong> In ROS 2, code cannot exist as loose Python scripts. All production robot nodes, launch files, parameter configurations, and URDF models must live within structured <strong>Packages</strong> compiled inside a <strong>Workspace</strong>.
-      </div>
-      <div class="l04-card-grid-2x2">
-        <div class="l04-pillar-card">
-          <div class="l04-pillar-header"><span class="l03-card-icon">📁</span><span>The Workspace Quartet</span></div>
-          <p>Master the 4-tier lifecycle separation: <code>src/</code> (human code), <code>build/</code> (intermediate cache), <code>install/</code> (runtime scripts), and <code>log/</code> (diagnostics).</p>
-        </div>
-        <div class="l04-pillar-card">
-          <div class="l04-pillar-header"><span class="l03-card-icon">⛓️</span><span>Environment Chaining</span></div>
-          <p>Layer development Overlays (<code>~/ros2_ws</code>) seamlessly atop base Underlays (<code>/opt/ros/jazzy</code>) via <code>AMENT_PREFIX_PATH</code> priority shadowing.</p>
-        </div>
-        <div class="l04-pillar-card">
-          <div class="l04-pillar-header"><span class="l03-card-icon">📦</span><span>Package Manifest &amp; Anatomy</span></div>
-          <p>Structure an <code>ament_python</code> package with <code>package.xml</code> (Format 3 schema), entry point console scripts in <code>setup.py</code>, and ament resource markers.</p>
-        </div>
-        <div class="l04-pillar-card">
-          <div class="l04-pillar-header"><span class="l03-card-icon">🛠️</span><span>Build &amp; Introspection Pipeline</span></div>
-          <p>Execute selective parallel compilation with <code>colcon build</code>, resolve missing system dependencies via <code>rosdep</code>, and query installed packages with <code>ros2 pkg</code>.</p>
-        </div>
-      </div>
-    `
-  });
-
-  // 2. Section 2: The ROS 2 Workspace Architecture (~/ros2_ws)
+  // 1. Section 2: The ROS 2 Workspace Architecture (~/ros2_ws) (Direct start, no duplicate roadmap)
   slides.push({
     id: `${lesson.id}_sec2_workspace_hierarchy`,
     type: 'concept',
@@ -2827,65 +2818,7 @@ self.map_sub = self.create_subscription(OccupancyGrid, '/map', self.cb, qos_prof
     `
   });
 
-  // 12. Section 8: Student Challenge: Turtlesim Autonomous Square Patrol
-  slides.push({
-    id: `${lesson.id}_sec8_student_challenge`,
-    type: 'concept',
-    lessonNum: lesson.num_str,
-    lessonId: lesson.id,
-    module: lesson.module,
-    sectionTitle: '8. Hands-on Student Challenge',
-    badge: '🎯 Student Mission',
-    title: '8. Student Challenge: AMR Square Patrol Controller',
-    htmlContent: `
-      <div class="l05-two-col-layout">
-        <div class="l05-content-col">
-          <div class="l03-concept-card">
-            <div class="l03-concept-header"><span class="l03-card-icon">🔄</span><strong>Two-State Finite State Machine (FSM)</strong></div>
-            <p><strong>STATE_FORWARD:</strong> <code>linear.x = 2.0 m/s</code>, <code>angular.z = 0.0</code> for 2.0s (4.0m leg).<br/>
-            <strong>STATE_TURN:</strong> <code>linear.x = 0.0</code>, <code>angular.z = 1.5708 rad/s</code> for 1.0s (90° CCW pivot).</p>
-          </div>
-          <div class="l03-cmd-card">
-            <div class="l03-cmd-header"><span class="l03-term-badge">Transition Loop</span><strong>10 Hz Control Callback</strong></div>
-            <pre><code class="language-python">self.state_elapsed_time += self.timer_period
-if self.state == self.STATE_FORWARD:
-    cmd.linear.x = self.linear_speed
-    if self.state_elapsed_time >= self.forward_duration:
-        self.state = self.STATE_TURN
-        self.state_elapsed_time = 0.0
-elif self.state == self.STATE_TURN:
-    cmd.angular.z = self.angular_speed
-    if self.state_elapsed_time >= self.turn_duration:
-        self.state = self.STATE_FORWARD
-        self.state_elapsed_time = 0.0
-self.cmd_vel_pub.publish(cmd)</code></pre>
-          </div>
-        </div>
-        <div class="l05-content-col">
-          <div class="l03-cmd-card">
-            <div class="l03-cmd-header"><span class="l03-term-badge">Execution Run Sheet</span><strong>Launch &amp; Test Controller</strong></div>
-            <pre><code class="language-bash"># Terminal 1: Simulator | Terminal 2: Controller
-ros2 run turtlesim turtlesim_node
-ros2 run nexus_amr_basics square_turtle
-
-# Terminal 3: Velocity Telemetry Echo
-ros2 topic echo /turtle1/cmd_vel</code></pre>
-          </div>
-          <div class="l03-output-card">
-            <div class="l03-output-header"><span class="l03-card-icon">🖥️</span><strong>Expected Terminal Telemetry</strong></div>
-            <pre><code class="language-text">[INFO] [turtle_square]: Initializing TurtleSquareController...
-[INFO] [turtle_square]: State FORWARD: driving edge #1...
-[INFO] [turtle_square]: State TURN: rotating 90 degrees left...
-[INFO] [turtle_square]: State FORWARD: driving edge #2...
-[INFO] [turtle_square]: Zero-velocity halt published on exit.</code></pre>
-          </div>
-        </div>
-      </div>
-    `
-  });
-
-
-  // 14. Section 9: Production Best Practices & Golden Rules
+  // Section 9: Production Best Practices & Golden Rules
   slides.push({
     id: `${lesson.id}_sec9_golden_rules`,
     type: 'concept',
@@ -3338,92 +3271,7 @@ ros2 run nexus_amr_basics emergency_stop_client "Obstacle within 0.35m"</code></
     `
   });
 
-  // 8. Section 7: Hands-on Student Challenge: AMR Speed Mode & Zone Governor
-  slides.push({
-    id: `${lesson.id}_sec7_student_challenge`,
-    type: 'challenge',
-    lessonNum: lesson.num_str,
-    lessonId: lesson.id,
-    module: lesson.module,
-    sectionTitle: '7. Student Challenge',
-    badge: '🎯 Industrial Challenge',
-    title: '7. Hands-on Challenge: AMR Operational Speed Mode & Zone Governor Server',
-    htmlContent: `
-      <div class="l06-two-col-layout">
-        <div class="l06-content-col">
-          <div class="l03-concept-card">
-            <div class="l03-concept-header"><span class="l03-card-icon">🏭</span><strong>Industrial Context: Multi-Zone AMR Speed Governor</strong></div>
-            <p>AMR fleets dynamically throttle velocities based on warehouse zone geofences (intersections, express corridors, pedestrian crossings).</p>
-          </div>
-          <div class="l06-table-wrap">
-            <table>
-              <thead>
-                <tr>
-                  <th>Mode Name</th>
-                  <th>Speed Scale</th>
-                  <th>Operational Zone Context</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td><code>TURBO</code></td>
-                  <td><strong>100%</strong> (2.0 m/s)</td>
-                  <td>Express corridors; segregated high-speed transport</td>
-                </tr>
-                <tr>
-                  <td><code>NORMAL</code></td>
-                  <td><strong>70%</strong> (1.4 m/s)</td>
-                  <td>Standard fulfillment aisles; normal transit mode</td>
-                </tr>
-                <tr>
-                  <td><code>CREEP</code></td>
-                  <td><strong>30%</strong> (0.6 m/s)</td>
-                  <td>High-traffic pedestrian zones, dock approaches</td>
-                </tr>
-                <tr>
-                  <td><code>STOP</code></td>
-                  <td><strong>0%</strong> (0.0 m/s)</td>
-                  <td>Safety exclusion zones, loading hold, emergency lock</td>
-                </tr>
-                <tr>
-                  <td><code>CUSTOM</code></td>
-                  <td>User Defined</td>
-                  <td>Dynamic speed override via <code>custom_speed_percent</code></td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-        <div class="l06-content-col">
-          <div class="l03-cmd-card">
-            <div class="l03-cmd-header"><span class="l03-term-badge">Workflow</span><strong>Copy Starter &amp; Register Entrypoint</strong></div>
-            <pre><code class="language-bash"># Copy starter template to student workspace:
-cp ~/ros2_ws_reference/src/nexus_amr_basics/nexus_amr_basics/m01_l06_task_speed_mode_server.py \\
-   ~/ros2_ws/src/nexus_amr_basics/nexus_amr_basics/m01_l06_task_speed_mode_server.py
-
-# Add to setup.py console_scripts:
-# 'task_speed_mode_server = nexus_amr_basics.m01_l06_task_speed_mode_server:main'
-colcon build --symlink-install --packages-select nexus_amr_basics</code></pre>
-          </div>
-          <div class="l03-cmd-card">
-            <div class="l03-cmd-header"><span class="l03-term-badge">CLI Verification</span><strong>Test Zone Dispatch via CLI</strong></div>
-            <pre><code class="language-bash"># Terminal 1: Launch speed mode server
-ros2 run nexus_amr_basics task_speed_mode_server
-
-# Terminal 2: Request TURBO mode transition
-ros2 service call /amr/set_speed_mode nexus_amr_interfaces/srv/SetSpeedMode \\
-  "{mode_name: 'TURBO', custom_speed_percent: 0.0}"</code></pre>
-          </div>
-          <div class="l06-golden-card success" style="margin-top: 0.2rem;">
-            <div class="l06-golden-header"><span>🏆</span><strong>Challenge Goal</strong></div>
-            <p>Implement the <code>cb_set_speed_mode</code> callback to validate mode strings, calculate effective linear m/s, and return a verified <code>SetSpeedMode.Response</code>.</p>
-          </div>
-        </div>
-      </div>
-    `
-  });
-
-  // 9. Section 8: Production Best Practices & Golden Rules
+  // Section 8: Production Best Practices & Golden Rules
   slides.push({
     id: `${lesson.id}_sec8_golden_rules`,
     type: 'concept',

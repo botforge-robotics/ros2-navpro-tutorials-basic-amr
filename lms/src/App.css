@@ -3658,27 +3658,28 @@
   background: var(--bg-surface);
   border: 1px solid var(--border-color);
   border-radius: 12px;
-  padding: 1rem 1.4rem;
+  padding: 0.6rem 1rem !important;
+  margin: 0.25rem 0 !important;
 }
 
 .ppt-breakdown-deck .code-breakdown-title {
-  margin: 0 0 0.4rem 0;
-  font-size: 1.05rem;
+  margin: 0 0 0.25rem 0 !important;
+  font-size: 0.95rem !important;
   font-weight: 800;
   color: var(--text-primary);
 }
 
 .ppt-breakdown-deck .code-breakdown-intro {
-  margin: 0 0 0.85rem 0;
-  font-size: 0.9rem;
-  line-height: 1.45;
+  margin: 0 0 0.45rem 0 !important;
+  font-size: 0.85rem !important;
+  line-height: 1.35 !important;
   color: var(--text-secondary);
 }
 
 .ppt-breakdown-deck .code-breakdown-list {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 0.75rem;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 0.45rem !important;
   list-style: none;
   padding: 0;
   margin: 0;
@@ -3689,17 +3690,17 @@
   border: 1px solid var(--border-color);
   border-left: 3px solid #8b5cf6;
   border-radius: 8px;
-  padding: 0.65rem 0.95rem;
-  font-size: 0.85rem;
-  line-height: 1.4;
+  padding: 0.45rem 0.75rem !important;
+  font-size: 0.82rem !important;
+  line-height: 1.32 !important;
   color: var(--text-primary);
 }
 
 .ppt-breakdown-deck .code-breakdown-item strong {
   display: block;
   color: #8b5cf6;
-  font-size: 0.88rem;
-  margin-bottom: 0.2rem;
+  font-size: 0.84rem !important;
+  margin-bottom: 0.15rem !important;
 }
 
 /* Split List Item Slide (from decomposed large subtopic lists) */
@@ -3886,8 +3887,123 @@
   font-size: 0.98rem;
   line-height: 1.55;
   color: var(--text-secondary);
-  max-height: 480px;
+  max-height: 520px;
   overflow-y: hidden;
+}
+
+.presentation-viewport:not(.is-fullscreen) .concept-html-body {
+  max-height: 520px !important;
+}
+
+/* Presentation Mode Concept & Subtopic Optimization for 0px Vertical Overflow */
+.presentation-viewport .concept-html-body pre {
+  margin: 0.35rem 0 !important;
+  padding: 0.5rem 0.75rem !important;
+  font-size: 0.82rem !important;
+  line-height: 1.35 !important;
+  max-height: 250px !important;
+}
+
+.presentation-viewport .concept-html-body .code-container {
+  margin: 0.35rem 0 !important;
+}
+
+.presentation-viewport .concept-html-body .code-container pre {
+  max-height: 250px !important;
+  padding: 0.5rem 0.75rem !important;
+}
+
+.presentation-viewport .concept-html-body .table-responsive {
+  margin: 0.25rem 0 !important;
+}
+
+.presentation-viewport .concept-html-body table {
+  font-size: 0.76rem !important;
+  margin: 0.15rem 0 !important;
+}
+
+.presentation-viewport .concept-html-body th,
+.presentation-viewport .concept-html-body td {
+  padding: 0.15rem 0.35rem !important;
+  font-size: 0.76rem !important;
+  line-height: 1.2 !important;
+}
+
+.presentation-viewport .concept-html-body table tr {
+  height: auto !important;
+}
+
+.presentation-viewport .concept-html-body div[style*="grid"] {
+  grid-template-columns: repeat(3, 1fr) !important;
+  gap: 0.45rem !important;
+  margin: 0.25rem 0 !important;
+}
+
+.presentation-viewport .concept-html-body div[style*="grid"] > div {
+  padding: 0.45rem 0.65rem !important;
+  font-size: 0.8rem !important;
+}
+
+.presentation-viewport .concept-html-body div[style*="grid"] pre {
+  margin: 0.2rem 0 !important;
+  padding: 0.35rem 0.5rem !important;
+  font-size: 0.72rem !important;
+  line-height: 1.22 !important;
+  max-height: 125px !important;
+}
+
+.presentation-viewport .concept-html-body div[style*="grid"] p {
+  font-size: 0.76rem !important;
+  line-height: 1.25 !important;
+  margin: 0.2rem 0 !important;
+}
+
+.presentation-viewport .concept-html-body div[style*="grid"] h4,
+.presentation-viewport .concept-html-body div[style*="grid"] h5 {
+  font-size: 0.86rem !important;
+  margin: 0 0 0.2rem 0 !important;
+}
+
+.presentation-viewport .concept-html-body p {
+  margin: 0.3rem 0 !important;
+  line-height: 1.4 !important;
+}
+
+.presentation-viewport .concept-html-body ul,
+.presentation-viewport .concept-html-body ol {
+  margin: 0.3rem 0 !important;
+  padding-left: 1.2rem !important;
+}
+
+.presentation-viewport .concept-html-body li {
+  margin: 0.15rem 0 !important;
+  line-height: 1.35 !important;
+}
+
+.presentation-viewport .concept-html-body .alert,
+.presentation-viewport .concept-html-body .alert-callout {
+  margin: 0.35rem 0 !important;
+  padding: 0.5rem 0.8rem !important;
+  font-size: 0.88rem !important;
+  line-height: 1.38 !important;
+}
+
+.file-path-strip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: var(--bg-sidebar);
+  border: 1px solid var(--border-color);
+  padding: 0.25rem 0.6rem;
+  border-radius: 6px;
+  font-size: 0.82rem;
+  margin-bottom: 0.4rem;
+}
+
+.file-path-strip code {
+  color: var(--accent-primary);
+  font-family: var(--font-mono);
+  font-weight: 600;
 }
 
 .concept-html-body img,
