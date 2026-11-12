@@ -1,0 +1,289 @@
+<svg viewBox="0 0 1200 610" width="1200" height="610" class="multi-topic-svg" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <!-- Gradients -->
+        <linearGradient id="centralNodeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#faf5ff" stop-opacity="1" />
+          <stop offset="50%" stop-color="#fdf4ff" stop-opacity="1" />
+          <stop offset="100%" stop-color="#ffffff" stop-opacity="1" />
+        </linearGradient>
+
+        <linearGradient id="nodePillGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#ffffff" stop-opacity="1" />
+          <stop offset="100%" stop-color="#f8fafc" stop-opacity="1" />
+        </linearGradient>
+
+        <linearGradient id="cyanLineGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="#06b6d4" />
+          <stop offset="100%" stop-color="#38bdf8" />
+        </linearGradient>
+
+        <linearGradient id="skyLineGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="#38bdf8" />
+          <stop offset="100%" stop-color="#818cf8" />
+        </linearGradient>
+
+        <linearGradient id="violetLineGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="#818cf8" />
+          <stop offset="100%" stop-color="#c084fc" />
+        </linearGradient>
+
+        <linearGradient id="greenLineGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="#10b981" />
+          <stop offset="100%" stop-color="#34d399" />
+        </linearGradient>
+
+        <linearGradient id="amberLineGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="#f59e0b" />
+          <stop offset="100%" stop-color="#fbbf24" />
+        </linearGradient>
+
+        <!-- Arrow Markers -->
+        <marker id="arrow-cyan" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+          <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#38bdf8" />
+        </marker>
+        <marker id="arrow-sky" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+          <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#38bdf8" />
+        </marker>
+        <marker id="arrow-violet" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+          <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#c084fc" />
+        </marker>
+        <marker id="arrow-green" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+          <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#34d399" />
+        </marker>
+        <marker id="arrow-amber" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+          <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#fbbf24" />
+        </marker>
+
+        <!-- Glow Filters -->
+        <filter id="glow-purple" x="-20%" y="-20%" width="140%" height="140%">
+          <feDropShadow dx="0" dy="0" stdDeviation="6" flood-color="#a855f7" flood-opacity="0.4" />
+        </filter>
+        <filter id="text-backdrop" x="-15%" y="-15%" width="130%" height="130%">
+          <feDropShadow dx="0" dy="0" stdDeviation="3" flood-color="#ffffff" flood-opacity="0.95" />
+        </filter>
+      </defs>
+
+      <!-- Solid Dark Background Canvas -->
+      <rect x="0" y="0" width="1200" height="610" fill="#ffffff" stroke="#e2e8f0" stroke-width="1.5" rx="14" />
+      <pattern id="dotPattern" x="0" y="0" width="24" height="24" patternUnits="userSpaceOnUse">
+        <circle cx="12" cy="12" r="1" fill="#94a3b8" fill-opacity="0.2" />
+      </pattern>
+      <rect x="0" y="0" width="1200" height="610" fill="url(#dotPattern)" rx="14" />
+
+      <!-- ================= CURVED WIRING (DDS TOPIC HIGHWAYS) ================= -->
+
+      <!-- Wire 1: Ultrasonic -> Supervisor (Curved Bézier) -->
+      <path d="M 215,95 C 310,95 365,175 445,175" 
+            fill="none" stroke="url(#cyanLineGrad)" stroke-width="2.5" marker-end="url(#arrow-cyan)" class="curved-wire-anim" />
+
+      <!-- Wire 3: Teleop -> Supervisor (Curved Bézier) -->
+      <path d="M 215,425 C 310,425 365,345 445,345" 
+            fill="none" stroke="url(#violetLineGrad)" stroke-width="2.5" marker-end="url(#arrow-violet)" class="curved-wire-anim" />
+
+      <!-- Wire 4: Supervisor -> Motor Controller (Curved Bézier) -->
+      <path d="M 705,205 C 785,205 870,155 955,155" 
+            fill="none" stroke="url(#greenLineGrad)" stroke-width="2.5" marker-end="url(#arrow-green)" class="curved-wire-anim" />
+
+      <!-- Wire 5: Supervisor -> RViz Dashboard (Curved Bézier) -->
+      <path d="M 705,315 C 785,315 870,355 955,355" 
+            fill="none" stroke="url(#amberLineGrad)" stroke-width="2.5" marker-end="url(#arrow-amber)" class="curved-wire-anim" />
+
+
+      <!-- ================= /odom TOPIC: 1 PUBLISHER -> 2 EXPLICIT SUBSCRIBER BRANCHES ================= -->
+
+      <!-- Trunk: /wheel_odom_node to Split Junction (Solid blue) -->
+      <path d="M 215,260 L 310,260" 
+            fill="none" stroke="#38bdf8" stroke-width="3" />
+
+      <!-- /odom Branch 1 -> amr_safety_supervisor_node (Subscriber 1) -->
+      <path d="M 310,260 L 415,260" 
+            fill="none" stroke="#38bdf8" stroke-width="2.5" marker-end="url(#arrow-sky)" class="curved-wire-anim" />
+
+      <!-- /odom Branch 2 -> rviz2_dashboard (Subscriber 2, Smooth Curved Path) -->
+      <path d="M 310,260 C 340,320 370,535 610,535 C 830,535 885,445 955,395" 
+            fill="none" stroke="#38bdf8" stroke-width="2.5" marker-end="url(#arrow-sky)" class="curved-wire-anim" />
+
+      <!-- Junction Split Node Indicator (Glowing Cyan Dot) -->
+      <circle cx="310" cy="260" r="7" fill="#0284c7" stroke="#38bdf8" stroke-width="2" />
+      <circle cx="310" cy="260" r="3" fill="#ffffff" />
+
+
+      <!-- ================= TOPIC NAMES (CLEAN TEXT PLACED WITH CLEAR GAPS - NO OVALS) ================= -->
+
+      <!-- Topic 1: /sensor/ultrasonic_front (Placed 28px ABOVE curve) -->
+      <g transform="translate(325, 68)" filter="url(#text-backdrop)">
+        <text x="0" y="0" fill="#0284c7" font-family="'JetBrains Mono', monospace" font-size="12" font-weight="800" text-anchor="middle">/sensor/ultrasonic_front</text>
+        <text x="0" y="15" fill="#94a3b8" font-family="'Plus Jakarta Sans', sans-serif" font-size="9.5" text-anchor="middle">sensor_msgs/Range · 10 Hz</text>
+      </g>
+
+      <!-- Topic 2: /odom Shared Trunk Label (Placed ABOVE the junction) -->
+      <g transform="translate(285, 226)" filter="url(#text-backdrop)">
+        <text x="0" y="0" fill="#0284c7" font-family="'JetBrains Mono', monospace" font-size="12.5" font-weight="800" text-anchor="middle">/odom</text>
+        <text x="0" y="14" fill="#94a3b8" font-family="'Plus Jakarta Sans', sans-serif" font-size="9.5" text-anchor="middle">nav_msgs/Odometry · 50 Hz</text>
+      </g>
+
+      <!-- Junction Callout Tag -->
+      <g transform="translate(310, 282)" filter="url(#text-backdrop)">
+        <rect x="-85" y="-10" width="170" height="20" rx="6" fill="#ffffff" stroke="#0284c7" stroke-width="1.2" />
+        <text x="0" y="4" fill="#0284c7" font-family="'JetBrains Mono', monospace" font-size="8.5" font-weight="800" text-anchor="middle">⚡ 1 TOPIC ➔ 2 SUBSCRIBERS</text>
+      </g>
+
+      <!-- Sub 1 Branch Label -->
+      <g transform="translate(365, 250)" filter="url(#text-backdrop)">
+        <text x="0" y="0" fill="#38bdf8" font-family="'JetBrains Mono', monospace" font-size="9.5" font-weight="700" text-anchor="middle">➔ sub_odom</text>
+      </g>
+
+      <!-- Sub 2 Branch Curve Label (Positioned 35px ABOVE the curve at y=500, with curve at y=535) -->
+      <g transform="translate(610, 492)" filter="url(#text-backdrop)">
+        <text x="0" y="0" fill="#0284c7" font-family="'JetBrains Mono', monospace" font-size="11.5" font-weight="800" text-anchor="middle">/odom Branch ➔ Subscribed by /rviz2_dashboard (Sub 2)</text>
+        <text x="0" y="15" fill="#94a3b8" font-family="'Plus Jakarta Sans', sans-serif" font-size="9.5" text-anchor="middle">DDS Multicast: 1 published message received by both nodes simultaneously</text>
+      </g>
+
+      <!-- Topic 3: /teleop_cmd (Placed 28px BELOW curve) -->
+      <g transform="translate(325, 450)" filter="url(#text-backdrop)">
+        <text x="0" y="0" fill="#7c3aed" font-family="'JetBrains Mono', monospace" font-size="12" font-weight="800" text-anchor="middle">/teleop_cmd</text>
+        <text x="0" y="15" fill="#94a3b8" font-family="'Plus Jakarta Sans', sans-serif" font-size="9.5" text-anchor="middle">geometry_msgs/Twist · 20 Hz</text>
+      </g>
+
+      <!-- Topic 4: /cmd_vel (Placed 28px ABOVE curve) -->
+      <g transform="translate(830, 135)" filter="url(#text-backdrop)">
+        <text x="0" y="0" fill="#059669" font-family="'JetBrains Mono', monospace" font-size="12" font-weight="800" text-anchor="middle">/cmd_vel</text>
+        <text x="0" y="15" fill="#065f46" font-family="'Plus Jakarta Sans', sans-serif" font-size="9.5" text-anchor="middle">geometry_msgs/Twist · Safe Vel (20 Hz)</text>
+      </g>
+
+      <!-- Topic 5: /diagnostics/safety_status (Placed 30px BELOW curve) -->
+      <g transform="translate(830, 395)" filter="url(#text-backdrop)">
+        <text x="0" y="0" fill="#b45309" font-family="'JetBrains Mono', monospace" font-size="12" font-weight="800" text-anchor="middle">/diagnostics/safety_status</text>
+        <text x="0" y="15" fill="#92400e" font-family="'Plus Jakarta Sans', sans-serif" font-size="9.5" text-anchor="middle">std_msgs/String · Health Telemetry (1 Hz)</text>
+      </g>
+
+
+      <!-- ================= NODES AS OVALS ================= -->
+
+      <!-- ==- LEFT COLUMN OVAL NODES (UPSTREAM PUBLISHERS) ==- -->
+
+      <!-- Node 1: ultrasonic_node (Oval) -->
+      <g transform="translate(120, 95)" class="node-oval-group">
+        <rect x="-95" y="-26" width="190" height="52" rx="26" fill="url(#nodePillGrad)" stroke="#06b6d4" stroke-width="2" />
+        <circle cx="-70" cy="-5" r="4" fill="#06b6d4" />
+        <text x="-58" y="-2" fill="#22d3ee" font-family="'JetBrains Mono', monospace" font-size="8.5" font-weight="700">NODE</text>
+        <text x="16" y="-2" fill="#0f172a" font-family="'JetBrains Mono', monospace" font-size="10.5" font-weight="800" text-anchor="middle">/ultrasonic_node</text>
+        <text x="0" y="13" fill="#06b6d4" font-family="'Plus Jakarta Sans', sans-serif" font-size="9" font-weight="600" text-anchor="middle">Publisher (1 Topic)</text>
+        <!-- Out Port Dot -->
+        <circle cx="95" cy="0" r="4.5" fill="#38bdf8" stroke="#ffffff" stroke-width="1.5" />
+      </g>
+
+      <!-- Node 2: wheel_odom_node (Oval) -->
+      <g transform="translate(120, 260)" class="node-oval-group">
+        <rect x="-95" y="-26" width="190" height="52" rx="26" fill="url(#nodePillGrad)" stroke="#38bdf8" stroke-width="2" />
+        <circle cx="-70" cy="-5" r="4" fill="#38bdf8" />
+        <text x="-58" y="-2" fill="#38bdf8" font-family="'JetBrains Mono', monospace" font-size="8.5" font-weight="700">NODE</text>
+        <text x="16" y="-2" fill="#0f172a" font-family="'JetBrains Mono', monospace" font-size="10.5" font-weight="800" text-anchor="middle">/wheel_odom_node</text>
+        <text x="0" y="13" fill="#38bdf8" font-family="'Plus Jakarta Sans', sans-serif" font-size="9" font-weight="600" text-anchor="middle">Publishes /odom (50Hz)</text>
+        <!-- Out Port Dot -->
+        <circle cx="95" cy="0" r="4.5" fill="#38bdf8" stroke="#ffffff" stroke-width="1.5" />
+      </g>
+
+      <!-- Node 3: teleop_key_node (Oval) -->
+      <g transform="translate(120, 425)" class="node-oval-group">
+        <rect x="-95" y="-26" width="190" height="52" rx="26" fill="url(#nodePillGrad)" stroke="#818cf8" stroke-width="2" />
+        <circle cx="-70" cy="-5" r="4" fill="#818cf8" />
+        <text x="-58" y="-2" fill="#818cf8" font-family="'JetBrains Mono', monospace" font-size="8.5" font-weight="700">NODE</text>
+        <text x="16" y="-2" fill="#0f172a" font-family="'JetBrains Mono', monospace" font-size="10.5" font-weight="800" text-anchor="middle">/teleop_key_node</text>
+        <text x="0" y="13" fill="#818cf8" font-family="'Plus Jakarta Sans', sans-serif" font-size="9" font-weight="600" text-anchor="middle">Publisher (1 Topic)</text>
+        <!-- Out Port Dot -->
+        <circle cx="95" cy="0" r="4.5" fill="#c084fc" stroke="#ffffff" stroke-width="1.5" />
+      </g>
+
+
+      <!-- ==- CENTRAL OVAL NODE (THE MULTI PUB & SUB HUB) ==- -->
+
+      <g transform="translate(575, 260)" class="central-node-group">
+        <!-- Outer Glowing Oval Capsule (Horizontal Elliptical Oval) -->
+        <rect x="-160" y="-130" width="320" height="260" rx="130" fill="url(#centralNodeGrad)" stroke="#a855f7" stroke-width="3" filter="url(#glow-purple)" />
+        
+        <!-- Header Pill Badge -->
+        <rect x="-90" y="-115" width="180" height="20" rx="10" fill="#f3e8ff" stroke="#d8b4fe" stroke-width="1" />
+        <text x="0" y="-101" fill="#7e22ce" font-family="'JetBrains Mono', monospace" font-size="8.5" font-weight="800" text-anchor="middle">★ CENTRAL NODE (OVAL)</text>
+
+        <!-- Node Name -->
+        <text x="0" y="-76" fill="#0f172a" font-family="'JetBrains Mono', monospace" font-size="13.5" font-weight="800" text-anchor="middle">/amr_safety_supervisor_node</text>
+        <text x="0" y="-58" fill="#7c3aed" font-family="'Plus Jakarta Sans', sans-serif" font-size="9.5" font-weight="700" text-anchor="middle">Single Python Process (1 Node · Multiple Pubs &amp; Subs)</text>
+
+        <!-- Internal Subscriptions Card -->
+        <g transform="translate(-70, -10)">
+          <rect x="-60" y="-34" width="120" height="68" rx="8" fill="#ffffff" stroke="#bae6fd" stroke-width="1.2" />
+          <text x="0" y="-18" fill="#0284c7" font-family="'Plus Jakarta Sans', sans-serif" font-size="9" font-weight="800" text-anchor="middle">⚡ 3 SUBSCRIBERS</text>
+          <text x="-50" y="-1" fill="#334155" font-family="'JetBrains Mono', monospace" font-size="8">• sub_range (10Hz)</text>
+          <text x="-50" y="13" fill="#0284c7" font-family="'JetBrains Mono', monospace" font-size="8" font-weight="800">• sub_odom (50Hz)</text>
+          <text x="-50" y="27" fill="#334155" font-family="'JetBrains Mono', monospace" font-size="8">• sub_teleop (20Hz)</text>
+        </g>
+
+        <!-- Internal Publishers Card -->
+        <g transform="translate(70, -10)">
+          <rect x="-60" y="-34" width="120" height="68" rx="8" fill="#ffffff" stroke="#bbf7d0" stroke-width="1.2" />
+          <text x="0" y="-18" fill="#059669" font-family="'Plus Jakarta Sans', sans-serif" font-size="9" font-weight="800" text-anchor="middle">📡 2 PUBLISHERS</text>
+          <text x="-50" y="-1" fill="#334155" font-family="'JetBrains Mono', monospace" font-size="8">• pub_cmd_vel (20Hz)</text>
+          <text x="-50" y="13" fill="#334155" font-family="'JetBrains Mono', monospace" font-size="8">• pub_status (1Hz)</text>
+          <text x="-50" y="27" fill="#64748b" font-family="'JetBrains Mono', monospace" font-size="7.5">DDS QoS: RELIABLE</text>
+        </g>
+
+        <!-- Logic Arbitration Banner -->
+        <g transform="translate(0, 76)">
+          <rect x="-135" y="-24" width="270" height="46" rx="10" fill="#ffffff" stroke="#e9d5ff" stroke-width="1.2" />
+          <text x="0" y="-10" fill="#7e22ce" font-family="'Plus Jakarta Sans', sans-serif" font-size="9" font-weight="800" text-anchor="middle">🧠 Sensor Fusion &amp; Arbitration</text>
+          <text x="0" y="6" fill="#1e293b" font-family="'JetBrains Mono', monospace" font-size="8" font-weight="700" text-anchor="middle">if clearance &lt; 0.50m: E-STOP else FORWARD</text>
+        </g>
+
+        <!-- Central Oval Ports -->
+        <!-- Inbound Port Dots (Left Rim) -->
+        <circle cx="-130" cy="-85" r="4.5" fill="#38bdf8" stroke="#ffffff" stroke-width="2" />
+        <circle cx="-160" cy="0" r="4.5" fill="#38bdf8" stroke="#ffffff" stroke-width="2" />
+        <circle cx="-130" cy="85" r="4.5" fill="#c084fc" stroke="#ffffff" stroke-width="2" />
+
+        <!-- Outbound Port Dots (Right Rim) -->
+        <circle cx="130" cy="-55" r="4.5" fill="#34d399" stroke="#ffffff" stroke-width="2" />
+        <circle cx="130" cy="55" r="4.5" fill="#fbbf24" stroke="#ffffff" stroke-width="2" />
+      </g>
+
+
+      <!-- ==- RIGHT COLUMN OVAL NODES (DOWNSTREAM SUBSCRIBERS) ==- -->
+
+      <!-- Node 4: motor_controller (Oval) -->
+      <g transform="translate(1050, 155)" class="node-oval-group">
+        <rect x="-95" y="-26" width="190" height="52" rx="26" fill="url(#nodePillGrad)" stroke="#10b981" stroke-width="2" />
+        <!-- In Port Dot -->
+        <circle cx="-95" cy="0" r="4.5" fill="#34d399" stroke="#ffffff" stroke-width="1.5" />
+        <circle cx="-70" cy="-5" r="4" fill="#10b981" />
+        <text x="-58" y="-2" fill="#34d399" font-family="'JetBrains Mono', monospace" font-size="8.5" font-weight="700">NODE</text>
+        <text x="16" y="-2" fill="#0f172a" font-family="'JetBrains Mono', monospace" font-size="10.5" font-weight="800" text-anchor="middle">/motor_controller</text>
+        <text x="0" y="13" fill="#10b981" font-family="'Plus Jakarta Sans', sans-serif" font-size="9" font-weight="600" text-anchor="middle">Subscriber (Hardware)</text>
+      </g>
+
+      <!-- Node 5: rviz2_dashboard (Oval) -->
+      <g transform="translate(1050, 375)" class="node-oval-group">
+        <rect x="-95" y="-34" width="190" height="68" rx="34" fill="url(#nodePillGrad)" stroke="#f59e0b" stroke-width="2" />
+        <!-- In Port Dots (2 subscribers clearly displayed!) -->
+        <circle cx="-95" cy="-20" r="4.5" fill="#fbbf24" stroke="#ffffff" stroke-width="1.5" />
+        <circle cx="-95" cy="20" r="4.5" fill="#38bdf8" stroke="#ffffff" stroke-width="1.5" />
+        
+        <circle cx="-70" cy="-14" r="4" fill="#f59e0b" />
+        <text x="-58" y="-11" fill="#fbbf24" font-family="'JetBrains Mono', monospace" font-size="8.5" font-weight="700">NODE</text>
+        <text x="16" y="-11" fill="#0f172a" font-family="'JetBrains Mono', monospace" font-size="10.5" font-weight="800" text-anchor="middle">/rviz2_dashboard</text>
+        
+        <!-- Two distinct subscriptions inside RViz2 -->
+        <text x="0" y="7" fill="#fde68a" font-family="'JetBrains Mono', monospace" font-size="8.5" text-anchor="middle">• sub /diagnostics</text>
+        <text x="0" y="21" fill="#7dd3fc" font-family="'JetBrains Mono', monospace" font-size="8.5" font-weight="700" text-anchor="middle">• sub /odom (Branch 2)</text>
+      </g>
+
+      <!-- Bottom Legend -->
+      <g transform="translate(600, 585)">
+        <rect x="-380" y="-12" width="760" height="24" rx="12" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.2" />
+        <text x="0" y="3.5" fill="#475569" font-family="'Plus Jakarta Sans', sans-serif" font-size="10" font-weight="600" text-anchor="middle">
+          <tspan fill="#a855f7" font-weight="700">⬭ Oval</tspan> = Node  ·  
+          <tspan fill="#38bdf8" font-weight="700">⚡ Split Dot</tspan> = 1-to-Many Topic Fork (/odom ➔ 2 Subscribers)  ·  
+          <tspan fill="#0284c7" font-weight="700">Text</tspan> = Named Topic  ·  
+          <tspan fill="#c084fc" font-weight="700">Center</tspan> = Node with 3 Subs + 2 Pubs
+        </text>
+      </g>
+    </svg>

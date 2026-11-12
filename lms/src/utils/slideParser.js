@@ -2327,42 +2327,7 @@ ros2 pkg prefix nexus_amr_basics
  * high-yield architectural overviews with paired commands, code, and live telemetry.
  */
 function buildLesson05Slides(doc, lesson, slides) {
-  // 1. Pub/Sub Architecture & Decoupling Road Map
-  slides.push({
-    id: `${lesson.id}_sec1_architecture_roadmap`,
-    type: 'concept',
-    lessonNum: lesson.num_str,
-    lessonId: lesson.id,
-    module: lesson.module,
-    sectionTitle: '1. Pub/Sub Architecture Road Map',
-    badge: '🧭 Architecture Pillars',
-    title: '1. Pub/Sub Architecture & Decoupling Road Map',
-    htmlContent: `
-      <div class="l05-banner-intro">
-        <strong>Autonomous Robotics Core Requirement:</strong> Modern AMRs require asynchronous, decoupled communication between real-time sensors (ultrasonic rangers, LiDAR, cameras) and supervisory safety systems. In ROS 2, this is achieved via the <strong>Publish-Subscribe</strong> model over a decentralized <strong>DDS</strong> message bus.
-      </div>
-      <div class="l05-card-grid-2x2">
-        <div class="l05-pillar-card">
-          <div class="l05-pillar-header"><span class="l03-card-icon">📡</span><span>DDS Pub/Sub Decoupling</span></div>
-          <p>Master temporal, spatial, and synchronization decoupling over DDS. Messages stream peer-to-peer with zero central master bottleneck.</p>
-        </div>
-        <div class="l05-pillar-card">
-          <div class="l05-pillar-header"><span class="l03-card-icon">🧭</span><span>Ultrasonic Rangefinder Publisher</span></div>
-          <p>Author an OOP Python publisher node (<code>ultrasonic_sensor_node.py</code>) streaming <code>sensor_msgs/msg/Range</code> at 10 Hz via non-blocking timers.</p>
-        </div>
-        <div class="l05-pillar-card">
-          <div class="l05-pillar-header"><span class="l03-card-icon">🛡️</span><span>Collision Safety Monitor Subscriber</span></div>
-          <p>Author an event-driven subscriber (<code>collision_monitor_node.py</code>) evaluating a 0.50m safety threshold and triggering real-time emergency braking.</p>
-        </div>
-        <div class="l05-pillar-card">
-          <div class="l05-pillar-header"><span class="l03-card-icon">⚡</span><span>QoS Policies &amp; AMR Square Mission</span></div>
-          <p>Configure Reliability (<code>RELIABLE</code> vs <code>BEST_EFFORT</code>) and Durability policies, and program Turtlesim to execute an autonomous square patrol.</p>
-        </div>
-      </div>
-    `
-  });
-
-  // 2. Interactive Architecture Explorer: Pub/Sub & DDS Message Flow (Replacing Static Diagram)
+  // 1. Interactive Architecture Stage: Pub/Sub & DDS Message Flow (Merged Roadmap & Live Simulator)
   slides.push({
     id: `${lesson.id}_interactive_pubsub`,
     type: 'interactive',
@@ -2370,9 +2335,9 @@ function buildLesson05Slides(doc, lesson, slides) {
     lessonNum: lesson.num_str,
     lessonId: lesson.id,
     module: lesson.module,
-    sectionTitle: '2. Pub/Sub Message Flow & Topic Buffering',
+    sectionTitle: '1. Topic Architecture & Pub/Sub Message Flow',
     badge: '🔄 Interactive Simulator',
-    title: 'Interactive Pub/Sub & DDS Message Flow Simulator'
+    title: 'Interactive Pub/Sub Architecture & DDS Message Flow Simulator'
   });
 
   // 4. Section 3.1: Discovering & Inspecting Message Interfaces (sensor_msgs/msg/Range)
@@ -2810,7 +2775,7 @@ self.map_sub = self.create_subscription(OccupancyGrid, '/map', self.cb, qos_prof
     `
   });
 
-  // 11. Section 7.3: Multi-Topic Architecture: Single Node Multi Pub/Sub
+  // 10. Section 7.3: Multi-Topic Architecture: Single Node Multi Pub/Sub
   slides.push({
     id: `${lesson.id}_sec7_multi_pubsub`,
     type: 'concept',
@@ -2822,18 +2787,14 @@ self.map_sub = self.create_subscription(OccupancyGrid, '/map', self.cb, qos_prof
     title: '7.3 Multi-Topic Architecture: Single Node Multi Pub/Sub',
     htmlContent: `
       <div class="l05-two-col-layout">
-        <div class="l05-content-col">
-          <div class="l03-concept-card">
-            <div class="l03-concept-header"><span class="l03-card-icon">🧠</span><strong>Single-Node Multi-Channel Hub</strong></div>
-            <p>A ROS 2 node is an OOP class that can host <strong>multiple publishers and subscribers</strong> across different topics simultaneously to serve as a central AMR safety supervisor.</p>
+        <div class="l05-visual-col">
+          <div class="l05-visual-frame">
+            <img src="assets/images/ros2_multi_topic_hub.svg" alt="Multi-Topic Architecture Diagram" class="l05-hero-svg" />
+            <span class="l05-visual-caption">Decoupled Multi-Topic Topology: 3 Inbound Subscriptions &amp; 2 Outbound Publishers on 1 Node.</span>
           </div>
-          <div class="l05-golden-card">
-            <div class="l05-golden-header"><span>📥</span><strong>3 Inbound Subscriptions</strong></div>
-            <p><code>/sensor/ultrasonic_front</code> (Range, 10Hz), <code>/odom</code> (Odometry, 50Hz), and <code>/teleop_cmd</code> (Twist, 20Hz).</p>
-          </div>
-          <div class="l05-golden-card success" style="margin-top: 0.15rem;">
-            <div class="l05-golden-header"><span>📤</span><strong>2 Outbound Publishers</strong></div>
-            <p><code>/cmd_vel</code> (Safe motor commands) and <code>/diagnostics/safety_status</code> (Fleet telemetry).</p>
+          <div class="l05-golden-card success" style="margin-top: 0.25rem;">
+            <div class="l05-golden-header"><span>🔀</span><strong>Single Node Multi-Channel Hub</strong></div>
+            <p>1 Python class binds multiple <code>create_subscription</code> &amp; <code>create_publisher</code> instances, arbitrating multi-rate sensor and command streams safely.</p>
           </div>
         </div>
         <div class="l05-content-col">
@@ -2842,22 +2803,22 @@ self.map_sub = self.create_subscription(OccupancyGrid, '/map', self.cb, qos_prof
             <pre><code class="language-python">class MultiTopicSupervisor(Node):
     def __init__(self):
         super().__init__('amr_safety_supervisor_node')
-        # 3 Subscriptions
+        # 3 Subscriptions (Inbound Telemetry)
         self.sub_range = self.create_subscription(Range, '/sensor/ultrasonic_front', self.range_cb, 10)
         self.sub_odom  = self.create_subscription(Odometry, '/odom', self.odom_cb, 10)
         self.sub_cmd   = self.create_subscription(Twist, '/teleop_cmd', self.teleop_cb, 10)
 
-        # 2 Publishers
+        # 2 Publishers (Outbound Actuation &amp; Health)
         self.pub_vel    = self.create_publisher(Twist, '/cmd_vel', 10)
         self.pub_status = self.create_publisher(String, '/diagnostics/safety_status', 10)
 
-        # 20 Hz Arbitration Control Loop (zeros speed if obstacle < 0.50m)
+        # 20 Hz Arbitrated Safety Control Loop
         self.timer = self.create_timer(0.05, self.control_loop)</code></pre>
           </div>
           <div class="l03-output-card">
             <div class="l03-output-header"><span class="l03-card-icon">💡</span><strong>CLI Node Introspection</strong></div>
             <pre><code class="language-bash">ros2 node info /amr_safety_supervisor_node
-# Prints all 3 subscriptions and 2 publishers!</code></pre>
+# Verified: 3 Subscriptions and 2 Publishers active</code></pre>
           </div>
         </div>
       </div>

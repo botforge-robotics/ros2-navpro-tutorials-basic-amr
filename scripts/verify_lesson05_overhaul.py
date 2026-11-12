@@ -111,7 +111,7 @@ def verify():
             img_name = f"l05_overhaul_card_slide_{s:02d}.png"
             take_screenshot(img_name)
 
-            if s == 2:  # Pub/Sub interactive slide
+            if s == 1:  # Pub/Sub interactive slide (merged Slide 2 & 3)
                 ps_data = send_cmd("Runtime.evaluate", {
                     "expression": """
                         (() => {
@@ -135,6 +135,24 @@ def verify():
                     "returnByValue": True
                 }).get("result", {}).get("value", {})
                 print(f"  >>> Pub/Sub Flow Geometry (Card): {json.dumps(ps_data)}")
+
+            if s == 9:  # Multi-Topic Architecture slide with block diagram
+                mt_data = send_cmd("Runtime.evaluate", {
+                    "expression": """
+                        (() => {
+                            const img = document.querySelector('.l05-hero-svg');
+                            return {
+                                hasImage: !!img,
+                                src: img ? img.getAttribute('src') : null,
+                                naturalWidth: img ? img.naturalWidth : null,
+                                naturalHeight: img ? img.naturalHeight : null,
+                                clientHeight: img ? img.clientHeight : null
+                            };
+                        })()
+                    """,
+                    "returnByValue": True
+                }).get("result", {}).get("value", {})
+                print(f"  >>> Multi-Topic Diagram Geometry (Card): {json.dumps(mt_data)}")
 
         # Fullscreen Mode
         print("\n--- Testing Lesson 05 Fullscreen Mode (1920x1080) ---")
@@ -200,7 +218,7 @@ def verify():
             img_name = f"l05_overhaul_fs_slide_{s:02d}.png"
             take_screenshot(img_name)
 
-            if s == 2:  # Pub/Sub interactive slide
+            if s == 1:  # Pub/Sub interactive slide (merged Slide 2 & 3)
                 ps_data = send_cmd("Runtime.evaluate", {
                     "expression": """
                         (() => {
@@ -224,6 +242,24 @@ def verify():
                     "returnByValue": True
                 }).get("result", {}).get("value", {})
                 print(f"  >>> Pub/Sub Flow Geometry (FS): {json.dumps(ps_data)}")
+
+            if s == 9:  # Multi-Topic Architecture slide with block diagram
+                mt_data = send_cmd("Runtime.evaluate", {
+                    "expression": """
+                        (() => {
+                            const img = document.querySelector('.l05-hero-svg');
+                            return {
+                                hasImage: !!img,
+                                src: img ? img.getAttribute('src') : null,
+                                naturalWidth: img ? img.naturalWidth : null,
+                                naturalHeight: img ? img.naturalHeight : null,
+                                clientHeight: img ? img.clientHeight : null
+                            };
+                        })()
+                    """,
+                    "returnByValue": True
+                }).get("result", {}).get("value", {})
+                print(f"  >>> Multi-Topic Diagram Geometry (FS): {json.dumps(mt_data)}")
 
         card_overflows = [r for r in results if r.get('overflowDiff', 0) > 0]
         fs_overflows = [r for r in fs_results if r.get('overflowDiff', 0) > 0]
