@@ -7952,6 +7952,21 @@
   line-height: 1.45 !important;
 }
 
+/* Presentation Mode Overrides for Package Structure Interactive */
+.presentation-viewport .package-structure-infographic {
+  margin: 0 !important;
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+.presentation-viewport:not(.is-fullscreen) .package-structure-infographic {
+  padding: 0.85rem 1rem !important;
+}
+
+.presentation-viewport.is-fullscreen .package-structure-infographic {
+  padding: 1.5rem 2rem !important;
+}
+
 
 
 

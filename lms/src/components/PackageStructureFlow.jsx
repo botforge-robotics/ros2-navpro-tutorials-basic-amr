@@ -237,9 +237,9 @@ if __name__ == '__main__':
       background: 'var(--bg-surface)',
       border: '1px solid var(--border-color)',
       borderRadius: '16px',
-      padding: '1.75rem',
-      margin: '2rem 0',
-      boxShadow: '0 8px 30px rgba(0, 0, 0, 0.25)',
+      padding: '0.85rem 1.15rem',
+      margin: '0',
+      boxShadow: '0 8px 30px rgba(0, 0, 0, 0.15)',
       position: 'relative',
       overflow: 'hidden'
     }}>
@@ -250,14 +250,14 @@ if __name__ == '__main__':
         justifyContent: 'space-between',
         flexWrap: 'wrap',
         gap: '12px',
-        marginBottom: '1.5rem',
-        paddingBottom: '1.25rem',
+        marginBottom: '0.75rem',
+        paddingBottom: '0.65rem',
         borderBottom: '1px solid var(--border-color)'
       }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
           <div style={{
-            width: 42,
-            height: 42,
+            width: 36,
+            height: 36,
             borderRadius: '10px',
             background: 'linear-gradient(135deg, rgba(245, 158, 11, 0.2) 0%, rgba(56, 189, 248, 0.15) 100%)',
             border: '1px solid rgba(245, 158, 11, 0.35)',
@@ -266,13 +266,13 @@ if __name__ == '__main__':
             justifyContent: 'center',
             color: '#f59e0b'
           }}>
-            <Package size={22} />
+            <Package size={18} />
           </div>
           <div>
-            <h3 style={{ margin: 0, fontSize: '1.2rem', fontWeight: 800, color: 'var(--text-primary)' }}>
+            <h3 style={{ margin: 0, fontSize: '1.1rem', fontWeight: 800, color: 'var(--text-primary)' }}>
               Anatomy of an <code style={{ color: '#38bdf8' }}>ament_python</code> Package
             </h3>
-            <span style={{ fontSize: '0.84rem', color: 'var(--text-muted)' }}>
+            <span style={{ fontSize: '0.8rem', color: 'var(--text-secondary)' }}>
               The 5 essential components that transform a directory into a functional ROS 2 package
             </span>
           </div>
@@ -286,19 +286,19 @@ if __name__ == '__main__':
               display: 'flex',
               alignItems: 'center',
               gap: '6px',
-              background: activeExecTrace > 0 ? 'linear-gradient(135deg, #0284c7 0%, #0369a1 100%)' : 'var(--bg-primary)',
+              background: activeExecTrace > 0 ? 'linear-gradient(135deg, #0284c7 0%, #0369a1 100%)' : 'var(--bg-card, #0f172a)',
               color: activeExecTrace > 0 ? '#ffffff' : 'var(--text-primary)',
               border: activeExecTrace > 0 ? '1px solid #38bdf8' : '1px solid var(--border-color)',
               borderRadius: '8px',
-              padding: '7px 14px',
-              fontSize: '0.82rem',
+              padding: '5px 11px',
+              fontSize: '0.78rem',
               fontWeight: 700,
               cursor: 'pointer',
               boxShadow: activeExecTrace > 0 ? '0 2px 8px rgba(2, 132, 199, 0.35)' : 'none',
               transition: 'all 0.2s'
             }}
           >
-            <Play size={14} fill={activeExecTrace > 0 ? 'currentColor' : 'none'} />
+            <Play size={12} fill={activeExecTrace > 0 ? 'currentColor' : 'none'} />
             <span>
               {activeExecTrace === 0 ? 'Trace ros2 run Execution' : `Execution Step ${activeExecTrace}/4 (Next &rarr;)`}
             </span>
@@ -312,8 +312,8 @@ if __name__ == '__main__':
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                width: 34,
-                height: 34,
+                width: 30,
+                height: 30,
                 background: 'var(--bg-primary)',
                 color: 'var(--text-secondary)',
                 border: '1px solid var(--border-color)',
@@ -321,7 +321,7 @@ if __name__ == '__main__':
                 cursor: 'pointer'
               }}
             >
-              <RotateCcw size={14} />
+              <RotateCcw size={12} />
             </button>
           )}
         </div>
@@ -396,7 +396,7 @@ if __name__ == '__main__':
           </div>
 
           {/* File Items List */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
             {packageFiles.map((file) => {
               const isSelected = selectedFile === file.id;
               const isTraced = activeExecTrace > 0 && traceSteps[activeExecTrace - 1].targetFile === file.id;
@@ -410,7 +410,7 @@ if __name__ == '__main__':
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'space-between',
-                    padding: '8px 12px',
+                    padding: '6px 10px',
                     borderRadius: '8px',
                     background: isSelected
                       ? 'rgba(56, 189, 248, 0.1)'
@@ -428,10 +428,10 @@ if __name__ == '__main__':
                   }}
                 >
                   <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                    <Icon size={15} color={isSelected ? file.borderAccent : 'var(--text-muted)'} />
+                    <Icon size={14} color={isSelected ? file.borderAccent : 'var(--text-muted)'} />
                     <span style={{
                       fontFamily: 'monospace',
-                      fontSize: '0.84rem',
+                      fontSize: '0.82rem',
                       fontWeight: isSelected ? 700 : 500,
                       color: isSelected ? file.borderAccent : 'var(--text-primary)'
                     }}>
@@ -440,9 +440,9 @@ if __name__ == '__main__':
                   </div>
 
                   <span style={{
-                    fontSize: '0.66rem',
+                    fontSize: '0.64rem',
                     fontWeight: 700,
-                    padding: '2px 6px',
+                    padding: '2px 5px',
                     borderRadius: '4px',
                     background: file.badgeBg,
                     color: file.badgeColor
@@ -456,18 +456,20 @@ if __name__ == '__main__':
 
           {/* Golden Rule Summary Card */}
           <div style={{
-            marginTop: '1.25rem',
-            padding: '10px 12px',
+            marginTop: '0.65rem',
+            padding: '7px 10px',
             borderRadius: '8px',
-            background: 'rgba(15, 23, 42, 0.6)',
+            background: 'var(--bg-canvas, rgba(16, 185, 129, 0.08))',
             border: '1px solid var(--border-color)',
-            fontSize: '0.78rem',
-            color: 'var(--text-secondary)',
-            lineHeight: 1.5
+            fontSize: '0.76rem',
+            color: 'var(--text-primary)',
+            lineHeight: 1.4
           }}>
             <strong style={{ color: '#10b981' }}>The Minimum Package Requirement:</strong>
             <br />
-            A ROS 2 Python package requires at least a <code style={{ color: '#f59e0b' }}>package.xml</code> and a <code style={{ color: '#38bdf8' }}>setup.py</code> file to be buildable by colcon.
+            <span style={{ color: 'var(--text-secondary)' }}>
+              A ROS 2 Python package requires at least a <code style={{ color: '#f59e0b', fontWeight: 600 }}>package.xml</code> and a <code style={{ color: '#38bdf8', fontWeight: 600 }}>setup.py</code> file to be buildable by colcon.
+            </span>
           </div>
         </div>
 
@@ -480,7 +482,7 @@ if __name__ == '__main__':
         }}>
           {/* File Header Bar */}
           <div style={{
-            padding: '0.85rem 1.25rem',
+            padding: '0.65rem 1rem',
             background: 'rgba(15, 23, 42, 0.8)',
             borderBottom: '1px solid var(--border-color)',
             display: 'flex',
@@ -492,7 +494,7 @@ if __name__ == '__main__':
             <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
               <span style={{
                 fontFamily: 'monospace',
-                fontSize: '0.85rem',
+                fontSize: '0.84rem',
                 fontWeight: 800,
                 color: currentFile.borderAccent
               }}>
@@ -506,30 +508,30 @@ if __name__ == '__main__':
                 display: 'flex',
                 alignItems: 'center',
                 gap: '4px',
-                background: 'rgba(255, 255, 255, 0.06)',
-                border: '1px solid var(--border-color)',
+                background: 'rgba(255, 255, 255, 0.08)',
+                border: '1px solid rgba(255, 255, 255, 0.15)',
                 borderRadius: '6px',
-                padding: '4px 8px',
-                fontSize: '0.72rem',
-                color: copiedId === currentFile.id ? '#10b981' : '#94a3b8',
+                padding: '3px 7px',
+                fontSize: '0.7rem',
+                color: copiedId === currentFile.id ? '#10b981' : '#cbd5e1',
                 cursor: 'pointer'
               }}
             >
-              {copiedId === currentFile.id ? <Check size={13} /> : <Copy size={13} />}
+              {copiedId === currentFile.id ? <Check size={12} /> : <Copy size={12} />}
               <span>{copiedId === currentFile.id ? 'Copied' : 'Copy Code'}</span>
             </button>
           </div>
 
           {/* Description & Purpose Banner */}
           <div style={{
-            padding: '1rem 1.25rem',
-            borderBottom: '1px solid rgba(255, 255, 255, 0.05)',
-            background: 'rgba(15, 23, 42, 0.4)'
+            padding: '0.65rem 1rem',
+            borderBottom: '1px solid rgba(255, 255, 255, 0.08)',
+            background: 'rgba(15, 23, 42, 0.6)'
           }}>
-            <div style={{ fontSize: '0.9rem', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '4px' }}>
+            <div style={{ fontSize: '0.88rem', fontWeight: 700, color: '#f8fafc', marginBottom: '3px' }}>
               {currentFile.title}
             </div>
-            <div style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', marginBottom: '8px', lineHeight: 1.5 }}>
+            <div style={{ fontSize: '0.78rem', color: '#cbd5e1', marginBottom: '6px', lineHeight: 1.45 }}>
               {currentFile.purpose}
             </div>
 
@@ -537,27 +539,27 @@ if __name__ == '__main__':
             <div style={{
               display: 'flex',
               alignItems: 'start',
-              gap: '8px',
-              padding: '8px 10px',
+              gap: '6px',
+              padding: '6px 8px',
               borderRadius: '6px',
-              background: 'rgba(239, 68, 68, 0.08)',
-              border: '1px solid rgba(239, 68, 68, 0.25)',
-              fontSize: '0.76rem',
-              color: '#fca5a5',
-              lineHeight: 1.45
+              background: 'rgba(239, 68, 68, 0.12)',
+              border: '1px solid rgba(239, 68, 68, 0.35)',
+              fontSize: '0.74rem',
+              color: '#fecaca',
+              lineHeight: 1.4
             }}>
-              <AlertTriangle size={15} color="#ef4444" style={{ flexShrink: 0, marginTop: '2px' }} />
+              <AlertTriangle size={14} color="#ef4444" style={{ flexShrink: 0, marginTop: '2px' }} />
               <div>
-                <strong style={{ color: '#ef4444' }}>Common Pitfall:</strong> {currentFile.commonPitfall}
+                <strong style={{ color: '#f87171' }}>Common Pitfall:</strong> {currentFile.commonPitfall}
               </div>
             </div>
           </div>
 
           {/* Syntax Highlighted Code Viewer */}
           <div style={{
-            padding: '1.25rem',
+            padding: '0.75rem 1rem',
             overflowX: 'auto',
-            maxHeight: '380px'
+            maxHeight: '185px'
           }}>
             <pre style={{
               margin: 0,
