@@ -519,6 +519,8 @@ export function parseLessonIntoSlides(lesson) {
     buildLesson05Slides(doc, lesson, slides);
   } else if (lesson.id === '06' || lesson.num_str === '06' || lesson.id === 'lesson_06') {
     buildLesson06Slides(doc, lesson, slides);
+  } else if (lesson.id === '07' || lesson.num_str === '07' || lesson.id === 'lesson_07') {
+    buildLesson07Slides(doc, lesson, slides);
   } else {
     sections.forEach((section, secIdx) => {
     const h2 = section.querySelector('h2');
@@ -3303,6 +3305,282 @@ ros2 run nexus_amr_basics emergency_stop_client "Obstacle within 0.35m"</code></
     `
   });
 }
+
+/**
+ * Dedicated High-Yield Pedagogical Deck Builder for Lesson 07:
+ * Runtime Management & Python Launch Files.
+ * Consolidates fragmented 15-slide micro-splits into 9 concise,
+ * high-yield architectural overviews with interactive visuals,
+ * code templates, action matrices, and multi-robot CLI workflows.
+ */
+function buildLesson07Slides(doc, lesson, slides) {
+  // 1. ROS 2 Python Launch Execution Architecture (with SVG visual)
+  slides.push({
+    id: `${lesson.id}_sec2_architecture`,
+    type: 'concept',
+    lessonNum: lesson.num_str,
+    lessonId: lesson.id,
+    module: lesson.module,
+    sectionTitle: '2. The Python Launch Architecture',
+    badge: '🚀 Launch Architecture',
+    title: '2. ROS 2 Python Launch System Architecture',
+    htmlContent: `
+      <div class="l03-two-col-layout l03-graph-layout">
+        <div class="l03-visual-col">
+          <div class="l03-visual-frame" style="background: var(--bg-surface); padding: 0.6rem; border-radius: 10px; border: 1px solid var(--border-color); display: flex; flex-direction: column; align-items: center; justify-content: center;">
+            <img src="assets/images/ros2_launch_architecture.svg" alt="ROS 2 Python Launch Execution Architecture" style="width: 100%; max-height: 275px; object-fit: contain;" />
+            <span class="l03-visual-caption">Declarative Directed Acyclic Graph (DAG) Built &amp; Executed by ROS 2 Runtime</span>
+          </div>
+        </div>
+        <div class="l03-content-col">
+          <div class="l03-concept-card">
+            <div class="l03-concept-header"><span class="l03-card-icon">🐍</span><strong>Pure Python Declarative Graph</strong></div>
+            <p>Unlike static XML in ROS 1, ROS 2 uses pure Python scripts (<code>.launch.py</code>) to build an execution pipeline. You gain full programmatic power: conditionals, loops, dynamic path resolution, and environment checks.</p>
+          </div>
+          <div class="l03-concept-card">
+            <div class="l03-concept-header"><span class="l03-card-icon">🎯</span><strong>generate_launch_description() Entrypoint</strong></div>
+            <p>The mandatory root function that returns a <code>LaunchDescription</code> holding an ordered list of actions: node spawners, CLI argument declarations, logging commands, and nested launch inclusions.</p>
+          </div>
+          <div class="l03-concept-card">
+            <div class="l03-concept-header"><span class="l03-card-icon">⚡</span><strong>Dynamic Substitutions (LaunchConfiguration)</strong></div>
+            <p>Parameters like <code>robot_namespace</code> or <code>use_sim_time</code> are evaluated lazily at runtime, allowing operators to reconfigure entire robot subsystems from the CLI without changing code.</p>
+          </div>
+        </div>
+      </div>
+    `
+  });
+
+  // 2. Writing an AMR Subsystem Launch File: The 4 Core Phases
+  slides.push({
+    id: `${lesson.id}_sec3_subsystem_launch`,
+    type: 'concept',
+    lessonNum: lesson.num_str,
+    lessonId: lesson.id,
+    module: lesson.module,
+    sectionTitle: '3. AMR Subsystem Launch File Implementation',
+    badge: '📝 Subsystem Launch Script',
+    title: '3. Writing an AMR Launch File: The 4 Core Architectural Phases',
+    htmlContent: `
+      <div class="l03-two-col-layout">
+        <div class="l03-left-code-col">
+          <div class="l03-cmd-card" style="margin-bottom: 0;">
+            <div class="l03-cmd-header"><span class="l03-term-badge">amr_subsystem.launch.py</span><strong>Pure Python Script</strong></div>
+            <pre><code class="language-python">import os
+from ament_index_python.packages import get_package_share_directory
+from launch import LaunchDescription
+from launch.actions import DeclareLaunchArgument
+from launch.substitutions import LaunchConfiguration
+from launch_ros.actions import Node
+
+def generate_launch_description():
+    # Phase 1: Dynamic Path Resolution
+    pkg_share = get_package_share_directory('nexus_amr_basics')
+    config_file = os.path.join(pkg_share, 'config', 'teleop_params.yaml')
+
+    # Phase 2: Declare CLI Arguments
+    ns_arg = DeclareLaunchArgument(
+        'robot_namespace', default_value='nexus_amr',
+        description='Top-level isolation namespace'
+    )
+
+    # Phase 3: Define Subsystem Node Spawners
+    estop_node = Node(
+        package='nexus_amr_basics',
+        executable='emergency_stop_server',
+        namespace=LaunchConfiguration('robot_namespace'),
+        output='screen'
+    )
+    param_node = Node(
+        package='nexus_amr_basics',
+        executable='param_node_explained',
+        namespace=LaunchConfiguration('robot_namespace'),
+        parameters=[config_file],
+        remappings=[('/cmd_vel', 'cmd_vel_filtered')],
+        output='screen'
+    )
+
+    # Phase 4: Assemble & Return Pipeline
+    return LaunchDescription([ns_arg, estop_node, param_node])</code></pre>
+          </div>
+        </div>
+        <div class="l03-content-col">
+          <div class="l05-golden-card" style="margin-bottom: 0.35rem; padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>📂</span><strong>Phase 1: Dynamic Path Resolution</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;"><code>get_package_share_directory()</code> portably locates installed assets across source builds and debian installs without hardcoding absolute paths.</p>
+          </div>
+          <div class="l05-golden-card" style="margin-bottom: 0.35rem; padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🎛️</span><strong>Phase 2: Declare Runtime Arguments</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;"><code>DeclareLaunchArgument</code> exposes CLI switches with safe defaults, enabling runtime overrides like <code>robot_namespace:=amr_alpha</code>.</p>
+          </div>
+          <div class="l05-golden-card" style="margin-bottom: 0.35rem; padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🤖</span><strong>Phase 3: Managed Subsystem Nodes</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;"><code>Node(...)</code> actions declare process boundaries, YAML parameter paths, topic remappings, and terminal output streaming.</p>
+          </div>
+          <div class="l05-golden-card" style="margin-bottom: 0; padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🚀</span><strong>Phase 4: Return LaunchDescription</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">Hands the assembled execution list to the launch daemon to spawn and supervise the processes concurrently.</p>
+          </div>
+        </div>
+      </div>
+    `
+  });
+
+  // 3. Core Launch Actions & Syntax Matrix
+  slides.push({
+    id: `${lesson.id}_sec4_actions_matrix`,
+    type: 'concept',
+    lessonNum: lesson.num_str,
+    lessonId: lesson.id,
+    module: lesson.module,
+    sectionTitle: '4. Key Launch Actions & Syntax Breakdown',
+    badge: '⚙️ Action API Reference',
+    title: '4. Essential ROS 2 Launch Actions & Syntax Reference Matrix',
+    htmlContent: `
+      <div class="l06-table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th style="width: 26%;">Launch Action / Class</th>
+              <th style="width: 24%;">Module Import</th>
+              <th style="width: 50%;">Core Role &amp; Production Usage</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>Node(...)</code></td>
+              <td><code>launch_ros.actions</code></td>
+              <td>Spawns a managed ROS 2 node process. Configures <code>package</code>, <code>executable</code>, <code>name</code>, <code>namespace</code>, <code>parameters</code>, <code>remappings</code>, and <code>output='screen'</code>.</td>
+            </tr>
+            <tr>
+              <td><code>DeclareLaunchArgument</code></td>
+              <td><code>launch.actions</code></td>
+              <td>Registers a configurable CLI argument flag (e.g. <code>robot_namespace</code>, <code>use_sim_time</code>) with default values and validation rules.</td>
+            </tr>
+            <tr>
+              <td><code>LaunchConfiguration</code></td>
+              <td><code>launch.substitutions</code></td>
+              <td>Dynamically evaluates and injects the runtime value of a declared launch argument into node parameters or names.</td>
+            </tr>
+            <tr>
+              <td><code>IncludeLaunchDescription</code></td>
+              <td><code>launch.actions</code></td>
+              <td>Nests external launch files (e.g. Nav2 navigation stack or Gazebo world simulator) for hierarchical modular stack composition.</td>
+            </tr>
+            <tr>
+              <td><code>remappings=[('/old', '/new')]</code></td>
+              <td><code>launch_ros.actions.Node</code></td>
+              <td>Redirects topic or service names dynamically at the DDS transport boundary without modifying node source code.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="l05-banner-intro" style="margin-top: 0.5rem; padding: 0.4rem 0.7rem; font-size: 0.76rem;">
+        <strong>💡 Production Golden Rule:</strong> Always keep launch files declarative. Avoid blocking loops, network I/O, or heavy computation inside <code>generate_launch_description()</code>; delegate logic to node lifecycles.
+      </div>
+    `
+  });
+
+  // 4. Package Integration (setup.py) & The Symlink Build Rule
+  slides.push({
+    id: `${lesson.id}_sec5_setup_build`,
+    type: 'concept',
+    lessonNum: lesson.num_str,
+    lessonId: lesson.id,
+    module: lesson.module,
+    sectionTitle: '5. Package Integration: Directory Structure & setup.py',
+    badge: '📦 Package Integration',
+    title: '5. Registering Launch Files in setup.py & The Symlink Build Workflow',
+    htmlContent: `
+      <div class="l03-two-col-layout">
+        <div class="l03-content-col">
+          <div class="l03-cmd-card">
+            <div class="l03-cmd-header"><span class="l03-term-badge">setup.py</span><strong>data_files Installation Tuple</strong></div>
+            <pre><code class="language-python">import os
+from glob import glob
+
+# Inside setup(...) data_files:
+data_files=[
+    ('share/ament_index/resource_index/packages', ['resource/' + package_name]),
+    ('share/' + package_name, ['package.xml']),
+    # 1. Install all launch files into share/nexus_amr_basics/launch:
+    (os.path.join('share', package_name, 'launch'),
+     glob(os.path.join('launch', '*.launch.py'))),
+    # 2. Install YAML configuration files:
+    (os.path.join('share', package_name, 'config'),
+     glob(os.path.join('config', '*.yaml'))),
+]</code></pre>
+          </div>
+          <div class="l03-concept-card">
+            <div class="l03-concept-header"><span class="l03-card-icon">📁</span><strong>Package Directory Convention</strong></div>
+            <p>Store launch files in a top-level <code>launch/</code> directory beside <code>package.xml</code>. The glob pattern automatically bundles all <code>*.launch.py</code> scripts.</p>
+          </div>
+        </div>
+        <div class="l03-content-col">
+          <div class="l03-cmd-card">
+            <div class="l03-cmd-header"><span class="l03-term-badge">bash</span><strong>Build &amp; Source Workspace</strong></div>
+            <pre><code class="language-bash">cd ~/ros2_ws
+colcon build --symlink-install --packages-select nexus_amr_basics
+source install/setup.bash</code></pre>
+          </div>
+          <div class="l05-golden-card warning" style="margin-bottom: 0.45rem; padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>⚡</span><strong>Crucial: Always Use --symlink-install</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">Without symlinks, Python launch edits require a full <code>colcon build</code> every time! With <code>--symlink-install</code>, ROS 2 links directly to your source files, enabling <strong>instant iteration</strong> without rebuilding.</p>
+          </div>
+          <div class="l05-golden-card" style="padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🔍</span><strong>Install Target Verification</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">Verify files were installed properly: <code>ls ~/ros2_ws/install/nexus_amr_basics/share/nexus_amr_basics/launch</code></p>
+          </div>
+        </div>
+      </div>
+    `
+  });
+
+  // 5. CLI Execution & Multi-Robot Namespace Verification
+  slides.push({
+    id: `${lesson.id}_sec6_cli_verification`,
+    type: 'concept',
+    lessonNum: lesson.num_str,
+    lessonId: lesson.id,
+    module: lesson.module,
+    sectionTitle: '6. CLI Execution & Multi-Robot Verification',
+    badge: '⚡ Runtime Verification',
+    title: '6. Executing Launch Files & Multi-Robot Namespace Verification',
+    htmlContent: `
+      <div class="l03-two-col-layout">
+        <div class="l03-content-col">
+          <div class="l03-cmd-card">
+            <div class="l03-cmd-header"><span class="l03-term-badge">bash</span><strong>Launch with CLI Namespace Override</strong></div>
+            <pre><code class="language-bash">ros2 launch nexus_amr_basics amr_subsystem.launch.py \\
+  robot_namespace:=amr_alpha</code></pre>
+          </div>
+          <div class="l03-output-card">
+            <div class="l03-output-header"><span class="l03-term-badge">Console Output</span><strong>Multi-Node Supervisor Logs</strong></div>
+            <pre><code class="language-plaintext">[INFO] [launch]: Starting AMR Subsystem under namespace: amr_alpha
+[INFO] [emergency_stop_server-1]: process started with pid [42110]
+[INFO] [param_node_explained-2]: process started with pid [42111]
+[emergency_stop_server-1] [INFO]: Ready on /amr_alpha/robot/emergency_stop
+[param_node_explained-2] [INFO]: Param Node Initialized | ID: 'nexus-wh-01'</code></pre>
+          </div>
+        </div>
+        <div class="l03-content-col">
+          <div class="l05-golden-card" style="margin-bottom: 0.35rem; padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>1️⃣</span><strong>Node Discovery Audit</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;"><code>ros2 node list</code><br/>&rarr; Confirms <code>/amr_alpha/emergency_stop_server</code> and <code>/amr_alpha/parameterized_controller</code> run concurrently under isolated namespaces.</p>
+          </div>
+          <div class="l05-golden-card" style="margin-bottom: 0.35rem; padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>2️⃣</span><strong>Interface &amp; Topic Wire Audit</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;"><code>ros2 service list | grep amr_alpha</code><br/>&rarr; Confirms safety services are mapped to <code>/amr_alpha/robot/emergency_stop</code> with no cross-talk with other robots.</p>
+          </div>
+          <div class="l05-golden-card" style="margin-bottom: 0; padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🏭</span><strong>Industrial Multi-AMR Fleet Scaling</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">Running <code>robot_namespace:=amr_beta</code> in a second terminal deploys a complete second robot on the exact same DDS physical network with zero topic collision.</p>
+          </div>
+        </div>
+      </div>
+    `
+  });
+}
+
 
 
 
