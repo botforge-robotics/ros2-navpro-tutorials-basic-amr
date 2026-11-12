@@ -521,6 +521,36 @@ export function parseLessonIntoSlides(lesson) {
     buildLesson06Slides(doc, lesson, slides);
   } else if (lesson.id === '07' || lesson.num_str === '07' || lesson.id === 'lesson_07') {
     buildLesson07Slides(doc, lesson, slides);
+  } else if (lesson.id === '08' || lesson.num_str === '08' || lesson.id === 'lesson_08') {
+    buildLesson08Slides(doc, lesson, slides);
+  } else if (lesson.id === '09' || lesson.num_str === '09' || lesson.id === 'lesson_09') {
+    buildLesson09Slides(doc, lesson, slides);
+  } else if (lesson.id === '10' || lesson.num_str === '10' || lesson.id === 'lesson_10') {
+    buildLesson10Slides(doc, lesson, slides);
+  } else if (lesson.id === '11' || lesson.num_str === '11' || lesson.id === 'lesson_11') {
+    buildLesson11Slides(doc, lesson, slides);
+  } else if (lesson.id === '12' || lesson.num_str === '12' || lesson.id === 'lesson_12') {
+    buildLesson12Slides(doc, lesson, slides);
+  } else if (lesson.id === '13' || lesson.num_str === '13' || lesson.id === 'lesson_13') {
+    buildLesson13Slides(doc, lesson, slides);
+  } else if (lesson.id === '14' || lesson.num_str === '14' || lesson.id === 'lesson_14') {
+    buildLesson14Slides(doc, lesson, slides);
+  } else if (lesson.id === '15' || lesson.num_str === '15' || lesson.id === 'lesson_15') {
+    buildLesson15Slides(doc, lesson, slides);
+  } else if (lesson.id === '16' || lesson.num_str === '16' || lesson.id === 'lesson_16') {
+    buildLesson16Slides(doc, lesson, slides);
+  } else if (lesson.id === '17' || lesson.num_str === '17' || lesson.id === 'lesson_17') {
+    buildLesson17Slides(doc, lesson, slides);
+  } else if (lesson.id === '18' || lesson.num_str === '18' || lesson.id === 'lesson_18') {
+    buildLesson18Slides(doc, lesson, slides);
+  } else if (lesson.id === '19' || lesson.num_str === '19' || lesson.id === 'lesson_19') {
+    buildLesson19Slides(doc, lesson, slides);
+  } else if (lesson.id === '20' || lesson.num_str === '20' || lesson.id === 'lesson_20') {
+    buildLesson20Slides(doc, lesson, slides);
+  } else if (lesson.id === '21' || lesson.num_str === '21' || lesson.id === 'lesson_21') {
+    buildLesson21Slides(doc, lesson, slides);
+  } else if (lesson.id === '22' || lesson.num_str === '22' || lesson.id === 'lesson_22') {
+    buildLesson22Slides(doc, lesson, slides);
   } else {
     sections.forEach((section, secIdx) => {
     const h2 = section.querySelector('h2');
@@ -3581,6 +3611,3437 @@ source install/setup.bash</code></pre>
   });
 }
 
+/**
+ * Dedicated High-Yield Pedagogical Deck Builder for Lesson 08:
+ * Communication Mechanism III: Action Servers & Clients in Python.
+ * Replaces 23 fragmented micro-slices with 9 coherent, executive-quality
+ * slides featuring the 3-tier protocol, interactive execution flow,
+ * IDL contracts, server/client callbacks, and Nav2 production integration.
+ */
+function buildLesson08Slides(doc, lesson, slides) {
+  // 1. Action Communication Architecture (SVG Visual + 3 Tiers)
+  slides.push({
+    id: `${lesson.id}_sec2_architecture`,
+    type: 'concept',
+    lessonNum: lesson.num_str,
+    lessonId: lesson.id,
+    module: lesson.module,
+    sectionTitle: '2. Action Communication Architecture',
+    badge: '⚡ Action Protocol',
+    title: '2. The ROS 2 Action Protocol: Goal, Feedback & Result Lifecycle',
+    htmlContent: `
+      <div class="l03-two-col-layout l03-graph-layout">
+        <div class="l03-visual-col">
+          <div class="l03-visual-frame" style="background: var(--bg-surface); padding: 0.5rem; border-radius: 10px; border: 1px solid var(--border-color); display: flex; flex-direction: column; align-items: center; justify-content: center;">
+            <img src="assets/images/ros2_action_lifecycle.svg" alt="ROS 2 Action Lifecycle Architecture" style="width: 100%; max-height: 270px; object-fit: contain;" />
+            <span class="l03-visual-caption">Goal Service + Feedback Topic + Result Service + Preemption Cancel</span>
+          </div>
+        </div>
+        <div class="l03-content-col">
+          <div class="l03-concept-card">
+            <div class="l03-concept-header"><span class="l03-card-icon">⏱️</span><strong>Why Topics &amp; Services Fall Short</strong></div>
+            <p>Topics are fire-and-forget streams with no completion signals. Services are synchronous RPCs that freeze execution threads during prolonged robot motions (e.g. driving 10 meters) and cannot be aborted mid-flight.</p>
+          </div>
+          <div class="l03-concept-card">
+            <div class="l03-concept-header"><span class="l03-card-icon">🔀</span><strong>The 3 Coordinated DDS Channels</strong></div>
+            <p>Under the hood, every ROS 2 Action coordinates three primitives: a <strong>Goal Service</strong> (accept/reject), a <strong>Feedback Topic</strong> (continuous telemetry streaming), and a <strong>Result Service</strong> (terminal outcome).</p>
+          </div>
+          <div class="l03-concept-card">
+            <div class="l03-concept-header"><span class="l03-card-icon">🛑</span><strong>Native Preemption &amp; Cancellation</strong></div>
+            <p>Unlike services, actions allow clients to abort or cancel goals at any time (e.g. an unexpected obstacle blocks the path). The server safely halts actuators and transitions to the <code>CANCELED</code> state.</p>
+          </div>
+        </div>
+      </div>
+    `
+  });
+
+  // 2. Interactive Action Flow Simulator
+  slides.push({
+    id: `${lesson.id}_interactive_action`,
+    type: 'interactive',
+    interactiveKey: 'action',
+    lessonNum: lesson.num_str,
+    lessonId: lesson.id,
+    module: lesson.module,
+    sectionTitle: 'Interactive Simulation & Execution Flow',
+    title: 'Interactive Action Flow: Goal Dispatch, Feedback & Cancellation'
+  });
+
+  // 3. Action Interface Definition (.action IDL)
+  slides.push({
+    id: `${lesson.id}_sec3_action_idl`,
+    type: 'concept',
+    lessonNum: lesson.num_str,
+    lessonId: lesson.id,
+    module: lesson.module,
+    sectionTitle: '3. Action Interface Definition',
+    badge: '📐 Action IDL',
+    title: '3. Anatomy of an Action Definition (NavigateDistance.action)',
+    htmlContent: `
+      <div class="l03-two-col-layout">
+        <div class="l03-left-code-col">
+          <div class="l03-cmd-card" style="margin-bottom: 0;">
+            <div class="l03-cmd-header"><span class="l03-term-badge">NavigateDistance.action</span><strong>Action IDL Contract</strong></div>
+            <pre><code class="language-plaintext"># 1. GOAL: Dispatched by Client
+float32 target_distance_m
+float32 speed_mps
+---
+# 2. RESULT: Returned Upon Completion
+bool success
+float32 final_distance_traveled
+string message
+---
+# 3. FEEDBACK: Periodic Telemetry Stream
+float32 distance_remaining
+int32 percent_complete</code></pre>
+          </div>
+        </div>
+        <div class="l03-content-col">
+          <div class="l05-golden-card" style="margin-bottom: 0.35rem; padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>➖</span><strong>The 3-Section Triple-Dash Format (---)</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">Action definitions use exactly two sets of <code>---</code> dividers to separate <strong>Goal</strong>, <strong>Result</strong>, and <strong>Feedback</strong> fields into one strict IDL schema.</p>
+          </div>
+          <div class="l05-golden-card" style="margin-bottom: 0.35rem; padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>⚙️</span><strong>4 Auto-Generated Classes</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">Build tooling compiles the <code>.action</code> file into four Python classes: <code>NavigateDistance.Goal</code>, <code>NavigateDistance.Result</code>, <code>NavigateDistance.Feedback</code>, and internal transport handlers.</p>
+          </div>
+          <div class="l05-golden-card" style="margin-bottom: 0; padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🔍</span><strong>CLI Schema Introspection</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">Inspect any installed action interface directly from the terminal:<br/><code>ros2 interface show nexus_amr_interfaces/action/NavigateDistance</code></p>
+          </div>
+        </div>
+      </div>
+    `
+  });
+
+  // 4. Action Server Implementation
+  slides.push({
+    id: `${lesson.id}_sec4_action_server`,
+    type: 'concept',
+    lessonNum: lesson.num_str,
+    lessonId: lesson.id,
+    module: lesson.module,
+    sectionTitle: '4. Action Server Implementation',
+    badge: '🤖 Action Server Node',
+    title: '4. Authoring the Action Server (navigate_distance_server.py)',
+    htmlContent: `
+      <div class="l03-two-col-layout">
+        <div class="l03-left-code-col">
+          <div class="l03-cmd-card" style="margin-bottom: 0;">
+            <div class="l03-cmd-header"><span class="l03-term-badge">navigate_distance_server.py</span><strong>Core Server Callbacks</strong></div>
+            <pre><code class="language-python">class NavigateDistanceServer(Node):
+    def __init__(self):
+        super().__init__('navigate_distance_server')
+        self._action_server = ActionServer(
+            self, NavigateDistance, 'navigate_distance',
+            execute_callback=self.execute_callback,
+            goal_callback=self.goal_callback,
+            cancel_callback=self.cancel_callback
+        )
+
+    def goal_callback(self, goal_request):
+        # Validate target distance (reject negative or >50m)
+        if goal_request.target_distance_m <= 0.0 or goal_request.target_distance_m > 50.0:
+            return GoalResponse.REJECT
+        return GoalResponse.ACCEPT
+
+    def cancel_callback(self, goal_handle):
+        return CancelResponse.ACCEPT  # Permit preemption
+
+    async def execute_callback(self, goal_handle):
+        feedback_msg = NavigateDistance.Feedback()
+        while distance_covered < target:
+            if goal_handle.is_cancel_requested:
+                goal_handle.canceled()
+                return NavigateDistance.Result(success=False, message="Canceled")
+            goal_handle.publish_feedback(feedback_msg)
+            time.sleep(0.5)
+
+        goal_handle.succeed()
+        return NavigateDistance.Result(success=True, final_distance_traveled=target)</code></pre>
+          </div>
+        </div>
+        <div class="l03-content-col">
+          <div class="l05-golden-card" style="margin-bottom: 0.35rem; padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>1️⃣</span><strong>Goal Callback: Synchronous Validation</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">Immediately returns <code>GoalResponse.ACCEPT</code> or <code>REJECT</code>. Validates kinematic physical feasibility before any motor movement starts.</p>
+          </div>
+          <div class="l05-golden-card" style="margin-bottom: 0.35rem; padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>2️⃣</span><strong>Cancel Callback: Preemption Authorization</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">Authorizes preemption requests when supervisory safety triggers fire, returning <code>CancelResponse.ACCEPT</code>.</p>
+          </div>
+          <div class="l05-golden-card" style="margin-bottom: 0; padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>3️⃣</span><strong>Execute Loop &amp; Terminal States</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">Publishes live progress via <code>goal_handle.publish_feedback()</code>, polls <code>is_cancel_requested</code>, and terminates with <code>goal_handle.succeed()</code> or <code>canceled()</code>.</p>
+          </div>
+        </div>
+      </div>
+    `
+  });
+
+  // 5. Asynchronous Action Client Implementation
+  slides.push({
+    id: `${lesson.id}_sec5_action_client`,
+    type: 'concept',
+    lessonNum: lesson.num_str,
+    lessonId: lesson.id,
+    module: lesson.module,
+    sectionTitle: '5. Action Client Implementation',
+    badge: '📡 Action Client Node',
+    title: '5. Authoring the Asynchronous Action Client (navigate_distance_client.py)',
+    htmlContent: `
+      <div class="l03-two-col-layout">
+        <div class="l03-left-code-col">
+          <div class="l03-cmd-card" style="margin-bottom: 0;">
+            <div class="l03-cmd-header"><span class="l03-term-badge">navigate_distance_client.py</span><strong>Asynchronous Client Pipeline</strong></div>
+            <pre><code class="language-python">class NavigateDistanceClient(Node):
+    def __init__(self):
+        super().__init__('navigate_distance_client')
+        self._client = ActionClient(self, NavigateDistance, 'navigate_distance')
+
+    def send_goal(self, distance_m, speed):
+        self._client.wait_for_server()
+        goal_msg = NavigateDistance.Goal(target_distance_m=distance_m, speed_mps=speed)
+        # Non-blocking async dispatch with live feedback callback:
+        self._send_goal_future = self._client.send_goal_async(
+            goal_msg, feedback_callback=self.feedback_callback
+        )
+        self._send_goal_future.add_done_callback(self.goal_response_callback)
+
+    def feedback_callback(self, feedback_msg):
+        fb = feedback_msg.feedback
+        self.get_logger().info(f"Progress: {fb.percent_complete}% | Remaining: {fb.distance_remaining}m")
+
+    def goal_response_callback(self, future):
+        goal_handle = future.result()
+        if not goal_handle.accepted:
+            self.get_logger().error("Goal rejected by server!")
+            return
+        self._get_result_future = goal_handle.get_result_async()
+        self._get_result_future.add_done_callback(self.result_callback)</code></pre>
+          </div>
+        </div>
+        <div class="l03-content-col">
+          <div class="l05-golden-card" style="margin-bottom: 0.35rem; padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>⏳</span><strong>1. Server Discovery (wait_for_server)</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">Ensures the action server is active on DDS before sending commands, preventing unhandled connection drops.</p>
+          </div>
+          <div class="l05-golden-card" style="margin-bottom: 0.35rem; padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>⚡</span><strong>2. Non-Blocking Async Dispatch</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;"><code>send_goal_async()</code> delegates execution to a background Future without freezing the node's main event loop.</p>
+          </div>
+          <div class="l05-golden-card" style="margin-bottom: 0.35rem; padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>📊</span><strong>3. Live Telemetry Feedback Handler</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">Receives real-time progress updates (percentage, distance remaining) streamed from the server at fixed frequencies.</p>
+          </div>
+          <div class="l05-golden-card" style="margin-bottom: 0; padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🏁</span><strong>4. Terminal Result Future Resolution</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">Invokes <code>get_result_async()</code> to extract final outcome and performance metrics when the trajectory completes.</p>
+          </div>
+        </div>
+      </div>
+    `
+  });
+
+  // 6. CLI Testing & Production Nav2 Integration
+  slides.push({
+    id: `${lesson.id}_sec6_cli_verification`,
+    type: 'concept',
+    lessonNum: lesson.num_str,
+    lessonId: lesson.id,
+    module: lesson.module,
+    sectionTitle: '6. Verification & Nav2 Production Context',
+    badge: '🔍 CLI & Production Nav2',
+    title: '6. CLI Testing (ros2 action) & The Nav2 Navigation Stack Connection',
+    htmlContent: `
+      <div class="l03-two-col-layout">
+        <div class="l03-content-col">
+          <div class="l03-cmd-card">
+            <div class="l03-cmd-header"><span class="l03-term-badge">bash</span><strong>CLI Goal Dispatch with Live Streaming</strong></div>
+            <pre><code class="language-bash"># 1. Discover active actions on DDS:
+ros2 action list
+ros2 action info /navigate_distance
+
+# 2. Dispatch goal from terminal with live feedback:
+ros2 action send_goal /navigate_distance \\
+  nexus_amr_interfaces/action/NavigateDistance \\
+  "{target_distance_m: 5.0, speed_mps: 0.5}" --feedback</code></pre>
+          </div>
+          <div class="l03-output-card">
+            <div class="l03-output-header"><span class="l03-term-badge">Terminal Output</span><strong>CLI Feedback Stream</strong></div>
+            <pre><code class="language-plaintext">Feedback: distance_remaining: 3.5m, percent_complete: 30%
+Feedback: distance_remaining: 1.0m, percent_complete: 80%
+Result: success: True, final_distance_traveled: 5.0m
+Goal finished with status: SUCCEEDED</code></pre>
+          </div>
+        </div>
+        <div class="l03-content-col">
+          <div class="l05-golden-card" style="margin-bottom: 0.45rem;">
+            <div class="l05-golden-header"><span>🧭</span><strong>How Production Nav2 Uses Actions</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">In production robotics, the entire autonomous navigation stack (Nav2) is driven by the <code>nav2_msgs/action/NavigateToPose</code> and <code>NavigateThroughPoses</code> actions.</p>
+          </div>
+          <div class="l05-golden-card" style="margin-bottom: 0.45rem;">
+            <div class="l05-golden-header"><span>🔄</span><strong>Behavior Tree Coordination</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">Nav2 Behavior Trees continuously evaluate action feedback to detect path blockages, calculate dynamic reroutes, or trigger recovery behaviors (spin, backup, clear costmap).</p>
+          </div>
+          <div class="l05-golden-card">
+            <div class="l05-golden-header"><span>🏆</span><strong>Core Takeaway: Topics vs Services vs Actions</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;"><strong>Topics:</strong> Continuous telemetry (LiDAR, Pose).<br/><strong>Services:</strong> Fast, non-blocking RPC (&lt;50ms, E-stop).<br/><strong>Actions:</strong> Long-running tasks with feedback and preemption.</p>
+          </div>
+        </div>
+      </div>
+    `
+  });
+}
 
 
 
+
+
+
+/**
+ * Dedicated High-Yield Pedagogical Deck Builder for Lesson 09:
+ * 3D Robot Modeling with URDF & Xacro.
+ */
+function buildLesson09Slides(doc, lesson, slides) {
+  // 1. URDF Kinematic Hierarchy: Links vs Joints & REP-103 Conventions
+  slides.push({
+    id: `${lesson.id}_sec2_anatomy`,
+    type: 'concept',
+    lessonNum: lesson.num_str,
+    lessonId: lesson.id,
+    module: lesson.module,
+    sectionTitle: '2. URDF Anatomy: Links vs. Joints',
+    badge: '🤖 Kinematic Foundations',
+    title: '2. URDF Kinematic Hierarchy: Links, Joints & REP-103 Conventions',
+    htmlContent: `
+      <div class="l03-two-col-layout">
+        <div class="l03-content-col">
+          <div class="l05-golden-card" style="margin-bottom: 0.35rem; padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🔗</span><strong>Links: Rigid Physical Bodies</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">A Link represents an unyielding physical mass. It contains three decoupled structural tags: <code>&lt;visual&gt;</code> (render meshes for RViz), <code>&lt;collision&gt;</code> (simplified bounding boxes for physics engines), and <code>&lt;inertial&gt;</code> (mass and 3D moment of inertia tensor).</p>
+          </div>
+          <div class="l05-golden-card" style="margin-bottom: 0.35rem; padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>⚙️</span><strong>Joints: Kinematic Constraints</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">Joints establish relative motion constraints between a parent link and a child link. Every joint explicitly defines its reference origin <code>xyz/rpy</code>, axis of rotation/translation <code>&lt;axis xyz="..."/&gt;</code>, and physical joint limits.</p>
+          </div>
+          <div class="l05-golden-card" style="padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>📐</span><strong>REP-103 Spatial Coordinate Standard</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">ROS 2 strictly enforces <strong>+X Forward</strong>, <strong>+Y Port (Left)</strong>, and <strong>+Z Upward</strong>. Origin is grounded at <code>base_footprint</code> (ground plane, z=0) with <code>base_link</code> directly above it at the structural axle center.</p>
+          </div>
+        </div>
+        <div class="l03-content-col">
+          <div class="l06-table-wrap">
+            <table>
+              <thead>
+                <tr><th>Link Identifier</th><th>Type / Role</th><th>Parent Joint</th></tr>
+              </thead>
+              <tbody>
+                <tr><td><code>base_footprint</code></td><td>Ground projection datum (z=0)</td><td>World / Odom</td></tr>
+                <tr><td><code>base_link</code></td><td>Structural chassis center</td><td><code>base_footprint_joint</code> (fixed)</td></tr>
+                <tr><td><code>left_wheel_link</code></td><td>Differential drive traction</td><td><code>left_wheel_joint</code> (continuous)</td></tr>
+                <tr><td><code>right_wheel_link</code></td><td>Differential drive traction</td><td><code>right_wheel_joint</code> (continuous)</td></tr>
+                <tr><td><code>laser_frame</code></td><td>2D LiDAR scan origin</td><td><code>laser_joint</code> (fixed)</td></tr>
+                <tr><td><code>camera_link</code></td><td>RGB-D optical sensor</td><td><code>camera_joint</code> (fixed)</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    `
+  });
+
+  // 2. The 6 Universal URDF Joint Types Matrix
+  slides.push({
+    id: `${lesson.id}_sec2_joint_types`,
+    type: 'concept',
+    lessonNum: lesson.num_str,
+    lessonId: lesson.id,
+    module: lesson.module,
+    sectionTitle: '2. URDF Anatomy: Links vs. Joints',
+    badge: '🔩 Joint Degrees of Freedom',
+    title: 'The 6 Universal URDF Joint Types in Robotics',
+    htmlContent: `
+      <div class="l06-table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th style="width: 20%;">Joint Type</th>
+              <th style="width: 18%;">Degrees of Freedom</th>
+              <th style="width: 36%;">Motion Constraints &amp; Limits</th>
+              <th style="width: 26%;">AMR Production Example</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>continuous</code></td>
+              <td>1-DOF (Rotation)</td>
+              <td>Continuous unlimited 360&deg; rotation around specified axis.</td>
+              <td>AMR traction drive wheels (left/right).</td>
+            </tr>
+            <tr>
+              <td><code>revolute</code></td>
+              <td>1-DOF (Rotation)</td>
+              <td>Rotation strictly constrained between <code>&lt;limit lower="..." upper="..."/&gt;</code>.</td>
+              <td>Steering knuckles, robotic arm elbows.</td>
+            </tr>
+            <tr>
+              <td><code>fixed</code></td>
+              <td>0-DOF (Rigid)</td>
+              <td>No relative motion permitted between parent and child.</td>
+              <td>LiDAR sensor mount, structural chassis plates.</td>
+            </tr>
+            <tr>
+              <td><code>prismatic</code></td>
+              <td>1-DOF (Translation)</td>
+              <td>Linear 1D sliding motion along a single directional vector.</td>
+              <td>Forklift pallet lift mast, telescoping masts.</td>
+            </tr>
+            <tr>
+              <td><code>planar</code></td>
+              <td>3-DOF (2D Plane)</td>
+              <td>Translation along X and Y axes plus rotation about normal Z.</td>
+              <td>Omnidirectional holonomic mobile bases.</td>
+            </tr>
+            <tr>
+              <td><code>floating</code></td>
+              <td>6-DOF (Free 3D)</td>
+              <td>Full unconstrained spatial translation and rotation.</td>
+              <td>Underwater submersibles, aerial drones.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="l05-banner-intro" style="margin-top: 0.4rem; font-size: 0.74rem; padding: 0.35rem 0.6rem;">
+        <strong>💡 Kinematic Rule:</strong> Differential-drive AMRs exclusively use <code>continuous</code> joints for active drive wheels and <code>fixed</code> joints for sensor mounts and passive caster brackets.
+      </div>
+    `
+  });
+
+  // 3. Xacro Macros & Property Parameterization
+  slides.push({
+    id: `${lesson.id}_sec3_xacro_macros`,
+    type: 'concept',
+    lessonNum: lesson.num_str,
+    lessonId: lesson.id,
+    module: lesson.module,
+    sectionTitle: '3. Authoring nexus_amr.urdf.xacro',
+    badge: '📦 Modular Xacro',
+    title: '3. Parameterizing Robot Models with Xacro Properties & Reusable Macros',
+    htmlContent: `
+      <div class="l03-two-col-layout">
+        <div class="l03-left-code-col">
+          <div class="l03-cmd-card" style="margin-bottom: 0;">
+            <div class="l03-cmd-header"><span class="l03-term-badge">nexus_amr.urdf.xacro</span><strong>Parametric Wheel Macro</strong></div>
+            <pre><code class="language-xml">&lt;robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="nexus_amr"&gt;
+  &lt;xacro:property name="wheel_r" value="0.08" /&gt;
+  &lt;xacro:property name="wheel_w" value="0.04" /&gt;
+  &lt;xacro:property name="wheel_m" value="1.2" /&gt;
+
+  &lt;xacro:macro name="drive_wheel" params="prefix parent reflect"&gt;
+    &lt;link name="\${prefix}_wheel_link"&gt;
+      &lt;visual&gt;
+        &lt;geometry&gt;&lt;cylinder radius="\${wheel_r}" length="\${wheel_w}"/&gt;&lt;/geometry&gt;
+        &lt;material name="black"/&gt;
+      &lt;/visual&gt;
+      &lt;collision&gt;
+        &lt;geometry&gt;&lt;cylinder radius="\${wheel_r}" length="\${wheel_w}"/&gt;&lt;/geometry&gt;
+      &lt;/collision&gt;
+      &lt;xacro:cylinder_inertia m="\${wheel_m}" r="\${wheel_r}" h="\${wheel_w}"/&gt;
+    &lt;/link&gt;
+    &lt;joint name="\${prefix}_wheel_joint" type="continuous"&gt;
+      &lt;parent link="\${parent}"/&gt;
+      &lt;child link="\${prefix}_wheel_link"/&gt;
+      &lt;origin xyz="0.0 \${reflect * 0.22} 0.08" rpy="-1.5708 0 0"/&gt;
+      &lt;axis xyz="0 0 1"/&gt;
+    &lt;/joint&gt;
+  &lt;/xacro:macro&gt;
+&lt;/robot&gt;</code></pre>
+          </div>
+        </div>
+        <div class="l03-content-col">
+          <div class="l05-golden-card" style="margin-bottom: 0.35rem; padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🎯</span><strong>Why Xacro Over Raw URDF?</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">Raw URDF requires copying identical XML blocks for left and right wheels. Xacro macros eliminate copy-paste errors and enforce mathematical symmetry across both sides of the chassis.</p>
+          </div>
+          <div class="l05-golden-card" style="margin-bottom: 0.35rem; padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>📐</span><strong>Global Variable Parameterization</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;"><code>&lt;xacro:property&gt;</code> constants define dimensions (wheel radius, track width, chassis mass) in a single place. Updating wheel size updates geometry, collision, and inertia automatically.</p>
+          </div>
+          <div class="l05-golden-card" style="padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🔄</span><strong>Clean Symmetric Invocation</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">Instantiate both wheels in two clean lines:<br/><code>&lt;xacro:drive_wheel prefix="left" parent="base_link" reflect="1"/&gt;</code><br/><code>&lt;xacro:drive_wheel prefix="right" parent="base_link" reflect="-1"/&gt;</code></p>
+          </div>
+        </div>
+      </div>
+    `
+  });
+
+  // 4. Inertia Tensor Mathematics & Physics Stability
+  slides.push({
+    id: `${lesson.id}_sec4_inertia_math`,
+    type: 'concept',
+    lessonNum: lesson.num_str,
+    lessonId: lesson.id,
+    module: lesson.module,
+    sectionTitle: '4. Inertia Tensor Mathematics & CAD Mass Properties',
+    badge: '📐 Physics & Dynamics',
+    title: '4. Mass Inertia Tensors: Mathematical Formulas & Physics Solver Stability',
+    htmlContent: `
+      <div class="l03-two-col-layout">
+        <div class="l03-content-col">
+          <div class="l03-cmd-card" style="margin-bottom: 0.35rem;">
+            <div class="l03-cmd-header"><span class="l03-term-badge">Standard Inertia</span><strong>Solid Cylinder &amp; Rectangular Box</strong></div>
+            <pre><code class="language-plaintext"># 1. Solid Cylinder of Mass m, Radius r, Height h:
+I_xx = (1/12) * m * (3*r^2 + h^2)
+I_yy = (1/12) * m * (3*r^2 + h^2)
+I_zz = (1/2)  * m * r^2
+
+# 2. Solid Rectangular Box of Mass m, Dims (x, y, z):
+I_xx = (1/12) * m * (y^2 + z^2)
+I_yy = (1/12) * m * (x^2 + z^2)
+I_zz = (1/12) * m * (x^2 + y^2)</code></pre>
+          </div>
+          <div class="l05-golden-card warning" style="padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>⚠️</span><strong>The Zero-Inertia Disaster</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">Setting inertia to zero or negative causes Gazebo\'s ODE solver to divide by zero, launching the simulated robot into infinite coordinates or causing the physics engine to freeze.</p>
+          </div>
+        </div>
+        <div class="l03-content-col">
+          <div class="l05-golden-card" style="margin-bottom: 0.35rem; padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🧮</span><strong>The 3x3 Symmetric Tensor Matrix</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">The spatial resistance to rotational acceleration (&tau; = I &alpha;) is represented by 6 unique scalars: <code>ixx, ixy, ixz, iyy, iyz, izz</code>. For symmetric shapes aligned with coordinate axes, off-diagonals are zero.</p>
+          </div>
+          <div class="l05-golden-card" style="margin-bottom: 0.35rem; padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🏗️</span><strong>CAD Mass Properties Extraction</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">In industrial practice, open your 3D CAD model (Fusion 360 / SolidWorks), assign accurate materials (aluminum, rubber), and inspect <strong>Physical Properties &rarr; Moments of Inertia at Center of Mass</strong>.</p>
+          </div>
+          <div class="l05-golden-card" style="padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>⚙️</span><strong>Interactive Inertia Calculator</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">Use the built-in LMS Inertia Calculator portal to calculate exact tensor values for custom cylinders, spheres, and rectangular prisms instantly.</p>
+          </div>
+        </div>
+      </div>
+    `
+  });
+
+  // 5. Industrial CAD to URDF Workflow
+  slides.push({
+    id: `${lesson.id}_sec5_cad_workflow`,
+    type: 'concept',
+    lessonNum: lesson.num_str,
+    lessonId: lesson.id,
+    module: lesson.module,
+    sectionTitle: '5. Industrial CAD Workflow: From CAD to ROS 2 URDF',
+    badge: '🏭 Industrial CAD Pipeline',
+    title: '5. Industrial CAD Workflow: Exporting Fusion 360 Models to ROS 2 Meshes',
+    htmlContent: `
+      <div class="l03-two-col-layout">
+        <div class="l03-content-col">
+          <div class="l05-golden-card" style="margin-bottom: 0.35rem; padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>1️⃣</span><strong>Model Assembly &amp; Origin Alignment</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">Construct each robot subassembly in CAD. Align joint pivot origins with the CAD world origin before exporting individual parts.</p>
+          </div>
+          <div class="l05-golden-card" style="margin-bottom: 0.35rem; padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>2️⃣</span><strong>Export Visual Meshes (STL / DAE)</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">Export high-resolution visual meshes (with textures and colors) into <code>nexus_amr_description/meshes/visual/</code>.</p>
+          </div>
+          <div class="l05-golden-card" style="margin-bottom: 0.35rem; padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>3️⃣</span><strong>Generate Convex Collision Hulls</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">Never use high-poly meshes for collision! Export simplified bounding boxes or low-poly convex hulls to preserve real-time physics performance.</p>
+          </div>
+          <div class="l05-golden-card" style="padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>4️⃣</span><strong>Meter Scaling Verification</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">CAD programs export STL in millimeters. In URDF, always apply <code>scale="0.001 0.001 0.001"</code> to ensure the robot is not 1000x oversized in Gazebo.</p>
+          </div>
+        </div>
+        <div class="l03-content-col">
+          <div class="l03-cmd-card">
+            <div class="l03-cmd-header"><span class="l03-term-badge">URDF Mesh Link</span><strong>Visual vs. Collision Mesh Separation</strong></div>
+            <pre><code class="language-xml">&lt;link name="chassis_link"&gt;
+  &lt;!-- High-poly visual render --&gt;
+  &lt;visual&gt;
+    &lt;geometry&gt;
+      &lt;mesh filename="package://nexus_amr_description/meshes/visual/chassis.dae" scale="1 1 1"/&gt;
+    &lt;/geometry&gt;
+  &lt;/visual&gt;
+
+  &lt;!-- Simplified low-poly collision hull --&gt;
+  &lt;collision&gt;
+    &lt;geometry&gt;
+      &lt;mesh filename="package://nexus_amr_description/meshes/collision/chassis.stl" scale="1 1 1"/&gt;
+    &lt;/geometry&gt;
+  &lt;/collision&gt;
+&lt;/link&gt;</code></pre>
+          </div>
+        </div>
+      </div>
+    `
+  });
+}
+
+/**
+ * Dedicated High-Yield Pedagogical Deck Builder for Lesson 10:
+ * RViz2 Visualization & Kinematic TF Inspection.
+ */
+function buildLesson10Slides(doc, lesson, slides) {
+  // 1. RViz2 vs Gazebo Distinction
+  slides.push({
+    id: `${lesson.id}_sec2_rviz_vs_gazebo`,
+    type: 'concept',
+    lessonNum: lesson.num_str,
+    lessonId: lesson.id,
+    module: lesson.module,
+    sectionTitle: '2. RViz2 vs. Gazebo: The Essential Distinction',
+    badge: '👁️ Perception vs Physics',
+    title: '2. RViz2 vs. Gazebo: The Essential Distinction in Robotics Engineering',
+    htmlContent: `
+      <div class="l06-table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th style="width: 22%;">Dimension</th>
+              <th style="width: 39%;">RViz2 (Sensor &amp; State Visualizer)</th>
+              <th style="width: 39%;">Gazebo (Rigid-Body Physics Simulator)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Primary Purpose</strong></td>
+              <td>Visualizes what the robot <em>believes &amp; perceives</em> (LiDAR, TF, Costmaps).</td>
+              <td>Simulates the <em>physical reality</em> (gravity, friction, inertia, contacts).</td>
+            </tr>
+            <tr>
+              <td><strong>Physics Engine</strong></td>
+              <td>None. Pure 3D rendering pipeline (OGRE). Displays incoming ROS 2 messages.</td>
+              <td>ODE / Bullet / DART solver calculating joint torques and collisions.</td>
+            </tr>
+            <tr>
+              <td><strong>Time Source</strong></td>
+              <td>Listens to <code>/clock</code> when <code>use_sim_time:=True</code>, or wall-clock.</td>
+              <td>Generates simulated time and publishes the authoritative <code>/clock</code>.</td>
+            </tr>
+            <tr>
+              <td><strong>Sensor Data</strong></td>
+              <td>Subscribes to sensor topics and renders visual representations.</td>
+              <td>Computes synthetic sensor observations with physics raycasts and noise.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="l05-banner-intro" style="margin-top: 0.4rem; font-size: 0.74rem; padding: 0.35rem 0.6rem;">
+        <strong>💡 Key Distinction:</strong> You can run RViz2 with a real physical robot in a factory without Gazebo. RViz2 is the robot\'s dashboard; Gazebo is its digital twin playground.
+      </div>
+    `
+  });
+
+  // 2. Spatial Coordinate Conventions (REP 103)
+  slides.push({
+    id: `${lesson.id}_sec3_rep103_rgb`,
+    type: 'concept',
+    lessonNum: lesson.num_str,
+    lessonId: lesson.id,
+    module: lesson.module,
+    sectionTitle: '3. The RGB = XYZ Rule & Coordinate Conventions',
+    badge: '📐 REP-103 Standard',
+    title: '3. Spatial Coordinate Conventions: The Universal "RGB = XYZ" Rule',
+    htmlContent: `
+      <div class="l03-two-col-layout">
+        <div class="l03-content-col">
+          <div class="l05-golden-card" style="margin-bottom: 0.35rem; padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🔴</span><strong>Red Axis = X (Forward Longitudinal)</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">Points strictly forward along the robot\'s primary direction of travel. Positive linear velocities (<code>+vx</code>) drive the robot forward.</p>
+          </div>
+          <div class="l05-golden-card" style="margin-bottom: 0.35rem; padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🟢</span><strong>Green Axis = Y (Port / Left Lateral)</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">Points horizontally to the robot\'s left side. For holonomic omni-directional robots, positive strafe velocities (<code>+vy</code>) move left.</p>
+          </div>
+          <div class="l05-golden-card" style="padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🔵</span><strong>Blue Axis = Z (Upward Vertical)</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">Points vertically upward normal to the ground plane. Positive angular velocities (<code>+wz</code>) cause counter-clockwise yaw rotation.</p>
+          </div>
+        </div>
+        <div class="l03-content-col">
+          <div class="l05-golden-card" style="margin-bottom: 0.35rem; padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>✋</span><strong>Right-Hand Coordinate Rule</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">Extend your right thumb along an axis. Your curled fingers point in the direction of positive angular rotation (Euler angles: Roll about X, Pitch about Y, Yaw about Z).</p>
+          </div>
+          <div class="l05-golden-card" style="padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>📷</span><strong>Optical Sensor Frame Exception</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">Camera image sensors follow optical conventions: <strong>Z Forward</strong> (optical axis), <strong>X Right</strong>, <strong>Y Down</strong>. A static TF transform bridges <code>camera_link</code> to <code>camera_optical_frame</code>.</p>
+          </div>
+        </div>
+      </div>
+    `
+  });
+
+  // 3. Key RViz2 Displays & Fixed Frame Rule
+  slides.push({
+    id: `${lesson.id}_sec4_displays_fixed_frame`,
+    type: 'concept',
+    lessonNum: lesson.num_str,
+    lessonId: lesson.id,
+    module: lesson.module,
+    sectionTitle: '4. Key RViz2 Displays & The Fixed Frame Rule',
+    badge: '🖥️ RViz2 Displays',
+    title: '4. Key RViz2 Displays & The Authoritative Fixed Frame Rule',
+    htmlContent: `
+      <div class="l03-two-col-layout">
+        <div class="l03-content-col">
+          <div class="l06-table-wrap">
+            <table>
+              <thead>
+                <tr><th>Display Plugin</th><th>Input Topic / Frame</th><th>Functionality</th></tr>
+              </thead>
+              <tbody>
+                <tr><td><code>RobotModel</code></td><td><code>/robot_description</code></td><td>Renders 3D meshes and kinematic joints.</td></tr>
+                <tr><td><code>TF</code></td><td><code>/tf</code> &amp; <code>/tf_static</code></td><td>Visualizes 3D coordinate frame axes.</td></tr>
+                <tr><td><code>LaserScan</code></td><td><code>/scan</code></td><td>Projects 2D LiDAR range points in space.</td></tr>
+                <tr><td><code>Map</code></td><td><code>/map</code> (OccupancyGrid)</td><td>Renders SLAM or global static obstacle map.</td></tr>
+                <tr><td><code>Odometry</code></td><td><code>/odom</code></td><td>Renders robot position and trajectory arrow.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="l03-content-col">
+          <div class="l05-golden-card" style="margin-bottom: 0.35rem; padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🎯</span><strong>The "Fixed Frame" Reference Datum</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">Every incoming sensor message is rendered relative to the Fixed Frame. If an active transform path from sensor to Fixed Frame is missing, the display errors out in red.</p>
+          </div>
+          <div class="l05-golden-card" style="padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>📍</span><strong>Which Fixed Frame to Select?</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">
+              &bull; <strong>URDF Modeling:</strong> Set to <code>base_footprint</code> or <code>base_link</code>.<br/>
+              &bull; <strong>Odometry Testing:</strong> Set to <code>odom</code> to see the robot move relative to start.<br/>
+              &bull; <strong>SLAM &amp; Navigation:</strong> Set to <code>map</code> for drift-free global coordinates.
+            </p>
+          </div>
+        </div>
+      </div>
+    `
+  });
+
+  // 4. Launch Pipeline: rsp.launch.py & display.launch.py
+  slides.push({
+    id: `${lesson.id}_sec5_launch_pipeline`,
+    type: 'concept',
+    lessonNum: lesson.num_str,
+    lessonId: lesson.id,
+    module: lesson.module,
+    sectionTitle: '5. Building the Launch Pipeline: rsp & display',
+    badge: '🚀 Launch Architecture',
+    title: '5. The Robot State Publisher & RViz2 Launch Pipeline Architecture',
+    htmlContent: `
+      <div class="l03-two-col-layout">
+        <div class="l03-left-code-col">
+          <div class="l03-cmd-card" style="margin-bottom: 0;">
+            <div class="l03-cmd-header"><span class="l03-term-badge">display.launch.py</span><strong>RViz2 Bringup Nodes</strong></div>
+            <pre><code class="language-python"># 1. State Publisher (Broadcasting robot URDF & TF)
+rsp_launch = IncludeLaunchDescription(
+    PythonLaunchDescriptionSource([rsp_path]),
+    launch_arguments={'use_sim_time': 'false'}.items()
+)
+
+# 2. Joint State Publisher GUI (Interactive joint sliders)
+jsp_gui_node = Node(
+    package='joint_state_publisher_gui',
+    executable='joint_state_publisher_gui'
+)
+
+# 3. RViz2 Visualizer Node (Pre-configured config)
+rviz_node = Node(
+    package='rviz2',
+    executable='rviz2',
+    arguments=['-d', rviz_config_path]
+)</code></pre>
+          </div>
+        </div>
+        <div class="l03-content-col">
+          <div class="l05-golden-card" style="margin-bottom: 0.35rem; padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>📡</span><strong>robot_state_publisher Role</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">Parses the URDF XML, listens to <code>/joint_states</code>, calculates 3D forward kinematics, and broadcasts all coordinate frame transforms to <code>/tf</code> and <code>/tf_static</code>.</p>
+          </div>
+          <div class="l05-golden-card" style="margin-bottom: 0.35rem; padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🎚️</span><strong>joint_state_publisher_gui Role</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">Opens an interactive GUI slider for non-fixed joints, publishing real-time mock joint angles to <code>/joint_states</code> before physical motor encoders exist.</p>
+          </div>
+          <div class="l05-golden-card" style="padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>💾</span><strong>Config File Persistence (-d)</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">Always supply <code>arguments=['-d', rviz_config]</code> so your curated displays, topic bindings, and camera views load automatically without manual setup.</p>
+          </div>
+        </div>
+      </div>
+    `
+  });
+
+  // 5. Kinematic TF Diagnostics & CLI Inspection
+  slides.push({
+    id: `${lesson.id}_sec6_tf_cli`,
+    type: 'concept',
+    lessonNum: lesson.num_str,
+    lessonId: lesson.id,
+    module: lesson.module,
+    sectionTitle: '6. Kinematic TF Diagnostics & CLI Inspection Tools',
+    badge: '🔍 TF Inspection',
+    title: '6. Kinematic TF Diagnostics: view_frames, tf2_echo & tf2_monitor',
+    htmlContent: `
+      <div class="l03-two-col-layout">
+        <div class="l03-content-col">
+          <div class="l03-cmd-card">
+            <div class="l03-cmd-header"><span class="l03-term-badge">TF2 CLI Tools</span><strong>Essential Diagnostic Commands</strong></div>
+            <pre><code class="language-bash"># 1. Generate full TF kinematic tree PDF report
+ros2 run tf2_tools view_frames
+
+# 2. Inspect real-time 3D offset between two frames
+ros2 run tf2_ros tf2_echo base_link laser_frame
+
+# 3. Monitor broadcast frequency & latency across all frames
+ros2 run tf2_ros tf2_monitor</code></pre>
+          </div>
+        </div>
+        <div class="l03-content-col">
+          <div class="l05-golden-card" style="margin-bottom: 0.35rem; padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>📄</span><strong>view_frames Kinematic Tree Audit</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">Generates <code>frames.pdf</code> showing the complete hierarchy from root <code>base_footprint</code> to sensor frames, confirming no disjointed sub-trees or missing broadcasters.</p>
+          </div>
+          <div class="l05-golden-card" style="margin-bottom: 0.35rem; padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>📡</span><strong>tf2_echo Real-Time Vector Check</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">Streams the exact translation (x, y, z) and rotation (quaternion / RPY) between two frames at 1Hz, verifying hardware sensor placement against CAD design.</p>
+          </div>
+          <div class="l05-golden-card" style="padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>⏱️</span><strong>tf2_monitor Latency &amp; Jitter</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">Measures publication rate (Hz) and age of transforms. Helps diagnose dropped frames, CPU starvation, or network buffering issues.</p>
+          </div>
+        </div>
+      </div>
+    `
+  });
+}
+
+/**
+ * Dedicated High-Yield Pedagogical Deck Builder for Lesson 11:
+ * Gazebo Physics Simulation & Sensor Plugins.
+ */
+function buildLesson11Slides(doc, lesson, slides) {
+  // 1. Gazebo Simulation Engine & Physics Architecture
+  slides.push({
+    id: `${lesson.id}_sec2_gazebo_arch`,
+    type: 'concept',
+    lessonNum: lesson.num_str,
+    lessonId: lesson.id,
+    module: lesson.module,
+    sectionTitle: '2. Gazebo Physics Simulation Architecture',
+    badge: '⚙️ Simulation Architecture',
+    title: '2. Gazebo Physics Engine Mechanics: ODE Solvers & Simulated Clock',
+    htmlContent: `
+      <div class="l03-two-col-layout">
+        <div class="l03-content-col">
+          <div class="l05-golden-card" style="margin-bottom: 0.35rem; padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>⚙️</span><strong>Open Dynamics Engine (ODE) Physics</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">Gazebo evaluates Newtonian physics (F = m &middot; a) at discrete intervals. It computes wheel ground contact forces, friction cones, and actuator torques on every time step.</p>
+          </div>
+          <div class="l05-golden-card" style="margin-bottom: 0.35rem; padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>⏱️</span><strong>Discrete Simulation Step (dt = 0.001s)</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">Default physics step is 1 millisecond (1000 Hz). Smaller steps enhance numerical stability for small wheel contacts but require higher CPU compute.</p>
+          </div>
+          <div class="l05-golden-card" style="padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>📊</span><strong>Real-Time Factor (RTF) Metric</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;"><code>RTF = Sim Time / Real Time</code>. An RTF of 1.0 means 1 simulation second equals 1 wall-clock second. RTF &lt; 1.0 indicates CPU physics solver bottleneck.</p>
+          </div>
+        </div>
+        <div class="l03-content-col">
+          <div class="l03-cmd-card">
+            <div class="l03-cmd-header"><span class="l03-term-badge">The Simulated Clock Rule</span><strong>use_sim_time Synchronization</strong></div>
+            <pre><code class="language-bash"># Gazebo publishes simulated time to /clock:
+ros2 topic echo /clock
+
+# All ROS 2 nodes must be launched with:
+use_sim_time:=True
+
+# In Python nodes, rclpy uses /clock automatically:
+node.get_clock().now()</code></pre>
+          </div>
+          <div class="l05-golden-card warning" style="margin-top: 0.35rem; padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>⚠️</span><strong>The Time Mismatch Pitfall</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">If a node runs with wall-clock time while Gazebo runs on simulated time, TF transform lookups will fail immediately with "Lookup would require extrapolation into the future".</p>
+          </div>
+        </div>
+      </div>
+    `
+  });
+
+  // 2. Differential Drive Controller Plugin
+  slides.push({
+    id: `${lesson.id}_sec3_diff_drive_plugin`,
+    type: 'concept',
+    lessonNum: lesson.num_str,
+    lessonId: lesson.id,
+    module: lesson.module,
+    sectionTitle: '3. The Differential Drive Controller Plugin',
+    badge: '🚜 Motion Controller Plugin',
+    title: '3. Closed-Loop Kinematics: libgazebo_ros_diff_drive.so',
+    htmlContent: `
+      <div class="l03-two-col-layout">
+        <div class="l03-left-code-col">
+          <div class="l03-cmd-card" style="margin-bottom: 0;">
+            <div class="l03-cmd-header"><span class="l03-term-badge">gazebo.xacro</span><strong>Diff-Drive Plugin Config</strong></div>
+            <pre><code class="language-xml">&lt;gazebo&gt;
+  &lt;plugin name="diff_drive" filename="libgazebo_ros_diff_drive.so"&gt;
+    &lt;left_joint&gt;left_wheel_joint&lt;/left_joint&gt;
+    &lt;right_joint&gt;right_wheel_joint&lt;/right_joint&gt;
+    &lt;wheel_separation&gt;0.44&lt;/wheel_separation&gt;
+    &lt;wheel_diameter&gt;0.16&lt;/wheel_diameter&gt;
+    &lt;max_wheel_torque&gt;20&lt;/max_wheel_torque&gt;
+    &lt;max_wheel_acceleration&gt;1.5&lt;/max_wheel_acceleration&gt;
+    &lt;command_topic&gt;cmd_vel&lt;/command_topic&gt;
+    &lt;publish_odom&gt;true&lt;/publish_odom&gt;
+    &lt;publish_odom_tf&gt;true&lt;/publish_odom_tf&gt;
+    &lt;odometry_frame&gt;odom&lt;/odometry_frame&gt;
+    &lt;robot_base_frame&gt;base_footprint&lt;/robot_base_frame&gt;
+  &lt;/plugin&gt;
+&lt;/gazebo&gt;</code></pre>
+          </div>
+        </div>
+        <div class="l03-content-col">
+          <div class="l05-golden-card" style="margin-bottom: 0.35rem; padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🎯</span><strong>Direct cmd_vel Ingestion</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">Subscribes to <code>geometry_msgs/msg/Twist</code> on <code>/cmd_vel</code>. Calculates individual wheel velocities using track separation: <code>v_L = v - (w &middot; L / 2)</code>, <code>v_R = v + (w &middot; L / 2)</code>.</p>
+          </div>
+          <div class="l05-golden-card" style="margin-bottom: 0.35rem; padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🔄</span><strong>Odometry &amp; TF Broadcasting</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">Integrates wheel encoder revolutions to compute dead-reckoning pose. Automatically publishes <code>nav_msgs/msg/Odometry</code> on <code>/odom</code> and broadcasts <code>odom &rarr; base_footprint</code> TF.</p>
+          </div>
+          <div class="l05-golden-card" style="padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>⚙️</span><strong>Motor Limits &amp; Torque Modeling</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">Enforces maximum torque (20 N&middot;m) and acceleration limits to simulate physical motor saturation and wheel slip under heavy payload.</p>
+          </div>
+        </div>
+      </div>
+    `
+  });
+
+  // 3. 2D LiDAR Ray Sensor Plugin
+  slides.push({
+    id: `${lesson.id}_sec4_lidar_plugin`,
+    type: 'concept',
+    lessonNum: lesson.num_str,
+    lessonId: lesson.id,
+    module: lesson.module,
+    sectionTitle: '4. The 2D LiDAR Ray Sensor Plugin',
+    badge: '📡 LiDAR Ray Sensor',
+    title: '4. Simulating Perception: 2D LiDAR Ray Sensor Plugin Configuration',
+    htmlContent: `
+      <div class="l03-two-col-layout">
+        <div class="l03-left-code-col">
+          <div class="l03-cmd-card" style="margin-bottom: 0;">
+            <div class="l03-cmd-header"><span class="l03-term-badge">gazebo.xacro</span><strong>LiDAR Plugin Config</strong></div>
+            <pre><code class="language-xml">&lt;gazebo reference="laser_frame"&gt;
+  &lt;sensor name="lidar" type="ray"&gt;
+    &lt;always_on&gt;true&lt;/always_on&gt;
+    &lt;visualize&gt;false&lt;/visualize&gt;
+    &lt;update_rate&gt;10&lt;/update_rate&gt;
+    &lt;ray&gt;
+      &lt;scan&gt;
+        &lt;horizontal&gt;
+          &lt;samples&gt;360&lt;/samples&gt;
+          &lt;min_angle&gt;-3.14159&lt;/min_angle&gt;
+          &lt;max_angle&gt;3.14159&lt;/max_angle&gt;
+        &lt;/horizontal&gt;
+      &lt;/scan&gt;
+      &lt;range&gt;&lt;min&gt;0.12&lt;/min&gt;&lt;max&gt;12.0&lt;/max&gt;&lt;/range&gt;
+      &lt;noise&gt;&lt;type&gt;gaussian&lt;/type&gt;&lt;stddev&gt;0.01&lt;/stddev&gt;&lt;/noise&gt;
+    &lt;/ray&gt;
+    &lt;plugin name="lidar_controller" filename="libgazebo_ros_ray_sensor.so"&gt;
+      &lt;ros&gt;&lt;remapping&gt;~/out:=scan&lt;/remapping&gt;&lt;/ros&gt;
+      &lt;output_type&gt;sensor_msgs/LaserScan&lt;/output_type&gt;
+      &lt;frame_name&gt;laser_frame&lt;/frame_name&gt;
+    &lt;/plugin&gt;
+  &lt;/sensor&gt;
+&lt;/gazebo&gt;</code></pre>
+          </div>
+        </div>
+        <div class="l03-content-col">
+          <div class="l05-golden-card" style="margin-bottom: 0.35rem; padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>📐</span><strong>360&deg; Spatial Scanning Geometry</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">Casts 360 discrete rays across 2&pi; radians (-180&deg; to +180&deg;). Measures distance to the closest intersecting collision bounding box.</p>
+          </div>
+          <div class="l05-golden-card" style="margin-bottom: 0.35rem; padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🎲</span><strong>Gaussian Noise Injection</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">Real laser sensors suffer measurement jitter. Setting Gaussian noise (&sigma; = 0.01m) trains SLAM algorithms to handle noisy industrial data robustly.</p>
+          </div>
+          <div class="l05-golden-card" style="padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>📡</span><strong>Downstream SLAM Compatibility</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">Outputs standard <code>sensor_msgs/msg/LaserScan</code> directly on <code>/scan</code> with <code>frame_id: laser_frame</code>, fully ready for SLAM Toolbox and Nav2.</p>
+          </div>
+        </div>
+      </div>
+    `
+  });
+
+  // 4. RGB Camera Sensor Plugin
+  slides.push({
+    id: `${lesson.id}_sec5_camera_plugin`,
+    type: 'concept',
+    lessonNum: lesson.num_str,
+    lessonId: lesson.id,
+    module: lesson.module,
+    sectionTitle: '5. The RGB Camera Sensor Plugin',
+    badge: '📷 Optical Sensor Plugin',
+    title: '5. Vision Pipeline: RGB Camera Sensor Plugin (libgazebo_ros_camera.so)',
+    htmlContent: `
+      <div class="l03-two-col-layout">
+        <div class="l03-left-code-col">
+          <div class="l03-cmd-card" style="margin-bottom: 0;">
+            <div class="l03-cmd-header"><span class="l03-term-badge">gazebo.xacro</span><strong>Camera Plugin Config</strong></div>
+            <pre><code class="language-xml">&lt;gazebo reference="camera_link"&gt;
+  &lt;sensor name="camera_sensor" type="camera"&gt;
+    &lt;update_rate&gt;30.0&lt;/update_rate&gt;
+    &lt;camera name="head"&gt;
+      &lt;horizontal_fov&gt;1.3962634&lt;/horizontal_fov&gt;
+      &lt;image&gt;
+        &lt;width&gt;640&lt;/width&gt;&lt;height&gt;480&lt;/height&gt;
+        &lt;format&gt;R8G8B8&lt;/format&gt;
+      &lt;/image&gt;
+      &lt;clip&gt;&lt;near&gt;0.05&lt;/near&gt;&lt;far&gt;15&lt;/far&gt;&lt;/clip&gt;
+    &lt;/camera&gt;
+    &lt;plugin name="camera_controller" filename="libgazebo_ros_camera.so"&gt;
+      &lt;frame_name&gt;camera_optical_frame&lt;/frame_name&gt;
+      &lt;min_depth&gt;0.1&lt;/min_depth&gt;
+      &lt;max_depth&gt;10.0&lt;/max_depth&gt;
+    &lt;/plugin&gt;
+  &lt;/sensor&gt;
+&lt;/gazebo&gt;</code></pre>
+          </div>
+        </div>
+        <div class="l03-content-col">
+          <div class="l05-golden-card" style="margin-bottom: 0.35rem; padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🖼️</span><strong>Synchronized Dual-Stream Output</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">Publishes synchronized raw pixels on <code>/camera/image_raw</code> and calibration intrinsics (focal length, principal point) on <code>/camera/camera_info</code> at 30 Hz.</p>
+          </div>
+          <div class="l05-golden-card" style="margin-bottom: 0.35rem; padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>👁️</span><strong>Optical Coordinate Frame Binding</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">Binds <code>frame_name: camera_optical_frame</code> to align with OpenCV image coordinate conventions (Z forward, X right, Y down), preventing inverted image renders.</p>
+          </div>
+          <div class="l05-golden-card" style="padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🤖</span><strong>Downstream AI &amp; Perception</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">Feed camera streams into visual fiducial tag detectors (AprilTag / ArUco), YOLO object detectors, or visual SLAM packages.</p>
+          </div>
+        </div>
+      </div>
+    `
+  });
+
+  // 5. Simulation Bringup Launch File & Execution
+  slides.push({
+    id: `${lesson.id}_sec6_sim_bringup`,
+    type: 'concept',
+    lessonNum: lesson.num_str,
+    lessonId: lesson.id,
+    module: lesson.module,
+    sectionTitle: '6. Simulation Bringup Launch File & Entity Spawner',
+    badge: '🚀 Simulation Bringup',
+    title: '6. Simulation Bringup Launch Pipeline & Entity Spawner Execution',
+    htmlContent: `
+      <div class="l03-two-col-layout">
+        <div class="l03-left-code-col">
+          <div class="l03-cmd-card" style="margin-bottom: 0;">
+            <div class="l03-cmd-header"><span class="l03-term-badge">sim_world.launch.py</span><strong>Gazebo + Spawner Pipeline</strong></div>
+            <pre><code class="language-python"># 1. Launch Gazebo Server & Client with World
+gazebo = IncludeLaunchDescription(
+    PythonLaunchDescriptionSource([gazebo_ros_path, '/gazebo.launch.py']),
+    launch_arguments={'world': world_path}.items()
+)
+
+# 2. Robot State Publisher (use_sim_time:=True)
+rsp = IncludeLaunchDescription(
+    PythonLaunchDescriptionSource([rsp_path]),
+    launch_arguments={'use_sim_time': 'true'}.items()
+)
+
+# 3. Spawn Nexus AMR Entity in Gazebo Physics
+spawn_entity = Node(
+    package='gazebo_ros',
+    executable='spawn_entity.py',
+    arguments=['-topic', 'robot_description', '-entity', 'nexus_amr', '-z', '0.1']
+)</code></pre>
+          </div>
+        </div>
+        <div class="l03-content-col">
+          <div class="l05-golden-card" style="margin-bottom: 0.35rem; padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>📦</span><strong>Dynamic Entity Spawning via CLI</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;"><code>spawn_entity.py</code> queries the <code>/robot_description</code> topic published by RSP and injects the robot into Gazebo\'s physics space at runtime without hardcoding paths.</p>
+          </div>
+          <div class="l05-golden-card" style="margin-bottom: 0.35rem; padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🚀</span><strong>Single Command Bringup</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">Execute: <code>ros2 launch nexus_amr_gazebo sim_world.launch.py</code>. Launches physics simulation, loads warehouse world, spawns AMR, and starts sensors simultaneously.</p>
+          </div>
+          <div class="l05-golden-card" style="padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🎮</span><strong>Drive Verification</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">Open a new terminal and run <code>ros2 run teleop_twist_keyboard teleop_twist_keyboard</code> to verify closed-loop wheel motion and odometry tracking.</p>
+          </div>
+        </div>
+      </div>
+    `
+  });
+}
+
+/**
+ * Dedicated High-Yield Pedagogical Deck Builder for Lesson 12:
+ * Building Custom Simulation Worlds in Gazebo.
+ */
+function buildLesson12Slides(doc, lesson, slides) {
+  // 1. Anatomy of an SDF World File
+  slides.push({
+    id: `${lesson.id}_sec2_sdf_anatomy`,
+    type: 'concept',
+    lessonNum: lesson.num_str,
+    lessonId: lesson.id,
+    module: lesson.module,
+    sectionTitle: '2. Anatomy of an SDF World File',
+    badge: '🌐 SDF World Architecture',
+    title: '2. Anatomy of an SDF World: Environment Hierarchy & Static Elements',
+    htmlContent: `
+      <div class="l03-two-col-layout">
+        <div class="l03-left-code-col">
+          <div class="l03-cmd-card" style="margin-bottom: 0;">
+            <div class="l03-cmd-header"><span class="l03-term-badge">warehouse.world</span><strong>SDF Root Hierarchy</strong></div>
+            <pre><code class="language-xml">&lt;sdf version="1.6"&gt;
+  &lt;world name="warehouse_world"&gt;
+    &lt;!-- Global Directional Lighting --&gt;
+    &lt;include&gt;&lt;uri&gt;model://sun&lt;/uri&gt;&lt;/include&gt;
+
+    &lt;!-- Infinite Ground Plane with Friction --&gt;
+    &lt;include&gt;&lt;uri&gt;model://ground_plane&lt;/uri&gt;&lt;/include&gt;
+
+    &lt;!-- Physics Solver Parameters --&gt;
+    &lt;physics type="ode"&gt;
+      &lt;max_step_size&gt;0.001&lt;/max_step_size&gt;
+      &lt;real_time_update_rate&gt;1000&lt;/real_time_update_rate&gt;
+    &lt;/physics&gt;
+
+    &lt;!-- Custom Warehouse Obstacles & Walls --&gt;
+    &lt;include&gt;
+      &lt;uri&gt;model://warehouse_walls&lt;/uri&gt;
+      &lt;pose&gt;0 0 0 0 0 0&lt;/pose&gt;
+    &lt;/include&gt;
+  &lt;/world&gt;
+&lt;/sdf&gt;</code></pre>
+          </div>
+        </div>
+        <div class="l03-content-col">
+          <div class="l05-golden-card" style="margin-bottom: 0.35rem; padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🌐</span><strong>URDF vs. SDF: Fundamental Difference</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">URDF describes a single robot kinematic tree. SDF (Simulation Description Format) describes entire environments: gravity, sky, lighting, multiple robots, and static infrastructure.</p>
+          </div>
+          <div class="l05-golden-card" style="margin-bottom: 0.35rem; padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>☀️</span><strong>Directional Sun &amp; Shadows</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">The <code>sun</code> model provides raycasting light and shadows essential for optical camera testing and vision-based obstacle avoidance.</p>
+          </div>
+          <div class="l05-golden-card" style="padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🧱</span><strong>Ground Plane Contact Friction</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">Defines contact friction coefficients (<code>mu1</code>, <code>mu2</code>). Tuning ground friction ensures simulated rubber drive wheels don\'t spin out during acceleration.</p>
+          </div>
+        </div>
+      </div>
+    `
+  });
+
+  // 2. Physics Solver Tuning for Robotics
+  slides.push({
+    id: `${lesson.id}_sec3_solver_tuning`,
+    type: 'concept',
+    lessonNum: lesson.num_str,
+    lessonId: lesson.id,
+    module: lesson.module,
+    sectionTitle: '3. Physics Solver Tuning for Robotics',
+    badge: '⚙️ Physics Engine Tuning',
+    title: '3. Physics Solver Tuning: Balancing Simulation Fidelity & Real-Time Performance',
+    htmlContent: `
+      <div class="l03-two-col-layout">
+        <div class="l03-left-code-col">
+          <div class="l03-cmd-card" style="margin-bottom: 0;">
+            <div class="l03-cmd-header"><span class="l03-term-badge">warehouse.world</span><strong>Tuned ODE Physics Parameters</strong></div>
+            <pre><code class="language-xml">&lt;physics type="ode"&gt;
+  &lt;max_step_size&gt;0.001&lt;/max_step_size&gt;
+  &lt;real_time_update_rate&gt;1000&lt;/real_time_update_rate&gt;
+  &lt;ode&gt;
+    &lt;solver&gt;
+      &lt;type&gt;quick&lt;/type&gt;
+      &lt;iters&gt;50&lt;/iters&gt;
+      &lt;sor&gt;1.3&lt;/sor&gt;
+    &lt;/solver&gt;
+    &lt;constraints&gt;
+      &lt;cfm&gt;0.00001&lt;/cfm&gt;
+      &lt;erp&gt;0.2&lt;/erp&gt;
+      &lt;contact_max_correcting_vel&gt;100.0&lt;/contact_max_correcting_vel&gt;
+      &lt;contact_surface_layer&gt;0.001&lt;/contact_surface_layer&gt;
+    &lt;/constraints&gt;
+  &lt;/ode&gt;
+&lt;/physics&gt;</code></pre>
+          </div>
+        </div>
+        <div class="l03-content-col">
+          <div class="l05-golden-card" style="margin-bottom: 0.35rem; padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>⚡</span><strong>iters: 50 Solver Iterations</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">Higher iterations (50 vs default 20) resolve constraint equations accurately, completely preventing AMR wheels from jittering or penetrating through floor meshes.</p>
+          </div>
+          <div class="l05-golden-card" style="margin-bottom: 0.35rem; padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>📈</span><strong>sor: 1.3 (Successive Over-Relaxation)</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">Accelerates convergence of the iterative LCP solver, reducing CPU overhead while preserving numerical stability under heavy dynamic loads.</p>
+          </div>
+          <div class="l05-golden-card" style="padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🎯</span><strong>Target RTF = 1.0 (Real-Time Factor)</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">Guarantees that 1.0 second of simulation time equals 1.0 second of real world time, preserving accurate ROS 2 timer frequencies and sensor rates.</p>
+          </div>
+        </div>
+      </div>
+    `
+  });
+
+  // 3. Constructing Warehouse Elements & Static Collision Boundaries
+  slides.push({
+    id: `${lesson.id}_sec4_warehouse_elements`,
+    type: 'concept',
+    lessonNum: lesson.num_str,
+    lessonId: lesson.id,
+    module: lesson.module,
+    sectionTitle: '4. Constructing Warehouse Elements',
+    badge: '🏭 Factory Assets',
+    title: '4. Constructing Warehouse Geometry: Corridors, Shelving Racks & Collision Hulls',
+    htmlContent: `
+      <div class="l03-two-col-layout">
+        <div class="l03-content-col">
+          <div class="l05-golden-card" style="margin-bottom: 0.35rem; padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🔒</span><strong>The static=true Performance Rule</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">Always mark permanent walls, storage racks, and structural pillars as <code>&lt;static&gt;true&lt;/static&gt;</code>. This removes them from ODE dynamic force calculations, saving massive CPU cycles.</p>
+          </div>
+          <div class="l05-golden-card" style="margin-bottom: 0.35rem; padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>📦</span><strong>Modular Storage Rack Dimensions</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">Standardize aisles to 2.5m width and rack depths to 1.0m to reflect industrial automated logistics facilities, providing realistic clearance for 0.4m AMRs.</p>
+          </div>
+          <div class="l05-golden-card" style="padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>📡</span><strong>LiDAR Ray Reflection Realism</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">Ensure collision bounding boxes match visual boundaries exactly so simulated 2D LiDAR raycasts match physical wall contours precisely.</p>
+          </div>
+        </div>
+        <div class="l03-content-col">
+          <div class="l03-cmd-card">
+            <div class="l03-cmd-header"><span class="l03-term-badge">warehouse_shelf.sdf</span><strong>Static Warehouse Asset Model</strong></div>
+            <pre><code class="language-xml">&lt;model name="warehouse_shelf"&gt;
+  &lt;static&gt;true&lt;/static&gt;
+  &lt;link name="shelf_link"&gt;
+    &lt;visual name="visual"&gt;
+      &lt;geometry&gt;
+        &lt;box&gt;&lt;size&gt;2.0 0.8 2.2&lt;/size&gt;&lt;/box&gt;
+      &lt;/geometry&gt;
+      &lt;material&gt;&lt;ambient&gt;0.2 0.2 0.7 1&lt;/ambient&gt;&lt;/material&gt;
+    &lt;/visual&gt;
+    &lt;collision name="collision"&gt;
+      &lt;geometry&gt;
+        &lt;box&gt;&lt;size&gt;2.0 0.8 2.2&lt;/size&gt;&lt;/box&gt;
+      &lt;/geometry&gt;
+    &lt;/collision&gt;
+  &lt;/link&gt;
+&lt;/model&gt;</code></pre>
+          </div>
+        </div>
+      </div>
+    `
+  });
+
+  // 4. Viewport Camera Positioning & Spawning
+  slides.push({
+    id: `${lesson.id}_sec5_viewport_camera`,
+    type: 'concept',
+    lessonNum: lesson.num_str,
+    lessonId: lesson.id,
+    module: lesson.module,
+    sectionTitle: '5. Viewport Camera Positioning & Spawning',
+    badge: '🎥 Developer Viewport',
+    title: '5. Developer Experience: Viewport Camera Presets & Dynamic Asset Spawning',
+    htmlContent: `
+      <div class="l03-two-col-layout">
+        <div class="l03-left-code-col">
+          <div class="l03-cmd-card" style="margin-bottom: 0;">
+            <div class="l03-cmd-header"><span class="l03-term-badge">warehouse.world</span><strong>GUI Camera Preset</strong></div>
+            <pre><code class="language-xml">&lt;gui fullscreen="0"&gt;
+  &lt;camera name="user_camera"&gt;
+    &lt;!-- X Y Z Roll Pitch Yaw --&gt;
+    &lt;pose&gt;-6.0 -6.0 8.0 0.0 0.85 0.785&lt;/pose&gt;
+    &lt;view_controller&gt;orbit&lt;/view_controller&gt;
+  &lt;/camera&gt;
+&lt;/gui&gt;</code></pre>
+          </div>
+        </div>
+        <div class="l03-content-col">
+          <div class="l05-golden-card" style="margin-bottom: 0.35rem; padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🎥</span><strong>Isometric Overhead Camera View</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">Setting a default camera pose (Z=8m, pitch=0.85 rad) positions the Gazebo viewport in an isometric perspective over the whole facility immediately upon launch.</p>
+          </div>
+          <div class="l05-golden-card" style="margin-bottom: 0.35rem; padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🔄</span><strong>Spawning Dynamic Obstacles</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">Spawn dynamic pallets and temporary barriers on the fly using the CLI:<br/><code>ros2 run gazebo_ros spawn_entity.py -entity pallet_1 -file pallet.sdf -x 2.5 -y 1.0</code></p>
+          </div>
+          <div class="l05-golden-card" style="padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🏭</span><strong>Production Verification Ready</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">A complete custom world provides the realistic spatial corridors needed for mapping with SLAM Toolbox and autonomous navigation with Nav2.</p>
+          </div>
+        </div>
+      </div>
+    `
+  });
+}
+
+/**
+ * Dedicated High-Yield Pedagogical Deck Builder for Lesson 13:
+ * 2D LiDAR SLAM Mapping with SLAM Toolbox.
+ */
+function buildLesson13Slides(doc, lesson, slides) {
+  // 1. Graph SLAM Architecture & Pose Graph Optimization
+  slides.push({
+    id: `${lesson.id}_sec2_slam_arch`,
+    type: 'concept',
+    lessonNum: lesson.num_str,
+    lessonId: lesson.id,
+    module: lesson.module,
+    sectionTitle: '2. Graph SLAM Architecture & Pose Graph Optimization',
+    badge: '🗺️ SLAM Architecture',
+    title: '2. Graph SLAM Foundations: Scan Matching & Pose Graph Optimization (PGO)',
+    htmlContent: `
+      <div class="l03-two-col-layout">
+        <div class="l03-content-col">
+          <div class="l05-golden-card" style="margin-bottom: 0.35rem; padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🔍</span><strong>Front-End Scan Matching (Karto)</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">Aligns consecutive 2D laser scans against local sub-maps using correlative scan matching. Computes high-precision relative pose changes between robot timesteps.</p>
+          </div>
+          <div class="l05-golden-card" style="margin-bottom: 0.35rem; padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🕸️</span><strong>Pose Graph Construction</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">Maintains a graph where <strong>Nodes</strong> represent robot poses at discrete locations, and <strong>Edges</strong> represent spatial constraints derived from odometry and scan matching.</p>
+          </div>
+          <div class="l05-golden-card" style="padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🔄</span><strong>Back-End Loop Closure Optimization</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">When the robot re-enters a previously visited area, SLAM detects a loop closure. The non-linear <strong>Ceres Solver</strong> redistributes cumulative odometry drift across the entire graph.</p>
+          </div>
+        </div>
+        <div class="l03-content-col">
+          <div class="l05-golden-card" style="margin-bottom: 0.35rem; padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>📐</span><strong>The Authoritative TF Triad</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">SLAM Toolbox publishes the critical <code>map &rarr; odom</code> transform. Combined with wheel odometry\'s <code>odom &rarr; base_footprint</code>, the robot obtains globally drift-free coordinates.</p>
+          </div>
+          <div class="l05-golden-card" style="padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🚀</span><strong>Why SLAM Toolbox Over Gmapping / Cartographer?</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">SLAM Toolbox is the official ROS 2 standard: handles huge multi-story warehouse facilities, supports life-long mapping, dynamic serialization, and deserialization without memory leaks.</p>
+          </div>
+        </div>
+      </div>
+    `
+  });
+
+  // 2. SLAM Toolbox Configuration (config/slam_toolbox.yaml)
+  slides.push({
+    id: `${lesson.id}_sec3_slam_config`,
+    type: 'concept',
+    lessonNum: lesson.num_str,
+    lessonId: lesson.id,
+    module: lesson.module,
+    sectionTitle: '3. Deep Dive: config/slam_toolbox.yaml',
+    badge: '⚙️ SLAM Configuration',
+    title: '3. Tuning SLAM Toolbox: config/slam_toolbox.yaml Parameter Matrix',
+    htmlContent: `
+      <div class="l03-two-col-layout">
+        <div class="l03-left-code-col">
+          <div class="l03-cmd-card" style="margin-bottom: 0;">
+            <div class="l03-cmd-header"><span class="l03-term-badge">slam_toolbox.yaml</span><strong>Production Tuning</strong></div>
+            <pre><code class="language-yaml">slam_toolbox:
+  ros__parameters:
+    # Frame & Topic Bindings
+    odom_frame: odom
+    map_frame: map
+    base_frame: base_footprint
+    scan_topic: /scan
+    mode: mapping # online mapping
+
+    # Spatial Resolution & Search
+    resolution: 0.05       # 5cm grid resolution
+    max_laser_range: 12.0  # Match LiDAR max range
+    minimum_time_interval: 0.5
+    transform_timeout: 0.2
+    tf_buffer_duration: 30.0
+
+    # Loop Closure Constraints
+    do_loop_closing: true
+    loop_search_maximum_distance: 3.0
+    loop_match_minimum_chain_size: 10
+    loop_match_maximum_variance_coarse: 3.0</code></pre>
+          </div>
+        </div>
+        <div class="l03-content-col">
+          <div class="l05-golden-card" style="margin-bottom: 0.35rem; padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>📏</span><strong>resolution: 0.05 (5cm / pixel)</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">Industrial gold standard: provides crisp pallet and doorway definition while keeping total grid memory compact for 100,000 sq ft warehouses.</p>
+          </div>
+          <div class="l05-golden-card" style="margin-bottom: 0.35rem; padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🔄</span><strong>loop_search_maximum_distance: 3.0m</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">Limits candidate loop closure search space within a 3.0-meter radius of the current pose estimate, preventing false positive matches in repetitive aisles.</p>
+          </div>
+          <div class="l05-golden-card" style="padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>⏱️</span><strong>transform_timeout: 0.2s</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">Grace period for TF buffer lookup. Prevents scan-drop errors when CPU load temporarily spikes during Ceres graph optimization steps.</p>
+          </div>
+        </div>
+      </div>
+    `
+  });
+
+  // 3. Online Mapping Workflow & Loop Closure Strategy
+  slides.push({
+    id: `${lesson.id}_sec4_mapping_workflow`,
+    type: 'concept',
+    lessonNum: lesson.num_str,
+    lessonId: lesson.id,
+    module: lesson.module,
+    sectionTitle: '4. Step-by-Step Mapping Workflow',
+    badge: '🎮 Mapping Workflow',
+    title: '4. The Step-by-Step Mapping Workflow & Loop Closure Strategy',
+    htmlContent: `
+      <div class="l03-two-col-layout">
+        <div class="l03-left-code-col">
+          <div class="l03-cmd-card" style="margin-bottom: 0;">
+            <div class="l03-cmd-header"><span class="l03-term-badge">Terminal Operations</span><strong>Bringup &amp; Teleop Commands</strong></div>
+            <pre><code class="language-bash"># Terminal 1: Launch Gazebo Simulation World
+ros2 launch nexus_amr_gazebo sim_world.launch.py
+
+# Terminal 2: Launch SLAM Toolbox & RViz2
+ros2 launch nexus_amr_navigation slam.launch.py
+
+# Terminal 3: Keyboard Teleop Control
+ros2 run teleop_twist_keyboard teleop_twist_keyboard \
+  --ros-args -r /cmd_vel:=/cmd_vel</code></pre>
+          </div>
+        </div>
+        <div class="l03-content-col">
+          <div class="l05-golden-card" style="margin-bottom: 0.35rem; padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🏎️</span><strong>Speed Discipline: 0.2 m/s Max</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">Never drive at full speed while mapping! Smooth, slow driving (0.2 m/s linear, 0.4 rad/s angular) maximizes scan overlap and prevents scan slippage.</p>
+          </div>
+          <div class="l05-golden-card" style="margin-bottom: 0.35rem; padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🔄</span><strong>The Perimeter-First Rule</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">First drive along the outer boundary wall of the facility until you return to your starting pose. This triggers a global loop closure that locks the outer perimeter before exploring interior aisles.</p>
+          </div>
+          <div class="l05-golden-card" style="padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🖥️</span><strong>RViz Verification</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">Add the <code>Map</code> display listening to <code>/map</code>. Black lines show walls, white spaces indicate verified free corridors, and gray areas indicate unscanned space.</p>
+          </div>
+        </div>
+      </div>
+    `
+  });
+
+  // 4. Map Serialization & Occupancy Grid Storage
+  slides.push({
+    id: `${lesson.id}_sec5_saving_map`,
+    type: 'concept',
+    lessonNum: lesson.num_str,
+    lessonId: lesson.id,
+    module: lesson.module,
+    sectionTitle: '5. Saving the Map (.yaml & .pgm Serialization)',
+    badge: '💾 Map Serialization',
+    title: '5. Map Serialization & Occupancy Grid Storage (.yaml & .pgm)',
+    htmlContent: `
+      <div class="l03-two-col-layout">
+        <div class="l03-left-code-col">
+          <div class="l03-cmd-card" style="margin-bottom: 0.35rem;">
+            <div class="l03-cmd-header"><span class="l03-term-badge">Map Saver CLI</span><strong>Serializing Active SLAM Grid</strong></div>
+            <pre><code class="language-bash"># Save map files to maps/ directory
+ros2 run nav2_map_server map_saver_cli \
+  -f ~/ros2_ws/src/nexus_amr_navigation/maps/warehouse_map</code></pre>
+          </div>
+          <div class="l03-cmd-card">
+            <div class="l03-cmd-header"><span class="l03-term-badge">warehouse_map.yaml</span><strong>Metadata Contract</strong></div>
+            <pre><code class="language-yaml">image: warehouse_map.pgm
+resolution: 0.050000
+origin: [-10.000000, -10.000000, 0.000000]
+negate: 0
+occupied_thresh: 0.65
+free_thresh: 0.25
+mode: trinary</code></pre>
+          </div>
+        </div>
+        <div class="l03-content-col">
+          <div class="l05-golden-card" style="margin-bottom: 0.35rem; padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🖼️</span><strong>warehouse_map.pgm (Portable Graymap)</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">An 8-bit grayscale bitmap where each pixel represents a 5cm x 5cm grid cell. White (254) = Free Space, Black (0) = Solid Obstacle, Gray (205) = Unknown Space.</p>
+          </div>
+          <div class="l05-golden-card" style="margin-bottom: 0.35rem; padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>📍</span><strong>origin: [-10.0, -10.0, 0.0] World Anchor</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">Anchors the bottom-left pixel (0,0) of the image to physical coordinates in the <code>map</code> coordinate frame. Without this, localization in Nav2 fails completely.</p>
+          </div>
+          <div class="l05-golden-card" style="padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🚀</span><strong>Ready for Nav2 Ingestion</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">This serialized map is loaded directly by Nav2\'s <code>map_server</code> in Lesson 14, providing the foundation for global path planning and localization.</p>
+          </div>
+        </div>
+      </div>
+    `
+  });
+}
+
+/**
+ * Dedicated High-Yield Pedagogical Deck Builder for Lesson 14:
+ * Nav2 Stack Architecture & Costmap 2D Configuration.
+ */
+function buildLesson14Slides(doc, lesson, slides) {
+  // 1. The Nav2 Server Architecture
+  slides.push({
+    id: `${lesson.id}_sec2_nav2_arch`,
+    type: 'concept',
+    lessonNum: lesson.num_str,
+    lessonId: lesson.id,
+    module: lesson.module,
+    sectionTitle: '2. The Nav2 Server Architecture',
+    badge: '🧠 Nav2 Architecture',
+    title: '2. Nav2 System Architecture: Separation of Planning, Control & Recovery',
+    htmlContent: `
+      <div class="l03-two-col-layout">
+        <div class="l03-content-col">
+          <div class="l05-golden-card" style="margin-bottom: 0.35rem; padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🌳</span><strong>BT Navigator (Behavior Tree Orchestrator)</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">The master executive brain. Evaluates behavior tree XML scripts to coordinate planning, trajectory following, progress monitoring, and cascading recovery actions.</p>
+          </div>
+          <div class="l05-golden-card" style="margin-bottom: 0.35rem; padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🗺️</span><strong>Planner Server (Global Macro Path Finding)</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">Runs A* or NavFn on the global costmap to compute the optimal collision-free route from current pose to goal destination at low frequency (1 Hz).</p>
+          </div>
+          <div class="l05-golden-card" style="padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🚜</span><strong>Controller Server (Local Micro Path Tracking)</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">Runs DWB or Regulated Pure Pursuit on the rolling local costmap at high frequency (20 Hz) to output physical velocity commands (<code>/cmd_vel</code>) avoiding dynamic obstacles.</p>
+          </div>
+        </div>
+        <div class="l03-content-col">
+          <div class="l05-golden-card" style="margin-bottom: 0.35rem; padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🔄</span><strong>Recoveries Server (Fault Recovery Pipeline)</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">Executes emergency recovery behaviors when the robot gets stuck: costmap clearing, in-place rotation (spin), backing up, or waiting for dynamic obstacles to clear.</p>
+          </div>
+          <div class="l05-golden-card" style="padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>⚙️</span><strong>Managed Lifecycle Architecture</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">All Nav2 servers are ROS 2 Lifecycle Nodes orchestrated by <code>lifecycle_manager</code>. They transition systematically from Unconfigured &rarr; Inactive &rarr; Active.</p>
+          </div>
+        </div>
+      </div>
+    `
+  });
+
+  // 2. Costmap 2D: Layered Representation
+  slides.push({
+    id: `${lesson.id}_sec3_costmap_layers`,
+    type: 'concept',
+    lessonNum: lesson.num_str,
+    lessonId: lesson.id,
+    module: lesson.module,
+    sectionTitle: '3. Costmap 2D: Layered Representation',
+    badge: '🧱 Layered Grid',
+    title: '3. Costmap 2D Architecture: The 3-Tier Layered Representation',
+    htmlContent: `
+      <div class="l03-two-col-layout">
+        <div class="l03-content-col">
+          <div class="l05-golden-card" style="margin-bottom: 0.35rem; padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>1️⃣</span><strong>Static Layer (SLAM Map Baseline)</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">Ingests the pre-computed SLAM <code>warehouse_map.yaml</code>. Provides permanent static walls, columns, and corridors. Remains unchanged during runtime.</p>
+          </div>
+          <div class="l05-golden-card" style="margin-bottom: 0.35rem; padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>2️⃣</span><strong>Obstacle Layer (Live Sensor Streams)</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">Subscribes to live <code>/scan</code> (2D LiDAR) and 3D depth cameras. Uses raycasting to dynamically mark new obstacles (people, forklifts, crates) and clear free space.</p>
+          </div>
+          <div class="l05-golden-card" style="padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>3️⃣</span><strong>Inflation Layer (Safety Clearance Buffer)</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">Propagates an exponential cost decay gradient outward from every obstacle cell, creating a virtual safety envelope that pushes path planners away from walls.</p>
+          </div>
+        </div>
+        <div class="l03-content-col">
+          <div class="l06-table-wrap">
+            <table>
+              <thead>
+                <tr><th>Cost Value</th><th>Classification</th><th>Meaning for Planner</th></tr>
+              </thead>
+              <tbody>
+                <tr><td><code>0</code></td><td>Free Space</td><td>Safe for robot traversal.</td></tr>
+                <tr><td><code>1 - 252</code></td><td>Inflation Gradient</td><td>Allowed, but penalized by cost.</td></tr>
+                <tr><td><code>253</code></td><td>Inscribed Zone</td><td>Fatal! Robot center here causes collision.</td></tr>
+                <tr><td><code>254</code></td><td>Lethal Obstacle</td><td>Physical solid obstacle surface.</td></tr>
+                <tr><td><code>255</code></td><td>No Information</td><td>Unknown unscanned space.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    `
+  });
+
+  // 3. Inflation Layer Mathematics: The Safety Buffer
+  slides.push({
+    id: `${lesson.id}_sec4_inflation_math`,
+    type: 'concept',
+    lessonNum: lesson.num_str,
+    lessonId: lesson.id,
+    module: lesson.module,
+    sectionTitle: '4. Inflation Layer Mathematics: The Safety Buffer',
+    badge: '📐 Safety Mathematics',
+    title: '4. Inflation Layer Mathematics: Exponential Cost Decay & Safety Radii',
+    htmlContent: `
+      <div class="l03-two-col-layout">
+        <div class="l03-left-code-col">
+          <div class="l03-cmd-card" style="margin-bottom: 0.35rem;">
+            <div class="l03-cmd-header"><span class="l03-term-badge">Exponential Decay Formula</span><strong>Cost Calculation</strong></div>
+            <pre><code class="language-plaintext">For distance d between inscribed_radius and inflation_radius:
+
+cost = exp(-1.0 * cost_scaling_factor * (d - r_inscribed)) 
+       * (INSCRIBED_COST - 1)
+
+Where:
+- INSCRIBED_COST = 253
+- d = distance from cell to nearest lethal obstacle
+- r_inscribed = 0.25m (Nexus AMR chassis radius)</code></pre>
+          </div>
+        </div>
+        <div class="l03-content-col">
+          <div class="l05-golden-card" style="margin-bottom: 0.35rem; padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>⭕</span><strong>Inscribed Radius (0.25m)</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">The distance from the AMR rotation center to its outermost chassis edge. Any cell closer than this distance is marked <code>253 (Inscribed)</code>, preventing collision.</p>
+          </div>
+          <div class="l05-golden-card" style="margin-bottom: 0.35rem; padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>📉</span><strong>cost_scaling_factor Tuning</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">Inversely proportional to cost decay rate. Higher values (e.g. 5.0) produce steep drop-offs suitable for tight aisles; lower values (e.g. 2.0) enforce wide safety clearance.</p>
+          </div>
+          <div class="l05-golden-card" style="padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🛡️</span><strong>Inflation Radius (0.55m)</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">The maximum distance outward that obstacle costs propagate. Cells beyond 0.55m have cost <code>0</code> and zero traversal penalty.</p>
+          </div>
+        </div>
+      </div>
+    `
+  });
+
+  // 4. Global vs. Local Costmap Configuration Matrix
+  slides.push({
+    id: `${lesson.id}_sec5_global_vs_local`,
+    type: 'concept',
+    lessonNum: lesson.num_str,
+    lessonId: lesson.id,
+    module: lesson.module,
+    sectionTitle: '5. Global vs. Local Costmap Configuration',
+    badge: '🗺️ Costmap Matrix',
+    title: '5. Global vs. Local Costmap Configuration: Comparative Architecture Matrix',
+    htmlContent: `
+      <div class="l06-table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th style="width: 20%;">Property</th>
+              <th style="width: 40%;">Global Costmap (global_costmap)</th>
+              <th style="width: 40%;">Local Costmap (local_costmap)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Primary Consumer</strong></td>
+              <td><code>planner_server</code> (Global path search: NavFn / Smac)</td>
+              <td><code>controller_server</code> (Local velocity generation: DWB / RPP)</td>
+            </tr>
+            <tr>
+              <td><strong>Global Frame</strong></td>
+              <td><code>map</code> (drift-free world coordinate frame)</td>
+              <td><code>odom</code> (smooth, continuous local coordinate frame)</td>
+            </tr>
+            <tr>
+              <td><strong>Rolling Window</strong></td>
+              <td><code>false</code> (Encompasses entire mapped warehouse facility)</td>
+              <td><code>true</code> (Small 3m x 3m window centered dynamically on robot)</td>
+            </tr>
+            <tr>
+              <td><strong>Update Frequency</strong></td>
+              <td><code>1.0 Hz</code> (Low frequency saves CPU compute)</td>
+              <td><code>5.0 - 10.0 Hz</code> (High frequency reacts rapidly to obstacles)</td>
+            </tr>
+            <tr>
+              <td><strong>Resolution</strong></td>
+              <td><code>0.05m</code> (5cm / pixel)</td>
+              <td><code>0.05m</code> (5cm / pixel)</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="l05-banner-intro" style="margin-top: 0.4rem; font-size: 0.74rem; padding: 0.35rem 0.6rem;">
+        <strong>💡 Key Insight:</strong> Global costmap plans the macroscopic itinerary across the warehouse; Local costmap acts as the robot\'s immediate personal safety bubble avoiding dynamic obstacles.
+      </div>
+    `
+  });
+}
+
+/**
+ * Dedicated High-Yield Pedagogical Deck Builder for Lesson 15:
+ * Nav2 Path Planners & Local Controller Tuning.
+ */
+function buildLesson15Slides(doc, lesson, slides) {
+  // 1. Planners vs. Controllers Paradigm
+  slides.push({
+    id: `${lesson.id}_sec2_planners_vs_controllers`,
+    type: 'concept',
+    lessonNum: lesson.num_str,
+    lessonId: lesson.id,
+    module: lesson.module,
+    sectionTitle: '2. Planners vs. Controllers: The Two-Tier Paradigm',
+    badge: '🧭 Two-Tier Motion',
+    title: '2. The Two-Tier Paradigm: Global Path Planners vs. Local Controllers',
+    htmlContent: `
+      <div class="l06-table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th style="width: 20%;">Dimension</th>
+              <th style="width: 40%;">Global Path Planner (planner_server)</th>
+              <th style="width: 40%;">Local Controller (controller_server)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Scope &amp; Objective</strong></td>
+              <td>Macroscopic route planning from start to goal coordinates across warehouse.</td>
+              <td>Microscopic trajectory tracking and real-time obstacle evasion.</td>
+            </tr>
+            <tr>
+              <td><strong>Operating Costmap</strong></td>
+              <td><code>global_costmap</code> (Static SLAM map + full inflation).</td>
+              <td><code>local_costmap</code> (3m x 3m rolling window with live LiDAR rays).</td>
+            </tr>
+            <tr>
+              <td><strong>Update Frequency</strong></td>
+              <td><code>1.0 Hz</code> (Low frequency; plans once upon goal receipt).</td>
+              <td><code>20.0 Hz</code> (High frequency; evaluates every 50ms).</td>
+            </tr>
+            <tr>
+              <td><strong>Output Data Type</strong></td>
+              <td><code>nav_msgs/msg/Path</code> (Array of coordinate waypoints).</td>
+              <td><code>geometry_msgs/msg/Twist</code> (Direct <code>cmd_vel</code> velocities).</td>
+            </tr>
+            <tr>
+              <td><strong>Algorithms</strong></td>
+              <td>NavFn (Dijkstra), Smac Planner (A*, Hybrid-A*).</td>
+              <td>DWB (Dynamic Window), Regulated Pure Pursuit (RPP).</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="l05-banner-intro" style="margin-top: 0.4rem; font-size: 0.74rem; padding: 0.35rem 0.6rem;">
+        <strong>💡 Motion Architecture:</strong> Planners draw the map; Controllers drive the wheels while dodging unexpected humans and forklifts.
+      </div>
+    `
+  });
+
+  // 2. DWB Controller: Trajectory Rollout & Critic Scoring
+  slides.push({
+    id: `${lesson.id}_sec3_dwb_rollout`,
+    type: 'concept',
+    lessonNum: lesson.num_str,
+    lessonId: lesson.id,
+    module: lesson.module,
+    sectionTitle: '3. DWB Local Planner: Trajectory Rollout & Critic Scoring',
+    badge: '🏎️ DWB Controller',
+    title: '3. DWB Controller Mechanics: Dynamic Window Velocity Sampling & Rollout',
+    htmlContent: `
+      <div class="l03-two-col-layout">
+        <div class="l03-content-col">
+          <div class="l05-golden-card" style="margin-bottom: 0.35rem; padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🪟</span><strong>1. Dynamic Window Velocity Sampling</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">At each 20Hz cycle, DWB samples a discrete 2D grid of candidate velocities <code>(v_x, &omega;_z)</code> constrained strictly by motor acceleration limits: <code>v_current &plusmn; a_max &middot; dt</code>.</p>
+          </div>
+          <div class="l05-golden-card" style="margin-bottom: 0.35rem; padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🔮</span><strong>2. Forward Kinematic Rollout (sim_time = 1.5s)</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">Simulates the forward motion of the robot along each sampled velocity pair over a 1.5-second horizon. Discards any trajectory whose footprint strikes an obstacle.</p>
+          </div>
+          <div class="l05-golden-card" style="padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>⚖️</span><strong>3. Multi-Critic Scoring &amp; Selection</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">Scores surviving trajectories using weighted objective critics: <code>Score = &sum; (weight_i &middot; critic_i)</code>. The candidate trajectory with the highest aggregate score is dispatched to <code>cmd_vel</code>.</p>
+          </div>
+        </div>
+        <div class="l03-content-col">
+          <div class="l03-cmd-card">
+            <div class="l03-cmd-header"><span class="l03-term-badge">nav2_params.yaml</span><strong>DWB Controller Tuning</strong></div>
+            <pre><code class="language-yaml">controller_server:
+  ros__parameters:
+    FollowPath:
+      plugin: "dwb_core::DWBLocalPlanner"
+      sim_time: 1.5
+      vx_samples: 20
+      vtheta_samples: 40
+      critics: ["RotateToGoal", "Oscillation",
+                "BaseObstacle", "GoalAlign", 
+                "PathAlign", "PathDist", "GoalDist"]
+      BaseObstacle.scale: 0.02
+      PathAlign.scale: 32.0
+      GoalAlign.scale: 24.0
+      PathDist.scale: 32.0
+      GoalDist.scale: 24.0</code></pre>
+          </div>
+        </div>
+      </div>
+    `
+  });
+
+  // 3. Key DWB Critics & Tuning Matrix
+  slides.push({
+    id: `${lesson.id}_sec4_dwb_critics`,
+    type: 'concept',
+    lessonNum: lesson.num_str,
+    lessonId: lesson.id,
+    module: lesson.module,
+    sectionTitle: '4. Key DWB Critics & Tuning Matrix',
+    badge: '🎯 Critic Scoring Matrix',
+    title: '4. DWB Critic Scoring Matrix: Balancing Clearance, Speed & Goal Accuracy',
+    htmlContent: `
+      <div class="l06-table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th style="width: 22%;">Critic Name</th>
+              <th style="width: 16%;">Scale Weight</th>
+              <th style="width: 34%;">Pedagogical Function</th>
+              <th style="width: 28%;">Tuning Recommendation</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>BaseObstacle</code></td>
+              <td><code>0.02</code></td>
+              <td>Penalizes trajectories grazing close to costmap obstacles.</td>
+              <td>Increase if robot clips corner racks during turns.</td>
+            </tr>
+            <tr>
+              <td><code>PathAlign</code></td>
+              <td><code>32.0</code></td>
+              <td>Keeps robot heading aligned with global path direction.</td>
+              <td>High weight ensures robot travels straight along aisles.</td>
+            </tr>
+            <tr>
+              <td><code>GoalAlign</code></td>
+              <td><code>24.0</code></td>
+              <td>Orients robot heading directly towards goal destination.</td>
+              <td>Prevents robot from drifting past the target waypoint.</td>
+            </tr>
+            <tr>
+              <td><code>PathDist</code></td>
+              <td><code>32.0</code></td>
+              <td>Penalizes cross-track distance away from the global path.</td>
+              <td>Keeps robot glued to the center of warehouse corridors.</td>
+            </tr>
+            <tr>
+              <td><code>RotateToGoal</code></td>
+              <td><code>32.0</code></td>
+              <td>Enforces final in-place rotation when within xy tolerance.</td>
+              <td>Crucial for docking into charging stations or pallet bays.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="l05-banner-intro" style="margin-top: 0.4rem; font-size: 0.74rem; padding: 0.35rem 0.6rem;">
+        <strong>⚖️ Tuning Golden Rule:</strong> Never change multiple critic weights simultaneously! Adjust one weight by a factor of 2x, test trajectory smoothness, and verify oscillation stability.
+      </div>
+    `
+  });
+
+  // 4. Regulated Pure Pursuit (RPP)
+  slides.push({
+    id: `${lesson.id}_sec5_rpp_controller`,
+    type: 'concept',
+    lessonNum: lesson.num_str,
+    lessonId: lesson.id,
+    module: lesson.module,
+    sectionTitle: '5. Regulated Pure Pursuit (RPP) Controller',
+    badge: '📐 Pure Pursuit',
+    title: '5. Regulated Pure Pursuit (RPP): Deterministic Industrial Path Tracking',
+    htmlContent: `
+      <div class="l03-two-col-layout">
+        <div class="l03-content-col">
+          <div class="l05-golden-card" style="margin-bottom: 0.35rem; padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🎯</span><strong>Geometric Lookahead Arc</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">RPP projects an imaginary anchor point along the global path at a distance <code>L_lookahead</code> ahead of the robot. It calculates the exact geometric curvature arc required to drive towards that point.</p>
+          </div>
+          <div class="l05-golden-card" style="margin-bottom: 0.35rem; padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>📉</span><strong>Automatic Curvature Deceleration</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">Slows down automatically when encountering sharp turns (proportional to path curvature radius), eliminating the risk of AMR rollover or wheel traction loss under payload.</p>
+          </div>
+          <div class="l05-golden-card" style="padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🏭</span><strong>Why Industry Prefers RPP Over DWB</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">DWB can exhibit erratic exploratory swerves in wide open corridors. RPP produces perfectly predictable, repeatable, train-track paths preferred in commercial logistics.</p>
+          </div>
+        </div>
+        <div class="l03-content-col">
+          <div class="l03-cmd-card">
+            <div class="l03-cmd-header"><span class="l03-term-badge">nav2_params.yaml</span><strong>RPP Configuration Snippet</strong></div>
+            <pre><code class="language-yaml">controller_server:
+  ros__parameters:
+    FollowPath:
+      plugin: "nav2_regulated_pure_pursuit_controller::RegulatedPurePursuitController"
+      desired_linear_vel: 0.5
+      lookahead_dist: 0.6
+      min_lookahead_dist: 0.3
+      max_lookahead_dist: 0.9
+      lookahead_time: 1.5
+      use_velocity_scaled_lookahead_dist: true
+      use_regulated_linear_velocity_scaling: true
+      regulated_linear_scaling_min_radius: 0.9
+      use_cost_regulated_linear_velocity_scaling: true</code></pre>
+          </div>
+        </div>
+      </div>
+    `
+  });
+}
+
+/**
+ * Dedicated High-Yield Pedagogical Deck Builder for Lesson 16:
+ * Autonomous Navigation Scripting with Nav2 Simple Commander.
+ */
+function buildLesson16Slides(doc, lesson, slides) {
+  // 1. Simple Commander Python API Architecture
+  slides.push({
+    id: `${lesson.id}_sec2_simple_commander_arch`,
+    type: 'concept',
+    lessonNum: lesson.num_str,
+    lessonId: lesson.id,
+    module: lesson.module,
+    sectionTitle: '2. The Simple Commander Python API Architecture',
+    badge: '🐍 Python Automation',
+    title: '2. Nav2 Simple Commander: High-Level Python API for Autonomous Missions',
+    htmlContent: `
+      <div class="l03-two-col-layout">
+        <div class="l03-content-col">
+          <div class="l05-golden-card" style="margin-bottom: 0.35rem; padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🧱</span><strong>Encapsulating Low-Level DDS Plumbing</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">Writing raw ROS 2 action clients requires hundreds of lines of future callbacks, feedback handles, and cancel services. <code>BasicNavigator</code> wraps these into intuitive Python methods.</p>
+          </div>
+          <div class="l05-golden-card" style="margin-bottom: 0.35rem; padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🔄</span><strong>Automated Lifecycle Synchronization</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">Calling <code>navigator.waitUntilNav2Active()</code> verifies that BT Navigator, Costmap 2D, and Controller servers have all transitioned to the <code>ACTIVE</code> state before dispatching goals.</p>
+          </div>
+          <div class="l05-golden-card" style="padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🏭</span><strong>Fleet &amp; Business Logic Bridge</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">Allows roboticists to script high-level warehouse missions (pick &amp; place, multi-checkpoint patrols, charging dock runs) cleanly in pure Python.</p>
+          </div>
+        </div>
+        <div class="l03-content-col">
+          <div class="l03-cmd-card">
+            <div class="l03-cmd-header"><span class="l03-term-badge">Python Boilerplate Reduction</span><strong>Simple Commander Abstraction</strong></div>
+            <pre><code class="language-python">from nav2_simple_commander.robot_navigator import BasicNavigator
+import rclpy
+
+rclpy.init()
+navigator = BasicNavigator()
+
+# Wait for Nav2 stack to be fully active
+navigator.waitUntilNav2Active()
+
+# Set initial pose & navigate in 2 lines!
+navigator.setInitialPose(initial_pose)
+navigator.goToPose(goal_pose)</code></pre>
+          </div>
+        </div>
+      </div>
+    `
+  });
+
+  // 2. Core BasicNavigator API Methods Reference
+  slides.push({
+    id: `${lesson.id}_sec3_basic_navigator_methods`,
+    type: 'concept',
+    lessonNum: lesson.num_str,
+    lessonId: lesson.id,
+    module: lesson.module,
+    sectionTitle: '3. Core BasicNavigator Methods Reference',
+    badge: '📚 API Reference',
+    title: '3. Core BasicNavigator API Methods: Mission Control & Telemetry Matrix',
+    htmlContent: `
+      <div class="l06-table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th style="width: 26%;">Method Signature</th>
+              <th style="width: 20%;">Return Type</th>
+              <th style="width: 34%;">Operational Role</th>
+              <th style="width: 20%;">Blocking Behavior</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>setInitialPose(pose)</code></td>
+              <td><code>None</code></td>
+              <td>Seeds AMCL localization with initial world coordinates.</td>
+              <td>Synchronous</td>
+            </tr>
+            <tr>
+              <td><code>goToPose(pose)</code></td>
+              <td><code>None</code></td>
+              <td>Dispatches a single waypoint navigation goal to Nav2.</td>
+              <td>Asynchronous (Non-blocking)</td>
+            </tr>
+            <tr>
+              <td><code>followWaypoints(poses)</code></td>
+              <td><code>None</code></td>
+              <td>Dispatches an ordered list of waypoints for sequential patrol.</td>
+              <td>Asynchronous (Non-blocking)</td>
+            </tr>
+            <tr>
+              <td><code>isTaskComplete()</code></td>
+              <td><code>bool</code></td>
+              <td>Queries whether the active mission has finished.</td>
+              <td>Instantaneous</td>
+            </tr>
+            <tr>
+              <td><code>getFeedback()</code></td>
+              <td><code>NavigationFeedback</code></td>
+              <td>Returns real-time <code>distance_remaining</code> and <code>navigation_time</code>.</td>
+              <td>Instantaneous</td>
+            </tr>
+            <tr>
+              <td><code>cancelTask()</code></td>
+              <td><code>None</code></td>
+              <td>Immediately preempts and safely aborts the active goal.</td>
+              <td>Synchronous</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="l05-banner-intro" style="margin-top: 0.4rem; font-size: 0.74rem; padding: 0.35rem 0.6rem;">
+        <strong>💡 Key Pattern:</strong> <code>goToPose</code> is non-blocking! You monitor progress inside a <code>while not navigator.isTaskComplete():</code> loop to stream telemetry and detect stalls.
+      </div>
+    `
+  });
+
+  // 3. Complete Autonomous Patrol Script Walkthrough
+  slides.push({
+    id: `${lesson.id}_sec4_patrol_script`,
+    type: 'concept',
+    lessonNum: lesson.num_str,
+    lessonId: lesson.id,
+    module: lesson.module,
+    sectionTitle: '4. Complete Autonomous Patrol Script Walkthrough',
+    badge: '💻 Production Script',
+    title: '4. Autonomous Navigation Scripting: Goal Dispatch, Feedback & Watchdog Loop',
+    htmlContent: `
+      <div class="l03-two-col-layout">
+        <div class="l03-left-code-col">
+          <div class="l03-cmd-card" style="margin-bottom: 0;">
+            <div class="l03-cmd-header"><span class="l03-term-badge">autonomous_patrol.py</span><strong>Production Navigation Loop</strong></div>
+            <pre><code class="language-python">goal_pose = PoseStamped()
+goal_pose.header.frame_id = 'map'
+goal_pose.header.stamp = navigator.get_clock().now().to_msg()
+goal_pose.pose.position.x = 3.5
+goal_pose.pose.position.y = 1.2
+goal_pose.pose.orientation.w = 1.0
+
+navigator.goToPose(goal_pose)
+
+# Non-blocking feedback & timeout watchdog
+while not navigator.isTaskComplete():
+    feedback = navigator.getFeedback()
+    if feedback:
+        print(f"Dist remaining: {feedback.distance_remaining:.2f}m")
+    time.sleep(0.5)
+
+result = navigator.getResult()
+if result == TaskResult.SUCCEEDED:
+    print("Checkpoint reached successfully!")</code></pre>
+          </div>
+        </div>
+        <div class="l03-content-col">
+          <div class="l05-golden-card" style="margin-bottom: 0.35rem; padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>📍</span><strong>header.frame_id = 'map' Rule</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">Goals must always be expressed in the global <code>map</code> frame with updated timestamps from <code>navigator.get_clock().now().to_msg()</code>.</p>
+          </div>
+          <div class="l05-golden-card" style="margin-bottom: 0.35rem; padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>⏱️</span><strong>Non-Blocking Feedback Streaming</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">Access <code>feedback.distance_remaining</code>, <code>feedback.navigation_time</code>, and <code>feedback.number_of_recoveries</code> without blocking other robot threads.</p>
+          </div>
+          <div class="l05-golden-card" style="padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🛡️</span><strong>TaskResult Terminal States</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">Handles all three terminal outcomes: <code>TaskResult.SUCCEEDED</code>, <code>TaskResult.CANCELED</code>, and <code>TaskResult.FAILED</code> cleanly.</p>
+          </div>
+        </div>
+      </div>
+    `
+  });
+
+  // 4. Multi-Checkpoint Waypoint Queuing & Production Recovery
+  slides.push({
+    id: `${lesson.id}_sec5_waypoints_patrol`,
+    type: 'concept',
+    lessonNum: lesson.num_str,
+    lessonId: lesson.id,
+    module: lesson.module,
+    sectionTitle: '5. Multi-Checkpoint Waypoint Queuing',
+    badge: '🏭 Industrial Fleet Automation',
+    title: '5. Multi-Checkpoint Waypoint Queuing & Mission Recovery Watchdogs',
+    htmlContent: `
+      <div class="l03-two-col-layout">
+        <div class="l03-left-code-col">
+          <div class="l03-cmd-card" style="margin-bottom: 0.35rem;">
+            <div class="l03-cmd-header"><span class="l03-term-badge">followWaypoints</span><strong>Queued Patrol Checkpoints</strong></div>
+            <pre><code class="language-python"># Define patrol route waypoints
+checkpoints = [pose_dock, pose_aisle_3, pose_aisle_7, pose_dock]
+
+# Dispatch full multi-stop mission
+navigator.followWaypoints(checkpoints)
+
+while not navigator.isTaskComplete():
+    feedback = navigator.getFeedback()
+    if feedback:
+        print(f"Executing waypoint: {feedback.current_waypoint + 1}/{len(checkpoints)}")
+    time.sleep(1.0)</code></pre>
+          </div>
+        </div>
+        <div class="l03-content-col">
+          <div class="l05-golden-card" style="margin-bottom: 0.35rem; padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🔄</span><strong>Automated Waypoint Transitions</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">Nav2 switches to the next waypoint automatically upon reaching the current checkpoint tolerance, maintaining continuous patrol flow.</p>
+          </div>
+          <div class="l05-golden-card" style="margin-bottom: 0.35rem; padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🐕</span><strong>Stall Watchdog Architecture</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">Track distance remaining over time. If distance does not decrease over 30 seconds (due to persistent corridor blockages), invoke <code>navigator.cancelTask()</code>.</p>
+          </div>
+          <div class="l05-golden-card" style="padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🏭</span><strong>WMS / Fleet Manager Integration</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">Expose this script via REST API or MQTT to connect warehouse inventory management systems directly with autonomous AMR tasking.</p>
+          </div>
+        </div>
+      </div>
+    `
+  });
+}
+
+/**
+ * Dedicated High-Yield Pedagogical Deck Builder for Lesson 17:
+ * Dynamic Parameters & YAML Configuration.
+ */
+function buildLesson17Slides(doc, lesson, slides) {
+  // 1. ROS 1 vs ROS 2 Parameter Architecture
+  slides.push({
+    id: `${lesson.id}_sec2_param_arch`,
+    type: 'concept',
+    lessonNum: lesson.num_str,
+    lessonId: lesson.id,
+    module: lesson.module,
+    sectionTitle: '2. ROS 1 vs. ROS 2 Parameter Architecture',
+    badge: '⚙️ Parameter Architecture',
+    title: '2. Parameter Architecture: Centralized ROS 1 vs. Distributed Typed ROS 2',
+    htmlContent: `
+      <div class="l06-table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th style="width: 22%;">Architectural Metric</th>
+              <th style="width: 39%;">ROS 1 Parameter Server</th>
+              <th style="width: 39%;">ROS 2 Distributed Parameters</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Storage Topology</strong></td>
+              <td>Centralized key-value dictionary residing inside <code>roscore</code>.</td>
+              <td>Fully distributed; owned directly by each individual node over DDS.</td>
+            </tr>
+            <tr>
+              <td><strong>Type Safety</strong></td>
+              <td>Weakly typed; dynamic XML-RPC type coercion without compile-time safety.</td>
+              <td>Strongly typed (Integer, Double, String, Boolean, Byte Arrays).</td>
+            </tr>
+            <tr>
+              <td><strong>Fault Tolerance</strong></td>
+              <td>Single point of failure: if <code>roscore</code> crashes, all parameters vanish.</td>
+              <td>Zero single point of failure; node failure affects only its own parameters.</td>
+            </tr>
+            <tr>
+              <td><strong>Runtime Validation</strong></td>
+              <td>No native constraints; nodes must manually sanitize incoming values.</td>
+              <td>Built-in <code>ParameterDescriptor</code> range constraints &amp; atomic callbacks.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="l05-banner-intro" style="margin-top: 0.4rem; font-size: 0.74rem; padding: 0.35rem 0.6rem;">
+        <strong>💡 Key Concept:</strong> In ROS 2, parameters are first-class citizen services and events hosted directly by each node\'s executor.
+      </div>
+    `
+  });
+
+  // 2. Building a Parameterized Node (Python)
+  slides.push({
+    id: `${lesson.id}_sec3_declaring_params`,
+    type: 'concept',
+    lessonNum: lesson.num_str,
+    lessonId: lesson.id,
+    module: lesson.module,
+    sectionTitle: '3. Building a Parameterized Node (Python)',
+    badge: '🐍 Python Parameters',
+    title: '3. Declaring & Reading Parameters in Python: The Mandatory Declaration Rule',
+    htmlContent: `
+      <div class="l03-two-col-layout">
+        <div class="l03-left-code-col">
+          <div class="l03-cmd-card" style="margin-bottom: 0;">
+            <div class="l03-cmd-header"><span class="l03-term-badge">amr_speed_controller.py</span><strong>Declaration &amp; Access</strong></div>
+            <pre><code class="language-python">class SpeedController(Node):
+    def __init__(self):
+        super().__init__('speed_controller')
+
+        # 1. Declare parameters with default fallback values
+        self.declare_parameter('max_linear_speed', 1.5)
+        self.declare_parameter('enable_safety_reverse', True)
+
+        # 2. Access parameter values directly
+        self.max_speed = self.get_parameter('max_linear_speed').value
+        self.safety_rev = self.get_parameter('enable_safety_reverse').value
+
+        self.get_logger().info(f"Initialized with max speed: {self.max_speed} m/s")</code></pre>
+          </div>
+        </div>
+        <div class="l03-content-col">
+          <div class="l05-golden-card" style="margin-bottom: 0.35rem; padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🔒</span><strong>The Mandatory Declaration Rule</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">In ROS 2, a node cannot access or be assigned a parameter from CLI or YAML unless it is explicitly declared with <code>self.declare_parameter()</code>.</p>
+          </div>
+          <div class="l05-golden-card" style="margin-bottom: 0.35rem; padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🎯</span><strong>Automatic Type Inference</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">The type of the default value (e.g. <code>1.5</code> double, <code>True</code> bool) automatically locks the parameter type. Attempting to pass a string causes type rejection.</p>
+          </div>
+          <div class="l05-golden-card" style="padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🛡️</span><strong>Safe Fallback Defaults</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">Always supply sensible, safe production defaults so the robot operates safely even if launch arguments or configuration YAML files are omitted.</p>
+          </div>
+        </div>
+      </div>
+    `
+  });
+
+  // 3. Parameter Descriptors & Dynamic Validation
+  slides.push({
+    id: `${lesson.id}_sec4_param_descriptors`,
+    type: 'concept',
+    lessonNum: lesson.num_str,
+    lessonId: lesson.id,
+    module: lesson.module,
+    sectionTitle: '4. Parameter Descriptors & Dynamic Validation',
+    badge: '🛡️ Safety Validation',
+    title: '4. Parameter Descriptors & Dynamic Validation Callbacks for Hardware Safety',
+    htmlContent: `
+      <div class="l03-two-col-layout">
+        <div class="l03-left-code-col">
+          <div class="l03-cmd-card" style="margin-bottom: 0;">
+            <div class="l03-cmd-header"><span class="l03-term-badge">Validation Callback</span><strong>Enforcing Physical Constraints</strong></div>
+            <pre><code class="language-python"># Register dynamic change callback
+self.add_on_set_parameters_callback(self.validate_parameters)
+
+def validate_parameters(self, params):
+    result = SetParametersResult(successful=True)
+    for p in params:
+        if p.name == 'max_linear_speed':
+            if p.value &lt; 0.0 or p.value &gt; 2.2:
+                result.successful = False
+                result.reason = "Speed must be between 0.0 and 2.2 m/s"
+            else:
+                self.max_speed = p.value
+    return result</code></pre>
+          </div>
+        </div>
+        <div class="l03-content-col">
+          <div class="l05-golden-card" style="margin-bottom: 0.35rem; padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🛑</span><strong>Atomic Rejection of Unsafe Values</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">If an operator attempts to set <code>max_linear_speed</code> to <code>10.0 m/s</code>, the callback returns <code>successful=False</code>, rejecting the change before hardware damage occurs.</p>
+          </div>
+          <div class="l05-golden-card" style="margin-bottom: 0.35rem; padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>📋</span><strong>ParameterDescriptor Metadata</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">Attach <code>FloatingPointRange(from_value=0.0, to_value=2.2, step=0.1)</code> and description text so GUI tools display formatted sliders and tooltips.</p>
+          </div>
+          <div class="l05-golden-card" style="padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🔄</span><strong>Real-Time Parameter Updates</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">Updating <code>self.max_speed</code> inside the callback applies the new tuning immediately in real time without restarting the node.</p>
+          </div>
+        </div>
+      </div>
+    `
+  });
+
+  // 4. Organizing Configuration with YAML Files
+  slides.push({
+    id: `${lesson.id}_sec5_yaml_config`,
+    type: 'concept',
+    lessonNum: lesson.num_str,
+    lessonId: lesson.id,
+    module: lesson.module,
+    sectionTitle: '5. Organizing Configuration with YAML Files',
+    badge: '📄 Production YAML',
+    title: '5. Production YAML Configuration: The ros__parameters Nesting Rule',
+    htmlContent: `
+      <div class="l03-two-col-layout">
+        <div class="l03-left-code-col">
+          <div class="l03-cmd-card" style="margin-bottom: 0.35rem;">
+            <div class="l03-cmd-header"><span class="l03-term-badge">amr_params.yaml</span><strong>Production YAML Hierarchy</strong></div>
+            <pre><code class="language-yaml">/speed_controller:
+  ros__parameters:
+    max_linear_speed: 1.8
+    enable_safety_reverse: true
+    wheel_radius: 0.08
+    pid_gains:
+      kp: 2.5
+      ki: 0.1
+      kd: 0.05</code></pre>
+          </div>
+          <div class="l03-cmd-card">
+            <div class="l03-cmd-header"><span class="l03-term-badge">CLI &amp; Launch Ingestion</span><strong>Loading Parameters</strong></div>
+            <pre><code class="language-bash"># Run node directly with YAML file:
+ros2 run nexus_amr_control speed_controller \
+  --ros-args --params-file config/amr_params.yaml</code></pre>
+          </div>
+        </div>
+        <div class="l03-content-col">
+          <div class="l05-golden-card" style="margin-bottom: 0.35rem; padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>⚠️</span><strong>The ros__parameters Indentation Rule</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">Every parameter in ROS 2 MUST be nested under its target node name, followed by the exact key <code>ros__parameters:</code> (with double underscores). Omission causes silent parsing failure.</p>
+          </div>
+          <div class="l05-golden-card" style="margin-bottom: 0.35rem; padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>📦</span><strong>Nested Sub-Namespaces</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">Organize related parameters cleanly into dot-separated namespaces (e.g. <code>pid_gains.kp</code>), improving readability for complex robot tuning.</p>
+          </div>
+          <div class="l05-golden-card" style="padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🚀</span><strong>Launch File Integration</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">Pass YAML configuration paths cleanly in launch files: <code>Node(..., parameters=[config_yaml_path])</code>.</p>
+          </div>
+        </div>
+      </div>
+    `
+  });
+
+  // 5. Parameter Inspection with CLI & rqt_reconfigure
+  slides.push({
+    id: `${lesson.id}_sec6_cli_params`,
+    type: 'concept',
+    lessonNum: lesson.num_str,
+    lessonId: lesson.id,
+    module: lesson.module,
+    sectionTitle: '6. Parameter Inspection with CLI & rqt_reconfigure',
+    badge: '🔍 Parameter Diagnostics',
+    title: '6. Parameter CLI Commands & Real-Time Tuning with rqt_reconfigure',
+    htmlContent: `
+      <div class="l03-two-col-layout">
+        <div class="l03-content-col">
+          <div class="l03-cmd-card">
+            <div class="l03-cmd-header"><span class="l03-term-badge">ros2 param Verbs</span><strong>Essential CLI Commands</strong></div>
+            <pre><code class="language-bash"># 1. List all parameters declared on a node
+ros2 param list /speed_controller
+
+# 2. Query current value & type of a parameter
+ros2 param get /speed_controller max_linear_speed
+
+# 3. Modify parameter dynamically at runtime
+ros2 param set /speed_controller max_linear_speed 1.2
+
+# 4. Dump all active parameters to YAML file
+ros2 param dump /speed_controller &gt; tuned_params.yaml</code></pre>
+          </div>
+        </div>
+        <div class="l03-content-col">
+          <div class="l05-golden-card" style="margin-bottom: 0.35rem; padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🎛️</span><strong>rqt_reconfigure Interactive Tuning</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">Run <code>ros2 run rqt_reconfigure rqt_reconfigure</code> to open a real-time GUI with sliders for every parameter declared with numerical descriptors.</p>
+          </div>
+          <div class="l05-golden-card" style="margin-bottom: 0.35rem; padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>💾</span><strong>Snapshot Tuning to Disk</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">After tuning PID gains or speed limits in the warehouse, run <code>ros2 param dump</code> to persist the optimized parameters directly into production YAML.</p>
+          </div>
+          <div class="l05-golden-card" style="padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🔍</span><strong>Zero Recompile Iteration</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">Change operational behaviors instantly across live robots without touching source code or re-running <code>colcon build</code>.</p>
+          </div>
+        </div>
+      </div>
+    `
+  });
+}
+
+/**
+ * Dedicated High-Yield Pedagogical Deck Builder for Lesson 18:
+ * VS Code IDE Tooling & ROS 2 Logging Framework.
+ */
+function buildLesson18Slides(doc, lesson, slides) {
+  // 1. VS Code IDE Configuration for ROS 2 Python
+  slides.push({
+    id: `${lesson.id}_sec2_vscode_ide`,
+    type: 'concept',
+    lessonNum: lesson.num_str,
+    lessonId: lesson.id,
+    module: lesson.module,
+    sectionTitle: '2. VS Code IDE Configuration for ROS 2 Python',
+    badge: '💻 IDE Configuration',
+    title: '2. Professional VS Code IDE Tooling: Autocompletion & Path Resolution',
+    htmlContent: `
+      <div class="l03-two-col-layout">
+        <div class="l03-left-code-col">
+          <div class="l03-cmd-card" style="margin-bottom: 0;">
+            <div class="l03-cmd-header"><span class="l03-term-badge">.vscode/settings.json</span><strong>Python Path Configuration</strong></div>
+            <pre><code class="language-json">{
+  "python.autoComplete.extraPaths": [
+    "/opt/ros/humble/lib/python3.10/site-packages",
+    "&#36;{workspaceFolder}/install/nexus_amr_control/lib/python3.10/site-packages"
+  ],
+  "python.analysis.extraPaths": [
+    "/opt/ros/humble/lib/python3.10/site-packages",
+    "&#36;{workspaceFolder}/install/nexus_amr_control/lib/python3.10/site-packages"
+  ],
+  "terminal.integrated.env.linux": {
+    "PYTHONPATH": "/opt/ros/humble/lib/python3.10/site-packages:&#36;{workspaceFolder}/install/nexus_amr_control/lib/python3.10/site-packages"
+  }
+}</code></pre>
+          </div>
+        </div>
+        <div class="l03-content-col">
+          <div class="l05-golden-card" style="margin-bottom: 0.35rem; padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🐛</span><strong>Eliminating "Import rclpy Could Not Be Resolved"</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">Pylance looks only in standard virtualenvs by default. Adding ROS 2 underlay site-packages to <code>extraPaths</code> resolves all red squiggly lines instantly.</p>
+          </div>
+          <div class="l05-golden-card" style="margin-bottom: 0.35rem; padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>✨</span><strong>Full IntelliSense &amp; Type Hovering</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">Gain instant parameter tooltips, docstring inspection, and method autocompletion for <code>Node</code>, <code>Publisher</code>, and message dataclasses.</p>
+          </div>
+          <div class="l05-golden-card" style="padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🔨</span><strong>Integrated Colcon Tasks</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">Bind <code>tasks.json</code> to trigger <code>colcon build --symlink-install</code> with a single <code>Ctrl+Shift+B</code> shortcut directly within VS Code.</p>
+          </div>
+        </div>
+      </div>
+    `
+  });
+
+  // 2. The Five Logging Severity Levels
+  slides.push({
+    id: `${lesson.id}_sec3_log_levels`,
+    type: 'concept',
+    lessonNum: lesson.num_str,
+    lessonId: lesson.id,
+    module: lesson.module,
+    sectionTitle: '3. The Five Logging Severity Levels',
+    badge: '🚦 Severity Hierarchy',
+    title: '3. The ROS 2 Logging Framework: The 5-Tier Severity Hierarchy',
+    htmlContent: `
+      <div class="l06-table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th style="width: 14%;">Level</th>
+              <th style="width: 12%;">Color</th>
+              <th style="width: 38%;">Architectural Intent</th>
+              <th style="width: 36%;">AMR Production Example</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>DEBUG</code></td>
+              <td>Cyan</td>
+              <td>High-frequency diagnostic traces; silenced in production.</td>
+              <td>Raw encoder ticks, math intermediate vectors.</td>
+            </tr>
+            <tr>
+              <td><code>INFO</code></td>
+              <td>White</td>
+              <td>Normal operational milestones; standard production default.</td>
+              <td>Node started, mission waypoint reached, client connected.</td>
+            </tr>
+            <tr>
+              <td><code>WARN</code></td>
+              <td>Yellow</td>
+              <td>Unexpected but recoverable event; degraded performance.</td>
+              <td>LiDAR packet drop, battery &lt; 20%, retry attempt.</td>
+            </tr>
+            <tr>
+              <td><code>ERROR</code></td>
+              <td>Red</td>
+              <td>Component failed; functionality lost, but node survives.</td>
+              <td>Sensor disconnected, goal rejected, plan aborted.</td>
+            </tr>
+            <tr>
+              <td><code>FATAL</code></td>
+              <td>Magenta</td>
+              <td>Critical unrecoverable failure; immediate shutdown required.</td>
+              <td>Emergency stop triggered, motor over-current thermal trip.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="l05-banner-intro" style="margin-top: 0.4rem; font-size: 0.74rem; padding: 0.35rem 0.6rem;">
+        <strong>💡 Production Standard:</strong> Default threshold is <code>INFO</code>. Messages below the active threshold are dropped with zero CPU string formatting penalty.
+      </div>
+    `
+  });
+
+  // 3. Throttled & One-Shot Logging
+  slides.push({
+    id: `${lesson.id}_sec4_throttled_logging`,
+    type: 'concept',
+    lessonNum: lesson.num_str,
+    lessonId: lesson.id,
+    module: lesson.module,
+    sectionTitle: '4. Throttled & One-Shot Logging',
+    badge: '⏱️ Rate-Limited Logs',
+    title: '4. Clean Production Logs: Throttled, One-Shot & Skip-First Patterns',
+    htmlContent: `
+      <div class="l03-two-col-layout">
+        <div class="l03-left-code-col">
+          <div class="l03-cmd-card" style="margin-bottom: 0;">
+            <div class="l03-cmd-header"><span class="l03-term-badge">telemetry_logger.py</span><strong>Rate-Limited Logging</strong></div>
+            <pre><code class="language-python"># 1. Standard log (Dangerous in 50Hz control loop!)
+# self.get_logger().info("Control loop tick") # FLOODS TERMINAL!
+
+# 2. Throttled: Log at most once every 2.0 seconds
+self.get_logger().info(
+    f"Battery: {self.battery_pct}%", 
+    throttle_duration_sec=2.0
+)
+
+# 3. Once: Log exactly one time across node lifespan
+self.get_logger().info(
+    "Motor drivers calibrated", 
+    once=True
+)
+
+# 4. Skip-First: Log after warm-up stabilization
+self.get_logger().warn(
+    "Sensor latency high", 
+    skip_first=True
+)</code></pre>
+          </div>
+        </div>
+        <div class="l03-content-col">
+          <div class="l05-golden-card" style="margin-bottom: 0.35rem; padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🚫</span><strong>Preventing Terminal Flooding</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">Calling <code>info()</code> unthrottled in a 50Hz motor loop generates 3,000 log lines per minute, exhausting terminal buffers and inflating log files to gigabytes.</p>
+          </div>
+          <div class="l05-golden-card" style="margin-bottom: 0.35rem; padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>⏱️</span><strong>throttle_duration_sec=2.0</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">Provides steady operational telemetry at human-readable rates while the underlying high-frequency feedback loop runs uninterrupted.</p>
+          </div>
+          <div class="l05-golden-card" style="padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>📢</span><strong>once=True for Boot Announcements</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">Ideal for hardware handshake confirmation, firmware version prints, and static configuration summaries on startup.</p>
+          </div>
+        </div>
+      </div>
+    `
+  });
+
+  // 4. Runtime Log Level Configuration
+  slides.push({
+    id: `${lesson.id}_sec5_runtime_log_config`,
+    type: 'concept',
+    lessonNum: lesson.num_str,
+    lessonId: lesson.id,
+    module: lesson.module,
+    sectionTitle: '5. Runtime Log Level Configuration',
+    badge: '🎛️ Dynamic Log Control',
+    title: '5. Dynamic Log Level Configuration: CLI Overrides & Live Service Reconfiguration',
+    htmlContent: `
+      <div class="l03-two-col-layout">
+        <div class="l03-content-col">
+          <div class="l03-cmd-card">
+            <div class="l03-cmd-header"><span class="l03-term-badge">Dynamic Logging CLI</span><strong>Launch &amp; Live Service Commands</strong></div>
+            <pre><code class="language-bash"># 1. Override log level at launch time for all nodes:
+ros2 run nexus_amr_control speed_controller \
+  --ros-args --log-level DEBUG
+
+# 2. Target a specific node's logger:
+ros2 run nexus_amr_control speed_controller \
+  --ros-args --log-level speed_controller:=DEBUG
+
+# 3. Change log level dynamically on running robot via service:
+ros2 service call /speed_controller/set_logger_levels \
+  rcl_interfaces/srv/SetLoggerLevels \
+  "{levels: [{name: 'speed_controller', level_name: 'DEBUG'}]}"</code></pre>
+          </div>
+        </div>
+        <div class="l03-content-col">
+          <div class="l05-golden-card" style="margin-bottom: 0.35rem; padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🚀</span><strong>Targeted Launch Diagnostics</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">Pass <code>--log-level DEBUG</code> during integration testing to expose raw calculations without altering your production code.</p>
+          </div>
+          <div class="l05-golden-card" style="margin-bottom: 0.35rem; padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🔌</span><strong>Live Service Introspection</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">Elevate log severity from <code>INFO</code> to <code>DEBUG</code> on a physical robot deployed in a factory aisle without stopping its navigation mission.</p>
+          </div>
+          <div class="l05-golden-card" style="padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>📁</span><strong>Persistent Disk Logging (~/.ros/log/)</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">All logs are automatically timestamped and mirrored to disk in <code>~/.ros/log/</code> for post-mortem flight recorder analysis.</p>
+          </div>
+        </div>
+      </div>
+    `
+  });
+}
+
+/**
+ * Dedicated High-Yield Pedagogical Deck Builder for Lesson 19:
+ * ROS 2 Interfaces & Custom Messages, Services & Actions.
+ */
+function buildLesson19Slides(doc, lesson, slides) {
+  // 1. Standard Interface Libraries vs Custom Interfaces
+  slides.push({
+    id: `${lesson.id}_sec2_standard_vs_custom`,
+    type: 'concept',
+    lessonNum: lesson.num_str,
+    lessonId: lesson.id,
+    module: lesson.module,
+    sectionTitle: '2. Standard ROS 2 Interface Libraries',
+    badge: '📦 Interface Ecosystem',
+    title: '2. Standard ROS 2 Interfaces vs. Custom Definitions: The Ecosystem Rule',
+    htmlContent: `
+      <div class="l06-table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th style="width: 22%;">Package Name</th>
+              <th style="width: 28%;">Standard Types</th>
+              <th style="width: 50%;">Production Robotics Role</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>std_msgs</code></td>
+              <td><code>String</code>, <code>Float32</code>, <code>Bool</code>, <code>Header</code></td>
+              <td>Primitive datatypes and timestamped metadata structures.</td>
+            </tr>
+            <tr>
+              <td><code>geometry_msgs</code></td>
+              <td><code>Twist</code>, <code>PoseStamped</code>, <code>TransformStamped</code></td>
+              <td>Spatial kinematics, Cartesian velocities, coordinate transforms.</td>
+            </tr>
+            <tr>
+              <td><code>sensor_msgs</code></td>
+              <td><code>LaserScan</code>, <code>Image</code>, <code>Imu</code>, <code>PointCloud2</code></td>
+              <td>High-throughput raw perception data from physical sensors.</td>
+            </tr>
+            <tr>
+              <td><code>nav_msgs</code></td>
+              <td><code>Odometry</code>, <code>Path</code>, <code>OccupancyGrid</code></td>
+              <td>Navigation trajectories, dead-reckoning, and SLAM map grids.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="l05-banner-intro" style="margin-top: 0.4rem; font-size: 0.74rem; padding: 0.35rem 0.6rem;">
+        <strong>💡 The Reusability Principle:</strong> ALWAYS prefer standard interfaces when possible! Creating custom messages unnecessarily breaks interoperability with RViz2, Nav2, and community tools.
+      </div>
+    `
+  });
+
+  // 2. The Custom Interface Architecture Rule
+  slides.push({
+    id: `${lesson.id}_sec3_standalone_pkg_rule`,
+    type: 'concept',
+    lessonNum: lesson.num_str,
+    lessonId: lesson.id,
+    module: lesson.module,
+    sectionTitle: '3. The Custom Interface Architecture Rule',
+    badge: '🏛️ Architecture Rule',
+    title: '3. The Golden Architectural Rule: Dedicated Standalone Interface Packages',
+    htmlContent: `
+      <div class="l03-two-col-layout">
+        <div class="l03-content-col">
+          <div class="l05-golden-card" style="margin-bottom: 0.35rem; padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🚫</span><strong>The Python Package Limitation</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">In ROS 2, custom interface generators (<code>rosidl_default_generators</code>) rely on CMake build tooling. Pure Python packages (<code>ament_python</code>) CANNOT generate custom message bindings.</p>
+          </div>
+          <div class="l05-golden-card" style="margin-bottom: 0.35rem; padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>📦</span><strong>The Dedicated CMake Package Rule</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">Always create a standalone CMake package named <code>&lt;robot&gt;_interfaces</code> (e.g. <code>nexus_amr_interfaces</code>) containing solely <code>msg/</code>, <code>srv/</code>, and <code>action/</code> IDL files.</p>
+          </div>
+          <div class="l05-golden-card" style="padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🔄</span><strong>Circular Dependency Immunity</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">Separating interfaces decouples perception, control, and fleet nodes, allowing any Python or C++ node to import messages without circular dependency locks.</p>
+          </div>
+        </div>
+        <div class="l03-content-col">
+          <div class="l03-cmd-card">
+            <div class="l03-cmd-header"><span class="l03-term-badge">Filesystem Layout</span><strong>nexus_amr_interfaces /</strong></div>
+            <pre><code class="language-plaintext">nexus_amr_interfaces/
+├── CMakeLists.txt        # Calls rosidl_generate_interfaces
+├── package.xml           # Declares buildtool_depend rosidl
+├── msg/
+│   └── UltrasonicRange.msg
+├── srv/
+│   └── ResetOdometry.srv
+└── action/
+    └── DockRobot.action</code></pre>
+          </div>
+        </div>
+      </div>
+    `
+  });
+
+  // 3. IDL Anatomy: .msg, .srv & .action Syntax
+  slides.push({
+    id: `${lesson.id}_sec4_idl_anatomy`,
+    type: 'concept',
+    lessonNum: lesson.num_str,
+    lessonId: lesson.id,
+    module: lesson.module,
+    sectionTitle: '4. IDL Anatomy: .msg, .srv & .action Syntax',
+    badge: '📐 IDL Grammar',
+    title: '4. Interface Definition Language (IDL): Anatomy of .msg, .srv & .action Files',
+    htmlContent: `
+      <div class="l03-two-col-layout">
+        <div class="l03-left-code-col">
+          <div class="l03-cmd-card" style="margin-bottom: 0.35rem;">
+            <div class="l03-cmd-header"><span class="l03-term-badge">UltrasonicRange.msg</span><strong>Topic Message</strong></div>
+            <pre><code class="language-protobuf">std_msgs/Header header
+float32 distance        # Measured range in meters
+float32 min_range       # Hardware minimum
+float32 max_range       # Hardware maximum
+bool obstacle_detected  # Binary threshold alert</code></pre>
+          </div>
+          <div class="l03-cmd-card">
+            <div class="l03-cmd-header"><span class="l03-term-badge">ResetOdometry.srv</span><strong>Service Contract</strong></div>
+            <pre><code class="language-protobuf"># Request (Single dash separator: ---)
+float64 x
+float64 y
+float64 theta
+---
+# Response
+bool success
+string message</code></pre>
+          </div>
+        </div>
+        <div class="l03-content-col">
+          <div class="l03-cmd-card" style="margin-bottom: 0.35rem;">
+            <div class="l03-cmd-header"><span class="l03-term-badge">DockRobot.action</span><strong>Action Contract</strong></div>
+            <pre><code class="language-protobuf"># 1. Goal (First ---)
+string docking_station_id
+---
+# 2. Result (Second ---)
+bool docked
+duration time_elapsed
+---
+# 3. Feedback
+float32 distance_to_dock
+float32 alignment_error</code></pre>
+          </div>
+          <div class="l05-golden-card" style="padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🎯</span><strong>The Separator Syntax Rule</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">Messages have no dividers. Services require <strong>one <code>---</code> line</strong>. Actions require <strong>two <code>---</code> lines</strong>. Extra spaces or characters on divider lines cause compiler errors.</p>
+          </div>
+        </div>
+      </div>
+    `
+  });
+
+  // 4. CMakeLists.txt & package.xml Build Wiring
+  slides.push({
+    id: `${lesson.id}_sec5_build_wiring`,
+    type: 'concept',
+    lessonNum: lesson.num_str,
+    lessonId: lesson.id,
+    module: lesson.module,
+    sectionTitle: '5. Configuring package.xml & CMakeLists.txt',
+    badge: '⚙️ Build Wiring',
+    title: '5. Build Configuration: Generator Wiring in CMakeLists.txt & package.xml',
+    htmlContent: `
+      <div class="l03-two-col-layout">
+        <div class="l03-left-code-col">
+          <div class="l03-cmd-card" style="margin-bottom: 0;">
+            <div class="l03-cmd-header"><span class="l03-term-badge">CMakeLists.txt</span><strong>rosidl Interface Generation</strong></div>
+            <pre><code class="language-cmake">cmake_minimum_required(VERSION 3.8)
+project(nexus_amr_interfaces)
+
+find_package(ament_cmake REQUIRED)
+find_package(rosidl_default_generators REQUIRED)
+find_package(std_msgs REQUIRED)
+find_package(builtin_interfaces REQUIRED)
+
+rosidl_generate_interfaces(&#36;{PROJECT_NAME}
+  "msg/UltrasonicRange.msg"
+  "srv/ResetOdometry.srv"
+  "action/DockRobot.action"
+  DEPENDENCIES std_msgs builtin_interfaces
+)
+
+ament_package()</code></pre>
+          </div>
+        </div>
+        <div class="l03-content-col">
+          <div class="l05-golden-card" style="margin-bottom: 0.35rem; padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🔨</span><strong>The Generator / Runtime Dependency Pair</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">In <code>package.xml</code>, declare <code>&lt;buildtool_depend&gt;rosidl_default_generators&lt;/buildtool_depend&gt;</code> for build-time generation and <code>&lt;exec_depend&gt;rosidl_default_runtime&lt;/exec_depend&gt;</code> for runtime execution.</p>
+          </div>
+          <div class="l05-golden-card" style="margin-bottom: 0.35rem; padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>📦</span><strong>Nested DEPENDENCIES Tag</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">If your custom messages use <code>std_msgs/Header</code> or <code>builtin_interfaces/Time</code>, list them explicitly under <code>DEPENDENCIES</code> in <code>rosidl_generate_interfaces</code>.</p>
+          </div>
+          <div class="l05-golden-card" style="padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🚀</span><strong>Selective Build Command</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">Compile standalone: <code>colcon build --packages-select nexus_amr_interfaces</code> followed by <code>source install/setup.bash</code>.</p>
+          </div>
+        </div>
+      </div>
+    `
+  });
+
+  // 5. CLI Introspection & Python Node Ingestion
+  slides.push({
+    id: `${lesson.id}_sec6_cli_python_usage`,
+    type: 'concept',
+    lessonNum: lesson.num_str,
+    lessonId: lesson.id,
+    module: lesson.module,
+    sectionTitle: '6. CLI Verification & Python Node Ingestion',
+    badge: '💻 Python Ingestion',
+    title: '6. CLI Verification & Ingesting Custom Interfaces in Python Nodes',
+    htmlContent: `
+      <div class="l03-two-col-layout">
+        <div class="l03-left-code-col">
+          <div class="l03-cmd-card" style="margin-bottom: 0.35rem;">
+            <div class="l03-cmd-header"><span class="l03-term-badge">CLI Verification</span><strong>Inspecting Compiled Schemas</strong></div>
+            <pre><code class="language-bash"># Verify interface is registered & inspect definition:
+ros2 interface show nexus_amr_interfaces/msg/UltrasonicRange</code></pre>
+          </div>
+          <div class="l03-cmd-card">
+            <div class="l03-cmd-header"><span class="l03-term-badge">range_sensor_node.py</span><strong>Python Import &amp; Population</strong></div>
+            <pre><code class="language-python">from nexus_amr_interfaces.msg import UltrasonicRange
+
+msg = UltrasonicRange()
+msg.header.stamp = self.get_clock().now().to_msg()
+msg.header.frame_id = 'sonar_front_link'
+msg.distance = 0.42
+msg.obstacle_detected = True
+
+self.publisher_.publish(msg)</code></pre>
+          </div>
+        </div>
+        <div class="l03-content-col">
+          <div class="l05-golden-card" style="margin-bottom: 0.35rem; padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🔍</span><strong>ros2 interface show Validation</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">Outputs the full compiled field hierarchy and comments. If this command prints the schema, the interface is correctly registered across the ROS 2 middleware.</p>
+          </div>
+          <div class="l05-golden-card" style="margin-bottom: 0.35rem; padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🐍</span><strong>Strong Python Field Typing</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">Attempting to assign a string to <code>msg.distance</code> raises an immediate <code>TypeError</code> or <code>AssertionError</code> at runtime, protecting the robot from type corruption.</p>
+          </div>
+          <div class="l05-golden-card" style="padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🏭</span><strong>Fleet Interoperability</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">Distribute the compiled <code>nexus_amr_interfaces</code> debian package across fleet AMRs, edge servers, and cloud telemetry backends.</p>
+          </div>
+        </div>
+      </div>
+    `
+  });
+}
+
+/**
+ * Dedicated High-Yield Pedagogical Deck Builder for Lesson 20:
+ * Data Recording & Playback with ROS 2 Bags.
+ */
+function buildLesson20Slides(doc, lesson, slides) {
+  // 1. Storage Plugins: SQLite3 vs MCAP
+  slides.push({
+    id: `${lesson.id}_sec2_sqlite_vs_mcap`,
+    type: 'concept',
+    lessonNum: lesson.num_str,
+    lessonId: lesson.id,
+    module: lesson.module,
+    sectionTitle: '2. Storage Plugins: SQLite3 vs. MCAP',
+    badge: '💾 Storage Engine',
+    title: '2. ROS 2 Bag Storage Formats: Legacy SQLite3 vs. Modern MCAP',
+    htmlContent: `
+      <div class="l06-table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th style="width: 20%;">Architectural Metric</th>
+              <th style="width: 40%;">SQLite3 (Default Legacy Plugin)</th>
+              <th style="width: 40%;">MCAP (Modern Industrial Standard)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Write Throughput</strong></td>
+              <td>Relational SQL engine; suffers write locks during high-rate camera/LiDAR streams.</td>
+              <td>Append-only binary chunk streaming; zero write locks; 10x higher throughput.</td>
+            </tr>
+            <tr>
+              <td><strong>Schema Portability</strong></td>
+              <td>Requires original ROS 2 workspace message definitions installed to deserialize.</td>
+              <td><strong>Self-describing</strong>: Embeds message IDL schemas directly inside file header.</td>
+            </tr>
+            <tr>
+              <td><strong>Tooling Ecosystem</strong></td>
+              <td>CLI playback and generic SQLite browsers.</td>
+              <td>Native direct streaming in Foxglove Studio, PlotJuggler, and web browsers.</td>
+            </tr>
+            <tr>
+              <td><strong>Crash Recovery</strong></td>
+              <td>Unclosed SQLite transactions can corrupt index on unexpected power loss.</td>
+              <td>Append-only chunk headers ensure data up to the last millisecond is recoverable.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="l05-banner-intro" style="margin-top: 0.4rem; font-size: 0.74rem; padding: 0.35rem 0.6rem;">
+        <strong>💡 Industrial Standard:</strong> Always record with <code>--storage mcap</code> for field testing. Your telemetry can be inspected on any laptop without compiling custom robot interface packages.
+      </div>
+    `
+  });
+
+  // 2. Production CLI Recording Strategies
+  slides.push({
+    id: `${lesson.id}_sec3_recording_cli`,
+    type: 'concept',
+    lessonNum: lesson.num_str,
+    lessonId: lesson.id,
+    module: lesson.module,
+    sectionTitle: '3. Step-by-Step: Recording Data via CLI',
+    badge: '📹 CLI Recording',
+    title: '3. Production CLI Recording Strategies: Selective Topics & Compression',
+    htmlContent: `
+      <div class="l03-two-col-layout">
+        <div class="l03-content-col">
+          <div class="l03-cmd-card">
+            <div class="l03-cmd-header"><span class="l03-term-badge">ros2 bag record</span><strong>Essential Recording Recipes</strong></div>
+            <pre><code class="language-bash"># 1. Selective Topic Recording (Recommended):
+ros2 bag record -s mcap -o amr_patrol_01 \
+  /cmd_vel /odom /scan /tf /tf_static
+
+# 2. Regex Wildcard Topic Recording:
+ros2 bag record -s mcap -e "/amr/.*"
+
+# 3. Production Zstandard Compression:
+ros2 bag record -s mcap -o mission_compressed \
+  --compression-mode file \
+  --compression-format zstd \
+  /scan /camera/image_raw</code></pre>
+          </div>
+        </div>
+        <div class="l03-content-col">
+          <div class="l05-golden-card" style="margin-bottom: 0.35rem; padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🎯</span><strong>The Golden Selective Rule</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">Never run <code>ros2 bag record -a</code> (record all) blindly on a production robot! Unthrottled raw camera images (60 MB/s) will exhaust SSD storage within minutes.</p>
+          </div>
+          <div class="l05-golden-card" style="margin-bottom: 0.35rem; padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🗜️</span><strong>Zstandard (zstd) Compression</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">Enabling <code>zstd</code> compression shrinks 2D laser scans and pointclouds by up to 70% with negligible CPU overhead on modern AMR embedded processors.</p>
+          </div>
+          <div class="l05-golden-card" style="padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🏷️</span><strong>Explicit Directory Naming (-o)</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">Always supply <code>-o &lt;name&gt;</code> with mission timestamps (e.g. <code>amr_patrol_2026_11_12</code>) to prevent cryptic auto-generated timestamp folder names.</p>
+          </div>
+        </div>
+      </div>
+    `
+  });
+
+  // 3. Metadata Inspection & Playback Simulation
+  slides.push({
+    id: `${lesson.id}_sec4_playback_simulation`,
+    type: 'concept',
+    lessonNum: lesson.num_str,
+    lessonId: lesson.id,
+    module: lesson.module,
+    sectionTitle: '4. Inspecting Bag Metadata & Offline Simulation Playback',
+    badge: '▶️ Simulation Playback',
+    title: '4. Offline Simulation Playback: The Authoritative --clock Time Rule',
+    htmlContent: `
+      <div class="l03-two-col-layout">
+        <div class="l03-left-code-col">
+          <div class="l03-cmd-card" style="margin-bottom: 0.35rem;">
+            <div class="l03-cmd-header"><span class="l03-term-badge">Metadata Inspection</span><strong>ros2 bag info</strong></div>
+            <pre><code class="language-bash">ros2 bag info amr_patrol_01/
+# Reports: Duration, Storage format (mcap), 
+# Message count, and exact Topic schemas.</code></pre>
+          </div>
+          <div class="l03-cmd-card">
+            <div class="l03-cmd-header"><span class="l03-term-badge">ros2 bag play</span><strong>Offline Simulation</strong></div>
+            <pre><code class="language-bash"># Playback driving simulated time:
+ros2 bag play --clock 10 -r 1.0 amr_patrol_01/
+
+# Fast-forward 2x speed:
+ros2 bag play -r 2.0 amr_patrol_01/
+
+# Remap topic for algorithm comparison:
+ros2 bag play amr_patrol_01/ --remap /scan:=/recorded_scan</code></pre>
+          </div>
+        </div>
+        <div class="l03-content-col">
+          <div class="l05-golden-card" style="margin-bottom: 0.35rem; padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>⏱️</span><strong>The --clock 10 Parameter Rule</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">Publishes historical timestamps to <code>/clock</code> at 10 Hz. Launch SLAM or RViz2 with <code>use_sim_time:=True</code> to reconstruct missions seamlessly as if running live.</p>
+          </div>
+          <div class="l05-golden-card" style="margin-bottom: 0.35rem; padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>⏩</span><strong>Rate Scaling (-r) &amp; Looping (-l)</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">Accelerate testing at <code>-r 2.0</code> (double speed) or slow down to <code>-r 0.25</code> to inspect high-speed collision close calls frame-by-frame.</p>
+          </div>
+          <div class="l05-golden-card" style="padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🔀</span><strong>Dynamic Topic Remapping</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">Remap <code>/scan:=/recorded_scan</code> to feed historical sensor data into a newly tuned SLAM Toolbox node without topic collision.</p>
+          </div>
+        </div>
+      </div>
+    `
+  });
+
+  // 4. Programmatic Bag Analysis with rosbag2_py
+  slides.push({
+    id: `${lesson.id}_sec5_rosbag2_py`,
+    type: 'concept',
+    lessonNum: lesson.num_str,
+    lessonId: lesson.id,
+    module: lesson.module,
+    sectionTitle: '5. Offline Python Analysis using rosbag2_py',
+    badge: '🐍 Python Analytics',
+    title: '5. Programmatic Bag Analysis: Automated CI/CD Regression & Telemetry Extraction',
+    htmlContent: `
+      <div class="l03-two-col-layout">
+        <div class="l03-left-code-col">
+          <div class="l03-cmd-card" style="margin-bottom: 0;">
+            <div class="l03-cmd-header"><span class="l03-term-badge">analyze_bag.py</span><strong>SequentialReader API</strong></div>
+            <pre><code class="language-python">import rosbag2_py
+from rclpy.serialization import deserialize_message
+from sensor_msgs.msg import LaserScan
+
+reader = rosbag2_py.SequentialReader()
+storage_options = rosbag2_py.StorageOptions(
+    uri='amr_patrol_01', storage_id='mcap'
+)
+converter_options = rosbag2_py.ConverterOptions(
+    input_serialization_format='cdr',
+    output_serialization_format='cdr'
+)
+reader.open(storage_options, converter_options)
+
+while reader.has_next():
+    (topic, data, stamp) = reader.read_next()
+    if topic == '/scan':
+        scan = deserialize_message(data, LaserScan)
+        # Audit minimum obstacle clearance
+        min_dist = min(scan.ranges)</code></pre>
+          </div>
+        </div>
+        <div class="l03-content-col">
+          <div class="l05-golden-card" style="margin-bottom: 0.35rem; padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>📊</span><strong>Automated CI/CD Regression Testing</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">Run automated Python test suites that ingest field bags, verify that minimum obstacle clearance never fell below 0.20m, and fail builds on safety violations.</p>
+          </div>
+          <div class="l05-golden-card" style="margin-bottom: 0.35rem; padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>📈</span><strong>Pandas &amp; NumPy Pipeline</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">Extract odometry and battery telemetry directly into Pandas DataFrames for fleet MTBF (Mean Time Between Failures) analytics.</p>
+          </div>
+          <div class="l05-golden-card" style="padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>⚡</span><strong>Zero ROS 2 Daemon Overhead</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">Processes gigabytes of recorded robotics telemetry in seconds without launching ROS 2 middleware daemons or DDS network discovery.</p>
+          </div>
+        </div>
+      </div>
+    `
+  });
+}
+
+/**
+ * Dedicated High-Yield Pedagogical Deck Builder for Lesson 21:
+ * Complete ROS 2 Command-Line Interface (CLI) Masterclass.
+ */
+function buildLesson21Slides(doc, lesson, slides) {
+  // 1. Master CLI Reference Matrix
+  slides.push({
+    id: `${lesson.id}_sec2_master_cli_matrix`,
+    type: 'concept',
+    lessonNum: lesson.num_str,
+    lessonId: lesson.id,
+    module: lesson.module,
+    sectionTitle: '2. Master CLI Reference Matrix',
+    badge: '⌨️ Master CLI Matrix',
+    title: '2. The ROS 2 CLI Architectural Framework: Unified Verb-Noun Grammar',
+    htmlContent: `
+      <div class="l06-table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th style="width: 18%;">Verb Group</th>
+              <th style="width: 38%;">Primary Introspection Commands</th>
+              <th style="width: 44%;">Operational Purpose</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>ros2 node</code></td>
+              <td><code>list</code>, <code>info &lt;node&gt;</code></td>
+              <td>Inspect active computation graph, publishers, subscribers, services.</td>
+            </tr>
+            <tr>
+              <td><code>ros2 topic</code></td>
+              <td><code>list</code>, <code>echo</code>, <code>hz</code>, <code>bw</code>, <code>info -v</code></td>
+              <td>Monitor telemetry streams, data bandwidth, publication frequency, QoS.</td>
+            </tr>
+            <tr>
+              <td><code>ros2 service</code></td>
+              <td><code>list</code>, <code>type</code>, <code>call &lt;srv&gt; &lt;type&gt; &lt;data&gt;</code></td>
+              <td>Execute synchronous RPC requests and test server transactions.</td>
+            </tr>
+            <tr>
+              <td><code>ros2 action</code></td>
+              <td><code>list</code>, <code>send_goal &lt;act&gt; &lt;type&gt; --feedback</code></td>
+              <td>Dispatch long-duration navigation goals and monitor progress.</td>
+            </tr>
+            <tr>
+              <td><code>ros2 param</code></td>
+              <td><code>list</code>, <code>get</code>, <code>set</code>, <code>dump</code></td>
+              <td>Tune PID gains, velocity limits, and node configurations in real time.</td>
+            </tr>
+            <tr>
+              <td><code>ros2 doctor</code></td>
+              <td><code>--report</code>, <code>multicast receive / send</code></td>
+              <td>Audit DDS participant discovery, network interfaces, platform health.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="l05-banner-intro" style="margin-top: 0.4rem; font-size: 0.74rem; padding: 0.35rem 0.6rem;">
+        <strong>💡 Grammar Uniformity:</strong> ROS 2 adheres to strict <code>ros2 &lt;verb&gt; &lt;noun&gt; [arguments]</code> syntax across all sub-systems, making terminal navigation intuitive and scriptable.
+      </div>
+    `
+  });
+
+  // 2. Deep Graph Introspection: Nodes, Topics & QoS Profiles
+  slides.push({
+    id: `${lesson.id}_sec3_deep_introspection`,
+    type: 'concept',
+    lessonNum: lesson.num_str,
+    lessonId: lesson.id,
+    module: lesson.module,
+    sectionTitle: '3. Deep Graph Introspection: Nodes, Topics & QoS',
+    badge: '🔍 Graph Introspection',
+    title: '3. Deep Graph Introspection: Uncovering Hidden DDS Graph Topologies & QoS',
+    htmlContent: `
+      <div class="l03-two-col-layout">
+        <div class="l03-content-col">
+          <div class="l03-cmd-card">
+            <div class="l03-cmd-header"><span class="l03-term-badge">Introspection Verbs</span><strong>Deep Node &amp; Topic Analysis</strong></div>
+            <pre><code class="language-bash"># 1. Uncover all publishers, subscribers, &amp; services of a node:
+ros2 node info /amr_controller
+
+# 2. Inspect verbose topic metadata &amp; QoS profiles:
+ros2 topic info /scan --verbose
+
+# 3. Measure publication frequency with microsecond precision:
+ros2 topic hz /scan
+
+# 4. Measure network bandwidth consumption:
+ros2 topic bw /camera/image_raw</code></pre>
+          </div>
+        </div>
+        <div class="l03-content-col">
+          <div class="l05-golden-card" style="margin-bottom: 0.35rem; padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🔎</span><strong>ros2 node info: The X-Ray Diagnostic</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">Shows every communication port hosted by the node. Instantly reveals if a subscriber topic name was misspelled or remapped incorrectly.</p>
+          </div>
+          <div class="l05-golden-card" style="margin-bottom: 0.35rem; padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🛡️</span><strong>QoS Compatibility Detective (topic info -v)</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">Identifies fatal DDS mismatches (e.g. Reliable subscriber listening to Best Effort publisher), which silently prevents messages from being delivered.</p>
+          </div>
+          <div class="l05-golden-card" style="padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>📊</span><strong>Bandwidth Auditing (topic bw)</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">Detects Wi-Fi congestion caused by uncompressed camera images before deploying multi-robot fleets on shared wireless access points.</p>
+          </div>
+        </div>
+      </div>
+    `
+  });
+
+  // 3. Transactional Verbs: Services, Actions & Parameter Tuning
+  slides.push({
+    id: `${lesson.id}_sec4_transactional_verbs`,
+    type: 'concept',
+    lessonNum: lesson.num_str,
+    lessonId: lesson.id,
+    module: lesson.module,
+    sectionTitle: '4. Transactional Verbs: Services, Actions & Parameters',
+    badge: '⚡ Transactional CLI',
+    title: '4. Transactional Verbs: Direct RPC Service Calls & Live Action Dispatch',
+    htmlContent: `
+      <div class="l03-two-col-layout">
+        <div class="l03-left-code-col">
+          <div class="l03-cmd-card" style="margin-bottom: 0.35rem;">
+            <div class="l03-cmd-header"><span class="l03-term-badge">Service Call</span><strong>Testing RPC Directly</strong></div>
+            <pre><code class="language-bash"># Call service with inline YAML dictionary payload:
+ros2 service call /reset_odom \
+  nexus_amr_interfaces/srv/ResetOdometry \
+  "{x: 0.0, y: 0.0, theta: 0.0}"</code></pre>
+          </div>
+          <div class="l03-cmd-card">
+            <div class="l03-cmd-header"><span class="l03-term-badge">Action Dispatch</span><strong>Streaming Live Feedback</strong></div>
+            <pre><code class="language-bash"># Send action goal with live feedback enabled:
+ros2 action send_goal /dock_robot \
+  nexus_amr_interfaces/action/DockRobot \
+  "{docking_station_id: 'bay_04'}" \
+  --feedback</code></pre>
+          </div>
+        </div>
+        <div class="l03-content-col">
+          <div class="l05-golden-card" style="margin-bottom: 0.35rem; padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🧪</span><strong>Headless Unit Testing Without GUIs</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">Verify service server logic and response schemas directly in terminal before building complex client GUI widgets or web frontends.</p>
+          </div>
+          <div class="l05-golden-card" style="margin-bottom: 0.35rem; padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>📡</span><strong>The --feedback Action Flag</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">Streams ongoing intermediate feedback ticks (distance remaining, alignment angle) in real time until the terminal goal result returns.</p>
+          </div>
+          <div class="l05-golden-card" style="padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🤖</span><strong>Automated Test Scripting</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">Integrate CLI service calls into bash validation scripts to test physical hardware bringup in manufacturing assembly lines.</p>
+          </div>
+        </div>
+      </div>
+    `
+  });
+
+  // 4. Advanced Network Diagnostics & ROS 2 Doctor
+  slides.push({
+    id: `${lesson.id}_sec5_doctor_diagnostics`,
+    type: 'concept',
+    lessonNum: lesson.num_str,
+    lessonId: lesson.id,
+    module: lesson.module,
+    sectionTitle: '5. Advanced Network Diagnostics & ROS 2 Doctor',
+    badge: '🩺 Network Diagnostics',
+    title: '5. Fleet Diagnostics: ROS 2 Doctor & DDS Multicast Health Audits',
+    htmlContent: `
+      <div class="l03-two-col-layout">
+        <div class="l03-content-col">
+          <div class="l03-cmd-card">
+            <div class="l03-cmd-header"><span class="l03-term-badge">Diagnostic Commands</span><strong>Network &amp; Health Auditing</strong></div>
+            <pre><code class="language-bash"># 1. Complete automated environment &amp; network health audit:
+ros2 doctor --report
+
+# 2. Test DDS multicast reception on Robot A:
+ros2 multicast receive
+
+# 3. Transmit test multicast ping from Developer PC:
+ros2 multicast send
+
+# 4. Enforce strict fleet domain isolation:
+export ROS_DOMAIN_ID=42</code></pre>
+          </div>
+        </div>
+        <div class="l03-content-col">
+          <div class="l05-golden-card" style="margin-bottom: 0.35rem; padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🩺</span><strong>ros2 doctor --report Automated Health Check</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">Scans your Linux kernel, network MTUs, environment variables, and package versions. Pinpoints configuration conflicts instantly.</p>
+          </div>
+          <div class="l05-golden-card" style="margin-bottom: 0.35rem; padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🌐</span><strong>DDS Multicast Discovery Verification</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">Industrial switches frequently block UDP multicast. <code>ros2 multicast receive/send</code> validates whether discovery packets can pass through the facility network.</p>
+          </div>
+          <div class="l05-golden-card" style="padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🔒</span><strong>ROS_DOMAIN_ID Fleet Isolation</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">Assign distinct domain IDs (0&ndash;101) to each physical AMR on a shared warehouse Wi-Fi network to eliminate topic crosstalk and command collision.</p>
+          </div>
+        </div>
+      </div>
+    `
+  });
+}
+
+/**
+ * Dedicated High-Yield Pedagogical Deck Builder for Lesson 22:
+ * Behavior Trees, Recovery Behaviors & Lifecycle Management.
+ */
+function buildLesson22Slides(doc, lesson, slides) {
+  // 1. Why Behavior Trees Over State Machines?
+  slides.push({
+    id: `${lesson.id}_sec2_why_behavior_trees`,
+    type: 'concept',
+    lessonNum: lesson.num_str,
+    lessonId: lesson.id,
+    module: lesson.module,
+    sectionTitle: '2. Why Behavior Trees Over State Machines?',
+    badge: '🌳 Behavior Trees',
+    title: '2. Why Behavior Trees? Overcoming Finite State Machine (FSM) Complexity',
+    htmlContent: `
+      <div class="l06-table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th style="width: 20%;">Dimension</th>
+              <th style="width: 40%;">Finite State Machines (FSMs)</th>
+              <th style="width: 40%;">Behavior Trees (BTs)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Scalability &amp; Transitions</strong></td>
+              <td>State explosion ($O(N^2)$ transitions). Adding 1 state requires updating every existing transition.</td>
+              <td>Modular tree hierarchy ($O(N)$). Nodes can be added, pruned, or reordered independently.</td>
+            </tr>
+            <tr>
+              <td><strong>Reactive Preemption</strong></td>
+              <td>Rigid polling states; interrupting an action requires complex conditional escape transitions.</td>
+              <td>Ticked at high frequency (10Hz). Parent Fallback nodes can preempt children immediately.</td>
+            </tr>
+            <tr>
+              <td><strong>Node Return Contract</strong></td>
+              <td>Arbitrary internal state identifiers and variable transitions.</td>
+              <td>Every node returns strictly: <code>SUCCESS</code>, <code>FAILURE</code>, or <code>RUNNING</code>.</td>
+            </tr>
+            <tr>
+              <td><strong>Visual Reusability</strong></td>
+              <td>Monolithic code structures; difficult to reuse state fragments across robots.</td>
+              <td>Modular XML sub-trees reusable across arm manipulators, drones, and AMRs.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="l05-banner-intro" style="margin-top: 0.4rem; font-size: 0.74rem; padding: 0.35rem 0.6rem;">
+        <strong>💡 Key BT Paradigm:</strong> <code>Sequence</code> acts as AND (ticks children until one fails); <code>Fallback</code> acts as OR (ticks children until one succeeds).
+      </div>
+    `
+  });
+
+  // 2. The Recovery Sub-Tree Pipeline & Behavior Tree Execution
+  slides.push({
+    id: `${lesson.id}_sec3_recovery_pipeline`,
+    type: 'concept',
+    lessonNum: lesson.num_str,
+    lessonId: lesson.id,
+    module: lesson.module,
+    sectionTitle: '3. The Recovery Sub-Tree Pipeline & Behavior Tree Execution',
+    badge: '🔄 Cascading Recoveries',
+    title: '3. Nav2 Recovery Pipeline: The Cascading NavigateRecovery Sub-Tree',
+    htmlContent: `
+      <div class="l03-two-col-layout">
+        <div class="l03-left-code-col">
+          <div class="l03-cmd-card" style="margin-bottom: 0;">
+            <div class="l03-cmd-header"><span class="l03-term-badge">navigate_w_replanning_and_recovery.xml</span><strong>BT Sub-Tree</strong></div>
+            <pre><code class="language-xml">&lt;root main_tree_to_execute="MainTree"&gt;
+  &lt;BehaviorTree ID="MainTree"&gt;
+    &lt;RecoveryNode number_of_retries="6" name="NavigateRecovery"&gt;
+      &lt;!-- Primary Mission Branch --&gt;
+      &lt;PipelineSequence name="NavigateWithReplanning"&gt;
+        &lt;ComputePathToPose goal="{goal}" path="{path}"/&gt;
+        &lt;FollowPath path="{path}"/&gt;
+      &lt;/PipelineSequence&gt;
+
+      &lt;!-- Cascading Recovery Fallback Branch --&gt;
+      &lt;ReactiveFallback name="RecoveryFallback"&gt;
+        &lt;ClearEntireCostmap service_name="local_costmap/clear_entirely_local_costmap"/&gt;
+        &lt;Spin spin_dist="1.57"/&gt;
+        &lt;BackUp backup_dist="0.30" backup_speed="0.10"/&gt;
+        &lt;Wait wait_duration="2.0"/&gt;
+      &lt;/ReactiveFallback&gt;
+    &lt;/RecoveryNode&gt;
+  &lt;/BehaviorTree&gt;
+&lt;/root&gt;</code></pre>
+          </div>
+        </div>
+        <div class="l03-content-col">
+          <div class="l05-golden-card" style="margin-bottom: 0.35rem; padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>1️⃣</span><strong>Step 1: Costmap Clearing</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">Purges dynamic LiDAR sensor artifacts and transient ghost obstacles from the costmap before taking physical action.</p>
+          </div>
+          <div class="l05-golden-card" style="margin-bottom: 0.35rem; padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>2️⃣</span><strong>Step 2: In-Place Spin (90&deg;&ndash;180&deg;)</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">Rotates the AMR in place to sweep blind spots with 2D LiDAR and re-localize in AMCL against distinctive features.</p>
+          </div>
+          <div class="l05-golden-card" style="margin-bottom: 0.35rem; padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>3️⃣</span><strong>Step 3: Safe BackUp (0.30m) &amp; Wait</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">Reverses into verified clear space, pausing 2 seconds to allow pedestrian traffic to pass before attempting to re-plan.</p>
+          </div>
+        </div>
+      </div>
+    `
+  });
+
+  // 3. The ROS 2 Lifecycle State Machine (REP 2007)
+  slides.push({
+    id: `${lesson.id}_sec4_lifecycle_state_machine`,
+    type: 'concept',
+    lessonNum: lesson.num_str,
+    lessonId: lesson.id,
+    module: lesson.module,
+    sectionTitle: '4. The ROS 2 Lifecycle State Machine',
+    badge: '🚦 Lifecycle Nodes',
+    title: '4. Managed Lifecycle State Machine (REP-2007): Deterministic Node States',
+    htmlContent: `
+      <div class="l03-two-col-layout">
+        <div class="l03-content-col">
+          <div class="l05-golden-card" style="margin-bottom: 0.35rem; padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>⚪</span><strong>1. Unconfigured State</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">Node instantiated in memory, but no hardware handles or network resources allocated. Invoking <code>configure</code> triggers <code>on_configure()</code>.</p>
+          </div>
+          <div class="l05-golden-card" style="margin-bottom: 0.35rem; padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🟡</span><strong>2. Inactive Holding State</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">All configuration loaded, publishers and subscribers created, but <strong>actuators are paused</strong>. No velocity messages are emitted. Node is completely safe.</p>
+          </div>
+          <div class="l05-golden-card" style="padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🟢</span><strong>3. Active Execution State</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">Invoking <code>activate</code> transitions node to <code>Active</code> via <code>on_activate()</code>. Actuator loops start and wheel velocity commands stream to hardware.</p>
+          </div>
+        </div>
+        <div class="l03-content-col">
+          <div class="l05-golden-card" style="margin-bottom: 0.35rem; padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🔴</span><strong>4. Finalized (Shutdown) State</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">Hardware drivers safely parked and connections closed. Memory ready for immediate clean deallocation by the operating system.</p>
+          </div>
+          <div class="l05-golden-card" style="padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🛡️</span><strong>Why Industry Demands Lifecycle Nodes</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">Prevents race conditions where motor controllers attempt to drive wheels before LiDAR drivers finish booting, eliminating startup safety accidents.</p>
+          </div>
+        </div>
+      </div>
+    `
+  });
+
+  // 4. Lifecycle Management via CLI & Nav2 Lifecycle Manager
+  slides.push({
+    id: `${lesson.id}_sec5_lifecycle_management_cli`,
+    type: 'concept',
+    lessonNum: lesson.num_str,
+    lessonId: lesson.id,
+    module: lesson.module,
+    sectionTitle: '5. Inspecting Lifecycle States with the CLI',
+    badge: '🎛️ Lifecycle Orchestration',
+    title: '5. Lifecycle Orchestration: CLI State Transitions & Nav2 Lifecycle Manager',
+    htmlContent: `
+      <div class="l03-two-col-layout">
+        <div class="l03-content-col">
+          <div class="l03-cmd-card">
+            <div class="l03-cmd-header"><span class="l03-term-badge">Lifecycle CLI Verbs</span><strong>Manual Transition Commands</strong></div>
+            <pre><code class="language-bash"># 1. Query active state of a node:
+ros2 lifecycle get /amr_controller
+
+# 2. Transition from Unconfigured to Inactive:
+ros2 lifecycle set /amr_controller configure
+
+# 3. Transition from Inactive to Active:
+ros2 lifecycle set /amr_controller activate
+
+# 4. Emergency pause (Active -> Inactive):
+ros2 lifecycle set /amr_controller deactivate</code></pre>
+          </div>
+        </div>
+        <div class="l03-content-col">
+          <div class="l05-golden-card" style="margin-bottom: 0.35rem; padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🎼</span><strong>Nav2 lifecycle_manager Orchestration</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">In production, human operators do not manage lifecycle transitions manually. Nav2\'s <code>lifecycle_manager</code> brings all 8 navigation servers into <code>Active</code> in strict lockstep.</p>
+          </div>
+          <div class="l05-golden-card" style="margin-bottom: 0.35rem; padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🔄</span><strong>Dynamic Fault Reset Pipeline</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">If a hardware driver faults, execute: <code>deactivate &rarr; cleanup &rarr; configure &rarr; activate</code> to reload configuration and reset communication without rebooting the robot PC.</p>
+          </div>
+          <div class="l05-golden-card" style="padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🏆</span><strong>Curriculum Mastery Achieved</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">You now command the complete industrial ROS 2 stack: from Linux foundations and URDF to Nav2 autonomous navigation and behavior tree recovery.</p>
+          </div>
+        </div>
+      </div>
+    `
+  });
+}
