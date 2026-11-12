@@ -7967,6 +7967,312 @@
   padding: 1.5rem 2rem !important;
 }
 
+/* ==========================================================================
+   Lesson 05 Dedicated Presentation Layouts & Overhaul
+   ========================================================================== */
+
+.l05-two-col-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.15rem;
+  align-items: start;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.l05-visual-col {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.l05-visual-frame {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 0.45rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: var(--shadow-sm);
+}
+
+.l05-hero-svg {
+  width: 100%;
+  height: auto;
+  max-height: 185px;
+  object-fit: contain;
+  border-radius: 6px;
+  display: block;
+}
+
+.l05-visual-caption {
+  font-size: 0.72rem;
+  color: var(--text-tertiary);
+  margin-top: 0.35rem;
+  text-align: center;
+  font-weight: 500;
+}
+
+.l05-content-col {
+  display: flex;
+  flex-direction: column;
+  gap: 0.32rem;
+}
+
+.l05-content-col .l03-concept-card {
+  padding: 0.42rem 0.65rem;
+  margin-bottom: 0.28rem;
+}
+
+.l05-content-col .l03-concept-card p {
+  font-size: 0.73rem;
+  line-height: 1.28;
+}
+
+.l05-content-col .l03-cmd-card {
+  margin-bottom: 0.28rem;
+}
+
+.l05-content-col .l03-cmd-card pre {
+  padding: 0.4rem 0.65rem;
+  font-size: 0.74rem;
+  line-height: 1.28;
+}
+
+.l05-content-col .l03-output-card {
+  margin-bottom: 0.28rem;
+}
+
+.l05-content-col .l03-output-card pre {
+  padding: 0.4rem 0.65rem;
+  font-size: 0.72rem;
+  line-height: 1.25;
+}
+
+.l05-card-grid-2x2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.7rem;
+  margin-top: 0.35rem;
+}
+
+.l05-pillar-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 0.6rem 0.8rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.l05-pillar-header {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.l05-pillar-card p {
+  margin: 0;
+  font-size: 0.75rem;
+  line-height: 1.32;
+  color: var(--text-secondary);
+}
+
+.l05-banner-intro {
+  background: rgba(59, 130, 246, 0.08);
+  border: 1px solid rgba(59, 130, 246, 0.25);
+  border-left: 4px solid #3b82f6;
+  border-radius: 6px;
+  padding: 0.45rem 0.75rem;
+  font-size: 0.79rem;
+  color: var(--text-primary);
+  margin-bottom: 0.5rem;
+  line-height: 1.35;
+}
+
+.l05-golden-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 0.48rem 0.7rem;
+  border-left: 4px solid #3b82f6;
+}
+
+.l05-golden-card.warning {
+  border-left-color: #f59e0b;
+}
+
+.l05-golden-card.success {
+  border-left-color: #10b981;
+}
+
+.l05-golden-header {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.81rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 0.18rem;
+}
+
+.l05-golden-card p {
+  margin: 0;
+  font-size: 0.74rem;
+  line-height: 1.32;
+  color: var(--text-secondary);
+}
+
+.l05-table-wrap {
+  width: 100%;
+  overflow: hidden;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  background: var(--bg-card);
+}
+
+.l05-table-wrap table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.72rem;
+}
+
+.l05-table-wrap th {
+  padding: 0.35rem 0.55rem;
+  font-size: 0.73rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  background: var(--bg-sidebar, rgba(0, 0, 0, 0.04));
+  border-bottom: 1px solid var(--border-color);
+}
+
+.l05-table-wrap td {
+  padding: 0.3rem 0.55rem;
+  border-bottom: 1px solid var(--border-color);
+  color: var(--text-secondary);
+  line-height: 1.25;
+}
+
+.l05-table-wrap tr:last-child td {
+  border-bottom: none;
+}
+
+.l05-table-wrap td code {
+  font-family: var(--font-mono, monospace);
+  font-size: 0.71rem;
+  padding: 0.1rem 0.3rem;
+  border-radius: 4px;
+  background: rgba(59, 130, 246, 0.08);
+  color: #2563eb;
+  font-weight: 600;
+}
+
+.dark-theme .l05-table-wrap td code {
+  background: rgba(59, 130, 246, 0.16);
+  color: #60a5fa;
+}
+
+/* Fullscreen Overrides for Lesson 05 */
+.presentation-viewport.is-fullscreen .l05-two-col-layout {
+  gap: 2.25rem !important;
+  max-height: calc(100vh - 130px) !important;
+}
+
+.presentation-viewport.is-fullscreen .l05-hero-svg {
+  max-height: 320px !important;
+}
+
+.presentation-viewport.is-fullscreen .l05-visual-caption {
+  font-size: 0.88rem !important;
+}
+
+.presentation-viewport.is-fullscreen .l05-card-grid-2x2 {
+  gap: 1.5rem !important;
+}
+
+.presentation-viewport.is-fullscreen .l05-banner-intro {
+  font-size: 0.98rem !important;
+  padding: 0.75rem 1.1rem !important;
+  margin-bottom: 1.25rem !important;
+}
+
+.presentation-viewport.is-fullscreen .l05-pillar-header,
+.presentation-viewport.is-fullscreen .l05-golden-header {
+  font-size: 0.96rem !important;
+}
+
+.presentation-viewport.is-fullscreen .l05-pillar-card p,
+.presentation-viewport.is-fullscreen .l05-golden-card p {
+  font-size: 0.9rem !important;
+  line-height: 1.45 !important;
+}
+
+.presentation-viewport.is-fullscreen .l05-table-wrap table {
+  font-size: 0.85rem !important;
+}
+
+.presentation-viewport.is-fullscreen .l05-table-wrap th,
+.presentation-viewport.is-fullscreen .l05-table-wrap td {
+  padding: 0.55rem 0.85rem !important;
+}
+
+/* Card Mode Compact Optimizations for Lesson 05 */
+.presentation-viewport:not(.is-fullscreen) .l05-two-col-layout {
+  gap: 0.95rem !important;
+}
+
+.presentation-viewport:not(.is-fullscreen) .l05-content-col {
+  gap: 0.22rem !important;
+}
+
+.presentation-viewport:not(.is-fullscreen) .l05-content-col .l03-cmd-card,
+.presentation-viewport:not(.is-fullscreen) .l05-content-col .l03-output-card,
+.presentation-viewport:not(.is-fullscreen) .l05-content-col .l03-concept-card,
+.presentation-viewport:not(.is-fullscreen) .l05-content-col .l05-golden-card {
+  margin-bottom: 0.18rem !important;
+  padding: 0.32rem 0.55rem !important;
+}
+
+.presentation-viewport:not(.is-fullscreen) .l05-content-col .l03-cmd-header,
+.presentation-viewport:not(.is-fullscreen) .l05-content-col .l03-output-header,
+.presentation-viewport:not(.is-fullscreen) .l05-content-col .l03-concept-header,
+.presentation-viewport:not(.is-fullscreen) .l05-content-col .l05-golden-header {
+  padding: 0.2rem 0.5rem !important;
+  font-size: 0.70rem !important;
+  margin-bottom: 0.12rem !important;
+}
+
+.presentation-viewport:not(.is-fullscreen) .l05-content-col .l03-concept-card p,
+.presentation-viewport:not(.is-fullscreen) .l05-content-col .l05-golden-card p {
+  font-size: 0.69rem !important;
+  line-height: 1.22 !important;
+}
+
+.presentation-viewport:not(.is-fullscreen) .l05-content-col pre,
+.presentation-viewport:not(.is-fullscreen) .l05-content-col pre code,
+.presentation-viewport:not(.is-fullscreen) .l05-content-col .l03-cmd-card pre,
+.presentation-viewport:not(.is-fullscreen) .l05-content-col .l03-cmd-card pre code,
+.presentation-viewport:not(.is-fullscreen) .l05-content-col .l03-output-card pre,
+.presentation-viewport:not(.is-fullscreen) .l05-content-col .l03-output-card pre code {
+  padding: 0.3rem 0.5rem !important;
+  font-size: 0.69rem !important;
+  line-height: 1.22 !important;
+}
+
+.presentation-viewport:not(.is-fullscreen) .l05-table-wrap th,
+.presentation-viewport:not(.is-fullscreen) .l05-table-wrap td {
+  padding: 0.22rem 0.42rem !important;
+  font-size: 0.69rem !important;
+  line-height: 1.2 !important;
+}
+
+
+
 
 
 

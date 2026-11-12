@@ -442,6 +442,8 @@ export function parseLessonIntoSlides(lesson) {
     buildLesson03Slides(doc, lesson, slides);
   } else if (lesson.id === '04' || lesson.num_str === '04' || lesson.id === 'lesson_04') {
     buildLesson04Slides(doc, lesson, slides);
+  } else if (lesson.id === '05' || lesson.num_str === '05' || lesson.id === 'lesson_05') {
+    buildLesson05Slides(doc, lesson, slides);
   } else {
     sections.forEach((section, secIdx) => {
     const h2 = section.querySelector('h2');
@@ -2317,4 +2319,719 @@ ros2 pkg prefix nexus_amr_basics
     `
   });
 }
+
+/**
+ * Dedicated High-Yield Pedagogical Deck Builder for Lesson 05:
+ * Communication Mechanism I: Publishers, Subscribers & Quality of Service (QoS).
+ * Consolidates fragmented single-command micro-splits into unified,
+ * high-yield architectural overviews with paired commands, code, and live telemetry.
+ */
+function buildLesson05Slides(doc, lesson, slides) {
+  // 1. Learning Objectives & Pub/Sub Curriculum Road Map
+  slides.push({
+    id: `${lesson.id}_sec1_objectives`,
+    type: 'concept',
+    lessonNum: lesson.num_str,
+    lessonId: lesson.id,
+    module: lesson.module,
+    sectionTitle: '1. Overview & Learning Objectives',
+    badge: '🎯 Architecture Goals',
+    title: '1. Learning Objectives & Pub/Sub Road Map',
+    htmlContent: `
+      <div class="l05-banner-intro">
+        <strong>Autonomous Robotics Core Requirement:</strong> Modern AMRs require asynchronous, decoupled communication between real-time sensors (ultrasonic rangers, LiDAR, cameras) and supervisory safety systems. In ROS 2, this is achieved via the <strong>Publish-Subscribe</strong> model over a decentralized <strong>DDS</strong> message bus.
+      </div>
+      <div class="l05-card-grid-2x2">
+        <div class="l05-pillar-card">
+          <div class="l05-pillar-header"><span class="l03-card-icon">📡</span><span>DDS Pub/Sub Decoupling</span></div>
+          <p>Master temporal, spatial, and synchronization decoupling over DDS. Messages stream peer-to-peer with zero central master bottleneck.</p>
+        </div>
+        <div class="l05-pillar-card">
+          <div class="l05-pillar-header"><span class="l03-card-icon">🧭</span><span>Ultrasonic Rangefinder Publisher</span></div>
+          <p>Author an OOP Python publisher node (<code>ultrasonic_sensor_node.py</code>) streaming <code>sensor_msgs/msg/Range</code> at 10 Hz via non-blocking timers.</p>
+        </div>
+        <div class="l05-pillar-card">
+          <div class="l05-pillar-header"><span class="l03-card-icon">🛡️</span><span>Collision Safety Monitor Subscriber</span></div>
+          <p>Author an event-driven subscriber (<code>collision_monitor_node.py</code>) evaluating a 0.50m safety threshold and triggering real-time emergency braking.</p>
+        </div>
+        <div class="l05-pillar-card">
+          <div class="l05-pillar-header"><span class="l03-card-icon">⚡</span><span>QoS Policies &amp; AMR Square Mission</span></div>
+          <p>Configure Reliability (<code>RELIABLE</code> vs <code>BEST_EFFORT</code>) and Durability policies, and program Turtlesim to execute an autonomous square patrol.</p>
+        </div>
+      </div>
+    `
+  });
+
+  // 2. Section 2: Topic Communication Architecture & DDS Middleware
+  slides.push({
+    id: `${lesson.id}_sec2_topic_arch_dds`,
+    type: 'concept',
+    lessonNum: lesson.num_str,
+    lessonId: lesson.id,
+    module: lesson.module,
+    sectionTitle: '2. Topic Communication Architecture & DDS',
+    badge: '🌐 DDS Message Bus',
+    title: '2. Topic Communication Architecture & DDS Middleware',
+    htmlContent: `
+      <div class="l05-two-col-layout">
+        <div class="l05-visual-col">
+          <div class="l05-visual-frame">
+            <img src="assets/images/ros2_graph_dds_bus.svg" alt="ROS 2 Decentralized DDS Bus" class="l05-hero-svg" />
+            <span class="l05-visual-caption">Decentralized computational graph running over peer-to-peer DDS (Zero roscore bottleneck).</span>
+          </div>
+          <div class="l05-golden-card" style="margin-top: 0.35rem;">
+            <div class="l05-golden-header"><span>⚡</span><strong>Peer-to-Peer Multicast Discovery</strong></div>
+            <p>Nodes automatically discover compatible peers on the local network via DDS domain IDs, negotiating pub/sub connections with zero centralized master broker.</p>
+          </div>
+        </div>
+        <div class="l05-content-col">
+          <div class="l03-concept-card">
+            <div class="l03-concept-header"><span class="l03-card-icon">⏳</span><strong>Temporal Decoupling</strong></div>
+            <p>Publishers and subscribers do not need to be active at the same time. A subscriber can join minutes after a publisher starts without network or execution errors.</p>
+          </div>
+          <div class="l03-concept-card">
+            <div class="l03-concept-header"><span class="l03-card-icon">🌐</span><strong>Spatial Decoupling</strong></div>
+            <p>Nodes do not know each other's IP addresses or process IDs. They address data packets exclusively by topic name (e.g. <code>/sensor/ultrasonic_front</code>).</p>
+          </div>
+          <div class="l03-concept-card">
+            <div class="l03-concept-header"><span class="l03-card-icon">⚡</span><strong>Synchronization Decoupling</strong></div>
+            <p>Publishing is non-blocking. A publisher never waits for subscribers to receive or parse data, ensuring high-rate sensor loops never stall.</p>
+          </div>
+        </div>
+      </div>
+    `
+  });
+
+  // 3. Section 2: Pub/Sub Message Flow & Topic Buffering
+  slides.push({
+    id: `${lesson.id}_sec2_pubsub_pipeline`,
+    type: 'concept',
+    lessonNum: lesson.num_str,
+    lessonId: lesson.id,
+    module: lesson.module,
+    sectionTitle: '2. Pub/Sub Message Flow & Topic Buffering',
+    badge: '🔄 Pub/Sub Pipeline',
+    title: '2. Pub/Sub Message Flow & In-Memory Topic Buffering',
+    htmlContent: `
+      <div class="l05-two-col-layout">
+        <div class="l05-visual-col">
+          <div class="l05-visual-frame">
+            <img src="assets/images/ros2_pubsub_pipeline.svg" alt="ROS 2 Pub/Sub Pipeline" class="l05-hero-svg" />
+            <span class="l05-visual-caption">DataWriter ➔ CDR Serialization ➔ DDS Socket Buffer ➔ DataReader Callback.</span>
+          </div>
+          <div class="l05-golden-card warning" style="margin-top: 0.35rem;">
+            <div class="l05-golden-header"><span>💾</span><strong>In-Memory Topic Buffering</strong></div>
+            <p>DDS maintains an internal ring buffer sized by QoS <code>depth</code>. If unread packets exceed depth, the oldest packet is dropped to prevent memory leaks.</p>
+          </div>
+        </div>
+        <div class="l05-content-col">
+          <div class="l03-concept-card">
+            <div class="l03-concept-header"><span class="l03-card-icon">📦</span><strong>CDR Serialization</strong></div>
+            <p>When calling <code>self.pub.publish(msg)</code>, the typed Python struct is serialized into binary Common Data Representation (CDR) packets for UDP network broadcast.</p>
+          </div>
+          <div class="l03-concept-card">
+            <div class="l03-concept-header"><span class="l03-card-icon">🔄</span><strong>DataReader Callback Scheduling</strong></div>
+            <p>Incoming packets trigger the OS socket. <code>rclpy.spin()</code> processes the queue and schedules the bound Python callback method on the executor thread.</p>
+          </div>
+          <div class="l03-concept-card">
+            <div class="l03-concept-header"><span class="l03-card-icon">🎛️</span><strong>Zero CPU Busy-Waiting</strong></div>
+            <p>Subscribers sleep until the Linux kernel signals new packet arrival on the DDS socket, yielding 0% idle CPU utilization.</p>
+          </div>
+        </div>
+      </div>
+    `
+  });
+
+  // 4. Section 3.1: Discovering & Inspecting Message Interfaces (sensor_msgs/msg/Range)
+  slides.push({
+    id: `${lesson.id}_sec3_interface_inspection`,
+    type: 'concept',
+    lessonNum: lesson.num_str,
+    lessonId: lesson.id,
+    module: lesson.module,
+    sectionTitle: '3. Message Interface Discovery',
+    badge: '🔍 Interface Inspection',
+    title: '3.1 Interface Discovery: sensor_msgs/msg/Range',
+    htmlContent: `
+      <div class="l05-two-col-layout">
+        <div class="l05-content-col">
+          <div class="l03-concept-card">
+            <div class="l03-concept-header"><span class="l03-card-icon">💡</span><strong>Robotics Best Practice: Inspect Before Coding</strong></div>
+            <p>Never guess message schemas. Always inspect standard ROS 2 message fields and data types using CLI introspection before writing publisher or subscriber logic.</p>
+          </div>
+          <div class="l03-cmd-card">
+            <div class="l03-cmd-header"><span class="l03-term-badge">CLI Discovery</span><strong>Query Interface Schema</strong></div>
+            <pre><code class="language-bash"># Search across interfaces for range types:
+ros2 interface list | grep -i range
+
+# Inspect sensor_msgs/msg/Range schema:
+ros2 interface show sensor_msgs/msg/Range</code></pre>
+          </div>
+          <div class="l05-golden-card success" style="margin-top: 0.15rem;">
+            <div class="l05-golden-header"><span>🎯</span><strong>Key Insight: msg.range</strong></div>
+            <p>The obstacle distance in meters is stored in <code>msg.range</code> (float32). Do not confuse it with generic <code>msg.data</code>!</p>
+          </div>
+        </div>
+        <div class="l05-content-col">
+          <div class="l03-output-header"><span class="l03-card-icon">📋</span><strong>Field Definitions &amp; Robotics Semantics</strong></div>
+          <div class="l05-table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Field</th>
+                  <th>Type</th>
+                  <th>Robotics Semantic Meaning</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><code>header.frame_id</code></td>
+                  <td>string</td>
+                  <td>Mounting coordinate frame (e.g. <code>'ultrasound_front_link'</code>)</td>
+                </tr>
+                <tr>
+                  <td><code>radiation_type</code></td>
+                  <td>uint8</td>
+                  <td>Transducer type: <code>0 = ULTRASOUND</code>, <code>1 = INFRARED</code></td>
+                </tr>
+                <tr>
+                  <td><code>field_of_view</code></td>
+                  <td>float32</td>
+                  <td>Detection cone spread in radians (<code>0.5236 rad ≈ 30°</code>)</td>
+                </tr>
+                <tr>
+                  <td><code>min_range / max_range</code></td>
+                  <td>float32</td>
+                  <td>Operating envelope limits (<code>0.02m</code> to <code>3.0m</code>)</td>
+                </tr>
+                <tr>
+                  <td><code>range</code></td>
+                  <td>float32</td>
+                  <td><strong>Current measured obstacle distance in meters</strong></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    `
+  });
+
+  // 5. Section 3.2: Authoring the Ultrasonic Sensor Publisher Node
+  slides.push({
+    id: `${lesson.id}_sec3_publisher_node`,
+    type: 'concept',
+    lessonNum: lesson.num_str,
+    lessonId: lesson.id,
+    module: lesson.module,
+    sectionTitle: '3. Writing the Publisher Node',
+    badge: '📡 Publisher Node',
+    title: '3.2 Authoring the Ultrasonic Sensor Publisher Node',
+    htmlContent: `
+      <div class="l05-two-col-layout">
+        <div class="l05-content-col">
+          <div class="l03-cmd-card">
+            <div class="l03-cmd-header"><span class="l03-term-badge">Python Node</span><strong>ultrasonic_sensor_node.py</strong></div>
+            <pre><code class="language-python">import math, rclpy
+from rclpy.node import Node
+from sensor_msgs.msg import Range
+
+class UltrasonicSensorPublisher(Node):
+    def __init__(self):
+        super().__init__('ultrasonic_sensor_node')
+        self.pub = self.create_publisher(Range, '/sensor/ultrasonic_front', 10)
+        self.timer = self.create_timer(0.1, self.timer_cb)
+        self.step = 0
+
+    def timer_cb(self):
+        dist = 1.5 + 1.2 * math.sin(0.5 * self.step * 0.1)
+        msg = Range()
+        msg.header.stamp = self.get_clock().now().to_msg()
+        msg.header.frame_id = 'ultrasound_front_link'
+        msg.radiation_type = Range.ULTRASOUND
+        msg.range = round(dist, 2)
+        self.pub.publish(msg)
+        self.step += 1</code></pre>
+          </div>
+        </div>
+        <div class="l05-content-col">
+          <div class="l03-concept-card">
+            <div class="l03-concept-header"><span class="l03-card-icon">🏷️</span><strong>1. Node Heritage &amp; Registration</strong></div>
+            <p>Subclasses <code>rclpy.node.Node</code>. <code>super().__init__('ultrasonic_sensor_node')</code> registers node ID into the ROS 2 graph.</p>
+          </div>
+          <div class="l03-concept-card">
+            <div class="l03-concept-header"><span class="l03-card-icon">⏱️</span><strong>2. Non-Blocking 10 Hz Timer</strong></div>
+            <p><code>create_timer(0.1, self.timer_cb)</code> fires every 100ms. Never blocks the executor thread with <code>time.sleep()</code>.</p>
+          </div>
+          <div class="l03-concept-card">
+            <div class="l03-concept-header"><span class="l03-card-icon">📡</span><strong>3. DDS Publisher &amp; Default QoS</strong></div>
+            <p>Depth <code>10</code> applies default QoS: <code>RELIABLE</code> delivery, <code>VOLATILE</code> durability, and <code>KEEP_LAST(10)</code> ring buffer.</p>
+          </div>
+          <div class="l03-concept-card">
+            <div class="l03-concept-header"><span class="l03-card-icon">🌊</span><strong>4. Synthetic AMR Telemetry</strong></div>
+            <p>Sinusoidal distance oscillates 0.3m–2.7m. Proximity under 0.50m triggers vehicle safety alerts.</p>
+          </div>
+        </div>
+      </div>
+    `
+  });
+
+  // 6. Section 4: Configuring setup.py, Building & Testing the Publisher
+  slides.push({
+    id: `${lesson.id}_sec4_setup_build_test`,
+    type: 'concept',
+    lessonNum: lesson.num_str,
+    lessonId: lesson.id,
+    module: lesson.module,
+    sectionTitle: '4. Build & CLI Introspection',
+    badge: '🛠️ Build & Test',
+    title: '4. setup.py Entry Point, Build & Topic Introspection',
+    htmlContent: `
+      <div class="l05-two-col-layout">
+        <div class="l05-content-col">
+          <div class="l03-cmd-card">
+            <div class="l03-cmd-header"><span class="l03-term-badge">setup.py</span><strong>Step 1: Register Console Script</strong></div>
+            <pre><code class="language-python">entry_points={
+    'console_scripts': [
+        'ultrasonic_publisher = nexus_amr_basics.ultrasonic_sensor_node:main',
+    ],
+},</code></pre>
+          </div>
+          <div class="l03-cmd-card">
+            <div class="l03-cmd-header"><span class="l03-term-badge">Terminal 1</span><strong>Step 2: Build &amp; Launch (--symlink-install)</strong></div>
+            <pre><code class="language-bash">cd ~/ros2_ws
+colcon build --symlink-install --packages-select nexus_amr_basics
+source install/setup.bash
+ros2 run nexus_amr_basics ultrasonic_publisher</code></pre>
+          </div>
+        </div>
+        <div class="l05-content-col">
+          <div class="l03-output-card">
+            <div class="l03-output-header"><span class="l03-card-icon">🔍</span><strong>CLI Steps 1 &amp; 2: Discover &amp; Echo Topic</strong></div>
+            <pre><code class="language-bash">$ ros2 topic list
+/sensor/ultrasonic_front
+
+$ ros2 topic echo /sensor/ultrasonic_front
+range: 1.50 -> [PATH CLEAR]
+range: 1.62 -> [PATH CLEAR]</code></pre>
+          </div>
+          <div class="l03-output-card">
+            <div class="l03-output-header"><span class="l03-card-icon">⚡</span><strong>CLI Step 3: Stream Rate Introspection</strong></div>
+            <pre><code class="language-bash">$ ros2 topic hz /sensor/ultrasonic_front
+average rate: 10.012 Hz (period: 0.100s, window: 10)</code></pre>
+          </div>
+        </div>
+      </div>
+    `
+  });
+
+  // 7. Section 5: Authoring the Collision Safety Monitor Subscriber Node
+  slides.push({
+    id: `${lesson.id}_sec5_subscriber_node`,
+    type: 'concept',
+    lessonNum: lesson.num_str,
+    lessonId: lesson.id,
+    module: lesson.module,
+    sectionTitle: '5. Writing the Subscriber Node',
+    badge: '🛡️ Subscriber Node',
+    title: '5. Authoring the Collision Safety Monitor Subscriber',
+    htmlContent: `
+      <div class="l05-two-col-layout">
+        <div class="l05-content-col">
+          <div class="l03-cmd-card">
+            <div class="l03-cmd-header"><span class="l03-term-badge">Python Node</span><strong>collision_monitor_node.py</strong></div>
+            <pre><code class="language-python">import rclpy
+from rclpy.node import Node
+from sensor_msgs.msg import Range
+
+class CollisionSafetySubscriber(Node):
+    def __init__(self):
+        super().__init__('collision_monitor_node')
+        self.safety_threshold_m = 0.50
+        self.sub = self.create_subscription(
+            Range, '/sensor/ultrasonic_front',
+            self.distance_callback, 10
+        )
+
+    def distance_callback(self, msg: Range):
+        dist = msg.range
+        if dist < self.safety_threshold_m:
+            self.get_logger().error(f'ALERT: {dist:.2f}m! EMERGENCY BRAKE!')
+        else:
+            self.get_logger().info(f'Distance: {dist:.2f}m -> Nominal clear')</code></pre>
+          </div>
+        </div>
+        <div class="l05-content-col">
+          <div class="l03-concept-card">
+            <div class="l03-concept-header"><span class="l03-card-icon">⚡</span><strong>1. Event-Driven Push Callback</strong></div>
+            <p><code>distance_callback</code> runs immediately when a DDS packet arrives. 0% CPU wasted on busy-waiting.</p>
+          </div>
+          <div class="l03-concept-card">
+            <div class="l03-concept-header"><span class="l03-card-icon">🛡️</span><strong>2. Physical Safety Invariant</strong></div>
+            <p>Distance &lt; 0.50m triggers emergency brake alert, overriding motor controllers in complete AMR stacks.</p>
+          </div>
+          <div class="l03-concept-card">
+            <div class="l03-concept-header"><span class="l03-card-icon">🔗</span><strong>3. QoS Compatibility Match</strong></div>
+            <p>Depth <code>10</code> matches publisher default QoS (<code>RELIABLE</code> + <code>VOLATILE</code>), guaranteeing packet delivery.</p>
+          </div>
+          <div class="l03-concept-card">
+            <div class="l03-concept-header"><span class="l03-card-icon">🛑</span><strong>4. Clean Lifecycle Teardown</strong></div>
+            <p><code>destroy_node()</code> and <code>rclpy.shutdown()</code> cleanly deregister subscriber from DDS on <code>Ctrl+C</code>.</p>
+          </div>
+        </div>
+      </div>
+    `
+  });
+
+  // 8. Section 6: Dual-Node End-to-End Verification Drill
+  slides.push({
+    id: `${lesson.id}_sec6_dual_node_drill`,
+    type: 'concept',
+    lessonNum: lesson.num_str,
+    lessonId: lesson.id,
+    module: lesson.module,
+    sectionTitle: '6. Dual-Node Verification Drill',
+    badge: '🚀 End-to-End Test',
+    title: '6. Dual-Node Telemetry & Verification Drill',
+    htmlContent: `
+      <div class="l05-two-col-layout">
+        <div class="l05-content-col">
+          <div class="l03-cmd-card">
+            <div class="l03-cmd-header"><span class="l03-term-badge">setup.py</span><strong>Step 1: Register Entry Point</strong></div>
+            <pre><code class="language-python">'collision_monitor = nexus_amr_basics.collision_monitor_node:main',</code></pre>
+          </div>
+          <div class="l03-cmd-card">
+            <div class="l03-cmd-header"><span class="l03-term-badge">Execution</span><strong>Step 2: Launch Dual Nodes</strong></div>
+            <pre><code class="language-bash"># Terminal 1: Sensor Publisher
+ros2 run nexus_amr_basics ultrasonic_publisher
+
+# Terminal 2: Safety Supervisor
+ros2 run nexus_amr_basics collision_monitor</code></pre>
+          </div>
+          <div class="l03-cmd-card">
+            <div class="l03-cmd-header"><span class="l03-term-badge">Terminal 3</span><strong>Step 3: Graph Topic Topology Check</strong></div>
+            <pre><code class="language-bash">ros2 topic info /sensor/ultrasonic_front</code></pre>
+          </div>
+        </div>
+        <div class="l05-content-col">
+          <div class="l03-output-card">
+            <div class="l03-output-header"><span class="l03-card-icon">🖥️</span><strong>Terminal 2 Live Telemetry: Safety Monitor</strong></div>
+            <pre><code class="language-text">[INFO] [collision_monitor]: Initialized (Threshold: 0.50 m)
+[INFO] [collision_monitor]: Distance: 1.52 m -> PATH CLEAR
+[WARN] [collision_monitor]: ⚠️ EMERGENCY BRAKE! Distance: 0.38 m &lt; 0.50 m!</code></pre>
+          </div>
+          <div class="l03-output-card">
+            <div class="l03-output-header"><span class="l03-card-icon">📊</span><strong>Terminal 3 Output: Active DDS Endpoints</strong></div>
+            <pre><code class="language-text">Type: sensor_msgs/msg/Range
+Publisher count: 1    (/ultrasonic_sensor_node)
+Subscription count: 1 (/collision_monitor_node)</code></pre>
+          </div>
+        </div>
+      </div>
+    `
+  });
+
+  // 9. Section 7.1: Quality of Service (QoS) Deep Dive: Policies & Profiles
+  slides.push({
+    id: `${lesson.id}_sec7_qos_deep_dive`,
+    type: 'concept',
+    lessonNum: lesson.num_str,
+    lessonId: lesson.id,
+    module: lesson.module,
+    sectionTitle: '7. Quality of Service (QoS)',
+    badge: '⚖️ QoS Policies',
+    title: '7.1 Quality of Service (QoS): Policies & AMR Profiles',
+    htmlContent: `
+      <div class="l05-two-col-layout">
+        <div class="l05-content-col">
+          <div class="l03-concept-card">
+            <div class="l03-concept-header"><span class="l03-card-icon">🎯</span><strong>1. Reliability Policy</strong></div>
+            <p><strong>RELIABLE:</strong> Guarantees delivery via packet ACKs and retransmissions. Used for state machines, e-stops, and goals.<br/>
+            <strong>BEST_EFFORT:</strong> Drops delayed packets, minimum latency. Essential for 20-30 Hz sensor streams (LiDAR, camera).</p>
+          </div>
+          <div class="l03-concept-card">
+            <div class="l03-concept-header"><span class="l03-card-icon">💾</span><strong>2. Durability Policy</strong></div>
+            <p><strong>VOLATILE:</strong> No samples saved for late joiners.<br/>
+            <strong>TRANSIENT_LOCAL:</strong> "Latched" topic; publisher keeps last N samples in memory for late joiners (e.g. <code>/map</code>).</p>
+          </div>
+          <div class="l03-concept-card">
+            <div class="l03-concept-header"><span class="l03-card-icon">🗄️</span><strong>3. History &amp; Depth Policy</strong></div>
+            <p><strong>KEEP_LAST (N):</strong> Ring buffer of depth N.<br/>
+            <strong>KEEP_ALL:</strong> Unbounded buffer (RAM hazard if subscriber lags).</p>
+          </div>
+        </div>
+        <div class="l05-content-col">
+          <div class="l03-output-header"><span class="l03-card-icon">🤖</span><strong>Production AMR QoS Selection Matrix</strong></div>
+          <div class="l05-table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Topic &amp; Stream</th>
+                  <th>Reliability</th>
+                  <th>Durability</th>
+                  <th>Rationale</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><code>/scan</code> (LiDAR)</td>
+                  <td>BEST_EFFORT</td>
+                  <td>VOLATILE</td>
+                  <td>Latest scan is crucial; never stall for dropped packet.</td>
+                </tr>
+                <tr>
+                  <td><code>/map</code> (Occupancy)</td>
+                  <td>RELIABLE</td>
+                  <td>TRANSIENT_LOCAL</td>
+                  <td>Latched: Late-joining AMRs need map immediately.</td>
+                </tr>
+                <tr>
+                  <td><code>/cmd_vel</code> (Motors)</td>
+                  <td>RELIABLE</td>
+                  <td>VOLATILE</td>
+                  <td>Velocity setpoints must be delivered deterministically.</td>
+                </tr>
+                <tr>
+                  <td><code>/emergency_stop</code></td>
+                  <td>RELIABLE</td>
+                  <td>VOLATILE</td>
+                  <td>Safety invariant; zero packet drop tolerated.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    `
+  });
+
+  // 10. Section 7.2: The QoS Compatibility Rule (Requested <= Offered)
+  slides.push({
+    id: `${lesson.id}_sec7_qos_compatibility`,
+    type: 'concept',
+    lessonNum: lesson.num_str,
+    lessonId: lesson.id,
+    module: lesson.module,
+    sectionTitle: '7. QoS Compatibility & Python Setup',
+    badge: '⚠️ Compatibility Rule',
+    title: '7.2 The QoS Compatibility Rule (Rx <= Tx) & The Silence Trap',
+    htmlContent: `
+      <div class="l05-two-col-layout">
+        <div class="l05-content-col">
+          <div class="l05-table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Publisher (Tx)</th>
+                  <th>Subscriber (Rx)</th>
+                  <th>Compatible?</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><span class="badge badge-success">RELIABLE</span></td>
+                  <td><span class="badge badge-success">RELIABLE</span></td>
+                  <td><strong>Compatible ✅</strong> (Guaranteed delivery)</td>
+                </tr>
+                <tr>
+                  <td><span class="badge badge-success">RELIABLE</span></td>
+                  <td><span class="badge badge-warning">BEST_EFFORT</span></td>
+                  <td><strong>Compatible ✅</strong> (Accepts best effort)</td>
+                </tr>
+                <tr>
+                  <td><span class="badge badge-warning">BEST_EFFORT</span></td>
+                  <td><span class="badge badge-warning">BEST_EFFORT</span></td>
+                  <td><strong>Compatible ✅</strong> (Low-latency stream)</td>
+                </tr>
+                <tr>
+                  <td><span class="badge badge-warning">BEST_EFFORT</span></td>
+                  <td><span class="badge badge-danger">RELIABLE</span></td>
+                  <td><strong>INCOMPATIBLE ❌ (Silent Failure!)</strong></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="l05-golden-card warning" style="margin-top: 0.25rem;">
+            <div class="l05-golden-header"><span>⚠️</span><strong>The QoS "Silence" Trap</strong></div>
+            <p>If a subscriber requests <code>RELIABLE</code> from a <code>BEST_EFFORT</code> publisher, both nodes run without crashing, but <strong>ZERO messages are ever received</strong>!</p>
+          </div>
+        </div>
+        <div class="l05-content-col">
+          <div class="l03-cmd-card">
+            <div class="l03-cmd-header"><span class="l03-term-badge">Python QoS</span><strong>Authoring Profiles with rclpy.qos</strong></div>
+            <pre><code class="language-python">from rclpy.qos import QoSProfile, ReliabilityPolicy, DurabilityPolicy, qos_profile_sensor_data
+
+# Option A: Pre-built Sensor Profile (Best-Effort, Volatile, Depth 5)
+self.sub = self.create_subscription(LaserScan, '/scan', self.cb, qos_profile=qos_profile_sensor_data)
+
+# Option B: Custom Latched Profile (Reliable, Latched, Depth 1)
+latched_qos = QoSProfile(
+    reliability=ReliabilityPolicy.RELIABLE,
+    durability=DurabilityPolicy.TRANSIENT_LOCAL,
+    depth=1
+)
+self.map_sub = self.create_subscription(OccupancyGrid, '/map', self.cb, qos_profile=latched_qos)</code></pre>
+          </div>
+        </div>
+      </div>
+    `
+  });
+
+  // 11. Section 7.3: Multi-Topic Architecture: Single Node Multi Pub/Sub
+  slides.push({
+    id: `${lesson.id}_sec7_multi_pubsub`,
+    type: 'concept',
+    lessonNum: lesson.num_str,
+    lessonId: lesson.id,
+    module: lesson.module,
+    sectionTitle: '7. Multi-Topic Architecture',
+    badge: '🔀 Multi-Topic Hub',
+    title: '7.3 Multi-Topic Architecture: Single Node Multi Pub/Sub',
+    htmlContent: `
+      <div class="l05-two-col-layout">
+        <div class="l05-content-col">
+          <div class="l03-concept-card">
+            <div class="l03-concept-header"><span class="l03-card-icon">🧠</span><strong>Single-Node Multi-Channel Hub</strong></div>
+            <p>A ROS 2 node is an OOP class that can host <strong>multiple publishers and subscribers</strong> across different topics simultaneously to serve as a central AMR safety supervisor.</p>
+          </div>
+          <div class="l05-golden-card">
+            <div class="l05-golden-header"><span>📥</span><strong>3 Inbound Subscriptions</strong></div>
+            <p><code>/sensor/ultrasonic_front</code> (Range, 10Hz), <code>/odom</code> (Odometry, 50Hz), and <code>/teleop_cmd</code> (Twist, 20Hz).</p>
+          </div>
+          <div class="l05-golden-card success" style="margin-top: 0.15rem;">
+            <div class="l05-golden-header"><span>📤</span><strong>2 Outbound Publishers</strong></div>
+            <p><code>/cmd_vel</code> (Safe motor commands) and <code>/diagnostics/safety_status</code> (Fleet telemetry).</p>
+          </div>
+        </div>
+        <div class="l05-content-col">
+          <div class="l03-cmd-card">
+            <div class="l03-cmd-header"><span class="l03-term-badge">Python Hub</span><strong>amr_safety_supervisor_node.py</strong></div>
+            <pre><code class="language-python">class MultiTopicSupervisor(Node):
+    def __init__(self):
+        super().__init__('amr_safety_supervisor_node')
+        # 3 Subscriptions
+        self.sub_range = self.create_subscription(Range, '/sensor/ultrasonic_front', self.range_cb, 10)
+        self.sub_odom  = self.create_subscription(Odometry, '/odom', self.odom_cb, 10)
+        self.sub_cmd   = self.create_subscription(Twist, '/teleop_cmd', self.teleop_cb, 10)
+
+        # 2 Publishers
+        self.pub_vel    = self.create_publisher(Twist, '/cmd_vel', 10)
+        self.pub_status = self.create_publisher(String, '/diagnostics/safety_status', 10)
+
+        # 20 Hz Arbitration Control Loop (zeros speed if obstacle < 0.50m)
+        self.timer = self.create_timer(0.05, self.control_loop)</code></pre>
+          </div>
+          <div class="l03-output-card">
+            <div class="l03-output-header"><span class="l03-card-icon">💡</span><strong>CLI Node Introspection</strong></div>
+            <pre><code class="language-bash">ros2 node info /amr_safety_supervisor_node
+# Prints all 3 subscriptions and 2 publishers!</code></pre>
+          </div>
+        </div>
+      </div>
+    `
+  });
+
+  // 12. Interactive Architecture Explorer: Pub/Sub & DDS Message Flow
+  slides.push({
+    id: `${lesson.id}_interactive_pubsub`,
+    type: 'interactive',
+    interactiveKey: 'pubsub',
+    lessonNum: lesson.num_str,
+    lessonId: lesson.id,
+    module: lesson.module,
+    sectionTitle: 'Interactive Architecture: Pub/Sub Message Flow',
+    title: 'Interactive Pub/Sub & DDS Message Flow Simulator'
+  });
+
+  // 13. Section 8: Student Challenge: Turtlesim Autonomous Square Patrol
+  slides.push({
+    id: `${lesson.id}_sec8_student_challenge`,
+    type: 'concept',
+    lessonNum: lesson.num_str,
+    lessonId: lesson.id,
+    module: lesson.module,
+    sectionTitle: '8. Hands-on Student Challenge',
+    badge: '🎯 Student Mission',
+    title: '8. Student Challenge: AMR Square Patrol Controller',
+    htmlContent: `
+      <div class="l05-two-col-layout">
+        <div class="l05-content-col">
+          <div class="l03-concept-card">
+            <div class="l03-concept-header"><span class="l03-card-icon">🔄</span><strong>Two-State Finite State Machine (FSM)</strong></div>
+            <p><strong>STATE_FORWARD:</strong> <code>linear.x = 2.0 m/s</code>, <code>angular.z = 0.0</code> for 2.0s (4.0m leg).<br/>
+            <strong>STATE_TURN:</strong> <code>linear.x = 0.0</code>, <code>angular.z = 1.5708 rad/s</code> for 1.0s (90° CCW pivot).</p>
+          </div>
+          <div class="l03-cmd-card">
+            <div class="l03-cmd-header"><span class="l03-term-badge">Transition Loop</span><strong>10 Hz Control Callback</strong></div>
+            <pre><code class="language-python">self.state_elapsed_time += self.timer_period
+if self.state == self.STATE_FORWARD:
+    cmd.linear.x = self.linear_speed
+    if self.state_elapsed_time >= self.forward_duration:
+        self.state = self.STATE_TURN
+        self.state_elapsed_time = 0.0
+elif self.state == self.STATE_TURN:
+    cmd.angular.z = self.angular_speed
+    if self.state_elapsed_time >= self.turn_duration:
+        self.state = self.STATE_FORWARD
+        self.state_elapsed_time = 0.0
+self.cmd_vel_pub.publish(cmd)</code></pre>
+          </div>
+        </div>
+        <div class="l05-content-col">
+          <div class="l03-cmd-card">
+            <div class="l03-cmd-header"><span class="l03-term-badge">Execution Run Sheet</span><strong>Launch &amp; Test Controller</strong></div>
+            <pre><code class="language-bash"># Terminal 1: Simulator | Terminal 2: Controller
+ros2 run turtlesim turtlesim_node
+ros2 run nexus_amr_basics square_turtle
+
+# Terminal 3: Velocity Telemetry Echo
+ros2 topic echo /turtle1/cmd_vel</code></pre>
+          </div>
+          <div class="l03-output-card">
+            <div class="l03-output-header"><span class="l03-card-icon">🖥️</span><strong>Expected Terminal Telemetry</strong></div>
+            <pre><code class="language-text">[INFO] [turtle_square]: Initializing TurtleSquareController...
+[INFO] [turtle_square]: State FORWARD: driving edge #1...
+[INFO] [turtle_square]: State TURN: rotating 90 degrees left...
+[INFO] [turtle_square]: State FORWARD: driving edge #2...
+[INFO] [turtle_square]: Zero-velocity halt published on exit.</code></pre>
+          </div>
+        </div>
+      </div>
+    `
+  });
+
+
+  // 14. Section 9: Production Best Practices & Golden Rules
+  slides.push({
+    id: `${lesson.id}_sec9_golden_rules`,
+    type: 'concept',
+    lessonNum: lesson.num_str,
+    lessonId: lesson.id,
+    module: lesson.module,
+    sectionTitle: 'Production Best Practices',
+    badge: '🛡️ Production Rules',
+    title: 'Publishers, Subscribers & QoS Golden Rules',
+    htmlContent: `
+      <div class="l05-card-grid-2x2">
+        <div class="l05-golden-card">
+          <div class="l05-golden-header"><span>⏱️</span><strong>1. Non-Blocking Callbacks</strong></div>
+          <p>Never call <code>time.sleep()</code> inside a callback or timer! It halts the ROS 2 executor thread, freezing all other callbacks and starving incoming topic queues.</p>
+        </div>
+        <div class="l05-golden-card">
+          <div class="l05-golden-header"><span>📡</span><strong>2. Match QoS to Data Semantics</strong></div>
+          <p>Use <code>BEST_EFFORT</code> for loss-tolerant high-rate sensor streams (LiDAR, cameras). Use <code>RELIABLE</code> for safety alerts, state transitions, and navigation goals.</p>
+        </div>
+        <div class="l05-golden-card">
+          <div class="l05-golden-header"><span>🔗</span><strong>3. Build with --symlink-install</strong></div>
+          <p>Always compile with <code>--symlink-install</code> during Python development. Python script edits in <code>src/</code> execute immediately without re-compiling.</p>
+        </div>
+        <div class="l05-golden-card">
+          <div class="l05-golden-header"><span>🛑</span><strong>4. Fail-Safe Zero-Velocity Shutdown</strong></div>
+          <p>Always catch <code>KeyboardInterrupt</code> and publish a zero-velocity <code>Twist()</code> in the <code>finally:</code> block to ensure AMRs halt safely when control processes exit.</p>
+        </div>
+      </div>
+    `
+  });
+}
+
 
