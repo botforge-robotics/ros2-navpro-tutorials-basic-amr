@@ -1848,16 +1848,16 @@ ros2 param set /turtlesim background_b 42</code></pre>
  * high-yield architectural overviews with commands and outcomes side-by-side.
  */
 function buildLesson04Slides(doc, lesson, slides) {
-  // 1. Learning Objectives & Curriculum Road Map
+  // 1. ROS 2 Workspace & Package Architecture Road Map
   slides.push({
     id: `${lesson.id}_sec1_objectives`,
     type: 'concept',
     lessonNum: lesson.num_str,
     lessonId: lesson.id,
     module: lesson.module,
-    sectionTitle: '1. Overview & Learning Objectives',
-    badge: '🎯 Architecture Goals',
-    title: '1. Learning Objectives & Curriculum Road Map',
+    sectionTitle: '1. Workspace Architecture Road Map',
+    badge: '📁 Architecture Pillars',
+    title: '1. ROS 2 Workspace & Package Architecture Road Map',
     htmlContent: `
       <div class="l04-banner-intro">
         <strong>Autonomous Robotics Core Requirement:</strong> In ROS 2, code cannot exist as loose Python scripts. All production robot nodes, launch files, parameter configurations, and URDF models must live within structured <strong>Packages</strong> compiled inside a <strong>Workspace</strong>.
@@ -2327,16 +2327,16 @@ ros2 pkg prefix nexus_amr_basics
  * high-yield architectural overviews with paired commands, code, and live telemetry.
  */
 function buildLesson05Slides(doc, lesson, slides) {
-  // 1. Learning Objectives & Pub/Sub Curriculum Road Map
+  // 1. Pub/Sub Architecture & Decoupling Road Map
   slides.push({
-    id: `${lesson.id}_sec1_objectives`,
+    id: `${lesson.id}_sec1_architecture_roadmap`,
     type: 'concept',
     lessonNum: lesson.num_str,
     lessonId: lesson.id,
     module: lesson.module,
-    sectionTitle: '1. Overview & Learning Objectives',
-    badge: '🎯 Architecture Goals',
-    title: '1. Learning Objectives & Pub/Sub Road Map',
+    sectionTitle: '1. Pub/Sub Architecture Road Map',
+    badge: '🧭 Architecture Pillars',
+    title: '1. Pub/Sub Architecture & Decoupling Road Map',
     htmlContent: `
       <div class="l05-banner-intro">
         <strong>Autonomous Robotics Core Requirement:</strong> Modern AMRs require asynchronous, decoupled communication between real-time sensors (ultrasonic rangers, LiDAR, cameras) and supervisory safety systems. In ROS 2, this is achieved via the <strong>Publish-Subscribe</strong> model over a decentralized <strong>DDS</strong> message bus.
@@ -2362,84 +2362,17 @@ function buildLesson05Slides(doc, lesson, slides) {
     `
   });
 
-  // 2. Section 2: Topic Communication Architecture & DDS Middleware
+  // 2. Interactive Architecture Explorer: Pub/Sub & DDS Message Flow (Replacing Static Diagram)
   slides.push({
-    id: `${lesson.id}_sec2_topic_arch_dds`,
-    type: 'concept',
-    lessonNum: lesson.num_str,
-    lessonId: lesson.id,
-    module: lesson.module,
-    sectionTitle: '2. Topic Communication Architecture & DDS',
-    badge: '🌐 DDS Message Bus',
-    title: '2. Topic Communication Architecture & DDS Middleware',
-    htmlContent: `
-      <div class="l05-two-col-layout">
-        <div class="l05-visual-col">
-          <div class="l05-visual-frame">
-            <img src="assets/images/ros2_graph_dds_bus.svg" alt="ROS 2 Decentralized DDS Bus" class="l05-hero-svg" />
-            <span class="l05-visual-caption">Decentralized computational graph running over peer-to-peer DDS (Zero roscore bottleneck).</span>
-          </div>
-          <div class="l05-golden-card" style="margin-top: 0.35rem;">
-            <div class="l05-golden-header"><span>⚡</span><strong>Peer-to-Peer Multicast Discovery</strong></div>
-            <p>Nodes automatically discover compatible peers on the local network via DDS domain IDs, negotiating pub/sub connections with zero centralized master broker.</p>
-          </div>
-        </div>
-        <div class="l05-content-col">
-          <div class="l03-concept-card">
-            <div class="l03-concept-header"><span class="l03-card-icon">⏳</span><strong>Temporal Decoupling</strong></div>
-            <p>Publishers and subscribers do not need to be active at the same time. A subscriber can join minutes after a publisher starts without network or execution errors.</p>
-          </div>
-          <div class="l03-concept-card">
-            <div class="l03-concept-header"><span class="l03-card-icon">🌐</span><strong>Spatial Decoupling</strong></div>
-            <p>Nodes do not know each other's IP addresses or process IDs. They address data packets exclusively by topic name (e.g. <code>/sensor/ultrasonic_front</code>).</p>
-          </div>
-          <div class="l03-concept-card">
-            <div class="l03-concept-header"><span class="l03-card-icon">⚡</span><strong>Synchronization Decoupling</strong></div>
-            <p>Publishing is non-blocking. A publisher never waits for subscribers to receive or parse data, ensuring high-rate sensor loops never stall.</p>
-          </div>
-        </div>
-      </div>
-    `
-  });
-
-  // 3. Section 2: Pub/Sub Message Flow & Topic Buffering
-  slides.push({
-    id: `${lesson.id}_sec2_pubsub_pipeline`,
-    type: 'concept',
+    id: `${lesson.id}_interactive_pubsub`,
+    type: 'interactive',
+    interactiveKey: 'pubsub',
     lessonNum: lesson.num_str,
     lessonId: lesson.id,
     module: lesson.module,
     sectionTitle: '2. Pub/Sub Message Flow & Topic Buffering',
-    badge: '🔄 Pub/Sub Pipeline',
-    title: '2. Pub/Sub Message Flow & In-Memory Topic Buffering',
-    htmlContent: `
-      <div class="l05-two-col-layout">
-        <div class="l05-visual-col">
-          <div class="l05-visual-frame">
-            <img src="assets/images/ros2_pubsub_pipeline.svg" alt="ROS 2 Pub/Sub Pipeline" class="l05-hero-svg" />
-            <span class="l05-visual-caption">DataWriter ➔ CDR Serialization ➔ DDS Socket Buffer ➔ DataReader Callback.</span>
-          </div>
-          <div class="l05-golden-card warning" style="margin-top: 0.35rem;">
-            <div class="l05-golden-header"><span>💾</span><strong>In-Memory Topic Buffering</strong></div>
-            <p>DDS maintains an internal ring buffer sized by QoS <code>depth</code>. If unread packets exceed depth, the oldest packet is dropped to prevent memory leaks.</p>
-          </div>
-        </div>
-        <div class="l05-content-col">
-          <div class="l03-concept-card">
-            <div class="l03-concept-header"><span class="l03-card-icon">📦</span><strong>CDR Serialization</strong></div>
-            <p>When calling <code>self.pub.publish(msg)</code>, the typed Python struct is serialized into binary Common Data Representation (CDR) packets for UDP network broadcast.</p>
-          </div>
-          <div class="l03-concept-card">
-            <div class="l03-concept-header"><span class="l03-card-icon">🔄</span><strong>DataReader Callback Scheduling</strong></div>
-            <p>Incoming packets trigger the OS socket. <code>rclpy.spin()</code> processes the queue and schedules the bound Python callback method on the executor thread.</p>
-          </div>
-          <div class="l03-concept-card">
-            <div class="l03-concept-header"><span class="l03-card-icon">🎛️</span><strong>Zero CPU Busy-Waiting</strong></div>
-            <p>Subscribers sleep until the Linux kernel signals new packet arrival on the DDS socket, yielding 0% idle CPU utilization.</p>
-          </div>
-        </div>
-      </div>
-    `
+    badge: '🔄 Interactive Simulator',
+    title: 'Interactive Pub/Sub & DDS Message Flow Simulator'
   });
 
   // 4. Section 3.1: Discovering & Inspecting Message Interfaces (sensor_msgs/msg/Range)
@@ -2931,19 +2864,7 @@ self.map_sub = self.create_subscription(OccupancyGrid, '/map', self.cb, qos_prof
     `
   });
 
-  // 12. Interactive Architecture Explorer: Pub/Sub & DDS Message Flow
-  slides.push({
-    id: `${lesson.id}_interactive_pubsub`,
-    type: 'interactive',
-    interactiveKey: 'pubsub',
-    lessonNum: lesson.num_str,
-    lessonId: lesson.id,
-    module: lesson.module,
-    sectionTitle: 'Interactive Architecture: Pub/Sub Message Flow',
-    title: 'Interactive Pub/Sub & DDS Message Flow Simulator'
-  });
-
-  // 13. Section 8: Student Challenge: Turtlesim Autonomous Square Patrol
+  // 12. Section 8: Student Challenge: Turtlesim Autonomous Square Patrol
   slides.push({
     id: `${lesson.id}_sec8_student_challenge`,
     type: 'concept',

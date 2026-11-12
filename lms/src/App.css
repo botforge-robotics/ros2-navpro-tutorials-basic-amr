@@ -3963,51 +3963,162 @@
   padding: 0.4rem 0.55rem !important;
 }
 
-/* Guard against vertical overflow in interactive widgets in presentation mode */
+/* Presentation Mode Interactive Simulation Widget: Pub/Sub Flow & Service Flow */
 .presentation-viewport .pubsub-flow-container {
-  max-height: 460px;
-  overflow: hidden;
+  margin: 0 !important;
+  padding: 0.5rem 0.85rem !important;
+  width: 100% !important;
+  max-width: 1100px !important;
+  box-sizing: border-box !important;
+  border-radius: 12px !important;
 }
 
-.presentation-viewport .flow-cli-introspection-bar {
-  margin-top: 0.5rem;
+.presentation-viewport .pubsub-flow-header {
+  margin-bottom: 0.35rem !important;
+  padding-bottom: 0.25rem !important;
 }
 
-/* Card Mode Presentation Optimizations (Prevent Bottom Overflows) */
-.presentation-viewport:not(.is-fullscreen) .ppt-term-body,
-.presentation-viewport:not(.is-fullscreen) .ppt-ide-body {
-  padding: 0.65rem 1rem !important;
-  font-size: 0.88rem !important;
-  line-height: 1.42 !important;
+.presentation-viewport .header-title-row {
+  margin-bottom: 0.2rem !important;
 }
 
-.presentation-viewport:not(.is-fullscreen) .cmd-slide-header {
-  margin-bottom: 0.6rem !important;
+.presentation-viewport .pubsub-flow-subtitle {
+  font-size: 0.78rem !important;
+  line-height: 1.25 !important;
+  margin: 0 !important;
 }
 
-.presentation-viewport:not(.is-fullscreen) .ppt-breakdown-deck .code-breakdown-list {
-  grid-template-columns: repeat(2, 1fr) !important;
-  gap: 0.45rem !important;
+.presentation-viewport .walkthrough-bar {
+  margin-bottom: 0.35rem !important;
+  padding: 4px 8px !important;
+  gap: 6px !important;
 }
 
-.presentation-viewport:not(.is-fullscreen) .ppt-breakdown-deck .code-breakdown-item {
-  padding: 0.45rem 0.75rem !important;
-  font-size: 0.8rem !important;
-  line-height: 1.35 !important;
+.presentation-viewport .walkthrough-step-btn {
+  padding: 3px 8px !important;
+  font-size: 0.74rem !important;
 }
 
-.presentation-viewport:not(.is-fullscreen) .ppt-breakdown-deck .code-breakdown-item strong {
+.presentation-viewport .active-step-banner {
+  padding: 6px 10px !important;
+  margin-bottom: 0.35rem !important;
+  gap: 8px !important;
+}
+
+.presentation-viewport .active-step-banner .banner-badge {
+  font-size: 0.68rem !important;
+  padding: 2px 6px !important;
+}
+
+.presentation-viewport .active-step-banner .banner-content h4 {
   font-size: 0.82rem !important;
-  margin-bottom: 0.15rem !important;
+  margin-bottom: 2px !important;
 }
 
-.presentation-viewport:not(.is-fullscreen) .ppt-breakdown-deck .code-breakdown-card {
-  padding: 0.75rem 1rem !important;
+.presentation-viewport .active-step-banner .banner-content p {
+  font-size: 0.75rem !important;
+  line-height: 1.25 !important;
+}
+
+.presentation-viewport .diagram-stage {
+  margin-bottom: 0.35rem !important;
+  gap: 8px !important;
+}
+
+.presentation-viewport .diagram-card {
+  padding: 6px 8px !important;
+  gap: 5px !important;
+}
+
+.presentation-viewport .card-code-snip {
+  padding: 4px 6px !important;
+  font-size: 0.7rem !important;
+}
+
+.presentation-viewport .card-telemetry {
+  padding: 3px 6px !important;
+}
+
+.presentation-viewport .telemetry-label {
+  font-size: 0.65rem !important;
+}
+
+.presentation-viewport .telemetry-val {
+  font-size: 0.75rem !important;
+}
+
+.presentation-viewport .proximity-gauge-wrap {
+  padding: 3px 6px !important;
+}
+
+.presentation-viewport .card-terminal-log {
+  padding: 3px 6px !important;
+  margin-top: 2px !important;
+}
+
+.presentation-viewport .card-terminal-log .log-header {
+  font-size: 0.62rem !important;
+  margin-bottom: 2px !important;
+}
+
+.presentation-viewport .card-terminal-log .log-content-wrap {
+  font-size: 0.7rem !important;
+  padding: 2px 6px !important;
+  line-height: 1.25 !important;
+}
+
+.presentation-viewport .pubsub-controls-bar {
+  padding: 5px 8px !important;
+  margin-top: 0.25rem !important;
+  gap: 6px !important;
+}
+
+.presentation-viewport .control-btn {
+  padding: 4px 8px !important;
+  font-size: 0.74rem !important;
+}
+
+.presentation-viewport .sensor-quick-btn {
+  padding: 4px 8px !important;
+  font-size: 0.72rem !important;
+}
+
+.presentation-viewport .rate-slider-group {
+  gap: 6px !important;
+}
+
+.presentation-viewport .slider-label {
+  font-size: 0.74rem !important;
+}
+
+.presentation-viewport .qos-choice-btn {
+  padding: 3px 7px !important;
+  font-size: 0.72rem !important;
+}
+
+.presentation-viewport .pubsub-inspector {
+  margin-top: 0.35rem !important;
+  padding: 6px 10px !important;
+  font-size: 0.75rem !important;
+}
+
+.presentation-viewport .inspector-header {
+  padding-bottom: 3px !important;
+  margin-bottom: 4px !important;
+}
+
+.presentation-viewport .inspector-title {
+  font-size: 0.78rem !important;
+}
+
+.presentation-viewport .inspector-body {
+  font-size: 0.74rem !important;
+  line-height: 1.3 !important;
 }
 
 .presentation-viewport:not(.is-fullscreen) .interactive-stage-container {
   height: 100% !important;
-  max-height: 480px !important;
+  max-height: 530px !important;
   overflow: hidden !important;
   display: flex !important;
   align-items: center !important;
@@ -7503,6 +7614,21 @@
 .presentation-viewport.is-fullscreen .interactive-stage-container {
   height: calc(100vh - 120px) !important;
   max-height: calc(100vh - 120px) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.presentation-viewport.is-fullscreen .pubsub-flow-container {
+  max-height: none !important;
+  margin: 0 auto !important;
+  padding: 1.25rem 1.75rem !important;
+  width: 100% !important;
+  max-width: 1400px !important;
+}
+
+.presentation-viewport.is-fullscreen .interactive-stage-container > * {
+  transform: none !important;
 }
 
 .presentation-viewport.is-fullscreen .concept-html-body {

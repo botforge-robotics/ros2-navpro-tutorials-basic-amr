@@ -111,6 +111,31 @@ def verify():
             img_name = f"l05_overhaul_card_slide_{s:02d}.png"
             take_screenshot(img_name)
 
+            if s == 2:  # Pub/Sub interactive slide
+                ps_data = send_cmd("Runtime.evaluate", {
+                    "expression": """
+                        (() => {
+                            const container = document.querySelector('.pubsub-flow-container');
+                            const controls = document.querySelector('.pubsub-controls-bar');
+                            const stage = document.querySelector('.interactive-stage-container');
+                            if (!container || !controls || !stage) return null;
+                            const cR = container.getBoundingClientRect();
+                            const ctrlR = controls.getBoundingClientRect();
+                            const sR = stage.getBoundingClientRect();
+                            return {
+                                containerHeight: cR.height,
+                                controlsBottom: ctrlR.bottom,
+                                containerBottom: cR.bottom,
+                                stageBottom: sR.bottom,
+                                isClippedByContainer: ctrlR.bottom > cR.bottom + 1,
+                                isClippedByStage: ctrlR.bottom > sR.bottom + 1
+                            };
+                        })()
+                    """,
+                    "returnByValue": True
+                }).get("result", {}).get("value", {})
+                print(f"  >>> Pub/Sub Flow Geometry (Card): {json.dumps(ps_data)}")
+
         # Fullscreen Mode
         print("\n--- Testing Lesson 05 Fullscreen Mode (1920x1080) ---")
         send_cmd("Emulation.setDeviceMetricsOverride", {
@@ -174,6 +199,31 @@ def verify():
             
             img_name = f"l05_overhaul_fs_slide_{s:02d}.png"
             take_screenshot(img_name)
+
+            if s == 2:  # Pub/Sub interactive slide
+                ps_data = send_cmd("Runtime.evaluate", {
+                    "expression": """
+                        (() => {
+                            const container = document.querySelector('.pubsub-flow-container');
+                            const controls = document.querySelector('.pubsub-controls-bar');
+                            const stage = document.querySelector('.interactive-stage-container');
+                            if (!container || !controls || !stage) return null;
+                            const cR = container.getBoundingClientRect();
+                            const ctrlR = controls.getBoundingClientRect();
+                            const sR = stage.getBoundingClientRect();
+                            return {
+                                containerHeight: cR.height,
+                                controlsBottom: ctrlR.bottom,
+                                containerBottom: cR.bottom,
+                                stageBottom: sR.bottom,
+                                isClippedByContainer: ctrlR.bottom > cR.bottom + 1,
+                                isClippedByStage: ctrlR.bottom > sR.bottom + 1
+                            };
+                        })()
+                    """,
+                    "returnByValue": True
+                }).get("result", {}).get("value", {})
+                print(f"  >>> Pub/Sub Flow Geometry (FS): {json.dumps(ps_data)}")
 
         card_overflows = [r for r in results if r.get('overflowDiff', 0) > 0]
         fs_overflows = [r for r in fs_results if r.get('overflowDiff', 0) > 0]
