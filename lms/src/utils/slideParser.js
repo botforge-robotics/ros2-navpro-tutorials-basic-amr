@@ -3640,7 +3640,7 @@ function buildLesson08Slides(doc, lesson, slides) {
         <div class="l03-content-col">
           <div class="l03-concept-card">
             <div class="l03-concept-header"><span class="l03-card-icon">⏱️</span><strong>Why Topics &amp; Services Fall Short</strong></div>
-            <p>Topics are fire-and-forget streams with no completion signals. Services are synchronous RPCs that freeze execution threads during prolonged robot motions (e.g. driving 10 meters) and cannot be aborted mid-flight.</p>
+            <p>Topics are fire-and-forget streams with no completion signals. Services are synchronous RPCs that freeze execution threads during prolonged robot motions and cannot be aborted mid-flight.</p>
           </div>
           <div class="l03-concept-card">
             <div class="l03-concept-header"><span class="l03-card-icon">🔀</span><strong>The 3 Coordinated DDS Channels</strong></div>
@@ -3648,7 +3648,7 @@ function buildLesson08Slides(doc, lesson, slides) {
           </div>
           <div class="l03-concept-card">
             <div class="l03-concept-header"><span class="l03-card-icon">🛑</span><strong>Native Preemption &amp; Cancellation</strong></div>
-            <p>Unlike services, actions allow clients to abort or cancel goals at any time (e.g. an unexpected obstacle blocks the path). The server safely halts actuators and transitions to the <code>CANCELED</code> state.</p>
+            <p>Unlike services, actions allow clients to abort or cancel goals at any time (e.g. unexpected obstacle blocks the path). The server safely halts actuators and transitions to the <code>CANCELED</code> state.</p>
           </div>
         </div>
       </div>
@@ -3703,18 +3703,18 @@ int32 percent_complete</code></pre>
           </div>
           <div class="l05-golden-card" style="margin-bottom: 0.35rem; padding: 0.4rem 0.65rem;">
             <div class="l05-golden-header" style="font-size: 0.78rem;"><span>⚙️</span><strong>4 Auto-Generated Classes</strong></div>
-            <p style="font-size: 0.74rem; line-height: 1.3;">Build tooling compiles the <code>.action</code> file into four Python classes: <code>NavigateDistance.Goal</code>, <code>NavigateDistance.Result</code>, <code>NavigateDistance.Feedback</code>, and internal transport handlers.</p>
+            <p style="font-size: 0.74rem; line-height: 1.3;">ROS 2 code generators build four Python structures: <code>Goal</code>, <code>Result</code>, <code>Feedback</code>, and <code>Impl</code> for type-safe client-server contracts.</p>
           </div>
           <div class="l05-golden-card" style="margin-bottom: 0; padding: 0.4rem 0.65rem;">
-            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🔍</span><strong>CLI Schema Introspection</strong></div>
-            <p style="font-size: 0.74rem; line-height: 1.3;">Inspect any installed action interface directly from the terminal:<br/><code>ros2 interface show nexus_amr_interfaces/action/NavigateDistance</code></p>
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>📦</span><strong>Dedicated Interface Package Rule</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">Never declare <code>.action</code> files inside an <code>ament_python</code> package. Place them in a standalone CMake package (e.g. <code>nexus_amr_interfaces</code>).</p>
           </div>
         </div>
       </div>
     `
   });
 
-  // 4. Action Server Implementation
+  // 4. Authoring the Action Server Node (navigate_distance_server.py)
   slides.push({
     id: `${lesson.id}_sec4_action_server`,
     type: 'concept',
@@ -3722,103 +3722,157 @@ int32 percent_complete</code></pre>
     lessonId: lesson.id,
     module: lesson.module,
     sectionTitle: '4. Action Server Implementation',
-    badge: '🤖 Action Server Node',
-    title: '4. Authoring the Action Server (navigate_distance_server.py)',
+    badge: '🛠️ Server Node',
+    title: '4. Authoring the Action Server: Callbacks & Preemption Handling',
     htmlContent: `
       <div class="l03-two-col-layout">
         <div class="l03-left-code-col">
           <div class="l03-cmd-card" style="margin-bottom: 0;">
-            <div class="l03-cmd-header"><span class="l03-term-badge">navigate_distance_server.py</span><strong>Core Server Callbacks</strong></div>
-            <pre><code class="language-python">class NavigateDistanceServer(Node):
+            <div class="l03-cmd-header"><span class="l03-term-badge">navigate_distance_server.py</span><strong>ActionServer Implementation</strong></div>
+            <pre><code class="language-python">from rclpy.action import ActionServer, CancelResponse, GoalResponse
+from nexus_amr_interfaces.action import NavigateDistance
+
+class NavigateDistanceServer(Node):
     def __init__(self):
         super().__init__('navigate_distance_server')
         self._action_server = ActionServer(
-            self, NavigateDistance, 'navigate_distance',
+            self, NavigateDistance, '/navigate_distance',
             execute_callback=self.execute_callback,
             goal_callback=self.goal_callback,
             cancel_callback=self.cancel_callback
         )
 
     def goal_callback(self, goal_request):
-        # Validate target distance (reject negative or >50m)
-        if goal_request.target_distance_m <= 0.0 or goal_request.target_distance_m > 50.0:
+        if goal_request.target_distance_m &lt;= 0:
             return GoalResponse.REJECT
         return GoalResponse.ACCEPT
 
     def cancel_callback(self, goal_handle):
-        return CancelResponse.ACCEPT  # Permit preemption
+        return CancelResponse.ACCEPT
 
     async def execute_callback(self, goal_handle):
-        feedback_msg = NavigateDistance.Feedback()
-        while distance_covered < target:
-            if goal_handle.is_cancel_requested:
-                goal_handle.canceled()
-                return NavigateDistance.Result(success=False, message="Canceled")
-            goal_handle.publish_feedback(feedback_msg)
-            time.sleep(0.5)
-
-        goal_handle.succeed()
-        return NavigateDistance.Result(success=True, final_distance_traveled=target)</code></pre>
+        # Publish feedback in loop, monitor is_cancel_requested
+        # On completion: goal_handle.succeed(); return result</code></pre>
           </div>
         </div>
         <div class="l03-content-col">
           <div class="l05-golden-card" style="margin-bottom: 0.35rem; padding: 0.4rem 0.65rem;">
-            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>1️⃣</span><strong>Goal Callback: Synchronous Validation</strong></div>
-            <p style="font-size: 0.74rem; line-height: 1.3;">Immediately returns <code>GoalResponse.ACCEPT</code> or <code>REJECT</code>. Validates kinematic physical feasibility before any motor movement starts.</p>
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🎯</span><strong>1. goal_callback (Goal Validation)</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">Validates parameters before starting motion (rejecting negative distances or out-of-boundary coordinates) via <code>GoalResponse</code>.</p>
           </div>
           <div class="l05-golden-card" style="margin-bottom: 0.35rem; padding: 0.4rem 0.65rem;">
-            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>2️⃣</span><strong>Cancel Callback: Preemption Authorization</strong></div>
-            <p style="font-size: 0.74rem; line-height: 1.3;">Authorizes preemption requests when supervisory safety triggers fire, returning <code>CancelResponse.ACCEPT</code>.</p>
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🛑</span><strong>2. cancel_callback (Preemption Trap)</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">Intercepts cancellation requests mid-flight. The execution loop checks <code>goal_handle.is_cancel_requested</code> and halts wheels safely.</p>
+          </div>
+          <div class="l05-golden-card" style="margin-bottom: 0.35rem; padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>📊</span><strong>3. execute_callback (Feedback Streaming)</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">Publishes periodic progress via <code>goal_handle.publish_feedback(fb)</code> at a fixed rate (e.g. 10 Hz) while advancing trajectory.</p>
           </div>
           <div class="l05-golden-card" style="margin-bottom: 0; padding: 0.4rem 0.65rem;">
-            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>3️⃣</span><strong>Execute Loop &amp; Terminal States</strong></div>
-            <p style="font-size: 0.74rem; line-height: 1.3;">Publishes live progress via <code>goal_handle.publish_feedback()</code>, polls <code>is_cancel_requested</code>, and terminates with <code>goal_handle.succeed()</code> or <code>canceled()</code>.</p>
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🏁</span><strong>4. Succeeded Outcome Invariant</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">Always invoke <code>goal_handle.succeed()</code> before returning the result. Omitting it leaves the client stuck in <code>EXECUTING</code> forever.</p>
           </div>
         </div>
       </div>
     `
   });
 
-  // 5. Asynchronous Action Client Implementation
+  // 5. NEW IN-BETWEEN SLIDE: Testing Action Server with ROS 2 CLI (Before Writing Client!)
   slides.push({
-    id: `${lesson.id}_sec5_action_client`,
+    id: `${lesson.id}_sec5_cli_server_test`,
     type: 'concept',
     lessonNum: lesson.num_str,
     lessonId: lesson.id,
     module: lesson.module,
-    sectionTitle: '5. Action Client Implementation',
-    badge: '📡 Action Client Node',
-    title: '5. Authoring the Asynchronous Action Client (navigate_distance_client.py)',
+    sectionTitle: '5. Testing Action Server via CLI',
+    badge: '🔍 CLI Server Test',
+    title: '5. Testing the Action Server via ROS 2 CLI & Streaming Feedback',
+    htmlContent: `
+      <div class="l03-two-col-layout">
+        <div class="l03-left-code-col">
+          <div class="l03-cmd-card" style="margin-bottom: 0.4rem;">
+            <div class="l03-cmd-header"><span class="l03-term-badge">bash</span><strong>CLI Action Discovery &amp; Goal Dispatch</strong></div>
+            <pre><code class="language-bash"># Terminal 1: Launch Action Server
+ros2 run nexus_amr_basics navigate_distance_server
+
+# Terminal 2: Verify Action Server registration
+ros2 action list
+# /navigate_distance
+
+ros2 action info /navigate_distance
+# Action: nexus_amr_interfaces/action/NavigateDistance
+# Action clients: 0 | Action servers: 1
+
+# Dispatch goal from CLI with real-time feedback:
+ros2 action send_goal /navigate_distance \
+  nexus_amr_interfaces/action/NavigateDistance \
+  "{target_distance_m: 5.0, speed_mps: 0.5}" --feedback</code></pre>
+          </div>
+          <div class="l03-output-card" style="margin-bottom: 0;">
+            <div class="l03-output-header"><span class="l03-term-badge">Terminal Output</span><strong>Live Telemetry &amp; Completion</strong></div>
+            <pre><code class="language-plaintext">Feedback: distance_remaining: 3.5m, percent_complete: 30%
+Feedback: distance_remaining: 1.0m, percent_complete: 80%
+Result: success: True, final_distance_traveled: 5.0m
+Goal finished with status: SUCCEEDED</code></pre>
+          </div>
+        </div>
+        <div class="l03-content-col">
+          <div class="l05-golden-card" style="margin-bottom: 0.35rem; padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🧪</span><strong>Verify Server Before Writing Client</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">Just like testing Services with <code>ros2 service call</code>, always test your Action Server using the CLI first to prove server correctness before coding clients.</p>
+          </div>
+          <div class="l05-golden-card" style="margin-bottom: 0.35rem; padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>📡</span><strong>The --feedback Switch</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">Without <code>--feedback</code>, <code>send_goal</code> only prints the final result. Adding the flag subscribes to the intermediate feedback topic in real time.</p>
+          </div>
+          <div class="l05-golden-card" style="margin-bottom: 0; padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🔍</span><strong>Endpoint Introspection (action info)</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">Inspects the action interface type, confirms exactly 1 server is active, and reports the count of connected client nodes.</p>
+          </div>
+        </div>
+      </div>
+    `
+  });
+
+  // 6. Authoring the Action Client Node (navigate_distance_client.py)
+  slides.push({
+    id: `${lesson.id}_sec6_action_client`,
+    type: 'concept',
+    lessonNum: lesson.num_str,
+    lessonId: lesson.id,
+    module: lesson.module,
+    sectionTitle: '6. Action Client Implementation',
+    badge: '💻 Client Node',
+    title: '6. Authoring the Asynchronous Action Client in Python',
     htmlContent: `
       <div class="l03-two-col-layout">
         <div class="l03-left-code-col">
           <div class="l03-cmd-card" style="margin-bottom: 0;">
-            <div class="l03-cmd-header"><span class="l03-term-badge">navigate_distance_client.py</span><strong>Asynchronous Client Pipeline</strong></div>
-            <pre><code class="language-python">class NavigateDistanceClient(Node):
+            <div class="l03-cmd-header"><span class="l03-term-badge">navigate_distance_client.py</span><strong>ActionClient Implementation</strong></div>
+            <pre><code class="language-python">from rclpy.action import ActionClient
+from nexus_amr_interfaces.action import NavigateDistance
+
+class NavigateDistanceClient(Node):
     def __init__(self):
         super().__init__('navigate_distance_client')
-        self._client = ActionClient(self, NavigateDistance, 'navigate_distance')
+        self._action_client = ActionClient(
+            self, NavigateDistance, '/navigate_distance'
+        )
 
-    def send_goal(self, distance_m, speed):
-        self._client.wait_for_server()
-        goal_msg = NavigateDistance.Goal(target_distance_m=distance_m, speed_mps=speed)
-        # Non-blocking async dispatch with live feedback callback:
-        self._send_goal_future = self._client.send_goal_async(
+    def send_goal(self, distance, speed):
+        self._action_client.wait_for_server()
+        goal_msg = NavigateDistance.Goal()
+        goal_msg.target_distance_m = float(distance)
+        goal_msg.speed_mps = float(speed)
+
+        self._send_goal_future = self._action_client.send_goal_async(
             goal_msg, feedback_callback=self.feedback_callback
         )
         self._send_goal_future.add_done_callback(self.goal_response_callback)
 
     def feedback_callback(self, feedback_msg):
         fb = feedback_msg.feedback
-        self.get_logger().info(f"Progress: {fb.percent_complete}% | Remaining: {fb.distance_remaining}m")
-
-    def goal_response_callback(self, future):
-        goal_handle = future.result()
-        if not goal_handle.accepted:
-            self.get_logger().error("Goal rejected by server!")
-            return
-        self._get_result_future = goal_handle.get_result_async()
-        self._get_result_future.add_done_callback(self.result_callback)</code></pre>
+        self.get_logger().info(f'Feedback: {fb.percent_complete}% ({fb.distance_remaining}m left)')</code></pre>
           </div>
         </div>
         <div class="l03-content-col">
@@ -3843,61 +3897,56 @@ int32 percent_complete</code></pre>
     `
   });
 
-  // 6. CLI Testing & Production Nav2 Integration
+  // 7. Dual-Node Verification & Nav2 Production Integration (Server + Client Together)
   slides.push({
-    id: `${lesson.id}_sec6_cli_verification`,
+    id: `${lesson.id}_sec7_dual_node_nav2`,
     type: 'concept',
     lessonNum: lesson.num_str,
     lessonId: lesson.id,
     module: lesson.module,
-    sectionTitle: '6. Verification & Nav2 Production Context',
-    badge: '🔍 CLI & Production Nav2',
-    title: '6. CLI Testing (ros2 action) & The Nav2 Navigation Stack Connection',
+    sectionTitle: '7. Dual-Node Verification & Nav2 Integration',
+    badge: '🚀 Dual-Node Drill & Nav2',
+    title: '7. Dual-Node Verification & The Nav2 Navigation Stack Connection',
     htmlContent: `
       <div class="l03-two-col-layout">
-        <div class="l03-content-col">
-          <div class="l03-cmd-card">
-            <div class="l03-cmd-header"><span class="l03-term-badge">bash</span><strong>CLI Goal Dispatch with Live Streaming</strong></div>
-            <pre><code class="language-bash"># 1. Discover active actions on DDS:
-ros2 action list
-ros2 action info /navigate_distance
+        <div class="l03-left-code-col">
+          <div class="l03-cmd-card" style="margin-bottom: 0.4rem;">
+            <div class="l03-cmd-header"><span class="l03-term-badge">bash</span><strong>2-Terminal Execution Run Sheet</strong></div>
+            <pre><code class="language-bash"># Terminal 1: Run Action Server
+source install/setup.bash
+ros2 run nexus_amr_basics navigate_distance_server
 
-# 2. Dispatch goal from terminal with live feedback:
-ros2 action send_goal /navigate_distance \\
-  nexus_amr_interfaces/action/NavigateDistance \\
-  "{target_distance_m: 5.0, speed_mps: 0.5}" --feedback</code></pre>
+# Terminal 2: Run Action Client Node
+source install/setup.bash
+ros2 run nexus_amr_basics navigate_distance_client 5.0 0.5</code></pre>
           </div>
-          <div class="l03-output-card">
-            <div class="l03-output-header"><span class="l03-term-badge">Terminal Output</span><strong>CLI Feedback Stream</strong></div>
-            <pre><code class="language-plaintext">Feedback: distance_remaining: 3.5m, percent_complete: 30%
-Feedback: distance_remaining: 1.0m, percent_complete: 80%
-Result: success: True, final_distance_traveled: 5.0m
-Goal finished with status: SUCCEEDED</code></pre>
+          <div class="l03-output-card" style="margin-bottom: 0;">
+            <div class="l03-output-header"><span class="l03-term-badge">Terminal Logs</span><strong>Synchronized Client-Server Execution</strong></div>
+            <pre><code class="language-plaintext">[Server] Goal accepted! Moving 5.0m at 0.5 m/s...
+[Client] Feedback: 3.5m left (30% done)
+[Client] Feedback: 1.0m left (80% done)
+[Server] Goal SUCCEEDED! Final distance: 5.0m
+[Client] Final Result: Success=True | Traveled: 5.0m</code></pre>
           </div>
         </div>
         <div class="l03-content-col">
-          <div class="l05-golden-card" style="margin-bottom: 0.45rem;">
-            <div class="l05-golden-header"><span>🧭</span><strong>How Production Nav2 Uses Actions</strong></div>
+          <div class="l05-golden-card" style="margin-bottom: 0.35rem; padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🔄</span><strong>End-to-End Coordinated Lifecycle</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">Validates the full 3-tier DDS protocol: Goal Service ➔ Feedback Topic ➔ Result Service operating seamlessly between Python processes.</p>
+          </div>
+          <div class="l05-golden-card" style="margin-bottom: 0.35rem; padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🧭</span><strong>How Production Nav2 Uses Actions</strong></div>
             <p style="font-size: 0.74rem; line-height: 1.3;">In production robotics, the entire autonomous navigation stack (Nav2) is driven by the <code>nav2_msgs/action/NavigateToPose</code> and <code>NavigateThroughPoses</code> actions.</p>
           </div>
-          <div class="l05-golden-card" style="margin-bottom: 0.45rem;">
-            <div class="l05-golden-header"><span>🔄</span><strong>Behavior Tree Coordination</strong></div>
-            <p style="font-size: 0.74rem; line-height: 1.3;">Nav2 Behavior Trees continuously evaluate action feedback to detect path blockages, calculate dynamic reroutes, or trigger recovery behaviors (spin, backup, clear costmap).</p>
-          </div>
-          <div class="l05-golden-card">
-            <div class="l05-golden-header"><span>🏆</span><strong>Core Takeaway: Topics vs Services vs Actions</strong></div>
-            <p style="font-size: 0.74rem; line-height: 1.3;"><strong>Topics:</strong> Continuous telemetry (LiDAR, Pose).<br/><strong>Services:</strong> Fast, non-blocking RPC (&lt;50ms, E-stop).<br/><strong>Actions:</strong> Long-running tasks with feedback and preemption.</p>
+          <div class="l05-golden-card" style="margin-bottom: 0; padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🌳</span><strong>Behavior Tree Preemption &amp; Recovery</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">Nav2 Behavior Trees continuously evaluate feedback to detect path blockages, cancel actions mid-flight, and execute recovery behaviors (spin, backup).</p>
           </div>
         </div>
       </div>
     `
   });
 }
-
-
-
-
-
 
 /**
  * Dedicated High-Yield Pedagogical Deck Builder for Lesson 09:
