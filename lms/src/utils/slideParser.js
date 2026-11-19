@@ -771,7 +771,9 @@ export function parseLessonIntoSlides(lesson) {
   }
 
   // 2. Interactive Quiz Slides (1 slide per question)
-  if (Array.isArray(lesson.quizzes) && lesson.quizzes.length > 0) {
+  // Exclude Lesson 03 quiz slides per user request to maintain uninterrupted operational flow
+  if (lesson.id !== '03' && lesson.num_str !== '03' && lesson.id !== 'lesson_03') {
+    if (Array.isArray(lesson.quizzes) && lesson.quizzes.length > 0) {
     lesson.quizzes.forEach((quiz, qIdx) => {
       const correctIdx = quiz.correct !== undefined 
         ? quiz.correct 
@@ -795,6 +797,7 @@ export function parseLessonIntoSlides(lesson) {
         explanation: quiz.explanation || ''
       });
     });
+    }
   }
 
   // 3. Lesson Wrap-up & Summary Slide
@@ -1532,6 +1535,11 @@ function buildLesson03Slides(doc, lesson, slides) {
             <div class="l03-concept-header"><span class="l03-card-icon">⚠️</span><strong>OS Window Focus Requirement</strong></div>
             <p>The terminal executing <code>turtle_teleop_key</code> must retain active desktop window focus to capture keystrokes and broadcast commands.</p>
           </div>
+          <div class="l03-concept-card" style="border-left: 3px solid #10b981; background: rgba(16, 185, 129, 0.05);">
+            <div class="l03-concept-header"><span class="l03-card-icon">🐚</span><strong>Permanent Sourcing in ~/.bashrc</strong></div>
+            <p>Ensure newly opened terminal panes auto-load ROS 2 without typing source each time:<br/>
+            <code>echo "source /opt/ros/jazzy/setup.bash" &gt;&gt; ~/.bashrc</code></p>
+          </div>
         </div>
       </div>
     `
@@ -2007,6 +2015,10 @@ function buildLesson04Slides(doc, lesson, slides) {
             <div class="l03-cmd-header"><span class="l03-term-badge">Step 3</span><strong>Source Local Overlay</strong></div>
             <pre><code class="language-bash">source ~/ros2_ws/install/setup.bash</code></pre>
           </div>
+          <div class="l03-cmd-card">
+            <div class="l03-cmd-header"><span class="l03-term-badge">Step 4</span><strong>Permanent ~/.bashrc Sourcing</strong></div>
+            <pre><code class="language-bash">echo "source ~/ros2_ws/install/setup.bash" >> ~/.bashrc</code></pre>
+          </div>
         </div>
         <div class="l04-content-col">
           <div class="l03-output-card">
@@ -2294,19 +2306,7 @@ ros2 pkg prefix nexus_amr_basics
     `
   });
 
-  // 11. Interactive Architecture Explorer: ROS 2 Package Filesystem
-  slides.push({
-    id: `${lesson.id}_interactive_package`,
-    type: 'interactive',
-    interactiveKey: 'package',
-    lessonNum: lesson.num_str,
-    lessonId: lesson.id,
-    module: lesson.module,
-    sectionTitle: 'Interactive Architecture: ROS 2 Package Filesystem',
-    title: 'Interactive Package Structure & Execution Trace'
-  });
-
-  // 12. Section 10: Production Best Practices & Golden Rules
+  // 10. Section 10: Production Best Practices & Golden Rules
   slides.push({
     id: `${lesson.id}_sec10_golden_rules`,
     type: 'concept',
@@ -3782,27 +3782,27 @@ class NavigateDistanceServer(Node):
     badge: '🔍 CLI Server Test',
     title: '5. Testing the Action Server via ROS 2 CLI & Streaming Feedback',
     htmlContent: `
-      <div class="l03-two-col-layout">
-        <div class="l03-left-code-col">
-          <div class="l03-cmd-card" style="margin-bottom: 0.4rem;">
+      <div class="l08-cli-test-layout">
+        <div class="l08-cli-code-col">
+          <div class="l03-cmd-card">
             <div class="l03-cmd-header"><span class="l03-term-badge">bash</span><strong>CLI Action Discovery &amp; Goal Dispatch</strong></div>
             <pre><code class="language-bash"># Terminal 1: Launch Action Server
 ros2 run nexus_amr_basics navigate_distance_server
 
 # Terminal 2: Verify Action Server registration
 ros2 action list
-# /navigate_distance
+# Discovered: /navigate_distance
 
 ros2 action info /navigate_distance
 # Action: nexus_amr_interfaces/action/NavigateDistance
 # Action clients: 0 | Action servers: 1
 
-# Dispatch goal from CLI with real-time feedback:
+# Dispatch goal from CLI with live streaming feedback:
 ros2 action send_goal /navigate_distance \
   nexus_amr_interfaces/action/NavigateDistance \
   "{target_distance_m: 5.0, speed_mps: 0.5}" --feedback</code></pre>
           </div>
-          <div class="l03-output-card" style="margin-bottom: 0;">
+          <div class="l03-output-card">
             <div class="l03-output-header"><span class="l03-term-badge">Terminal Output</span><strong>Live Telemetry &amp; Completion</strong></div>
             <pre><code class="language-plaintext">Feedback: distance_remaining: 3.5m, percent_complete: 30%
 Feedback: distance_remaining: 1.0m, percent_complete: 80%
@@ -3810,18 +3810,18 @@ Result: success: True, final_distance_traveled: 5.0m
 Goal finished with status: SUCCEEDED</code></pre>
           </div>
         </div>
-        <div class="l03-content-col">
-          <div class="l05-golden-card" style="margin-bottom: 0.35rem; padding: 0.4rem 0.65rem;">
-            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🧪</span><strong>Verify Server Before Writing Client</strong></div>
-            <p style="font-size: 0.74rem; line-height: 1.3;">Just like testing Services with <code>ros2 service call</code>, always test your Action Server using the CLI first to prove server correctness before coding clients.</p>
+        <div class="l08-cli-notes-col">
+          <div class="l05-golden-card">
+            <div class="l05-golden-header"><span>🧪</span><strong>Verify Server Before Writing Client</strong></div>
+            <p>Just like testing Services with <code>ros2 service call</code>, always test your Action Server using the CLI first to verify lifecycle callbacks, goals, and feedback before writing client code.</p>
           </div>
-          <div class="l05-golden-card" style="margin-bottom: 0.35rem; padding: 0.4rem 0.65rem;">
-            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>📡</span><strong>The --feedback Switch</strong></div>
-            <p style="font-size: 0.74rem; line-height: 1.3;">Without <code>--feedback</code>, <code>send_goal</code> only prints the final result. Adding the flag subscribes to the intermediate feedback topic in real time.</p>
+          <div class="l05-golden-card warning">
+            <div class="l05-golden-header"><span>📡</span><strong>The --feedback Switch</strong></div>
+            <p>Without <code>--feedback</code>, <code>send_goal</code> only waits for the final result. Adding the flag subscribes to the asynchronous feedback topic to print progress in real time.</p>
           </div>
-          <div class="l05-golden-card" style="margin-bottom: 0; padding: 0.4rem 0.65rem;">
-            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🔍</span><strong>Endpoint Introspection (action info)</strong></div>
-            <p style="font-size: 0.74rem; line-height: 1.3;">Inspects the action interface type, confirms exactly 1 server is active, and reports the count of connected client nodes.</p>
+          <div class="l05-golden-card success">
+            <div class="l05-golden-header"><span>🔍</span><strong>Endpoint Introspection (action info)</strong></div>
+            <p>Validates the action interface definition, verifies active server instances (must be &ge; 1), and audits connected client node count.</p>
           </div>
         </div>
       </div>
