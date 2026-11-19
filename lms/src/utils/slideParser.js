@@ -3999,91 +3999,44 @@ function buildLesson09Slides(doc, lesson, slides) {
 
   // 2. Link Properties & Tags I: Visual Geometry & Materials
   slides.push({
-    id: `${lesson.id}_sec2_visual_tags`,
+    id: `${lesson.id}_sec2_link_anatomy`,
     type: 'concept',
     lessonNum: lesson.num_str,
     lessonId: lesson.id,
     module: lesson.module,
     sectionTitle: '2. URDF Anatomy: Links vs. Joints',
-    badge: '👁️ RViz2 Rendering & Materials',
-    title: '2. Link Properties: Visual Tags (<visual>, <geometry>, <material>)',
+    badge: '📦 Link Structure & Tripartite Tags',
+    title: '2. URDF Link Anatomy: The Complete Link Excerpt (<visual>, <collision>, <inertial>)',
     htmlContent: `
       <div class="l03-two-col-layout">
         <div class="l03-left-code-col">
           <div class="l03-cmd-card" style="margin-bottom: 0;">
-            <div class="l03-cmd-header"><span class="l03-term-badge">nexus_amr.urdf.xacro</span><strong>Visual Appearance Block</strong></div>
+            <div class="l03-cmd-header"><span class="l03-term-badge">URDF Link Excerpt</span><strong>nexus_amr.urdf / base_link</strong></div>
             <pre><code class="language-xml">&lt;link name="base_link"&gt;
-  &lt;!-- 1. Visual Presentation in RViz2 --&gt;
-  &lt;visual&gt;
-    &lt;!-- Origin offset relative to link reference frame --&gt;
-    &lt;origin xyz="0 0 0" rpy="0 0 0"/&gt;
-
-    &lt;!-- Geometry Shape: Primitives or 3D Meshes --&gt;
-    &lt;geometry&gt;
-      &lt;!-- Primitive Option: &lt;box size="0.40 0.30 0.14"/&gt; --&gt;
-      &lt;!-- Primitive Option: &lt;cylinder radius="0.08" length="0.04"/&gt; --&gt;
-      &lt;!-- Primitive Option: &lt;sphere radius="0.03"/&gt; --&gt;
-      &lt;mesh filename="package://nexus_amr_description/meshes/base_link.stl"
-            scale="0.001 0.001 0.001"/&gt;
-    &lt;/geometry&gt;
-
-    &lt;!-- Surface Color Appearance &amp; Material --&gt;
-    &lt;material name="nexus_cyan"&gt;
-      &lt;color rgba="0.0 0.75 0.90 1.0"/&gt;
-    &lt;/material&gt;
-  &lt;/visual&gt;
-&lt;/link&gt;</code></pre>
-          </div>
-        </div>
-        <div class="l03-content-col">
-          <div class="l05-golden-card" style="margin-bottom: 0.35rem; padding: 0.4rem 0.65rem;">
-            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>📦</span><strong>&lt;geometry&gt; Primitives vs. 3D Meshes</strong></div>
-            <p style="font-size: 0.74rem; line-height: 1.3;">Primitives (<code>&lt;box&gt;</code>, <code>&lt;cylinder&gt;</code>, <code>&lt;sphere&gt;</code>) are ideal for rapid scaffolding and simple robots. Complex AMRs load high-resolution 3D surface meshes (STL / DAE) via <code>&lt;mesh filename="package://..."/&gt;</code>.</p>
-          </div>
-          <div class="l05-golden-card" style="margin-bottom: 0.35rem; padding: 0.4rem 0.65rem;">
-            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🎨</span><strong>&lt;material&gt; &amp; RGBA Color Definition</strong></div>
-            <p style="font-size: 0.74rem; line-height: 1.3;">Colors are specified with normalized floats (<code>0.0</code> to <code>1.0</code>) for red, green, blue, and alpha transparency (e.g. <code>rgba="0 0.75 0.9 1"</code>). Shared palettes can also be declared in <code>materials.xacro</code>.</p>
-          </div>
-          <div class="l05-golden-card" style="padding: 0.4rem 0.65rem;">
-            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>📐</span><strong>&lt;origin&gt; Spatial Visual Alignment</strong></div>
-            <p style="font-size: 0.74rem; line-height: 1.3;"><code>xyz="x y z"</code> shifts the geometry center relative to the link origin, while <code>rpy="roll pitch yaw"</code> rotates the mesh (in radians) so exported CAD meshes align precisely with robot axes.</p>
-          </div>
-        </div>
-      </div>
-    `
-  });
-
-  // 3. Link Properties & Tags II: Physics Dynamics (<inertial>) & Collision (<collision>)
-  slides.push({
-    id: `${lesson.id}_sec3_inertial_collision`,
-    type: 'concept',
-    lessonNum: lesson.num_str,
-    lessonId: lesson.id,
-    module: lesson.module,
-    sectionTitle: '2. URDF Anatomy: Links vs. Joints',
-    badge: '⚡ Physics & Dynamic Simulation',
-    title: '3. Link Properties: Physics Dynamics (<inertial>) & Collision (<collision>)',
-    htmlContent: `
-      <div class="l03-two-col-layout">
-        <div class="l03-left-code-col">
-          <div class="l03-cmd-card" style="margin-bottom: 0;">
-            <div class="l03-cmd-header"><span class="l03-term-badge">nexus_amr.urdf.xacro</span><strong>Inertial &amp; Collision Blocks</strong></div>
-            <pre><code class="language-xml">&lt;link name="base_link"&gt;
-  &lt;!-- 1. Mass &amp; Dynamics for Gazebo Physics ODE --&gt;
+  &lt;!-- 1. Mass &amp; Dynamics for Gazebo Physics Solver --&gt;
   &lt;inertial&gt;
-    &lt;!-- Center of Mass (CoM) location --&gt;
     &lt;origin xyz="0.0015 0.0004 0.0351" rpy="0 0 0"/&gt;
     &lt;mass value="0.6558"/&gt;
-    &lt;!-- 3x3 Symmetric Moment of Inertia Tensor --&gt;
     &lt;inertia ixx="0.000584" iyy="0.002255" izz="0.002722"
              ixy="0.0"      iyz="0.0"      ixz="-3.3e-05"/&gt;
   &lt;/inertial&gt;
 
-  &lt;!-- 2. Decoupled Collision Boundary --&gt;
+  &lt;!-- 2. Visual Render Mesh &amp; Material Appearance --&gt;
+  &lt;visual&gt;
+    &lt;origin xyz="0 0 0" rpy="0 0 0"/&gt;
+    &lt;geometry&gt;
+      &lt;mesh filename="package://nexus_amr_description/meshes/base_link.stl"
+            scale="0.001 0.001 0.001"/&gt;
+    &lt;/geometry&gt;
+    &lt;material name="silver"&gt;
+      &lt;color rgba="0.70 0.70 0.70 1.0"/&gt;
+    &lt;/material&gt;
+  &lt;/visual&gt;
+
+  &lt;!-- 3. Decoupled Collision Boundary (Low-Poly Box) --&gt;
   &lt;collision&gt;
     &lt;origin xyz="0 0 0" rpy="0 0 0"/&gt;
     &lt;geometry&gt;
-      &lt;!-- Simplified bounding box preserves 60 FPS physics --&gt;
       &lt;box size="0.25 0.20 0.08"/&gt;
     &lt;/geometry&gt;
   &lt;/collision&gt;
@@ -4091,17 +4044,75 @@ function buildLesson09Slides(doc, lesson, slides) {
           </div>
         </div>
         <div class="l03-content-col">
-          <div class="l05-golden-card" style="margin-bottom: 0.35rem; padding: 0.4rem 0.65rem;">
-            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🛡️</span><strong>Decoupled Collision vs. Visual Hulls</strong></div>
-            <p style="font-size: 0.74rem; line-height: 1.3;">Visual meshes contain thousands of surface facets. Calculating triangle-on-triangle contact forces every millisecond destroys real-time performance. Always use simple bounding boxes or convex hulls for <code>&lt;collision&gt;</code>.</p>
+          <div class="l05-golden-card" style="margin-bottom: 0.3rem; padding: 0.35rem 0.6rem;">
+            <div class="l05-golden-header" style="font-size: 0.76rem; color: #0284c7;"><span>🔵</span><strong>&lt;visual&gt; Appearance in RViz2</strong></div>
+            <p style="font-size: 0.72rem; line-height: 1.28;">Tells rendering engines how to draw the link. Contains <code>&lt;origin&gt;</code> (pose offset), <code>&lt;geometry&gt;</code> (CAD <code>&lt;mesh&gt;</code> in STL/DAE or primitives <code>&lt;box&gt;</code>, <code>&lt;cylinder&gt;</code>, <code>&lt;sphere&gt;</code>), and <code>&lt;material&gt;</code> with RGBA normalized color.</p>
           </div>
-          <div class="l05-golden-card" style="margin-bottom: 0.35rem; padding: 0.4rem 0.65rem;">
-            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🧮</span><strong>Mass &amp; 3D Inertia Tensor Matrix</strong></div>
-            <p style="font-size: 0.74rem; line-height: 1.3;"><code>&lt;mass value="m"/&gt;</code> is in kilograms (kg). The 3x3 symmetric inertia matrix (<code>ixx, iyy, izz, ixy, ixz, iyz</code>) governs spatial resistance to rotational acceleration (&tau; = I &alpha;).</p>
+          <div class="l05-golden-card" style="margin-bottom: 0.3rem; padding: 0.35rem 0.6rem;">
+            <div class="l05-golden-header" style="font-size: 0.76rem; color: #f59e0b;"><span>🟠</span><strong>&lt;collision&gt; Decoupled Physics Hull</strong></div>
+            <p style="font-size: 0.72rem; line-height: 1.28;">Evaluated by physics solvers (Gazebo ODE) and Nav2 footprint checkers. Never pass high-poly visual meshes to collision! Simplified bounding boxes or low-poly convex hulls preserve 60+ FPS physics.</p>
           </div>
-          <div class="l05-golden-card warning" style="padding: 0.4rem 0.65rem;">
-            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>⚠️</span><strong>The Zero-Inertia Disaster</strong></div>
-            <p style="font-size: 0.74rem; line-height: 1.3;">Never leave <code>&lt;inertial&gt;</code> empty or set inertia to 0! Physics engines divide by inertia. Zero inertia causes NaN acceleration, launching the robot to infinity and freezing Gazebo.</p>
+          <div class="l05-golden-card" style="padding: 0.35rem 0.6rem;">
+            <div class="l05-golden-header" style="font-size: 0.76rem; color: #10b981;"><span>🟢</span><strong>&lt;inertial&gt; Mass &amp; 3D Inertia Matrix</strong></div>
+            <p style="font-size: 0.72rem; line-height: 1.28;">Specifies mass in kg, Center of Mass (CoM) <code>&lt;origin&gt;</code>, and 3x3 symmetric rotational inertia tensor (<code>ixx, iyy, izz, ixy, ixz, iyz</code>). Zero inertia crashes Gazebo physics via division-by-zero.</p>
+          </div>
+        </div>
+      </div>
+    `
+  });
+
+  // 3. URDF File Anatomy: Kinematic Joint Excerpt (<joint>, <origin>, <axis>, <limit>)
+  slides.push({
+    id: `${lesson.id}_sec3_joint_anatomy`,
+    type: 'concept',
+    lessonNum: lesson.num_str,
+    lessonId: lesson.id,
+    module: lesson.module,
+    sectionTitle: '2. URDF Anatomy: Links vs. Joints',
+    badge: '🔩 Kinematic Constraint Excerpt',
+    title: '3. URDF Joint Anatomy: Parent-Child Binding, Relative Poses & Limits',
+    htmlContent: `
+      <div class="l03-two-col-layout">
+        <div class="l03-left-code-col">
+          <div class="l03-cmd-card" style="margin-bottom: 0;">
+            <div class="l03-cmd-header"><span class="l03-term-badge">URDF Joint Excerpt</span><strong>nexus_amr.urdf / right_motor &amp; steer</strong></div>
+            <pre><code class="language-xml">&lt;!-- 1. Continuous Joint: Wheel Traction Drive --&gt;
+&lt;joint name="right_motor" type="continuous"&gt;
+  &lt;parent link="base_link"/&gt;
+  &lt;child link="right_wheel_1"/&gt;
+  &lt;origin xyz="0.0561 -0.0516 0.0350" rpy="0 0 0"/&gt;
+  &lt;axis xyz="0 1 0"/&gt;
+  &lt;limit effort="10.0" velocity="12.5"/&gt;
+  &lt;dynamics damping="0.05" friction="0.01"/&gt;
+&lt;/joint&gt;
+
+&lt;!-- 2. Revolute Joint Example with Angular Limits --&gt;
+&lt;joint name="steer_joint" type="revolute"&gt;
+  &lt;parent link="base_link"/&gt;
+  &lt;child link="caster_swivel_link"/&gt;
+  &lt;origin xyz="-0.1200 0.0000 0.0200" rpy="0 0 0"/&gt;
+  &lt;axis xyz="0 0 1"/&gt;
+  &lt;limit lower="-1.5708" upper="1.5708"
+         effort="20.0" velocity="3.14"/&gt;
+&lt;/joint&gt;</code></pre>
+          </div>
+        </div>
+        <div class="l03-content-col">
+          <div class="l05-golden-card" style="margin-bottom: 0.3rem; padding: 0.35rem 0.6rem;">
+            <div class="l05-golden-header" style="font-size: 0.76rem; color: #8b5cf6;"><span>🔗</span><strong>&lt;parent&gt; &amp; &lt;child&gt; Binding</strong></div>
+            <p style="font-size: 0.72rem; line-height: 1.28;">Every joint explicitly binds exactly one parent link to one child link in the DAG hierarchy. Motion of the parent is transmitted forward through the joint to the child.</p>
+          </div>
+          <div class="l05-golden-card" style="margin-bottom: 0.3rem; padding: 0.35rem 0.6rem;">
+            <div class="l05-golden-header" style="font-size: 0.76rem; color: #0284c7;"><span>📐</span><strong>&lt;origin&gt; Relative 3D Pose Offset</strong></div>
+            <p style="font-size: 0.72rem; line-height: 1.28;">Defines the spatial translation (<code>xyz</code> in meters) and angular rotation (<code>rpy</code> in radians) from the parent link origin to the joint pivot center.</p>
+          </div>
+          <div class="l05-golden-card" style="margin-bottom: 0.3rem; padding: 0.35rem 0.6rem;">
+            <div class="l05-golden-header" style="font-size: 0.76rem; color: #dc2626;"><span>🎯</span><strong>&lt;axis&gt; &amp; &lt;limit&gt; Motion Boundaries</strong></div>
+            <p style="font-size: 0.72rem; line-height: 1.28;"><code>&lt;axis xyz="..."/&gt;</code> defines the unit vector of rotation or slide. <code>&lt;limit&gt;</code> enforces physical travel (<code>lower</code> / <code>upper</code>), peak motor torque (<code>effort</code> in Nm), and velocity (rad/s).</p>
+          </div>
+          <div class="l05-golden-card" style="padding: 0.35rem 0.6rem;">
+            <div class="l05-golden-header" style="font-size: 0.76rem; color: #10b981;"><span>⚙️</span><strong>&lt;dynamics&gt; Friction &amp; Damping</strong></div>
+            <p style="font-size: 0.72rem; line-height: 1.28;">Simulates real physical bearing resistance: <code>damping</code> (velocity-proportional viscous resistance) and <code>friction</code> (Coulomb dry friction) inside Gazebo physics.</p>
           </div>
         </div>
       </div>
