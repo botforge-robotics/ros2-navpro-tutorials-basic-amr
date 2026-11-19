@@ -9095,6 +9095,102 @@
   max-height: calc(100vh - 250px) !important;
 }
 
+/* Illustrative Image Cards for Lesson 09 */
+.l09-img-card {
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  padding: 0.3rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.l09-img-card img {
+  width: 100%;
+  max-height: 195px;
+  object-fit: contain;
+  border-radius: 6px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.l09-img-caption {
+  font-size: 0.68rem;
+  line-height: 1.22;
+  color: #94a3b8;
+  margin-top: 0.25rem;
+  text-align: center;
+}
+
+.l09-tripartite-pills {
+  display: flex;
+  flex-direction: column;
+  gap: 0.28rem;
+  width: 100%;
+}
+
+.l09-tag-pill {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(15, 23, 42, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 6px;
+  padding: 0.25rem 0.5rem;
+  box-sizing: border-box;
+}
+
+.l09-tag-pill .tag-badge {
+  font-size: 0.66rem;
+  font-weight: 700;
+  padding: 0.15rem 0.4rem;
+  border-radius: 4px;
+  white-space: nowrap;
+  font-family: var(--font-mono, monospace);
+  color: #ffffff;
+}
+
+.tag-visual .tag-badge { background: #0284c7; }
+.tag-collision .tag-badge { background: #d97706; }
+.tag-inertial .tag-badge { background: #059669; }
+
+.l09-tag-pill p {
+  margin: 0;
+  font-size: 0.70rem;
+  line-height: 1.24;
+  color: #cbd5e1;
+}
+
+/* Fullscreen Overrides for Lesson 09 Images */
+.presentation-viewport.is-fullscreen .l09-img-card img {
+  max-height: 340px !important;
+}
+
+.presentation-viewport.is-fullscreen .l09-img-caption {
+  font-size: 0.86rem !important;
+  margin-top: 0.45rem !important;
+}
+
+.presentation-viewport.is-fullscreen .l09-tripartite-pills {
+  gap: 0.5rem !important;
+}
+
+.presentation-viewport.is-fullscreen .l09-tag-pill {
+  padding: 0.45rem 0.8rem !important;
+}
+
+.presentation-viewport.is-fullscreen .l09-tag-pill .tag-badge {
+  font-size: 0.85rem !important;
+  padding: 0.2rem 0.55rem !important;
+}
+
+.presentation-viewport.is-fullscreen .l09-tag-pill p {
+  font-size: 0.86rem !important;
+  line-height: 1.38 !important;
+}
+
 /* Lesson 09 XML Code Snapshot Optimization - Full Viewport Visibility (No Scrolling) */
 .l09-xml-layout {
   display: grid;

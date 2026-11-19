@@ -3974,6 +3974,10 @@ function buildLesson09Slides(doc, lesson, slides) {
           </div>
         </div>
         <div class="l03-content-col">
+          <div class="l09-img-card" style="margin-bottom: 0.35rem;">
+            <img src="assets/images/urdf_kinematic_hierarchy_rep103.jpg" alt="URDF Kinematic Tree & REP-103 Conventions" />
+            <span class="l09-img-caption"><strong>REP-103 Kinematic DAG:</strong> +X Forward (Red), +Y Left (Green), +Z Up (Blue) anchored at <code>base_footprint</code> (z=0)</span>
+          </div>
           <div class="l06-table-wrap">
             <table>
               <thead>
@@ -3982,15 +3986,10 @@ function buildLesson09Slides(doc, lesson, slides) {
               <tbody>
                 <tr><td><code>base_footprint</code></td><td>Ground projection datum (z=0)</td><td>World / Odom</td></tr>
                 <tr><td><code>base_link</code></td><td>Structural chassis center</td><td><code>base_footprint_joint</code> (fixed)</td></tr>
-                <tr><td><code>right_wheel_1</code></td><td>Differential drive traction</td><td><code>right_motor</code> (continuous)</td></tr>
-                <tr><td><code>left_wheel_1</code></td><td>Differential drive traction</td><td><code>left_motor</code> (continuous)</td></tr>
-                <tr><td><code>lidar_1</code></td><td>360&deg; 2D RPLiDAR scanner</td><td><code>lidar_joint</code> (fixed)</td></tr>
-                <tr><td><code>camera_1</code></td><td>RGB front optical sensor</td><td><code>cam_joint</code> (fixed)</td></tr>
+                <tr><td><code>right_wheel_1</code> / <code>left_wheel_1</code></td><td>Differential drive traction</td><td>Continuous joints</td></tr>
+                <tr><td><code>lidar_1</code> / <code>camera_1</code></td><td>Perception sensors</td><td>Fixed joints</td></tr>
               </tbody>
             </table>
-          </div>
-          <div class="l05-banner-intro" style="margin-top: 0.4rem; font-size: 0.73rem; padding: 0.35rem 0.6rem;">
-            <strong>💡 Directed Acyclic Graph (DAG):</strong> A valid URDF is strictly a tree structure with exactly one root link (<code>base_footprint</code>) and zero closed kinematic loops.
           </div>
         </div>
       </div>
@@ -4043,17 +4042,23 @@ function buildLesson09Slides(doc, lesson, slides) {
           </div>
         </div>
         <div class="l03-content-col">
-          <div class="l05-golden-card" style="margin-bottom: 0.3rem; padding: 0.35rem 0.6rem;">
-            <div class="l05-golden-header" style="font-size: 0.76rem; color: #0284c7;"><span>🔵</span><strong>&lt;visual&gt; Appearance in RViz2</strong></div>
-            <p style="font-size: 0.72rem; line-height: 1.28;">Tells rendering engines how to draw the link. Contains <code>&lt;origin&gt;</code> (pose offset), <code>&lt;geometry&gt;</code> (CAD <code>&lt;mesh&gt;</code> in STL/DAE or primitives <code>&lt;box&gt;</code>, <code>&lt;cylinder&gt;</code>, <code>&lt;sphere&gt;</code>), and <code>&lt;material&gt;</code> with RGBA normalized color.</p>
+          <div class="l09-img-card" style="margin-bottom: 0.35rem;">
+            <img src="assets/images/urdf_link_visual_collision_inertial.jpg" alt="URDF Link Tripartite Architecture: Visual, Collision, Inertial" />
+            <span class="l09-img-caption"><strong>Tripartite Structure:</strong> 1. Visual Mesh &bull; 2. Collision Bounding Hull &bull; 3. Center of Mass &amp; 3x3 Inertia Tensor</span>
           </div>
-          <div class="l05-golden-card" style="margin-bottom: 0.3rem; padding: 0.35rem 0.6rem;">
-            <div class="l05-golden-header" style="font-size: 0.76rem; color: #f59e0b;"><span>🟠</span><strong>&lt;collision&gt; Decoupled Physics Hull</strong></div>
-            <p style="font-size: 0.72rem; line-height: 1.28;">Evaluated by physics solvers (Gazebo ODE) and Nav2 footprint checkers. Never pass high-poly visual meshes to collision! Simplified bounding boxes or low-poly convex hulls preserve 60+ FPS physics.</p>
-          </div>
-          <div class="l05-golden-card" style="padding: 0.35rem 0.6rem;">
-            <div class="l05-golden-header" style="font-size: 0.76rem; color: #10b981;"><span>🟢</span><strong>&lt;inertial&gt; Mass &amp; 3D Inertia Matrix</strong></div>
-            <p style="font-size: 0.72rem; line-height: 1.28;">Specifies mass in kg, Center of Mass (CoM) <code>&lt;origin&gt;</code>, and 3x3 symmetric rotational inertia tensor (<code>ixx, iyy, izz, ixy, ixz, iyz</code>). Zero inertia crashes Gazebo physics via division-by-zero.</p>
+          <div class="l09-tripartite-pills">
+            <div class="l09-tag-pill tag-visual">
+              <span class="tag-badge">🔵 &lt;visual&gt;</span>
+              <p>High-poly CAD mesh (.stl/.dae) &amp; RGBA color rendered in RViz2</p>
+            </div>
+            <div class="l09-tag-pill tag-collision">
+              <span class="tag-badge">🟠 &lt;collision&gt;</span>
+              <p>Simplified low-poly box/cylinder bounding hull for fast physics contact detection</p>
+            </div>
+            <div class="l09-tag-pill tag-inertial">
+              <span class="tag-badge">🟢 &lt;inertial&gt;</span>
+              <p>Mass in kg, CoM centroid offset, and 3x3 rotational inertia tensor matrix</p>
+            </div>
           </div>
         </div>
       </div>
@@ -4097,21 +4102,27 @@ function buildLesson09Slides(doc, lesson, slides) {
           </div>
         </div>
         <div class="l03-content-col">
-          <div class="l05-golden-card" style="margin-bottom: 0.3rem; padding: 0.35rem 0.6rem;">
-            <div class="l05-golden-header" style="font-size: 0.76rem; color: #8b5cf6;"><span>🔗</span><strong>&lt;parent&gt; &amp; &lt;child&gt; Binding</strong></div>
-            <p style="font-size: 0.72rem; line-height: 1.28;">Every joint explicitly binds exactly one parent link to one child link in the DAG hierarchy. Motion of the parent is transmitted forward through the joint to the child.</p>
+          <div class="l09-img-card" style="margin-bottom: 0.35rem;">
+            <img src="assets/images/urdf_joint_spatial_anatomy.jpg" alt="URDF Joint Spatial Kinematics & Constraints" />
+            <span class="l09-img-caption"><strong>Joint Kinematics:</strong> Origin <code>xyz/rpy</code> vector &bull; Axis <code>xyz</code> &bull; Range <code>limit</code> &bull; Friction <code>dynamics</code></span>
           </div>
-          <div class="l05-golden-card" style="margin-bottom: 0.3rem; padding: 0.35rem 0.6rem;">
-            <div class="l05-golden-header" style="font-size: 0.76rem; color: #0284c7;"><span>📐</span><strong>&lt;origin&gt; Relative 3D Pose Offset</strong></div>
-            <p style="font-size: 0.72rem; line-height: 1.28;">Defines the spatial translation (<code>xyz</code> in meters) and angular rotation (<code>rpy</code> in radians) from the parent link origin to the joint pivot center.</p>
-          </div>
-          <div class="l05-golden-card" style="margin-bottom: 0.3rem; padding: 0.35rem 0.6rem;">
-            <div class="l05-golden-header" style="font-size: 0.76rem; color: #dc2626;"><span>🎯</span><strong>&lt;axis&gt; &amp; &lt;limit&gt; Motion Boundaries</strong></div>
-            <p style="font-size: 0.72rem; line-height: 1.28;"><code>&lt;axis xyz="..."/&gt;</code> defines the unit vector of rotation or slide. <code>&lt;limit&gt;</code> enforces physical travel (<code>lower</code> / <code>upper</code>), peak motor torque (<code>effort</code> in Nm), and velocity (rad/s).</p>
-          </div>
-          <div class="l05-golden-card" style="padding: 0.35rem 0.6rem;">
-            <div class="l05-golden-header" style="font-size: 0.76rem; color: #10b981;"><span>⚙️</span><strong>&lt;dynamics&gt; Friction &amp; Damping</strong></div>
-            <p style="font-size: 0.72rem; line-height: 1.28;">Simulates real physical bearing resistance: <code>damping</code> (velocity-proportional viscous resistance) and <code>friction</code> (Coulomb dry friction) inside Gazebo physics.</p>
+          <div class="l09-tripartite-pills">
+            <div class="l09-tag-pill">
+              <span class="tag-badge" style="background: #8b5cf6;">🔗 &lt;parent&gt; &rarr; &lt;child&gt;</span>
+              <p>Rigid kinematic DAG binding between parent link and child link</p>
+            </div>
+            <div class="l09-tag-pill">
+              <span class="tag-badge" style="background: #0284c7;">📐 &lt;origin&gt;</span>
+              <p>6-DoF spatial translation (xyz) &amp; orientation (rpy) offset vector</p>
+            </div>
+            <div class="l09-tag-pill">
+              <span class="tag-badge" style="background: #dc2626;">🎯 &lt;axis&gt; &amp; &lt;limit&gt;</span>
+              <p>Unit motion vector with lower/upper mechanical travel limits &amp; effort</p>
+            </div>
+            <div class="l09-tag-pill">
+              <span class="tag-badge" style="background: #10b981;">⚙️ &lt;dynamics&gt;</span>
+              <p>Simulates physical joint damping and Coulomb friction in Gazebo</p>
+            </div>
           </div>
         </div>
       </div>
@@ -4237,9 +4248,9 @@ function buildLesson09Slides(doc, lesson, slides) {
         </div>
         <div class="l03-content-col">
           <div class="l09-cad-image-card">
-            <img src="assets/images/fusion360_to_ros2_urdf_amr.jpg" alt="From Autodesk Fusion 360 to ROS 2 URDF" />
+            <img src="assets/images/nexus_amr_real_urdf_robot_design.jpg" alt="Real Nexus AMR URDF Robot Design" />
             <div style="font-size: 0.72rem; line-height: 1.32; color: var(--text-secondary); text-align: center;">
-              <strong style="color: #38bdf8;">Nexus AMR Digital Twin Pipeline:</strong> Parametric 3D CAD modeling in Autodesk Fusion 360 &rarr; automated surface mesh extraction (.STL) &amp; inertia computation &rarr; ROS 2 URDF model with active TF coordinate frames.
+              <strong style="color: #38bdf8;">Nexus AMR 3D URDF Digital Twin:</strong> Dual drive wheels, front caster, 360&deg; RPLiDAR puck, front camera, and active REP-103 TF coordinate frames.
             </div>
             <div class="l03-cmd-header" style="width: 100%; padding: 0.25rem 0.5rem; font-size: 0.7rem; box-sizing: border-box; background: rgba(0,0,0,0.3); border-radius: 4px;">
               <span class="l03-term-badge" style="font-size: 0.65rem;">Mesh Reference</span>
