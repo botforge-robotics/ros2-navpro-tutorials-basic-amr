@@ -9050,11 +9050,17 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background: rgba(15, 23, 42, 0.4);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: var(--bg-surface, #f8fafc);
+  border: 1px solid var(--border-color, #e2e8f0);
   border-radius: 12px;
   padding: 0.35rem;
   box-sizing: border-box;
+}
+
+[data-theme="dark"] .l09-joint-anim-stage,
+.dark-theme .l09-joint-anim-stage {
+  background: rgba(15, 23, 42, 0.4);
+  border-color: rgba(255, 255, 255, 0.08);
 }
 
 .l09-joint-anim-stage img {
@@ -9065,8 +9071,8 @@
 }
 
 .l09-cad-image-card {
-  background: rgba(15, 23, 42, 0.6);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: var(--bg-surface, #f8fafc);
+  border: 1px solid var(--border-color, #e2e8f0);
   border-radius: 10px;
   padding: 0.5rem;
   display: flex;
@@ -9076,6 +9082,14 @@
   box-sizing: border-box;
   width: 100%;
   height: 100%;
+  color: var(--text-primary, #0f172a);
+}
+
+[data-theme="dark"] .l09-cad-image-card,
+.dark-theme .l09-cad-image-card {
+  background: rgba(15, 23, 42, 0.6);
+  border-color: rgba(255, 255, 255, 0.1);
+  color: #f8fafc;
 }
 
 .l09-cad-image-card img {
@@ -9083,7 +9097,19 @@
   max-height: 310px;
   object-fit: contain;
   border-radius: 6px;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+}
+
+.l09-cad-image-card .cad-caption {
+  font-size: 0.72rem;
+  line-height: 1.32;
+  color: var(--text-secondary, #334155);
+  text-align: center;
+}
+
+[data-theme="dark"] .l09-cad-image-card .cad-caption,
+.dark-theme .l09-cad-image-card .cad-caption {
+  color: #cbd5e1;
 }
 
 /* Fullscreen Overrides for Lesson 09 */
@@ -9095,10 +9121,10 @@
   max-height: calc(100vh - 250px) !important;
 }
 
-/* Illustrative Image Cards for Lesson 09 */
+/* Illustrative Image Cards for Lesson 09 - Theme-Aware Contrast */
 .l09-img-card {
-  background: rgba(15, 23, 42, 0.6);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: var(--bg-surface, #f8fafc);
+  border: 1px solid var(--border-color, #e2e8f0);
   border-radius: 8px;
   padding: 0.3rem;
   display: flex;
@@ -9108,20 +9134,45 @@
   width: 100%;
 }
 
+[data-theme="dark"] .l09-img-card,
+.dark-theme .l09-img-card {
+  background: rgba(15, 23, 42, 0.6);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
 .l09-img-card img {
   width: 100%;
   max-height: 195px;
   object-fit: contain;
   border-radius: 6px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+[data-theme="dark"] .l09-img-card img,
+.dark-theme .l09-img-card img {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
 }
 
 .l09-img-caption {
-  font-size: 0.68rem;
-  line-height: 1.22;
-  color: #94a3b8;
+  font-size: 0.68rem !important;
+  line-height: 1.25 !important;
+  color: var(--text-secondary, #475569) !important;
   margin-top: 0.25rem;
   text-align: center;
+}
+
+.l09-img-caption strong {
+  color: var(--text-primary, #0f172a) !important;
+}
+
+[data-theme="dark"] .l09-img-caption,
+.dark-theme .l09-img-caption {
+  color: #94a3b8 !important;
+}
+
+[data-theme="dark"] .l09-img-caption strong,
+.dark-theme .l09-img-caption strong {
+  color: #38bdf8 !important;
 }
 
 .l09-tripartite-pills {
@@ -9135,21 +9186,29 @@
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  background: rgba(15, 23, 42, 0.55);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: var(--bg-card, #ffffff);
+  border: 1px solid var(--border-color, #e2e8f0);
   border-radius: 6px;
-  padding: 0.25rem 0.5rem;
+  padding: 0.28rem 0.55rem;
   box-sizing: border-box;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+[data-theme="dark"] .l09-tag-pill,
+.dark-theme .l09-tag-pill {
+  background: rgba(15, 23, 42, 0.7);
+  border-color: rgba(255, 255, 255, 0.1);
+  box-shadow: none;
 }
 
 .l09-tag-pill .tag-badge {
-  font-size: 0.66rem;
+  font-size: 0.66rem !important;
   font-weight: 700;
   padding: 0.15rem 0.4rem;
   border-radius: 4px;
   white-space: nowrap;
   font-family: var(--font-mono, monospace);
-  color: #ffffff;
+  color: #ffffff !important;
 }
 
 .tag-visual .tag-badge { background: #0284c7; }
@@ -9158,9 +9217,14 @@
 
 .l09-tag-pill p {
   margin: 0;
-  font-size: 0.70rem;
-  line-height: 1.24;
-  color: #cbd5e1;
+  font-size: 0.70rem !important;
+  line-height: 1.24 !important;
+  color: var(--text-secondary, #1e293b) !important;
+}
+
+[data-theme="dark"] .l09-tag-pill p,
+.dark-theme .l09-tag-pill p {
+  color: #cbd5e1 !important;
 }
 
 /* Fullscreen Overrides for Lesson 09 Images */

@@ -4103,8 +4103,8 @@ function buildLesson09Slides(doc, lesson, slides) {
         </div>
         <div class="l03-content-col">
           <div class="l09-img-card" style="margin-bottom: 0.35rem;">
-            <img src="assets/images/urdf_joint_spatial_anatomy.jpg" alt="URDF Joint Spatial Kinematics & Constraints" />
-            <span class="l09-img-caption"><strong>Joint Kinematics:</strong> Origin <code>xyz/rpy</code> vector &bull; Axis <code>xyz</code> &bull; Range <code>limit</code> &bull; Friction <code>dynamics</code></span>
+            <img src="assets/images/urdf_joint_simple_schematic.jpg" alt="URDF Joint Simple Kinematic Schematic" />
+            <span class="l09-img-caption"><strong>Joint Kinematics:</strong> Origin <code>xyz/rpy</code> offset &bull; Mechanical pivot &bull; Motion <code>axis</code> &bull; Travel <code>limit</code></span>
           </div>
           <div class="l09-tripartite-pills">
             <div class="l09-tag-pill">
@@ -4249,8 +4249,8 @@ function buildLesson09Slides(doc, lesson, slides) {
         <div class="l03-content-col">
           <div class="l09-cad-image-card">
             <img src="assets/images/nexus_amr_real_urdf_robot_design.jpg" alt="Real Nexus AMR URDF Robot Design" />
-            <div style="font-size: 0.72rem; line-height: 1.32; color: var(--text-secondary); text-align: center;">
-              <strong style="color: #38bdf8;">Nexus AMR 3D URDF Digital Twin:</strong> Dual drive wheels, front caster, 360&deg; RPLiDAR puck, front camera, and active REP-103 TF coordinate frames.
+            <div class="cad-caption">
+              <strong style="color: #0284c7;">Nexus AMR 3D URDF Digital Twin:</strong> Dual drive wheels, front caster, 360&deg; RPLiDAR puck, front camera, and active REP-103 TF coordinate frames.
             </div>
             <div class="l03-cmd-header" style="width: 100%; padding: 0.25rem 0.5rem; font-size: 0.7rem; box-sizing: border-box; background: rgba(0,0,0,0.3); border-radius: 4px;">
               <span class="l03-term-badge" style="font-size: 0.65rem;">Mesh Reference</span>
