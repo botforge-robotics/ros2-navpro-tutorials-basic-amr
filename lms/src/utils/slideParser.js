@@ -1088,7 +1088,7 @@ function buildLesson02Slides(doc, lesson, slides) {
     `
   });
 
-  // 5. Section 3.4: Windows / PC OS Metaphor & The 4-Tier Software Stack (Combined)
+  // 5. Section 3.4: Windows / PC OS Metaphor & Middleware Reality
   slides.push({
     id: `${lesson.id}_sec3_4_metaphor_and_stack`,
     type: 'concept',
@@ -1096,41 +1096,35 @@ function buildLesson02Slides(doc, lesson, slides) {
     lessonId: lesson.id,
     module: lesson.module,
     sectionTitle: '3. Robotics Fundamentals & ROS 2 Architecture',
-    badge: '💻 Architectural Metaphor & Stack',
+    badge: '💻 Architectural Metaphor',
     title: '3.4 What is ROS? The PC OS Metaphor & The 4-Tier Software Stack',
     htmlContent: `
       <div class="l02-metaphor-stack-layout">
-        <!-- Col 1: Metaphor -->
+        <!-- Col 1: Metaphor Visual (Enlarged) -->
         <div class="metaphor-col">
           <div class="metaphor-visual-card">
             <img src="assets/images/ros_metaphor_pc_vs_robot.jpg" alt="PC OS vs Robot OS Metaphor" />
           </div>
+        </div>
+
+        <!-- Col 2: Metaphor Comparisons & Meta-OS Reality (Replaced 1-4 points) -->
+        <div class="stack-col">
+          <div class="stack-alert-box">
+            <strong>Core Reality: Middleware Framework, Not a Bare-Metal Kernel</strong><br/>
+            ROS 2 does <em>not</em> manage CPU scheduling or raw memory. It is a <strong>meta-operating system</strong> installing in user space on top of Ubuntu Linux.
+          </div>
           <div class="metaphor-comparisons">
-            <div class="metaphor-compare-card">
+            <div class="metaphor-compare-card pc-compare">
               <div class="card-tag"><span>🖥️</span><strong>Personal Computers (Windows / macOS)</strong></div>
               <p>Standardizes hardware abstraction (GPUs, audio, USB, Wi-Fi) and graphics APIs (DirectX). Devs focus on gameplay, not writing graphics card microcode.</p>
             </div>
-            <div class="metaphor-compare-card">
+            <div class="metaphor-compare-card amr-compare">
               <div class="card-tag"><span>🤖</span><strong>Autonomous Mobile Robots (ROS 2)</strong></div>
               <p>Standardizes hardware abstraction (LiDAR, cameras, IMUs, motor drives) and DDS IPC. Autonomy engineers focus on navigation, not low-level byte parsing.</p>
             </div>
           </div>
-        </div>
-
-        <!-- Col 2: Stack Reality -->
-        <div class="stack-col">
-          <div class="stack-alert-box">
-            <strong>Core Reality: Middleware Framework, Not a Bare-Metal Kernel</strong><br/>
-            ROS 2 does <em>not</em> manage CPU scheduling, interrupt vectors, or raw memory. It is a <strong>meta-operating system</strong> installing in user space on top of Ubuntu Linux.
-          </div>
-          <div class="stack-pills">
-            <div class="stack-pill user"><span>1. User Applications</span><span>Nav2, SLAM Toolbox, Vision, AI Behaviors</span></div>
-            <div class="stack-pill ros"><span>2. ROS 2 Middleware &amp; RCL</span><span>rclcpp, rclpy, FastDDS Inter-Process Bus</span></div>
-            <div class="stack-pill os"><span>3. Host Operating System</span><span>Ubuntu 24.04 LTS Kernel &amp; POSIX APIs</span></div>
-            <div class="stack-pill hw"><span>4. Physical Robot Hardware</span><span>Motors, LiDAR, IMU, Chassis &amp; Microcontrollers</span></div>
-          </div>
           <div class="stack-takeaway">
-            <strong>💡 Unified Engineering Takeaway:</strong> The PC OS metaphor explains <em>why</em> we standardize (hardware independence); the 4-tier stack explains <em>how</em> it runs (modular user-space processes over DDS).
+            <strong>💡 Unified Engineering Takeaway:</strong> The PC OS metaphor explains <em>why</em> we standardize (hardware independence); ROS 2 sits as a user-space meta-OS over Linux to achieve this.
           </div>
         </div>
       </div>

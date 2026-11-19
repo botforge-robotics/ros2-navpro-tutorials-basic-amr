@@ -4797,9 +4797,9 @@
 .robot-ingredients-slide-layout {
   display: grid;
   grid-template-columns: 1.05fr 1fr;
-  gap: 1.25rem;
+  gap: 1.15rem;
   height: 100%;
-  max-height: 490px;
+  max-height: 480px;
   align-items: stretch;
 }
 
@@ -4807,7 +4807,8 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  gap: 0.65rem;
+  gap: 0.5rem;
+  height: 100%;
 }
 
 .anatomy-image-wrap {
@@ -4818,13 +4819,15 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 0.65rem;
+  padding: 0.45rem;
   overflow: hidden;
+  min-height: 0;
 }
 
 .ingredients-hero-img {
-  max-height: 340px;
+  max-height: 250px;
   width: 100%;
+  height: 100%;
   object-fit: contain;
 }
 
@@ -4832,27 +4835,31 @@
   background: rgba(59, 130, 246, 0.08);
   border: 1px solid rgba(59, 130, 246, 0.25);
   border-radius: 8px;
-  padding: 0.5rem 0.85rem;
-  font-size: 0.82rem;
-  line-height: 1.4;
+  padding: 0.35rem 0.65rem;
+  font-size: 0.74rem;
+  line-height: 1.32;
   color: var(--text-secondary);
+  flex-shrink: 0;
 }
 
 .ingredients-cards-col {
   display: flex;
   flex-direction: column;
-  gap: 0.55rem;
+  gap: 0.45rem;
   justify-content: space-between;
+  height: 100%;
 }
 
 .ingredient-card {
-  padding: 0.65rem 0.95rem;
-  border-radius: 10px;
+  padding: 0.45rem 0.75rem;
+  border-radius: 8px;
   border: 1px solid var(--border-color);
   background: var(--bg-card);
   display: flex;
   flex-direction: column;
-  gap: 0.25rem;
+  gap: 0.15rem;
+  flex: 1;
+  justify-content: center;
 }
 
 .ingredient-card.ingredient-perception {
@@ -4873,36 +4880,36 @@
 .ingredient-header {
   display: flex;
   align-items: center;
-  gap: 0.55rem;
+  gap: 0.45rem;
 }
 
 .ingredient-icon {
-  font-size: 1.3rem;
+  font-size: 1.15rem;
   line-height: 1;
 }
 
 .ingredient-title-group {
   display: flex;
   align-items: baseline;
-  gap: 0.5rem;
+  gap: 0.45rem;
 }
 
 .ingredient-name {
-  font-size: 1.02rem;
+  font-size: 0.92rem;
   font-weight: 800;
   color: var(--text-primary);
 }
 
 .ingredient-role {
-  font-size: 0.78rem;
+  font-size: 0.72rem;
   font-weight: 600;
   color: var(--text-muted);
 }
 
 .ingredient-desc {
   margin: 0;
-  font-size: 0.8rem;
-  line-height: 1.38;
+  font-size: 0.73rem;
+  line-height: 1.3;
   color: var(--text-secondary);
 }
 
@@ -4910,9 +4917,9 @@
 .story-step-slide-layout {
   display: grid;
   grid-template-columns: 1fr 1.05fr;
-  gap: 1.4rem;
+  gap: 1.25rem;
   height: 100%;
-  max-height: 490px;
+  max-height: 480px;
   align-items: stretch;
 }
 
@@ -4924,20 +4931,20 @@
   background: var(--bg-card);
   border: 1px solid var(--border-color);
   border-radius: 12px;
-  padding: 0.65rem;
+  padding: 0.6rem;
   overflow: hidden;
 }
 
 .story-step-hero-img {
-  max-height: 345px;
+  max-height: 330px;
   width: 100%;
   object-fit: contain;
   border-radius: 8px;
 }
 
 .story-step-caption {
-  margin-top: 0.45rem;
-  font-size: 0.78rem;
+  margin-top: 0.4rem;
+  font-size: 0.75rem;
   font-weight: 700;
   color: var(--text-muted);
   text-align: center;
@@ -4946,24 +4953,26 @@
 .story-narrative-col {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  gap: 0.65rem;
+  justify-content: flex-start;
+  gap: 0.55rem;
+  height: 100%;
 }
 
 .story-quote-card {
   background: rgba(59, 130, 246, 0.06);
   border: 1px solid rgba(59, 130, 246, 0.2);
   border-radius: 10px;
-  padding: 0.75rem 0.95rem;
+  padding: 0.65rem 0.85rem;
+  flex-shrink: 0;
 }
 
 .story-quote-tag {
-  font-size: 0.72rem;
+  font-size: 0.7rem;
   font-weight: 800;
   text-transform: uppercase;
   color: #3b82f6;
   letter-spacing: 0.05em;
-  margin-bottom: 0.25rem;
+  margin-bottom: 0.2rem;
 }
 
 .story-quote-tag.warning-tag { color: #f59e0b; }
@@ -4972,9 +4981,9 @@
 
 .story-quote-lead {
   margin: 0;
-  font-size: 0.92rem;
+  font-size: 0.88rem;
   font-style: italic;
-  line-height: 1.42;
+  line-height: 1.38;
   color: var(--text-primary);
   font-weight: 600;
 }
@@ -4983,49 +4992,50 @@
   background: var(--bg-card);
   border: 1px solid var(--border-color);
   border-radius: 10px;
-  padding: 0.75rem 0.95rem;
-  flex: 1;
+  padding: 0.65rem 0.85rem;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: flex-start;
+  gap: 0.4rem;
+  flex: 1;
 }
 
 .story-insight-title {
-  margin: 0 0 0.35rem;
-  font-size: 0.9rem;
+  margin: 0 0 0.15rem;
+  font-size: 0.88rem;
   font-weight: 800;
   color: var(--text-primary);
 }
 
 .story-insight-box p {
   margin: 0;
-  font-size: 0.8rem;
-  line-height: 1.38;
+  font-size: 0.78rem;
+  line-height: 1.35;
   color: var(--text-secondary);
 }
 
 .story-trap-list {
-  margin: 0.25rem 0;
-  padding-left: 1.15rem;
-  font-size: 0.78rem;
-  line-height: 1.32;
+  margin: 0.15rem 0;
+  padding-left: 1.1rem;
+  font-size: 0.75rem;
+  line-height: 1.3;
   color: var(--text-secondary);
 }
 
 .story-trap-list li {
-  margin-bottom: 0.2rem;
+  margin-bottom: 0.15rem;
 }
 
 .story-pill-row {
   display: flex;
-  gap: 0.45rem;
-  margin-top: 0.5rem;
+  gap: 0.4rem;
+  margin-top: 0.4rem;
 }
 
 .story-pill {
-  font-size: 0.72rem;
+  font-size: 0.7rem;
   font-weight: 700;
-  padding: 0.18rem 0.5rem;
+  padding: 0.16rem 0.45rem;
   background: var(--bg-sidebar);
   border: 1px solid var(--border-color);
   border-radius: 6px;
@@ -5033,23 +5043,25 @@
 }
 
 .story-burnout-result {
-  margin-top: 0.4rem;
-  padding: 0.4rem 0.6rem;
+  margin-top: 0.35rem;
+  padding: 0.35rem 0.55rem;
   background: rgba(239, 68, 68, 0.08);
   border-left: 3px solid #ef4444;
-  font-size: 0.78rem;
-  line-height: 1.32;
+  font-size: 0.75rem;
+  line-height: 1.3;
   color: var(--text-primary);
+  border-radius: 0 6px 6px 0;
 }
 
 .story-cycle-footer {
-  margin-top: 0.4rem;
-  padding: 0.4rem 0.6rem;
+  margin-top: 0.35rem;
+  padding: 0.35rem 0.55rem;
   background: rgba(139, 92, 246, 0.08);
   border-left: 3px solid #8b5cf6;
-  font-size: 0.78rem;
-  line-height: 1.32;
+  font-size: 0.75rem;
+  line-height: 1.3;
   color: var(--text-primary);
+  border-radius: 0 6px 6px 0;
 }
 
 .story-core-solution-layout {
@@ -6324,11 +6336,11 @@
 /* Lesson 02 Merged Layout 1: Metaphor & Stack Reality (3.4) */
 .l02-metaphor-stack-layout {
   display: grid;
-  grid-template-columns: 1fr 1.05fr;
-  gap: 1.15rem;
+  grid-template-columns: 1.15fr 1fr;
+  gap: 1.25rem;
   width: 100%;
   height: 100%;
-  max-height: 520px;
+  max-height: 490px;
   align-items: stretch;
   box-sizing: border-box;
 }
@@ -6336,58 +6348,29 @@
 .l02-metaphor-stack-layout .metaphor-col {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  gap: 0.5rem;
+  height: 100%;
 }
 
 .l02-metaphor-stack-layout .metaphor-visual-card {
   background: var(--bg-card);
   border: 1px solid var(--border-color);
   border-radius: 10px;
-  padding: 0.45rem;
+  padding: 0.65rem;
   display: flex;
   align-items: center;
   justify-content: center;
-  max-height: 180px;
+  height: 100%;
+  flex: 1;
   overflow: hidden;
+  max-height: none;
 }
 
 .l02-metaphor-stack-layout .metaphor-visual-card img {
-  max-height: 170px;
-  width: auto;
-  max-width: 100%;
+  max-height: 380px;
+  width: 100%;
+  height: 100%;
   object-fit: contain;
   border-radius: 6px;
-}
-
-.l02-metaphor-stack-layout .metaphor-comparisons {
-  display: flex;
-  flex-direction: column;
-  gap: 0.45rem;
-}
-
-.l02-metaphor-stack-layout .metaphor-compare-card {
-  background: var(--bg-card);
-  border: 1px solid var(--border-color);
-  border-radius: 8px;
-  padding: 0.5rem 0.75rem;
-}
-
-.l02-metaphor-stack-layout .metaphor-compare-card .card-tag {
-  display: flex;
-  align-items: center;
-  gap: 0.35rem;
-  font-size: 0.78rem;
-  font-weight: 800;
-  color: var(--text-primary);
-  margin-bottom: 0.2rem;
-}
-
-.l02-metaphor-stack-layout .metaphor-compare-card p {
-  margin: 0;
-  font-size: 0.73rem;
-  line-height: 1.32;
-  color: var(--text-secondary);
 }
 
 .l02-metaphor-stack-layout .stack-col {
@@ -6395,6 +6378,7 @@
   flex-direction: column;
   justify-content: space-between;
   gap: 0.5rem;
+  height: 100%;
 }
 
 .l02-metaphor-stack-layout .stack-alert-box {
@@ -6402,10 +6386,55 @@
   border: 1px solid rgba(59, 130, 246, 0.25);
   border-left: 4px solid #3b82f6;
   border-radius: 8px;
-  padding: 0.5rem 0.75rem;
-  font-size: 0.75rem;
-  line-height: 1.35;
+  padding: 0.45rem 0.75rem;
+  font-size: 0.74rem;
+  line-height: 1.34;
   color: var(--text-primary);
+  flex-shrink: 0;
+}
+
+.l02-metaphor-stack-layout .metaphor-comparisons {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  flex: 1;
+  justify-content: center;
+}
+
+.l02-metaphor-stack-layout .metaphor-compare-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 0.5rem 0.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.l02-metaphor-stack-layout .metaphor-compare-card.pc-compare {
+  border-left: 3.5px solid #3b82f6;
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.05), transparent);
+}
+
+.l02-metaphor-stack-layout .metaphor-compare-card.amr-compare {
+  border-left: 3.5px solid #10b981;
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.05), transparent);
+}
+
+.l02-metaphor-stack-layout .metaphor-compare-card .card-tag {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.8rem;
+  font-weight: 800;
+  color: var(--text-primary);
+}
+
+.l02-metaphor-stack-layout .metaphor-compare-card p {
+  margin: 0;
+  font-size: 0.73rem;
+  line-height: 1.32;
+  color: var(--text-secondary);
 }
 
 .l02-metaphor-stack-layout .stack-pills {
@@ -6434,10 +6463,11 @@
   background: var(--bg-card);
   border: 1px solid var(--border-color);
   border-radius: 8px;
-  padding: 0.5rem 0.75rem;
+  padding: 0.45rem 0.75rem;
   font-size: 0.73rem;
   line-height: 1.32;
   color: var(--text-secondary);
+  flex-shrink: 0;
 }
 
 /* Lesson 02 Merged Layout 2: Complete Installation Pipeline (5) */
@@ -7174,49 +7204,80 @@
   padding: 0.2rem 0.55rem !important;
 }
 
-/* 2. Section 3.1: Robot Anatomy Ingredients */
-.presentation-viewport.is-fullscreen .deck-ingredients-grid {
+/* 2. Section 3.1: Robot Anatomy & Three Core Ingredients (Fullscreen) */
+.presentation-viewport.is-fullscreen .robot-ingredients-slide-layout {
   display: grid !important;
-  grid-template-columns: repeat(3, 1fr) !important;
+  grid-template-columns: 1.1fr 1fr !important;
   gap: 2.25rem !important;
   height: 100% !important;
-  max-height: calc(100vh - 130px) !important;
+  max-height: calc(100vh - 140px) !important;
   align-items: stretch !important;
 }
 
-.presentation-viewport.is-fullscreen .ingredient-card {
-  padding: 1.6rem 1.5rem !important;
-  border-radius: 14px !important;
-  gap: 0.65rem !important;
-  justify-content: space-between !important;
+.presentation-viewport.is-fullscreen .ingredients-visual-col {
+  gap: 1rem !important;
+  height: 100% !important;
 }
 
-.presentation-viewport.is-fullscreen .ingredient-card-img {
-  max-height: calc(100vh - 350px) !important;
+.presentation-viewport.is-fullscreen .anatomy-image-wrap {
+  padding: 1rem !important;
+  border-radius: 14px !important;
+}
+
+.presentation-viewport.is-fullscreen .ingredients-hero-img {
+  max-height: calc(100vh - 290px) !important;
   width: 100% !important;
   object-fit: contain !important;
 }
 
-.presentation-viewport.is-fullscreen .ingredient-card-title {
-  font-size: 1.4rem !important;
+.presentation-viewport.is-fullscreen .ingredients-def-badge {
+  padding: 0.75rem 1.15rem !important;
+  font-size: 0.95rem !important;
+  line-height: 1.45 !important;
+  border-radius: 10px !important;
+}
+
+.presentation-viewport.is-fullscreen .ingredients-cards-col {
+  gap: 0.85rem !important;
+  height: 100% !important;
+}
+
+.presentation-viewport.is-fullscreen .ingredient-card {
+  padding: 0.85rem 1.15rem !important;
+  border-radius: 12px !important;
+  gap: 0.35rem !important;
+  flex: 1 !important;
+  justify-content: center !important;
+}
+
+.presentation-viewport.is-fullscreen .ingredient-header {
+  gap: 0.65rem !important;
+}
+
+.presentation-viewport.is-fullscreen .ingredient-icon {
+  font-size: 1.5rem !important;
+}
+
+.presentation-viewport.is-fullscreen .ingredient-name {
+  font-size: 1.15rem !important;
 }
 
 .presentation-viewport.is-fullscreen .ingredient-role {
-  font-size: 0.95rem !important;
+  font-size: 0.88rem !important;
 }
 
 .presentation-viewport.is-fullscreen .ingredient-desc {
-  font-size: 0.98rem !important;
-  line-height: 1.52 !important;
+  font-size: 0.92rem !important;
+  line-height: 1.45 !important;
 }
 
-/* 3. Section 3.2: Story of an Autonomous AMR Engineer (4 Steps) */
+/* 3. Section 3.2: Story of an Autonomous AMR Engineer (4 Steps - Fullscreen) */
 .presentation-viewport.is-fullscreen .story-step-slide-layout {
   display: grid !important;
   grid-template-columns: 1fr 1.18fr !important;
   gap: 3.5rem !important;
   height: 100% !important;
-  max-height: calc(100vh - 130px) !important;
+  max-height: calc(100vh - 140px) !important;
   align-items: stretch !important;
 }
 
@@ -7237,8 +7298,8 @@
 }
 
 .presentation-viewport.is-fullscreen .story-narrative-col {
-  gap: 1.25rem !important;
-  justify-content: space-between !important;
+  gap: 1rem !important;
+  justify-content: flex-start !important;
 }
 
 .presentation-viewport.is-fullscreen .story-quote-card {
@@ -7256,8 +7317,10 @@
 }
 
 .presentation-viewport.is-fullscreen .story-insight-box {
-  padding: 1.4rem 1.6rem !important;
+  padding: 1.15rem 1.4rem !important;
   border-radius: 12px !important;
+  justify-content: flex-start !important;
+  gap: 0.65rem !important;
 }
 
 .presentation-viewport.is-fullscreen .story-insight-title {
@@ -7968,24 +8031,63 @@
   max-height: calc(100vh - 130px) !important;
 }
 
+.presentation-viewport.is-fullscreen .l02-metaphor-stack-layout {
+  display: grid !important;
+  grid-template-columns: 1.2fr 1fr !important;
+  gap: 2.5rem !important;
+  height: 100% !important;
+  max-height: calc(100vh - 140px) !important;
+  align-items: stretch !important;
+}
+
 .presentation-viewport.is-fullscreen .l02-metaphor-stack-layout .metaphor-visual-card {
-  max-height: 280px !important;
+  max-height: none !important;
+  height: 100% !important;
+  padding: 1.25rem !important;
 }
 
 .presentation-viewport.is-fullscreen .l02-metaphor-stack-layout .metaphor-visual-card img {
-  max-height: 270px !important;
+  max-height: calc(100vh - 200px) !important;
+  width: 100% !important;
+  object-fit: contain !important;
+}
+
+.presentation-viewport.is-fullscreen .l02-metaphor-stack-layout .stack-col {
+  gap: 1.15rem !important;
+  height: 100% !important;
+  justify-content: space-between !important;
+}
+
+.presentation-viewport.is-fullscreen .l02-metaphor-stack-layout .stack-alert-box {
+  padding: 0.85rem 1.25rem !important;
+  font-size: 0.96rem !important;
+  line-height: 1.45 !important;
+  border-radius: 10px !important;
+}
+
+.presentation-viewport.is-fullscreen .l02-metaphor-stack-layout .metaphor-comparisons {
+  gap: 0.9rem !important;
+}
+
+.presentation-viewport.is-fullscreen .l02-metaphor-stack-layout .metaphor-compare-card {
+  padding: 0.95rem 1.25rem !important;
+  border-radius: 10px !important;
+  gap: 0.35rem !important;
+}
+
+.presentation-viewport.is-fullscreen .l02-metaphor-stack-layout .metaphor-compare-card .card-tag {
+  font-size: 1.05rem !important;
 }
 
 .presentation-viewport.is-fullscreen .l02-metaphor-stack-layout .metaphor-compare-card p,
-.presentation-viewport.is-fullscreen .l02-metaphor-stack-layout .stack-takeaway,
-.presentation-viewport.is-fullscreen .l02-metaphor-stack-layout .stack-alert-box {
-  font-size: 0.95rem !important;
+.presentation-viewport.is-fullscreen .l02-metaphor-stack-layout .stack-takeaway {
+  font-size: 0.92rem !important;
   line-height: 1.45 !important;
 }
 
-.presentation-viewport.is-fullscreen .l02-metaphor-stack-layout .stack-pill {
-  font-size: 0.95rem !important;
-  padding: 0.6rem 1rem !important;
+.presentation-viewport.is-fullscreen .l02-metaphor-stack-layout .stack-takeaway {
+  padding: 0.85rem 1.25rem !important;
+  border-radius: 10px !important;
 }
 
 .presentation-viewport.is-fullscreen .l02-install-col .l03-cmd-card pre,
