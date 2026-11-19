@@ -9095,6 +9095,73 @@
   max-height: calc(100vh - 250px) !important;
 }
 
+/* Lesson 09 XML Code Snapshot Optimization - Full Viewport Visibility (No Scrolling) */
+.l09-xml-layout {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr !important;
+  gap: 0.85rem !important;
+  width: 100%;
+  align-items: stretch;
+}
+
+.l09-xml-card {
+  margin-bottom: 0 !important;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.presentation-viewport .concept-html-body .l09-xml-card pre,
+.presentation-viewport .concept-html-body .l09-xml-layout .l03-cmd-card pre,
+.presentation-viewport .concept-html-body .l09-xml-pre {
+  max-height: none !important;
+  height: auto !important;
+  overflow-y: visible !important;
+  overflow-x: auto !important;
+  padding: 0.45rem 0.65rem !important;
+  font-size: 0.70rem !important;
+  line-height: 1.25 !important;
+}
+
+.presentation-viewport .concept-html-body .l09-xml-layout .l03-content-col {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 0.4rem;
+}
+
+/* Fullscreen Overrides for Lesson 09 XML Slides */
+.presentation-viewport.is-fullscreen .l09-xml-layout {
+  gap: 1.25rem !important;
+}
+
+.presentation-viewport.is-fullscreen .concept-html-body .l09-xml-card pre,
+.presentation-viewport.is-fullscreen .concept-html-body .l09-xml-layout .l03-cmd-card pre,
+.presentation-viewport.is-fullscreen .concept-html-body .l09-xml-pre {
+  max-height: none !important;
+  height: auto !important;
+  overflow-y: visible !important;
+  font-size: 0.88rem !important;
+  line-height: 1.40 !important;
+  padding: 0.85rem 1.15rem !important;
+}
+
+.presentation-viewport.is-fullscreen .l09-xml-layout .l05-golden-card {
+  padding: 0.75rem 1.1rem !important;
+  margin-bottom: 0 !important;
+}
+
+.presentation-viewport.is-fullscreen .l09-xml-layout .l05-golden-header {
+  font-size: 1.02rem !important;
+  margin-bottom: 0.35rem !important;
+}
+
+.presentation-viewport.is-fullscreen .l09-xml-layout .l05-golden-card p {
+  font-size: 0.90rem !important;
+  line-height: 1.42 !important;
+}
+
+
 
 
 

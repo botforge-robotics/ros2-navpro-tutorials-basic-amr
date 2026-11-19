@@ -4008,12 +4008,12 @@ function buildLesson09Slides(doc, lesson, slides) {
     badge: '📦 Link Structure & Tripartite Tags',
     title: '2. URDF Link Anatomy: The Complete Link Excerpt (<visual>, <collision>, <inertial>)',
     htmlContent: `
-      <div class="l03-two-col-layout">
+      <div class="l03-two-col-layout l09-xml-layout">
         <div class="l03-left-code-col">
-          <div class="l03-cmd-card" style="margin-bottom: 0;">
+          <div class="l03-cmd-card l09-xml-card">
             <div class="l03-cmd-header"><span class="l03-term-badge">URDF Link Excerpt</span><strong>nexus_amr.urdf / base_link</strong></div>
-            <pre><code class="language-xml">&lt;link name="base_link"&gt;
-  &lt;!-- 1. Mass &amp; Dynamics for Gazebo Physics Solver --&gt;
+            <pre class="l09-xml-pre"><code class="language-xml">&lt;link name="base_link"&gt;
+  &lt;!-- 1. Inertial: Mass &amp; Dynamics for Gazebo Physics Solver --&gt;
   &lt;inertial&gt;
     &lt;origin xyz="0.0015 0.0004 0.0351" rpy="0 0 0"/&gt;
     &lt;mass value="0.6558"/&gt;
@@ -4021,19 +4021,18 @@ function buildLesson09Slides(doc, lesson, slides) {
              ixy="0.0"      iyz="0.0"      ixz="-3.3e-05"/&gt;
   &lt;/inertial&gt;
 
-  &lt;!-- 2. Visual Render Mesh &amp; Material Appearance --&gt;
+  &lt;!-- 2. Visual: 3D CAD Render Mesh &amp; Color Appearance --&gt;
   &lt;visual&gt;
     &lt;origin xyz="0 0 0" rpy="0 0 0"/&gt;
     &lt;geometry&gt;
-      &lt;mesh filename="package://nexus_amr_description/meshes/base_link.stl"
-            scale="0.001 0.001 0.001"/&gt;
+      &lt;mesh filename="package://nexus_amr_description/meshes/base_link.stl" scale="0.001 0.001 0.001"/&gt;
     &lt;/geometry&gt;
     &lt;material name="silver"&gt;
       &lt;color rgba="0.70 0.70 0.70 1.0"/&gt;
     &lt;/material&gt;
   &lt;/visual&gt;
 
-  &lt;!-- 3. Decoupled Collision Boundary (Low-Poly Box) --&gt;
+  &lt;!-- 3. Collision: Simplified Fast Bounding Box Hull --&gt;
   &lt;collision&gt;
     &lt;origin xyz="0 0 0" rpy="0 0 0"/&gt;
     &lt;geometry&gt;
@@ -4072,11 +4071,11 @@ function buildLesson09Slides(doc, lesson, slides) {
     badge: '🔩 Kinematic Constraint Excerpt',
     title: '3. URDF Joint Anatomy: Parent-Child Binding, Relative Poses & Limits',
     htmlContent: `
-      <div class="l03-two-col-layout">
+      <div class="l03-two-col-layout l09-xml-layout">
         <div class="l03-left-code-col">
-          <div class="l03-cmd-card" style="margin-bottom: 0;">
+          <div class="l03-cmd-card l09-xml-card">
             <div class="l03-cmd-header"><span class="l03-term-badge">URDF Joint Excerpt</span><strong>nexus_amr.urdf / right_motor &amp; steer</strong></div>
-            <pre><code class="language-xml">&lt;!-- 1. Continuous Joint: Wheel Traction Drive --&gt;
+            <pre class="l09-xml-pre"><code class="language-xml">&lt;!-- 1. Continuous Joint: Wheel Traction Drive --&gt;
 &lt;joint name="right_motor" type="continuous"&gt;
   &lt;parent link="base_link"/&gt;
   &lt;child link="right_wheel_1"/&gt;
@@ -4092,8 +4091,8 @@ function buildLesson09Slides(doc, lesson, slides) {
   &lt;child link="caster_swivel_link"/&gt;
   &lt;origin xyz="-0.1200 0.0000 0.0200" rpy="0 0 0"/&gt;
   &lt;axis xyz="0 0 1"/&gt;
-  &lt;limit lower="-1.5708" upper="1.5708"
-         effort="20.0" velocity="3.14"/&gt;
+  &lt;limit lower="-1.5708" upper="1.5708" effort="20.0" velocity="3.14"/&gt;
+  &lt;dynamics damping="0.02" friction="0.01"/&gt;
 &lt;/joint&gt;</code></pre>
           </div>
         </div>
@@ -4152,11 +4151,11 @@ function buildLesson09Slides(doc, lesson, slides) {
     badge: '📦 Modular Xacro Engine',
     title: '5. Parameterizing Robot Models: Xacro Properties, Math & Reusable Macros',
     htmlContent: `
-      <div class="l03-two-col-layout">
+      <div class="l03-two-col-layout l09-xml-layout">
         <div class="l03-left-code-col">
-          <div class="l03-cmd-card" style="margin-bottom: 0;">
+          <div class="l03-cmd-card l09-xml-card">
             <div class="l03-cmd-header"><span class="l03-term-badge">nexus_amr.urdf.xacro</span><strong>Parametric Wheel Macro</strong></div>
-            <pre><code class="language-xml">&lt;robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="nexus_amr"&gt;
+            <pre class="l09-xml-pre"><code class="language-xml">&lt;robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="nexus_amr"&gt;
   &lt;!-- 1. Global Parameter Constants --&gt;
   &lt;xacro:property name="wheel_r" value="0.035"/&gt;
   &lt;xacro:property name="wheel_w" value="0.020"/&gt;
@@ -4182,7 +4181,7 @@ function buildLesson09Slides(doc, lesson, slides) {
     &lt;/joint&gt;
   &lt;/xacro:macro&gt;
 
-  &lt;!-- 3. Symmetrical Instantiations --&gt;
+  &lt;!-- 3. Symmetrical Macro Instantiations --&gt;
   &lt;xacro:drive_wheel prefix="right" parent="base_link" reflect="-1"/&gt;
   &lt;xacro:drive_wheel prefix="left"  parent="base_link" reflect="1"/&gt;
 &lt;/robot&gt;</code></pre>
