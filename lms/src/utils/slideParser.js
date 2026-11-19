@@ -3949,14 +3949,14 @@ ros2 run nexus_amr_basics navigate_distance_client 5.0 0.5</code></pre>
 function buildLesson09Slides(doc, lesson, slides) {
   // 1. URDF Kinematic Hierarchy: Links vs Joints & REP-103 Conventions
   slides.push({
-    id: `${lesson.id}_sec2_anatomy`,
+    id: `${lesson.id}_sec1_anatomy`,
     type: 'concept',
     lessonNum: lesson.num_str,
     lessonId: lesson.id,
     module: lesson.module,
     sectionTitle: '2. URDF Anatomy: Links vs. Joints',
     badge: '🤖 Kinematic Foundations',
-    title: '2. URDF Kinematic Hierarchy: Links, Joints & REP-103 Conventions',
+    title: '1. URDF Kinematic Hierarchy: Links, Joints & REP-103 Conventions',
     htmlContent: `
       <div class="l03-two-col-layout">
         <div class="l03-content-col">
@@ -3970,7 +3970,7 @@ function buildLesson09Slides(doc, lesson, slides) {
           </div>
           <div class="l05-golden-card" style="padding: 0.4rem 0.65rem;">
             <div class="l05-golden-header" style="font-size: 0.78rem;"><span>📐</span><strong>REP-103 Spatial Coordinate Standard</strong></div>
-            <p style="font-size: 0.74rem; line-height: 1.3;">ROS 2 strictly enforces <strong>+X Forward</strong>, <strong>+Y Port (Left)</strong>, and <strong>+Z Upward</strong>. Origin is grounded at <code>base_footprint</code> (ground plane, z=0) with <code>base_link</code> directly above it at the structural axle center.</p>
+            <p style="font-size: 0.74rem; line-height: 1.3;">ROS 2 strictly enforces <strong>+X Forward</strong> (Red), <strong>+Y Port / Left</strong> (Green), and <strong>+Z Upward</strong> (Blue). Origin is grounded at <code>base_footprint</code> (ground plane, z=0) with <code>base_link</code> directly above it at the structural axle center.</p>
           </div>
         </div>
         <div class="l03-content-col">
@@ -3982,107 +3982,178 @@ function buildLesson09Slides(doc, lesson, slides) {
               <tbody>
                 <tr><td><code>base_footprint</code></td><td>Ground projection datum (z=0)</td><td>World / Odom</td></tr>
                 <tr><td><code>base_link</code></td><td>Structural chassis center</td><td><code>base_footprint_joint</code> (fixed)</td></tr>
-                <tr><td><code>left_wheel_link</code></td><td>Differential drive traction</td><td><code>left_wheel_joint</code> (continuous)</td></tr>
-                <tr><td><code>right_wheel_link</code></td><td>Differential drive traction</td><td><code>right_wheel_joint</code> (continuous)</td></tr>
-                <tr><td><code>laser_frame</code></td><td>2D LiDAR scan origin</td><td><code>laser_joint</code> (fixed)</td></tr>
-                <tr><td><code>camera_link</code></td><td>RGB-D optical sensor</td><td><code>camera_joint</code> (fixed)</td></tr>
+                <tr><td><code>right_wheel_1</code></td><td>Differential drive traction</td><td><code>right_motor</code> (continuous)</td></tr>
+                <tr><td><code>left_wheel_1</code></td><td>Differential drive traction</td><td><code>left_motor</code> (continuous)</td></tr>
+                <tr><td><code>lidar_1</code></td><td>360&deg; 2D RPLiDAR scanner</td><td><code>lidar_joint</code> (fixed)</td></tr>
+                <tr><td><code>camera_1</code></td><td>RGB front optical sensor</td><td><code>cam_joint</code> (fixed)</td></tr>
               </tbody>
             </table>
+          </div>
+          <div class="l05-banner-intro" style="margin-top: 0.4rem; font-size: 0.73rem; padding: 0.35rem 0.6rem;">
+            <strong>💡 Directed Acyclic Graph (DAG):</strong> A valid URDF is strictly a tree structure with exactly one root link (<code>base_footprint</code>) and zero closed kinematic loops.
           </div>
         </div>
       </div>
     `
   });
 
-  // 2. The 6 Universal URDF Joint Types Matrix
+  // 2. Link Properties & Tags I: Visual Geometry & Materials
   slides.push({
-    id: `${lesson.id}_sec2_joint_types`,
+    id: `${lesson.id}_sec2_visual_tags`,
     type: 'concept',
     lessonNum: lesson.num_str,
     lessonId: lesson.id,
     module: lesson.module,
     sectionTitle: '2. URDF Anatomy: Links vs. Joints',
-    badge: '🔩 Joint Degrees of Freedom',
-    title: 'The 6 Universal URDF Joint Types in Robotics',
+    badge: '👁️ RViz2 Rendering & Materials',
+    title: '2. Link Properties: Visual Tags (<visual>, <geometry>, <material>)',
     htmlContent: `
-      <div class="l06-table-wrap">
-        <table>
-          <thead>
-            <tr>
-              <th style="width: 20%;">Joint Type</th>
-              <th style="width: 18%;">Degrees of Freedom</th>
-              <th style="width: 36%;">Motion Constraints &amp; Limits</th>
-              <th style="width: 26%;">AMR Production Example</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><code>continuous</code></td>
-              <td>1-DOF (Rotation)</td>
-              <td>Continuous unlimited 360&deg; rotation around specified axis.</td>
-              <td>AMR traction drive wheels (left/right).</td>
-            </tr>
-            <tr>
-              <td><code>revolute</code></td>
-              <td>1-DOF (Rotation)</td>
-              <td>Rotation strictly constrained between <code>&lt;limit lower="..." upper="..."/&gt;</code>.</td>
-              <td>Steering knuckles, robotic arm elbows.</td>
-            </tr>
-            <tr>
-              <td><code>fixed</code></td>
-              <td>0-DOF (Rigid)</td>
-              <td>No relative motion permitted between parent and child.</td>
-              <td>LiDAR sensor mount, structural chassis plates.</td>
-            </tr>
-            <tr>
-              <td><code>prismatic</code></td>
-              <td>1-DOF (Translation)</td>
-              <td>Linear 1D sliding motion along a single directional vector.</td>
-              <td>Forklift pallet lift mast, telescoping masts.</td>
-            </tr>
-            <tr>
-              <td><code>planar</code></td>
-              <td>3-DOF (2D Plane)</td>
-              <td>Translation along X and Y axes plus rotation about normal Z.</td>
-              <td>Omnidirectional holonomic mobile bases.</td>
-            </tr>
-            <tr>
-              <td><code>floating</code></td>
-              <td>6-DOF (Free 3D)</td>
-              <td>Full unconstrained spatial translation and rotation.</td>
-              <td>Underwater submersibles, aerial drones.</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-      <div class="l05-banner-intro" style="margin-top: 0.4rem; font-size: 0.74rem; padding: 0.35rem 0.6rem;">
-        <strong>💡 Kinematic Rule:</strong> Differential-drive AMRs exclusively use <code>continuous</code> joints for active drive wheels and <code>fixed</code> joints for sensor mounts and passive caster brackets.
+      <div class="l03-two-col-layout">
+        <div class="l03-left-code-col">
+          <div class="l03-cmd-card" style="margin-bottom: 0;">
+            <div class="l03-cmd-header"><span class="l03-term-badge">nexus_amr.urdf.xacro</span><strong>Visual Appearance Block</strong></div>
+            <pre><code class="language-xml">&lt;link name="base_link"&gt;
+  &lt;!-- 1. Visual Presentation in RViz2 --&gt;
+  &lt;visual&gt;
+    &lt;!-- Origin offset relative to link reference frame --&gt;
+    &lt;origin xyz="0 0 0" rpy="0 0 0"/&gt;
+
+    &lt;!-- Geometry Shape: Primitives or 3D Meshes --&gt;
+    &lt;geometry&gt;
+      &lt;!-- Primitive Option: &lt;box size="0.40 0.30 0.14"/&gt; --&gt;
+      &lt;!-- Primitive Option: &lt;cylinder radius="0.08" length="0.04"/&gt; --&gt;
+      &lt;!-- Primitive Option: &lt;sphere radius="0.03"/&gt; --&gt;
+      &lt;mesh filename="package://nexus_amr_description/meshes/base_link.stl"
+            scale="0.001 0.001 0.001"/&gt;
+    &lt;/geometry&gt;
+
+    &lt;!-- Surface Color Appearance &amp; Material --&gt;
+    &lt;material name="nexus_cyan"&gt;
+      &lt;color rgba="0.0 0.75 0.90 1.0"/&gt;
+    &lt;/material&gt;
+  &lt;/visual&gt;
+&lt;/link&gt;</code></pre>
+          </div>
+        </div>
+        <div class="l03-content-col">
+          <div class="l05-golden-card" style="margin-bottom: 0.35rem; padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>📦</span><strong>&lt;geometry&gt; Primitives vs. 3D Meshes</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">Primitives (<code>&lt;box&gt;</code>, <code>&lt;cylinder&gt;</code>, <code>&lt;sphere&gt;</code>) are ideal for rapid scaffolding and simple robots. Complex AMRs load high-resolution 3D surface meshes (STL / DAE) via <code>&lt;mesh filename="package://..."/&gt;</code>.</p>
+          </div>
+          <div class="l05-golden-card" style="margin-bottom: 0.35rem; padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🎨</span><strong>&lt;material&gt; &amp; RGBA Color Definition</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">Colors are specified with normalized floats (<code>0.0</code> to <code>1.0</code>) for red, green, blue, and alpha transparency (e.g. <code>rgba="0 0.75 0.9 1"</code>). Shared palettes can also be declared in <code>materials.xacro</code>.</p>
+          </div>
+          <div class="l05-golden-card" style="padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>📐</span><strong>&lt;origin&gt; Spatial Visual Alignment</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;"><code>xyz="x y z"</code> shifts the geometry center relative to the link origin, while <code>rpy="roll pitch yaw"</code> rotates the mesh (in radians) so exported CAD meshes align precisely with robot axes.</p>
+          </div>
+        </div>
       </div>
     `
   });
 
-  // 3. Xacro Macros & Property Parameterization
+  // 3. Link Properties & Tags II: Physics Dynamics (<inertial>) & Collision (<collision>)
   slides.push({
-    id: `${lesson.id}_sec3_xacro_macros`,
+    id: `${lesson.id}_sec3_inertial_collision`,
+    type: 'concept',
+    lessonNum: lesson.num_str,
+    lessonId: lesson.id,
+    module: lesson.module,
+    sectionTitle: '2. URDF Anatomy: Links vs. Joints',
+    badge: '⚡ Physics & Dynamic Simulation',
+    title: '3. Link Properties: Physics Dynamics (<inertial>) & Collision (<collision>)',
+    htmlContent: `
+      <div class="l03-two-col-layout">
+        <div class="l03-left-code-col">
+          <div class="l03-cmd-card" style="margin-bottom: 0;">
+            <div class="l03-cmd-header"><span class="l03-term-badge">nexus_amr.urdf.xacro</span><strong>Inertial &amp; Collision Blocks</strong></div>
+            <pre><code class="language-xml">&lt;link name="base_link"&gt;
+  &lt;!-- 1. Mass &amp; Dynamics for Gazebo Physics ODE --&gt;
+  &lt;inertial&gt;
+    &lt;!-- Center of Mass (CoM) location --&gt;
+    &lt;origin xyz="0.0015 0.0004 0.0351" rpy="0 0 0"/&gt;
+    &lt;mass value="0.6558"/&gt;
+    &lt;!-- 3x3 Symmetric Moment of Inertia Tensor --&gt;
+    &lt;inertia ixx="0.000584" iyy="0.002255" izz="0.002722"
+             ixy="0.0"      iyz="0.0"      ixz="-3.3e-05"/&gt;
+  &lt;/inertial&gt;
+
+  &lt;!-- 2. Decoupled Collision Boundary --&gt;
+  &lt;collision&gt;
+    &lt;origin xyz="0 0 0" rpy="0 0 0"/&gt;
+    &lt;geometry&gt;
+      &lt;!-- Simplified bounding box preserves 60 FPS physics --&gt;
+      &lt;box size="0.25 0.20 0.08"/&gt;
+    &lt;/geometry&gt;
+  &lt;/collision&gt;
+&lt;/link&gt;</code></pre>
+          </div>
+        </div>
+        <div class="l03-content-col">
+          <div class="l05-golden-card" style="margin-bottom: 0.35rem; padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🛡️</span><strong>Decoupled Collision vs. Visual Hulls</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">Visual meshes contain thousands of surface facets. Calculating triangle-on-triangle contact forces every millisecond destroys real-time performance. Always use simple bounding boxes or convex hulls for <code>&lt;collision&gt;</code>.</p>
+          </div>
+          <div class="l05-golden-card" style="margin-bottom: 0.35rem; padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🧮</span><strong>Mass &amp; 3D Inertia Tensor Matrix</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;"><code>&lt;mass value="m"/&gt;</code> is in kilograms (kg). The 3x3 symmetric inertia matrix (<code>ixx, iyy, izz, ixy, ixz, iyz</code>) governs spatial resistance to rotational acceleration (&tau; = I &alpha;).</p>
+          </div>
+          <div class="l05-golden-card warning" style="padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>⚠️</span><strong>The Zero-Inertia Disaster</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">Never leave <code>&lt;inertial&gt;</code> empty or set inertia to 0! Physics engines divide by inertia. Zero inertia causes NaN acceleration, launching the robot to infinity and freezing Gazebo.</p>
+          </div>
+        </div>
+      </div>
+    `
+  });
+
+  // 4. URDF Joint Mechanics: The 4 Primary Motion Types with Live Animation
+  slides.push({
+    id: `${lesson.id}_sec4_joint_animation`,
+    type: 'concept',
+    lessonNum: lesson.num_str,
+    lessonId: lesson.id,
+    module: lesson.module,
+    sectionTitle: '2. URDF Anatomy: Links vs. Joints',
+    badge: '🔩 Joint Kinematics & DOF',
+    title: '4. URDF Joint Mechanics: The 4 Primary Motion Types with Live Animation',
+    htmlContent: `
+      <div class="l09-joint-layout">
+        <div class="l09-joint-anim-stage">
+          <img src="assets/images/urdf_joint_types_animation.svg" alt="URDF Joint Types Animated Mechanical Motion" />
+        </div>
+        <div class="l05-banner-intro" style="margin-top: 0.1rem; font-size: 0.72rem; padding: 0.35rem 0.75rem; text-align: center;">
+          <strong>💡 Kinematic Summary:</strong> Differential-drive AMRs combine <code>continuous</code> joints for active drive wheels and <code>fixed</code> joints for sensor mounts (LiDAR, camera). Multi-DOF joints include <code>planar</code> (3-DOF, omnidirectional bases) and <code>floating</code> (6-DOF, aerial drones).
+        </div>
+      </div>
+    `
+  });
+
+  // 5. Modular Robot Description with Xacro
+  slides.push({
+    id: `${lesson.id}_sec5_xacro_macros`,
     type: 'concept',
     lessonNum: lesson.num_str,
     lessonId: lesson.id,
     module: lesson.module,
     sectionTitle: '3. Authoring nexus_amr.urdf.xacro',
-    badge: '📦 Modular Xacro',
-    title: '3. Parameterizing Robot Models with Xacro Properties & Reusable Macros',
+    badge: '📦 Modular Xacro Engine',
+    title: '5. Parameterizing Robot Models: Xacro Properties, Math & Reusable Macros',
     htmlContent: `
       <div class="l03-two-col-layout">
         <div class="l03-left-code-col">
           <div class="l03-cmd-card" style="margin-bottom: 0;">
             <div class="l03-cmd-header"><span class="l03-term-badge">nexus_amr.urdf.xacro</span><strong>Parametric Wheel Macro</strong></div>
             <pre><code class="language-xml">&lt;robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="nexus_amr"&gt;
-  &lt;xacro:property name="wheel_r" value="0.08" /&gt;
-  &lt;xacro:property name="wheel_w" value="0.04" /&gt;
-  &lt;xacro:property name="wheel_m" value="1.2" /&gt;
+  &lt;!-- 1. Global Parameter Constants --&gt;
+  &lt;xacro:property name="wheel_r" value="0.035"/&gt;
+  &lt;xacro:property name="wheel_w" value="0.020"/&gt;
+  &lt;xacro:property name="track_w" value="0.103"/&gt;
 
+  &lt;!-- 2. Reusable Parametric Wheel Macro --&gt;
   &lt;xacro:macro name="drive_wheel" params="prefix parent reflect"&gt;
-    &lt;link name="\${prefix}_wheel_link"&gt;
+    &lt;link name="\${prefix}_wheel_1"&gt;
       &lt;visual&gt;
         &lt;geometry&gt;&lt;cylinder radius="\${wheel_r}" length="\${wheel_w}"/&gt;&lt;/geometry&gt;
         &lt;material name="black"/&gt;
@@ -4090,15 +4161,19 @@ function buildLesson09Slides(doc, lesson, slides) {
       &lt;collision&gt;
         &lt;geometry&gt;&lt;cylinder radius="\${wheel_r}" length="\${wheel_w}"/&gt;&lt;/geometry&gt;
       &lt;/collision&gt;
-      &lt;xacro:cylinder_inertia m="\${wheel_m}" r="\${wheel_r}" h="\${wheel_w}"/&gt;
+      &lt;xacro:cylinder_inertia m="0.036" r="\${wheel_r}" h="\${wheel_w}"/&gt;
     &lt;/link&gt;
-    &lt;joint name="\${prefix}_wheel_joint" type="continuous"&gt;
+    &lt;joint name="\${prefix}_motor" type="continuous"&gt;
       &lt;parent link="\${parent}"/&gt;
-      &lt;child link="\${prefix}_wheel_link"/&gt;
-      &lt;origin xyz="0.0 \${reflect * 0.22} 0.08" rpy="-1.5708 0 0"/&gt;
-      &lt;axis xyz="0 0 1"/&gt;
+      &lt;child link="\${prefix}_wheel_1"/&gt;
+      &lt;origin xyz="0.056 \${reflect * track_w / 2} 0.035" rpy="0 0 0"/&gt;
+      &lt;axis xyz="0 1 0"/&gt;
     &lt;/joint&gt;
   &lt;/xacro:macro&gt;
+
+  &lt;!-- 3. Symmetrical Instantiations --&gt;
+  &lt;xacro:drive_wheel prefix="right" parent="base_link" reflect="-1"/&gt;
+  &lt;xacro:drive_wheel prefix="left"  parent="base_link" reflect="1"/&gt;
 &lt;/robot&gt;</code></pre>
           </div>
         </div>
@@ -4108,114 +4183,58 @@ function buildLesson09Slides(doc, lesson, slides) {
             <p style="font-size: 0.74rem; line-height: 1.3;">Raw URDF requires copying identical XML blocks for left and right wheels. Xacro macros eliminate copy-paste errors and enforce mathematical symmetry across both sides of the chassis.</p>
           </div>
           <div class="l05-golden-card" style="margin-bottom: 0.35rem; padding: 0.4rem 0.65rem;">
-            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>📐</span><strong>Global Variable Parameterization</strong></div>
-            <p style="font-size: 0.74rem; line-height: 1.3;"><code>&lt;xacro:property&gt;</code> constants define dimensions (wheel radius, track width, chassis mass) in a single place. Updating wheel size updates geometry, collision, and inertia automatically.</p>
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>📐</span><strong>Global Properties &amp; Built-in Math</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;"><code>&lt;xacro:property&gt;</code> constants define dimensions (wheel radius, track width) in a single place. Built-in math syntax <code>\${reflect * track_w / 2}</code> calculates symmetrical joint offsets automatically.</p>
           </div>
           <div class="l05-golden-card" style="padding: 0.4rem 0.65rem;">
-            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🔄</span><strong>Clean Symmetric Invocation</strong></div>
-            <p style="font-size: 0.74rem; line-height: 1.3;">Instantiate both wheels in two clean lines:<br/><code>&lt;xacro:drive_wheel prefix="left" parent="base_link" reflect="1"/&gt;</code><br/><code>&lt;xacro:drive_wheel prefix="right" parent="base_link" reflect="-1"/&gt;</code></p>
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🧩</span><strong>Modular Subsystem Architecture</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">Split monolithic robot files into clean modules via <code>&lt;xacro:include filename="$(find ...)/urdf/lidar.xacro"/&gt;</code>. Compile to pure URDF via <code>xacro nexus_amr.urdf.xacro &gt; /tmp/robot.urdf</code>.</p>
           </div>
         </div>
       </div>
     `
   });
 
-  // 4. Inertia Tensor Mathematics & Physics Stability
+  // 6. Industrial CAD Workflow: Autodesk Fusion 360 to ROS 2 URDF (with Robot Image)
   slides.push({
-    id: `${lesson.id}_sec4_inertia_math`,
-    type: 'concept',
-    lessonNum: lesson.num_str,
-    lessonId: lesson.id,
-    module: lesson.module,
-    sectionTitle: '4. Inertia Tensor Mathematics & CAD Mass Properties',
-    badge: '📐 Physics & Dynamics',
-    title: '4. Mass Inertia Tensors: Mathematical Formulas & Physics Solver Stability',
-    htmlContent: `
-      <div class="l03-two-col-layout">
-        <div class="l03-content-col">
-          <div class="l03-cmd-card" style="margin-bottom: 0.35rem;">
-            <div class="l03-cmd-header"><span class="l03-term-badge">Standard Inertia</span><strong>Solid Cylinder &amp; Rectangular Box</strong></div>
-            <pre><code class="language-plaintext"># 1. Solid Cylinder of Mass m, Radius r, Height h:
-I_xx = (1/12) * m * (3*r^2 + h^2)
-I_yy = (1/12) * m * (3*r^2 + h^2)
-I_zz = (1/2)  * m * r^2
-
-# 2. Solid Rectangular Box of Mass m, Dims (x, y, z):
-I_xx = (1/12) * m * (y^2 + z^2)
-I_yy = (1/12) * m * (x^2 + z^2)
-I_zz = (1/12) * m * (x^2 + y^2)</code></pre>
-          </div>
-          <div class="l05-golden-card warning" style="padding: 0.4rem 0.65rem;">
-            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>⚠️</span><strong>The Zero-Inertia Disaster</strong></div>
-            <p style="font-size: 0.74rem; line-height: 1.3;">Setting inertia to zero or negative causes Gazebo\'s ODE solver to divide by zero, launching the simulated robot into infinite coordinates or causing the physics engine to freeze.</p>
-          </div>
-        </div>
-        <div class="l03-content-col">
-          <div class="l05-golden-card" style="margin-bottom: 0.35rem; padding: 0.4rem 0.65rem;">
-            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🧮</span><strong>The 3x3 Symmetric Tensor Matrix</strong></div>
-            <p style="font-size: 0.74rem; line-height: 1.3;">The spatial resistance to rotational acceleration (&tau; = I &alpha;) is represented by 6 unique scalars: <code>ixx, ixy, ixz, iyy, iyz, izz</code>. For symmetric shapes aligned with coordinate axes, off-diagonals are zero.</p>
-          </div>
-          <div class="l05-golden-card" style="margin-bottom: 0.35rem; padding: 0.4rem 0.65rem;">
-            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🏗️</span><strong>CAD Mass Properties Extraction</strong></div>
-            <p style="font-size: 0.74rem; line-height: 1.3;">In industrial practice, open your 3D CAD model (Fusion 360 / SolidWorks), assign accurate materials (aluminum, rubber), and inspect <strong>Physical Properties &rarr; Moments of Inertia at Center of Mass</strong>.</p>
-          </div>
-          <div class="l05-golden-card" style="padding: 0.4rem 0.65rem;">
-            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>⚙️</span><strong>Interactive Inertia Calculator</strong></div>
-            <p style="font-size: 0.74rem; line-height: 1.3;">Use the built-in LMS Inertia Calculator portal to calculate exact tensor values for custom cylinders, spheres, and rectangular prisms instantly.</p>
-          </div>
-        </div>
-      </div>
-    `
-  });
-
-  // 5. Industrial CAD to URDF Workflow
-  slides.push({
-    id: `${lesson.id}_sec5_cad_workflow`,
+    id: `${lesson.id}_sec6_cad_fusion360`,
     type: 'concept',
     lessonNum: lesson.num_str,
     lessonId: lesson.id,
     module: lesson.module,
     sectionTitle: '5. Industrial CAD Workflow: From CAD to ROS 2 URDF',
-    badge: '🏭 Industrial CAD Pipeline',
-    title: '5. Industrial CAD Workflow: Exporting Fusion 360 Models to ROS 2 Meshes',
+    badge: '🏭 CAD to ROS 2 Pipeline',
+    title: '6. Industrial CAD Pipeline: Designing in Autodesk Fusion 360 & Exporting to ROS 2 URDF',
     htmlContent: `
       <div class="l03-two-col-layout">
         <div class="l03-content-col">
-          <div class="l05-golden-card" style="margin-bottom: 0.35rem; padding: 0.4rem 0.65rem;">
-            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>1️⃣</span><strong>Model Assembly &amp; Origin Alignment</strong></div>
-            <p style="font-size: 0.74rem; line-height: 1.3;">Construct each robot subassembly in CAD. Align joint pivot origins with the CAD world origin before exporting individual parts.</p>
+          <div class="l05-golden-card" style="margin-bottom: 0.3rem; padding: 0.35rem 0.6rem;">
+            <div class="l05-golden-header" style="font-size: 0.76rem;"><span>1️⃣</span><strong>Parametric CAD Modeling in Fusion 360</strong></div>
+            <p style="font-size: 0.72rem; line-height: 1.28;">Model chassis, drive wheels, casters, and sensor mounts as individual components (<code>urr_bot v8.f3d</code>). Align joint pivot origins with component coordinate origins.</p>
           </div>
-          <div class="l05-golden-card" style="margin-bottom: 0.35rem; padding: 0.4rem 0.65rem;">
-            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>2️⃣</span><strong>Export Visual Meshes (STL / DAE)</strong></div>
-            <p style="font-size: 0.74rem; line-height: 1.3;">Export high-resolution visual meshes (with textures and colors) into <code>nexus_amr_description/meshes/visual/</code>.</p>
+          <div class="l05-golden-card" style="margin-bottom: 0.3rem; padding: 0.35rem 0.6rem;">
+            <div class="l05-golden-header" style="font-size: 0.76rem;"><span>2️⃣</span><strong>Automated Export via fusion2urdf</strong></div>
+            <p style="font-size: 0.72rem; line-height: 1.28;">Run the <code>fusion2urdf-ros2</code> add-in. It automatically computes Center of Mass (CoM), 3D inertia tensors (<code>ixx, iyy, izz</code>), and exports triangular surface meshes (<code>base_link.stl</code>, <code>right_wheel_1.stl</code>, etc.).</p>
           </div>
-          <div class="l05-golden-card" style="margin-bottom: 0.35rem; padding: 0.4rem 0.65rem;">
-            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>3️⃣</span><strong>Generate Convex Collision Hulls</strong></div>
-            <p style="font-size: 0.74rem; line-height: 1.3;">Never use high-poly meshes for collision! Export simplified bounding boxes or low-poly convex hulls to preserve real-time physics performance.</p>
+          <div class="l05-golden-card" style="margin-bottom: 0.3rem; padding: 0.35rem 0.6rem;">
+            <div class="l05-golden-header" style="font-size: 0.76rem;"><span>3️⃣</span><strong>Millimeter-to-Meter Scaling Rule</strong></div>
+            <p style="font-size: 0.72rem; line-height: 1.28;"><strong>Golden Rule:</strong> CAD suites export STL in millimeters (mm). ROS 2 URDF strictly requires meters (m). Always apply <code>scale="0.001 0.001 0.001"</code> inside the <code>&lt;mesh&gt;</code> tag.</p>
           </div>
-          <div class="l05-golden-card" style="padding: 0.4rem 0.65rem;">
-            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>4️⃣</span><strong>Meter Scaling Verification</strong></div>
-            <p style="font-size: 0.74rem; line-height: 1.3;">CAD programs export STL in millimeters. In URDF, always apply <code>scale="0.001 0.001 0.001"</code> to ensure the robot is not 1000x oversized in Gazebo.</p>
+          <div class="l05-golden-card" style="padding: 0.35rem 0.6rem;">
+            <div class="l05-golden-header" style="font-size: 0.76rem;"><span>4️⃣</span><strong>Package Integration &amp; Verification</strong></div>
+            <p style="font-size: 0.72rem; line-height: 1.28;">Store meshes in <code>nexus_amr_description/meshes/</code> and install via <code>setup.py</code>. Inspect the kinematic tree using <code>check_urdf</code> and preview in RViz2 with joint sliders.</p>
           </div>
         </div>
         <div class="l03-content-col">
-          <div class="l03-cmd-card">
-            <div class="l03-cmd-header"><span class="l03-term-badge">URDF Mesh Link</span><strong>Visual vs. Collision Mesh Separation</strong></div>
-            <pre><code class="language-xml">&lt;link name="chassis_link"&gt;
-  &lt;!-- High-poly visual render --&gt;
-  &lt;visual&gt;
-    &lt;geometry&gt;
-      &lt;mesh filename="package://nexus_amr_description/meshes/visual/chassis.dae" scale="1 1 1"/&gt;
-    &lt;/geometry&gt;
-  &lt;/visual&gt;
-
-  &lt;!-- Simplified low-poly collision hull --&gt;
-  &lt;collision&gt;
-    &lt;geometry&gt;
-      &lt;mesh filename="package://nexus_amr_description/meshes/collision/chassis.stl" scale="1 1 1"/&gt;
-    &lt;/geometry&gt;
-  &lt;/collision&gt;
-&lt;/link&gt;</code></pre>
+          <div class="l09-cad-image-card">
+            <img src="assets/images/fusion360_to_ros2_urdf_amr.jpg" alt="From Autodesk Fusion 360 to ROS 2 URDF" />
+            <div style="font-size: 0.72rem; line-height: 1.32; color: var(--text-secondary); text-align: center;">
+              <strong style="color: #38bdf8;">Nexus AMR Digital Twin Pipeline:</strong> Parametric 3D CAD modeling in Autodesk Fusion 360 &rarr; automated surface mesh extraction (.STL) &amp; inertia computation &rarr; ROS 2 URDF model with active TF coordinate frames.
+            </div>
+            <div class="l03-cmd-header" style="width: 100%; padding: 0.25rem 0.5rem; font-size: 0.7rem; box-sizing: border-box; background: rgba(0,0,0,0.3); border-radius: 4px;">
+              <span class="l03-term-badge" style="font-size: 0.65rem;">Mesh Reference</span>
+              <code>&lt;mesh filename="package://...base_link.stl" scale="0.001 0.001 0.001"/&gt;</code>
+            </div>
           </div>
         </div>
       </div>
