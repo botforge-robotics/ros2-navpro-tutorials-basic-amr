@@ -1,0 +1,333 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 240" width="100%" height="100%">
+  <defs>
+    <!-- Gradients -->
+    <linearGradient id="hudBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#070c18"/>
+      <stop offset="60%" stop-color="#0b1329"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </linearGradient>
+
+    <linearGradient id="cubeTop" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#475569"/>
+      <stop offset="100%" stop-color="#1e293b"/>
+    </linearGradient>
+    <linearGradient id="cubeFront" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#1e293b"/>
+      <stop offset="100%" stop-color="#0a0f1d"/>
+    </linearGradient>
+    <linearGradient id="cubeSide" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#1e293b"/>
+      <stop offset="100%" stop-color="#334155"/>
+    </linearGradient>
+
+    <linearGradient id="armMetal" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#0284c7"/>
+      <stop offset="35%" stop-color="#0ea5e9"/>
+      <stop offset="70%" stop-color="#38bdf8"/>
+      <stop offset="100%" stop-color="#0369a1"/>
+    </linearGradient>
+
+    <linearGradient id="shaftMetal" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#64748b"/>
+      <stop offset="40%" stop-color="#cbd5e1"/>
+      <stop offset="70%" stop-color="#ffffff"/>
+      <stop offset="100%" stop-color="#475569"/>
+    </linearGradient>
+
+    <!-- Filters -->
+    <filter id="neonCyan" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="2" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <filter id="neonAmber" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="2.5" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <filter id="drop" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="2.5" stdDeviation="3.5" flood-color="#000" flood-opacity="0.6"/>
+    </filter>
+
+    <!-- Markers -->
+    <marker id="arrRed" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#ef4444"/>
+    </marker>
+    <marker id="arrGreen" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#10b981"/>
+    </marker>
+    <marker id="arrBlue" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#3b82f6"/>
+    </marker>
+    <marker id="arrCyan" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#38bdf8"/>
+    </marker>
+    <marker id="arrAmber" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#f59e0b"/>
+    </marker>
+
+    <!-- Keyframes -->
+    <style><![CDATA[
+      @keyframes dashFlow {
+        from { stroke-dashoffset: 28; }
+        to { stroke-dashoffset: 0; }
+      }
+      @keyframes revoluteOscillate {
+        0% { transform: rotate(-52deg); }
+        48% { transform: rotate(52deg); }
+        52% { transform: rotate(52deg); }
+        98% { transform: rotate(-52deg); }
+        100% { transform: rotate(-52deg); }
+      }
+      @keyframes orbitSpin {
+        0% { stroke-dashoffset: 0; }
+        100% { stroke-dashoffset: -36; }
+      }
+      @keyframes pulseLight {
+        0%, 100% { opacity: 0.4; }
+        50% { opacity: 1; filter: drop-shadow(0 0 4px #10b981); }
+      }
+      @keyframes travelingPulse {
+        0% { transform: translate(96px, 126px); opacity: 0; }
+        20% { opacity: 1; }
+        80% { opacity: 1; }
+        100% { transform: translate(360px, 115px); opacity: 0; }
+      }
+      @keyframes limitGlow {
+        0%, 100% { opacity: 0.5; }
+        50% { opacity: 1; }
+      }
+
+      .dash-origin-path {
+        stroke-dasharray: 6 5;
+        animation: dashFlow 1.4s linear infinite;
+      }
+      .child-arm-motion {
+        transform-origin: 0px 0px;
+        animation: revoluteOscillate 3.2s cubic-bezier(0.65, 0, 0.35, 1) infinite;
+      }
+      .orbit-ring {
+        stroke-dasharray: 5 4;
+        animation: orbitSpin 2.0s linear infinite;
+      }
+      .live-dot {
+        animation: pulseLight 1.8s ease-in-out infinite;
+      }
+      .travel-dot {
+        animation: travelingPulse 1.8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+      }
+      .limit-line {
+        animation: limitGlow 2.2s ease-in-out infinite;
+      }
+    ]]></style>
+  </defs>
+
+  <!-- Background Base Panel -->
+  <rect width="500" height="240" rx="8" fill="url(#hudBg)" stroke="rgba(56, 189, 248, 0.3)" stroke-width="1.2"/>
+
+  <!-- Top Title HUD Bar -->
+  <g transform="translate(14, 10)">
+    <circle cx="4" cy="5" r="3.5" fill="#10b981" class="live-dot"/>
+    <text x="14" y="8.5" font-family="system-ui, sans-serif" font-size="9.5" font-weight="800" fill="#38bdf8" letter-spacing="0.4">
+      URDF JOINT KINEMATICS &amp; 1-DOF RELATIVE BINDING
+    </text>
+    <rect x="330" y="-3" width="142" height="16" rx="4" fill="rgba(15, 23, 42, 0.85)" stroke="rgba(56, 189, 248, 0.3)" stroke-width="0.8"/>
+    <text x="401" y="8" font-family="monospace" font-size="8.5" font-weight="700" fill="#a5f3fc" text-anchor="middle">
+      type="revolute" (active)
+    </text>
+  </g>
+
+  <!-- Ground Shadows -->
+  <ellipse cx="96" cy="180" rx="58" ry="18" fill="#000" opacity="0.45"/>
+  <ellipse cx="360" cy="195" rx="72" ry="20" fill="#000" opacity="0.4"/>
+
+  <!-- ========================================================================= -->
+  <!-- 1. PARENT LINK: base_link -->
+  <!-- ========================================================================= -->
+  <g id="parentGroup">
+    <!-- Isometric Chassis Cube -->
+    <!-- Top Face -->
+    <polygon points="96,94 148,112 96,130 44,112" fill="url(#cubeTop)" stroke="#64748b" stroke-width="1.2"/>
+    <!-- Left Front -->
+    <polygon points="44,112 96,130 96,172 44,154" fill="url(#cubeFront)" stroke="#334155" stroke-width="1.2"/>
+    <!-- Right Front -->
+    <polygon points="96,130 148,112 148,154 96,172" fill="url(#cubeSide)" stroke="#475569" stroke-width="1.2"/>
+
+    <!-- Parent Tag Badge -->
+    <g transform="translate(30, 68)">
+      <rect width="134" height="21" rx="4" fill="rgba(139, 92, 246, 0.35)" stroke="#a78bfa" stroke-width="1.2" filter="url(#drop)"/>
+      <text x="67" y="14" font-family="monospace" font-size="9.5" font-weight="800" fill="#f5f3ff" text-anchor="middle">
+        &lt;parent link="base_link"/&gt;
+      </text>
+    </g>
+
+    <!-- Parent Origin Reference Frame (REP-103) -->
+    <g transform="translate(96, 126)">
+      <circle cx="0" cy="0" r="3.5" fill="#ffffff" stroke="#0f172a" stroke-width="1"/>
+      <!-- +X Forward (red) -->
+      <line x1="0" y1="0" x2="-34" y2="16" stroke="#ef4444" stroke-width="2.4" marker-end="url(#arrRed)"/>
+      <text x="-43" y="21" font-family="monospace" font-size="9" font-weight="800" fill="#f87171">+X</text>
+      <!-- +Y Left (green) -->
+      <line x1="0" y1="0" x2="34" y2="16" stroke="#10b981" stroke-width="2.4" marker-end="url(#arrGreen)"/>
+      <text x="40" y="21" font-family="monospace" font-size="9" font-weight="800" fill="#4ade80">+Y</text>
+      <!-- +Z Up (blue) -->
+      <line x1="0" y1="0" x2="0" y2="-36" stroke="#3b82f6" stroke-width="2.4" marker-end="url(#arrBlue)"/>
+      <text x="6" y="-30" font-family="monospace" font-size="9" font-weight="800" fill="#60a5fa">+Z</text>
+
+      <text x="0" y="-8" font-family="monospace" font-size="8" font-weight="700" fill="#cbd5e1" text-anchor="middle">
+        Origin (0,0,0)
+      </text>
+    </g>
+  </g>
+
+  <!-- ========================================================================= -->
+  <!-- 2. SPATIAL TRANSFORM VECTOR: <origin xyz="..." rpy="..."/> -->
+  <!-- ========================================================================= -->
+  <g id="originGroup">
+    <!-- Curved Animated Spatial Vector from Parent to Joint Pivot -->
+    <path d="M 96 126 Q 205 72 356 112" fill="none" stroke="#06b6d4" stroke-width="2.5" stroke-linecap="round" class="dash-origin-path" marker-end="url(#arrCyan)" filter="url(#neonCyan)"/>
+    
+    <!-- Pulse Packet traveling along vector -->
+    <circle cx="0" cy="0" r="4.5" fill="#38bdf8" filter="url(#neonCyan)" class="travel-dot"/>
+
+    <!-- Origin Tag Pill -->
+    <g transform="translate(150, 56)">
+      <rect width="144" height="27" rx="5" fill="rgba(10, 16, 30, 0.95)" stroke="#0284c7" stroke-width="1.2" filter="url(#drop)"/>
+      <text x="72" y="11.5" font-family="monospace" font-size="9" font-weight="800" fill="#38bdf8" text-anchor="middle">
+        &lt;origin xyz="Δx Δy Δz"
+      </text>
+      <text x="72" y="22.5" font-family="monospace" font-size="8" fill="#cbd5e1" text-anchor="middle">
+        rpy="0 0 0"/&gt;
+      </text>
+    </g>
+  </g>
+
+  <!-- ========================================================================= -->
+  <!-- 3. JOINT MECHANICS & REVOLUTE PIVOT -->
+  <!-- ========================================================================= -->
+  <!-- Travel Limit Arc Wedge (Stationary background in joint frame) -->
+  <g transform="translate(360, 115)">
+    <!-- Travel Arc Sector (-52° to +52°) -->
+    <path d="M 0 0 L -45 36 A 58 58 0 0 1 45 36 Z" fill="rgba(245, 158, 11, 0.14)" stroke="rgba(245, 158, 11, 0.4)" stroke-width="1.2" stroke-dasharray="3 3"/>
+    
+    <!-- Limit Stop Lines -->
+    <line x1="0" y1="0" x2="-52" y2="41" stroke="#ef4444" stroke-width="1.8" stroke-dasharray="2 2" class="limit-line"/>
+    <line x1="0" y1="0" x2="52" y2="41" stroke="#ef4444" stroke-width="1.8" stroke-dasharray="2 2" class="limit-line"/>
+
+    <!-- Limit Badges -->
+    <rect x="-92" y="38" width="46" height="14" rx="3" fill="#1e293b" stroke="#ef4444" stroke-width="0.9"/>
+    <text x="-69" y="48" font-family="monospace" font-size="8" font-weight="700" fill="#fca5a5" text-anchor="middle">-1.57 rad</text>
+
+    <rect x="46" y="38" width="46" height="14" rx="3" fill="#1e293b" stroke="#ef4444" stroke-width="0.9"/>
+    <text x="69" y="48" font-family="monospace" font-size="8" font-weight="700" fill="#fca5a5" text-anchor="middle">+1.57 rad</text>
+
+    <!-- Center Zero Reference -->
+    <line x1="0" y1="0" x2="0" y2="54" stroke="#64748b" stroke-width="1" stroke-dasharray="2 2"/>
+    <text x="0" y="65" font-family="monospace" font-size="8" fill="#94a3b8" text-anchor="middle">θ = 0</text>
+  </g>
+
+  <!-- ========================================================================= -->
+  <!-- 4. CHILD LINK: caster_swivel_link (PROPER PIVOTING UNDER JOINT) -->
+  <!-- ========================================================================= -->
+  <g transform="translate(360, 115)">
+    <g class="child-arm-motion">
+      <!-- Ground Shadow of swinging arm -->
+      <ellipse cx="0" cy="52" rx="12" ry="5" fill="#000" opacity="0.45"/>
+
+      <!-- Swivel Socket Ring at joint pivot -->
+      <circle cx="0" cy="0" r="13" fill="#0284c7" stroke="#38bdf8" stroke-width="1.5"/>
+
+      <!-- Arm Solid Beam Body -->
+      <path d="M -8 0 L -6 44 C -6 50 -2 54 0 54 C 2 54 6 50 6 44 L 8 0 Z" fill="url(#armMetal)" stroke="#38bdf8" stroke-width="1.5" filter="url(#drop)"/>
+
+      <!-- Inner structural rib -->
+      <rect x="-2" y="12" width="4" height="20" rx="2" fill="#070c18" opacity="0.5"/>
+
+      <!-- End Caster Swivel Hub & Wheel -->
+      <circle cx="0" cy="46" r="9.5" fill="#1e293b" stroke="#38bdf8" stroke-width="1.5"/>
+      <circle cx="0" cy="46" r="5" fill="#38bdf8"/>
+      <circle cx="0" cy="46" r="2" fill="#ffffff"/>
+
+      <!-- Child Link Pill Tag directly anchored below the arm -->
+      <g transform="translate(0, 58)">
+        <rect x="-56" y="0" width="112" height="17" rx="3.5" fill="rgba(10, 16, 30, 0.95)" stroke="#38bdf8" stroke-width="1" filter="url(#drop)"/>
+        <text x="0" y="11.5" font-family="monospace" font-size="8" font-weight="800" fill="#7dd3fc" text-anchor="middle">
+          &lt;child link="swivel"/&gt;
+        </text>
+      </g>
+    </g>
+  </g>
+
+  <!-- ========================================================================= -->
+  <!-- 5. JOINT REVOLUTE PIVOT CYLINDER (Foreground stationary axle) -->
+  <!-- ========================================================================= -->
+  <g transform="translate(360, 115)">
+    <!-- Base Axle Flange -->
+    <ellipse cx="0" cy="0" rx="18" ry="9" fill="#1e293b" stroke="#475569" stroke-width="1.2"/>
+    
+    <!-- Cylinder Axle Body -->
+    <path d="M -15 0 L -15 -23 A 15 7.5 0 0 1 15 -23 L 15 0 A 15 7.5 0 0 1 -15 0 Z" fill="url(#shaftMetal)" stroke="#64748b" stroke-width="1.2"/>
+    <!-- Top Cap -->
+    <ellipse cx="0" cy="-23" rx="15" ry="6.5" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1"/>
+    <circle cx="0" cy="-23" r="4.5" fill="#0f172a"/>
+
+    <!-- Amber Rotation Velocity Orbit Ring -->
+    <ellipse cx="0" cy="-11.5" rx="23" ry="10.5" fill="none" stroke="#f59e0b" stroke-width="2.2" class="orbit-ring" filter="url(#neonAmber)"/>
+
+    <!-- <axis xyz="0 0 1"/> Vector Arrow (Upward along Z) -->
+    <line x1="0" y1="-23" x2="0" y2="-66" stroke="#f59e0b" stroke-width="2.8" marker-end="url(#arrAmber)"/>
+    <text x="8" y="-56" font-family="monospace" font-size="9" font-weight="800" fill="#fbbf24">
+      &lt;axis xyz="0 0 1"/&gt;
+    </text>
+
+    <!-- Joint Tag Badge Top Right -->
+    <g transform="translate(36, -46)">
+      <rect width="124" height="31" rx="4.5" fill="rgba(10, 16, 30, 0.95)" stroke="#f59e0b" stroke-width="1.2" filter="url(#drop)"/>
+      <text x="62" y="13" font-family="monospace" font-size="8.5" font-weight="800" fill="#fcd34d" text-anchor="middle">
+        &lt;joint type="revolute"&gt;
+      </text>
+      <text x="62" y="25" font-family="system-ui, sans-serif" font-size="8" font-weight="600" fill="#cbd5e1" text-anchor="middle">
+        limits: [-1.57, +1.57]
+      </text>
+    </g>
+  </g>
+
+  <!-- ========================================================================= -->
+  <!-- 6. BOTTOM KINEMATIC CHAIN DOCK -->
+  <!-- ========================================================================= -->
+  <g transform="translate(14, 214)">
+    <rect width="472" height="20" rx="4" fill="rgba(10, 16, 30, 0.92)" stroke="rgba(255, 255, 255, 0.12)" stroke-width="0.8"/>
+    
+    <g transform="translate(10, 13)">
+      <circle cx="0" cy="0" r="2.5" fill="#8b5cf6"/>
+      <text x="7" y="2.5" font-family="system-ui, sans-serif" font-size="7.5" font-weight="800" fill="#c4b5fd">PARENT LINK</text>
+    </g>
+
+    <text x="115" y="15.5" font-family="system-ui, sans-serif" font-size="8.5" fill="#64748b">&#8594;</text>
+
+    <g transform="translate(132, 13)">
+      <circle cx="0" cy="0" r="2.5" fill="#06b6d4"/>
+      <text x="7" y="2.5" font-family="system-ui, sans-serif" font-size="7.5" font-weight="800" fill="#38bdf8">&lt;origin&gt; POSE OFFSET</text>
+    </g>
+
+    <text x="280" y="15.5" font-family="system-ui, sans-serif" font-size="8.5" fill="#64748b">&#8594;</text>
+
+    <g transform="translate(296, 13)">
+      <circle cx="0" cy="0" r="2.5" fill="#f59e0b"/>
+      <text x="7" y="2.5" font-family="system-ui, sans-serif" font-size="7.5" font-weight="800" fill="#fbbf24">JOINT &lt;axis&gt; / &lt;limit&gt;</text>
+    </g>
+
+    <text x="412" y="15.5" font-family="system-ui, sans-serif" font-size="8.5" fill="#64748b">&#8594;</text>
+
+    <g transform="translate(426, 13)">
+      <circle cx="0" cy="0" r="2.5" fill="#38bdf8"/>
+      <text x="7" y="2.5" font-family="system-ui, sans-serif" font-size="7.5" font-weight="800" fill="#7dd3fc">CHILD LINK</text>
+    </g>
+  </g>
+</svg>

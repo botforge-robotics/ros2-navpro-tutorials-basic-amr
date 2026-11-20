@@ -4103,7 +4103,7 @@ function buildLesson09Slides(doc, lesson, slides) {
         </div>
         <div class="l03-content-col">
           <div class="l09-img-card" style="margin-bottom: 0.35rem;">
-            <img src="assets/images/urdf_joint_simple_schematic.jpg" alt="URDF Joint Simple Kinematic Schematic" />
+            <img src="assets/images/urdf_joint_anatomy_animation.svg" alt="URDF Joint Anatomy Animated Mechanical Simulation" />
             <span class="l09-img-caption"><strong>Joint Kinematics:</strong> Origin <code>xyz/rpy</code> offset &bull; Mechanical pivot &bull; Motion <code>axis</code> &bull; Travel <code>limit</code></span>
           </div>
           <div class="l09-tripartite-pills">
