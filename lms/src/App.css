@@ -9321,6 +9321,17 @@
   line-height: 1.42 !important;
 }
 
+/* ========================================================================= */
+/* LESSON 10 DEDICATED PRESENTATION STYLING                                 */
+/* ========================================================================= */
+.presentation-viewport .concept-html-body .l03-cmd-card pre,
+.presentation-viewport.is-fullscreen .concept-html-body .l03-cmd-card pre {
+  max-height: none !important;
+  height: auto !important;
+  overflow-y: visible !important;
+}
+
+
 
 
 

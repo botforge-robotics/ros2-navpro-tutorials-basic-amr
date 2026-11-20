@@ -1,0 +1,319 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 430" width="100%" height="100%">
+  <defs>
+    <!-- Gradients -->
+    <linearGradient id="tfBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#070c18"/>
+      <stop offset="60%" stop-color="#0b1329"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </linearGradient>
+
+    <linearGradient id="nodeBase" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#1e293b"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </linearGradient>
+
+    <linearGradient id="nodeActive" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0284c7"/>
+      <stop offset="100%" stop-color="#0369a1"/>
+    </linearGradient>
+
+    <linearGradient id="hudCard" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#111c35"/>
+      <stop offset="100%" stop-color="#0a1020"/>
+    </linearGradient>
+
+    <!-- Filters -->
+    <filter id="neonCyan" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="2.5" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <filter id="nodeShadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="3" stdDeviation="4" flood-color="#000" flood-opacity="0.6"/>
+    </filter>
+
+    <!-- Markers -->
+    <marker id="tfArrCyan" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#38bdf8"/>
+    </marker>
+    <marker id="tfArrPurple" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#a855f7"/>
+    </marker>
+    <marker id="tfArrAmber" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#f59e0b"/>
+    </marker>
+
+    <!-- Keyframes -->
+    <style><![CDATA[
+      @keyframes dashFlow {
+        from { stroke-dashoffset: 24; }
+        to { stroke-dashoffset: 0; }
+      }
+      @keyframes pulseNode {
+        0%, 100% { filter: drop-shadow(0 0 3px rgba(56, 189, 248, 0.3)); }
+        50% { filter: drop-shadow(0 0 14px rgba(56, 189, 248, 0.9)); }
+      }
+      @keyframes pulseLed {
+        0%, 100% { opacity: 0.35; }
+        50% { opacity: 1; filter: drop-shadow(0 0 4px #10b981); }
+      }
+      @keyframes tfStreamFast {
+        0% { stroke-dashoffset: 0; }
+        100% { stroke-dashoffset: -32; }
+      }
+      @keyframes tfStreamSlow {
+        0% { stroke-dashoffset: 0; }
+        100% { stroke-dashoffset: -32; }
+      }
+
+      .tf-dash-dynamic {
+        stroke-dasharray: 6 5;
+        animation: tfStreamFast 1.2s linear infinite;
+      }
+      .tf-dash-static {
+        stroke-dasharray: 4 4;
+        opacity: 0.75;
+      }
+      .active-base-node {
+        animation: pulseNode 3.0s ease-in-out infinite;
+      }
+      .live-dot {
+        animation: pulseLed 1.8s ease-in-out infinite;
+      }
+    ]]></style>
+  </defs>
+
+  <!-- Background Canvas -->
+  <rect width="980" height="430" rx="12" fill="url(#tfBg)" stroke="rgba(56, 189, 248, 0.25)" stroke-width="1.2"/>
+
+  <!-- Top Title Bar -->
+  <g transform="translate(24, 15)">
+    <circle cx="5" cy="7" r="4.5" fill="#10b981" class="live-dot"/>
+    <text x="17" y="11" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="800" fill="#38bdf8" letter-spacing="0.5">
+      DIFFERENTIAL DRIVE ROBOT TF2 KINEMATIC TRANSFORM TREE (REP-105)
+    </text>
+    <text x="17" y="25" font-family="system-ui, sans-serif" font-size="9" font-weight="600" fill="#94a3b8">
+      Directed Acyclic Graph (DAG) • Global SLAM Datum &#8594; Odometry &#8594; Base Footprint &#8594; Actuators &amp; Sensor Frames
+    </text>
+  </g>
+
+  <!-- ========================================================================= -->
+  <!-- LEFT/CENTER: 2D TF DIRECTED ACYCLIC GRAPH (DAG) -->
+  <!-- ========================================================================= -->
+
+  <!-- Transform Connecting Edges -->
+  <g id="tfEdges">
+    <!-- map -> odom (SLAM / AMCL Drift Correction: 1-10Hz) -->
+    <path d="M 290 80 L 290 120" fill="none" stroke="#a855f7" stroke-width="2.5" class="tf-dash-dynamic" marker-end="url(#tfArrPurple)"/>
+    <text x="300" y="104" font-family="monospace" font-size="8" font-weight="700" fill="#c084fc">SLAM (10Hz)</text>
+
+    <!-- odom -> base_footprint (Wheel Odometry: 50Hz) -->
+    <path d="M 290 156 L 290 196" fill="none" stroke="#38bdf8" stroke-width="2.8" class="tf-dash-dynamic" marker-end="url(#tfArrCyan)"/>
+    <text x="300" y="180" font-family="monospace" font-size="8" font-weight="800" fill="#38bdf8">diff_drive (50Hz)</text>
+
+    <!-- base_footprint -> base_link (Ground Elevation Offset: Fixed/Static) -->
+    <path d="M 290 232 L 290 270" fill="none" stroke="#10b981" stroke-width="2.2" class="tf-dash-static" marker-end="url(#tfArrGreen)"/>
+    <text x="300" y="254" font-family="monospace" font-size="8" font-weight="700" fill="#4ade80">z = +0.035m</text>
+
+    <!-- base_link -> left_wheel_link (Wheel Joint: 50Hz) -->
+    <path d="M 240 292 Q 130 310 110 348" fill="none" stroke="#38bdf8" stroke-width="2.2" class="tf-dash-dynamic" marker-end="url(#tfArrCyan)"/>
+    <text x="140" y="322" font-family="monospace" font-size="7.5" fill="#94a3b8">joint_states (50Hz)</text>
+
+    <!-- base_link -> right_wheel_link (Wheel Joint: 50Hz) -->
+    <path d="M 270 306 Q 230 325 220 348" fill="none" stroke="#38bdf8" stroke-width="2.2" class="tf-dash-dynamic" marker-end="url(#tfArrCyan)"/>
+
+    <!-- base_link -> caster_swivel_link (Passive Swivel) -->
+    <path d="M 290 306 L 310 348" fill="none" stroke="#a855f7" stroke-width="1.8" class="tf-dash-dynamic" marker-end="url(#tfArrPurple)"/>
+
+    <!-- base_link -> laser_frame (Static Transform /tf_static) -->
+    <path d="M 330 306 Q 370 325 400 348" fill="none" stroke="#f59e0b" stroke-width="2" class="tf-dash-static" marker-end="url(#tfArrAmber)"/>
+    <text x="385" y="330" font-family="monospace" font-size="7.5" font-weight="700" fill="#fbbf24">/tf_static (latched)</text>
+
+    <!-- base_link -> camera_link (Static Transform /tf_static) -->
+    <path d="M 345 292 Q 450 310 490 348" fill="none" stroke="#f59e0b" stroke-width="2" class="tf-dash-static" marker-end="url(#tfArrAmber)"/>
+
+    <!-- camera_link -> camera_optical_frame (REP-103 Optical rotation) -->
+    <path d="M 490 384 L 490 405" fill="none" stroke="#10b981" stroke-width="1.5" class="tf-dash-static"/>
+  </g>
+
+  <!-- ========================================================================= -->
+  <!-- TF NODES (Frames) -->
+  <!-- ========================================================================= -->
+
+  <!-- NODE 1: map (World Global Frame) -->
+  <g transform="translate(210, 48)">
+    <rect width="160" height="34" rx="6" fill="#0f172a" stroke="#a855f7" stroke-width="1.5" filter="url(#nodeShadow)"/>
+    <!-- RGB Mini Axes Icon -->
+    <g transform="translate(18, 17)">
+      <line x1="0" y1="0" x2="10" y2="0" stroke="#ef4444" stroke-width="1.8"/>
+      <line x1="0" y1="0" x2="0" y2="-10" stroke="#10b981" stroke-width="1.8"/>
+    </g>
+    <text x="34" y="16" font-family="monospace" font-size="11" font-weight="800" fill="#f3e8ff">map</text>
+    <text x="34" y="27" font-family="system-ui, sans-serif" font-size="7.5" fill="#c084fc">Global World Datum (SLAM/AMCL)</text>
+  </g>
+
+  <!-- NODE 2: odom (Continuous Smooth Odometry Frame) -->
+  <g transform="translate(200, 122)">
+    <rect width="180" height="34" rx="6" fill="#0f172a" stroke="#38bdf8" stroke-width="1.5" filter="url(#nodeShadow)"/>
+    <g transform="translate(18, 17)">
+      <line x1="0" y1="0" x2="10" y2="0" stroke="#ef4444" stroke-width="1.8"/>
+      <line x1="0" y1="0" x2="0" y2="-10" stroke="#10b981" stroke-width="1.8"/>
+    </g>
+    <text x="34" y="16" font-family="monospace" font-size="11" font-weight="800" fill="#e0f2fe">odom</text>
+    <text x="34" y="27" font-family="system-ui, sans-serif" font-size="7.5" fill="#7dd3fc">Continuous Dead-Reckoning (50Hz)</text>
+  </g>
+
+  <!-- NODE 3: base_footprint (Ground Plane Projection z=0) -->
+  <g transform="translate(195, 198)">
+    <rect width="190" height="34" rx="6" fill="#0f172a" stroke="#10b981" stroke-width="1.5" filter="url(#nodeShadow)"/>
+    <g transform="translate(18, 17)">
+      <line x1="0" y1="0" x2="10" y2="0" stroke="#ef4444" stroke-width="1.8"/>
+      <line x1="0" y1="0" x2="0" y2="-10" stroke="#10b981" stroke-width="1.8"/>
+    </g>
+    <text x="34" y="16" font-family="monospace" font-size="11" font-weight="800" fill="#f0fdf4">base_footprint</text>
+    <text x="34" y="27" font-family="system-ui, sans-serif" font-size="7.5" fill="#86efac">Ground Plane Projection (z=0)</text>
+  </g>
+
+  <!-- NODE 4: base_link (CENTRAL CHASSIS DATUM) -->
+  <g transform="translate(195, 272)" class="active-base-node">
+    <rect width="190" height="36" rx="6" fill="url(#nodeActive)" stroke="#7dd3fc" stroke-width="2" filter="url(#nodeShadow)"/>
+    <g transform="translate(18, 18)">
+      <line x1="0" y1="0" x2="12" y2="0" stroke="#ef4444" stroke-width="2.2"/>
+      <line x1="0" y1="0" x2="0" y2="-12" stroke="#10b981" stroke-width="2.2"/>
+    </g>
+    <text x="34" y="17" font-family="monospace" font-size="12" font-weight="900" fill="#ffffff">base_link</text>
+    <text x="34" y="29" font-family="system-ui, sans-serif" font-size="8" font-weight="700" fill="#e0f2fe">Robot Chassis / Axle Center (CoM)</text>
+  </g>
+
+  <!-- LEAF FRAMES (Sensors & Actuators at Tier 5) -->
+  
+  <!-- Left Wheel Frame -->
+  <g transform="translate(55, 350)">
+    <rect width="90" height="32" rx="5" fill="#0f172a" stroke="#38bdf8" stroke-width="1.2" filter="url(#nodeShadow)"/>
+    <text x="45" y="14" font-family="monospace" font-size="8.5" font-weight="800" fill="#7dd3fc" text-anchor="middle">left_wheel</text>
+    <text x="45" y="25" font-family="system-ui, sans-serif" font-size="7" fill="#94a3b8" text-anchor="middle">continuous</text>
+  </g>
+
+  <!-- Right Wheel Frame -->
+  <g transform="translate(155, 350)">
+    <rect width="90" height="32" rx="5" fill="#0f172a" stroke="#38bdf8" stroke-width="1.2" filter="url(#nodeShadow)"/>
+    <text x="45" y="14" font-family="monospace" font-size="8.5" font-weight="800" fill="#7dd3fc" text-anchor="middle">right_wheel</text>
+    <text x="45" y="25" font-family="system-ui, sans-serif" font-size="7" fill="#94a3b8" text-anchor="middle">continuous</text>
+  </g>
+
+  <!-- Front Caster Frame -->
+  <g transform="translate(255, 350)">
+    <rect width="90" height="32" rx="5" fill="#0f172a" stroke="#a855f7" stroke-width="1.2" filter="url(#nodeShadow)"/>
+    <text x="45" y="14" font-family="monospace" font-size="8" font-weight="800" fill="#d8b4fe" text-anchor="middle">caster_swivel</text>
+    <text x="45" y="25" font-family="system-ui, sans-serif" font-size="7" fill="#94a3b8" text-anchor="middle">revolute / fixed</text>
+  </g>
+
+  <!-- LiDAR Frame -->
+  <g transform="translate(355, 350)">
+    <rect width="90" height="32" rx="5" fill="#0f172a" stroke="#f59e0b" stroke-width="1.2" filter="url(#nodeShadow)"/>
+    <text x="45" y="14" font-family="monospace" font-size="8.5" font-weight="800" fill="#fbbf24" text-anchor="middle">laser_frame</text>
+    <text x="45" y="25" font-family="system-ui, sans-serif" font-size="7" fill="#94a3b8" text-anchor="middle">fixed (LiDAR)</text>
+  </g>
+
+  <!-- Camera Frames -->
+  <g transform="translate(455, 350)">
+    <rect width="96" height="32" rx="5" fill="#0f172a" stroke="#10b981" stroke-width="1.2" filter="url(#nodeShadow)"/>
+    <text x="48" y="14" font-family="monospace" font-size="8.5" font-weight="800" fill="#6ee7b7" text-anchor="middle">camera_link</text>
+    <text x="48" y="25" font-family="system-ui, sans-serif" font-size="7" fill="#94a3b8" text-anchor="middle">fixed (Depth Cam)</text>
+  </g>
+
+  <!-- Optical Camera Frame Note -->
+  <g transform="translate(450, 400)">
+    <rect width="106" height="18" rx="3.5" fill="rgba(15, 23, 42, 0.9)" stroke="#10b981" stroke-width="0.8"/>
+    <text x="53" y="12" font-family="monospace" font-size="7.5" fill="#a7f3d0" text-anchor="middle">camera_optical_frame</text>
+  </g>
+
+  <!-- ========================================================================= -->
+  <!-- RIGHT: TF2 PRINCIPLES & RULES HUD -->
+  <!-- ========================================================================= -->
+  <g transform="translate(585, 20)">
+    <rect width="375" height="390" rx="10" fill="url(#hudCard)" stroke="rgba(255, 255, 255, 0.12)" stroke-width="1.2" filter="url(#nodeShadow)"/>
+
+    <!-- Title -->
+    <g transform="translate(18, 22)">
+      <rect width="190" height="20" rx="4" fill="rgba(168, 85, 247, 0.25)" stroke="#a855f7" stroke-width="1"/>
+      <text x="95" y="13.5" font-family="system-ui, sans-serif" font-size="9.5" font-weight="800" fill="#d8b4fe" text-anchor="middle">
+        TF2 ARCHITECTURE SPECIFICATION
+      </text>
+    </g>
+
+    <!-- 1. The Single Parent Rule (Tree / DAG Structure) -->
+    <g transform="translate(16, 50)">
+      <rect width="343" height="74" rx="6" fill="rgba(15, 23, 42, 0.75)" stroke="rgba(168, 85, 247, 0.25)" stroke-width="1"/>
+      <text x="12" y="18" font-family="system-ui, sans-serif" font-size="9" font-weight="800" fill="#c084fc">
+        1. The Universal Single-Parent Rule
+      </text>
+      <text x="12" y="34" font-family="system-ui, sans-serif" font-size="8" fill="#cbd5e1">
+        In ROS 2 TF2, every coordinate frame can have at most <tspan font-weight="800" fill="#ffffff">ONE parent</tspan>.
+      </text>
+      <text x="12" y="48" font-family="system-ui, sans-serif" font-size="8" fill="#94a3b8">
+        &#8226; A frame may have multiple children (e.g., base_link &#8594; wheels, sensors).
+      </text>
+      <text x="12" y="62" font-family="system-ui, sans-serif" font-size="8" fill="#ef4444">
+        &#8226; Violating this creates closed kinematic loops and crashes TF tree lookups.
+      </text>
+    </g>
+
+    <!-- 2. Dynamic TF vs Static TF (/tf vs /tf_static) -->
+    <g transform="translate(16, 132)">
+      <rect width="343" height="96" rx="6" fill="rgba(15, 23, 42, 0.75)" stroke="rgba(56, 189, 248, 0.25)" stroke-width="1"/>
+      <text x="12" y="18" font-family="system-ui, sans-serif" font-size="9" font-weight="800" fill="#38bdf8">
+        2. Dynamic Transforms (/tf) vs Static (/tf_static)
+      </text>
+
+      <g transform="translate(12, 28)">
+        <rect width="154" height="58" rx="4" fill="#0b1329" stroke="#0284c7" stroke-width="0.8"/>
+        <text x="77" y="15" font-family="monospace" font-size="8.5" font-weight="800" fill="#38bdf8" text-anchor="middle">Dynamic: /tf</text>
+        <text x="8" y="30" font-family="system-ui, sans-serif" font-size="7.5" fill="#cbd5e1">&#8226; Broadcast at 20-50Hz</text>
+        <text x="8" y="42" font-family="system-ui, sans-serif" font-size="7.5" fill="#cbd5e1">&#8226; Moving links (odom, wheels)</text>
+        <text x="8" y="54" font-family="system-ui, sans-serif" font-size="7.5" fill="#94a3b8">&#8226; Uses circular ring buffer</text>
+      </g>
+
+      <g transform="translate(176, 28)">
+        <rect width="154" height="58" rx="4" fill="#0b1329" stroke="#f59e0b" stroke-width="0.8"/>
+        <text x="77" y="15" font-family="monospace" font-size="8.5" font-weight="800" fill="#fbbf24" text-anchor="middle">Static: /tf_static</text>
+        <text x="8" y="30" font-family="system-ui, sans-serif" font-size="7.5" fill="#cbd5e1">&#8226; Latched QoS (0Hz bandwidth)</text>
+        <text x="8" y="42" font-family="system-ui, sans-serif" font-size="7.5" fill="#cbd5e1">&#8226; Rigid brackets (LiDAR, camera)</text>
+        <text x="8" y="54" font-family="system-ui, sans-serif" font-size="7.5" fill="#94a3b8">&#8226; Zero network CPU load</text>
+      </g>
+    </g>
+
+    <!-- 3. Fixed Frame Selection & Diagnostics -->
+    <g transform="translate(16, 236)">
+      <rect width="343" height="136" rx="6" fill="rgba(15, 23, 42, 0.75)" stroke="rgba(16, 185, 129, 0.25)" stroke-width="1"/>
+      <text x="12" y="18" font-family="system-ui, sans-serif" font-size="9" font-weight="800" fill="#10b981">
+        3. Authoritative Fixed Frame Rules in RViz2
+      </text>
+
+      <g transform="translate(12, 28)">
+        <text x="0" y="12" font-family="system-ui, sans-serif" font-size="8" font-weight="700" fill="#cbd5e1">
+          When configuring RViz2 Displays:
+        </text>
+        <text x="8" y="26" font-family="system-ui, sans-serif" font-size="8" fill="#94a3b8">
+          &#8226; <tspan font-weight="700" fill="#e0f2fe">URDF Testing:</tspan> Set to <tspan font-family="monospace" fill="#38bdf8">base_link</tspan> (standalone model review)
+        </text>
+        <text x="8" y="40" font-family="system-ui, sans-serif" font-size="8" fill="#94a3b8">
+          &#8226; <tspan font-weight="700" fill="#e0f2fe">Wheel Odometry:</tspan> Set to <tspan font-family="monospace" fill="#38bdf8">odom</tspan> (view trajectory in room)
+        </text>
+        <text x="8" y="54" font-family="system-ui, sans-serif" font-size="8" fill="#94a3b8">
+          &#8226; <tspan font-weight="700" fill="#e0f2fe">Autonomous Nav:</tspan> Set to <tspan font-family="monospace" fill="#38bdf8">map</tspan> (drift-free warehouse grid)
+        </text>
+
+        <!-- Command Pill -->
+        <g transform="translate(0, 66)">
+          <rect width="319" height="30" rx="4" fill="#0b1329" stroke="#334155" stroke-width="0.8"/>
+          <text x="8" y="13" font-family="monospace" font-size="8" fill="#a5f3fc">ros2 run tf2_tools view_frames</text>
+          <text x="8" y="24" font-family="system-ui, sans-serif" font-size="7.5" fill="#64748b">&#8594; Generates frames.pdf auditing latency &amp; tree continuity</text>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>

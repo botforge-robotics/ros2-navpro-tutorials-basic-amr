@@ -4268,158 +4268,195 @@ function buildLesson09Slides(doc, lesson, slides) {
  * RViz2 Visualization & Kinematic TF Inspection.
  */
 function buildLesson10Slides(doc, lesson, slides) {
-  // 1. RViz2 vs Gazebo Distinction
+  // 1. RViz2 Architecture & Sensor Perception Workspace
   slides.push({
-    id: `${lesson.id}_sec2_rviz_vs_gazebo`,
+    id: `${lesson.id}_sec1_rviz_workspace`,
     type: 'concept',
     lessonNum: lesson.num_str,
     lessonId: lesson.id,
     module: lesson.module,
-    sectionTitle: '2. RViz2 vs. Gazebo: The Essential Distinction',
-    badge: '👁️ Perception vs Physics',
-    title: '2. RViz2 vs. Gazebo: The Essential Distinction in Robotics Engineering',
-    htmlContent: `
-      <div class="l06-table-wrap">
-        <table>
-          <thead>
-            <tr>
-              <th style="width: 22%;">Dimension</th>
-              <th style="width: 39%;">RViz2 (Sensor &amp; State Visualizer)</th>
-              <th style="width: 39%;">Gazebo (Rigid-Body Physics Simulator)</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><strong>Primary Purpose</strong></td>
-              <td>Visualizes what the robot <em>believes &amp; perceives</em> (LiDAR, TF, Costmaps).</td>
-              <td>Simulates the <em>physical reality</em> (gravity, friction, inertia, contacts).</td>
-            </tr>
-            <tr>
-              <td><strong>Physics Engine</strong></td>
-              <td>None. Pure 3D rendering pipeline (OGRE). Displays incoming ROS 2 messages.</td>
-              <td>ODE / Bullet / DART solver calculating joint torques and collisions.</td>
-            </tr>
-            <tr>
-              <td><strong>Time Source</strong></td>
-              <td>Listens to <code>/clock</code> when <code>use_sim_time:=True</code>, or wall-clock.</td>
-              <td>Generates simulated time and publishes the authoritative <code>/clock</code>.</td>
-            </tr>
-            <tr>
-              <td><strong>Sensor Data</strong></td>
-              <td>Subscribes to sensor topics and renders visual representations.</td>
-              <td>Computes synthetic sensor observations with physics raycasts and noise.</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-      <div class="l05-banner-intro" style="margin-top: 0.4rem; font-size: 0.74rem; padding: 0.35rem 0.6rem;">
-        <strong>💡 Key Distinction:</strong> You can run RViz2 with a real physical robot in a factory without Gazebo. RViz2 is the robot\'s dashboard; Gazebo is its digital twin playground.
-      </div>
-    `
-  });
-
-  // 2. Spatial Coordinate Conventions (REP 103)
-  slides.push({
-    id: `${lesson.id}_sec3_rep103_rgb`,
-    type: 'concept',
-    lessonNum: lesson.num_str,
-    lessonId: lesson.id,
-    module: lesson.module,
-    sectionTitle: '3. The RGB = XYZ Rule & Coordinate Conventions',
-    badge: '📐 REP-103 Standard',
-    title: '3. Spatial Coordinate Conventions: The Universal "RGB = XYZ" Rule',
+    sectionTitle: '1. RViz2 3D Sensor Perception Suite',
+    badge: '👁️ 3D Perception Dashboard',
+    title: '1. RViz2 Architecture: Visualizing Robot State & Active Sensor Streams',
     htmlContent: `
       <div class="l03-two-col-layout">
         <div class="l03-content-col">
           <div class="l05-golden-card" style="margin-bottom: 0.35rem; padding: 0.4rem 0.65rem;">
-            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🔴</span><strong>Red Axis = X (Forward Longitudinal)</strong></div>
-            <p style="font-size: 0.74rem; line-height: 1.3;">Points strictly forward along the robot\'s primary direction of travel. Positive linear velocities (<code>+vx</code>) drive the robot forward.</p>
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>👁️</span><strong>Perception Visualizer vs Physics Simulator</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">RViz2 visualizes what the robot <em>believes and perceives</em> via DDS topics (LiDAR, Camera, TF, Costmaps). Unlike Gazebo, RViz2 contains no physics engine—it runs directly on physical robots in factories as the primary engineering cockpit.</p>
           </div>
           <div class="l05-golden-card" style="margin-bottom: 0.35rem; padding: 0.4rem 0.65rem;">
-            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🟢</span><strong>Green Axis = Y (Port / Left Lateral)</strong></div>
-            <p style="font-size: 0.74rem; line-height: 1.3;">Points horizontally to the robot\'s left side. For holonomic omni-directional robots, positive strafe velocities (<code>+vy</code>) move left.</p>
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🖥️</span><strong>The RViz2 Workspace Anatomy</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">The interface unites the <strong>Displays Panel</strong> (topic bindings &amp; render properties), the <strong>3D Central Viewport</strong> (interactive OGRE rendering canvas), the <strong>Views Panel</strong> (Orbit/FPS cameras), and the <strong>Time Sync Status</strong>.</p>
           </div>
           <div class="l05-golden-card" style="padding: 0.4rem 0.65rem;">
-            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🔵</span><strong>Blue Axis = Z (Upward Vertical)</strong></div>
-            <p style="font-size: 0.74rem; line-height: 1.3;">Points vertically upward normal to the ground plane. Positive angular velocities (<code>+wz</code>) cause counter-clockwise yaw rotation.</p>
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>📡</span><strong>Real-Time DDS Topic Ingestion</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">RViz2 dynamically subscribes to <code>/robot_description</code>, <code>/scan</code>, <code>/tf</code>, <code>/tf_static</code>, and <code>/odom</code>, transforming raw binary sensor messages into millimeter-accurate 3D spatial geometry.</p>
           </div>
         </div>
         <div class="l03-content-col">
-          <div class="l05-golden-card" style="margin-bottom: 0.35rem; padding: 0.4rem 0.65rem;">
-            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>✋</span><strong>Right-Hand Coordinate Rule</strong></div>
-            <p style="font-size: 0.74rem; line-height: 1.3;">Extend your right thumb along an axis. Your curled fingers point in the direction of positive angular rotation (Euler angles: Roll about X, Pitch about Y, Yaw about Z).</p>
+          <div class="l09-img-card" style="margin-bottom: 0.35rem;">
+            <img src="assets/images/rviz2_robot_sensor_visualization.jpg" alt="RViz2 3D Robot Model and Sensor Visualization Dashboard" />
+            <span class="l09-img-caption"><strong>Live RViz2 Inspection:</strong> Nexus AMR 3D Model &bull; 360&deg; LiDAR rays (<code>/scan</code>) &bull; Camera frustum &bull; TF frames &bull; Odometry path</span>
           </div>
-          <div class="l05-golden-card" style="padding: 0.4rem 0.65rem;">
-            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>📷</span><strong>Optical Sensor Frame Exception</strong></div>
-            <p style="font-size: 0.74rem; line-height: 1.3;">Camera image sensors follow optical conventions: <strong>Z Forward</strong> (optical axis), <strong>X Right</strong>, <strong>Y Down</strong>. A static TF transform bridges <code>camera_link</code> to <code>camera_optical_frame</code>.</p>
+          <div class="l05-banner-intro" style="font-size: 0.72rem; padding: 0.35rem 0.65rem;">
+            <strong>💡 Golden Rule:</strong> RViz2 renders visual representations of real message payloads. If a sensor node stops publishing, the corresponding display freezes or dims immediately.
           </div>
         </div>
       </div>
     `
   });
 
-  // 3. Key RViz2 Displays & Fixed Frame Rule
+  // 2. Multi-Sensor Visualizations in RViz2
   slides.push({
-    id: `${lesson.id}_sec4_displays_fixed_frame`,
+    id: `${lesson.id}_sec2_sensor_displays`,
     type: 'concept',
     lessonNum: lesson.num_str,
     lessonId: lesson.id,
     module: lesson.module,
-    sectionTitle: '4. Key RViz2 Displays & The Fixed Frame Rule',
-    badge: '🖥️ RViz2 Displays',
-    title: '4. Key RViz2 Displays & The Authoritative Fixed Frame Rule',
+    sectionTitle: '2. Multi-Sensor Displays in RViz2',
+    badge: '📡 Multi-Sensor Telemetry',
+    title: '2. RViz2 Sensor Displays: Decoding LaserScan, Depth Clouds, TF & Odometry',
     htmlContent: `
       <div class="l03-two-col-layout">
         <div class="l03-content-col">
           <div class="l06-table-wrap">
             <table>
               <thead>
-                <tr><th>Display Plugin</th><th>Input Topic / Frame</th><th>Functionality</th></tr>
+                <tr><th style="width: 25%;">Display Plugin</th><th style="width: 28%;">Topic / Source</th><th>Visual Representation</th></tr>
               </thead>
               <tbody>
-                <tr><td><code>RobotModel</code></td><td><code>/robot_description</code></td><td>Renders 3D meshes and kinematic joints.</td></tr>
-                <tr><td><code>TF</code></td><td><code>/tf</code> &amp; <code>/tf_static</code></td><td>Visualizes 3D coordinate frame axes.</td></tr>
-                <tr><td><code>LaserScan</code></td><td><code>/scan</code></td><td>Projects 2D LiDAR range points in space.</td></tr>
-                <tr><td><code>Map</code></td><td><code>/map</code> (OccupancyGrid)</td><td>Renders SLAM or global static obstacle map.</td></tr>
-                <tr><td><code>Odometry</code></td><td><code>/odom</code></td><td>Renders robot position and trajectory arrow.</td></tr>
+                <tr><td><code>RobotModel</code></td><td><code>/robot_description</code></td><td>Renders 3D URDF visual meshes, joints &amp; collision hulls.</td></tr>
+                <tr><td><code>TF</code></td><td><code>/tf</code> &amp; <code>/tf_static</code></td><td>Visualizes 3D coordinate frame axes (RGB = XYZ).</td></tr>
+                <tr><td><code>LaserScan</code></td><td><code>/scan</code></td><td>Projects 2D LiDAR range beams with rainbow distance gradient.</td></tr>
+                <tr><td><code>Camera</code></td><td><code>/camera/image_raw</code></td><td>Renders 2D image feed + 3D translucent viewing frustum.</td></tr>
+                <tr><td><code>Odometry</code></td><td><code>/odom</code></td><td>Renders robot position arrow, trail history &amp; covariance.</td></tr>
               </tbody>
             </table>
           </div>
         </div>
         <div class="l03-content-col">
           <div class="l05-golden-card" style="margin-bottom: 0.35rem; padding: 0.4rem 0.65rem;">
-            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🎯</span><strong>The "Fixed Frame" Reference Datum</strong></div>
-            <p style="font-size: 0.74rem; line-height: 1.3;">Every incoming sensor message is rendered relative to the Fixed Frame. If an active transform path from sensor to Fixed Frame is missing, the display errors out in red.</p>
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🎯</span><strong>LaserScan Point Cloud Projection</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">Converts polar range-bearing pairs <code>(r, &theta;)</code> into Cartesian 3D spatial points relative to <code>laser_frame</code>, colored by proximity to obstacles.</p>
+          </div>
+          <div class="l05-golden-card" style="margin-bottom: 0.35rem; padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>📷</span><strong>Camera Frustum &amp; Image Fusion</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">Draws an interactive 3D vision cone projecting forward from <code>camera_link</code>, enabling engineers to verify field-of-view (FoV) coverage against physical blindspots.</p>
           </div>
           <div class="l05-golden-card" style="padding: 0.4rem 0.65rem;">
-            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>📍</span><strong>Which Fixed Frame to Select?</strong></div>
-            <p style="font-size: 0.74rem; line-height: 1.3;">
-              &bull; <strong>URDF Modeling:</strong> Set to <code>base_footprint</code> or <code>base_link</code>.<br/>
-              &bull; <strong>Odometry Testing:</strong> Set to <code>odom</code> to see the robot move relative to start.<br/>
-              &bull; <strong>SLAM &amp; Navigation:</strong> Set to <code>map</code> for drift-free global coordinates.
-            </p>
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>📈</span><strong>Odometry Trails &amp; Covariance Ellipses</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">Visualizes dead-reckoning trajectory history and positional uncertainty ellipsoids derived from wheel encoders and IMU integration.</p>
           </div>
         </div>
       </div>
     `
   });
 
-  // 4. Launch Pipeline: rsp.launch.py & display.launch.py
+  // 3. Differential Drive Kinematics & ICC Simulation
   slides.push({
-    id: `${lesson.id}_sec5_launch_pipeline`,
+    id: `${lesson.id}_sec3_diff_drive_kinematics`,
     type: 'concept',
     lessonNum: lesson.num_str,
     lessonId: lesson.id,
     module: lesson.module,
-    sectionTitle: '5. Building the Launch Pipeline: rsp & display',
-    badge: '🚀 Launch Architecture',
-    title: '5. The Robot State Publisher & RViz2 Launch Pipeline Architecture',
+    sectionTitle: '3. Differential Drive Kinematics & ICC',
+    badge: '⚙️ AMR Kinematics & Motion Geometry',
+    title: '3. Differential Drive Kinematics: Mathematical Modeling & ICC Motion Geometry',
+    htmlContent: `
+      <div class="l09-joint-layout">
+        <div class="l09-joint-anim-stage">
+          <img src="assets/images/diff_drive_kinematics_animation.svg" alt="Differential Drive AMR Kinematics and ICC Geometry Live Animation" />
+        </div>
+        <div class="l05-banner-intro" style="margin-top: 0.1rem; font-size: 0.72rem; padding: 0.35rem 0.75rem; text-align: center;">
+          <strong>💡 Kinematic Principle:</strong> Two-wheel differential drive robots adhere to a <strong>non-holonomic constraint</strong> prohibiting lateral side-slip (<code>v_y = 0</code>). All curved motion traces instantaneous circular arcs around the <strong>ICC</strong> with turning radius <code>R = v / &omega;</code>.
+        </div>
+      </div>
+    `
+  });
+
+  // 4. Differential Drive Kinematic TF2 DAG Hierarchy
+  slides.push({
+    id: `${lesson.id}_sec4_tf_tree_hierarchy`,
+    type: 'concept',
+    lessonNum: lesson.num_str,
+    lessonId: lesson.id,
+    module: lesson.module,
+    sectionTitle: '4. Coordinate Frames & TF2 DAG Hierarchy',
+    badge: '📐 Kinematic TF2 Architecture',
+    title: '4. Coordinate Frames & The Differential Drive TF2 DAG Hierarchy',
+    htmlContent: `
+      <div class="l09-joint-layout">
+        <div class="l09-joint-anim-stage">
+          <img src="assets/images/diff_drive_tf_tree_animation.svg" alt="Differential Drive Robot TF2 Kinematic Transform Tree Animation" />
+        </div>
+        <div class="l05-banner-intro" style="margin-top: 0.1rem; font-size: 0.72rem; padding: 0.35rem 0.75rem; text-align: center;">
+          <strong>💡 Single-Parent Topology:</strong> TF2 strictly enforces a Directed Acyclic Graph (DAG) with zero kinematic loops. The authoritative path flows from <code>map</code> (global SLAM datum) &rarr; <code>odom</code> (continuous 50Hz odometry) &rarr; <code>base_footprint</code> &rarr; <code>base_link</code> &rarr; sensors and wheels.
+        </div>
+      </div>
+    `
+  });
+
+  // 5. The Fixed Frame Rule & Spatial Sensor Alignment
+  slides.push({
+    id: `${lesson.id}_sec5_fixed_frame_rule`,
+    type: 'concept',
+    lessonNum: lesson.num_str,
+    lessonId: lesson.id,
+    module: lesson.module,
+    sectionTitle: '5. The Authoritative Fixed Frame Rule',
+    badge: '🎯 Reference Datum Alignment',
+    title: '5. The Authoritative Fixed Frame Rule & Spatial Sensor Alignment',
     htmlContent: `
       <div class="l03-two-col-layout">
+        <div class="l03-content-col">
+          <div class="l06-table-wrap">
+            <table>
+              <thead>
+                <tr><th style="width: 28%;">Fixed Frame Selection</th><th style="width: 32%;">Primary Purpose</th><th>Observation Behavior</th></tr>
+              </thead>
+              <tbody>
+                <tr><td><code>base_link</code></td><td>URDF &amp; Joint Inspection</td><td>Robot remains stationary at origin; environment moves.</td></tr>
+                <tr><td><code>odom</code></td><td>Wheel Odometry Testing</td><td>Continuous smooth path; robot drives across room datum.</td></tr>
+                <tr><td><code>map</code></td><td>SLAM &amp; Autonomous Nav</td><td>Drift-free global warehouse grid; corrected by loop closures.</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="l05-golden-card warning" style="margin-top: 0.35rem; padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>⚠️</span><strong>The "Frame Does Not Exist" Error</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">If an active transform connecting a sensor\'s <code>header.frame_id</code> to the selected Fixed Frame is missing or times out, RViz2 displays immediately error out in red.</p>
+          </div>
+        </div>
+        <div class="l03-content-col">
+          <div class="l05-golden-card" style="margin-bottom: 0.35rem; padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🔴🟢🔵</span><strong>The Universal "RGB = XYZ" Rule (REP-103)</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;"><strong>Red Axis = +X</strong> (Forward Longitudinal)<br/><strong>Green Axis = +Y</strong> (Port / Left Lateral)<br/><strong>Blue Axis = +Z</strong> (Upward Vertical normal to ground)</p>
+          </div>
+          <div class="l05-golden-card" style="padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>📷</span><strong>Camera Optical Frame Exception</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">Computer vision libraries (OpenCV) expect <strong>Z Forward</strong>, <strong>X Right</strong>, <strong>Y Down</strong>. A static transform bridges <code>camera_link</code> to <code>camera_optical_frame</code> via roll: -90&deg;, yaw: -90&deg; rotation.</p>
+          </div>
+        </div>
+      </div>
+    `
+  });
+
+  // 6. Launch Architecture: rsp.launch.py & display.launch.py
+  slides.push({
+    id: `${lesson.id}_sec6_launch_pipeline`,
+    type: 'concept',
+    lessonNum: lesson.num_str,
+    lessonId: lesson.id,
+    module: lesson.module,
+    sectionTitle: '6. Building the Launch Pipeline: rsp & display',
+    badge: '🚀 Launch Architecture',
+    title: '6. The Robot State Publisher & RViz2 Launch Pipeline Architecture',
+    htmlContent: `
+      <div class="l03-two-col-layout l09-xml-layout">
         <div class="l03-left-code-col">
-          <div class="l03-cmd-card" style="margin-bottom: 0;">
+          <div class="l03-cmd-card l09-xml-card" style="margin-bottom: 0;">
             <div class="l03-cmd-header"><span class="l03-term-badge">display.launch.py</span><strong>RViz2 Bringup Nodes</strong></div>
-            <pre><code class="language-python"># 1. State Publisher (Broadcasting robot URDF & TF)
+            <pre class="l09-xml-pre"><code class="language-python"># 1. State Publisher (Broadcasting robot URDF & TF)
 rsp_launch = IncludeLaunchDescription(
     PythonLaunchDescriptionSource([rsp_path]),
     launch_arguments={'use_sim_time': 'false'}.items()
@@ -4457,16 +4494,16 @@ rviz_node = Node(
     `
   });
 
-  // 5. Kinematic TF Diagnostics & CLI Inspection
+  // 7. Kinematic TF Diagnostics & CLI Inspection Tools
   slides.push({
-    id: `${lesson.id}_sec6_tf_cli`,
+    id: `${lesson.id}_sec7_tf_cli`,
     type: 'concept',
     lessonNum: lesson.num_str,
     lessonId: lesson.id,
     module: lesson.module,
-    sectionTitle: '6. Kinematic TF Diagnostics & CLI Inspection Tools',
-    badge: '🔍 TF Inspection',
-    title: '6. Kinematic TF Diagnostics: view_frames, tf2_echo & tf2_monitor',
+    sectionTitle: '7. Kinematic TF Diagnostics & CLI Tools',
+    badge: '🔍 TF2 CLI Diagnostics',
+    title: '7. Kinematic TF Diagnostics: view_frames, tf2_echo & tf2_monitor',
     htmlContent: `
       <div class="l03-two-col-layout">
         <div class="l03-content-col">
@@ -4481,11 +4518,14 @@ ros2 run tf2_ros tf2_echo base_link laser_frame
 # 3. Monitor broadcast frequency & latency across all frames
 ros2 run tf2_ros tf2_monitor</code></pre>
           </div>
+          <div class="l05-banner-intro" style="margin-top: 0.35rem; font-size: 0.72rem; padding: 0.35rem 0.65rem;">
+            <strong>💡 Pro-Tip:</strong> Run <code>tf2_echo</code> to dynamically verify your URDF sensor offsets against real measured physical calipers on the hardware chassis.
+          </div>
         </div>
         <div class="l03-content-col">
           <div class="l05-golden-card" style="margin-bottom: 0.35rem; padding: 0.4rem 0.65rem;">
             <div class="l05-golden-header" style="font-size: 0.78rem;"><span>📄</span><strong>view_frames Kinematic Tree Audit</strong></div>
-            <p style="font-size: 0.74rem; line-height: 1.3;">Generates <code>frames.pdf</code> showing the complete hierarchy from root <code>base_footprint</code> to sensor frames, confirming no disjointed sub-trees or missing broadcasters.</p>
+            <p style="font-size: 0.74rem; line-height: 1.3;">Generates <code>frames.pdf</code> showing the complete hierarchy from root <code>map</code> down to sensor frames, confirming no disjointed sub-trees or missing broadcasters.</p>
           </div>
           <div class="l05-golden-card" style="margin-bottom: 0.35rem; padding: 0.4rem 0.65rem;">
             <div class="l05-golden-header" style="font-size: 0.78rem;"><span>📡</span><strong>tf2_echo Real-Time Vector Check</strong></div>

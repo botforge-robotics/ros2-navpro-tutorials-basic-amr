@@ -1,0 +1,413 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 430" width="100%" height="100%">
+  <defs>
+    <!-- Dark Tech Gradients -->
+    <linearGradient id="bgCanvas" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#070c18"/>
+      <stop offset="60%" stop-color="#0b1329"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </linearGradient>
+
+    <linearGradient id="panelBg" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#111c35"/>
+      <stop offset="100%" stop-color="#0c1426"/>
+    </linearGradient>
+
+    <linearGradient id="chassisGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#1e293b"/>
+      <stop offset="50%" stop-color="#334155"/>
+      <stop offset="100%" stop-color="#1e293b"/>
+    </linearGradient>
+
+    <linearGradient id="wheelGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#475569"/>
+      <stop offset="50%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#334155"/>
+    </linearGradient>
+
+    <linearGradient id="arcGlow" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#06b6d4"/>
+      <stop offset="100%" stop-color="#3b82f6"/>
+    </linearGradient>
+
+    <!-- Filters -->
+    <filter id="neonCyan" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="2.5" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <filter id="neonAmber" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <filter id="boxShadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#000" flood-opacity="0.6"/>
+    </filter>
+
+    <!-- Arrow Markers -->
+    <marker id="mArrCyan" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#38bdf8"/>
+    </marker>
+    <marker id="mArrGreen" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#10b981"/>
+    </marker>
+    <marker id="mArrAmber" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#f59e0b"/>
+    </marker>
+    <marker id="mArrPurple" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#a855f7"/>
+    </marker>
+
+    <!-- CSS Keyframes -->
+    <style><![CDATA[
+      @keyframes dashCircle {
+        from { stroke-dashoffset: 0; }
+        to { stroke-dashoffset: -40; }
+      }
+      @keyframes pulseIcc {
+        0%, 100% { r: 5px; opacity: 0.8; }
+        50% { r: 9px; opacity: 1; filter: drop-shadow(0 0 6px #f59e0b); }
+      }
+      @keyframes waveRing {
+        0% { r: 6px; opacity: 1; }
+        100% { r: 36px; opacity: 0; }
+      }
+      @keyframes travelRobotArc {
+        0% { offset-distance: 0%; opacity: 0.2; }
+        10% { opacity: 1; }
+        90% { opacity: 1; }
+        100% { offset-distance: 100%; opacity: 0.2; }
+      }
+      @keyframes wheelTread {
+        from { stroke-dashoffset: 0; }
+        to { stroke-dashoffset: -20; }
+      }
+      @keyframes vectorPulse {
+        0%, 100% { opacity: 0.85; filter: drop-shadow(0 0 2px rgba(56, 189, 248, 0.3)); }
+        50% { opacity: 1; filter: drop-shadow(0 0 8px rgba(56, 189, 248, 0.85)); }
+      }
+      @keyframes ledFlash {
+        0%, 100% { opacity: 0.35; }
+        50% { opacity: 1; filter: drop-shadow(0 0 4px #10b981); }
+      }
+
+      .icc-wave {
+        animation: waveRing 2.4s cubic-bezier(0.2, 0.8, 0.4, 1) infinite;
+      }
+      .icc-core {
+        animation: pulseIcc 2.4s ease-in-out infinite;
+      }
+      .arc-path-dash {
+        stroke-dasharray: 6 5;
+        animation: dashCircle 2.0s linear infinite;
+      }
+      .wheel-tread-fast {
+        stroke-dasharray: 4 3;
+        animation: wheelTread 0.9s linear infinite;
+      }
+      .wheel-tread-slow {
+        stroke-dasharray: 4 3;
+        animation: wheelTread 1.8s linear infinite;
+      }
+      .live-indicator {
+        animation: ledFlash 1.6s ease-in-out infinite;
+      }
+      .pulse-vec {
+        animation: vectorPulse 2.0s ease-in-out infinite;
+      }
+    ]]></style>
+  </defs>
+
+  <!-- Background Base Panel -->
+  <rect width="980" height="430" rx="12" fill="url(#bgCanvas)" stroke="rgba(56, 189, 248, 0.25)" stroke-width="1.2"/>
+
+  <!-- Technical Grid Background on Visualizer Stage -->
+  <g opacity="0.12" stroke="#64748b" stroke-width="0.7" stroke-dasharray="2 3">
+    <line x1="20" y1="45" x2="600" y2="45"/>
+    <line x1="20" y1="105" x2="600" y2="105"/>
+    <line x1="20" y1="165" x2="600" y2="165"/>
+    <line x1="20" y1="225" x2="600" y2="225"/>
+    <line x1="20" y1="285" x2="600" y2="285"/>
+    <line x1="20" y1="345" x2="600" y2="345"/>
+    <line x1="20" y1="405" x2="600" y2="405"/>
+    <line x1="80" y1="20" x2="80" y2="415"/>
+    <line x1="160" y1="20" x2="160" y2="415"/>
+    <line x1="240" y1="20" x2="240" y2="415"/>
+    <line x1="320" y1="20" x2="320" y2="415"/>
+    <line x1="400" y1="20" x2="400" y2="415"/>
+    <line x1="480" y1="20" x2="480" y2="415"/>
+    <line x1="560" y1="20" x2="560" y2="415"/>
+  </g>
+
+  <!-- Title & Mode Header Bar -->
+  <g transform="translate(24, 15)">
+    <circle cx="5" cy="7" r="4.5" fill="#10b981" class="live-indicator"/>
+    <text x="17" y="11" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="800" fill="#38bdf8" letter-spacing="0.5">
+      DIFFERENTIAL DRIVE AMR KINEMATICS &amp; ICC GEOMETRY
+    </text>
+    <text x="17" y="25" font-family="system-ui, sans-serif" font-size="9" font-weight="600" fill="#94a3b8">
+      Two-Wheel Differential Drive • Non-Holonomic Constraint (vy = 0) • Instantaneous Center of Curvature
+    </text>
+  </g>
+
+  <!-- ========================================================================= -->
+  <!-- LEFT: 2D MECHANICAL KINEMATIC STAGE -->
+  <!-- ========================================================================= -->
+
+  <!-- 1. INSTANTANEOUS CENTER OF CURVATURE (ICC) -->
+  <g id="iccMarker" transform="translate(140, 240)">
+    <!-- Expanding Radar Wave -->
+    <circle cx="0" cy="0" r="10" fill="none" stroke="#f59e0b" stroke-width="1.8" class="icc-wave"/>
+    <circle cx="0" cy="0" r="6" fill="#f59e0b" class="icc-core" filter="url(#neonAmber)"/>
+    <circle cx="0" cy="0" r="2.5" fill="#ffffff"/>
+    
+    <!-- ICC Callout Badge -->
+    <g transform="translate(-70, -28)">
+      <rect width="84" height="22" rx="4" fill="rgba(15, 23, 42, 0.9)" stroke="#f59e0b" stroke-width="1.2" filter="url(#boxShadow)"/>
+      <text x="42" y="14.5" font-family="monospace" font-size="10" font-weight="800" fill="#fbbf24" text-anchor="middle">
+        ICC (Pivot)
+      </text>
+    </g>
+    <text x="-4" y="24" font-family="monospace" font-size="8.5" font-weight="700" fill="#cbd5e1" text-anchor="end">
+      (x_icc, y_icc)
+    </text>
+  </g>
+
+  <!-- 2. TURNING RADIUS R & RADIUS VECTOR LINES -->
+  <g id="radiusLines">
+    <!-- Center Radius R Line to Axle Midpoint (140,240) to (430,240) -->
+    <line x1="140" y1="240" x2="430" y2="240" stroke="#f59e0b" stroke-width="2" stroke-dasharray="5 4"/>
+    
+    <!-- Inner Radius R - L/2 to Left Wheel (140,240) to (430,170) -->
+    <line x1="140" y1="240" x2="430" y2="170" stroke="#10b981" stroke-width="1.4" stroke-dasharray="3 3" opacity="0.75"/>
+    
+    <!-- Outer Radius R + L/2 to Right Wheel (140,240) to (430,310) -->
+    <line x1="140" y1="240" x2="430" y2="310" stroke="#38bdf8" stroke-width="1.4" stroke-dasharray="3 3" opacity="0.75"/>
+
+    <!-- Radius Dimension Label (R) -->
+    <g transform="translate(255, 222)">
+      <rect width="72" height="18" rx="3.5" fill="rgba(15, 23, 42, 0.92)" stroke="#f59e0b" stroke-width="1"/>
+      <text x="36" y="12.5" font-family="monospace" font-size="9" font-weight="800" fill="#fcd34d" text-anchor="middle">
+        Radius R = v/ω
+      </text>
+    </g>
+  </g>
+
+  <!-- 3. CURVED TRAJECTORY ARCS (Circular paths swept around ICC) -->
+  <g id="trajectoryArcs">
+    <!-- Robot Center Trajectory Arc (Radius = 290px from ICC) -->
+    <path d="M 430 80 A 290 290 0 0 1 430 400" fill="none" stroke="url(#arcGlow)" stroke-width="2.2" class="arc-path-dash" filter="url(#neonCyan)"/>
+
+    <!-- Inner Wheel Path Arc (Radius = 220px) -->
+    <path d="M 360 80 A 220 220 0 0 1 360 400" fill="none" stroke="#10b981" stroke-width="1.2" stroke-dasharray="3 4" opacity="0.45"/>
+
+    <!-- Outer Wheel Path Arc (Radius = 360px) -->
+    <path d="M 500 80 A 360 360 0 0 1 500 400" fill="none" stroke="#38bdf8" stroke-width="1.2" stroke-dasharray="3 4" opacity="0.45"/>
+  </g>
+
+  <!-- ========================================================================= -->
+  <!-- 4. ROBOT CHASSIS & ACTUATORS (AT AXLE CENTER 430, 240) -->
+  <!-- ========================================================================= -->
+  <g id="robotAMR" transform="translate(430, 240)">
+    <!-- Chassis Ground Shadow -->
+    <ellipse cx="20" cy="0" rx="60" ry="74" fill="#000" opacity="0.5"/>
+
+    <!-- Main Chassis Body (Top View) -->
+    <!-- Heading points towards +Y screen up (or +X Forward along tangent) -->
+    <rect x="-35" y="-55" width="105" height="110" rx="20" fill="url(#chassisGrad)" stroke="#475569" stroke-width="1.8" filter="url(#boxShadow)"/>
+    
+    <!-- Top LiDAR Puck & Accent Lines -->
+    <circle cx="15" cy="0" r="22" fill="#0f172a" stroke="#06b6d4" stroke-width="1.5"/>
+    <circle cx="15" cy="0" r="14" fill="#1e293b"/>
+    <circle cx="15" cy="0" r="6" fill="#06b6d4" filter="url(#neonCyan)"/>
+    <text x="15" y="-26" font-family="monospace" font-size="7.5" font-weight="700" fill="#38bdf8" text-anchor="middle">LiDAR</text>
+
+    <!-- Front Depth Camera Bracket (Forward facing, x=70) -->
+    <rect x="68" y="-16" width="6" height="32" rx="2" fill="#0284c7" stroke="#38bdf8" stroke-width="1"/>
+    <!-- Camera View Conical Frustum -->
+    <polygon points="74,-12 120,-38 120,38 74,12" fill="rgba(16, 185, 129, 0.12)" stroke="rgba(16, 185, 129, 0.35)" stroke-width="0.8" stroke-dasharray="2 2"/>
+    <text x="98" y="3" font-family="monospace" font-size="7" font-weight="700" fill="#6ee7b7" text-anchor="middle">Camera</text>
+
+    <!-- FRONT CASTER WHEEL (Passive Swivel at x=50, y=0) -->
+    <ellipse cx="50" cy="0" rx="8" ry="14" fill="#334155" stroke="#94a3b8" stroke-width="1"/>
+    <text x="50" y="24" font-family="system-ui, sans-serif" font-size="7.5" fill="#94a3b8" text-anchor="middle">Caster</text>
+
+    <!-- ===================================================================== -->
+    <!-- LEFT DRIVE WHEEL (Inner Curve at y=-70) -->
+    <!-- ===================================================================== -->
+    <g transform="translate(0, -70)">
+      <rect x="-24" y="-11" width="48" height="22" rx="4" fill="url(#wheelGrad)" stroke="#10b981" stroke-width="1.8" filter="url(#boxShadow)"/>
+      <!-- Wheel Tread Ticks -->
+      <line x1="-16" y1="-11" x2="16" y2="-11" stroke="#4ade80" stroke-width="2" class="wheel-tread-slow"/>
+      <line x1="-16" y1="11" x2="16" y2="11" stroke="#4ade80" stroke-width="2" class="wheel-tread-slow"/>
+      <circle cx="0" cy="0" r="4" fill="#10b981"/>
+
+      <!-- Left Wheel Velocity Vector v_L (Green Arrow forward along +X) -->
+      <line x1="24" y1="0" x2="68" y2="0" stroke="#10b981" stroke-width="3" marker-end="url(#mArrGreen)" class="pulse-vec"/>
+      <text x="75" y="4" font-family="monospace" font-size="10" font-weight="800" fill="#4ade80">v_L</text>
+
+      <text x="0" y="-16" font-family="monospace" font-size="8" font-weight="700" fill="#86efac" text-anchor="middle">
+        Left Wheel (v_L = r·ω_L)
+      </text>
+    </g>
+
+    <!-- ===================================================================== -->
+    <!-- RIGHT DRIVE WHEEL (Outer Curve at y=+70) -->
+    <!-- ===================================================================== -->
+    <g transform="translate(0, 70)">
+      <rect x="-24" y="-11" width="48" height="22" rx="4" fill="url(#wheelGrad)" stroke="#38bdf8" stroke-width="1.8" filter="url(#boxShadow)"/>
+      <!-- Wheel Tread Ticks (Fast rotation) -->
+      <line x1="-16" y1="-11" x2="16" y2="-11" stroke="#38bdf8" stroke-width="2" class="wheel-tread-fast"/>
+      <line x1="-16" y1="11" x2="16" y2="11" stroke="#38bdf8" stroke-width="2" class="wheel-tread-fast"/>
+      <circle cx="0" cy="0" r="4" fill="#38bdf8"/>
+
+      <!-- Right Wheel Velocity Vector v_R (Cyan Arrow forward - longer!) -->
+      <line x1="24" y1="0" x2="98" y2="0" stroke="#38bdf8" stroke-width="3.5" marker-end="url(#mArrCyan)" class="pulse-vec"/>
+      <text x="106" y="4" font-family="monospace" font-size="10" font-weight="800" fill="#38bdf8">v_R (Faster)</text>
+
+      <text x="0" y="24" font-family="monospace" font-size="8" font-weight="700" fill="#7dd3fc" text-anchor="middle">
+        Right Wheel (v_R = r·ω_R)
+      </text>
+    </g>
+
+    <!-- WHEELBASE L TRACK GAUGE DIMENSION -->
+    <line x1="-30" y1="-70" x2="-30" y2="70" stroke="#cbd5e1" stroke-width="1.2"/>
+    <line x1="-36" y1="-70" x2="-24" y2="-70" stroke="#cbd5e1" stroke-width="1.2"/>
+    <line x1="-36" y1="70" x2="-24" y2="70" stroke="#cbd5e1" stroke-width="1.2"/>
+    <g transform="translate(-62, -8)">
+      <rect width="28" height="16" rx="3" fill="#0f172a" stroke="#64748b" stroke-width="0.8"/>
+      <text x="14" y="11.5" font-family="monospace" font-size="9" font-weight="800" fill="#f8fafc" text-anchor="middle">L</text>
+    </g>
+
+    <!-- ROBOT CENTER / AXLE MIDPOINT DATUM (base_link) -->
+    <circle cx="0" cy="0" r="4.5" fill="#f59e0b" filter="url(#neonAmber)"/>
+    <circle cx="0" cy="0" r="2" fill="#ffffff"/>
+
+    <!-- Linear Forward Velocity Vector v = (v_R + v_L)/2 -->
+    <line x1="0" y1="0" x2="84" y2="0" stroke="#f59e0b" stroke-width="3.2" marker-end="url(#mArrAmber)" class="pulse-vec"/>
+    <g transform="translate(42, -18)">
+      <rect width="64" height="15" rx="3" fill="rgba(15, 23, 42, 0.92)" stroke="#f59e0b" stroke-width="0.8"/>
+      <text x="32" y="10.5" font-family="monospace" font-size="8.5" font-weight="800" fill="#fbbf24" text-anchor="middle">v = (v_R+v_L)/2</text>
+    </g>
+
+    <!-- Angular Yaw Velocity Curved Arc ω = (v_R - v_L)/L -->
+    <path d="M 18 -26 A 32 32 0 0 1 32 -14" fill="none" stroke="#c084fc" stroke-width="2.5" marker-end="url(#mArrPurple)"/>
+    <text x="38" y="-24" font-family="monospace" font-size="9.5" font-weight="800" fill="#c084fc">ω</text>
+  </g>
+
+  <!-- ========================================================================= -->
+  <!-- RIGHT: MATHEMATICAL KINEMATIC FORMULA & THEORY HUD -->
+  <!-- ========================================================================= -->
+  <g transform="translate(595, 20)">
+    <!-- HUD Card Container -->
+    <rect width="365" height="390" rx="10" fill="url(#panelBg)" stroke="rgba(255, 255, 255, 0.12)" stroke-width="1.2" filter="url(#boxShadow)"/>
+
+    <!-- Header -->
+    <g transform="translate(18, 24)">
+      <rect width="180" height="20" rx="4" fill="rgba(2, 132, 199, 0.25)" stroke="#0284c7" stroke-width="1"/>
+      <text x="90" y="13.5" font-family="system-ui, sans-serif" font-size="10" font-weight="800" fill="#38bdf8" text-anchor="middle">
+        KINEMATIC GOVERNING EQUATIONS
+      </text>
+    </g>
+
+    <!-- 1. FORWARD KINEMATICS BOX -->
+    <g transform="translate(16, 52)">
+      <rect width="333" height="78" rx="6" fill="rgba(15, 23, 42, 0.75)" stroke="rgba(56, 189, 248, 0.25)" stroke-width="1"/>
+      <text x="12" y="18" font-family="system-ui, sans-serif" font-size="9" font-weight="800" fill="#38bdf8">
+        1. Forward Kinematics (Wheel Speeds &#8594; Robot Motion)
+      </text>
+      
+      <!-- Linear Velocity Equation -->
+      <g transform="translate(14, 28)">
+        <rect width="146" height="40" rx="4" fill="#0b1329" stroke="#334155" stroke-width="0.8"/>
+        <text x="73" y="16" font-family="monospace" font-size="8" fill="#94a3b8" text-anchor="middle">Linear Velocity (v)</text>
+        <text x="73" y="32" font-family="monospace" font-size="11" font-weight="800" fill="#38bdf8" text-anchor="middle">
+          v = (v_R + v_L) / 2
+        </text>
+      </g>
+
+      <!-- Angular Velocity Equation -->
+      <g transform="translate(172, 28)">
+        <rect width="146" height="40" rx="4" fill="#0b1329" stroke="#334155" stroke-width="0.8"/>
+        <text x="73" y="16" font-family="monospace" font-size="8" fill="#94a3b8" text-anchor="middle">Angular Velocity (ω)</text>
+        <text x="73" y="32" font-family="monospace" font-size="11" font-weight="800" fill="#c084fc" text-anchor="middle">
+          ω = (v_R - v_L) / L
+        </text>
+      </g>
+    </g>
+
+    <!-- 2. INVERSE KINEMATICS BOX -->
+    <g transform="translate(16, 138)">
+      <rect width="333" height="78" rx="6" fill="rgba(15, 23, 42, 0.75)" stroke="rgba(16, 185, 129, 0.25)" stroke-width="1"/>
+      <text x="12" y="18" font-family="system-ui, sans-serif" font-size="9" font-weight="800" fill="#10b981">
+        2. Inverse Kinematics (Cmd_Vel (v, ω) &#8594; Wheel Speeds)
+      </text>
+
+      <!-- Right Wheel Target -->
+      <g transform="translate(14, 28)">
+        <rect width="146" height="40" rx="4" fill="#0b1329" stroke="#334155" stroke-width="0.8"/>
+        <text x="73" y="16" font-family="monospace" font-size="8" fill="#94a3b8" text-anchor="middle">Right Wheel (v_R)</text>
+        <text x="73" y="32" font-family="monospace" font-size="11" font-weight="800" fill="#38bdf8" text-anchor="middle">
+          v_R = v + (L/2)·ω
+        </text>
+      </g>
+
+      <!-- Left Wheel Target -->
+      <g transform="translate(172, 28)">
+        <rect width="146" height="40" rx="4" fill="#0b1329" stroke="#334155" stroke-width="0.8"/>
+        <text x="73" y="16" font-family="monospace" font-size="8" fill="#94a3b8" text-anchor="middle">Left Wheel (v_L)</text>
+        <text x="73" y="32" font-family="monospace" font-size="11" font-weight="800" fill="#4ade80" text-anchor="middle">
+          v_L = v - (L/2)·ω
+        </text>
+      </g>
+    </g>
+
+    <!-- 3. INSTANTANEOUS CENTER OF CURVATURE (ICC) CALCULATION -->
+    <g transform="translate(16, 224)">
+      <rect width="333" height="54" rx="6" fill="rgba(15, 23, 42, 0.75)" stroke="rgba(245, 158, 11, 0.25)" stroke-width="1"/>
+      <text x="12" y="17" font-family="system-ui, sans-serif" font-size="9" font-weight="800" fill="#fbbf24">
+        3. Instantaneous Turning Radius (R)
+      </text>
+      <g transform="translate(14, 24)">
+        <rect width="304" height="24" rx="3.5" fill="#0b1329" stroke="#334155" stroke-width="0.8"/>
+        <text x="152" y="16" font-family="monospace" font-size="10.5" font-weight="800" fill="#fcd34d" text-anchor="middle">
+          R = (L/2) · (v_R + v_L) / (v_R - v_L) = v / ω
+        </text>
+      </g>
+    </g>
+
+    <!-- 4. THREE CHARACTERISTIC MOTION REGIMES -->
+    <g transform="translate(16, 286)">
+      <text x="2" y="12" font-family="system-ui, sans-serif" font-size="8.5" font-weight="800" fill="#cbd5e1">
+        4. Operational Motion Regimes:
+      </text>
+
+      <!-- Mode 1: Straight -->
+      <g transform="translate(0, 18)">
+        <rect width="333" height="22" rx="4" fill="rgba(16, 185, 129, 0.15)" stroke="#10b981" stroke-width="0.8"/>
+        <text x="8" y="14" font-family="monospace" font-size="8" font-weight="700" fill="#86efac">v_R = v_L</text>
+        <text x="76" y="14" font-family="system-ui, sans-serif" font-size="8" fill="#cbd5e1">&#8594; Straight Line (ω = 0, R &#8594; &#8734;)</text>
+      </g>
+
+      <!-- Mode 2: Spin in place -->
+      <g transform="translate(0, 44)">
+        <rect width="333" height="22" rx="4" fill="rgba(239, 68, 68, 0.15)" stroke="#ef4444" stroke-width="0.8"/>
+        <text x="8" y="14" font-family="monospace" font-size="8" font-weight="700" fill="#fca5a5">v_R = -v_L</text>
+        <text x="76" y="14" font-family="system-ui, sans-serif" font-size="8" fill="#cbd5e1">&#8594; Zero-Radius Turn / Spin on spot (v = 0, R = 0)</text>
+      </g>
+
+      <!-- Mode 3: Curve -->
+      <g transform="translate(0, 70)">
+        <rect width="333" height="22" rx="4" fill="rgba(56, 189, 248, 0.15)" stroke="#0284c7" stroke-width="0.8"/>
+        <text x="8" y="14" font-family="monospace" font-size="8" font-weight="700" fill="#7dd3fc">v_R &#8800; v_L</text>
+        <text x="76" y="14" font-family="system-ui, sans-serif" font-size="8" fill="#cbd5e1">&#8594; Curved Trajectory Arc (Turning about ICC)</text>
+      </g>
+    </g>
+  </g>
+</svg>
