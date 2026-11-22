@@ -4546,47 +4546,41 @@ ros2 run tf2_ros tf2_monitor</code></pre>
  * Gazebo Physics Simulation & Sensor Plugins.
  */
 function buildLesson11Slides(doc, lesson, slides) {
-  // 1. Gazebo Simulation Engine & Physics Architecture
+  // 1. Gazebo Simulation Engine & GUI Workspace Anatomy
   slides.push({
-    id: `${lesson.id}_sec2_gazebo_arch`,
+    id: `${lesson.id}_sec1_gazebo_gui_arch`,
     type: 'concept',
     lessonNum: lesson.num_str,
     lessonId: lesson.id,
     module: lesson.module,
-    sectionTitle: '2. Gazebo Physics Simulation Architecture',
-    badge: '⚙️ Simulation Architecture',
-    title: '2. Gazebo Physics Engine Mechanics: ODE Solvers & Simulated Clock',
+    sectionTitle: '1. Gazebo 3D Simulation Architecture',
+    badge: '🌍 Physics Simulator & GUI Cockpit',
+    title: '1. Gazebo Architecture: 3D Physics Engine Mechanics & Workspace Anatomy',
     htmlContent: `
       <div class="l03-two-col-layout">
-        <div class="l03-content-col">
-          <div class="l05-golden-card" style="margin-bottom: 0.35rem; padding: 0.4rem 0.65rem;">
-            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>⚙️</span><strong>Open Dynamics Engine (ODE) Physics</strong></div>
-            <p style="font-size: 0.74rem; line-height: 1.3;">Gazebo evaluates Newtonian physics (F = m &middot; a) at discrete intervals. It computes wheel ground contact forces, friction cones, and actuator torques on every time step.</p>
-          </div>
-          <div class="l05-golden-card" style="margin-bottom: 0.35rem; padding: 0.4rem 0.65rem;">
-            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>⏱️</span><strong>Discrete Simulation Step (dt = 0.001s)</strong></div>
-            <p style="font-size: 0.74rem; line-height: 1.3;">Default physics step is 1 millisecond (1000 Hz). Smaller steps enhance numerical stability for small wheel contacts but require higher CPU compute.</p>
+        <div class="l03-content-col" style="display: flex; flex-direction: column; justify-content: space-between; gap: 0.35rem;">
+          <div class="l05-golden-card" style="padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>⚙️</span><strong>Physics Simulator vs Perception Visualizer</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">Unlike RViz2 (which only displays incoming messages), Gazebo solves Newtonian rigid-body dynamics (<code>F = m · a</code>). It models gravity (<code>-9.81 m/s²</code>), ground friction, motor torques, collision impulses, and ray-traced sensor physics.</p>
           </div>
           <div class="l05-golden-card" style="padding: 0.4rem 0.65rem;">
-            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>📊</span><strong>Real-Time Factor (RTF) Metric</strong></div>
-            <p style="font-size: 0.74rem; line-height: 1.3;"><code>RTF = Sim Time / Real Time</code>. An RTF of 1.0 means 1 simulation second equals 1 wall-clock second. RTF &lt; 1.0 indicates CPU physics solver bottleneck.</p>
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🖥️</span><strong>The Gazebo GUI Workspace Anatomy</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">The interface unites the <strong>Entity Tree</strong> (world models &amp; links), <strong>3D Central Viewport</strong> (ODE physics with collision wireframes &amp; CoM), <strong>Top Toolbar</strong> (Translate, Rotate, Scale, Spawners), and <strong>Component Inspector</strong>.</p>
+          </div>
+          <div class="l05-golden-card" style="padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>⏱️</span><strong>Discrete Step (1ms) &amp; Real-Time Factor (RTF)</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">ODE advances physics in discrete 1000 Hz steps (<code>dt = 0.001s</code>). <code>RTF = Sim Time / Real Time</code>. RTF = 1.00x means 100% real-world speed; RTF &lt; 1.0 signals CPU physics solver bottleneck.</p>
           </div>
         </div>
-        <div class="l03-content-col">
-          <div class="l03-cmd-card">
-            <div class="l03-cmd-header"><span class="l03-term-badge">The Simulated Clock Rule</span><strong>use_sim_time Synchronization</strong></div>
-            <pre><code class="language-bash"># Gazebo publishes simulated time to /clock:
-ros2 topic echo /clock
-
-# All ROS 2 nodes must be launched with:
-use_sim_time:=True
-
-# In Python nodes, rclpy uses /clock automatically:
-node.get_clock().now()</code></pre>
+        <div class="l03-content-col" style="display: flex; flex-direction: column; justify-content: center;">
+          <div style="background: rgba(15, 23, 42, 0.65); border: 1px solid rgba(249, 115, 22, 0.35); border-radius: 8px; padding: 0.35rem; box-shadow: 0 4px 14px rgba(0,0,0,0.3);">
+            <img src="assets/images/gazebo_sim_robot_visualization.jpg" alt="Gazebo Sim 3D Robot Simulation Workspace" style="width: 100%; max-height: 270px; object-fit: contain; border-radius: 6px; display: block;" />
+            <div style="margin-top: 0.3rem; font-size: 0.68rem; color: #94a3b8; text-align: center; font-family: monospace;">
+              Live Gazebo Sim: Nexus AMR in Warehouse World • ODE Solver (1000 Hz) • Collision Wireframes • Center of Mass (CoM) • Playback Stepper
+            </div>
           </div>
-          <div class="l05-golden-card warning" style="margin-top: 0.35rem; padding: 0.4rem 0.65rem;">
-            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>⚠️</span><strong>The Time Mismatch Pitfall</strong></div>
-            <p style="font-size: 0.74rem; line-height: 1.3;">If a node runs with wall-clock time while Gazebo runs on simulated time, TF transform lookups will fail immediately with "Lookup would require extrapolation into the future".</p>
+          <div class="l05-banner-intro" style="margin-top: 0.35rem; font-size: 0.72rem; padding: 0.35rem 0.65rem; border-left: 3px solid #f97316;">
+            <strong>💡 The Simulated Clock Rule (/clock):</strong> Gazebo publishes simulated time to <code>/clock</code>. All ROS 2 nodes must run with <code>use_sim_time:=True</code> to prevent TF lookup failures.
           </div>
         </div>
       </div>
@@ -4595,20 +4589,20 @@ node.get_clock().now()</code></pre>
 
   // 2. Differential Drive Controller Plugin
   slides.push({
-    id: `${lesson.id}_sec3_diff_drive_plugin`,
+    id: `${lesson.id}_sec2_diff_drive_plugin`,
     type: 'concept',
     lessonNum: lesson.num_str,
     lessonId: lesson.id,
     module: lesson.module,
-    sectionTitle: '3. The Differential Drive Controller Plugin',
+    sectionTitle: '2. The Differential Drive Controller Plugin',
     badge: '🚜 Motion Controller Plugin',
-    title: '3. Closed-Loop Kinematics: libgazebo_ros_diff_drive.so',
+    title: '2. Closed-Loop Kinematics: libgazebo_ros_diff_drive.so',
     htmlContent: `
-      <div class="l03-two-col-layout">
+      <div class="l03-two-col-layout l09-xml-layout">
         <div class="l03-left-code-col">
-          <div class="l03-cmd-card" style="margin-bottom: 0;">
+          <div class="l03-cmd-card l09-xml-card" style="margin-bottom: 0;">
             <div class="l03-cmd-header"><span class="l03-term-badge">gazebo.xacro</span><strong>Diff-Drive Plugin Config</strong></div>
-            <pre><code class="language-xml">&lt;gazebo&gt;
+            <pre class="l09-xml-pre"><code class="language-xml">&lt;gazebo&gt;
   &lt;plugin name="diff_drive" filename="libgazebo_ros_diff_drive.so"&gt;
     &lt;left_joint&gt;left_wheel_joint&lt;/left_joint&gt;
     &lt;right_joint&gt;right_wheel_joint&lt;/right_joint&gt;
@@ -4625,18 +4619,18 @@ node.get_clock().now()</code></pre>
 &lt;/gazebo&gt;</code></pre>
           </div>
         </div>
-        <div class="l03-content-col">
-          <div class="l05-golden-card" style="margin-bottom: 0.35rem; padding: 0.4rem 0.65rem;">
-            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🎯</span><strong>Direct cmd_vel Ingestion</strong></div>
-            <p style="font-size: 0.74rem; line-height: 1.3;">Subscribes to <code>geometry_msgs/msg/Twist</code> on <code>/cmd_vel</code>. Calculates individual wheel velocities using track separation: <code>v_L = v - (w &middot; L / 2)</code>, <code>v_R = v + (w &middot; L / 2)</code>.</p>
+        <div class="l03-content-col" style="display: flex; flex-direction: column; justify-content: space-between; gap: 0.3rem;">
+          <div class="l05-golden-card" style="padding: 0.35rem 0.6rem;">
+            <div class="l05-golden-header" style="font-size: 0.76rem;"><span>🎯</span><strong>Direct cmd_vel Ingestion</strong></div>
+            <p style="font-size: 0.72rem; line-height: 1.28;">Subscribes to <code>geometry_msgs/msg/Twist</code> on <code>/cmd_vel</code>. Calculates individual wheel velocities using track separation: <code>v_L = v - (w &middot; L / 2)</code>, <code>v_R = v + (w &middot; L / 2)</code>.</p>
           </div>
-          <div class="l05-golden-card" style="margin-bottom: 0.35rem; padding: 0.4rem 0.65rem;">
-            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🔄</span><strong>Odometry &amp; TF Broadcasting</strong></div>
-            <p style="font-size: 0.74rem; line-height: 1.3;">Integrates wheel encoder revolutions to compute dead-reckoning pose. Automatically publishes <code>nav_msgs/msg/Odometry</code> on <code>/odom</code> and broadcasts <code>odom &rarr; base_footprint</code> TF.</p>
+          <div class="l05-golden-card" style="padding: 0.35rem 0.6rem;">
+            <div class="l05-golden-header" style="font-size: 0.76rem;"><span>🔄</span><strong>Odometry &amp; TF Broadcasting</strong></div>
+            <p style="font-size: 0.72rem; line-height: 1.28;">Integrates wheel encoder revolutions to compute dead-reckoning pose. Automatically publishes <code>nav_msgs/msg/Odometry</code> on <code>/odom</code> and broadcasts <code>odom &rarr; base_footprint</code> TF.</p>
           </div>
-          <div class="l05-golden-card" style="padding: 0.4rem 0.65rem;">
-            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>⚙️</span><strong>Motor Limits &amp; Torque Modeling</strong></div>
-            <p style="font-size: 0.74rem; line-height: 1.3;">Enforces maximum torque (20 N&middot;m) and acceleration limits to simulate physical motor saturation and wheel slip under heavy payload.</p>
+          <div class="l05-golden-card" style="padding: 0.35rem 0.6rem;">
+            <div class="l05-golden-header" style="font-size: 0.76rem;"><span>⚙️</span><strong>Motor Limits &amp; Torque Modeling</strong></div>
+            <p style="font-size: 0.72rem; line-height: 1.28;">Enforces maximum torque (20 N&middot;m) and acceleration limits to simulate physical motor saturation and wheel slip under heavy payload.</p>
           </div>
         </div>
       </div>
@@ -4645,20 +4639,20 @@ node.get_clock().now()</code></pre>
 
   // 3. 2D LiDAR Ray Sensor Plugin
   slides.push({
-    id: `${lesson.id}_sec4_lidar_plugin`,
+    id: `${lesson.id}_sec3_lidar_plugin`,
     type: 'concept',
     lessonNum: lesson.num_str,
     lessonId: lesson.id,
     module: lesson.module,
-    sectionTitle: '4. The 2D LiDAR Ray Sensor Plugin',
+    sectionTitle: '3. The 2D LiDAR Ray Sensor Plugin',
     badge: '📡 LiDAR Ray Sensor',
-    title: '4. Simulating Perception: 2D LiDAR Ray Sensor Plugin Configuration',
+    title: '3. Simulating Perception: 2D LiDAR Ray Sensor Plugin Configuration',
     htmlContent: `
-      <div class="l03-two-col-layout">
+      <div class="l03-two-col-layout l09-xml-layout">
         <div class="l03-left-code-col">
-          <div class="l03-cmd-card" style="margin-bottom: 0;">
+          <div class="l03-cmd-card l09-xml-card" style="margin-bottom: 0;">
             <div class="l03-cmd-header"><span class="l03-term-badge">gazebo.xacro</span><strong>LiDAR Plugin Config</strong></div>
-            <pre><code class="language-xml">&lt;gazebo reference="laser_frame"&gt;
+            <pre class="l09-xml-pre"><code class="language-xml">&lt;gazebo reference="laser_frame"&gt;
   &lt;sensor name="lidar" type="ray"&gt;
     &lt;always_on&gt;true&lt;/always_on&gt;
     &lt;visualize&gt;false&lt;/visualize&gt;
@@ -4683,18 +4677,18 @@ node.get_clock().now()</code></pre>
 &lt;/gazebo&gt;</code></pre>
           </div>
         </div>
-        <div class="l03-content-col">
-          <div class="l05-golden-card" style="margin-bottom: 0.35rem; padding: 0.4rem 0.65rem;">
-            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>📐</span><strong>360&deg; Spatial Scanning Geometry</strong></div>
-            <p style="font-size: 0.74rem; line-height: 1.3;">Casts 360 discrete rays across 2&pi; radians (-180&deg; to +180&deg;). Measures distance to the closest intersecting collision bounding box.</p>
+        <div class="l03-content-col" style="display: flex; flex-direction: column; justify-content: space-between; gap: 0.3rem;">
+          <div class="l05-golden-card" style="padding: 0.35rem 0.6rem;">
+            <div class="l05-golden-header" style="font-size: 0.76rem;"><span>📐</span><strong>360&deg; Spatial Scanning Geometry</strong></div>
+            <p style="font-size: 0.72rem; line-height: 1.28;">Casts 360 discrete rays across 2&pi; radians (-180&deg; to +180&deg;). Measures distance to the closest intersecting collision bounding box.</p>
           </div>
-          <div class="l05-golden-card" style="margin-bottom: 0.35rem; padding: 0.4rem 0.65rem;">
-            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🎲</span><strong>Gaussian Noise Injection</strong></div>
-            <p style="font-size: 0.74rem; line-height: 1.3;">Real laser sensors suffer measurement jitter. Setting Gaussian noise (&sigma; = 0.01m) trains SLAM algorithms to handle noisy industrial data robustly.</p>
+          <div class="l05-golden-card" style="padding: 0.35rem 0.6rem;">
+            <div class="l05-golden-header" style="font-size: 0.76rem;"><span>🎲</span><strong>Gaussian Noise Injection</strong></div>
+            <p style="font-size: 0.72rem; line-height: 1.28;">Real laser sensors suffer measurement jitter. Setting Gaussian noise (&sigma; = 0.01m) trains SLAM algorithms to handle noisy industrial data robustly.</p>
           </div>
-          <div class="l05-golden-card" style="padding: 0.4rem 0.65rem;">
-            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>📡</span><strong>Downstream SLAM Compatibility</strong></div>
-            <p style="font-size: 0.74rem; line-height: 1.3;">Outputs standard <code>sensor_msgs/msg/LaserScan</code> directly on <code>/scan</code> with <code>frame_id: laser_frame</code>, fully ready for SLAM Toolbox and Nav2.</p>
+          <div class="l05-golden-card" style="padding: 0.35rem 0.6rem;">
+            <div class="l05-golden-header" style="font-size: 0.76rem;"><span>📡</span><strong>Downstream SLAM Compatibility</strong></div>
+            <p style="font-size: 0.72rem; line-height: 1.28;">Outputs standard <code>sensor_msgs/msg/LaserScan</code> directly on <code>/scan</code> with <code>frame_id: laser_frame</code>, fully ready for SLAM Toolbox and Nav2.</p>
           </div>
         </div>
       </div>
@@ -4703,20 +4697,20 @@ node.get_clock().now()</code></pre>
 
   // 4. RGB Camera Sensor Plugin
   slides.push({
-    id: `${lesson.id}_sec5_camera_plugin`,
+    id: `${lesson.id}_sec4_camera_plugin`,
     type: 'concept',
     lessonNum: lesson.num_str,
     lessonId: lesson.id,
     module: lesson.module,
-    sectionTitle: '5. The RGB Camera Sensor Plugin',
+    sectionTitle: '4. The RGB Camera Sensor Plugin',
     badge: '📷 Optical Sensor Plugin',
-    title: '5. Vision Pipeline: RGB Camera Sensor Plugin (libgazebo_ros_camera.so)',
+    title: '4. Vision Pipeline: RGB Camera Sensor Plugin (libgazebo_ros_camera.so)',
     htmlContent: `
-      <div class="l03-two-col-layout">
+      <div class="l03-two-col-layout l09-xml-layout">
         <div class="l03-left-code-col">
-          <div class="l03-cmd-card" style="margin-bottom: 0;">
+          <div class="l03-cmd-card l09-xml-card" style="margin-bottom: 0;">
             <div class="l03-cmd-header"><span class="l03-term-badge">gazebo.xacro</span><strong>Camera Plugin Config</strong></div>
-            <pre><code class="language-xml">&lt;gazebo reference="camera_link"&gt;
+            <pre class="l09-xml-pre"><code class="language-xml">&lt;gazebo reference="camera_link"&gt;
   &lt;sensor name="camera_sensor" type="camera"&gt;
     &lt;update_rate&gt;30.0&lt;/update_rate&gt;
     &lt;camera name="head"&gt;
@@ -4736,18 +4730,18 @@ node.get_clock().now()</code></pre>
 &lt;/gazebo&gt;</code></pre>
           </div>
         </div>
-        <div class="l03-content-col">
-          <div class="l05-golden-card" style="margin-bottom: 0.35rem; padding: 0.4rem 0.65rem;">
-            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🖼️</span><strong>Synchronized Dual-Stream Output</strong></div>
-            <p style="font-size: 0.74rem; line-height: 1.3;">Publishes synchronized raw pixels on <code>/camera/image_raw</code> and calibration intrinsics (focal length, principal point) on <code>/camera/camera_info</code> at 30 Hz.</p>
+        <div class="l03-content-col" style="display: flex; flex-direction: column; justify-content: space-between; gap: 0.3rem;">
+          <div class="l05-golden-card" style="padding: 0.35rem 0.6rem;">
+            <div class="l05-golden-header" style="font-size: 0.76rem;"><span>🖼️</span><strong>Synchronized Dual-Stream Output</strong></div>
+            <p style="font-size: 0.72rem; line-height: 1.28;">Publishes synchronized raw pixels on <code>/camera/image_raw</code> and calibration intrinsics (focal length, principal point) on <code>/camera/camera_info</code> at 30 Hz.</p>
           </div>
-          <div class="l05-golden-card" style="margin-bottom: 0.35rem; padding: 0.4rem 0.65rem;">
-            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>👁️</span><strong>Optical Coordinate Frame Binding</strong></div>
-            <p style="font-size: 0.74rem; line-height: 1.3;">Binds <code>frame_name: camera_optical_frame</code> to align with OpenCV image coordinate conventions (Z forward, X right, Y down), preventing inverted image renders.</p>
+          <div class="l05-golden-card" style="padding: 0.35rem 0.6rem;">
+            <div class="l05-golden-header" style="font-size: 0.76rem;"><span>👁️</span><strong>Optical Coordinate Frame Binding</strong></div>
+            <p style="font-size: 0.72rem; line-height: 1.28;">Binds <code>frame_name: camera_optical_frame</code> to align with OpenCV image coordinate conventions (Z forward, X right, Y down), preventing inverted image renders.</p>
           </div>
-          <div class="l05-golden-card" style="padding: 0.4rem 0.65rem;">
-            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🤖</span><strong>Downstream AI &amp; Perception</strong></div>
-            <p style="font-size: 0.74rem; line-height: 1.3;">Feed camera streams into visual fiducial tag detectors (AprilTag / ArUco), YOLO object detectors, or visual SLAM packages.</p>
+          <div class="l05-golden-card" style="padding: 0.35rem 0.6rem;">
+            <div class="l05-golden-header" style="font-size: 0.76rem;"><span>🤖</span><strong>Downstream AI &amp; Perception</strong></div>
+            <p style="font-size: 0.72rem; line-height: 1.28;">Feed camera streams into visual fiducial tag detectors (AprilTag / ArUco), YOLO object detectors, or visual SLAM packages.</p>
           </div>
         </div>
       </div>
@@ -4756,20 +4750,20 @@ node.get_clock().now()</code></pre>
 
   // 5. Simulation Bringup Launch File & Execution
   slides.push({
-    id: `${lesson.id}_sec6_sim_bringup`,
+    id: `${lesson.id}_sec5_sim_bringup`,
     type: 'concept',
     lessonNum: lesson.num_str,
     lessonId: lesson.id,
     module: lesson.module,
-    sectionTitle: '6. Simulation Bringup Launch File & Entity Spawner',
+    sectionTitle: '5. Simulation Bringup Launch Pipeline & Entity Spawner',
     badge: '🚀 Simulation Bringup',
-    title: '6. Simulation Bringup Launch Pipeline & Entity Spawner Execution',
+    title: '5. Simulation Bringup Launch Pipeline & Entity Spawner Execution',
     htmlContent: `
-      <div class="l03-two-col-layout">
+      <div class="l03-two-col-layout l09-xml-layout">
         <div class="l03-left-code-col">
-          <div class="l03-cmd-card" style="margin-bottom: 0;">
+          <div class="l03-cmd-card l09-xml-card" style="margin-bottom: 0;">
             <div class="l03-cmd-header"><span class="l03-term-badge">sim_world.launch.py</span><strong>Gazebo + Spawner Pipeline</strong></div>
-            <pre><code class="language-python"># 1. Launch Gazebo Server & Client with World
+            <pre class="l09-xml-pre"><code class="language-python"># 1. Launch Gazebo Server & Client with World
 gazebo = IncludeLaunchDescription(
     PythonLaunchDescriptionSource([gazebo_ros_path, '/gazebo.launch.py']),
     launch_arguments={'world': world_path}.items()
@@ -4789,18 +4783,18 @@ spawn_entity = Node(
 )</code></pre>
           </div>
         </div>
-        <div class="l03-content-col">
-          <div class="l05-golden-card" style="margin-bottom: 0.35rem; padding: 0.4rem 0.65rem;">
-            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>📦</span><strong>Dynamic Entity Spawning via CLI</strong></div>
-            <p style="font-size: 0.74rem; line-height: 1.3;"><code>spawn_entity.py</code> queries the <code>/robot_description</code> topic published by RSP and injects the robot into Gazebo\'s physics space at runtime without hardcoding paths.</p>
+        <div class="l03-content-col" style="display: flex; flex-direction: column; justify-content: space-between; gap: 0.3rem;">
+          <div class="l05-golden-card" style="padding: 0.35rem 0.6rem;">
+            <div class="l05-golden-header" style="font-size: 0.76rem;"><span>📦</span><strong>Dynamic Entity Spawning via CLI</strong></div>
+            <p style="font-size: 0.72rem; line-height: 1.28;"><code>spawn_entity.py</code> queries the <code>/robot_description</code> topic published by RSP and injects the robot into Gazebo\'s physics space at runtime without hardcoding paths.</p>
           </div>
-          <div class="l05-golden-card" style="margin-bottom: 0.35rem; padding: 0.4rem 0.65rem;">
-            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🚀</span><strong>Single Command Bringup</strong></div>
-            <p style="font-size: 0.74rem; line-height: 1.3;">Execute: <code>ros2 launch nexus_amr_gazebo sim_world.launch.py</code>. Launches physics simulation, loads warehouse world, spawns AMR, and starts sensors simultaneously.</p>
+          <div class="l05-golden-card" style="padding: 0.35rem 0.6rem;">
+            <div class="l05-golden-header" style="font-size: 0.76rem;"><span>🚀</span><strong>Single Command Bringup</strong></div>
+            <p style="font-size: 0.72rem; line-height: 1.28;">Execute: <code>ros2 launch nexus_amr_gazebo sim_world.launch.py</code>. Launches physics simulation, loads warehouse world, spawns AMR, and starts sensors simultaneously.</p>
           </div>
-          <div class="l05-golden-card" style="padding: 0.4rem 0.65rem;">
-            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🎮</span><strong>Drive Verification</strong></div>
-            <p style="font-size: 0.74rem; line-height: 1.3;">Open a new terminal and run <code>ros2 run teleop_twist_keyboard teleop_twist_keyboard</code> to verify closed-loop wheel motion and odometry tracking.</p>
+          <div class="l05-golden-card" style="padding: 0.35rem 0.6rem;">
+            <div class="l05-golden-header" style="font-size: 0.76rem;"><span>🎮</span><strong>Drive Verification</strong></div>
+            <p style="font-size: 0.72rem; line-height: 1.28;">Open a new terminal and run <code>ros2 run teleop_twist_keyboard teleop_twist_keyboard</code> to verify closed-loop wheel motion and odometry tracking.</p>
           </div>
         </div>
       </div>
