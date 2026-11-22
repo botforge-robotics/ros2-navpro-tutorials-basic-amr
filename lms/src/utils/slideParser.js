@@ -4807,22 +4807,170 @@ spawn_entity = Node(
  * Building Custom Simulation Worlds in Gazebo.
  */
 function buildLesson12Slides(doc, lesson, slides) {
-  // 1. Anatomy of an SDF World File
+  // 1. Where to Sourcing Simulation Worlds: Gazebo Fuel & Open-Source Repositories
   slides.push({
-    id: `${lesson.id}_sec2_sdf_anatomy`,
+    id: `${lesson.id}_sec1_sourcing_worlds`,
     type: 'concept',
     lessonNum: lesson.num_str,
     lessonId: lesson.id,
     module: lesson.module,
-    sectionTitle: '2. Anatomy of an SDF World File',
-    badge: '🌐 SDF World Architecture',
-    title: '2. Anatomy of an SDF World: Environment Hierarchy & Static Elements',
+    sectionTitle: '1. Sourcing Simulation Worlds: Gazebo Fuel & Open Repositories',
+    badge: '🌐 Simulation World Ecosystem',
+    title: '1. Sourcing Simulation Worlds: Gazebo Fuel Cloud Hub & Open Repositories',
     htmlContent: `
       <div class="l03-two-col-layout">
+        <div class="l03-content-col" style="display: flex; flex-direction: column; justify-content: space-between; gap: 0.35rem;">
+          <div class="l05-golden-card" style="padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🌐</span><strong>Gazebo Fuel Cloud Hub (app.gazebosim.org/fuel)</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">The official cloud repository maintained by Open Robotics. Hosts thousands of ready-to-simulate 3D models (industrial racks, safety barriers, wooden pallets, forklifts) and turnkey factory worlds.</p>
+          </div>
+          <div class="l05-golden-card" style="padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🏭</span><strong>AWS RoboMaker &amp; Open-Source World Libraries</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">Industry-standard repositories on GitHub such as <code>aws-robomaker-small-warehouse-world</code>, <code>aws-robomaker-bookstore-world</code>, and Clearpath worlds provide production-grade lighting, textures, and Nav2 navigation corridors.</p>
+          </div>
+          <div class="l05-golden-card" style="padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>⚡</span><strong>Direct Cloud URI vs Local Caching (~/.gz/fuel)</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">Reference cloud models directly in SDF via <code>&lt;uri&gt;https://fuel.gazebosim.org/1.0/OpenRobotics/models/Warehouse&lt;/uri&gt;</code>. Gazebo auto-caches assets to <code>~/.gz/fuel</code> (or <code>~/.ignition/fuel</code>) for zero-latency offline loading.</p>
+          </div>
+        </div>
+        <div class="l03-content-col" style="display: flex; flex-direction: column; justify-content: center;">
+          <div style="background: rgba(15, 23, 42, 0.65); border: 1px solid rgba(56, 189, 248, 0.35); border-radius: 8px; padding: 0.35rem; box-shadow: 0 4px 14px rgba(0,0,0,0.3);">
+            <img src="assets/images/gazebo_fuel_world_ecosystem.jpg" alt="Gazebo Fuel Simulation World Ecosystem" style="width: 100%; max-height: 270px; object-fit: contain; border-radius: 6px; display: block;" />
+            <div style="margin-top: 0.3rem; font-size: 0.68rem; color: #94a3b8; text-align: center; font-family: monospace;">
+              Gazebo Fuel Cloud Hub (app.gazebosim.org/fuel) • AWS RoboMaker Warehouse World • Local Model Cache (~/.gz/fuel) • model:// Resolution
+            </div>
+          </div>
+          <div class="l05-banner-intro" style="margin-top: 0.35rem; font-size: 0.72rem; padding: 0.35rem 0.65rem; border-left: 3px solid #38bdf8;">
+            <strong>💡 The Fuel CLI Shortcut:</strong> Run <code>ign fuel download -u "&lt;Fuel_URI&gt;" -v 4</code> (or <code>gz fuel download -u ...</code>) to pre-cache complete environments offline before disconnected field testing.
+          </div>
+        </div>
+      </div>
+    `
+  });
+
+  // 2. Local Model Package Setup: Directory Structure & model.config Manifest
+  slides.push({
+    id: `${lesson.id}_sec2_local_model_pkg`,
+    type: 'concept',
+    lessonNum: lesson.num_str,
+    lessonId: lesson.id,
+    module: lesson.module,
+    sectionTitle: '2. Local Model Package Setup & model.config',
+    badge: '📦 Package Architecture',
+    title: '2. Local Model Package Architecture: Directory Structure & model.config Manifest',
+    htmlContent: `
+      <div class="l03-two-col-layout l09-xml-layout">
         <div class="l03-left-code-col">
-          <div class="l03-cmd-card" style="margin-bottom: 0;">
+          <div class="l03-cmd-card l09-xml-card" style="margin-bottom: 0;">
+            <div class="l03-cmd-header"><span class="l03-term-badge">nexus_amr_gazebo</span><strong>Package Tree &amp; model.config</strong></div>
+            <pre class="l09-xml-pre"><code class="language-xml">nexus_amr_gazebo/
+├── CMakeLists.txt
+├── package.xml
+├── worlds/
+│   └── warehouse.world       &lt;-- SDF environment
+└── models/                   &lt;-- Local model database
+    └── warehouse_shelf/
+        ├── model.config      &lt;-- Gazebo metadata manifest
+        └── model.sdf         &lt;-- Rigid body geometry
+
+&lt;!-- models/warehouse_shelf/model.config --&gt;
+&lt;?xml version="1.0"?&gt;
+&lt;model&gt;
+  &lt;name&gt;warehouse_shelf&lt;/name&gt;
+  &lt;version&gt;1.0&lt;/version&gt;
+  &lt;sdf version="1.6"&gt;model.sdf&lt;/sdf&gt;
+  &lt;author&gt;&lt;name&gt;NavPro AMR Team&lt;/name&gt;&lt;email&gt;dev@navpro.io&lt;/email&gt;&lt;/author&gt;
+  &lt;description&gt;Industrial warehouse storage pallet rack&lt;/description&gt;
+&lt;/model&gt;</code></pre>
+          </div>
+        </div>
+        <div class="l03-content-col" style="display: flex; flex-direction: column; justify-content: space-between; gap: 0.3rem;">
+          <div class="l05-golden-card" style="padding: 0.35rem 0.6rem;">
+            <div class="l05-golden-header" style="font-size: 0.76rem;"><span>📁</span><strong>Standardized Simulation Package Layout</strong></div>
+            <p style="font-size: 0.72rem; line-height: 1.28;">Colocate proprietary worlds and custom models inside a dedicated <code>&lt;robot_name&gt;_gazebo</code> package with separate <code>worlds/</code> and <code>models/</code> subdirectories.</p>
+          </div>
+          <div class="l05-golden-card" style="padding: 0.35rem 0.6rem;">
+            <div class="l05-golden-header" style="font-size: 0.76rem;"><span>📄</span><strong>The model.config Requirement</strong></div>
+            <p style="font-size: 0.72rem; line-height: 1.28;">Gazebo discovers models by reading <code>model.config</code>. Without this XML manifest, Gazebo ignores the directory, causing <code>model://warehouse_shelf</code> resolution to fail.</p>
+          </div>
+          <div class="l05-golden-card" style="padding: 0.35rem 0.6rem;">
+            <div class="l05-golden-header" style="font-size: 0.76rem;"><span>⚙️</span><strong>CMakeLists.txt Directory Installation</strong></div>
+            <p style="font-size: 0.72rem; line-height: 1.28;">Install both directories via <code>install(DIRECTORY worlds models DESTINATION share/\${PROJECT_NAME})</code> so <code>colcon build</code> exports assets to the global workspace share path.</p>
+          </div>
+        </div>
+      </div>
+    `
+  });
+
+  // 3. Gazebo Model Path Resolution: package.xml Exports & Launch Environment Hooks
+  slides.push({
+    id: `${lesson.id}_sec3_model_path_resolution`,
+    type: 'concept',
+    lessonNum: lesson.num_str,
+    lessonId: lesson.id,
+    module: lesson.module,
+    sectionTitle: '3. Gazebo Model Path Resolution & Launch Hooks',
+    badge: '🔗 Path Resolution',
+    title: '3. Gazebo Model Path Resolution: package.xml Exports & Launch Environment Hooks',
+    htmlContent: `
+      <div class="l03-two-col-layout l09-xml-layout">
+        <div class="l03-left-code-col">
+          <div class="l03-cmd-card l09-xml-card" style="margin-bottom: 0;">
+            <div class="l03-cmd-header"><span class="l03-term-badge">package.xml &amp; launch</span><strong>Path Export &amp; Environment Injection</strong></div>
+            <pre class="l09-xml-pre"><code class="language-python">&lt;!-- 1. In package.xml: Register model search path --&gt;
+&lt;export&gt;
+  &lt;gazebo_ros gazebo_model_path="\${prefix}/models"/&gt;
+  &lt;gazebo_ros gazebo_media_path="\${prefix}/worlds"/&gt;
+&lt;/export&gt;
+
+# 2. In launch/sim_world.launch.py:
+from launch.actions import AppendEnvironmentVariable
+from ament_index_python.packages import get_package_share_directory
+
+pkg_share = get_package_share_directory('nexus_amr_gazebo')
+models_path = os.path.join(pkg_share, 'models')
+
+# Injects local models into Gazebo search path:
+append_model_path = AppendEnvironmentVariable(
+    name='GAZEBO_MODEL_PATH', # or GZ_SIM_RESOURCE_PATH
+    value=':' + models_path
+)</code></pre>
+          </div>
+        </div>
+        <div class="l03-content-col" style="display: flex; flex-direction: column; justify-content: space-between; gap: 0.3rem;">
+          <div class="l05-golden-card" style="padding: 0.35rem 0.6rem;">
+            <div class="l05-golden-header" style="font-size: 0.76rem;"><span>🔍</span><strong>How Gazebo Resolves model:// URIs</strong></div>
+            <p style="font-size: 0.72rem; line-height: 1.28;">When an SDF world specifies <code>&lt;uri&gt;model://warehouse_shelf&lt;/uri&gt;</code>, Gazebo iterates through paths listed in <code>GAZEBO_MODEL_PATH</code> (Classic) or <code>GZ_SIM_RESOURCE_PATH</code> (Harmonic) to locate the asset.</p>
+          </div>
+          <div class="l05-golden-card" style="padding: 0.35rem 0.6rem;">
+            <div class="l05-golden-header" style="font-size: 0.76rem;"><span>🔄</span><strong>Dual Registration Strategy</strong></div>
+            <p style="font-size: 0.72rem; line-height: 1.28;">Using <code>package.xml &lt;export&gt;</code> registers paths for <code>gazebo_ros</code> CLI, while <code>AppendEnvironmentVariable</code> in launch files ensures runtime resolution in isolated subshells and daemon processes.</p>
+          </div>
+          <div class="l05-golden-card" style="padding: 0.35rem 0.6rem;">
+            <div class="l05-golden-header" style="font-size: 0.76rem;"><span>🚀</span><strong>Zero-Hardcoding Portability Rule</strong></div>
+            <p style="font-size: 0.72rem; line-height: 1.28;">Eliminates fragile user-specific paths like <code>/home/user/...</code>. The simulation workspace runs identically across developer laptops, CI/CD runners, and Docker containers.</p>
+          </div>
+        </div>
+      </div>
+    `
+  });
+
+  // 4. Anatomy of an SDF World File
+  slides.push({
+    id: `${lesson.id}_sec4_sdf_anatomy`,
+    type: 'concept',
+    lessonNum: lesson.num_str,
+    lessonId: lesson.id,
+    module: lesson.module,
+    sectionTitle: '4. Anatomy of an SDF World File',
+    badge: '🌐 SDF World Architecture',
+    title: '4. Anatomy of an SDF World: Environment Hierarchy & Static Elements',
+    htmlContent: `
+      <div class="l03-two-col-layout l09-xml-layout">
+        <div class="l03-left-code-col">
+          <div class="l03-cmd-card l09-xml-card" style="margin-bottom: 0;">
             <div class="l03-cmd-header"><span class="l03-term-badge">warehouse.world</span><strong>SDF Root Hierarchy</strong></div>
-            <pre><code class="language-xml">&lt;sdf version="1.6"&gt;
+            <pre class="l09-xml-pre"><code class="language-xml">&lt;sdf version="1.6"&gt;
   &lt;world name="warehouse_world"&gt;
     &lt;!-- Global Directional Lighting --&gt;
     &lt;include&gt;&lt;uri&gt;model://sun&lt;/uri&gt;&lt;/include&gt;
@@ -4836,49 +4984,49 @@ function buildLesson12Slides(doc, lesson, slides) {
       &lt;real_time_update_rate&gt;1000&lt;/real_time_update_rate&gt;
     &lt;/physics&gt;
 
-    &lt;!-- Custom Warehouse Obstacles & Walls --&gt;
+    &lt;!-- Custom Local Warehouse Shelving Rack --&gt;
     &lt;include&gt;
-      &lt;uri&gt;model://warehouse_walls&lt;/uri&gt;
-      &lt;pose&gt;0 0 0 0 0 0&lt;/pose&gt;
+      &lt;uri&gt;model://warehouse_shelf&lt;/uri&gt;
+      &lt;pose&gt;2.5 1.0 0 0 0 0&lt;/pose&gt;
     &lt;/include&gt;
   &lt;/world&gt;
 &lt;/sdf&gt;</code></pre>
           </div>
         </div>
-        <div class="l03-content-col">
-          <div class="l05-golden-card" style="margin-bottom: 0.35rem; padding: 0.4rem 0.65rem;">
-            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🌐</span><strong>URDF vs. SDF: Fundamental Difference</strong></div>
-            <p style="font-size: 0.74rem; line-height: 1.3;">URDF describes a single robot kinematic tree. SDF (Simulation Description Format) describes entire environments: gravity, sky, lighting, multiple robots, and static infrastructure.</p>
+        <div class="l03-content-col" style="display: flex; flex-direction: column; justify-content: space-between; gap: 0.3rem;">
+          <div class="l05-golden-card" style="padding: 0.35rem 0.6rem;">
+            <div class="l05-golden-header" style="font-size: 0.76rem;"><span>🌐</span><strong>URDF vs. SDF: Fundamental Difference</strong></div>
+            <p style="font-size: 0.72rem; line-height: 1.28;">URDF describes a single robot kinematic tree. SDF (Simulation Description Format) describes entire environments: gravity, sky, lighting, multiple robots, and static infrastructure.</p>
           </div>
-          <div class="l05-golden-card" style="margin-bottom: 0.35rem; padding: 0.4rem 0.65rem;">
-            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>☀️</span><strong>Directional Sun &amp; Shadows</strong></div>
-            <p style="font-size: 0.74rem; line-height: 1.3;">The <code>sun</code> model provides raycasting light and shadows essential for optical camera testing and vision-based obstacle avoidance.</p>
+          <div class="l05-golden-card" style="padding: 0.35rem 0.6rem;">
+            <div class="l05-golden-header" style="font-size: 0.76rem;"><span>☀️</span><strong>Directional Sun &amp; Shadows</strong></div>
+            <p style="font-size: 0.72rem; line-height: 1.28;">The <code>sun</code> model provides raycasting light and shadows essential for optical camera testing and vision-based obstacle avoidance.</p>
           </div>
-          <div class="l05-golden-card" style="padding: 0.4rem 0.65rem;">
-            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🧱</span><strong>Ground Plane Contact Friction</strong></div>
-            <p style="font-size: 0.74rem; line-height: 1.3;">Defines contact friction coefficients (<code>mu1</code>, <code>mu2</code>). Tuning ground friction ensures simulated rubber drive wheels don\'t spin out during acceleration.</p>
+          <div class="l05-golden-card" style="padding: 0.35rem 0.6rem;">
+            <div class="l05-golden-header" style="font-size: 0.76rem;"><span>🧱</span><strong>Ground Plane Contact Friction</strong></div>
+            <p style="font-size: 0.72rem; line-height: 1.28;">Defines contact friction coefficients (<code>mu1</code>, <code>mu2</code>). Tuning ground friction ensures simulated rubber drive wheels don't spin out during acceleration.</p>
           </div>
         </div>
       </div>
     `
   });
 
-  // 2. Physics Solver Tuning for Robotics
+  // 5. Physics Solver Tuning for Robotics
   slides.push({
-    id: `${lesson.id}_sec3_solver_tuning`,
+    id: `${lesson.id}_sec5_solver_tuning`,
     type: 'concept',
     lessonNum: lesson.num_str,
     lessonId: lesson.id,
     module: lesson.module,
-    sectionTitle: '3. Physics Solver Tuning for Robotics',
+    sectionTitle: '5. Physics Solver Tuning for Robotics',
     badge: '⚙️ Physics Engine Tuning',
-    title: '3. Physics Solver Tuning: Balancing Simulation Fidelity & Real-Time Performance',
+    title: '5. Physics Solver Tuning: Balancing Simulation Fidelity & Real-Time Performance',
     htmlContent: `
-      <div class="l03-two-col-layout">
+      <div class="l03-two-col-layout l09-xml-layout">
         <div class="l03-left-code-col">
-          <div class="l03-cmd-card" style="margin-bottom: 0;">
+          <div class="l03-cmd-card l09-xml-card" style="margin-bottom: 0;">
             <div class="l03-cmd-header"><span class="l03-term-badge">warehouse.world</span><strong>Tuned ODE Physics Parameters</strong></div>
-            <pre><code class="language-xml">&lt;physics type="ode"&gt;
+            <pre class="l09-xml-pre"><code class="language-xml">&lt;physics type="ode"&gt;
   &lt;max_step_size&gt;0.001&lt;/max_step_size&gt;
   &lt;real_time_update_rate&gt;1000&lt;/real_time_update_rate&gt;
   &lt;ode&gt;
@@ -4897,54 +5045,40 @@ function buildLesson12Slides(doc, lesson, slides) {
 &lt;/physics&gt;</code></pre>
           </div>
         </div>
-        <div class="l03-content-col">
-          <div class="l05-golden-card" style="margin-bottom: 0.35rem; padding: 0.4rem 0.65rem;">
-            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>⚡</span><strong>iters: 50 Solver Iterations</strong></div>
-            <p style="font-size: 0.74rem; line-height: 1.3;">Higher iterations (50 vs default 20) resolve constraint equations accurately, completely preventing AMR wheels from jittering or penetrating through floor meshes.</p>
+        <div class="l03-content-col" style="display: flex; flex-direction: column; justify-content: space-between; gap: 0.3rem;">
+          <div class="l05-golden-card" style="padding: 0.35rem 0.6rem;">
+            <div class="l05-golden-header" style="font-size: 0.76rem;"><span>⚡</span><strong>iters: 50 Solver Iterations</strong></div>
+            <p style="font-size: 0.72rem; line-height: 1.28;">Higher iterations (50 vs default 20) resolve constraint equations accurately, completely preventing AMR wheels from jittering or penetrating through floor meshes.</p>
           </div>
-          <div class="l05-golden-card" style="margin-bottom: 0.35rem; padding: 0.4rem 0.65rem;">
-            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>📈</span><strong>sor: 1.3 (Successive Over-Relaxation)</strong></div>
-            <p style="font-size: 0.74rem; line-height: 1.3;">Accelerates convergence of the iterative LCP solver, reducing CPU overhead while preserving numerical stability under heavy dynamic loads.</p>
+          <div class="l05-golden-card" style="padding: 0.35rem 0.6rem;">
+            <div class="l05-golden-header" style="font-size: 0.76rem;"><span>📈</span><strong>sor: 1.3 (Successive Over-Relaxation)</strong></div>
+            <p style="font-size: 0.72rem; line-height: 1.28;">Accelerates convergence of the iterative LCP solver, reducing CPU overhead while preserving numerical stability under heavy dynamic loads.</p>
           </div>
-          <div class="l05-golden-card" style="padding: 0.4rem 0.65rem;">
-            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🎯</span><strong>Target RTF = 1.0 (Real-Time Factor)</strong></div>
-            <p style="font-size: 0.74rem; line-height: 1.3;">Guarantees that 1.0 second of simulation time equals 1.0 second of real world time, preserving accurate ROS 2 timer frequencies and sensor rates.</p>
+          <div class="l05-golden-card" style="padding: 0.35rem 0.6rem;">
+            <div class="l05-golden-header" style="font-size: 0.76rem;"><span>🎯</span><strong>Target RTF = 1.0 (Real-Time Factor)</strong></div>
+            <p style="font-size: 0.72rem; line-height: 1.28;">Guarantees that 1.0 second of simulation time equals 1.0 second of real world time, preserving accurate ROS 2 timer frequencies and sensor rates.</p>
           </div>
         </div>
       </div>
     `
   });
 
-  // 3. Constructing Warehouse Elements & Static Collision Boundaries
+  // 6. Constructing Warehouse Elements & Static Collision Boundaries
   slides.push({
-    id: `${lesson.id}_sec4_warehouse_elements`,
+    id: `${lesson.id}_sec6_warehouse_elements`,
     type: 'concept',
     lessonNum: lesson.num_str,
     lessonId: lesson.id,
     module: lesson.module,
-    sectionTitle: '4. Constructing Warehouse Elements',
+    sectionTitle: '6. Constructing Warehouse Elements',
     badge: '🏭 Factory Assets',
-    title: '4. Constructing Warehouse Geometry: Corridors, Shelving Racks & Collision Hulls',
+    title: '6. Constructing Warehouse Geometry: Corridors, Shelving Racks & Collision Hulls',
     htmlContent: `
-      <div class="l03-two-col-layout">
-        <div class="l03-content-col">
-          <div class="l05-golden-card" style="margin-bottom: 0.35rem; padding: 0.4rem 0.65rem;">
-            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🔒</span><strong>The static=true Performance Rule</strong></div>
-            <p style="font-size: 0.74rem; line-height: 1.3;">Always mark permanent walls, storage racks, and structural pillars as <code>&lt;static&gt;true&lt;/static&gt;</code>. This removes them from ODE dynamic force calculations, saving massive CPU cycles.</p>
-          </div>
-          <div class="l05-golden-card" style="margin-bottom: 0.35rem; padding: 0.4rem 0.65rem;">
-            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>📦</span><strong>Modular Storage Rack Dimensions</strong></div>
-            <p style="font-size: 0.74rem; line-height: 1.3;">Standardize aisles to 2.5m width and rack depths to 1.0m to reflect industrial automated logistics facilities, providing realistic clearance for 0.4m AMRs.</p>
-          </div>
-          <div class="l05-golden-card" style="padding: 0.4rem 0.65rem;">
-            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>📡</span><strong>LiDAR Ray Reflection Realism</strong></div>
-            <p style="font-size: 0.74rem; line-height: 1.3;">Ensure collision bounding boxes match visual boundaries exactly so simulated 2D LiDAR raycasts match physical wall contours precisely.</p>
-          </div>
-        </div>
-        <div class="l03-content-col">
-          <div class="l03-cmd-card">
+      <div class="l03-two-col-layout l09-xml-layout">
+        <div class="l03-left-code-col">
+          <div class="l03-cmd-card l09-xml-card" style="margin-bottom: 0;">
             <div class="l03-cmd-header"><span class="l03-term-badge">warehouse_shelf.sdf</span><strong>Static Warehouse Asset Model</strong></div>
-            <pre><code class="language-xml">&lt;model name="warehouse_shelf"&gt;
+            <pre class="l09-xml-pre"><code class="language-xml">&lt;model name="warehouse_shelf"&gt;
   &lt;static&gt;true&lt;/static&gt;
   &lt;link name="shelf_link"&gt;
     &lt;visual name="visual"&gt;
@@ -4962,26 +5096,40 @@ function buildLesson12Slides(doc, lesson, slides) {
 &lt;/model&gt;</code></pre>
           </div>
         </div>
+        <div class="l03-content-col" style="display: flex; flex-direction: column; justify-content: space-between; gap: 0.3rem;">
+          <div class="l05-golden-card" style="padding: 0.35rem 0.6rem;">
+            <div class="l05-golden-header" style="font-size: 0.76rem;"><span>🔒</span><strong>The static=true Performance Rule</strong></div>
+            <p style="font-size: 0.72rem; line-height: 1.28;">Always mark permanent walls, storage racks, and structural pillars as <code>&lt;static&gt;true&lt;/static&gt;</code>. This removes them from ODE dynamic force calculations, saving massive CPU cycles.</p>
+          </div>
+          <div class="l05-golden-card" style="padding: 0.35rem 0.6rem;">
+            <div class="l05-golden-header" style="font-size: 0.76rem;"><span>📦</span><strong>Modular Storage Rack Dimensions</strong></div>
+            <p style="font-size: 0.72rem; line-height: 1.28;">Standardize aisles to 2.5m width and rack depths to 1.0m to reflect industrial automated logistics facilities, providing realistic clearance for 0.4m AMRs.</p>
+          </div>
+          <div class="l05-golden-card" style="padding: 0.35rem 0.6rem;">
+            <div class="l05-golden-header" style="font-size: 0.76rem;"><span>📡</span><strong>LiDAR Ray Reflection Realism</strong></div>
+            <p style="font-size: 0.72rem; line-height: 1.28;">Ensure collision bounding boxes match visual boundaries exactly so simulated 2D LiDAR raycasts match physical wall contours precisely.</p>
+          </div>
+        </div>
       </div>
     `
   });
 
-  // 4. Viewport Camera Positioning & Spawning
+  // 7. Viewport Camera Positioning & Spawning
   slides.push({
-    id: `${lesson.id}_sec5_viewport_camera`,
+    id: `${lesson.id}_sec7_viewport_camera`,
     type: 'concept',
     lessonNum: lesson.num_str,
     lessonId: lesson.id,
     module: lesson.module,
-    sectionTitle: '5. Viewport Camera Positioning & Spawning',
+    sectionTitle: '7. Viewport Camera Positioning & Spawning',
     badge: '🎥 Developer Viewport',
-    title: '5. Developer Experience: Viewport Camera Presets & Dynamic Asset Spawning',
+    title: '7. Developer Experience: Viewport Camera Presets & Dynamic Asset Spawning',
     htmlContent: `
-      <div class="l03-two-col-layout">
+      <div class="l03-two-col-layout l09-xml-layout">
         <div class="l03-left-code-col">
-          <div class="l03-cmd-card" style="margin-bottom: 0;">
+          <div class="l03-cmd-card l09-xml-card" style="margin-bottom: 0;">
             <div class="l03-cmd-header"><span class="l03-term-badge">warehouse.world</span><strong>GUI Camera Preset</strong></div>
-            <pre><code class="language-xml">&lt;gui fullscreen="0"&gt;
+            <pre class="l09-xml-pre"><code class="language-xml">&lt;gui fullscreen="0"&gt;
   &lt;camera name="user_camera"&gt;
     &lt;!-- X Y Z Roll Pitch Yaw --&gt;
     &lt;pose&gt;-6.0 -6.0 8.0 0.0 0.85 0.785&lt;/pose&gt;
@@ -4990,18 +5138,18 @@ function buildLesson12Slides(doc, lesson, slides) {
 &lt;/gui&gt;</code></pre>
           </div>
         </div>
-        <div class="l03-content-col">
-          <div class="l05-golden-card" style="margin-bottom: 0.35rem; padding: 0.4rem 0.65rem;">
-            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🎥</span><strong>Isometric Overhead Camera View</strong></div>
-            <p style="font-size: 0.74rem; line-height: 1.3;">Setting a default camera pose (Z=8m, pitch=0.85 rad) positions the Gazebo viewport in an isometric perspective over the whole facility immediately upon launch.</p>
+        <div class="l03-content-col" style="display: flex; flex-direction: column; justify-content: space-between; gap: 0.3rem;">
+          <div class="l05-golden-card" style="padding: 0.35rem 0.6rem;">
+            <div class="l05-golden-header" style="font-size: 0.76rem;"><span>🎥</span><strong>Isometric Overhead Camera View</strong></div>
+            <p style="font-size: 0.72rem; line-height: 1.28;">Setting a default camera pose (Z=8m, pitch=0.85 rad) positions the Gazebo viewport in an isometric perspective over the whole facility immediately upon launch.</p>
           </div>
-          <div class="l05-golden-card" style="margin-bottom: 0.35rem; padding: 0.4rem 0.65rem;">
-            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🔄</span><strong>Spawning Dynamic Obstacles</strong></div>
-            <p style="font-size: 0.74rem; line-height: 1.3;">Spawn dynamic pallets and temporary barriers on the fly using the CLI:<br/><code>ros2 run gazebo_ros spawn_entity.py -entity pallet_1 -file pallet.sdf -x 2.5 -y 1.0</code></p>
+          <div class="l05-golden-card" style="padding: 0.35rem 0.6rem;">
+            <div class="l05-golden-header" style="font-size: 0.76rem;"><span>🔄</span><strong>Spawning Dynamic Obstacles</strong></div>
+            <p style="font-size: 0.72rem; line-height: 1.28;">Spawn dynamic pallets and temporary barriers on the fly using the CLI:<br/><code>ros2 run gazebo_ros spawn_entity.py -entity pallet_1 -file pallet.sdf -x 2.5 -y 1.0</code></p>
           </div>
-          <div class="l05-golden-card" style="padding: 0.4rem 0.65rem;">
-            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🏭</span><strong>Production Verification Ready</strong></div>
-            <p style="font-size: 0.74rem; line-height: 1.3;">A complete custom world provides the realistic spatial corridors needed for mapping with SLAM Toolbox and autonomous navigation with Nav2.</p>
+          <div class="l05-golden-card" style="padding: 0.35rem 0.6rem;">
+            <div class="l05-golden-header" style="font-size: 0.76rem;"><span>🏭</span><strong>Production Verification Ready</strong></div>
+            <p style="font-size: 0.72rem; line-height: 1.28;">A complete custom world provides the realistic spatial corridors needed for mapping with SLAM Toolbox and autonomous navigation with Nav2.</p>
           </div>
         </div>
       </div>
