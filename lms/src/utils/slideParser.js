@@ -5162,71 +5162,198 @@ append_model_path = AppendEnvironmentVariable(
  * 2D LiDAR SLAM Mapping with SLAM Toolbox.
  */
 function buildLesson13Slides(doc, lesson, slides) {
-  // 1. Graph SLAM Architecture & Pose Graph Optimization
+  // 1. Robot Localization Foundations: AMCL & Particle Filters
   slides.push({
-    id: `${lesson.id}_sec2_slam_arch`,
+    id: `${lesson.id}_sec1_amcl_foundations`,
     type: 'concept',
     lessonNum: lesson.num_str,
     lessonId: lesson.id,
     module: lesson.module,
-    sectionTitle: '2. Graph SLAM Architecture & Pose Graph Optimization',
-    badge: '🗺️ SLAM Architecture',
-    title: '2. Graph SLAM Foundations: Scan Matching & Pose Graph Optimization (PGO)',
+    sectionTitle: '1. Robot Localization Foundations & AMCL',
+    badge: '📍 Localization Theory',
+    title: '1. Robot Localization Foundations: Adaptive Monte Carlo Localization (AMCL)',
     htmlContent: `
       <div class="l03-two-col-layout">
-        <div class="l03-content-col">
-          <div class="l05-golden-card" style="margin-bottom: 0.35rem; padding: 0.4rem 0.65rem;">
-            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🔍</span><strong>Front-End Scan Matching (Karto)</strong></div>
-            <p style="font-size: 0.74rem; line-height: 1.3;">Aligns consecutive 2D laser scans against local sub-maps using correlative scan matching. Computes high-precision relative pose changes between robot timesteps.</p>
-          </div>
-          <div class="l05-golden-card" style="margin-bottom: 0.35rem; padding: 0.4rem 0.65rem;">
-            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🕸️</span><strong>Pose Graph Construction</strong></div>
-            <p style="font-size: 0.74rem; line-height: 1.3;">Maintains a graph where <strong>Nodes</strong> represent robot poses at discrete locations, and <strong>Edges</strong> represent spatial constraints derived from odometry and scan matching.</p>
+        <div class="l03-content-col" style="display: flex; flex-direction: column; justify-content: space-between; gap: 0.35rem;">
+          <div class="l05-golden-card" style="padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>📍</span><strong>The Localization Objective: State Estimation</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">Localization estimates the AMR\'s 2D planar pose <code>x = [x, y, &theta;]<sup>T</sup></code> relative to a known global map coordinate frame, compensating for continuous dead-reckoning wheel slip and odometry drift.</p>
           </div>
           <div class="l05-golden-card" style="padding: 0.4rem 0.65rem;">
-            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🔄</span><strong>Back-End Loop Closure Optimization</strong></div>
-            <p style="font-size: 0.74rem; line-height: 1.3;">When the robot re-enters a previously visited area, SLAM detects a loop closure. The non-linear <strong>Ceres Solver</strong> redistributes cumulative odometry drift across the entire graph.</p>
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🎲</span><strong>The Particle Filter State Representation</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">AMCL represents belief using a population of sample hypotheses: each particle holds <code>[X<sub>p</sub>, Y<sub>p</sub>, &Theta;<sub>p</sub>, Weight]</code>. Particles propagate through an odometry motion model and are weighted by comparing simulated laser rays against the map.</p>
+          </div>
+          <div class="l05-golden-card" style="padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>⚡</span><strong>Adaptive Particle Scaling (KLD-Sampling)</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">AMCL uses Kullback-Leibler Divergence (KLD) sampling to dynamically adjust particle counts: when uncertainty is high, particle count grows (up to 5,000); once converged, count drops (down to 500) to conserve CPU compute.</p>
           </div>
         </div>
-        <div class="l03-content-col">
-          <div class="l05-golden-card" style="margin-bottom: 0.35rem; padding: 0.4rem 0.65rem;">
-            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>📐</span><strong>The Authoritative TF Triad</strong></div>
-            <p style="font-size: 0.74rem; line-height: 1.3;">SLAM Toolbox publishes the critical <code>map &rarr; odom</code> transform. Combined with wheel odometry\'s <code>odom &rarr; base_footprint</code>, the robot obtains globally drift-free coordinates.</p>
+        <div class="l03-content-col" style="display: flex; flex-direction: column; justify-content: center;">
+          <div style="background: rgba(15, 23, 42, 0.65); border: 1px solid rgba(234, 179, 8, 0.35); border-radius: 8px; padding: 0.35rem; box-shadow: 0 4px 14px rgba(0,0,0,0.3);">
+            <img src="assets/images/amcl_particle_filter_states.png" alt="AMCL Particle Filter State Representation" style="width: 100%; max-height: 270px; object-fit: contain; border-radius: 6px; display: block;" />
+            <div style="margin-top: 0.3rem; font-size: 0.68rem; color: #94a3b8; text-align: center; font-family: monospace;">
+              AMCL Particle Filter: Global Uniform Distribution • State Vector [X, Y, &Theta;, Weight] • Importance Weighting &amp; Convergence
+            </div>
           </div>
-          <div class="l05-golden-card" style="padding: 0.4rem 0.65rem;">
-            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🚀</span><strong>Why SLAM Toolbox Over Gmapping / Cartographer?</strong></div>
-            <p style="font-size: 0.74rem; line-height: 1.3;">SLAM Toolbox is the official ROS 2 standard: handles huge multi-story warehouse facilities, supports life-long mapping, dynamic serialization, and deserialization without memory leaks.</p>
+          <div class="l05-banner-intro" style="margin-top: 0.35rem; font-size: 0.72rem; padding: 0.35rem 0.65rem; border-left: 3px solid #eab308;">
+            <strong>💡 Particle Convergence Cycle:</strong> Prediction (wheel odometry step) &rarr; Measurement Likelihood (LiDAR scan correlation) &rarr; Importance Resampling (particles cluster tightly around true pose).
           </div>
         </div>
       </div>
     `
   });
 
-  // 2. SLAM Toolbox Configuration (config/slam_toolbox.yaml)
+  // 2. Localization Challenges: Position Tracking vs Kidnapped Robot Problem
   slides.push({
-    id: `${lesson.id}_sec3_slam_config`,
+    id: `${lesson.id}_sec2_localization_challenges`,
     type: 'concept',
     lessonNum: lesson.num_str,
     lessonId: lesson.id,
     module: lesson.module,
-    sectionTitle: '3. Deep Dive: config/slam_toolbox.yaml',
-    badge: '⚙️ SLAM Configuration',
-    title: '3. Tuning SLAM Toolbox: config/slam_toolbox.yaml Parameter Matrix',
+    sectionTitle: '2. Position Tracking vs Kidnapped Robot Problem',
+    badge: '🚨 Localization Challenges',
+    title: '2. Localization Challenges: Position Tracking vs The Kidnapped Robot Problem',
     htmlContent: `
       <div class="l03-two-col-layout">
+        <div class="l03-content-col" style="display: flex; flex-direction: column; justify-content: space-between; gap: 0.35rem;">
+          <div class="l05-golden-card" style="padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🎯</span><strong>Position Tracking (Local Localization)</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">The robot\'s initial pose is known with high confidence (e.g. at an automated docking station). The particle filter maintains a tight single-mode Gaussian cluster, correcting small encoder drift as the robot traverses paths.</p>
+          </div>
+          <div class="l05-golden-card" style="padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>❓</span><strong>The Kidnapped Robot Problem (Global Relocalization)</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">The robot is manually lifted and placed in an unknown location without odometry registering motion. Because the old cluster assumes it is elsewhere, scan matches fail catastrophically and odometry diverges.</p>
+          </div>
+          <div class="l05-golden-card" style="padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🔄</span><strong>AMCL Recovery: Random Particle Injection</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">AMCL monitors long-term vs short-term average measurement likelihood (<code>recovery_alpha_slow</code>, <code>recovery_alpha_fast</code>). When likelihood plunges, AMCL automatically injects random particles across free space to regain global tracking.</p>
+          </div>
+        </div>
+        <div class="l03-content-col" style="display: flex; flex-direction: column; justify-content: center;">
+          <div style="background: rgba(15, 23, 42, 0.65); border: 1px solid rgba(239, 68, 68, 0.35); border-radius: 8px; padding: 0.35rem; box-shadow: 0 4px 14px rgba(0,0,0,0.3);">
+            <img src="assets/images/localization_kidnapped_robot.png" alt="Position Tracking vs Kidnapped Robot Problem" style="width: 100%; max-height: 270px; object-fit: contain; border-radius: 6px; display: block;" />
+            <div style="margin-top: 0.3rem; font-size: 0.68rem; color: #94a3b8; text-align: center; font-family: monospace;">
+              Local Tracking (Known Pose, Small Drift) vs Kidnapped Robot (Pose Teleported, Diverged Filter Belief)
+            </div>
+          </div>
+          <div class="l05-banner-intro" style="margin-top: 0.35rem; font-size: 0.72rem; padding: 0.35rem 0.65rem; border-left: 3px solid #ef4444;">
+            <strong>⚠️ Industrial Safety Rule:</strong> Never rely solely on pure odometry in warehouses. Wheel slippage over spills or bumps causes pose tracking failure within meters unless corrected by LiDAR scan matching.
+          </div>
+        </div>
+      </div>
+    `
+  });
+
+  // 3. Occupancy Grid Mapping & Log-Odds Bayesian Updating
+  slides.push({
+    id: `${lesson.id}_sec3_occupancy_grid_mapping`,
+    type: 'concept',
+    lessonNum: lesson.num_str,
+    lessonId: lesson.id,
+    module: lesson.module,
+    sectionTitle: '3. Occupancy Grids & Log-Odds Updates',
+    badge: '🗺️ Grid Mapping Theory',
+    title: '3. Occupancy Grid Mapping & Log-Odds Bayesian Probability Updates',
+    htmlContent: `
+      <div class="l03-two-col-layout">
+        <div class="l03-content-col" style="display: flex; flex-direction: column; justify-content: space-between; gap: 0.35rem;">
+          <div class="l05-golden-card" style="padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>📐</span><strong>Discretized 2D Occupancy Grid Representation</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">Continuous 2D space is discretized into discrete grid cells <code>m<sub>i</sub></code> (typically 5cm &times; 5cm). Each cell holds the probability <code>P(m<sub>i</sub> = 1)</code> that an impenetrable physical obstacle occupies that space.</p>
+          </div>
+          <div class="l05-golden-card" style="padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🔢</span><strong>The Log-Odds Formulation: Eliminating Underflow</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">Probabilities <code>P</code> are mapped to log-odds: <code>l(m<sub>i</sub>) = ln(P / (1 - P))</code>. Bayesian updates become simple additions: <code>l<sub>t</sub> = l<sub>t-1</sub> + inv_sensor(m<sub>i</sub>, z<sub>t</sub>) - l<sub>0</sub></code>, preventing numerical underflow.</p>
+          </div>
+          <div class="l05-golden-card" style="padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>📡</span><strong>Inverse Sensor Model &amp; Raycasting Cones</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">For each LiDAR ray, Bresenham\'s line algorithm clears all cells along the beam path as <strong>Free (P &lt; 0.5)</strong>, while incrementing the terminal cell at the measured range as <strong>Occupied (P &gt; 0.5)</strong>.</p>
+          </div>
+        </div>
+        <div class="l03-content-col" style="display: flex; flex-direction: column; justify-content: center;">
+          <div style="background: rgba(15, 23, 42, 0.65); border: 1px solid rgba(16, 185, 129, 0.35); border-radius: 8px; padding: 0.35rem; box-shadow: 0 4px 14px rgba(0,0,0,0.3);">
+            <img src="assets/images/occupancy_grid_raycasting_cone.png" alt="Raycasting Beam Measurement Cone & Occupancy Updating" style="width: 100%; max-height: 270px; object-fit: contain; border-radius: 6px; display: block;" />
+            <div style="margin-top: 0.3rem; font-size: 0.68rem; color: #94a3b8; text-align: center; font-family: monospace;">
+              LiDAR Measurement Cone: Cleared Free Space Cells (White) &bull; Terminal Obstacle Cells (Black) &bull; Log-Odds Grid
+            </div>
+          </div>
+          <div class="l05-banner-intro" style="margin-top: 0.35rem; font-size: 0.72rem; padding: 0.35rem 0.65rem; border-left: 3px solid #10b981;">
+            <strong>💡 Trinary State Classification:</strong> Standard ROS 2 maps classify cells into three states: <strong>Free (0)</strong>, <strong>Occupied (100)</strong>, and <strong>Unknown (-1)</strong> based on threshold limits (0.25 and 0.65).
+          </div>
+        </div>
+      </div>
+    `
+  });
+
+  // 4. The SLAM Dilemma & Modern Graph SLAM Architecture
+  slides.push({
+    id: `${lesson.id}_sec4_slam_dilemma_graph_slam`,
+    type: 'concept',
+    lessonNum: lesson.num_str,
+    lessonId: lesson.id,
+    module: lesson.module,
+    sectionTitle: '4. The SLAM Dilemma & Graph Architecture',
+    badge: '🕸️ Graph SLAM Theory',
+    title: '4. The SLAM Dilemma & Modern Graph SLAM Architecture (SLAM Toolbox)',
+    htmlContent: `
+      <div class="l03-two-col-layout">
+        <div class="l03-content-col" style="display: flex; flex-direction: column; justify-content: space-between; gap: 0.35rem;">
+          <div class="l05-golden-card" style="padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🔄</span><strong>The Chicken-and-Egg SLAM Dilemma</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">To build a map, the robot needs accurate poses (Localization). But to accurately localize, the robot needs a map (Mapping). SLAM solves both concurrently from odometry and laser measurements.</p>
+          </div>
+          <div class="l05-golden-card" style="padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🔍</span><strong>Front-End Scan Matching (Karto)</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">Aligns consecutive laser scans against local sub-maps using correlative scan matching. Adds <strong>Nodes</strong> (poses) and <strong>Edges</strong> (odometry &amp; scan constraints) to a dynamic topological pose graph.</p>
+          </div>
+          <div class="l05-golden-card" style="padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🕸️</span><strong>Back-End Pose Graph Optimization (Ceres Solver)</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">When the robot re-enters a previously visited area, loop closure is triggered. The non-linear <strong>Ceres Solver</strong> redistributes cumulative odometry error globally across the entire pose graph.</p>
+          </div>
+        </div>
+        <div class="l03-content-col" style="display: flex; flex-direction: column; justify-content: space-between; gap: 0.35rem;">
+          <div class="l05-golden-card" style="padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>📐</span><strong>The Authoritative TF Triad</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">SLAM Toolbox publishes the critical dynamic <code>map &rarr; odom</code> transform. Combined with wheel odometry\'s <code>odom &rarr; base_footprint</code>, the robot achieves drift-free global coordinates.</p>
+          </div>
+          <div class="l05-golden-card" style="padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🚀</span><strong>Why SLAM Toolbox Over Legacy Gmapping?</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">Legacy Gmapping (particle filter SLAM) required maintaining hundreds of complete grid copies, crashing on large facilities. SLAM Toolbox maintains a lightweight pose graph, supporting life-long multi-building warehouse mapping.</p>
+          </div>
+          <div class="l05-golden-card" style="padding: 0.4rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>⚡</span><strong>Dynamic Serialization &amp; Deserialization</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.3;">Allows saving the complete pose graph to disk, restarting a session days later, and continuing mapping seamlessly without losing historical loop closures.</p>
+          </div>
+        </div>
+      </div>
+    `
+  });
+
+  // 5. SLAM Toolbox Configuration (config/slam_toolbox.yaml)
+  slides.push({
+    id: `${lesson.id}_sec5_slam_config`,
+    type: 'concept',
+    lessonNum: lesson.num_str,
+    lessonId: lesson.id,
+    module: lesson.module,
+    sectionTitle: '5. Deep Dive: config/slam_toolbox.yaml',
+    badge: '⚙️ SLAM Configuration',
+    title: '5. Tuning SLAM Toolbox: config/slam_toolbox.yaml Parameter Matrix',
+    htmlContent: `
+      <div class="l03-two-col-layout l09-xml-layout">
         <div class="l03-left-code-col">
-          <div class="l03-cmd-card" style="margin-bottom: 0;">
+          <div class="l03-cmd-card l09-xml-card" style="margin-bottom: 0;">
             <div class="l03-cmd-header"><span class="l03-term-badge">slam_toolbox.yaml</span><strong>Production Tuning</strong></div>
-            <pre><code class="language-yaml">slam_toolbox:
+            <pre class="l09-xml-pre"><code class="language-yaml">slam_toolbox:
   ros__parameters:
-    # Frame & Topic Bindings
+    # Frame &amp; Topic Bindings
     odom_frame: odom
     map_frame: map
     base_frame: base_footprint
     scan_topic: /scan
     mode: mapping # online mapping
 
-    # Spatial Resolution & Search
+    # Spatial Resolution &amp; Search
     resolution: 0.05       # 5cm grid resolution
     max_laser_range: 12.0  # Match LiDAR max range
     minimum_time_interval: 0.5
@@ -5240,43 +5367,43 @@ function buildLesson13Slides(doc, lesson, slides) {
     loop_match_maximum_variance_coarse: 3.0</code></pre>
           </div>
         </div>
-        <div class="l03-content-col">
-          <div class="l05-golden-card" style="margin-bottom: 0.35rem; padding: 0.4rem 0.65rem;">
-            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>📏</span><strong>resolution: 0.05 (5cm / pixel)</strong></div>
-            <p style="font-size: 0.74rem; line-height: 1.3;">Industrial gold standard: provides crisp pallet and doorway definition while keeping total grid memory compact for 100,000 sq ft warehouses.</p>
+        <div class="l03-content-col" style="display: flex; flex-direction: column; justify-content: space-between; gap: 0.3rem;">
+          <div class="l05-golden-card" style="padding: 0.35rem 0.6rem;">
+            <div class="l05-golden-header" style="font-size: 0.76rem;"><span>📏</span><strong>resolution: 0.05 (5cm / pixel)</strong></div>
+            <p style="font-size: 0.72rem; line-height: 1.28;">Industrial standard: provides crisp pallet and doorway definition while keeping total grid memory compact for 100,000 sq ft logistics warehouses.</p>
           </div>
-          <div class="l05-golden-card" style="margin-bottom: 0.35rem; padding: 0.4rem 0.65rem;">
-            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🔄</span><strong>loop_search_maximum_distance: 3.0m</strong></div>
-            <p style="font-size: 0.74rem; line-height: 1.3;">Limits candidate loop closure search space within a 3.0-meter radius of the current pose estimate, preventing false positive matches in repetitive aisles.</p>
+          <div class="l05-golden-card" style="padding: 0.35rem 0.6rem;">
+            <div class="l05-golden-header" style="font-size: 0.76rem;"><span>🔄</span><strong>loop_search_maximum_distance: 3.0m</strong></div>
+            <p style="font-size: 0.72rem; line-height: 1.28;">Limits candidate loop closure search space within a 3.0-meter radius of the current pose estimate, preventing false positive matches in repetitive racking aisles.</p>
           </div>
-          <div class="l05-golden-card" style="padding: 0.4rem 0.65rem;">
-            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>⏱️</span><strong>transform_timeout: 0.2s</strong></div>
-            <p style="font-size: 0.74rem; line-height: 1.3;">Grace period for TF buffer lookup. Prevents scan-drop errors when CPU load temporarily spikes during Ceres graph optimization steps.</p>
+          <div class="l05-golden-card" style="padding: 0.35rem 0.6rem;">
+            <div class="l05-golden-header" style="font-size: 0.76rem;"><span>⏱️</span><strong>transform_timeout: 0.2s</strong></div>
+            <p style="font-size: 0.72rem; line-height: 1.28;">Grace period for TF buffer lookup. Prevents scan-drop errors when CPU load temporarily spikes during Ceres graph optimization steps.</p>
           </div>
         </div>
       </div>
     `
   });
 
-  // 3. Online Mapping Workflow & Loop Closure Strategy
+  // 6. Online Mapping Workflow & Loop Closure Strategy
   slides.push({
-    id: `${lesson.id}_sec4_mapping_workflow`,
+    id: `${lesson.id}_sec6_mapping_workflow`,
     type: 'concept',
     lessonNum: lesson.num_str,
     lessonId: lesson.id,
     module: lesson.module,
-    sectionTitle: '4. Step-by-Step Mapping Workflow',
+    sectionTitle: '6. Step-by-Step Mapping Workflow',
     badge: '🎮 Mapping Workflow',
-    title: '4. The Step-by-Step Mapping Workflow & Loop Closure Strategy',
+    title: '6. Step-by-Step Online SLAM Mapping Workflow & RViz2 Verification',
     htmlContent: `
-      <div class="l03-two-col-layout">
+      <div class="l03-two-col-layout l09-xml-layout">
         <div class="l03-left-code-col">
-          <div class="l03-cmd-card" style="margin-bottom: 0;">
-            <div class="l03-cmd-header"><span class="l03-term-badge">Terminal Operations</span><strong>Bringup &amp; Teleop Commands</strong></div>
-            <pre><code class="language-bash"># Terminal 1: Launch Gazebo Simulation World
+          <div class="l03-cmd-card l09-xml-card" style="margin-bottom: 0;">
+            <div class="l03-cmd-header"><span class="l03-term-badge">Terminal Operations</span><strong>Bringup &amp; Teleop Pipeline</strong></div>
+            <pre class="l09-xml-pre"><code class="language-bash"># Terminal 1: Launch Gazebo Simulation World
 ros2 launch nexus_amr_gazebo sim_world.launch.py
 
-# Terminal 2: Launch SLAM Toolbox & RViz2
+# Terminal 2: Launch SLAM Toolbox &amp; RViz2
 ros2 launch nexus_amr_navigation slam.launch.py
 
 # Terminal 3: Keyboard Teleop Control
@@ -5284,46 +5411,44 @@ ros2 run teleop_twist_keyboard teleop_twist_keyboard \
   --ros-args -r /cmd_vel:=/cmd_vel</code></pre>
           </div>
         </div>
-        <div class="l03-content-col">
-          <div class="l05-golden-card" style="margin-bottom: 0.35rem; padding: 0.4rem 0.65rem;">
-            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🏎️</span><strong>Speed Discipline: 0.2 m/s Max</strong></div>
-            <p style="font-size: 0.74rem; line-height: 1.3;">Never drive at full speed while mapping! Smooth, slow driving (0.2 m/s linear, 0.4 rad/s angular) maximizes scan overlap and prevents scan slippage.</p>
+        <div class="l03-content-col" style="display: flex; flex-direction: column; justify-content: space-between; gap: 0.3rem;">
+          <div class="l05-golden-card" style="padding: 0.35rem 0.6rem;">
+            <div class="l05-golden-header" style="font-size: 0.76rem;"><span>🏎️</span><strong>Speed Discipline: 0.2 m/s Max</strong></div>
+            <p style="font-size: 0.72rem; line-height: 1.28;">Never drive at full speed while mapping! Smooth, slow driving (0.2 m/s linear, 0.4 rad/s angular) maximizes scan overlap and prevents scan slippage.</p>
           </div>
-          <div class="l05-golden-card" style="margin-bottom: 0.35rem; padding: 0.4rem 0.65rem;">
-            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🔄</span><strong>The Perimeter-First Rule</strong></div>
-            <p style="font-size: 0.74rem; line-height: 1.3;">First drive along the outer boundary wall of the facility until you return to your starting pose. This triggers a global loop closure that locks the outer perimeter before exploring interior aisles.</p>
+          <div class="l05-golden-card" style="padding: 0.35rem 0.6rem;">
+            <div class="l05-golden-header" style="font-size: 0.76rem;"><span>🔄</span><strong>The Perimeter-First Rule</strong></div>
+            <p style="font-size: 0.72rem; line-height: 1.28;">Drive the outer perimeter boundary first until returning to starting pose. This triggers a global loop closure that locks the outer bounding box before exploring interior aisles.</p>
           </div>
-          <div class="l05-golden-card" style="padding: 0.4rem 0.65rem;">
-            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🖥️</span><strong>RViz Verification</strong></div>
-            <p style="font-size: 0.74rem; line-height: 1.3;">Add the <code>Map</code> display listening to <code>/map</code>. Black lines show walls, white spaces indicate verified free corridors, and gray areas indicate unscanned space.</p>
+          <div class="l05-golden-card" style="padding: 0.35rem 0.6rem;">
+            <div class="l05-golden-header" style="font-size: 0.76rem;"><span>🖥️</span><strong>RViz2 Layer Inspection</strong></div>
+            <p style="font-size: 0.72rem; line-height: 1.28;">Add <code>Map</code> listening to <code>/map</code>. Black lines show solid obstacles, white spaces indicate verified corridors, and gray areas indicate unscanned space.</p>
           </div>
         </div>
       </div>
     `
   });
 
-  // 4. Map Serialization & Occupancy Grid Storage
+  // 7. Map Serialization & Occupancy Grid Storage
   slides.push({
-    id: `${lesson.id}_sec5_saving_map`,
+    id: `${lesson.id}_sec7_saving_map`,
     type: 'concept',
     lessonNum: lesson.num_str,
     lessonId: lesson.id,
     module: lesson.module,
-    sectionTitle: '5. Saving the Map (.yaml & .pgm Serialization)',
+    sectionTitle: '7. Map Serialization & Storage',
     badge: '💾 Map Serialization',
-    title: '5. Map Serialization & Occupancy Grid Storage (.yaml & .pgm)',
+    title: '7. Map Serialization & Occupancy Grid Storage (.yaml & .pgm)',
     htmlContent: `
-      <div class="l03-two-col-layout">
+      <div class="l03-two-col-layout l09-xml-layout">
         <div class="l03-left-code-col">
-          <div class="l03-cmd-card" style="margin-bottom: 0.35rem;">
-            <div class="l03-cmd-header"><span class="l03-term-badge">Map Saver CLI</span><strong>Serializing Active SLAM Grid</strong></div>
-            <pre><code class="language-bash"># Save map files to maps/ directory
+          <div class="l03-cmd-card l09-xml-card" style="margin-bottom: 0;">
+            <div class="l03-cmd-header"><span class="l03-term-badge">Map Saver CLI &amp; YAML</span><strong>Metadata Contract</strong></div>
+            <pre class="l09-xml-pre"><code class="language-bash"># Save active SLAM occupancy grid:
 ros2 run nav2_map_server map_saver_cli \
   -f ~/ros2_ws/src/nexus_amr_navigation/maps/warehouse_map</code></pre>
-          </div>
-          <div class="l03-cmd-card">
-            <div class="l03-cmd-header"><span class="l03-term-badge">warehouse_map.yaml</span><strong>Metadata Contract</strong></div>
-            <pre><code class="language-yaml">image: warehouse_map.pgm
+            <pre class="l09-xml-pre" style="margin-top: 0.3rem;"><code class="language-yaml"># warehouse_map.yaml
+image: warehouse_map.pgm
 resolution: 0.050000
 origin: [-10.000000, -10.000000, 0.000000]
 negate: 0
@@ -5332,18 +5457,18 @@ free_thresh: 0.25
 mode: trinary</code></pre>
           </div>
         </div>
-        <div class="l03-content-col">
-          <div class="l05-golden-card" style="margin-bottom: 0.35rem; padding: 0.4rem 0.65rem;">
-            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🖼️</span><strong>warehouse_map.pgm (Portable Graymap)</strong></div>
-            <p style="font-size: 0.74rem; line-height: 1.3;">An 8-bit grayscale bitmap where each pixel represents a 5cm x 5cm grid cell. White (254) = Free Space, Black (0) = Solid Obstacle, Gray (205) = Unknown Space.</p>
+        <div class="l03-content-col" style="display: flex; flex-direction: column; justify-content: space-between; gap: 0.3rem;">
+          <div class="l05-golden-card" style="padding: 0.35rem 0.6rem;">
+            <div class="l05-golden-header" style="font-size: 0.76rem;"><span>🖼️</span><strong>warehouse_map.pgm (Portable Graymap)</strong></div>
+            <p style="font-size: 0.72rem; line-height: 1.28;">An 8-bit grayscale bitmap where each pixel represents a 5cm &times; 5cm grid cell: White (254) = Free Space, Black (0) = Solid Obstacle, Gray (205) = Unknown Space.</p>
           </div>
-          <div class="l05-golden-card" style="margin-bottom: 0.35rem; padding: 0.4rem 0.65rem;">
-            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>📍</span><strong>origin: [-10.0, -10.0, 0.0] World Anchor</strong></div>
-            <p style="font-size: 0.74rem; line-height: 1.3;">Anchors the bottom-left pixel (0,0) of the image to physical coordinates in the <code>map</code> coordinate frame. Without this, localization in Nav2 fails completely.</p>
+          <div class="l05-golden-card" style="padding: 0.35rem 0.6rem;">
+            <div class="l05-golden-header" style="font-size: 0.76rem;"><span>📍</span><strong>origin: [-10.0, -10.0, 0.0] World Anchor</strong></div>
+            <p style="font-size: 0.72rem; line-height: 1.28;">Anchors the bottom-left pixel (0,0) of the image to physical coordinates in the <code>map</code> coordinate frame. Without this, localization in Nav2 fails completely.</p>
           </div>
-          <div class="l05-golden-card" style="padding: 0.4rem 0.65rem;">
-            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🚀</span><strong>Ready for Nav2 Ingestion</strong></div>
-            <p style="font-size: 0.74rem; line-height: 1.3;">This serialized map is loaded directly by Nav2\'s <code>map_server</code> in Lesson 14, providing the foundation for global path planning and localization.</p>
+          <div class="l05-golden-card" style="padding: 0.35rem 0.6rem;">
+            <div class="l05-golden-header" style="font-size: 0.76rem;"><span>🚀</span><strong>Ready for Nav2 Ingestion</strong></div>
+            <p style="font-size: 0.72rem; line-height: 1.28;">Loaded directly by Nav2\'s <code>map_server</code> in Lesson 14, providing the foundation for global path planning and localization.</p>
           </div>
         </div>
       </div>
