@@ -37,6 +37,7 @@ import { ActionFlow } from './ActionFlow';
 import { LogLevelsNestedCircle } from './LogLevelsNestedCircle';
 import InertiaCalculator from './InertiaCalculator';
 import UrdfViewer3D from './UrdfViewer3D';
+import AStarSearchInteractive from './AStarSearchInteractive';
 
 // High-Contrast Terminal & IDE Syntax Highlighter for PPT Slides
 export function highlightCodeForDisplay(rawCode, lang = 'bash') {
@@ -358,6 +359,8 @@ export function PresentationView({
         return <InertiaCalculator />;
       case 'loglevels':
         return <LogLevelsNestedCircle />;
+      case 'astar':
+        return <AStarSearchInteractive />;
       default:
         return null;
     }
