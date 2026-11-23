@@ -9480,3 +9480,70 @@
 
 
 
+
+/* ========================================================================= */
+/* LESSON 14 BESPOKE PRESENTATION LAYOUTS                                   */
+/* ========================================================================= */
+.presentation-viewport .concept-html-body .scenario-blueprint-layout {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 0.5rem !important;
+  height: 100% !important;
+  justify-content: center !important;
+  max-height: 520px !important;
+}
+
+.presentation-viewport .concept-html-body .costmap-pipeline-layout {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr) !important;
+  gap: 1rem !important;
+  align-items: center !important;
+  height: 100% !important;
+  max-height: 520px !important;
+}
+
+.presentation-viewport .concept-html-body .inflation-spectrum-layout {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 0.45rem !important;
+  height: 100% !important;
+  justify-content: center !important;
+  max-height: 520px !important;
+}
+
+.presentation-viewport .concept-html-body .roadmap-hero-layout {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr) !important;
+  gap: 1.1rem !important;
+  align-items: center !important;
+  height: 100% !important;
+  max-height: 520px !important;
+}
+
+.presentation-viewport .concept-html-body .practical-step-layout {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr) !important;
+  gap: 1rem !important;
+  align-items: center !important;
+  height: 100% !important;
+  max-height: 520px !important;
+}
+
+.presentation-viewport .concept-html-body .diagnostic-matrix-layout {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 0.45rem !important;
+  height: 100% !important;
+  justify-content: center !important;
+  max-height: 520px !important;
+}
+
+.presentation-viewport.is-fullscreen .scenario-blueprint-layout p,
+.presentation-viewport.is-fullscreen .costmap-pipeline-layout p,
+.presentation-viewport.is-fullscreen .inflation-spectrum-layout p,
+.presentation-viewport.is-fullscreen .roadmap-hero-layout p,
+.presentation-viewport.is-fullscreen .practical-step-layout p,
+.presentation-viewport.is-fullscreen .diagnostic-matrix-layout p {
+  font-size: 0.86rem !important;
+  line-height: 1.4 !important;
+}
