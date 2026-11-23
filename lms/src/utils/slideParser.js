@@ -5163,14 +5163,18 @@ append_model_path = AppendEnvironmentVariable(
  * Step-by-step visual breakdown matching RSE reference curriculum.
  */
 function buildLesson13Slides(doc, lesson, slides) {
-  // 1. Part I Section Break: Localization (Clean Title Slide)
+  // ==============================================================
+  // PART I: ROBOT LOCALIZATION
+  // ==============================================================
+
+  // 1. Part I Section Break: Localization
   slides.push({
     id: `${lesson.id}_sec_title_localization`,
     type: 'section_title',
     lessonNum: lesson.num_str,
     lessonId: lesson.id,
     module: lesson.module,
-    sectionTitle: 'Part I',
+    sectionTitle: 'Part I: Localization',
     badge: '📍 Part I',
     title: 'Localization',
     titleClass: 'text-localization',
@@ -5298,7 +5302,7 @@ function buildLesson13Slides(doc, lesson, slides) {
     `
   });
 
-  // 5. AMCL Step 1: Global Uniform Particle Distribution
+  // 5. AMCL Step 1: Global Uniform Particle Distribution (Slide 130)
   slides.push({
     id: `${lesson.id}_sec1_amcl_step1_uniform`,
     type: 'concept',
@@ -5339,7 +5343,7 @@ function buildLesson13Slides(doc, lesson, slides) {
     `
   });
 
-  // 6. AMCL Step 2: Anatomy of the Particle State Vector
+  // 6. AMCL Step 2: Anatomy of the Particle State Vector (Slide 131)
   slides.push({
     id: `${lesson.id}_sec1_amcl_step2_state_vector`,
     type: 'concept',
@@ -5380,7 +5384,7 @@ function buildLesson13Slides(doc, lesson, slides) {
     `
   });
 
-  // 7. AMCL Step 3: Motion Prediction & Measurement Weight Filtering
+  // 7. AMCL Step 3: Motion Prediction & Measurement Weight Filtering (Slide 132)
   slides.push({
     id: `${lesson.id}_sec1_amcl_step3_motion_sensor`,
     type: 'concept',
@@ -5421,7 +5425,7 @@ function buildLesson13Slides(doc, lesson, slides) {
     `
   });
 
-  // 8. AMCL Step 4: Resampling & Pose Convergence
+  // 8. AMCL Step 4: Resampling & Pose Convergence (Slide 133)
   slides.push({
     id: `${lesson.id}_sec1_amcl_step4_resampling`,
     type: 'concept',
@@ -5462,7 +5466,7 @@ function buildLesson13Slides(doc, lesson, slides) {
     `
   });
 
-  // 9. Localization Challenge: Position Tracking
+  // 9. Localization Challenge: Position Tracking (Slide 135)
   slides.push({
     id: `${lesson.id}_sec2_challenge_tracking`,
     type: 'concept',
@@ -5503,7 +5507,7 @@ function buildLesson13Slides(doc, lesson, slides) {
     `
   });
 
-  // 10. Localization Challenge: Kidnapped Robot Problem
+  // 10. Localization Challenge: Kidnapped Robot Problem (Slide 136)
   slides.push({
     id: `${lesson.id}_sec2_challenge_kidnapped`,
     type: 'concept',
@@ -5544,21 +5548,25 @@ function buildLesson13Slides(doc, lesson, slides) {
     `
   });
 
-  // 11. Part II Section Break: Mapping (Clean Title Slide)
+  // ==============================================================
+  // PART II: OCCUPANCY GRID MAPPING
+  // ==============================================================
+
+  // 11. Part II Section Break: Mapping
   slides.push({
     id: `${lesson.id}_sec_title_mapping`,
     type: 'section_title',
     lessonNum: lesson.num_str,
     lessonId: lesson.id,
     module: lesson.module,
-    sectionTitle: 'Part II',
+    sectionTitle: 'Part II: Mapping',
     badge: '🗺️ Part II',
     title: 'Mapping',
     titleClass: 'text-mapping',
     description: 'Constructing an accurate 2D metric occupancy grid map of an unknown environment from laser scan observations.'
   });
 
-  // 12. Mapping Step 1: Discretizing Continuous Space into a 2D Grid Lattice
+  // 12. Mapping Step 1: Discretizing Continuous Space into a 2D Grid Lattice (Slide 138)
   slides.push({
     id: `${lesson.id}_sec3_mapping_step1_lattice`,
     type: 'concept',
@@ -5599,7 +5607,7 @@ function buildLesson13Slides(doc, lesson, slides) {
     `
   });
 
-  // 13. Mapping Step 2: Binary States & Metric Quantization
+  // 13. Mapping Step 2: Binary States & Metric Quantization (Slide 139)
   slides.push({
     id: `${lesson.id}_sec3_mapping_step2_binary_states`,
     type: 'concept',
@@ -5640,7 +5648,7 @@ function buildLesson13Slides(doc, lesson, slides) {
     `
   });
 
-  // 14. Mapping Step 3: Full Warehouse Binary Matrix
+  // 14. Mapping Step 3: Full Warehouse Binary Matrix (Slide 140)
   slides.push({
     id: `${lesson.id}_sec3_mapping_step3_full_matrix`,
     type: 'concept',
@@ -5681,7 +5689,7 @@ function buildLesson13Slides(doc, lesson, slides) {
     `
   });
 
-  // 15. Mapping Step 4: The LiDAR Measurement Cone & Log-Odds Bayesian Updates
+  // 15. Mapping Step 4: The LiDAR Measurement Cone & Log-Odds Bayesian Updates (Slide 141)
   slides.push({
     id: `${lesson.id}_sec3_mapping_step4_raycast_cone`,
     type: 'concept',
@@ -5722,7 +5730,25 @@ function buildLesson13Slides(doc, lesson, slides) {
     `
   });
 
-  // 16. The Fundamental SLAM Dilemma & Classical Dataflow Architecture
+  // ==============================================================
+  // PART III: SLAM (SIMULTANEOUS LOCALIZATION AND MAPPING)
+  // ==============================================================
+
+  // 16. Part III Section Break: SLAM
+  slides.push({
+    id: `${lesson.id}_sec_title_slam`,
+    type: 'section_title',
+    lessonNum: lesson.num_str,
+    lessonId: lesson.id,
+    module: lesson.module,
+    sectionTitle: 'Part III: SLAM',
+    badge: '🔄 Part III',
+    title: 'SLAM Architecture',
+    titleColor: '#8b5cf6',
+    description: 'Simultaneously estimating the robot pose and constructing the environmental map from sensor observations.'
+  });
+
+  // 17. The Fundamental SLAM Dilemma & Classical Processing Pipeline (Slide 143)
   slides.push({
     id: `${lesson.id}_sec4_slam_dilemma`,
     type: 'concept',
@@ -5731,7 +5757,7 @@ function buildLesson13Slides(doc, lesson, slides) {
     module: lesson.module,
     sectionTitle: 'SLAM Dilemma',
     badge: '🔄 SLAM Dilemma',
-    title: 'The Fundamental SLAM Dilemma & Classical Dataflow Architecture',
+    title: 'The Fundamental SLAM Dilemma & Classical Processing Pipeline',
     htmlContent: `
       <div class="l03-two-col-layout">
         <div class="l03-content-col" style="display: flex; flex-direction: column; justify-content: center; gap: 0.45rem;">
@@ -5755,7 +5781,7 @@ function buildLesson13Slides(doc, lesson, slides) {
               SLAM Dilemma: Continuous interdependency between unknown pose estimation and unknown map building
             </div>
           </div>
-          <div class="l05-banner-intro" style="margin: 0; font-size: 0.72rem; padding: 0.38rem 0.65rem; border-left: 3px solid #0284c7;">
+          <div class="l05-banner-intro" style="margin: 0; font-size: 0.72rem; padding: 0.38rem 0.65rem; border-left: 3px solid #8b5cf6;">
             <strong>💡 Modern Solution:</strong> Pose Graph SLAM (SLAM Toolbox) decouples scan matching front-end from Ceres graph back-end.
           </div>
         </div>
@@ -5763,7 +5789,25 @@ function buildLesson13Slides(doc, lesson, slides) {
     `
   });
 
-  // 17. Practical Step 1: Install Required ROS 2 Packages
+  // ==============================================================
+  // PART IV: ROS 2 MAPPING & LOCALIZATION (PRACTICAL) - Slide 144
+  // ==============================================================
+
+  // 18. Part IV Section Break: Practical SLAM Workflow
+  slides.push({
+    id: `${lesson.id}_sec_title_practical`,
+    type: 'section_title',
+    lessonNum: lesson.num_str,
+    lessonId: lesson.id,
+    module: lesson.module,
+    sectionTitle: 'Part IV: Practical',
+    badge: '🛠️ Part IV',
+    title: 'ROS 2 SLAM Mapping',
+    titleColor: '#10b981',
+    description: 'Hands-on practical engineering: package architecture, launch files, parameter tuning, live teleoperation, and map serialization.'
+  });
+
+  // 19. Practical Step 1: Install Required ROS 2 Packages
   slides.push({
     id: `${lesson.id}_sec5_step1_install_packages`,
     type: 'concept',
@@ -5801,7 +5845,7 @@ function buildLesson13Slides(doc, lesson, slides) {
     `
   });
 
-  // 18. Practical Step 2: Create Mapping Package in Workspace
+  // 20. Practical Step 2: Create Mapping Package in Workspace
   slides.push({
     id: `${lesson.id}_sec5_step2_create_package`,
     type: 'concept',
@@ -5845,7 +5889,7 @@ mkdir -p config launch maps rviz</code></pre>
     `
   });
 
-  // 19. Practical Step 3: Add Config & Launch Files
+  // 21. Practical Step 3: Add Config & Launch Files
   slides.push({
     id: `${lesson.id}_sec5_step3_config_launch`,
     type: 'concept',
@@ -5893,7 +5937,7 @@ def generate_launch_description():
     `
   });
 
-  // 20. Practical Step 4: Tuning SLAM Configuration Parameters
+  // 22. Practical Step 4: Tuning SLAM Configuration Parameters
   slides.push({
     id: `${lesson.id}_sec5_step4_tuning_config`,
     type: 'concept',
@@ -5954,7 +5998,7 @@ def generate_launch_description():
     `
   });
 
-  // 21. Practical Step 5: Running Launch File & Teleop (Live Mapping in RViz2)
+  // 23. Practical Step 5: Running Launch File & Teleop (Live Mapping in RViz2) - Slide 142
   slides.push({
     id: `${lesson.id}_sec5_step5_running_teleop`,
     type: 'concept',
@@ -5995,7 +6039,7 @@ def generate_launch_description():
     `
   });
 
-  // 22. Practical Step 6: Map Serialization & Saving Map Files
+  // 24. Practical Step 6: Map Serialization & Saving Map Files
   slides.push({
     id: `${lesson.id}_sec5_step6_saving_maps`,
     type: 'concept',
@@ -6041,7 +6085,11 @@ free_thresh: 0.25</code></pre>
     `
   });
 
-  // 23. Interactive Knowledge Assessment Quiz
+  // ==============================================================
+  // PART V: ASSESSMENT & SUMMARY
+  // ==============================================================
+
+  // 25. Interactive Knowledge Assessment Quiz
   slides.push({
     id: `${lesson.id}_quiz_amcl_resampling`,
     type: 'quiz',
