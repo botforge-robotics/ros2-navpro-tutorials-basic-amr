@@ -93,7 +93,7 @@
       "icon": "Compass",
       "range": [
         13,
-        16
+        15
       ],
       "lesson_count": 3,
       "lessons": [
@@ -105,11 +105,11 @@
         {
           "id": "lesson_14",
           "num_str": "14",
-          "title": "Nav2 Stack Architecture & Costmap 2D Configuration"
+          "title": "Nav2 Stack Architecture, Path Planning & Parameter Tuning"
         },
         {
-          "id": "lesson_16",
-          "num_str": "16",
+          "id": "lesson_15",
+          "num_str": "15",
           "title": "Autonomous Navigation Scripting with Nav2 Simple Commander"
         }
       ]
@@ -119,39 +119,39 @@
       "name": "Bonus: Advanced Masterclasses & Electives",
       "icon": "Sparkles",
       "range": [
-        17,
-        22
+        16,
+        21
       ],
       "lesson_count": 6,
       "lessons": [
         {
+          "id": "lesson_16",
+          "num_str": "16",
+          "title": "Dynamic Parameters & YAML Configuration"
+        },
+        {
           "id": "lesson_17",
           "num_str": "17",
-          "title": "Dynamic Parameters & YAML Configuration"
+          "title": "VS Code IDE Tooling & ROS 2 Logging Framework"
         },
         {
           "id": "lesson_18",
           "num_str": "18",
-          "title": "VS Code IDE Tooling & ROS 2 Logging Framework"
+          "title": "ROS 2 Interfaces & Custom Messages, Services & Actions (.msg, .srv, .action)"
         },
         {
           "id": "lesson_19",
           "num_str": "19",
-          "title": "ROS 2 Interfaces & Custom Messages, Services & Actions (.msg, .srv, .action)"
+          "title": "Data Recording & Playback with ROS 2 Bags"
         },
         {
           "id": "lesson_20",
           "num_str": "20",
-          "title": "Data Recording & Playback with ROS 2 Bags"
+          "title": "Complete ROS 2 Command-Line Interface (CLI) Mastery"
         },
         {
           "id": "lesson_21",
           "num_str": "21",
-          "title": "Complete ROS 2 Command-Line Interface (CLI) Mastery"
-        },
-        {
-          "id": "lesson_22",
-          "num_str": "22",
           "title": "Behavior Trees, Recovery Behaviors & Lifecycle Management"
         }
       ]
@@ -1385,7 +1385,7 @@
           "Global Costmap plans complete warehouse trajectories; Local Rolling Costmap (3x3m) detects dynamic obstacles for collision avoidance."
         ]
       ],
-      "html_content": "\n<h2 id=\"1-overview-learning-objectives\">1. Overview &amp; Learning Objectives</h2>\n<div class=\"learning-objectives-banner\">\n  <div class=\"objectives-header\">\n    <span class=\"objectives-icon\">\ud83c\udfaf</span>\n    <h3 class=\"objectives-main-title\">Learning Objectives &amp; Core Outcomes</h3>\n  </div>\n  <ul class=\"objectives-list\">\n    <li><strong>Mathematical Foundations:</strong> Understand how continuous robot workspace geometry is transformed into discrete Configuration Space (C-Space) via obstacle inflation by robot radius.</li>\n    <li><strong>Layered Costmaps:</strong> Master the 3-tier Costmap 2D architecture combining the Static map, live LiDAR/depth Obstacle layers, and exponential Inflation buffer.</li>\n    <li><strong>Safety Buffer Decay:</strong> Calculate lethal obstacle boundaries, inscribed radii, and exponential cost decay curves to prevent AMR chassis collisions.</li>\n    <li><strong>Nav2 Server Stack:</strong> Learn the separation of responsibilities between BT Navigator, Planner Server, Controller Server, and Recovery Server.</li>\n    <li><strong>Production Configuration:</strong> Configure and tune <code class=\"inline-code\">nav2_params.yaml</code> for industrial differential drive AMRs operating in dynamic logistics warehouses.</li>\n  </ul>\n</div>\n\n<h2 id=\"2-navigation-problem-formulation\">2. Mobile Robot Navigation Problem Formulation &amp; Geometry</h2>\n<p>Autonomous mobile robot navigation is the science of computing and executing a safe, kinematically feasible trajectory from a current robot pose to a desired target goal without colliding with static warehouse infrastructure or dynamic obstacles.</p>\n\n<div class=\"grid-card-container\" style=\"display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin: 1.5rem 0;\">\n  <div class=\"golden-card\" style=\"background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(59, 130, 246, 0.3); border-radius: 8px; padding: 1rem;\">\n    <h4 style=\"color: #60a5fa; margin-top: 0; font-size: 0.95rem;\">1. Environment Geometry</h4>\n    <p style=\"font-size: 0.85rem; line-height: 1.4; color: #94a3b8;\">Physical boundaries, warehouse racking columns, walls, aisles, and restricted zones define the operational workspace <em>W &sub; &real;&sup2;</em>.</p>\n  </div>\n  <div class=\"golden-card\" style=\"background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(59, 130, 246, 0.3); border-radius: 8px; padding: 1rem;\">\n    <h4 style=\"color: #60a5fa; margin-top: 0; font-size: 0.95rem;\">2. Robot Geometry</h4>\n    <p style=\"font-size: 0.85rem; line-height: 1.4; color: #94a3b8;\">The physical chassis footprint (length, width, wheel baseline, caster placement, payload overhang) dictates whether the robot can physically fit through a corridor.</p>\n  </div>\n  <div class=\"golden-card\" style=\"background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(59, 130, 246, 0.3); border-radius: 8px; padding: 1rem;\">\n    <h4 style=\"color: #60a5fa; margin-top: 0; font-size: 0.95rem;\">3. Poses &amp; Algorithm</h4>\n    <p style=\"font-size: 0.85rem; line-height: 1.4; color: #94a3b8;\">Given <em>Start Pose (x_s, y_s, &theta;_s)</em> and <em>Goal Pose (x_g, y_g, &theta;_g)</em>, the Path Planning Algorithm searches for a continuous collision-free route.</p>\n  </div>\n</div>\n\n<h2 id=\"3-continuous-representation-collision\">3. Continuous Workspace Representation &amp; Collision Dilemma (5-Step Breakdown)</h2>\n<p>Before diving into algorithms, let us study how path planning operates in continuous space and why treating the robot as a simple point leads to catastrophic warehouse collisions:</p>\n\n<div class=\"steps-grid\" style=\"display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin: 1.5rem 0;\">\n  <div class=\"step-card\" style=\"background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(234, 179, 8, 0.3); border-radius: 8px; padding: 1rem;\">\n    <h4 style=\"color: #eab308; margin-top: 0; font-size: 0.95rem;\">Step 1: Continuous 2D Workspace &amp; Goal</h4>\n    <img src=\"assets/images/nav_continuous_rep_step1.png\" alt=\"Continuous Space Step 1\" class=\"lesson-image\" style=\"width: 100%; border-radius: 6px; margin: 0.5rem 0;\" />\n    <p style=\"font-size: 0.85rem; line-height: 1.4; color: #94a3b8;\">The robot starts at an origin pose in continuous Cartesian space with an intended target waypoint across the warehouse floor.</p>\n  </div>\n  <div class=\"step-card\" style=\"background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(234, 179, 8, 0.3); border-radius: 8px; padding: 1rem;\">\n    <h4 style=\"color: #eab308; margin-top: 0; font-size: 0.95rem;\">Step 2: Workspace Obstacle Boundaries</h4>\n    <img src=\"assets/images/nav_continuous_rep_step2.png\" alt=\"Continuous Space Step 2\" class=\"lesson-image\" style=\"width: 100%; border-radius: 6px; margin: 0.5rem 0;\" />\n    <p style=\"font-size: 0.85rem; line-height: 1.4; color: #94a3b8;\">Physical obstacles (pallets, pillars, machinery) introduce geometric keep-out zones in the workspace.</p>\n  </div>\n  <div class=\"step-card\" style=\"background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(234, 179, 8, 0.3); border-radius: 8px; padding: 1rem;\">\n    <h4 style=\"color: #eab308; margin-top: 0; font-size: 0.95rem;\">Step 3: Robot Trajectory Footprint Sweeping</h4>\n    <img src=\"assets/images/nav_continuous_rep_step3.png\" alt=\"Continuous Space Step 3\" class=\"lesson-image\" style=\"width: 100%; border-radius: 6px; margin: 0.5rem 0;\" />\n    <p style=\"font-size: 0.85rem; line-height: 1.4; color: #94a3b8;\">A candidate centerline path is traced between start and goal. However, the robot is not a dimensionless point\u2014it has physical width and radius <em>r_robot</em>.</p>\n  </div>\n  <div class=\"step-card\" style=\"background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(239, 68, 68, 0.3); border-radius: 8px; padding: 1rem;\">\n    <h4 style=\"color: #f87171; margin-top: 0; font-size: 0.95rem;\">Step 4: The Collision Dilemma (Clearance Failure)</h4>\n    <img src=\"assets/images/nav_continuous_rep_collision.png\" alt=\"Continuous Space Step 4: Collision\" class=\"lesson-image\" style=\"width: 100%; border-radius: 6px; margin: 0.5rem 0;\" />\n    <p style=\"font-size: 0.85rem; line-height: 1.4; color: #94a3b8;\">If the path passes closer to an obstacle than the robot radius (<em>distance &lt; r_robot</em>), the robot's physical chassis strikes the obstacle, resulting in severe hardware collision.</p>\n  </div>\n</div>\n\n<div class=\"two-col-layout\" style=\"display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin: 1.5rem 0;\">\n  <div class=\"step-card\" style=\"background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 8px; padding: 1rem;\">\n    <h4 style=\"color: #34d399; margin-top: 0; font-size: 0.95rem;\">Step 5a: Distance Clearance Checking</h4>\n    <img src=\"assets/images/nav_continuous_rep_clearance_check.png\" alt=\"Clearance Check\" class=\"lesson-image\" style=\"width: 100%; border-radius: 6px; margin: 0.5rem 0;\" />\n    <p style=\"font-size: 0.85rem; line-height: 1.4; color: #94a3b8;\">To guarantee safety, every point along the path must satisfy the strict geometric constraint: <strong>Distance to nearest obstacle &gt; r_robot</strong>.</p>\n  </div>\n  <div class=\"step-card\" style=\"background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 8px; padding: 1rem;\">\n    <h4 style=\"color: #34d399; margin-top: 0; font-size: 0.95rem;\">Step 5b: Allowable Collision-Free Path</h4>\n    <img src=\"assets/images/nav_continuous_rep_allowable_path.png\" alt=\"Allowable Path\" class=\"lesson-image\" style=\"width: 100%; border-radius: 6px; margin: 0.5rem 0;\" />\n    <p style=\"font-size: 0.85rem; line-height: 1.4; color: #94a3b8;\">The algorithm reroutes the path away from narrow gaps, finding a trajectory where the entire swept volume of the AMR clears all obstacles comfortably.</p>\n  </div>\n</div>\n\n<h2 id=\"4-cspace-obstacle-inflation\">4. Configuration Space (C-Space) &amp; Obstacle Inflation Theory</h2>\n<p>Continuously checking complex polygon robot geometries against every obstacle in the workspace is computationally prohibitive. Mobile robotics solves this through a brilliant mathematical transformation: <strong>Configuration Space (C-Space)</strong>.</p>\n\n<div class=\"two-col-layout\" style=\"display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin: 1.5rem 0;\">\n  <div class=\"step-card\" style=\"background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(168, 85, 247, 0.3); border-radius: 8px; padding: 1rem;\">\n    <h4 style=\"color: #c084fc; margin-top: 0; font-size: 0.95rem;\">Step 1: Inflating Obstacles by Robot Radius</h4>\n    <img src=\"assets/images/nav_cspace_obstacle_inflation.png\" alt=\"C-Space Obstacle Inflation\" class=\"lesson-image\" style=\"width: 100%; border-radius: 6px; margin: 0.5rem 0;\" />\n    <p style=\"font-size: 0.85rem; line-height: 1.4; color: #94a3b8;\">Every obstacle in the workspace is expanded outward in all directions by the robot radius <em>r_robot</em> (Minkowski sum: <em>Obstacle &oplus; Robot_Footprint</em>).</p>\n  </div>\n  <div class=\"step-card\" style=\"background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(168, 85, 247, 0.3); border-radius: 8px; padding: 1rem;\">\n    <h4 style=\"color: #c084fc; margin-top: 0; font-size: 0.95rem;\">Step 2: Point Robot Representation &amp; C_free / C_obs</h4>\n    <img src=\"assets/images/nav_cspace_cfree_cobs.png\" alt=\"C-Space Free and Occupied\" class=\"lesson-image\" style=\"width: 100%; border-radius: 6px; margin: 0.5rem 0;\" />\n    <p style=\"font-size: 0.85rem; line-height: 1.4; color: #94a3b8;\">With obstacles inflated, the robot collapses into an infinitesimal single point mass. The workspace partitions strictly into <strong>C_free</strong> (admissible points) and <strong>C_obs</strong> (inadmissible points).</p>\n  </div>\n</div>\n\n<h2 id=\"5-costmap-2d-layers\">5. Costmap 2D: The 3-Tier Layered Architecture</h2>\n<p>ROS 2 Nav2 implements C-Space inflation dynamically using the <strong>Costmap 2D</strong> plugin architecture. It stacks multiple independent 2D raster grids on top of each other:</p>\n\n<div class=\"grid-card-container\" style=\"display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin: 1.5rem 0;\">\n  <div class=\"golden-card\" style=\"background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(234, 179, 8, 0.3); border-radius: 8px; padding: 1rem;\">\n    <h4 style=\"color: #eab308; margin-top: 0; font-size: 0.95rem;\">1\ufe0f\u20e3 Static Layer</h4>\n    <p style=\"font-size: 0.85rem; line-height: 1.4; color: #94a3b8;\">Subscribes to <code class=\"inline-code\">/map</code> published by <code class=\"inline-code\">map_server</code>. Represents permanent structural elements: walls, columns, racking. Cost values are 0 (free) or 254 (lethal).</p>\n  </div>\n  <div class=\"golden-card\" style=\"background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(234, 179, 8, 0.3); border-radius: 8px; padding: 1rem;\">\n    <h4 style=\"color: #eab308; margin-top: 0; font-size: 0.95rem;\">2\ufe0f\u20e3 Obstacle Layer</h4>\n    <p style=\"font-size: 0.85rem; line-height: 1.4; color: #94a3b8;\">Subscribes to live sensor streams (<code class=\"inline-code\">/scan</code>). Raycasts through free space and dynamically inserts/clears unexpected obstacles (forklifts, crates, humans).</p>\n  </div>\n  <div class=\"golden-card\" style=\"background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(234, 179, 8, 0.3); border-radius: 8px; padding: 1rem;\">\n    <h4 style=\"color: #eab308; margin-top: 0; font-size: 0.95rem;\">3\ufe0f\u20e3 Inflation Layer</h4>\n    <p style=\"font-size: 0.85rem; line-height: 1.4; color: #94a3b8;\">Propagates obstacle costs outward through an exponential decay function, generating a continuous gradient potential field that repels the robot from hazards.</p>\n  </div>\n</div>\n\n<h2 id=\"6-inflation-mathematics\">6. Inflation Layer Mathematics: The Safety Buffer &amp; Decay Function</h2>\n<p>Each cell in the Costmap 2D holds an unsigned 8-bit integer cost value <em>C &isin; [0, 255]</em>:</p>\n<ul style=\"font-size: 0.9rem; line-height: 1.6; color: #94a3b8;\">\n  <li><strong>254 (Lethal Obstacle):</strong> The physical obstacle cell itself.</li>\n  <li><strong>253 (Inscribed Obstacle Radius):</strong> Cells within the inscribed circle radius <em>r_inscribed</em>. Driving here guarantees collision.</li>\n  <li><strong>1 &ndash; 252 (Decay Potential Zone):</strong> Cost smoothly drops exponentially with Euclidean distance <em>d</em>:\n    <div style=\"background: rgba(15, 23, 42, 0.8); border: 1px solid rgba(234, 179, 8, 0.3); border-radius: 6px; padding: 0.75rem; margin: 0.5rem 0; font-family: monospace; color: #fbbf24; text-align: center;\">\n      Cost(d) = 252 &times; exp( -&alpha; &times; (d - r_inscribed) )\n    </div>\n    where &alpha; is the inflation decay factor (<code class=\"inline-code\">cost_scaling_factor</code>).\n  </li>\n  <li><strong>0 (Free Space):</strong> Completely clear traversable floor where navigation incurs zero obstacle penalty.</li>\n  <li><strong>255 (Unknown Space):</strong> Unexplored regions outside the sensor horizon.</li>\n</ul>\n\n<h2 id=\"7-global-vs-local-costmaps\">7. Global vs. Local Costmap Configuration &amp; Parameter Matrix</h2>\n<table style=\"width: 100%; border-collapse: collapse; margin: 1.5rem 0; font-size: 0.85rem;\">\n  <thead>\n    <tr style=\"background: rgba(30, 41, 59, 0.8); color: #e2e8f0; border-bottom: 2px solid #eab308;\">\n      <th style=\"padding: 0.6rem; text-align: left;\">Feature</th>\n      <th style=\"padding: 0.6rem; text-align: left;\">Global Costmap</th>\n      <th style=\"padding: 0.6rem; text-align: left;\">Local Costmap</th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr style=\"border-bottom: 1px solid rgba(255, 255, 255, 0.1);\">\n      <td style=\"padding: 0.6rem; font-weight: bold;\">Tracking Frame</td>\n      <td style=\"padding: 0.6rem;\"><code>map</code> (World Fixed)</td>\n      <td style=\"padding: 0.6rem;\"><code>odom</code> (Rolling Window Centered on AMR)</td>\n    </tr>\n    <tr style=\"border-bottom: 1px solid rgba(255, 255, 255, 0.1);\">\n      <td style=\"padding: 0.6rem; font-weight: bold;\">Update Rate</td>\n      <td style=\"padding: 0.6rem;\">1.0 &ndash; 2.0 Hz (Macro Level)</td>\n      <td style=\"padding: 0.6rem;\">10.0 &ndash; 20.0 Hz (Micro Control Loop)</td>\n    </tr>\n    <tr style=\"border-bottom: 1px solid rgba(255, 255, 255, 0.1);\">\n      <td style=\"padding: 0.6rem; font-weight: bold;\">Grid Dimensions</td>\n      <td style=\"padding: 0.6rem;\">Full warehouse map size (e.g. 50m &times; 50m)</td>\n      <td style=\"padding: 0.6rem;\">Rolling bounding box (e.g. 3.0m &times; 3.0m)</td>\n    </tr>\n    <tr>\n      <td style=\"padding: 0.6rem; font-weight: bold;\">Primary Client</td>\n      <td style=\"padding: 0.6rem;\">Planner Server (Global Path Finding)</td>\n      <td style=\"padding: 0.6rem;\">Controller Server (Local Dynamic Avoidance)</td>\n    </tr>\n  </tbody>\n</table>\n\n<h2 id=\"8-nav2-server-architecture\">8. Nav2 System Architecture: Lifecycle Servers &amp; Recovery Pipeline</h2>\n<p>Nav2 decouples autonomy into specialized ROS 2 nodes orchestrated by the Behavior Tree Navigator:</p>\n\n<p><img src=\"assets/images/nav2_server_architecture.svg\" alt=\"Nav2 Server Subsystem &amp; Costmap Architecture\" class=\"lesson-image\" style=\"max-height: 400px; width: 100%; object-fit: contain; margin: 1.5rem 0;\" loading=\"lazy\" /></p>\n<ul style=\"font-size: 0.9rem; line-height: 1.6; color: #94a3b8;\">\n  <li><strong>BT Navigator:</strong> Evaluates behavior trees to coordinate planning, path following, progress checks, and recoveries.</li>\n  <li><strong>Planner Server:</strong> Calculates global routes from start to goal at 1 Hz using global costmap.</li>\n  <li><strong>Controller Server:</strong> Computes instantaneous <code>/cmd_vel</code> twist commands at 20 Hz avoiding local obstacles.</li>\n  <li><strong>Recoveries Server:</strong> Executes recovery behaviors (in-place spin, backup, costmap clearing) when stuck.</li>\n  <li><strong>Lifecycle Manager:</strong> State machine controlling Unconfigured &rarr; Inactive &rarr; Active transitions across all servers.</li>\n</ul>\n\n<h2 id=\"9-nav2-production-parameter-tuning\">9. Nav2 Production Parameter Tuning Guide &amp; Optimization Matrix</h2>\n<p>Deploying autonomous mobile robots in real-world warehouse environments requires rigorous tuning of costmaps, planners, and local controllers inside <code>nav2_params.yaml</code>:</p>\n\n<div class=\"grid-card-container\" style=\"display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin: 1.5rem 0;\">\n  <div class=\"golden-card\" style=\"background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(59, 130, 246, 0.3); border-radius: 8px; padding: 1rem;\">\n    <h4 style=\"color: #60a5fa; margin-top: 0; font-size: 0.95rem;\">1. Costmap 2D &amp; AMCL Tuning</h4>\n    <ul style=\"font-size: 0.85rem; line-height: 1.5; color: #94a3b8; padding-left: 1.2rem;\">\n      <li><code>inflation_radius (0.55m):</code> Inscribed radius + buffer to prevent chassis scraping.</li>\n      <li><code>cost_scaling_factor (3.0):</code> Controls exponential decay steepness. Higher value forces robot through narrow doors.</li>\n      <li><code>min_particles (500) / max_particles (2000):</code> Prevents particle deprivation during rapid turns while bounding CPU usage.</li>\n      <li><code>update_min_d (0.2m) / update_min_a (0.2rad):</code> Filters idle sensor noise when stationary.</li>\n    </ul>\n  </div>\n  <div class=\"golden-card\" style=\"background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 8px; padding: 1rem;\">\n    <h4 style=\"color: #34d399; margin-top: 0; font-size: 0.95rem;\">2. DWB Controller &amp; Critic Balancing</h4>\n    <ul style=\"font-size: 0.85rem; line-height: 1.5; color: #94a3b8; padding-left: 1.2rem;\">\n      <li><code>PathAlign.scale (32.0):</code> Penalizes chassis heading deviation from global plan.</li>\n      <li><code>PathDist.scale (32.0):</code> Penalizes lateral cross-track distance away from the global path.</li>\n      <li><code>GoalDist.scale (24.0):</code> Incentivizes forward velocity toward target waypoint.</li>\n      <li><code>BaseObstacle.scale (0.02):</code> Critical safety critic: instantly vetoes any candidate trajectory crossing lethal obstacles.</li>\n    </ul>\n  </div>\n</div>\n\n<div class=\"code-header-card\" style=\"margin-top: 1.5rem;\">\n  <span class=\"file-path\">ros2_ws_reference/src/nexus_amr_navigation/config/nav2_params.yaml</span>\n  <span class=\"code-badge\">Production Configuration</span>\n</div>\n<pre><code class=\"language-yaml\">controller_server:\n  ros__parameters:\n    controller_frequency: 20.0\n    min_x_velocity_threshold: 0.001\n    min_theta_velocity_threshold: 0.001\n    progress_checker_plugin: \"progress_checker\"\n    goal_checker_plugins: [\"general_goal_checker\"]\n    controller_plugins: [\"FollowPath\"]\n    progress_checker:\n      plugin: \"nav2_controller::SimpleProgressChecker\"\n      required_movement_radius: 0.2\n      movement_time_allowance: 10.0\n    general_goal_checker:\n      plugin: \"nav2_controller::SimpleGoalChecker\"\n      xy_goal_tolerance: 0.15\n      yaw_goal_tolerance: 0.10\n      stateful: True\n    FollowPath:\n      plugin: \"dwb_core::DWBLocalPlanner\"\n      max_vel_x: 0.60\n      min_vel_x: 0.0\n      max_vel_theta: 1.50\n      acc_lim_x: 1.50\n      acc_lim_theta: 2.50\n      critics: [\"RotateToGoal\", \"Oscillation\", \"BaseObstacle\", \"GoalAlign\", \"PathAlign\", \"PathDist\", \"GoalDist\"]\n      PathAlign.scale: 32.0\n      GoalAlign.scale: 24.0\n      PathDist.scale: 32.0\n      GoalDist.scale: 24.0\n      BaseObstacle.scale: 0.02</code></pre>\n\n<h2 id=\"10-hands-on-student-challenge\">10. Hands-on Student Challenge: Real-Time Costmap Inflation &amp; Clearance Auditor</h2>\n<p>In this lab exercise, students configure <code class=\"inline-code\">nav2_params.yaml</code>, adjust <code class=\"inline-code\">inflation_radius</code> and <code class=\"inline-code\">cost_scaling_factor</code>, and verify safety clearance bands in RViz2 under real-time simulation.</p>\n",
+      "html_content": "\n<h2 id=\"1-overview-learning-objectives\">1. Overview &amp; Learning Objectives</h2>\n<div class=\"learning-objectives-banner\">\n  <div class=\"objectives-header\">\n    <span class=\"objectives-icon\">\ud83c\udfaf</span>\n    <h3 class=\"objectives-main-title\">Learning Objectives &amp; Core Outcomes</h3>\n  </div>\n  <ul class=\"objectives-list\">\n    <li><strong>Mathematical Foundations:</strong> Understand how continuous robot workspace geometry is transformed into discrete Configuration Space (C-Space) via obstacle inflation by robot radius.</li>\n    <li><strong>Layered Costmaps:</strong> Master the 3-tier Costmap 2D architecture combining the Static map, live LiDAR/depth Obstacle layers, and exponential Inflation buffer.</li>\n    <li><strong>Safety Buffer Decay:</strong> Calculate lethal obstacle boundaries, inscribed radii, and exponential cost decay curves to prevent AMR chassis collisions.</li>\n    <li><strong>Nav2 Server Stack:</strong> Learn the separation of responsibilities between BT Navigator, Planner Server, Controller Server, and Recovery Server.</li>\n    <li><strong>Production Configuration:</strong> Configure and tune <code class=\"inline-code\">nav2_params.yaml</code> for industrial differential drive AMRs operating in dynamic logistics warehouses.</li>\n  </ul>\n</div>\n\n<h2 id=\"2-navigation-problem-formulation\">2. Mobile Robot Navigation Problem Formulation &amp; Geometry</h2>\n<p>Autonomous mobile robot navigation is the science of computing and executing a safe, kinematically feasible trajectory from a current robot pose to a desired target goal without colliding with static warehouse infrastructure or dynamic obstacles.</p>\n\n<div class=\"grid-card-container\" style=\"display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin: 1.5rem 0;\">\n  <div class=\"golden-card\" style=\"background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(59, 130, 246, 0.3); border-radius: 8px; padding: 1rem;\">\n    <h4 style=\"color: #60a5fa; margin-top: 0; font-size: 0.95rem;\">1. Environment Geometry</h4>\n    <p style=\"font-size: 0.85rem; line-height: 1.4; color: #94a3b8;\">Physical boundaries, warehouse racking columns, walls, aisles, and restricted zones define the operational workspace <em>W &sub; &real;&sup2;</em>.</p>\n  </div>\n  <div class=\"golden-card\" style=\"background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(59, 130, 246, 0.3); border-radius: 8px; padding: 1rem;\">\n    <h4 style=\"color: #60a5fa; margin-top: 0; font-size: 0.95rem;\">2. Robot Geometry</h4>\n    <p style=\"font-size: 0.85rem; line-height: 1.4; color: #94a3b8;\">The physical chassis footprint (length, width, wheel baseline, caster placement, payload overhang) dictates whether the robot can physically fit through a corridor.</p>\n  </div>\n  <div class=\"golden-card\" style=\"background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(59, 130, 246, 0.3); border-radius: 8px; padding: 1rem;\">\n    <h4 style=\"color: #60a5fa; margin-top: 0; font-size: 0.95rem;\">3. Poses &amp; Algorithm</h4>\n    <p style=\"font-size: 0.85rem; line-height: 1.4; color: #94a3b8;\">Given <em>Start Pose (x_s, y_s, &theta;_s)</em> and <em>Goal Pose (x_g, y_g, &theta;_g)</em>, the Path Planning Algorithm searches for a continuous collision-free route.</p>\n  </div>\n</div>\n\n<h2 id=\"3-continuous-representation-collision\">3. Continuous Workspace Representation &amp; Collision Dilemma (5-Step Breakdown)</h2>\n<p>Before diving into algorithms, let us study how path planning operates in continuous space and why treating the robot as a simple point leads to catastrophic warehouse collisions:</p>\n\n<div class=\"steps-grid\" style=\"display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin: 1.5rem 0;\">\n  <div class=\"step-card\" style=\"background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(234, 179, 8, 0.3); border-radius: 8px; padding: 1rem;\">\n    <h4 style=\"color: #eab308; margin-top: 0; font-size: 0.95rem;\">Step 1: Continuous 2D Workspace &amp; Goal</h4>\n    <img src=\"assets/images/nav_continuous_rep_step1.png\" alt=\"Continuous Space Step 1\" class=\"lesson-image\" style=\"width: 100%; border-radius: 6px; margin: 0.5rem 0;\" />\n    <p style=\"font-size: 0.85rem; line-height: 1.4; color: #94a3b8;\">The robot starts at an origin pose in continuous Cartesian space with an intended target waypoint across the warehouse floor.</p>\n  </div>\n  <div class=\"step-card\" style=\"background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(234, 179, 8, 0.3); border-radius: 8px; padding: 1rem;\">\n    <h4 style=\"color: #eab308; margin-top: 0; font-size: 0.95rem;\">Step 2: Workspace Obstacle Boundaries</h4>\n    <img src=\"assets/images/nav_continuous_rep_step2.png\" alt=\"Continuous Space Step 2\" class=\"lesson-image\" style=\"width: 100%; border-radius: 6px; margin: 0.5rem 0;\" />\n    <p style=\"font-size: 0.85rem; line-height: 1.4; color: #94a3b8;\">Physical obstacles (pallets, pillars, machinery) introduce geometric keep-out zones in the workspace.</p>\n  </div>\n  <div class=\"step-card\" style=\"background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(234, 179, 8, 0.3); border-radius: 8px; padding: 1rem;\">\n    <h4 style=\"color: #eab308; margin-top: 0; font-size: 0.95rem;\">Step 3: Robot Trajectory Footprint Sweeping</h4>\n    <img src=\"assets/images/nav_continuous_rep_step3.png\" alt=\"Continuous Space Step 3\" class=\"lesson-image\" style=\"width: 100%; border-radius: 6px; margin: 0.5rem 0;\" />\n    <p style=\"font-size: 0.85rem; line-height: 1.4; color: #94a3b8;\">A candidate centerline path is traced between start and goal. However, the robot is not a dimensionless point\u2014it has physical width and radius <em>r_robot</em>.</p>\n  </div>\n  <div class=\"step-card\" style=\"background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(239, 68, 68, 0.3); border-radius: 8px; padding: 1rem;\">\n    <h4 style=\"color: #f87171; margin-top: 0; font-size: 0.95rem;\">Step 4: The Collision Dilemma (Clearance Failure)</h4>\n    <img src=\"assets/images/nav_continuous_rep_collision.png\" alt=\"Continuous Space Step 4: Collision\" class=\"lesson-image\" style=\"width: 100%; border-radius: 6px; margin: 0.5rem 0;\" />\n    <p style=\"font-size: 0.85rem; line-height: 1.4; color: #94a3b8;\">If the path passes closer to an obstacle than the robot radius (<em>distance &lt; r_robot</em>), the robot's physical chassis strikes the obstacle, resulting in severe hardware collision.</p>\n  </div>\n</div>\n\n<div class=\"two-col-layout\" style=\"display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin: 1.5rem 0;\">\n  <div class=\"step-card\" style=\"background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 8px; padding: 1rem;\">\n    <h4 style=\"color: #34d399; margin-top: 0; font-size: 0.95rem;\">Step 5a: Distance Clearance Checking</h4>\n    <img src=\"assets/images/nav_continuous_rep_clearance_check.png\" alt=\"Clearance Check\" class=\"lesson-image\" style=\"width: 100%; border-radius: 6px; margin: 0.5rem 0;\" />\n    <p style=\"font-size: 0.85rem; line-height: 1.4; color: #94a3b8;\">To guarantee safety, every point along the path must satisfy the strict geometric constraint: <strong>Distance to nearest obstacle &gt; r_robot</strong>.</p>\n  </div>\n  <div class=\"step-card\" style=\"background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 8px; padding: 1rem;\">\n    <h4 style=\"color: #34d399; margin-top: 0; font-size: 0.95rem;\">Step 5b: Allowable Collision-Free Path</h4>\n    <img src=\"assets/images/nav_continuous_rep_allowable_path.png\" alt=\"Allowable Path\" class=\"lesson-image\" style=\"width: 100%; border-radius: 6px; margin: 0.5rem 0;\" />\n    <p style=\"font-size: 0.85rem; line-height: 1.4; color: #94a3b8;\">The algorithm reroutes the path away from narrow gaps, finding a trajectory where the entire swept volume of the AMR clears all obstacles comfortably.</p>\n  </div>\n</div>\n\n<h2 id=\"4-cspace-obstacle-inflation\">4. Configuration Space (C-Space) &amp; Obstacle Inflation Theory</h2>\n<p>Continuously checking complex polygon robot geometries against every obstacle in the workspace is computationally prohibitive. Mobile robotics solves this through a brilliant mathematical transformation: <strong>Configuration Space (C-Space)</strong>.</p>\n\n<div class=\"two-col-layout\" style=\"display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin: 1.5rem 0;\">\n  <div class=\"step-card\" style=\"background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(168, 85, 247, 0.3); border-radius: 8px; padding: 1rem;\">\n    <h4 style=\"color: #c084fc; margin-top: 0; font-size: 0.95rem;\">Step 1: Inflating Obstacles by Robot Radius</h4>\n    <img src=\"assets/images/nav_cspace_obstacle_inflation.png\" alt=\"C-Space Obstacle Inflation\" class=\"lesson-image\" style=\"width: 100%; border-radius: 6px; margin: 0.5rem 0;\" />\n    <p style=\"font-size: 0.85rem; line-height: 1.4; color: #94a3b8;\">Every obstacle in the workspace is expanded outward in all directions by the robot radius <em>r_robot</em> (Minkowski sum: <em>Obstacle &oplus; Robot_Footprint</em>).</p>\n  </div>\n  <div class=\"step-card\" style=\"background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(168, 85, 247, 0.3); border-radius: 8px; padding: 1rem;\">\n    <h4 style=\"color: #c084fc; margin-top: 0; font-size: 0.95rem;\">Step 2: Point Robot Representation &amp; C_free / C_obs</h4>\n    <img src=\"assets/images/nav_cspace_cfree_cobs.png\" alt=\"C-Space Free and Occupied\" class=\"lesson-image\" style=\"width: 100%; border-radius: 6px; margin: 0.5rem 0;\" />\n    <p style=\"font-size: 0.85rem; line-height: 1.4; color: #94a3b8;\">With obstacles inflated, the robot collapses into an infinitesimal single point mass. The workspace partitions strictly into <strong>C_free</strong> (admissible points) and <strong>C_obs</strong> (inadmissible points).</p>\n  </div>\n</div>\n\n<h2 id=\"5-costmap-2d-layers\">5. Costmap 2D: The 3-Tier Layered Architecture</h2>\n<p>ROS 2 Nav2 implements C-Space inflation dynamically using the <strong>Costmap 2D</strong> plugin architecture. It stacks multiple independent 2D raster grids on top of each other:</p>\n\n<div class=\"grid-card-container\" style=\"display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin: 1.5rem 0;\">\n  <div class=\"golden-card\" style=\"background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(234, 179, 8, 0.3); border-radius: 8px; padding: 1rem;\">\n    <h4 style=\"color: #eab308; margin-top: 0; font-size: 0.95rem;\">1\ufe0f\u20e3 Static Layer</h4>\n    <p style=\"font-size: 0.85rem; line-height: 1.4; color: #94a3b8;\">Subscribes to <code class=\"inline-code\">/map</code> published by <code class=\"inline-code\">map_server</code>. Represents permanent structural elements: walls, columns, racking. Cost values are 0 (free) or 254 (lethal).</p>\n  </div>\n  <div class=\"golden-card\" style=\"background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(234, 179, 8, 0.3); border-radius: 8px; padding: 1rem;\">\n    <h4 style=\"color: #eab308; margin-top: 0; font-size: 0.95rem;\">2\ufe0f\u20e3 Obstacle Layer</h4>\n    <p style=\"font-size: 0.85rem; line-height: 1.4; color: #94a3b8;\">Subscribes to live sensor streams (<code class=\"inline-code\">/scan</code>). Raycasts through free space and dynamically inserts/clears unexpected obstacles (forklifts, crates, humans).</p>\n  </div>\n  <div class=\"golden-card\" style=\"background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(234, 179, 8, 0.3); border-radius: 8px; padding: 1rem;\">\n    <h4 style=\"color: #eab308; margin-top: 0; font-size: 0.95rem;\">3\ufe0f\u20e3 Inflation Layer</h4>\n    <p style=\"font-size: 0.85rem; line-height: 1.4; color: #94a3b8;\">Propagates obstacle costs outward through an exponential decay function, generating a continuous gradient potential field that repels the robot from hazards.</p>\n  </div>\n</div>\n\n<h2 id=\"6-inflation-mathematics\">6. Inflation Layer Mathematics: The Safety Buffer &amp; Decay Function</h2>\n<p>Each cell in the Costmap 2D holds an unsigned 8-bit integer cost value <em>C &isin; [0, 255]</em>:</p>\n<ul style=\"font-size: 0.9rem; line-height: 1.6; color: #94a3b8;\">\n  <li><strong>254 (Lethal Obstacle):</strong> The physical obstacle cell itself.</li>\n  <li><strong>253 (Inscribed Obstacle Radius):</strong> Cells within the inscribed circle radius <em>r_inscribed</em>. Driving here guarantees collision.</li>\n  <li><strong>1 &ndash; 252 (Decay Potential Zone):</strong> Cost smoothly drops exponentially with Euclidean distance <em>d</em>:\n    <div style=\"background: rgba(15, 23, 42, 0.8); border: 1px solid rgba(234, 179, 8, 0.3); border-radius: 6px; padding: 0.75rem; margin: 0.5rem 0; font-family: monospace; color: #fbbf24; text-align: center;\">\n      Cost(d) = 252 &times; exp( -&alpha; &times; (d - r_inscribed) )\n    </div>\n    where &alpha; is the inflation decay factor (<code class=\"inline-code\">cost_scaling_factor</code>).\n  </li>\n  <li><strong>0 (Free Space):</strong> Completely clear traversable floor where navigation incurs zero obstacle penalty.</li>\n  <li><strong>255 (Unknown Space):</strong> Unexplored regions outside the sensor horizon.</li>\n</ul>\n\n<h2 id=\"7-global-vs-local-costmaps\">7. Global vs. Local Costmap Configuration &amp; Parameter Matrix</h2>\n<table style=\"width: 100%; border-collapse: collapse; margin: 1.5rem 0; font-size: 0.85rem;\">\n  <thead>\n    <tr style=\"background: rgba(30, 41, 59, 0.8); color: #e2e8f0; border-bottom: 2px solid #eab308;\">\n      <th style=\"padding: 0.6rem; text-align: left;\">Feature</th>\n      <th style=\"padding: 0.6rem; text-align: left;\">Global Costmap</th>\n      <th style=\"padding: 0.6rem; text-align: left;\">Local Costmap</th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr style=\"border-bottom: 1px solid rgba(255, 255, 255, 0.1);\">\n      <td style=\"padding: 0.6rem; font-weight: bold;\">Tracking Frame</td>\n      <td style=\"padding: 0.6rem;\"><code>map</code> (World Fixed)</td>\n      <td style=\"padding: 0.6rem;\"><code>odom</code> (Rolling Window Centered on AMR)</td>\n    </tr>\n    <tr style=\"border-bottom: 1px solid rgba(255, 255, 255, 0.1);\">\n      <td style=\"padding: 0.6rem; font-weight: bold;\">Update Rate</td>\n      <td style=\"padding: 0.6rem;\">1.0 &ndash; 2.0 Hz (Macro Level)</td>\n      <td style=\"padding: 0.6rem;\">10.0 &ndash; 20.0 Hz (Micro Control Loop)</td>\n    </tr>\n    <tr style=\"border-bottom: 1px solid rgba(255, 255, 255, 0.1);\">\n      <td style=\"padding: 0.6rem; font-weight: bold;\">Grid Dimensions</td>\n      <td style=\"padding: 0.6rem;\">Full warehouse map size (e.g. 50m &times; 50m)</td>\n      <td style=\"padding: 0.6rem;\">Rolling bounding box (e.g. 3.0m &times; 3.0m)</td>\n    </tr>\n    <tr>\n      <td style=\"padding: 0.6rem; font-weight: bold;\">Primary Client</td>\n      <td style=\"padding: 0.6rem;\">Planner Server (Global Path Finding)</td>\n      <td style=\"padding: 0.6rem;\">Controller Server (Local Dynamic Avoidance)</td>\n    </tr>\n  </tbody>\n</table>\n\n<h2 id=\"8-nav2-server-architecture\">8. Nav2 System Architecture: Lifecycle Servers &amp; Recovery Pipeline</h2>\n<p>Nav2 decouples autonomy into specialized ROS 2 nodes orchestrated by the Behavior Tree Navigator:</p>\n\n<p><img src=\"assets/images/nav2_architecture.png\" alt=\"Nav2 Server Subsystem &amp; Costmap Architecture\" class=\"lesson-image\" style=\"max-height: 400px; width: 100%; object-fit: contain; margin: 1.5rem 0;\" loading=\"lazy\" /></p>\n<ul style=\"font-size: 0.9rem; line-height: 1.6; color: #94a3b8;\">\n  <li><strong>BT Navigator:</strong> Evaluates behavior trees to coordinate planning, path following, progress checks, and recoveries.</li>\n  <li><strong>Planner Server:</strong> Calculates global routes from start to goal at 1 Hz using global costmap.</li>\n  <li><strong>Controller Server:</strong> Computes instantaneous <code>/cmd_vel</code> twist commands at 20 Hz avoiding local obstacles.</li>\n  <li><strong>Recoveries Server:</strong> Executes recovery behaviors (in-place spin, backup, costmap clearing) when stuck.</li>\n  <li><strong>Lifecycle Manager:</strong> State machine controlling Unconfigured &rarr; Inactive &rarr; Active transitions across all servers.</li>\n</ul>\n\n<h2 id=\"9-nav2-production-parameter-tuning\">9. Nav2 Production Parameter Tuning Guide &amp; Optimization Matrix</h2>\n<p>Deploying autonomous mobile robots in real-world warehouse environments requires rigorous tuning of costmaps, planners, and local controllers inside <code>nav2_params.yaml</code>:</p>\n\n<div class=\"grid-card-container\" style=\"display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin: 1.5rem 0;\">\n  <div class=\"golden-card\" style=\"background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(59, 130, 246, 0.3); border-radius: 8px; padding: 1rem;\">\n    <h4 style=\"color: #60a5fa; margin-top: 0; font-size: 0.95rem;\">1. Costmap 2D &amp; AMCL Tuning</h4>\n    <ul style=\"font-size: 0.85rem; line-height: 1.5; color: #94a3b8; padding-left: 1.2rem;\">\n      <li><code>inflation_radius (0.55m):</code> Inscribed radius + buffer to prevent chassis scraping.</li>\n      <li><code>cost_scaling_factor (3.0):</code> Controls exponential decay steepness. Higher value forces robot through narrow doors.</li>\n      <li><code>min_particles (500) / max_particles (2000):</code> Prevents particle deprivation during rapid turns while bounding CPU usage.</li>\n      <li><code>update_min_d (0.2m) / update_min_a (0.2rad):</code> Filters idle sensor noise when stationary.</li>\n    </ul>\n  </div>\n  <div class=\"golden-card\" style=\"background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 8px; padding: 1rem;\">\n    <h4 style=\"color: #34d399; margin-top: 0; font-size: 0.95rem;\">2. DWB Controller &amp; Critic Balancing</h4>\n    <ul style=\"font-size: 0.85rem; line-height: 1.5; color: #94a3b8; padding-left: 1.2rem;\">\n      <li><code>PathAlign.scale (32.0):</code> Penalizes chassis heading deviation from global plan.</li>\n      <li><code>PathDist.scale (32.0):</code> Penalizes lateral cross-track distance away from the global path.</li>\n      <li><code>GoalDist.scale (24.0):</code> Incentivizes forward velocity toward target waypoint.</li>\n      <li><code>BaseObstacle.scale (0.02):</code> Critical safety critic: instantly vetoes any candidate trajectory crossing lethal obstacles.</li>\n    </ul>\n  </div>\n</div>\n\n<div class=\"code-header-card\" style=\"margin-top: 1.5rem;\">\n  <span class=\"file-path\">ros2_ws_reference/src/nexus_amr_navigation/config/nav2_params.yaml</span>\n  <span class=\"code-badge\">Production Configuration</span>\n</div>\n<pre><code class=\"language-yaml\">controller_server:\n  ros__parameters:\n    controller_frequency: 20.0\n    min_x_velocity_threshold: 0.001\n    min_theta_velocity_threshold: 0.001\n    progress_checker_plugin: \"progress_checker\"\n    goal_checker_plugins: [\"general_goal_checker\"]\n    controller_plugins: [\"FollowPath\"]\n    progress_checker:\n      plugin: \"nav2_controller::SimpleProgressChecker\"\n      required_movement_radius: 0.2\n      movement_time_allowance: 10.0\n    general_goal_checker:\n      plugin: \"nav2_controller::SimpleGoalChecker\"\n      xy_goal_tolerance: 0.15\n      yaw_goal_tolerance: 0.10\n      stateful: True\n    FollowPath:\n      plugin: \"dwb_core::DWBLocalPlanner\"\n      max_vel_x: 0.60\n      min_vel_x: 0.0\n      max_vel_theta: 1.50\n      acc_lim_x: 1.50\n      acc_lim_theta: 2.50\n      critics: [\"RotateToGoal\", \"Oscillation\", \"BaseObstacle\", \"GoalAlign\", \"PathAlign\", \"PathDist\", \"GoalDist\"]\n      PathAlign.scale: 32.0\n      GoalAlign.scale: 24.0\n      PathDist.scale: 32.0\n      GoalDist.scale: 24.0\n      BaseObstacle.scale: 0.02</code></pre>\n\n<h2 id=\"10-hands-on-student-challenge\">10. Hands-on Student Challenge: Real-Time Costmap Inflation &amp; Clearance Auditor</h2>\n<p>In this lab exercise, students configure <code class=\"inline-code\">nav2_params.yaml</code>, adjust <code class=\"inline-code\">inflation_radius</code> and <code class=\"inline-code\">cost_scaling_factor</code>, and verify safety clearance bands in RViz2 under real-time simulation.</p>\n",
       "quizzes": [
         {
           "id": "q_l1_22_1",
@@ -1401,7 +1401,7 @@
         }
       ],
       "has_quiz": true,
-      "next_id": "lesson_16",
+      "next_id": "lesson_15",
       "prev_id": "lesson_13",
       "subtopics": [
         {
@@ -1443,9 +1443,9 @@
       ]
     },
     {
-      "id": "lesson_16",
-      "num": 16,
-      "num_str": "16",
+      "id": "lesson_15",
+      "num": 15,
+      "num_str": "15",
       "title": "Autonomous Navigation Scripting with Nav2 Simple Commander",
       "slug": "22_autonomous_patrol_nav2_simple_commander",
       "filename": "22_autonomous_patrol_nav2_simple_commander.md",
@@ -1487,7 +1487,7 @@
         }
       ],
       "has_quiz": true,
-      "next_id": "lesson_17",
+      "next_id": "lesson_16",
       "prev_id": "lesson_14",
       "subtopics": [
         {
@@ -1517,9 +1517,9 @@
       ]
     },
     {
-      "id": "lesson_17",
-      "num": 17,
-      "num_str": "17",
+      "id": "lesson_16",
+      "num": 16,
+      "num_str": "16",
       "title": "Dynamic Parameters & YAML Configuration",
       "slug": "lesson-08-dynamic-parameters-yaml-configuration",
       "filename": "lesson_08.html",
@@ -1585,8 +1585,8 @@
         }
       ],
       "has_quiz": true,
-      "next_id": "lesson_18",
-      "prev_id": "lesson_16",
+      "next_id": "lesson_17",
+      "prev_id": "lesson_15",
       "subtopics": [
         {
           "id": "1-overview-learning-objectives",
@@ -1619,9 +1619,9 @@
       ]
     },
     {
-      "id": "lesson_18",
-      "num": 18,
-      "num_str": "18",
+      "id": "lesson_17",
+      "num": 17,
+      "num_str": "17",
       "title": "VS Code IDE Tooling & ROS 2 Logging Framework",
       "slug": "vscode_debugging_and_ros2_logging",
       "filename": "06_vscode_debugging_and_ros2_logging.md",
@@ -1663,8 +1663,8 @@
         }
       ],
       "has_quiz": true,
-      "next_id": "lesson_19",
-      "prev_id": "lesson_17",
+      "next_id": "lesson_18",
+      "prev_id": "lesson_16",
       "subtopics": [
         {
           "id": "1-overview-learning-objectives",
@@ -1697,9 +1697,9 @@
       ]
     },
     {
-      "id": "lesson_19",
-      "num": 19,
-      "num_str": "19",
+      "id": "lesson_18",
+      "num": 18,
+      "num_str": "18",
       "title": "ROS 2 Interfaces & Custom Messages, Services & Actions (.msg, .srv, .action)",
       "slug": "interfaces-and-custom-messages",
       "filename": "11_interfaces_and_custom_messages.md",
@@ -1741,8 +1741,8 @@
         }
       ],
       "has_quiz": true,
-      "next_id": "lesson_20",
-      "prev_id": "lesson_18",
+      "next_id": "lesson_19",
+      "prev_id": "lesson_17",
       "subtopics": [
         {
           "id": "1-overview-learning-objectives",
@@ -1779,9 +1779,9 @@
       ]
     },
     {
-      "id": "lesson_20",
-      "num": 20,
-      "num_str": "20",
+      "id": "lesson_19",
+      "num": 19,
+      "num_str": "19",
       "title": "Data Recording & Playback with ROS 2 Bags",
       "slug": "ros2_bag_recording_and_playback",
       "filename": "12_ros2_bag_recording_and_playback.md",
@@ -1823,8 +1823,8 @@
         }
       ],
       "has_quiz": true,
-      "next_id": "lesson_21",
-      "prev_id": "lesson_19",
+      "next_id": "lesson_20",
+      "prev_id": "lesson_18",
       "subtopics": [
         {
           "id": "1-overview-learning-objectives",
@@ -1857,9 +1857,9 @@
       ]
     },
     {
-      "id": "lesson_21",
-      "num": 21,
-      "num_str": "21",
+      "id": "lesson_20",
+      "num": 20,
+      "num_str": "20",
       "title": "Complete ROS 2 Command-Line Interface (CLI) Mastery",
       "slug": "ros2_cli_command_mastery",
       "filename": "13_ros2_cli_command_mastery.md",
@@ -1901,8 +1901,8 @@
         }
       ],
       "has_quiz": true,
-      "next_id": "lesson_22",
-      "prev_id": "lesson_20",
+      "next_id": "lesson_21",
+      "prev_id": "lesson_19",
       "subtopics": [
         {
           "id": "1-overview-learning-objectives",
@@ -1931,9 +1931,9 @@
       ]
     },
     {
-      "id": "lesson_22",
-      "num": 22,
-      "num_str": "22",
+      "id": "lesson_21",
+      "num": 21,
+      "num_str": "21",
       "title": "Behavior Trees, Recovery Behaviors & Lifecycle Management",
       "slug": "21_nav2_behavior_trees_and_recoveries",
       "filename": "21_nav2_behavior_trees_and_recoveries.md",
@@ -1976,7 +1976,7 @@
       ],
       "has_quiz": true,
       "next_id": null,
-      "prev_id": "lesson_21",
+      "prev_id": "lesson_20",
       "subtopics": [
         {
           "id": "1-overview-learning-objectives",

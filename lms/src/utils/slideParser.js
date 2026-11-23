@@ -542,21 +542,19 @@ export function parseLessonIntoSlides(lesson) {
   } else if (lesson.id === '14' || lesson.num_str === '14' || lesson.id === 'lesson_14') {
     buildLesson14Slides(doc, lesson, slides);
   } else if (lesson.id === '15' || lesson.num_str === '15' || lesson.id === 'lesson_15') {
-    buildLesson14Slides(doc, lesson, slides);
+    buildLesson15Slides(doc, lesson, slides); // Autonomous Navigation Scripting (Simple Commander)
   } else if (lesson.id === '16' || lesson.num_str === '16' || lesson.id === 'lesson_16') {
-    buildLesson16Slides(doc, lesson, slides);
+    buildLesson16Slides(doc, lesson, slides); // Dynamic Parameters & YAML Configuration
   } else if (lesson.id === '17' || lesson.num_str === '17' || lesson.id === 'lesson_17') {
-    buildLesson17Slides(doc, lesson, slides);
+    buildLesson17Slides(doc, lesson, slides); // VS Code IDE Tooling & ROS 2 Logging
   } else if (lesson.id === '18' || lesson.num_str === '18' || lesson.id === 'lesson_18') {
-    buildLesson18Slides(doc, lesson, slides);
+    buildLesson18Slides(doc, lesson, slides); // ROS 2 Interfaces & Custom Messages
   } else if (lesson.id === '19' || lesson.num_str === '19' || lesson.id === 'lesson_19') {
-    buildLesson19Slides(doc, lesson, slides);
+    buildLesson19Slides(doc, lesson, slides); // Data Recording & Playback with Rosbags
   } else if (lesson.id === '20' || lesson.num_str === '20' || lesson.id === 'lesson_20') {
-    buildLesson20Slides(doc, lesson, slides);
+    buildLesson20Slides(doc, lesson, slides); // Complete ROS 2 CLI Mastery
   } else if (lesson.id === '21' || lesson.num_str === '21' || lesson.id === 'lesson_21') {
-    buildLesson21Slides(doc, lesson, slides);
-  } else if (lesson.id === '22' || lesson.num_str === '22' || lesson.id === 'lesson_22') {
-    buildLesson22Slides(doc, lesson, slides);
+    buildLesson21Slides(doc, lesson, slides); // Behavior Trees & Recovery Behaviors
   } else {
     sections.forEach((section, secIdx) => {
     const h2 = section.querySelector('h2');
@@ -7026,7 +7024,7 @@ function buildLesson14Slides(doc, lesson, slides) {
     htmlContent: `
       <div style="display: flex; flex-direction: column; gap: 0.45rem; justify-content: center; align-items: center; width: 100%; height: 100%;">
         <div style="background: #ffffff; border: 1px solid var(--border-color); border-radius: 10px; padding: 0.35rem 0.6rem; box-shadow: 0 4px 14px rgba(0,0,0,0.12); width: 100%; max-width: 860px; text-align: center;">
-          <img src="assets/images/nav2_server_architecture.svg" alt="Nav2 Server Subsystem &amp; Costmap Architecture" style="width: 100%; max-height: 290px; object-fit: contain; border-radius: 6px; display: block; margin: 0 auto;" />
+          <img src="assets/images/nav2_architecture.png" alt="Nav2 Architecture Diagram (Official docs.nav2.org)" style="width: 100%; max-height: 290px; object-fit: contain; border-radius: 6px; display: block; margin: 0 auto;" />
         </div>
         <div class="l05-banner-intro" style="margin: 0; width: 100%; max-width: 860px; padding: 0.35rem 0.65rem; border-left: 3px solid #6366f1; font-size: 0.72rem; line-height: 1.35;">
           💡 <strong>Nav2 Modular Architecture:</strong> BT Navigator coordinates action servers (Planner at 1 Hz, Controller at 20 Hz, Recoveries) communicating over ROS 2 actions while sharing synchronized Global &amp; Local Costmaps.
@@ -7521,11 +7519,6 @@ ros2 launch nexus_amr_navigation navigation.launch.py
 }
 
 function buildLesson15Slides(doc, lesson, slides) {
-  // Lesson 15 has been merged into Lesson 14. If requested, delegate to Lesson 14.
-  return buildLesson14Slides(doc, lesson, slides);
-}
-
-function buildLesson16Slides(doc, lesson, slides) {
   // 1. Simple Commander Python API Architecture
   slides.push({
     id: `${lesson.id}_sec2_simple_commander_arch`,
@@ -7745,7 +7738,7 @@ while not navigator.isTaskComplete():
  * Dedicated High-Yield Pedagogical Deck Builder for Lesson 17:
  * Dynamic Parameters & YAML Configuration.
  */
-function buildLesson17Slides(doc, lesson, slides) {
+function buildLesson16Slides(doc, lesson, slides) {
   // 1. ROS 1 vs ROS 2 Parameter Architecture
   slides.push({
     id: `${lesson.id}_sec2_param_arch`,
@@ -7993,7 +7986,7 @@ ros2 param dump /speed_controller &gt; tuned_params.yaml</code></pre>
  * Dedicated High-Yield Pedagogical Deck Builder for Lesson 18:
  * VS Code IDE Tooling & ROS 2 Logging Framework.
  */
-function buildLesson18Slides(doc, lesson, slides) {
+function buildLesson17Slides(doc, lesson, slides) {
   // 1. VS Code IDE Configuration for ROS 2 Python
   slides.push({
     id: `${lesson.id}_sec2_vscode_ide`,
@@ -8210,7 +8203,7 @@ ros2 service call /speed_controller/set_logger_levels \
  * Dedicated High-Yield Pedagogical Deck Builder for Lesson 19:
  * ROS 2 Interfaces & Custom Messages, Services & Actions.
  */
-function buildLesson19Slides(doc, lesson, slides) {
+function buildLesson18Slides(doc, lesson, slides) {
   // 1. Standard Interface Libraries vs Custom Interfaces
   slides.push({
     id: `${lesson.id}_sec2_standard_vs_custom`,
@@ -8466,7 +8459,7 @@ self.publisher_.publish(msg)</code></pre>
  * Dedicated High-Yield Pedagogical Deck Builder for Lesson 20:
  * Data Recording & Playback with ROS 2 Bags.
  */
-function buildLesson20Slides(doc, lesson, slides) {
+function buildLesson19Slides(doc, lesson, slides) {
   // 1. Storage Plugins: SQLite3 vs MCAP
   slides.push({
     id: `${lesson.id}_sec2_sqlite_vs_mcap`,
@@ -8673,7 +8666,7 @@ while reader.has_next():
  * Dedicated High-Yield Pedagogical Deck Builder for Lesson 21:
  * Complete ROS 2 Command-Line Interface (CLI) Masterclass.
  */
-function buildLesson21Slides(doc, lesson, slides) {
+function buildLesson20Slides(doc, lesson, slides) {
   // 1. Master CLI Reference Matrix
   slides.push({
     id: `${lesson.id}_sec2_master_cli_matrix`,
@@ -8878,7 +8871,7 @@ export ROS_DOMAIN_ID=42</code></pre>
  * Dedicated High-Yield Pedagogical Deck Builder for Lesson 22:
  * Behavior Trees, Recovery Behaviors & Lifecycle Management.
  */
-function buildLesson22Slides(doc, lesson, slides) {
+function buildLesson21Slides(doc, lesson, slides) {
   // 1. Why Behavior Trees Over State Machines?
   slides.push({
     id: `${lesson.id}_sec2_why_behavior_trees`,
