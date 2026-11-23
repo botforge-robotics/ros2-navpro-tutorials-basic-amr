@@ -757,7 +757,13 @@ export function PresentationView({
             <div className="ppt-slide-content ppt-slide-concept-view">
               {currentSlide.title && (
                 <div className="concept-slide-header">
-                  <h2 className="concept-main-title">{currentSlide.title}</h2>
+                  <div className="concept-title-row">
+                    {currentSlide.badge && (
+                      <span className="concept-badge-tag">{currentSlide.badge}</span>
+                    )}
+                    <h2 className="concept-main-title">{currentSlide.title}</h2>
+                  </div>
+                  <div className="concept-header-divider" />
                 </div>
               )}
 
