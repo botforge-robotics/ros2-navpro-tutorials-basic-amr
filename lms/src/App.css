@@ -4041,10 +4041,37 @@
   height: auto !important;
 }
 
-.presentation-viewport .concept-html-body div[style*="grid"] {
+.presentation-viewport .concept-html-body div[style*="grid"]:not(.l03-two-col-layout):not([class*="two-col"]) {
   grid-template-columns: repeat(3, 1fr) !important;
   gap: 0.45rem !important;
   margin: 0.25rem 0 !important;
+}
+
+/* Explicit two-column centering & responsive balance for presentation slides */
+.presentation-viewport .concept-html-body .l03-two-col-layout {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr) !important;
+  gap: 1.25rem !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 100% !important;
+  height: 100% !important;
+  max-height: 520px !important;
+  box-sizing: border-box !important;
+  margin: auto 0 !important;
+}
+
+.presentation-viewport .concept-html-body .l03-two-col-layout.l03-graph-layout {
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr) !important;
+}
+
+.presentation-viewport .concept-html-body .l03-two-col-layout .l03-content-col {
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+  align-items: stretch !important;
+  width: 100% !important;
+  min-width: 0 !important;
 }
 
 .presentation-viewport .concept-html-body div[style*="grid"] > div {

@@ -6152,7 +6152,7 @@ function buildLesson14Slides(doc, lesson, slides) {
     badge: '🧭 Problem Statement',
     title: 'Mobile Robot Navigation: Problem Formulation & Constraints',
     htmlContent: `
-      <div class="l03-two-col-layout" style="display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 0.65rem; align-items: center;">
+      <div class="l03-two-col-layout">
         <div class="l03-content-col" style="display: flex; flex-direction: column; justify-content: center; gap: 0.4rem;">
           <div class="l05-golden-card" style="padding: 0.45rem 0.65rem;">
             <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🏢</span><strong>Environment Geometry (&Wscr;)</strong></div>
@@ -6197,7 +6197,7 @@ function buildLesson14Slides(doc, lesson, slides) {
     badge: '📐 Step 1',
     title: 'Continuous Space: 2D Plane & Target Waypoint',
     htmlContent: `
-      <div class="l03-two-col-layout" style="display: grid; grid-template-columns: 1fr 1.05fr; gap: 0.65rem; align-items: center;">
+      <div class="l03-two-col-layout">
         <div class="l03-content-col" style="display: flex; flex-direction: column; justify-content: center; gap: 0.45rem;">
           <div class="l05-golden-card" style="padding: 0.45rem 0.7rem;">
             <div class="l05-golden-header" style="font-size: 0.8rem;"><span>🌐</span><strong>The Continuous Workspace (&Wscr;)</strong></div>
@@ -6208,12 +6208,14 @@ function buildLesson14Slides(doc, lesson, slides) {
             <p style="font-size: 0.74rem; line-height: 1.35;">A mission goal specifies position and orientation <code>(x_g, y_g, &theta;_g)</code>. The robot must plan a continuous parametric curve <code>q(t): [0, 1] &rarr; &Wscr;</code> reaching this target.</p>
           </div>
         </div>
-        <div class="l03-content-col" style="display: flex; flex-direction: column; justify-content: center;">
-          <div style="background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: 10px; padding: 0.45rem; box-shadow: 0 4px 14px rgba(0,0,0,0.12); text-align: center;">
+        <div class="l03-content-col" style="display: flex; flex-direction: column; justify-content: center; gap: 0.45rem;">
+          <div style="background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: 10px; padding: 0.45rem; box-shadow: 0 4px 14px rgba(0,0,0,0.12); display: flex; flex-direction: column; align-items: center; justify-content: center;">
             <img src="assets/images/nav_continuous_rep_step1.png" alt="Continuous Space 2D Plane" style="width: 100%; max-height: 235px; object-fit: contain; border-radius: 6px; display: block; margin: 0 auto;" />
             <div style="margin-top: 0.35rem; font-size: 0.68rem; color: var(--text-muted); font-family: var(--font-sans);">
               Continuous 2D plane: Robot Start pose and Goal waypoint in empty free space
             </div>
+          <div class="l05-banner-intro" style="margin: 0; font-size: 0.71rem; padding: 0.35rem 0.6rem; border-left: 3px solid #3b82f6;">
+            <strong>💡 Continuous Representation:</strong> Real-world coordinates are continuous floats in &reals;<sup>2</sup> with infinite precision.
           </div>
         </div>
       </div>
@@ -6231,7 +6233,7 @@ function buildLesson14Slides(doc, lesson, slides) {
     badge: '📦 Merged Step 2 & 3',
     title: 'Continuous Space: Obstacle Boundaries & Swept Trajectory',
     htmlContent: `
-      <div class="l03-two-col-layout" style="display: grid; grid-template-columns: 1fr 1.05fr; gap: 0.65rem; align-items: center;">
+      <div class="l03-two-col-layout">
         <div class="l03-content-col" style="display: flex; flex-direction: column; justify-content: center; gap: 0.4rem;">
           <div class="l05-golden-card" style="padding: 0.45rem 0.65rem;">
             <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🧱</span><strong>Obstacle Boundaries (&Wscr;<sub>obs</sub>)</strong></div>
@@ -6246,12 +6248,14 @@ function buildLesson14Slides(doc, lesson, slides) {
             <p style="font-size: 0.73rem; line-height: 1.32;">A trajectory is collision-free if and only if <code>Swept(&tau;) &cap; &Wscr;<sub>obs</sub> = &empty;</code> across the entire duration.</p>
           </div>
         </div>
-        <div class="l03-content-col" style="display: flex; flex-direction: column; justify-content: center;">
-          <div style="background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: 10px; padding: 0.45rem; box-shadow: 0 4px 14px rgba(0,0,0,0.12); text-align: center;">
+        <div class="l03-content-col" style="display: flex; flex-direction: column; justify-content: center; gap: 0.45rem;">
+          <div style="background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: 10px; padding: 0.45rem; box-shadow: 0 4px 14px rgba(0,0,0,0.12); display: flex; flex-direction: column; align-items: center; justify-content: center;">
             <img src="assets/images/nav_continuous_rep_step3.png" alt="Obstacle Boundaries and Swept Footprint Trajectory" style="width: 100%; max-height: 235px; object-fit: contain; border-radius: 6px; display: block; margin: 0 auto;" />
             <div style="margin-top: 0.35rem; font-size: 0.68rem; color: var(--text-muted); font-family: var(--font-sans);">
               Swept AMR footprint volume passing between continuous obstacle boundaries
             </div>
+          <div class="l05-banner-intro" style="margin: 0; font-size: 0.71rem; padding: 0.35rem 0.6rem; border-left: 3px solid #f59e0b;">
+            <strong>💡 Swept Volume:</strong> The entire physical footprint swept by the robot body must remain disjoint from obstacles.
           </div>
         </div>
       </div>
@@ -6269,7 +6273,7 @@ function buildLesson14Slides(doc, lesson, slides) {
     badge: '💥 Step 4',
     title: 'Continuous Space: Clearance Failure & Chassis Collision',
     htmlContent: `
-      <div class="l03-two-col-layout" style="display: grid; grid-template-columns: 1fr 1.05fr; gap: 0.65rem; align-items: center;">
+      <div class="l03-two-col-layout">
         <div class="l03-content-col" style="display: flex; flex-direction: column; justify-content: center; gap: 0.45rem;">
           <div class="l05-golden-card" style="padding: 0.45rem 0.7rem;">
             <div class="l05-golden-header" style="font-size: 0.8rem;"><span>💥</span><strong>The Collision Boundary Failure</strong></div>
@@ -6280,12 +6284,14 @@ function buildLesson14Slides(doc, lesson, slides) {
             <p style="font-size: 0.74rem; line-height: 1.35;">Even though the robot center point <code>(x, y)</code> does not touch the obstacle, the chassis corners collide, causing real-world bumper trips and emergency stops.</p>
           </div>
         </div>
-        <div class="l03-content-col" style="display: flex; flex-direction: column; justify-content: center;">
-          <div style="background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: 10px; padding: 0.45rem; box-shadow: 0 4px 14px rgba(0,0,0,0.12); text-align: center;">
+        <div class="l03-content-col" style="display: flex; flex-direction: column; justify-content: center; gap: 0.45rem;">
+          <div style="background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: 10px; padding: 0.45rem; box-shadow: 0 4px 14px rgba(0,0,0,0.12); display: flex; flex-direction: column; align-items: center; justify-content: center;">
             <img src="assets/images/nav_continuous_rep_collision.png" alt="Clearance Failure and Chassis Collision" style="width: 100%; max-height: 235px; object-fit: contain; border-radius: 6px; display: block; margin: 0 auto;" />
             <div style="margin-top: 0.35rem; font-size: 0.68rem; color: #ef4444; font-family: var(--font-sans); font-weight: bold;">
               Collision: Swept footprint intersects obstacle boundary (Clearance = 0 mm)
             </div>
+          <div class="l05-banner-intro" style="margin: 0; font-size: 0.71rem; padding: 0.35rem 0.6rem; border-left: 3px solid #ef4444;">
+            <strong>⚠️ Collision Warning:</strong> Centerline clearance is insufficient; robot outer bounds must be verified continuously.
           </div>
         </div>
       </div>
@@ -6303,7 +6309,7 @@ function buildLesson14Slides(doc, lesson, slides) {
     badge: '📏 Step 5',
     title: 'Continuous Space: Distance Clearance Condition (d > R)',
     htmlContent: `
-      <div class="l03-two-col-layout" style="display: grid; grid-template-columns: 1fr 1.05fr; gap: 0.65rem; align-items: center;">
+      <div class="l03-two-col-layout">
         <div class="l03-content-col" style="display: flex; flex-direction: column; justify-content: center; gap: 0.45rem;">
           <div class="l05-golden-card" style="padding: 0.45rem 0.7rem;">
             <div class="l05-golden-header" style="font-size: 0.8rem;"><span>📏</span><strong>Distance to Obstacle Boundary</strong></div>
@@ -6314,12 +6320,14 @@ function buildLesson14Slides(doc, lesson, slides) {
             <p style="font-size: 0.74rem; line-height: 1.35;">Paths passing through corridors narrower than <code>2 &times; R<sub>robot</sub></code> are strictly pruned by the planning engine before motion execution begins.</p>
           </div>
         </div>
-        <div class="l03-content-col" style="display: flex; flex-direction: column; justify-content: center;">
-          <div style="background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: 10px; padding: 0.45rem; box-shadow: 0 4px 14px rgba(0,0,0,0.12); text-align: center;">
+        <div class="l03-content-col" style="display: flex; flex-direction: column; justify-content: center; gap: 0.45rem;">
+          <div style="background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: 10px; padding: 0.45rem; box-shadow: 0 4px 14px rgba(0,0,0,0.12); display: flex; flex-direction: column; align-items: center; justify-content: center;">
             <img src="assets/images/nav_continuous_rep_allowable_path.png" alt="Distance Clearance Condition d > R" style="width: 100%; max-height: 235px; object-fit: contain; border-radius: 6px; display: block; margin: 0 auto;" />
             <div style="margin-top: 0.35rem; font-size: 0.68rem; color: #10b981; font-family: var(--font-sans); font-weight: bold;">
               Allowable Path: Safety clearance corridor dist > R_robot verified
             </div>
+          <div class="l05-banner-intro" style="margin: 0; font-size: 0.71rem; padding: 0.35rem 0.6rem; border-left: 3px solid #10b981;">
+            <strong>💡 Circular Bounding:</strong> Enclosing the AMR in radius R guarantees collision avoidance at any orientation.
           </div>
         </div>
       </div>
@@ -6337,7 +6345,7 @@ function buildLesson14Slides(doc, lesson, slides) {
     badge: '🎈 Step 6',
     title: 'Configuration Space: Obstacle Inflation by Robot Radius',
     htmlContent: `
-      <div class="l03-two-col-layout" style="display: grid; grid-template-columns: 1fr 1.05fr; gap: 0.65rem; align-items: center;">
+      <div class="l03-two-col-layout">
         <div class="l03-content-col" style="display: flex; flex-direction: column; justify-content: center; gap: 0.45rem;">
           <div class="l05-golden-card" style="padding: 0.45rem 0.7rem;">
             <div class="l05-golden-header" style="font-size: 0.8rem;"><span>🎈</span><strong>Minkowski Sum Expansion</strong></div>
@@ -6348,12 +6356,14 @@ function buildLesson14Slides(doc, lesson, slides) {
             <p style="font-size: 0.74rem; line-height: 1.35;">In Configuration Space, the robot collapses into a dimensionless 0-radius point particle! Path planning is reduced to finding a 1D curve that never crosses inflated boundaries.</p>
           </div>
         </div>
-        <div class="l03-content-col" style="display: flex; flex-direction: column; justify-content: center;">
-          <div style="background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: 10px; padding: 0.45rem; box-shadow: 0 4px 14px rgba(0,0,0,0.12); text-align: center;">
+        <div class="l03-content-col" style="display: flex; flex-direction: column; justify-content: center; gap: 0.45rem;">
+          <div style="background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: 10px; padding: 0.45rem; box-shadow: 0 4px 14px rgba(0,0,0,0.12); display: flex; flex-direction: column; align-items: center; justify-content: center;">
             <img src="assets/images/nav_cspace_obstacle_inflation.png" alt="Obstacle Inflation by Robot Radius" style="width: 100%; max-height: 235px; object-fit: contain; border-radius: 6px; display: block; margin: 0 auto;" />
             <div style="margin-top: 0.35rem; font-size: 0.68rem; color: var(--text-muted); font-family: var(--font-sans);">
               Obstacle boundaries inflated outward by AMR circumscribed radius R
             </div>
+          <div class="l05-banner-intro" style="margin: 0; font-size: 0.71rem; padding: 0.35rem 0.6rem; border-left: 3px solid #8b5cf6;">
+            <strong>💡 C-Space Dilation:</strong> &Cscr;<sub>obs</sub> = &Wscr;<sub>obs</sub> &oplus; &Ascr;. Point collision checking replaces polygon intersection.
           </div>
         </div>
       </div>
@@ -6371,7 +6381,7 @@ function buildLesson14Slides(doc, lesson, slides) {
     badge: '✨ Step 7',
     title: 'Configuration Space: Point AMR in C_free vs. C_obs',
     htmlContent: `
-      <div class="l03-two-col-layout" style="display: grid; grid-template-columns: 1fr 1.05fr; gap: 0.65rem; align-items: center;">
+      <div class="l03-two-col-layout">
         <div class="l03-content-col" style="display: flex; flex-direction: column; justify-content: center; gap: 0.45rem;">
           <div class="l05-golden-card" style="padding: 0.45rem 0.7rem;">
             <div class="l05-golden-header" style="font-size: 0.8rem;"><span>🟢</span><strong>C_free Manifold</strong></div>
@@ -6382,12 +6392,14 @@ function buildLesson14Slides(doc, lesson, slides) {
             <p style="font-size: 0.74rem; line-height: 1.35;">The set of forbidden configurations: <code>C_obs = C \ C_free</code>. The robot point particle is strictly disallowed from entering <code>C_obs</code>.</p>
           </div>
         </div>
-        <div class="l03-content-col" style="display: flex; flex-direction: column; justify-content: center;">
-          <div style="background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: 10px; padding: 0.45rem; box-shadow: 0 4px 14px rgba(0,0,0,0.12); text-align: center;">
+        <div class="l03-content-col" style="display: flex; flex-direction: column; justify-content: center; gap: 0.45rem;">
+          <div style="background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: 10px; padding: 0.45rem; box-shadow: 0 4px 14px rgba(0,0,0,0.12); display: flex; flex-direction: column; align-items: center; justify-content: center;">
             <img src="assets/images/nav_cspace_cfree_cobs.png" alt="Point AMR in C_free vs C_obs" style="width: 100%; max-height: 235px; object-fit: contain; border-radius: 6px; display: block; margin: 0 auto;" />
             <div style="margin-top: 0.35rem; font-size: 0.68rem; color: var(--text-muted); font-family: var(--font-sans);">
               Point AMR navigating safely through C_free between C_obs regions
             </div>
+          <div class="l05-banner-intro" style="margin: 0; font-size: 0.71rem; padding: 0.35rem 0.6rem; border-left: 3px solid #10b981;">
+            <strong>💡 Dual Representation:</strong> Path planning for a robot body reduces to connecting points in &Cscr;<sub>free</sub>.
           </div>
         </div>
       </div>
@@ -6405,7 +6417,7 @@ function buildLesson14Slides(doc, lesson, slides) {
     badge: '🗺️ Architecture',
     title: 'Costmap 2D Architecture: The 3-Tier Layered Representation',
     htmlContent: `
-      <div class="l03-two-col-layout" style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.65rem; align-items: center;">
+      <div class="l03-two-col-layout">
         <div class="l03-content-col" style="display: flex; flex-direction: column; justify-content: center; gap: 0.4rem;">
           <div class="l05-golden-card" style="padding: 0.45rem 0.65rem;">
             <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🗺️</span><strong>Layer 1: Static Layer</strong></div>
@@ -6456,7 +6468,7 @@ function buildLesson14Slides(doc, lesson, slides) {
     badge: '🧮 Formulation',
     title: 'Inflation Layer Mathematics: Exponential Cost Decay & Safety Radii',
     htmlContent: `
-      <div class="l03-two-col-layout" style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.65rem; align-items: center;">
+      <div class="l03-two-col-layout">
         <div class="l03-content-col" style="display: flex; flex-direction: column; justify-content: center; gap: 0.4rem;">
           <div class="l05-golden-card" style="padding: 0.45rem 0.65rem;">
             <div class="l05-golden-header" style="font-size: 0.78rem;"><span>📐</span><strong>Decay Equation</strong></div>
@@ -6519,7 +6531,7 @@ function buildLesson14Slides(doc, lesson, slides) {
     badge: '🗂️ Taxonomy',
     title: 'Path Planning Taxonomy: Continuous vs. Discretized Roadmaps',
     htmlContent: `
-      <div class="l03-two-col-layout" style="display: grid; grid-template-columns: 1fr 1.05fr; gap: 0.65rem; align-items: center;">
+      <div class="l03-two-col-layout">
         <div class="l03-content-col" style="display: flex; flex-direction: column; justify-content: center; gap: 0.4rem;">
           <div class="l05-golden-card" style="padding: 0.45rem 0.65rem;">
             <div class="l05-golden-header" style="font-size: 0.78rem;"><span>📍</span><strong>RoadMap Methods</strong></div>
@@ -6534,12 +6546,15 @@ function buildLesson14Slides(doc, lesson, slides) {
             <p style="font-size: 0.73rem; line-height: 1.32;">Once roadmaps or cells are formed, optimal pathfinding engines (A*, Dijkstra) evaluate node heuristics to produce the final trajectory.</p>
           </div>
         </div>
-        <div class="l03-content-col" style="display: flex; flex-direction: column; justify-content: center;">
+        <div class="l03-content-col" style="display: flex; flex-direction: column; justify-content: center; gap: 0.45rem;">
           <div style="background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: 10px; padding: 0.45rem; box-shadow: 0 4px 14px rgba(0,0,0,0.12); text-align: center;">
             <img src="assets/images/nav_roadmap_taxonomy.png" alt="Path Planning Roadmap Taxonomy" style="width: 100%; max-height: 235px; object-fit: contain; border-radius: 6px; display: block; margin: 0 auto;" />
             <div style="margin-top: 0.35rem; font-size: 0.68rem; color: var(--text-muted); font-family: var(--font-sans);">
               Algorithmic taxonomy from RSE.pptx: Roadmap vs. Cell Decomposition vs. A* Search
             </div>
+          </div>
+          <div class="l05-banner-intro" style="margin-top: 0; padding: 0.4rem 0.65rem; border-left: 3px solid #6366f1; font-size: 0.72rem; line-height: 1.35;">
+            💡 <strong>Roadmap Core:</strong> Discretize continuous &#x2133;<sub>free</sub> into a finite graph G=(V, E) searchable by algorithms.
           </div>
         </div>
       </div>
@@ -6557,7 +6572,7 @@ function buildLesson14Slides(doc, lesson, slides) {
     badge: '👁️ Visibility Graph',
     title: 'Visibility Graph: Interconnecting Visible Obstacle Vertices',
     htmlContent: `
-      <div class="l03-two-col-layout" style="display: grid; grid-template-columns: 1fr 1.05fr; gap: 0.65rem; align-items: center;">
+      <div class="l03-two-col-layout">
         <div class="l03-content-col" style="display: flex; flex-direction: column; justify-content: center; gap: 0.45rem;">
           <div class="l05-golden-card" style="padding: 0.45rem 0.7rem;">
             <div class="l05-golden-header" style="font-size: 0.8rem;"><span>👁️</span><strong>Line-of-Sight Interconnection</strong></div>
@@ -6568,12 +6583,14 @@ function buildLesson14Slides(doc, lesson, slides) {
             <p style="font-size: 0.74rem; line-height: 1.35;">Because every vertex is connected to all 'visible' peers, searching this graph guarantees finding the globally shortest Euclidean distance path.</p>
           </div>
         </div>
-        <div class="l03-content-col" style="display: flex; flex-direction: column; justify-content: center;">
-          <div style="background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: 10px; padding: 0.45rem; box-shadow: 0 4px 14px rgba(0,0,0,0.12); text-align: center;">
+        <div class="l03-content-col" style="display: flex; flex-direction: column; justify-content: center; gap: 0.45rem;">
+          <div style="background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: 10px; padding: 0.45rem; box-shadow: 0 4px 14px rgba(0,0,0,0.12); display: flex; flex-direction: column; align-items: center; justify-content: center;">
             <img src="assets/images/nav_visibility_graph_step1.png" alt="Visibility Graph Interconnection" style="width: 100%; max-height: 235px; object-fit: contain; border-radius: 6px; display: block; margin: 0 auto;" />
             <div style="margin-top: 0.35rem; font-size: 0.68rem; color: var(--text-muted); font-family: var(--font-sans);">
               Connecting all obstacle vertices visible from each other in C_free
             </div>
+          <div class="l05-banner-intro" style="margin: 0; font-size: 0.71rem; padding: 0.35rem 0.6rem; border-left: 3px solid #0284c7;">
+            <strong>💡 Graph Construction:</strong> Nodes = {Start, Goal, Vertices}; Edges = Line-of-Sight segments.
           </div>
         </div>
       </div>
@@ -6591,7 +6608,7 @@ function buildLesson14Slides(doc, lesson, slides) {
     badge: '⚡ Shortest Path',
     title: 'Visibility Graph: Shortest Euclidean Path & Corner Grazing',
     htmlContent: `
-      <div class="l03-two-col-layout" style="display: grid; grid-template-columns: 1fr 1.05fr; gap: 0.65rem; align-items: center;">
+      <div class="l03-two-col-layout">
         <div class="l03-content-col" style="display: flex; flex-direction: column; justify-content: center; gap: 0.45rem;">
           <div class="l05-golden-card" style="padding: 0.45rem 0.7rem;">
             <div class="l05-golden-header" style="font-size: 0.8rem;"><span>📏</span><strong>Optimal Euclidean Distance</strong></div>
@@ -6602,12 +6619,14 @@ function buildLesson14Slides(doc, lesson, slides) {
             <p style="font-size: 0.74rem; line-height: 1.35;">Because paths pass directly through obstacle vertices, clearance is minimal (0 mm without inflation). Industrial AMRs require obstacle inflation to prevent chassis clipping.</p>
           </div>
         </div>
-        <div class="l03-content-col" style="display: flex; flex-direction: column; justify-content: center;">
-          <div style="background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: 10px; padding: 0.45rem; box-shadow: 0 4px 14px rgba(0,0,0,0.12); text-align: center;">
+        <div class="l03-content-col" style="display: flex; flex-direction: column; justify-content: center; gap: 0.45rem;">
+          <div style="background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: 10px; padding: 0.45rem; box-shadow: 0 4px 14px rgba(0,0,0,0.12); display: flex; flex-direction: column; align-items: center; justify-content: center;">
             <img src="assets/images/nav_visibility_graph_step2.png" alt="Visibility Graph Shortest Path" style="width: 100%; max-height: 235px; object-fit: contain; border-radius: 6px; display: block; margin: 0 auto;" />
             <div style="margin-top: 0.35rem; font-size: 0.68rem; color: #10b981; font-family: var(--font-sans); font-weight: bold;">
               Optimal shortest path computed through the visibility roadmap
             </div>
+          <div class="l05-banner-intro" style="margin: 0; font-size: 0.71rem; padding: 0.35rem 0.6rem; border-left: 3px solid #eab308;">
+            <strong>⚠️ Corner Grazing Risk:</strong> Shortest paths touch obstacle vertices directly, requiring safety padding in practice.
           </div>
         </div>
       </div>
@@ -6625,7 +6644,7 @@ function buildLesson14Slides(doc, lesson, slides) {
     badge: '🛡️ Maximum Clearance',
     title: 'Voronoi Diagram: Free-Space Bisectors & Maximum Clearance',
     htmlContent: `
-      <div class="l03-two-col-layout" style="display: grid; grid-template-columns: 1fr 1.05fr; gap: 0.65rem; align-items: center;">
+      <div class="l03-two-col-layout">
         <div class="l03-content-col" style="display: flex; flex-direction: column; justify-content: center; gap: 0.45rem;">
           <div class="l05-golden-card" style="padding: 0.45rem 0.7rem;">
             <div class="l05-golden-header" style="font-size: 0.8rem;"><span>⚖️</span><strong>Equidistant Bisectors</strong></div>
@@ -6636,12 +6655,14 @@ function buildLesson14Slides(doc, lesson, slides) {
             <p style="font-size: 0.74rem; line-height: 1.35;">Unlike visibility graphs which produce tight corner-grazing paths, Voronoi trajectories maximize distance from obstacles, providing maximum safety in busy industrial environments.</p>
           </div>
         </div>
-        <div class="l03-content-col" style="display: flex; flex-direction: column; justify-content: center;">
-          <div style="background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: 10px; padding: 0.45rem; box-shadow: 0 4px 14px rgba(0,0,0,0.12); text-align: center;">
+        <div class="l03-content-col" style="display: flex; flex-direction: column; justify-content: center; gap: 0.45rem;">
+          <div style="background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: 10px; padding: 0.45rem; box-shadow: 0 4px 14px rgba(0,0,0,0.12); display: flex; flex-direction: column; align-items: center; justify-content: center;">
             <img src="assets/images/nav_voronoi_diagram.png" alt="Voronoi Diagram Bisectors" style="width: 100%; max-height: 235px; object-fit: contain; border-radius: 6px; display: block; margin: 0 auto;" />
             <div style="margin-top: 0.35rem; font-size: 0.68rem; color: var(--text-muted); font-family: var(--font-sans);">
               Voronoi graph: edges bisect free space equidistant from obstacles
             </div>
+          <div class="l05-banner-intro" style="margin: 0; font-size: 0.71rem; padding: 0.35rem 0.6rem; border-left: 3px solid #10b981;">
+            <strong>💡 Maximum Safety:</strong> Maximizes obstacle clearance distance, making it ideal for high-speed industrial AMRs.
           </div>
         </div>
       </div>
@@ -6659,7 +6680,7 @@ function buildLesson14Slides(doc, lesson, slides) {
     badge: '📐 Cell Slicing',
     title: 'Exact Cell Decomposition: Trapezoidal & Triangular Slicing',
     htmlContent: `
-      <div class="l03-two-col-layout" style="display: grid; grid-template-columns: 1fr 1.05fr; gap: 0.65rem; align-items: center;">
+      <div class="l03-two-col-layout">
         <div class="l03-content-col" style="display: flex; flex-direction: column; justify-content: center; gap: 0.45rem;">
           <div class="l05-golden-card" style="padding: 0.45rem 0.7rem;">
             <div class="l05-golden-header" style="font-size: 0.8rem;"><span>✂️</span><strong>Vertical Vertex Slicing</strong></div>
@@ -6670,12 +6691,15 @@ function buildLesson14Slides(doc, lesson, slides) {
             <p style="font-size: 0.74rem; line-height: 1.35;">Nodes are placed at cell centroids and boundary midpoints. Connecting adjacent cells creates a topological graph searched from start cell to goal cell.</p>
           </div>
         </div>
-        <div class="l03-content-col" style="display: flex; flex-direction: column; justify-content: center;">
+        <div class="l03-content-col" style="display: flex; flex-direction: column; justify-content: center; gap: 0.45rem;">
           <div style="background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: 10px; padding: 0.45rem; box-shadow: 0 4px 14px rgba(0,0,0,0.12); text-align: center;">
             <img src="assets/images/nav_exact_cell_decomp_step1.png" alt="Exact Cell Decomposition" style="width: 100%; max-height: 235px; object-fit: contain; border-radius: 6px; display: block; margin: 0 auto;" />
             <div style="margin-top: 0.35rem; font-size: 0.68rem; color: var(--text-muted); font-family: var(--font-sans);">
               Non-overlapping trapezoidal cells and resultant shortest path traversal
             </div>
+          </div>
+          <div class="l05-banner-intro" style="margin-top: 0; padding: 0.4rem 0.65rem; border-left: 3px solid #14b8a6; font-size: 0.72rem; line-height: 1.35;">
+            💡 <strong>Convex Guarantee:</strong> Within any convex trapezoid, straight-line motion is always 100% collision-free.
           </div>
         </div>
       </div>
@@ -6693,7 +6717,7 @@ function buildLesson14Slides(doc, lesson, slides) {
     badge: '🌳 Quadtrees',
     title: 'Approximate Cell Decomposition: Recursive Quadtree Subdivision',
     htmlContent: `
-      <div class="l03-two-col-layout" style="display: grid; grid-template-columns: 1fr 1.05fr; gap: 0.65rem; align-items: center;">
+      <div class="l03-two-col-layout">
         <div class="l03-content-col" style="display: flex; flex-direction: column; justify-content: center; gap: 0.4rem;">
           <div class="l05-golden-card" style="padding: 0.45rem 0.65rem;">
             <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🔲</span><strong>Three-State Cell Classification</strong></div>
@@ -6704,12 +6728,15 @@ function buildLesson14Slides(doc, lesson, slides) {
             <p style="font-size: 0.73rem; line-height: 1.32;">If no contiguous chain of Empty cells connects Start to Goal, Mixed cells are subdivided into 4 sub-quadrants. As resolution increases, narrow passages emerge!</p>
           </div>
         </div>
-        <div class="l03-content-col" style="display: flex; flex-direction: column; justify-content: center;">
+        <div class="l03-content-col" style="display: flex; flex-direction: column; justify-content: center; gap: 0.45rem;">
           <div style="background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: 10px; padding: 0.45rem; box-shadow: 0 4px 14px rgba(0,0,0,0.12); text-align: center;">
             <img src="assets/images/nav_approx_cell_decomp_step2.png" alt="Approximate Cell Decomposition Quadtree" style="width: 100%; max-height: 235px; object-fit: contain; border-radius: 6px; display: block; margin: 0 auto;" />
             <div style="margin-top: 0.35rem; font-size: 0.68rem; color: var(--text-muted); font-family: var(--font-sans);">
               Recursive quadtree subdivision revealing free corridor through mixed cells
             </div>
+          </div>
+          <div class="l05-banner-intro" style="margin-top: 0; padding: 0.4rem 0.65rem; border-left: 3px solid #06b6d4; font-size: 0.72rem; line-height: 1.35;">
+            💡 <strong>Quadtree Scaling:</strong> Saves massive memory by focusing cell resolution only on obstacle borders.
           </div>
         </div>
       </div>
@@ -6746,7 +6773,7 @@ function buildLesson14Slides(doc, lesson, slides) {
     badge: '⭐ Formulation',
     title: 'Graph Search: The A* Search Engine & Heuristic Function',
     htmlContent: `
-      <div class="l03-two-col-layout" style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.65rem; align-items: center;">
+      <div class="l03-two-col-layout">
         <div class="l03-content-col" style="display: flex; flex-direction: column; justify-content: center; gap: 0.4rem;">
           <div class="l05-golden-card" style="padding: 0.45rem 0.65rem;">
             <div class="l05-golden-header" style="font-size: 0.78rem;"><span>⭐</span><strong>Evaluation Function f(n) = g(n) + h(n)</strong></div>
@@ -6790,7 +6817,7 @@ function buildLesson14Slides(doc, lesson, slides) {
     badge: '🔍 Graph Expansion',
     title: 'A* Graph Search: Step-by-Step Node Expansion & Priority Queue',
     htmlContent: `
-      <div class="l03-two-col-layout" style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.65rem; align-items: center;">
+      <div class="l03-two-col-layout">
         <div class="l03-content-col" style="display: flex; flex-direction: column; justify-content: center; gap: 0.4rem;">
           <div class="l05-golden-card" style="padding: 0.45rem 0.65rem;">
             <div class="l05-golden-header" style="font-size: 0.78rem;"><span>1️⃣</span><strong>Iteration 1: Start Node (S) Expansion</strong></div>
@@ -6891,7 +6918,7 @@ function buildLesson14Slides(doc, lesson, slides) {
     badge: '🏎️ DWA Rollout',
     title: 'Dynamic Window Approach (DWA): Velocity Sampling & Forward Rollout',
     htmlContent: `
-      <div class="l03-two-col-layout" style="display: grid; grid-template-columns: 1fr 1.05fr; gap: 0.65rem; align-items: center;">
+      <div class="l03-two-col-layout">
         <div class="l03-content-col" style="display: flex; flex-direction: column; justify-content: center; gap: 0.4rem;">
           <div class="l05-golden-card" style="padding: 0.45rem 0.65rem;">
             <div class="l05-golden-header" style="font-size: 0.78rem;"><span>1️⃣</span><strong>Dynamic Window Velocity Sampling</strong></div>
@@ -6906,12 +6933,14 @@ function buildLesson14Slides(doc, lesson, slides) {
             <p style="font-size: 0.73rem; line-height: 1.32;">Discard trajectories intersecting lethal obstacles. Evaluate remaining trajectories with scoring critics, pick the highest score, and stream <code>/cmd_vel</code> at 20 Hz!</p>
           </div>
         </div>
-        <div class="l03-content-col" style="display: flex; flex-direction: column; justify-content: center;">
-          <div style="background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: 10px; padding: 0.45rem; box-shadow: 0 4px 14px rgba(0,0,0,0.12); text-align: center;">
+        <div class="l03-content-col" style="display: flex; flex-direction: column; justify-content: center; gap: 0.45rem;">
+          <div style="background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: 10px; padding: 0.45rem; box-shadow: 0 4px 14px rgba(0,0,0,0.12); display: flex; flex-direction: column; align-items: center; justify-content: center;">
             <img src="assets/images/nav_dwa_local_planner.png" alt="DWA Local Planner Rollout" style="width: 100%; max-height: 235px; object-fit: contain; border-radius: 6px; display: block; margin: 0 auto;" />
             <div style="margin-top: 0.35rem; font-size: 0.68rem; color: var(--text-muted); font-family: var(--font-sans);">
               Velocity space sampling, forward rollout curves, and collision pruning
             </div>
+          <div class="l05-banner-intro" style="margin: 0; font-size: 0.71rem; padding: 0.35rem 0.6rem; border-left: 3px solid #e11d48;">
+            <strong>💡 Reactive Control:</strong> DWA executes at 20 Hz to dynamically steer around sudden warehouse obstacles.
           </div>
         </div>
       </div>
@@ -6929,7 +6958,7 @@ function buildLesson14Slides(doc, lesson, slides) {
     badge: '⚖️ Scoring Matrix',
     title: 'Nav2 DWB Controller: Multi-Objective Critic Scoring Matrix',
     htmlContent: `
-      <div class="l03-two-col-layout" style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.65rem; align-items: center;">
+      <div class="l03-two-col-layout">
         <div class="l03-content-col" style="display: flex; flex-direction: column; justify-content: center; gap: 0.4rem;">
           <div class="l05-golden-card" style="padding: 0.45rem 0.65rem;">
             <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🎯</span><strong>Objective Function G(v, &omega;)</strong></div>
@@ -7108,7 +7137,7 @@ function buildLesson14Slides(doc, lesson, slides) {
     badge: '📦 Practical Step 1',
     title: 'Practical Step 1: Install Required Nav2 & Localization Packages',
     htmlContent: `
-      <div class="l03-two-col-layout" style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.65rem; align-items: center;">
+      <div class="l03-two-col-layout">
         <div class="l03-content-col" style="display: flex; flex-direction: column; justify-content: center; gap: 0.4rem;">
           <div class="l05-golden-card" style="padding: 0.45rem 0.65rem;">
             <div class="l05-golden-header" style="font-size: 0.78rem;"><span>📦</span><strong>navigation2 &amp; nav2_bringup</strong></div>
@@ -7153,7 +7182,7 @@ ros2 pkg list | grep nav2</code></pre>
     badge: '📁 Practical Step 2',
     title: 'Practical Step 2: Create Navigation Package in Workspace',
     htmlContent: `
-      <div class="l03-two-col-layout" style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.65rem; align-items: center;">
+      <div class="l03-two-col-layout">
         <div class="l03-content-col" style="display: flex; flex-direction: column; justify-content: center; gap: 0.4rem;">
           <div class="l05-golden-card" style="padding: 0.45rem 0.65rem;">
             <div class="l05-golden-header" style="font-size: 0.78rem;"><span>📁</span><strong>nexus_amr_navigation Package</strong></div>
@@ -7196,7 +7225,7 @@ mkdir -p config launch maps rviz</code></pre>
     badge: '⚙️ Practical Step 3',
     title: 'Practical Step 3: Setup Configuration Files (nav2_params.yaml)',
     htmlContent: `
-      <div class="l03-two-col-layout" style="display: grid; grid-template-columns: 1fr 1.05fr; gap: 0.65rem; align-items: center;">
+      <div class="l03-two-col-layout">
         <div class="l03-content-col" style="display: flex; flex-direction: column; justify-content: center; gap: 0.4rem;">
           <div class="l05-golden-card" style="padding: 0.45rem 0.65rem;">
             <div class="l05-golden-header" style="font-size: 0.78rem;"><span>⚙️</span><strong>Centralized nav2_params.yaml</strong></div>
@@ -7251,7 +7280,7 @@ controller_server:
     badge: '🚀 Practical Step 4',
     title: 'Practical Step 4: Setup Navigation Launch File (navigation.launch.py)',
     htmlContent: `
-      <div class="l03-two-col-layout" style="display: grid; grid-template-columns: 1fr 1.05fr; gap: 0.65rem; align-items: center;">
+      <div class="l03-two-col-layout">
         <div class="l03-content-col" style="display: flex; flex-direction: column; justify-content: center; gap: 0.4rem;">
           <div class="l05-golden-card" style="padding: 0.45rem 0.65rem;">
             <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🚀</span><strong>nav2_bringup Integration</strong></div>
@@ -7308,7 +7337,7 @@ def generate_launch_description():
     badge: '🎯 Practical Step 5',
     title: 'Practical Step 5: Launching Navigation & Live RViz2 Mission Execution',
     htmlContent: `
-      <div class="l03-two-col-layout" style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.65rem; align-items: center;">
+      <div class="l03-two-col-layout">
         <div class="l03-content-col" style="display: flex; flex-direction: column; justify-content: center; gap: 0.4rem;">
           <div class="l05-golden-card" style="padding: 0.45rem 0.65rem;">
             <div class="l05-golden-header" style="font-size: 0.78rem;"><span>📍</span><strong>1. Set 2D Pose Estimate</strong></div>
