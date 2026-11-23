@@ -6797,93 +6797,24 @@ function buildLesson14Slides(doc, lesson, slides) {
             </div>
           </div>
           <div class="l05-banner-intro" style="margin: 0; font-size: 0.71rem; padding: 0.35rem 0.6rem; border-left: 3px solid #7c3aed;">
-            <strong>👉 Execution Graph:</strong> See the step-by-step priority queue expansion graph on the next slide!
+            <strong>👉 Interactive Engine:</strong> Click through the animated step-by-step node expansion & priority queue on the next slide!
           </div>
         </div>
       </div>
     `
   });
 
-  // 20. A* Graph Search: Step-by-Step Node Expansion & Priority Queue (Slide 168 in RSE)
+  // 20. Interactive A* Search: Animated On-Click Step-by-Step Node Expansion (Slide 168 in RSE)
   slides.push({
-    id: `${lesson.id}_sec16_astar_expansion`,
-    type: 'concept',
+    id: `${lesson.id}_interactive_astar`,
+    type: 'interactive',
+    interactiveKey: 'astar',
     lessonNum: lesson.num_str,
     lessonId: lesson.id,
     module: lesson.module,
     sectionTitle: '17. A* Search Execution',
-    badge: '🔍 Graph Expansion',
-    title: 'A* Graph Search: Step-by-Step Node Expansion & Priority Queue',
-    htmlContent: `
-      <div class="l03-two-col-layout">
-        <div class="l03-content-col" style="display: flex; flex-direction: column; justify-content: center; gap: 0.4rem;">
-          <div class="l05-golden-card" style="padding: 0.45rem 0.65rem;">
-            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>1️⃣</span><strong>Iteration 1: Start Node (S) Expansion</strong></div>
-            <p style="font-size: 0.73rem; line-height: 1.32;">Expand <code>S (g=0, h=6, f=6)</code>. Neighbors generated: <code>D (g=4, h=3, f=7)</code> and <code>A (g=2, h=4, f=6)</code>. Both pushed to Open List min-heap.</p>
-          </div>
-          <div class="l05-golden-card" style="padding: 0.45rem 0.65rem;">
-            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>2️⃣</span><strong>Iteration 2: Pop Lowest f(n) &rarr; Node A</strong></div>
-            <p style="font-size: 0.73rem; line-height: 1.32;"><code>f(A) = 6 &lt; f(D) = 7</code>. Pop <code>A</code>, add to Closed List. Neighbors evaluated: <code>E (g=2+3=5, h=2, f=7)</code>. Queue now contains <code>[D (f=7), E (f=7)]</code>.</p>
-          </div>
-          <div class="l05-golden-card" style="padding: 0.45rem 0.65rem;">
-            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>3️⃣</span><strong>Iteration 3: Expand Toward Goal (G)</strong></div>
-            <p style="font-size: 0.73rem; line-height: 1.32;">Pop <code>E</code>, expand edge to <code>Goal (g=5+2=7, h=0, f=7)</code>. Goal reached with guaranteed minimal cost <code>g*(G) = 7</code> along path <code>S &rarr; A &rarr; E &rarr; Goal</code>!</p>
-          </div>
-        </div>
-        <div class="l03-content-col" style="display: flex; flex-direction: column; justify-content: center; gap: 0.35rem;">
-          <div style="background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: 8px; padding: 0.45rem; box-shadow: 0 4px 14px rgba(0,0,0,0.12); text-align: center;">
-            <svg viewBox="0 0 420 220" style="width: 100%; max-height: 200px; display: block; margin: 0 auto;">
-              <defs>
-                <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-                  <path d="M 0 0 L 10 5 L 0 10 z" fill="#7c3aed" />
-                </marker>
-              </defs>
-              <line x1="60" y1="110" x2="160" y2="60" stroke="#7c3aed" stroke-width="2.5" marker-end="url(#arrow)" />
-              <text x="100" y="75" fill="#a78bfa" font-size="11" font-weight="bold">cost=2</text>
-
-              <line x1="60" y1="110" x2="160" y2="160" stroke="#64748b" stroke-width="1.5" stroke-dasharray="3,3" />
-              <text x="100" y="150" fill="#94a3b8" font-size="11">cost=4</text>
-
-              <line x1="160" y1="60" x2="270" y2="80" stroke="#7c3aed" stroke-width="2.5" marker-end="url(#arrow)" />
-              <text x="210" y="65" fill="#a78bfa" font-size="11" font-weight="bold">cost=3</text>
-
-              <line x1="160" y1="160" x2="270" y2="140" stroke="#64748b" stroke-width="1.5" stroke-dasharray="3,3" />
-              <text x="210" y="165" fill="#94a3b8" font-size="11">cost=2</text>
-
-              <line x1="270" y1="80" x2="370" y2="110" stroke="#10b981" stroke-width="3" marker-end="url(#arrow)" />
-              <text x="320" y="90" fill="#34d399" font-size="11" font-weight="bold">cost=2</text>
-
-              <!-- Nodes -->
-              <circle cx="60" cy="110" r="22" fill="#3b82f6" stroke="#60a5fa" stroke-width="2" />
-              <text x="60" y="106" fill="#fff" font-size="12" font-weight="bold" text-anchor="middle">S</text>
-              <text x="60" y="122" fill="#bfdbfe" font-size="9" text-anchor="middle">g=0, h=6</text>
-
-              <circle cx="160" cy="60" r="22" fill="#7c3aed" stroke="#a78bfa" stroke-width="2" />
-              <text x="160" y="56" fill="#fff" font-size="12" font-weight="bold" text-anchor="middle">A</text>
-              <text x="160" y="72" fill="#ddd6fe" font-size="9" text-anchor="middle">g=2, h=4</text>
-
-              <circle cx="160" cy="160" r="20" fill="#334155" stroke="#64748b" stroke-width="1.5" />
-              <text x="160" y="156" fill="#e2e8f0" font-size="12" font-weight="bold" text-anchor="middle">D</text>
-              <text x="160" y="171" fill="#94a3b8" font-size="9" text-anchor="middle">g=4, h=3</text>
-
-              <circle cx="270" cy="80" r="22" fill="#7c3aed" stroke="#a78bfa" stroke-width="2" />
-              <text x="270" y="76" fill="#fff" font-size="12" font-weight="bold" text-anchor="middle">E</text>
-              <text x="270" y="92" fill="#ddd6fe" font-size="9" text-anchor="middle">g=5, h=2</text>
-
-              <circle cx="370" cy="110" r="24" fill="#10b981" stroke="#34d399" stroke-width="2.5" />
-              <text x="370" y="106" fill="#fff" font-size="12" font-weight="bold" text-anchor="middle">Goal</text>
-              <text x="370" y="122" fill="#d1fae5" font-size="9" text-anchor="middle">g=7, h=0</text>
-            </svg>
-            <div style="margin-top: 0.3rem; font-size: 0.68rem; color: var(--text-muted); font-family: var(--font-sans);">
-              A* Traversal Graph: Priority queue frontier expands optimal path <span style="color: #34d399; font-weight: bold;">S &rarr; A &rarr; E &rarr; Goal</span>
-            </div>
-          </div>
-          <div class="l05-banner-intro" style="margin: 0; font-size: 0.72rem; padding: 0.35rem 0.6rem; border-left: 3px solid #10b981;">
-            <strong>💡 Shortest Path Result:</strong> Total path cost $f(Goal) = 7.0$ units. Zero nodes expanded unnecessarily!
-          </div>
-        </div>
-      </div>
-    `
+    badge: '⚡ Interactive On-Click Engine',
+    title: 'A* Graph Search: Step-by-Step On-Click Node Expansion'
   });
 
   // ==============================================================

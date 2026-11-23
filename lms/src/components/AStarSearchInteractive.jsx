@@ -5,143 +5,169 @@ import {
   RotateCcw, 
   ChevronRight, 
   ChevronLeft, 
-  CheckCircle2, 
   Sparkles,
+  CheckCircle2,
   Zap,
-  ArrowRight
+  Award,
+  CornerDownRight,
+  MousePointerClick
 } from 'lucide-react';
 
 const NODES = {
-  S: { x: 70, y: 145, h: 11.5, label: 'S (Start)' },
-  A: { x: 175, y: 70, h: 10.1, label: 'A' },
-  D: { x: 185, y: 220, h: 9.2, label: 'D' },
-  B: { x: 315, y: 70, h: 5.8, label: 'B' },
-  E: { x: 315, y: 220, h: 7.1, label: 'E' },
-  C: { x: 445, y: 70, h: 3.4, label: 'C' },
-  F: { x: 435, y: 220, h: 3.5, label: 'F' },
-  G: { x: 535, y: 145, h: 0.0, label: 'G (Goal)' }
+  S: { x: 65, y: 140, h: 11.5, label: 'S (Start)' },
+  A: { x: 175, y: 65, h: 10.1, label: 'A' },
+  D: { x: 185, y: 215, h: 9.2, label: 'D' },
+  B: { x: 315, y: 65, h: 5.8, label: 'B' },
+  E: { x: 315, y: 215, h: 7.1, label: 'E' },
+  C: { x: 445, y: 65, h: 3.4, label: 'C' },
+  F: { x: 435, y: 215, h: 3.5, label: 'F' },
+  G: { x: 535, y: 140, h: 0.0, label: 'G (Goal)' }
 };
 
 const EDGES = [
-  { from: 'S', to: 'A', cost: 3.0, midX: 120, midY: 95 },
-  { from: 'S', to: 'D', cost: 4.0, midX: 125, midY: 195 },
-  { from: 'A', to: 'B', cost: 4.0, midX: 245, midY: 55 },
-  { from: 'A', to: 'D', cost: 5.0, midX: 195, midY: 145 },
-  { from: 'D', to: 'E', cost: 2.0, midX: 250, midY: 235 },
-  { from: 'B', to: 'C', cost: 4.0, midX: 380, midY: 55 },
-  { from: 'B', to: 'E', cost: 5.0, midX: 300, midY: 145 },
-  { from: 'E', to: 'F', cost: 4.0, midX: 375, midY: 235 },
-  { from: 'F', to: 'G', cost: 3.5, midX: 495, midY: 195 }
+  { from: 'S', to: 'A', cost: 3.0, midX: 115, midY: 92 },
+  { from: 'S', to: 'D', cost: 4.0, midX: 120, midY: 188 },
+  { from: 'A', to: 'B', cost: 4.0, midX: 245, midY: 53 },
+  { from: 'A', to: 'D', cost: 5.0, midX: 190, midY: 140 },
+  { from: 'D', to: 'E', cost: 2.0, midX: 250, midY: 226 },
+  { from: 'B', to: 'C', cost: 4.0, midX: 380, midY: 53 },
+  { from: 'B', to: 'E', cost: 5.0, midX: 300, midY: 140 },
+  { from: 'E', to: 'F', cost: 4.0, midX: 375, midY: 226 },
+  { from: 'F', to: 'G', cost: 3.5, midX: 490, midY: 188 }
 ];
 
 const STEPS = [
   {
     step: 0,
-    title: 'Initialize Search at Start Node S',
+    chipLabel: '0: Init S',
+    title: 'Initialize Min-Heap Frontier at Start Node S',
     current: 'S',
     closed: [],
     frontier: [
-      { path: 'S', g: 0.0, h: 11.5, f: 11.5, status: 'Selected Next' }
+      { path: 'S', targetNode: 'S', g: 0.0, h: 11.5, f: 11.5, status: 'Root Initialized', isLowest: true }
     ],
     activeEdges: [],
     optimalPath: [],
-    explanation: 'Begin search at start node S. Compute heuristic h(S) = 11.5. Priority queue initializes with f(S) = g(0) + h(11.5) = 11.5.'
+    decisionFormula: 'f(S) = g(0.0) + h(11.5) = 11.5',
+    decisionNote: 'Push start node S into Open List min-heap.',
+    explanation: 'Search begins at Start Node S. True path cost from start g(S) = 0. Admissible heuristic estimate to goal h(S) = 11.5. Priority queue initializes with root f(S) = 11.5.'
   },
   {
     step: 1,
-    title: 'Expand Start Node S: Evaluate Neighbors A & D',
+    chipLabel: '1: Expand S',
+    title: 'Pop Node S: Expand Neighbors A & D',
     current: 'S',
     closed: ['S'],
     frontier: [
-      { path: 'S → A', g: 3.0, h: 10.1, f: 13.1, status: 'Lowest f(n) • Selected' },
-      { path: 'S → D', g: 4.0, h: 9.2, f: 13.2, status: 'Queued in Frontier' }
+      { path: 'S → A', targetNode: 'A', g: 3.0, h: 10.1, f: 13.1, status: '★ Lowest f(n) • Selected', isLowest: true },
+      { path: 'S → D', targetNode: 'D', g: 4.0, h: 9.2, f: 13.2, status: 'Queued in Min-Heap', isLowest: false }
     ],
     activeEdges: ['S-A', 'S-D'],
     optimalPath: [],
-    explanation: 'Pop S. Expand neighbors: S→A has f = 3 + 10.1 = 13.1; S→D has f = 4 + 9.2 = 13.2. S→A is selected because 13.1 < 13.2.'
+    decisionFormula: 'f(S→A) = 3.0 + 10.1 = 13.1  <  f(S→D) = 4.0 + 9.2 = 13.2',
+    decisionNote: 'Select S → A next (13.1 is strictly smaller than 13.2).',
+    explanation: 'Pop S from min-heap. Evaluate outgoing edges: edge (S,A) cost 3 gives f=13.1; edge (S,D) cost 4 gives f=13.2. Candidate S→A holds lowest f-score and is chosen next for expansion.'
   },
   {
     step: 2,
+    chipLabel: '2: Pop A',
     title: 'Pop S → A (f=13.1): Expand Node A to B & D',
     current: 'A',
     closed: ['S', 'A'],
     frontier: [
-      { path: 'S → A → B', g: 7.0, h: 5.8, f: 12.8, status: 'Lowest f(n) • Selected' },
-      { path: 'S → D', g: 4.0, h: 9.2, f: 13.2, status: 'Queued in Frontier' },
-      { path: 'S → A → D', g: 8.0, h: 9.2, f: 17.2, status: 'Sub-optimal Branch' }
+      { path: 'S → A → B', targetNode: 'B', g: 7.0, h: 5.8, f: 12.8, status: '★ Lowest f(n) • Selected', isLowest: true },
+      { path: 'S → D', targetNode: 'D', g: 4.0, h: 9.2, f: 13.2, status: 'Queued in Min-Heap', isLowest: false },
+      { path: 'S → A → D', targetNode: 'D', g: 8.0, h: 9.2, f: 17.2, status: 'Sub-optimal (g=8 > g=4)', isLowest: false }
     ],
     activeEdges: ['S-A', 'A-B', 'A-D', 'S-D'],
     optimalPath: [],
-    explanation: 'Pop S→A (f=13.1). Expand A: generated S→A→B (g=7, h=5.8, f=12.8) and S→A→D (g=8, h=9.2, f=17.2). S→A→B has lowest f=12.8!'
+    decisionFormula: 'f(S→A→B) = 7.0 + 5.8 = 12.8 (Lowest in entire Min-Heap!)',
+    decisionNote: 'Branch B is very promising due to low heuristic h(B)=5.8.',
+    explanation: 'Pop S→A (f=13.1). Expanding A generates path to B (g=7, h=5.8, f=12.8) and path to D (g=8, h=9.2, f=17.2). Candidate S→A→B now holds the lowest f-score in the entire queue!'
   },
   {
     step: 3,
-    title: 'Pop S → A → B (f=12.8): Expand Node B to C & E',
+    chipLabel: '3: Backtrack ↩',
+    title: 'Pop S → A → B (f=12.8): Expand B → A* Backtracks to D!',
     current: 'B',
     closed: ['S', 'A', 'B'],
     frontier: [
-      { path: 'S → D', g: 4.0, h: 9.2, f: 13.2, status: 'Lowest f(n) • Backtrack' },
-      { path: 'S → A → B → C', g: 11.0, h: 3.4, f: 14.4, status: 'Queued in Frontier' },
-      { path: 'S → A → D', g: 8.0, h: 9.2, f: 17.2, status: 'Sub-optimal' },
-      { path: 'S → A → B → E', g: 12.0, h: 7.1, f: 19.1, status: 'Sub-optimal' }
+      { path: 'S → D', targetNode: 'D', g: 4.0, h: 9.2, f: 13.2, status: '★ Lowest f(n) • BACKTRACK ↩', isLowest: true },
+      { path: 'S → A → B → C', targetNode: 'C', g: 11.0, h: 3.4, f: 14.4, status: 'Queued in Min-Heap', isLowest: false },
+      { path: 'S → A → D', targetNode: 'D', g: 8.0, h: 9.2, f: 17.2, status: 'Sub-optimal', isLowest: false },
+      { path: 'S → A → B → E', targetNode: 'E', g: 12.0, h: 7.1, f: 19.1, status: 'Sub-optimal', isLowest: false }
     ],
     activeEdges: ['S-A', 'A-B', 'B-C', 'B-E', 'S-D'],
     optimalPath: [],
-    explanation: 'Pop S→A→B (f=12.8). Generated S→A→B→C (f=14.4) and S→A→B→E (f=19.1). The lowest f-score in the queue is now S→D (13.2)! Algorithm backtracks to branch D.'
+    decisionFormula: 'f(S→D) = 13.2  <  f(S→A→B→C) = 14.4  <  f(S→A→B→E) = 19.1',
+    decisionNote: 'Intelligent A* Backtracking: Switches focus back to branch D!',
+    explanation: 'Pop S→A→B. Evaluating B generates C (f=14.4) and E (f=19.1). Both are worse than the waiting candidate S→D (f=13.2)! A* automatically backtracks to branch D, preventing wasted exploration!'
   },
   {
     step: 4,
-    title: 'Pop S → D (f=13.2): Expand Node D to E',
+    chipLabel: '4: Pop D (Prune ✂)',
+    title: 'Pop S → D (f=13.2): Expand D to E → Prune Costly Paths!',
     current: 'D',
     closed: ['S', 'A', 'B', 'D'],
     frontier: [
-      { path: 'S → D → E', g: 6.0, h: 7.1, f: 13.1, status: 'Lowest f(n) • Selected' },
-      { path: 'S → A → B → C', g: 11.0, h: 3.4, f: 14.4, status: 'Queued in Frontier' },
-      { path: 'S → D → A', g: 9.0, h: 10.1, f: 19.1, status: 'Sub-optimal' },
-      { path: 'S → A → B → E', g: 12.0, h: 7.1, f: 19.1, status: 'Pruned (Costlier)' }
+      { path: 'S → D → E', targetNode: 'E', g: 6.0, h: 7.1, f: 13.1, status: '★ Lowest f(n) • Selected', isLowest: true },
+      { path: 'S → A → B → C', targetNode: 'C', g: 11.0, h: 3.4, f: 14.4, status: 'Queued in Min-Heap', isLowest: false },
+      { path: 'S → D → A', targetNode: 'A', g: 9.0, h: 10.1, f: 19.1, status: 'Sub-optimal', isLowest: false },
+      { path: 'S → A → B → E', targetNode: 'E', g: 12.0, h: 7.1, f: 19.1, status: '✂ PRUNED (g=12 > g=6)', isLowest: false }
     ],
     activeEdges: ['S-D', 'D-E', 'S-A', 'A-B', 'B-C'],
     optimalPath: [],
-    explanation: 'Pop S→D (f=13.2). Expand D to E: path S→D→E has g=6, h=7.1, f=13.1. This is much cheaper than reaching E via B (f=19.1)! S→D→E becomes top candidate.'
+    decisionFormula: 'g(S→D→E) = 6.0  vs  g(S→A→B→E) = 12.0 → Pruned!',
+    decisionNote: 'Reaching E via D is half the cost of reaching E via B.',
+    explanation: 'Pop S→D (f=13.2). Edge (D,E) cost 2 reaches E with g=6.0, f=13.1. This is far cheaper than the earlier route via B (g=12.0). A* prunes the costly branch and selects S→D→E!'
   },
   {
     step: 5,
-    title: 'Pop S → D → E (f=13.1): Expand Node E to F',
+    chipLabel: '5: Expand E',
+    title: 'Pop S → D → E (f=13.1): Expand E to F',
     current: 'E',
     closed: ['S', 'A', 'B', 'D', 'E'],
     frontier: [
-      { path: 'S → D → E → F', g: 10.0, h: 3.5, f: 13.5, status: 'Lowest f(n) • Selected' },
-      { path: 'S → A → B → C', g: 11.0, h: 3.4, f: 14.4, status: 'Queued in Frontier' },
-      { path: 'S → D → E → B', g: 11.0, h: 5.8, f: 16.8, status: 'Sub-optimal' }
+      { path: 'S → D → E → F', targetNode: 'F', g: 10.0, h: 3.5, f: 13.5, status: '★ Lowest f(n) • Selected', isLowest: true },
+      { path: 'S → A → B → C', targetNode: 'C', g: 11.0, h: 3.4, f: 14.4, status: 'Queued in Min-Heap', isLowest: false },
+      { path: 'S → D → E → B', targetNode: 'B', g: 11.0, h: 5.8, f: 16.8, status: 'Sub-optimal (Closed)', isLowest: false }
     ],
     activeEdges: ['S-D', 'D-E', 'E-F'],
     optimalPath: [],
-    explanation: 'Pop S→D→E (f=13.1). Expand E to F: generated S→D→E→F (g=10, h=3.5, f=13.5). S→D→E→F holds lowest f-score and advances toward Goal.'
+    decisionFormula: 'f(S→D→E→F) = 10.0 + 3.5 = 13.5',
+    decisionNote: 'Node F is only 3.5 units estimated distance from Goal.',
+    explanation: 'Pop S→D→E (f=13.1). Expand E: edge (E,F) cost 4 gives g=10.0, h=3.5, f=13.5. Path S→D→E→F holds the lowest f-score in the queue and advances directly toward the Goal.'
   },
   {
     step: 6,
+    chipLabel: '6: Reach G',
     title: 'Pop S → D → E → F (f=13.5): Reach Goal G!',
     current: 'F',
     closed: ['S', 'A', 'B', 'D', 'E', 'F'],
     frontier: [
-      { path: 'S → D → E → F → G', g: 13.5, h: 0.0, f: 13.5, status: 'Goal Found • Ready to Pop' },
-      { path: 'S → A → B → C', g: 11.0, h: 3.4, f: 14.4, status: 'Queued in Frontier' }
+      { path: 'S → D → E → F → G', targetNode: 'G', g: 13.5, h: 0.0, f: 13.5, status: '★ GOAL FOUND • Ready to Pop', isLowest: true },
+      { path: 'S → A → B → C', targetNode: 'C', g: 11.0, h: 3.4, f: 14.4, status: 'Queued in Min-Heap', isLowest: false }
     ],
     activeEdges: ['S-D', 'D-E', 'E-F', 'F-G'],
     optimalPath: ['S-D', 'D-E', 'E-F', 'F-G'],
-    explanation: 'Pop S→D→E→F (f=13.5). Expand F to Goal G: total path cost g = 13.5, h = 0, f = 13.5! Target path is queued with lowest cost.'
+    decisionFormula: 'f(Goal) = g(13.5) + h(0.0) = 13.5',
+    decisionNote: 'Goal node queued at head of min-heap. Ready for final pop.',
+    explanation: 'Pop S→D→E→F (f=13.5). Edge (F,G) cost 3.5 reaches Goal G! Path cost g = 13.5, h(G) = 0, f = 13.5. Candidate path is placed at top of priority queue.'
   },
   {
     step: 7,
-    title: 'Goal G Popped: Optimal Path Guaranteed (Cost = 13.5)',
+    chipLabel: '7: Goal Optimal ★',
+    title: 'Pop Goal G: Optimal Path Guaranteed (Cost = 13.5)',
     current: 'G',
     closed: ['S', 'A', 'B', 'D', 'E', 'F', 'G'],
     frontier: [
-      { path: 'S → D → E → F → G', g: 13.5, h: 0.0, f: 13.5, status: '✓ OPTIMAL PATH FOUND' }
+      { path: 'S → D → E → F → G', targetNode: 'G', g: 13.5, h: 0.0, f: 13.5, status: '✓ MATHEMATICALLY OPTIMAL PATH', isLowest: true }
     ],
     activeEdges: ['S-D', 'D-E', 'E-F', 'F-G'],
     optimalPath: ['S-D', 'D-E', 'E-F', 'F-G'],
-    explanation: 'Goal node G popped from frontier! Because the heuristic h(n) is admissible (never overestimates true cost), S → D → E → F → G is provably optimal!'
+    decisionFormula: 'Optimal Path: S → D → E → F → G (Total Cost g* = 13.5)',
+    decisionNote: 'Admissible Heuristic Guarantee: No other path can be shorter.',
+    explanation: 'Goal node G popped from min-heap! Because the heuristic h(n) is admissible (h(n) ≤ h*(n) everywhere), the first path popped to the goal is provably optimal. Search halts with guaranteed shortest trajectory.'
   }
 ];
 
@@ -161,7 +187,7 @@ export function AStarSearchInteractive() {
           setIsPlaying(false);
           return prev;
         });
-      }, 1800);
+      }, 2000);
     }
     return () => clearInterval(timer);
   }, [isPlaying]);
@@ -191,6 +217,11 @@ export function AStarSearchInteractive() {
     setIsPlaying(prev => !prev);
   };
 
+  const handleJumpToStep = (idx, e) => {
+    e && e.stopPropagation();
+    setCurrentStepIndex(idx);
+  };
+
   return (
     <div 
       className="astar-interactive-container"
@@ -198,16 +229,94 @@ export function AStarSearchInteractive() {
         display: 'flex',
         flexDirection: 'column',
         height: '100%',
+        maxHeight: '520px',
         width: '100%',
-        padding: '0.4rem 0.6rem',
+        maxWidth: '1180px',
+        margin: '0 auto',
+        padding: '0.45rem 0.75rem',
         boxSizing: 'border-box',
-        gap: '0.4rem',
-        background: 'var(--bg-card, #0f172a)',
-        borderRadius: '10px',
-        border: '1px solid var(--border-color, #334155)',
-        color: 'var(--text-primary, #f8fafc)'
+        gap: '0.45rem',
+        background: 'linear-gradient(180deg, #0b1120 0%, #060913 100%)',
+        borderRadius: '12px',
+        border: '1px solid #1e293b',
+        boxShadow: '0 8px 30px rgba(0, 0, 0, 0.45)',
+        color: '#f8fafc',
+        fontFamily: 'system-ui, -apple-system, sans-serif'
       }}
     >
+      <style>{`
+        @keyframes astarMarch {
+          to {
+            stroke-dashoffset: -20;
+          }
+        }
+        @keyframes astarPulseRing {
+          0% {
+            r: 18;
+            opacity: 0.95;
+            stroke-width: 2.5;
+          }
+          50% {
+            r: 25;
+            opacity: 0.45;
+            stroke-width: 3.5;
+          }
+          100% {
+            r: 31;
+            opacity: 0;
+            stroke-width: 1;
+          }
+        }
+        @keyframes astarGlowPulse {
+          0%, 100% {
+            filter: drop-shadow(0 0 6px rgba(16, 185, 129, 0.7));
+          }
+          50% {
+            filter: drop-shadow(0 0 12px rgba(16, 185, 129, 0.95));
+          }
+        }
+        .astar-edge-active {
+          stroke: #f59e0b !important;
+          stroke-width: 3 !important;
+          stroke-dasharray: 6 4 !important;
+          animation: astarMarch 0.7s linear infinite !important;
+        }
+        .astar-edge-optimal {
+          stroke: #10b981 !important;
+          stroke-width: 4.5 !important;
+          stroke-dasharray: none !important;
+          animation: astarGlowPulse 1.8s ease-in-out infinite !important;
+        }
+        .astar-step-chip {
+          padding: 0.2rem 0.45rem;
+          font-size: 0.65rem;
+          font-weight: 600;
+          border-radius: 6px;
+          border: 1px solid #334155;
+          background: #1e293b;
+          color: #94a3b8;
+          cursor: pointer;
+          transition: all 0.2s ease;
+          white-space: nowrap;
+        }
+        .astar-step-chip:hover {
+          background: #334155;
+          color: #f8fafc;
+          border-color: #64748b;
+        }
+        .astar-step-chip.active {
+          background: #7c3aed;
+          border-color: #a78bfa;
+          color: #ffffff;
+          box-shadow: 0 0 10px rgba(124, 58, 237, 0.5);
+        }
+        .astar-step-chip.completed {
+          border-color: #065f46;
+          color: #34d399;
+          background: rgba(6, 95, 70, 0.25);
+        }
+      `}</style>
+
       {/* Top Header & Interactive Stepper Controls */}
       <div 
         style={{
@@ -216,33 +325,25 @@ export function AStarSearchInteractive() {
           alignItems: 'center',
           flexWrap: 'wrap',
           gap: '0.4rem',
-          borderBottom: '1px solid var(--border-color, #334155)',
+          borderBottom: '1px solid #1e293b',
           paddingBottom: '0.35rem'
         }}
       >
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-          <span 
-            style={{
-              background: '#8b5cf6',
-              color: '#fff',
-              padding: '0.2rem 0.55rem',
-              borderRadius: '999px',
-              fontSize: '0.72rem',
-              fontWeight: 700,
-              display: 'flex',
-              alignItems: 'center',
-              gap: '0.3rem'
-            }}
-          >
-            <Sparkles size={13} />
-            Step {currentStepIndex} of {STEPS.length - 1}
-          </span>
-          <strong style={{ fontSize: '0.82rem', color: '#e2e8f0' }}>
-            {stepData.title}
-          </strong>
+        {/* Step Chips (Clickable to jump directly to any step) */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.3rem', overflowX: 'auto', maxWidth: '68%' }}>
+          {STEPS.map((s, idx) => (
+            <button
+              key={idx}
+              onClick={(e) => handleJumpToStep(idx, e)}
+              className={`astar-step-chip ${idx === currentStepIndex ? 'active' : (idx < currentStepIndex ? 'completed' : '')}`}
+              title={`Jump to step ${idx}: ${s.title}`}
+            >
+              {s.chipLabel}
+            </button>
+          ))}
         </div>
 
-        {/* Buttons */}
+        {/* Action Controls */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
           <button
             onClick={handlePrev}
@@ -275,7 +376,7 @@ export function AStarSearchInteractive() {
               fontWeight: 600,
               borderRadius: '6px',
               border: '1px solid #8b5cf6',
-              background: isPlaying ? '#7c3aed' : 'rgba(139, 92, 246, 0.2)',
+              background: isPlaying ? '#7c3aed' : 'rgba(139, 92, 246, 0.25)',
               color: '#f8fafc',
               cursor: 'pointer'
             }}
@@ -290,17 +391,19 @@ export function AStarSearchInteractive() {
             style={{
               display: 'flex',
               alignItems: 'center',
-              gap: '0.2rem',
-              padding: '0.25rem 0.65rem',
+              gap: '0.25rem',
+              padding: '0.25rem 0.75rem',
               fontSize: '0.72rem',
-              fontWeight: 600,
+              fontWeight: 700,
               borderRadius: '6px',
               border: '1px solid #10b981',
               background: currentStepIndex === STEPS.length - 1 ? '#1e293b' : '#059669',
-              color: currentStepIndex === STEPS.length - 1 ? '#64748b' : '#f8fafc',
-              cursor: currentStepIndex === STEPS.length - 1 ? 'not-allowed' : 'pointer'
+              color: currentStepIndex === STEPS.length - 1 ? '#64748b' : '#ffffff',
+              cursor: currentStepIndex === STEPS.length - 1 ? 'not-allowed' : 'pointer',
+              boxShadow: currentStepIndex < STEPS.length - 1 ? '0 0 10px rgba(16, 185, 129, 0.4)' : 'none'
             }}
           >
+            <MousePointerClick size={14} />
             Next Step <ChevronRight size={14} />
           </button>
 
@@ -310,7 +413,7 @@ export function AStarSearchInteractive() {
             style={{
               display: 'flex',
               alignItems: 'center',
-              padding: '0.25rem 0.4rem',
+              padding: '0.25rem 0.45rem',
               fontSize: '0.72rem',
               borderRadius: '6px',
               border: '1px solid #475569',
@@ -324,12 +427,12 @@ export function AStarSearchInteractive() {
         </div>
       </div>
 
-      {/* Main Dual Stage: SVG Graph on Left, Priority Queue Table on Right */}
+      {/* Main Dual Stage: SVG Graph on Left (60%), Priority Queue Table on Right (40%) */}
       <div 
         style={{
           display: 'grid',
           gridTemplateColumns: '1.25fr 1fr',
-          gap: '0.5rem',
+          gap: '0.55rem',
           flex: 1,
           minHeight: 0
         }}
@@ -337,39 +440,62 @@ export function AStarSearchInteractive() {
         {/* SVG Graph Canvas */}
         <div 
           onClick={handleNext}
-          title="Click to advance to next step"
+          title="Click anywhere inside graph to advance to next step"
           style={{
             position: 'relative',
-            background: 'rgba(2, 6, 23, 0.75)',
-            border: '1px solid rgba(139, 92, 246, 0.3)',
+            background: 'radial-gradient(ellipse at 40% 50%, #0f172a 0%, #020617 100%)',
+            border: '1px solid rgba(139, 92, 246, 0.35)',
             borderRadius: '8px',
             overflow: 'hidden',
             display: 'flex',
             flexDirection: 'column',
             justifyContent: 'center',
-            cursor: currentStepIndex < STEPS.length - 1 ? 'pointer' : 'default'
+            cursor: currentStepIndex < STEPS.length - 1 ? 'pointer' : 'default',
+            padding: '0.25rem'
           }}
         >
+          {/* Legend and Click Hint */}
           <div 
             style={{
               position: 'absolute',
               top: '6px',
               left: '8px',
-              fontSize: '0.66rem',
+              right: '8px',
+              fontSize: '0.64rem',
               color: '#94a3b8',
               display: 'flex',
-              gap: '0.7rem'
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              zIndex: 2,
+              pointerEvents: 'none'
             }}
           >
-            <span><strong style={{ color: '#eab308' }}>●</strong> Active / Current</span>
-            <span><strong style={{ color: '#38bdf8' }}>●</strong> In Frontier</span>
-            <span><strong style={{ color: '#10b981' }}>●</strong> Optimal Path</span>
+            <div style={{ display: 'flex', gap: '0.65rem' }}>
+              <span><strong style={{ color: '#f59e0b' }}>●</strong> Active / Popped</span>
+              <span><strong style={{ color: '#38bdf8' }}>●</strong> Open Frontier</span>
+              <span><strong style={{ color: '#818cf8' }}>●</strong> Closed</span>
+              <span><strong style={{ color: '#10b981' }}>●</strong> Optimal Path</span>
+            </div>
+            {currentStepIndex < STEPS.length - 1 && (
+              <span style={{ color: '#a78bfa', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '0.2rem' }}>
+                <MousePointerClick size={12} /> Click graph to step
+              </span>
+            )}
           </div>
 
           <svg 
-            viewBox="0 0 600 290" 
+            viewBox="0 0 600 280" 
             style={{ width: '100%', height: '100%', maxHeight: '250px' }}
           >
+            <defs>
+              <pattern id="astarGrid" width="20" height="20" patternUnits="userSpaceOnUse">
+                <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#1e293b" strokeWidth="0.5" strokeOpacity="0.4" />
+              </pattern>
+            </defs>
+
+            {/* Background Blueprint Grid */}
+            <rect width="600" height="280" fill="url(#astarGrid)" />
+
             {/* Draw Edges */}
             {EDGES.map(edge => {
               const fromN = NODES[edge.from];
@@ -378,17 +504,20 @@ export function AStarSearchInteractive() {
               const isOptimal = stepData.optimalPath.includes(edgeKey);
               const isActive = stepData.activeEdges.includes(edgeKey);
 
+              let edgeClass = '';
               let stroke = '#334155';
               let strokeWidth = 2;
               let strokeDash = 'none';
 
               if (isOptimal) {
+                edgeClass = 'astar-edge-optimal';
                 stroke = '#10b981';
-                strokeWidth = 4;
+                strokeWidth = 4.5;
               } else if (isActive) {
+                edgeClass = 'astar-edge-active';
                 stroke = '#f59e0b';
-                strokeWidth = 2.5;
-                strokeDash = '4,3';
+                strokeWidth = 3;
+                strokeDash = '6 4';
               }
 
               return (
@@ -401,17 +530,19 @@ export function AStarSearchInteractive() {
                     stroke={stroke}
                     strokeWidth={strokeWidth}
                     strokeDasharray={strokeDash}
+                    className={edgeClass}
+                    style={{ transition: 'all 0.3s ease' }}
                   />
-                  {/* Cost Label */}
+                  {/* Cost Badge */}
                   <rect
                     x={edge.midX - 11}
                     y={edge.midY - 8}
                     width={22}
                     height={16}
                     rx={3}
-                    fill="#0f172a"
+                    fill="#020617"
                     stroke={isOptimal ? '#10b981' : (isActive ? '#f59e0b' : '#334155')}
-                    strokeWidth={1}
+                    strokeWidth={1.2}
                   />
                   <text
                     x={edge.midX}
@@ -421,7 +552,7 @@ export function AStarSearchInteractive() {
                     fontWeight="bold"
                     textAnchor="middle"
                   >
-                    {edge.cost}
+                    {edge.cost.toFixed(1)}
                   </text>
                 </g>
               );
@@ -433,7 +564,7 @@ export function AStarSearchInteractive() {
               const isClosed = stepData.closed.includes(id);
               const isGoal = id === 'G';
               const isStart = id === 'S';
-              const isInFrontier = stepData.frontier.some(f => f.next === id);
+              const isInFrontier = stepData.frontier.some(f => f.targetNode === id);
               const isOptimal = currentStepIndex >= 6 && ['S', 'D', 'E', 'F', 'G'].includes(id);
 
               let fill = '#1e293b';
@@ -441,7 +572,7 @@ export function AStarSearchInteractive() {
               let textColor = '#f8fafc';
 
               if (isOptimal && currentStepIndex === 7) {
-                fill = '#065f46';
+                fill = '#064e3b';
                 stroke = '#10b981';
                 textColor = '#6ee7b7';
               } else if (isCurrent) {
@@ -459,8 +590,35 @@ export function AStarSearchInteractive() {
               }
 
               return (
-                <g key={id}>
-                  {/* Node Circle */}
+                <g key={id} style={{ transition: 'all 0.3s ease' }}>
+                  {/* Animated Pulsing Ring around Active/Popped Node */}
+                  {isCurrent && (
+                    <circle
+                      cx={node.x}
+                      y={node.y}
+                      r={24}
+                      fill="none"
+                      stroke="#f59e0b"
+                      strokeWidth={2}
+                      strokeDasharray="4 3"
+                      style={{ animation: 'astarPulseRing 1.5s ease-out infinite' }}
+                    />
+                  )}
+
+                  {/* Optimal Path Outer Halo */}
+                  {isOptimal && currentStepIndex === 7 && (
+                    <circle
+                      cx={node.x}
+                      y={node.y}
+                      r={22}
+                      fill="none"
+                      stroke="#10b981"
+                      strokeWidth={2}
+                      strokeOpacity={0.6}
+                    />
+                  )}
+
+                  {/* Main Node Body */}
                   <circle
                     cx={node.x}
                     y={node.y}
@@ -469,7 +627,8 @@ export function AStarSearchInteractive() {
                     stroke={stroke}
                     strokeWidth={isCurrent || isOptimal ? 3 : 2}
                   />
-                  {/* Node Name */}
+
+                  {/* Node Label */}
                   <text
                     x={node.x}
                     y={node.y + 4}
@@ -480,26 +639,27 @@ export function AStarSearchInteractive() {
                   >
                     {id}
                   </text>
-                  {/* Heuristic Pill */}
+
+                  {/* Heuristic Pill (Admissible Estimate to Goal) */}
                   <rect
                     x={node.x - 17}
                     y={node.y - 30}
                     width={34}
                     height={14}
                     rx={3}
-                    fill="rgba(15, 23, 42, 0.9)"
-                    stroke="#475569"
-                    strokeWidth={0.8}
+                    fill="#020617"
+                    stroke={isCurrent ? '#f59e0b' : (isInFrontier ? '#0284c7' : '#334155')}
+                    strokeWidth={0.9}
                   />
                   <text
                     x={node.x}
-                    y={node.y - 19}
-                    fill="#cbd5e1"
+                    y={node.y - 20}
+                    fill={isCurrent ? '#fef08a' : (isInFrontier ? '#38bdf8' : '#94a3b8')}
                     fontSize="8.5"
                     fontWeight="bold"
                     textAnchor="middle"
                   >
-                    h={node.h}
+                    h={node.h.toFixed(1)}
                   </text>
                 </g>
               );
@@ -507,10 +667,10 @@ export function AStarSearchInteractive() {
           </svg>
         </div>
 
-        {/* Priority Queue (Frontier) Table */}
+        {/* Priority Queue (Frontier) Live Table */}
         <div 
           style={{
-            background: 'rgba(2, 6, 23, 0.75)',
+            background: 'rgba(2, 6, 23, 0.85)',
             border: '1px solid rgba(139, 92, 246, 0.3)',
             borderRadius: '8px',
             padding: '0.45rem',
@@ -527,27 +687,29 @@ export function AStarSearchInteractive() {
                 justifyContent: 'space-between',
                 alignItems: 'center',
                 marginBottom: '0.35rem',
-                borderBottom: '1px solid #334155',
+                borderBottom: '1px solid #1e293b',
                 paddingBottom: '0.25rem'
               }}
             >
-              <span style={{ fontSize: '0.72rem', fontWeight: 700, color: '#a78bfa' }}>
-                Priority Queue Frontier (Ordered by f(n) = g + h)
-              </span>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
+                <span style={{ fontSize: '0.74rem', fontWeight: 700, color: '#a78bfa' }}>
+                  Min-Heap Priority Queue (Open List)
+                </span>
+              </div>
               <span style={{ fontSize: '0.64rem', color: '#94a3b8' }}>
-                Queue Size: {stepData.frontier.length}
+                Sorted by f(n) = g + h
               </span>
             </div>
 
-            <div style={{ overflowX: 'auto' }}>
+            <div style={{ overflowX: 'auto', maxHeight: '185px' }}>
               <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.68rem' }}>
                 <thead>
-                  <tr style={{ background: '#1e293b', color: '#94a3b8', textAlign: 'left' }}>
-                    <th style={{ padding: '0.2rem 0.35rem' }}>Candidate Path</th>
-                    <th style={{ padding: '0.2rem 0.35rem' }}>g(n)</th>
-                    <th style={{ padding: '0.2rem 0.35rem' }}>h(n)</th>
-                    <th style={{ padding: '0.2rem 0.35rem', color: '#eab308' }}>f(n)</th>
-                    <th style={{ padding: '0.2rem 0.35rem' }}>Status</th>
+                  <tr style={{ background: '#0f172a', color: '#94a3b8', textAlign: 'left' }}>
+                    <th style={{ padding: '0.22rem 0.35rem' }}>Candidate Path</th>
+                    <th style={{ padding: '0.22rem 0.35rem' }}>g(n)</th>
+                    <th style={{ padding: '0.22rem 0.35rem' }}>h(n)</th>
+                    <th style={{ padding: '0.22rem 0.35rem', color: '#eab308' }}>f(n)</th>
+                    <th style={{ padding: '0.22rem 0.35rem' }}>Frontier Status</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -555,26 +717,27 @@ export function AStarSearchInteractive() {
                     <tr 
                       key={idx}
                       style={{
-                        background: idx === 0 ? 'rgba(234, 179, 8, 0.12)' : 'transparent',
+                        background: row.isLowest ? 'rgba(234, 179, 8, 0.14)' : 'transparent',
                         borderBottom: '1px solid #1e293b',
-                        color: idx === 0 ? '#fef08a' : '#cbd5e1'
+                        color: row.isLowest ? '#fef08a' : '#cbd5e1'
                       }}
                     >
-                      <td style={{ padding: '0.22rem 0.35rem', fontFamily: 'monospace', fontWeight: 600 }}>
+                      <td style={{ padding: '0.22rem 0.35rem', fontFamily: 'monospace', fontWeight: 700 }}>
                         {row.path}
                       </td>
                       <td style={{ padding: '0.22rem 0.35rem' }}>{row.g.toFixed(1)}</td>
                       <td style={{ padding: '0.22rem 0.35rem' }}>{row.h.toFixed(1)}</td>
-                      <td style={{ padding: '0.22rem 0.35rem', fontWeight: 700, color: idx === 0 ? '#fbbf24' : '#f8fafc' }}>
+                      <td style={{ padding: '0.22rem 0.35rem', fontWeight: 800, color: row.isLowest ? '#fbbf24' : '#f8fafc' }}>
                         {row.f.toFixed(1)}
                       </td>
                       <td style={{ padding: '0.22rem 0.35rem', fontSize: '0.62rem' }}>
                         <span 
                           style={{
-                            padding: '0.1rem 0.35rem',
+                            padding: '0.12rem 0.35rem',
                             borderRadius: '4px',
-                            background: idx === 0 ? '#854d0e' : '#334155',
-                            color: idx === 0 ? '#fef08a' : '#94a3b8'
+                            background: row.isLowest ? '#854d0e' : (row.status.includes('PRUNED') ? '#7f1d1d' : '#1e293b'),
+                            color: row.isLowest ? '#fef08a' : (row.status.includes('PRUNED') ? '#fca5a5' : '#94a3b8'),
+                            fontWeight: 600
                           }}
                         >
                           {row.status}
@@ -587,19 +750,31 @@ export function AStarSearchInteractive() {
             </div>
           </div>
 
-          {/* Mathematical Formula Footnote */}
+          {/* Mathematical Decision Box */}
           <div 
             style={{
-              background: 'rgba(30, 41, 59, 0.6)',
+              background: 'rgba(15, 23, 42, 0.9)',
               border: '1px solid #334155',
               borderRadius: '6px',
-              padding: '0.3rem 0.45rem',
-              fontSize: '0.66rem',
-              color: '#94a3b8',
-              marginTop: '0.35rem'
+              padding: '0.35rem 0.5rem',
+              fontSize: '0.68rem',
+              marginTop: '0.35rem',
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '0.15rem'
             }}
           >
-            <strong style={{ color: '#38bdf8' }}>f(n) = g(n) + h(n):</strong> g(n) is exact cost from Start; h(n) is admissible heuristic distance to Goal.
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+              <span style={{ color: '#38bdf8', fontWeight: 700 }}>
+                🧮 Math Evaluation:
+              </span>
+              <span style={{ color: '#fbbf24', fontFamily: 'monospace', fontWeight: 700 }}>
+                {stepData.decisionFormula}
+              </span>
+            </div>
+            <div style={{ color: '#cbd5e1', fontSize: '0.64rem' }}>
+              {stepData.decisionNote}
+            </div>
           </div>
         </div>
       </div>
@@ -607,21 +782,40 @@ export function AStarSearchInteractive() {
       {/* Bottom Step Explanation Banner */}
       <div 
         style={{
-          background: 'rgba(15, 23, 42, 0.85)',
-          borderLeft: '3px solid #8b5cf6',
-          padding: '0.35rem 0.6rem',
+          background: 'rgba(15, 23, 42, 0.95)',
+          borderLeft: '4px solid #8b5cf6',
+          padding: '0.4rem 0.65rem',
           borderRadius: '4px',
-          fontSize: '0.72rem',
+          fontSize: '0.73rem',
           lineHeight: 1.35,
-          color: '#e2e8f0'
+          color: '#e2e8f0',
+          display: 'flex',
+          alignItems: 'center',
+          gap: '0.5rem'
         }}
       >
-        <span style={{ color: '#a78bfa', fontWeight: 700, marginRight: '0.35rem' }}>
-          💡 Step Mechanics:
-        </span>
-        {stepData.explanation}
+        <div 
+          style={{
+            background: '#7c3aed',
+            color: '#fff',
+            padding: '0.15rem 0.45rem',
+            borderRadius: '4px',
+            fontSize: '0.65rem',
+            fontWeight: 800,
+            whiteSpace: 'nowrap'
+          }}
+        >
+          Step {currentStepIndex} of {STEPS.length - 1}
+        </div>
+        <div>
+          <strong style={{ color: '#a78bfa', marginRight: '0.35rem' }}>
+            {stepData.title}:
+          </strong>
+          <span>{stepData.explanation}</span>
+        </div>
       </div>
     </div>
   );
 }
+
 export default AStarSearchInteractive;
