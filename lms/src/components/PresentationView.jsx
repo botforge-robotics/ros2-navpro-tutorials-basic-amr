@@ -730,13 +730,36 @@ export function PresentationView({
           )}
 
           {/* ============================================================== */}
+          {/* SLIDE TYPE: SECTION TITLE / TOPIC DIVIDER                      */}
+          {/* ============================================================== */}
+          {currentSlide.type === 'section_title' && (
+            <div className="ppt-slide-content ppt-slide-section-title-view">
+              <div className="section-title-hero">
+                <h1 className={`section-title-text ${currentSlide.titleClass || ''}`} style={currentSlide.titleColor ? { color: currentSlide.titleColor } : {}}>
+                  {currentSlide.title}
+                </h1>
+                {currentSlide.description && (
+                  <p className="section-title-desc">
+                    {currentSlide.description}
+                  </p>
+                )}
+                {currentSlide.htmlContent && (
+                  <div dangerouslySetInnerHTML={{ __html: currentSlide.htmlContent }} />
+                )}
+              </div>
+            </div>
+          )}
+
+          {/* ============================================================== */}
           {/* SLIDE TYPE 6: SUBTOPIC / CONCEPT EXPLANATION SLIDE             */}
           {/* ============================================================== */}
           {(currentSlide.type === 'concept' || currentSlide.type === 'subtopic') && (
             <div className="ppt-slide-content ppt-slide-concept-view">
-              <div className="concept-slide-header">
-                <h2 className="concept-main-title">{currentSlide.title}</h2>
-              </div>
+              {currentSlide.title && (
+                <div className="concept-slide-header">
+                  <h2 className="concept-main-title">{currentSlide.title}</h2>
+                </div>
+              )}
 
               <div 
                 className="concept-html-body markdown-body"

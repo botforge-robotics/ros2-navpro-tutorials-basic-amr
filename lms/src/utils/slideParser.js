@@ -5163,32 +5163,18 @@ append_model_path = AppendEnvironmentVariable(
  * Step-by-step visual breakdown matching RSE reference curriculum.
  */
 function buildLesson13Slides(doc, lesson, slides) {
-  // 1. Part I Section Break: Localization (Vivid, High-Contrast Title Slide)
+  // 1. Part I Section Break: Localization (Clean Title Slide)
   slides.push({
     id: `${lesson.id}_sec_title_localization`,
-    type: 'concept',
+    type: 'section_title',
     lessonNum: lesson.num_str,
     lessonId: lesson.id,
     module: lesson.module,
-    sectionTitle: 'Part I: Localization',
+    sectionTitle: 'Part I',
     badge: '📍 Part I',
-    title: 'Part I: Robot Localization Foundations',
-    htmlContent: `
-      <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; min-height: 380px; text-align: center;">
-        <div style="background: #0f172a; border: 2px solid #eab308; border-radius: 16px; padding: 2.2rem 2.8rem; box-shadow: 0 12px 36px rgba(0,0,0,0.6); max-width: 720px; width: 100%;">
-          <div style="display: inline-flex; align-items: center; gap: 0.5rem; background: rgba(234, 179, 8, 0.2); border: 1px solid #eab308; padding: 0.35rem 1rem; border-radius: 9999px; margin-bottom: 1.2rem;">
-            <span style="font-size: 1.1rem;">📍</span>
-            <span style="font-size: 0.85rem; font-weight: 800; color: #fbbf24; text-transform: uppercase; letter-spacing: 0.12em;">Part I &bull; Theory &amp; Foundations</span>
-          </div>
-          <h1 style="font-size: 3.5rem; font-weight: 900; color: #fbbf24; margin: 0 0 0.85rem 0; letter-spacing: -0.02em; text-shadow: 0 4px 20px rgba(234, 179, 8, 0.35);">
-            Localization
-          </h1>
-          <p style="font-size: 1.05rem; color: #f8fafc; line-height: 1.6; margin: 0; font-weight: 500;">
-            Estimating the pose of an Autonomous Mobile Robot (AMR) <code style="color: #fbbf24; background: rgba(255,255,255,0.1); padding: 0.15rem 0.4rem; border-radius: 4px;">(x, y, &theta;) &isin; SE(2)</code> in a known environmental map given sensor observations and motion control inputs.
-          </p>
-        </div>
-      </div>
-    `
+    title: 'Localization',
+    titleClass: 'text-localization',
+    description: 'Estimating the robot pose relative to a known environmental map using sensor observations and wheel odometry.'
   });
 
   // 2. Localization Definition & Problem Statement (Slide 119)
@@ -5558,32 +5544,18 @@ function buildLesson13Slides(doc, lesson, slides) {
     `
   });
 
-  // 11. Part II Section Break: Mapping (Vivid, High-Contrast Title Slide)
+  // 11. Part II Section Break: Mapping (Clean Title Slide)
   slides.push({
     id: `${lesson.id}_sec_title_mapping`,
-    type: 'concept',
+    type: 'section_title',
     lessonNum: lesson.num_str,
     lessonId: lesson.id,
     module: lesson.module,
-    sectionTitle: 'Part II: Mapping',
+    sectionTitle: 'Part II',
     badge: '🗺️ Part II',
-    title: 'Part II: Occupancy Grid Mapping & Discretization',
-    htmlContent: `
-      <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; min-height: 380px; text-align: center;">
-        <div style="background: #0f172a; border: 2px solid #38bdf8; border-radius: 16px; padding: 2.2rem 2.8rem; box-shadow: 0 12px 36px rgba(0,0,0,0.6); max-width: 720px; width: 100%;">
-          <div style="display: inline-flex; align-items: center; gap: 0.5rem; background: rgba(56, 189, 248, 0.2); border: 1px solid #38bdf8; padding: 0.35rem 1rem; border-radius: 9999px; margin-bottom: 1.2rem;">
-            <span style="font-size: 1.1rem;">🗺️</span>
-            <span style="font-size: 0.85rem; font-weight: 800; color: #38bdf8; text-transform: uppercase; letter-spacing: 0.12em;">Part II &bull; Spatial Representation</span>
-          </div>
-          <h1 style="font-size: 3.5rem; font-weight: 900; color: #38bdf8; margin: 0 0 0.85rem 0; letter-spacing: -0.02em; text-shadow: 0 4px 20px rgba(56, 189, 248, 0.35);">
-            Mapping
-          </h1>
-          <p style="font-size: 1.05rem; color: #f8fafc; line-height: 1.6; margin: 0; font-weight: 500;">
-            Produce an accurate metric occupancy grid map of the operational warehouse environment given the robot pose(s) and laser rangefinder observations.
-          </p>
-        </div>
-      </div>
-    `
+    title: 'Mapping',
+    titleClass: 'text-mapping',
+    description: 'Constructing an accurate 2D metric occupancy grid map of an unknown environment from laser scan observations.'
   });
 
   // 12. Mapping Step 1: Discretizing Continuous Space into a 2D Grid Lattice
