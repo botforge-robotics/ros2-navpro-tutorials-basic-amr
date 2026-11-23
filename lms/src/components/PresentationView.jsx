@@ -38,6 +38,11 @@ import { LogLevelsNestedCircle } from './LogLevelsNestedCircle';
 import InertiaCalculator from './InertiaCalculator';
 import UrdfViewer3D from './UrdfViewer3D';
 import AStarSearchInteractive from './AStarSearchInteractive';
+import AmclParticleFilterInteractive from './AmclParticleFilterInteractive';
+import OccupancyGridMappingInteractive from './OccupancyGridMappingInteractive';
+import ContinuousToCSpaceInteractive from './ContinuousToCSpaceInteractive';
+import RoadmapMethodsInteractive from './RoadmapMethodsInteractive';
+import DwaLocalPlannerInteractive from './DwaLocalPlannerInteractive';
 
 // High-Contrast Terminal & IDE Syntax Highlighter for PPT Slides
 export function highlightCodeForDisplay(rawCode, lang = 'bash') {
@@ -361,6 +366,16 @@ export function PresentationView({
         return <LogLevelsNestedCircle />;
       case 'astar':
         return <AStarSearchInteractive />;
+      case 'amcl':
+        return <AmclParticleFilterInteractive />;
+      case 'occupancy':
+        return <OccupancyGridMappingInteractive />;
+      case 'cspace':
+        return <ContinuousToCSpaceInteractive />;
+      case 'roadmap':
+        return <RoadmapMethodsInteractive />;
+      case 'dwa':
+        return <DwaLocalPlannerInteractive />;
       default:
         return null;
     }
