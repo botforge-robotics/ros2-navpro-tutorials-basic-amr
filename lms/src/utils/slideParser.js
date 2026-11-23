@@ -6186,19 +6186,212 @@ function buildLesson14Slides(doc, lesson, slides) {
     `
   });
 
-  // 3. Continuous Space to Configuration Space Interactive (Slides 153-159 Merged)
+  // 3. Continuous Space Step 1: 2D Plane & Target Waypoint
   slides.push({
-    id: `${lesson.id}_sec2_cspace_interactive`,
-    type: 'interactive',
-    interactiveKey: 'cspace',
-    portalId: 'interactive-continuous-to-cspace-root',
+    id: `${lesson.id}_sec2_continuous_step1`,
+    type: 'concept',
     lessonNum: lesson.num_str,
     lessonId: lesson.id,
     module: lesson.module,
-    sectionTitle: 'Continuous Space to C-Space',
-    badge: '📐 Interactive C-Space Engine',
-    title: 'Continuous Workspace to Configuration Space (C-Space)',
-    summary: 'Interactive 6-stage transformation: continuous 2D plane, swept footprint trajectory, clearance failure, distance metric d > R, obstacle Minkowski inflation, and point AMR in C_free / C_obs.'
+    sectionTitle: '2. Continuous Space: 2D Plane',
+    badge: '📐 Step 1',
+    title: 'Continuous Space: 2D Plane & Target Waypoint',
+    htmlContent: `
+      <div class="l03-two-col-layout" style="display: grid; grid-template-columns: 1fr 1.05fr; gap: 0.65rem; align-items: center;">
+        <div class="l03-content-col" style="display: flex; flex-direction: column; justify-content: center; gap: 0.45rem;">
+          <div class="l05-golden-card" style="padding: 0.45rem 0.7rem;">
+            <div class="l05-golden-header" style="font-size: 0.8rem;"><span>🌐</span><strong>The Continuous Workspace (&Wscr;)</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.35;">The real world is continuous. Space is defined as &reals;<sup>2</sup> with infinite resolution, where coordinates <code>(x, y) &isin; &reals;<sup>2</sup></code> are represented by 64-bit floating point numbers.</p>
+          </div>
+          <div class="l05-golden-card" style="padding: 0.45rem 0.7rem;">
+            <div class="l05-golden-header" style="font-size: 0.8rem;"><span>🎯</span><strong>Target Goal Poses</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.35;">A mission goal specifies position and orientation <code>(x_g, y_g, &theta;_g)</code>. The robot must plan a continuous parametric curve <code>q(t): [0, 1] &rarr; &Wscr;</code> reaching this target.</p>
+          </div>
+        </div>
+        <div class="l03-content-col" style="display: flex; flex-direction: column; justify-content: center;">
+          <div style="background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: 10px; padding: 0.45rem; box-shadow: 0 4px 14px rgba(0,0,0,0.12); text-align: center;">
+            <img src="assets/images/nav_continuous_rep_step1.png" alt="Continuous Space 2D Plane" style="width: 100%; max-height: 235px; object-fit: contain; border-radius: 6px; display: block; margin: 0 auto;" />
+            <div style="margin-top: 0.35rem; font-size: 0.68rem; color: var(--text-muted); font-family: var(--font-sans);">
+              Continuous 2D plane: Robot Start pose and Goal waypoint in empty free space
+            </div>
+          </div>
+        </div>
+      </div>
+    `
+  });
+
+  // 4. Continuous Space: Obstacle Boundaries & Swept AMR Trajectory (MERGED SLIDES 3 & 4!)
+  slides.push({
+    id: `${lesson.id}_sec3_continuous_merged_obstacles_swept`,
+    type: 'concept',
+    lessonNum: lesson.num_str,
+    lessonId: lesson.id,
+    module: lesson.module,
+    sectionTitle: '3. Obstacles & Swept Trajectory',
+    badge: '📦 Merged Step 2 & 3',
+    title: 'Continuous Space: Obstacle Boundaries & Swept Trajectory',
+    htmlContent: `
+      <div class="l03-two-col-layout" style="display: grid; grid-template-columns: 1fr 1.05fr; gap: 0.65rem; align-items: center;">
+        <div class="l03-content-col" style="display: flex; flex-direction: column; justify-content: center; gap: 0.4rem;">
+          <div class="l05-golden-card" style="padding: 0.45rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🧱</span><strong>Obstacle Boundaries (&Wscr;<sub>obs</sub>)</strong></div>
+            <p style="font-size: 0.73rem; line-height: 1.32;">Physical warehouse racking columns, conveyor legs, and walls partition free space &Wscr;<sub>free</sub> from forbidden obstacle regions &Wscr;<sub>obs</sub>.</p>
+          </div>
+          <div class="l05-golden-card" style="padding: 0.45rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🚜</span><strong>The Swept Footprint Volume</strong></div>
+            <p style="font-size: 0.73rem; line-height: 1.32;">As the AMR moves along trajectory <code>q(t)</code>, it occupies a physical 2D area <code>&Ascr;(q(t))</code>. The swept volume is the union: <code>Swept(&tau;) = &cup;<sub>t</sub> &Ascr;(q(t))</code>.</p>
+          </div>
+          <div class="l05-golden-card" style="padding: 0.45rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>⚠️</span><strong>Collision Condition</strong></div>
+            <p style="font-size: 0.73rem; line-height: 1.32;">A trajectory is collision-free if and only if <code>Swept(&tau;) &cap; &Wscr;<sub>obs</sub> = &empty;</code> across the entire duration.</p>
+          </div>
+        </div>
+        <div class="l03-content-col" style="display: flex; flex-direction: column; justify-content: center;">
+          <div style="background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: 10px; padding: 0.45rem; box-shadow: 0 4px 14px rgba(0,0,0,0.12); text-align: center;">
+            <img src="assets/images/nav_continuous_rep_step3.png" alt="Obstacle Boundaries and Swept Footprint Trajectory" style="width: 100%; max-height: 235px; object-fit: contain; border-radius: 6px; display: block; margin: 0 auto;" />
+            <div style="margin-top: 0.35rem; font-size: 0.68rem; color: var(--text-muted); font-family: var(--font-sans);">
+              Swept AMR footprint volume passing between continuous obstacle boundaries
+            </div>
+          </div>
+        </div>
+      </div>
+    `
+  });
+
+  // 5. Continuous Space: Clearance Failure & Chassis Collision
+  slides.push({
+    id: `${lesson.id}_sec4_clearance_collision`,
+    type: 'concept',
+    lessonNum: lesson.num_str,
+    lessonId: lesson.id,
+    module: lesson.module,
+    sectionTitle: '4. Clearance Failure & Collision',
+    badge: '💥 Step 4',
+    title: 'Continuous Space: Clearance Failure & Chassis Collision',
+    htmlContent: `
+      <div class="l03-two-col-layout" style="display: grid; grid-template-columns: 1fr 1.05fr; gap: 0.65rem; align-items: center;">
+        <div class="l03-content-col" style="display: flex; flex-direction: column; justify-content: center; gap: 0.45rem;">
+          <div class="l05-golden-card" style="padding: 0.45rem 0.7rem;">
+            <div class="l05-golden-header" style="font-size: 0.8rem;"><span>💥</span><strong>The Collision Boundary Failure</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.35;">As the AMR advances along a candidate line, its physical chassis perimeter intersects obstacle boundaries because there is insufficient lateral clearance.</p>
+          </div>
+          <div class="l05-golden-card" style="padding: 0.45rem 0.7rem;">
+            <div class="l05-golden-header" style="font-size: 0.8rem;"><span>🚫</span><strong>Point Trajectory vs. Robot Body</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.35;">Even though the robot center point <code>(x, y)</code> does not touch the obstacle, the chassis corners collide, causing real-world bumper trips and emergency stops.</p>
+          </div>
+        </div>
+        <div class="l03-content-col" style="display: flex; flex-direction: column; justify-content: center;">
+          <div style="background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: 10px; padding: 0.45rem; box-shadow: 0 4px 14px rgba(0,0,0,0.12); text-align: center;">
+            <img src="assets/images/nav_continuous_rep_collision.png" alt="Clearance Failure and Chassis Collision" style="width: 100%; max-height: 235px; object-fit: contain; border-radius: 6px; display: block; margin: 0 auto;" />
+            <div style="margin-top: 0.35rem; font-size: 0.68rem; color: #ef4444; font-family: var(--font-sans); font-weight: bold;">
+              Collision: Swept footprint intersects obstacle boundary (Clearance = 0 mm)
+            </div>
+          </div>
+        </div>
+      </div>
+    `
+  });
+
+  // 6. Continuous Space: Distance Clearance Condition (d > R)
+  slides.push({
+    id: `${lesson.id}_sec5_clearance_condition`,
+    type: 'concept',
+    lessonNum: lesson.num_str,
+    lessonId: lesson.id,
+    module: lesson.module,
+    sectionTitle: '5. Clearance Condition',
+    badge: '📏 Step 5',
+    title: 'Continuous Space: Distance Clearance Condition (d > R)',
+    htmlContent: `
+      <div class="l03-two-col-layout" style="display: grid; grid-template-columns: 1fr 1.05fr; gap: 0.65rem; align-items: center;">
+        <div class="l03-content-col" style="display: flex; flex-direction: column; justify-content: center; gap: 0.45rem;">
+          <div class="l05-golden-card" style="padding: 0.45rem 0.7rem;">
+            <div class="l05-golden-header" style="font-size: 0.8rem;"><span>📏</span><strong>Distance to Obstacle Boundary</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.35;">To guarantee safety, we enforce: <code>dist(p, &part;&Wscr;<sub>obs</sub>) &gt; R<sub>robot</sub></code> at every point <code>p</code> along the path, where <code>R<sub>robot</sub></code> is the circumscribed radius.</p>
+          </div>
+          <div class="l05-golden-card" style="padding: 0.45rem 0.7rem;">
+            <div class="l05-golden-header" style="font-size: 0.8rem;"><span>✅</span><strong>Allowable Corridor Verification</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.35;">Paths passing through corridors narrower than <code>2 &times; R<sub>robot</sub></code> are strictly pruned by the planning engine before motion execution begins.</p>
+          </div>
+        </div>
+        <div class="l03-content-col" style="display: flex; flex-direction: column; justify-content: center;">
+          <div style="background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: 10px; padding: 0.45rem; box-shadow: 0 4px 14px rgba(0,0,0,0.12); text-align: center;">
+            <img src="assets/images/nav_continuous_rep_allowable_path.png" alt="Distance Clearance Condition d > R" style="width: 100%; max-height: 235px; object-fit: contain; border-radius: 6px; display: block; margin: 0 auto;" />
+            <div style="margin-top: 0.35rem; font-size: 0.68rem; color: #10b981; font-family: var(--font-sans); font-weight: bold;">
+              Allowable Path: Safety clearance corridor dist > R_robot verified
+            </div>
+          </div>
+        </div>
+      </div>
+    `
+  });
+
+  // 7. Configuration Space: Obstacle Inflation by Robot Radius
+  slides.push({
+    id: `${lesson.id}_sec6_cspace_inflation`,
+    type: 'concept',
+    lessonNum: lesson.num_str,
+    lessonId: lesson.id,
+    module: lesson.module,
+    sectionTitle: '6. Obstacle Inflation',
+    badge: '🎈 Step 6',
+    title: 'Configuration Space: Obstacle Inflation by Robot Radius',
+    htmlContent: `
+      <div class="l03-two-col-layout" style="display: grid; grid-template-columns: 1fr 1.05fr; gap: 0.65rem; align-items: center;">
+        <div class="l03-content-col" style="display: flex; flex-direction: column; justify-content: center; gap: 0.45rem;">
+          <div class="l05-golden-card" style="padding: 0.45rem 0.7rem;">
+            <div class="l05-golden-header" style="font-size: 0.8rem;"><span>🎈</span><strong>Minkowski Sum Expansion</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.35;">Instead of calculating complex polygon collisions at every timestep, we inflate every obstacle outward by the robot radius: <code>&Wscr;<sub>obs</sub> &oplus; &Ascr;</code>.</p>
+          </div>
+          <div class="l05-golden-card" style="padding: 0.45rem 0.7rem;">
+            <div class="l05-golden-header" style="font-size: 0.8rem;"><span>🎯</span><strong>AMR Becomes an Infinitesimal Point</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.35;">In Configuration Space, the robot collapses into a dimensionless 0-radius point particle! Path planning is reduced to finding a 1D curve that never crosses inflated boundaries.</p>
+          </div>
+        </div>
+        <div class="l03-content-col" style="display: flex; flex-direction: column; justify-content: center;">
+          <div style="background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: 10px; padding: 0.45rem; box-shadow: 0 4px 14px rgba(0,0,0,0.12); text-align: center;">
+            <img src="assets/images/nav_cspace_obstacle_inflation.png" alt="Obstacle Inflation by Robot Radius" style="width: 100%; max-height: 235px; object-fit: contain; border-radius: 6px; display: block; margin: 0 auto;" />
+            <div style="margin-top: 0.35rem; font-size: 0.68rem; color: var(--text-muted); font-family: var(--font-sans);">
+              Obstacle boundaries inflated outward by AMR circumscribed radius R
+            </div>
+          </div>
+        </div>
+      </div>
+    `
+  });
+
+  // 8. Configuration Space: Point AMR in C_free vs C_obs
+  slides.push({
+    id: `${lesson.id}_sec7_cspace_free_obs`,
+    type: 'concept',
+    lessonNum: lesson.num_str,
+    lessonId: lesson.id,
+    module: lesson.module,
+    sectionTitle: '7. C_free vs C_obs',
+    badge: '✨ Step 7',
+    title: 'Configuration Space: Point AMR in C_free vs. C_obs',
+    htmlContent: `
+      <div class="l03-two-col-layout" style="display: grid; grid-template-columns: 1fr 1.05fr; gap: 0.65rem; align-items: center;">
+        <div class="l03-content-col" style="display: flex; flex-direction: column; justify-content: center; gap: 0.45rem;">
+          <div class="l05-golden-card" style="padding: 0.45rem 0.7rem;">
+            <div class="l05-golden-header" style="font-size: 0.8rem;"><span>🟢</span><strong>C_free Manifold</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.35;">The set of all configurations <code>q</code> where the robot does not collide: <code>C_free = {q &isin; C | &Ascr;(q) &cap; &Wscr;<sub>obs</sub> = &empty;}</code>.</p>
+          </div>
+          <div class="l05-golden-card" style="padding: 0.45rem 0.7rem;">
+            <div class="l05-golden-header" style="font-size: 0.8rem;"><span>🔴</span><strong>C_obs (Forbidden Manifold)</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.35;">The set of forbidden configurations: <code>C_obs = C \ C_free</code>. The robot point particle is strictly disallowed from entering <code>C_obs</code>.</p>
+          </div>
+        </div>
+        <div class="l03-content-col" style="display: flex; flex-direction: column; justify-content: center;">
+          <div style="background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: 10px; padding: 0.45rem; box-shadow: 0 4px 14px rgba(0,0,0,0.12); text-align: center;">
+            <img src="assets/images/nav_cspace_cfree_cobs.png" alt="Point AMR in C_free vs C_obs" style="width: 100%; max-height: 235px; object-fit: contain; border-radius: 6px; display: block; margin: 0 auto;" />
+            <div style="margin-top: 0.35rem; font-size: 0.68rem; color: var(--text-muted); font-family: var(--font-sans);">
+              Point AMR navigating safely through C_free between C_obs regions
+            </div>
+          </div>
+        </div>
+      </div>
+    `
   });
 
   // 9. Costmap 2D Architecture: The 3-Tier Layered Representation
@@ -6353,19 +6546,174 @@ function buildLesson14Slides(doc, lesson, slides) {
     `
   });
 
-  // 13. Continuous to Discrete Roadmap Decomposition Interactive (Slides 162-166 Merged)
+  // 13. Visibility Graph Step 1: Interconnecting Visible Obstacle Vertices
   slides.push({
-    id: `${lesson.id}_sec11_roadmap_interactive`,
-    type: 'interactive',
-    interactiveKey: 'roadmap',
-    portalId: 'interactive-roadmap-methods-root',
+    id: `${lesson.id}_sec11_visibility_step1`,
+    type: 'concept',
     lessonNum: lesson.num_str,
     lessonId: lesson.id,
     module: lesson.module,
-    sectionTitle: 'Discretization & Roadmaps',
-    badge: '🗺️ Interactive Roadmap Comparison',
-    title: 'Continuous to Discrete Roadmap Decomposition Methods',
-    summary: 'Interactive comparison of the 4 classic roadmap methods: Visibility Graph, Voronoi Diagram, Exact Cell Decomposition, and Approximate Cell Decomposition (Quadtrees).'
+    sectionTitle: '11. Visibility Graph Step 1',
+    badge: '👁️ Visibility Graph',
+    title: 'Visibility Graph: Interconnecting Visible Obstacle Vertices',
+    htmlContent: `
+      <div class="l03-two-col-layout" style="display: grid; grid-template-columns: 1fr 1.05fr; gap: 0.65rem; align-items: center;">
+        <div class="l03-content-col" style="display: flex; flex-direction: column; justify-content: center; gap: 0.45rem;">
+          <div class="l05-golden-card" style="padding: 0.45rem 0.7rem;">
+            <div class="l05-golden-header" style="font-size: 0.8rem;"><span>👁️</span><strong>Line-of-Sight Interconnection</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.35;">The Visibility Graph connects the Start node, all polygon obstacle vertices, and the Goal node to each other wherever a direct straight line segment does not intersect obstacles.</p>
+          </div>
+          <div class="l05-golden-card" style="padding: 0.45rem 0.7rem;">
+            <div class="l05-golden-header" style="font-size: 0.8rem;"><span>🕸️</span><strong>Roadmap Graph Structure</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.35;">Because every vertex is connected to all 'visible' peers, searching this graph guarantees finding the globally shortest Euclidean distance path.</p>
+          </div>
+        </div>
+        <div class="l03-content-col" style="display: flex; flex-direction: column; justify-content: center;">
+          <div style="background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: 10px; padding: 0.45rem; box-shadow: 0 4px 14px rgba(0,0,0,0.12); text-align: center;">
+            <img src="assets/images/nav_visibility_graph_step1.png" alt="Visibility Graph Interconnection" style="width: 100%; max-height: 235px; object-fit: contain; border-radius: 6px; display: block; margin: 0 auto;" />
+            <div style="margin-top: 0.35rem; font-size: 0.68rem; color: var(--text-muted); font-family: var(--font-sans);">
+              Connecting all obstacle vertices visible from each other in C_free
+            </div>
+          </div>
+        </div>
+      </div>
+    `
+  });
+
+  // 14. Visibility Graph Step 2: Shortest Path Search
+  slides.push({
+    id: `${lesson.id}_sec12_visibility_step2`,
+    type: 'concept',
+    lessonNum: lesson.num_str,
+    lessonId: lesson.id,
+    module: lesson.module,
+    sectionTitle: '12. Visibility Graph Step 2',
+    badge: '⚡ Shortest Path',
+    title: 'Visibility Graph: Shortest Euclidean Path & Corner Grazing',
+    htmlContent: `
+      <div class="l03-two-col-layout" style="display: grid; grid-template-columns: 1fr 1.05fr; gap: 0.65rem; align-items: center;">
+        <div class="l03-content-col" style="display: flex; flex-direction: column; justify-content: center; gap: 0.45rem;">
+          <div class="l05-golden-card" style="padding: 0.45rem 0.7rem;">
+            <div class="l05-golden-header" style="font-size: 0.8rem;"><span>📏</span><strong>Optimal Euclidean Distance</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.35;">Running graph search on the visibility network computes the shortest possible trajectory from Start to Goal across 2D polygonal space.</p>
+          </div>
+          <div class="l05-golden-card" style="padding: 0.45rem 0.7rem;">
+            <div class="l05-golden-header" style="font-size: 0.8rem;"><span>⚠️</span><strong>The Corner-Grazing Tradeoff</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.35;">Because paths pass directly through obstacle vertices, clearance is minimal (0 mm without inflation). Industrial AMRs require obstacle inflation to prevent chassis clipping.</p>
+          </div>
+        </div>
+        <div class="l03-content-col" style="display: flex; flex-direction: column; justify-content: center;">
+          <div style="background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: 10px; padding: 0.45rem; box-shadow: 0 4px 14px rgba(0,0,0,0.12); text-align: center;">
+            <img src="assets/images/nav_visibility_graph_step2.png" alt="Visibility Graph Shortest Path" style="width: 100%; max-height: 235px; object-fit: contain; border-radius: 6px; display: block; margin: 0 auto;" />
+            <div style="margin-top: 0.35rem; font-size: 0.68rem; color: #10b981; font-family: var(--font-sans); font-weight: bold;">
+              Optimal shortest path computed through the visibility roadmap
+            </div>
+          </div>
+        </div>
+      </div>
+    `
+  });
+
+  // 15. Voronoi Diagram: Free-Space Bisectors & Maximum Clearance
+  slides.push({
+    id: `${lesson.id}_sec13_voronoi`,
+    type: 'concept',
+    lessonNum: lesson.num_str,
+    lessonId: lesson.id,
+    module: lesson.module,
+    sectionTitle: '13. Voronoi Diagram',
+    badge: '🛡️ Maximum Clearance',
+    title: 'Voronoi Diagram: Free-Space Bisectors & Maximum Clearance',
+    htmlContent: `
+      <div class="l03-two-col-layout" style="display: grid; grid-template-columns: 1fr 1.05fr; gap: 0.65rem; align-items: center;">
+        <div class="l03-content-col" style="display: flex; flex-direction: column; justify-content: center; gap: 0.45rem;">
+          <div class="l05-golden-card" style="padding: 0.45rem 0.7rem;">
+            <div class="l05-golden-header" style="font-size: 0.8rem;"><span>⚖️</span><strong>Equidistant Bisectors</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.35;">A Voronoi Diagram consists of edges that bisect free space between obstacles. Every point on an edge is strictly equidistant from the two nearest obstacle boundaries.</p>
+          </div>
+          <div class="l05-golden-card" style="padding: 0.45rem 0.7rem;">
+            <div class="l05-golden-header" style="font-size: 0.8rem;"><span>🛡️</span><strong>Maximized Safety Clearance</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.35;">Unlike visibility graphs which produce tight corner-grazing paths, Voronoi trajectories maximize distance from obstacles, providing maximum safety in busy industrial environments.</p>
+          </div>
+        </div>
+        <div class="l03-content-col" style="display: flex; flex-direction: column; justify-content: center;">
+          <div style="background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: 10px; padding: 0.45rem; box-shadow: 0 4px 14px rgba(0,0,0,0.12); text-align: center;">
+            <img src="assets/images/nav_voronoi_diagram.png" alt="Voronoi Diagram Bisectors" style="width: 100%; max-height: 235px; object-fit: contain; border-radius: 6px; display: block; margin: 0 auto;" />
+            <div style="margin-top: 0.35rem; font-size: 0.68rem; color: var(--text-muted); font-family: var(--font-sans);">
+              Voronoi graph: edges bisect free space equidistant from obstacles
+            </div>
+          </div>
+        </div>
+      </div>
+    `
+  });
+
+  // 16. Exact Cell Decomposition: Trapezoidal & Triangular Slicing
+  slides.push({
+    id: `${lesson.id}_sec14_exact_cell_decomp`,
+    type: 'concept',
+    lessonNum: lesson.num_str,
+    lessonId: lesson.id,
+    module: lesson.module,
+    sectionTitle: '14. Exact Cell Decomposition',
+    badge: '📐 Cell Slicing',
+    title: 'Exact Cell Decomposition: Trapezoidal & Triangular Slicing',
+    htmlContent: `
+      <div class="l03-two-col-layout" style="display: grid; grid-template-columns: 1fr 1.05fr; gap: 0.65rem; align-items: center;">
+        <div class="l03-content-col" style="display: flex; flex-direction: column; justify-content: center; gap: 0.45rem;">
+          <div class="l05-golden-card" style="padding: 0.45rem 0.7rem;">
+            <div class="l05-golden-header" style="font-size: 0.8rem;"><span>✂️</span><strong>Vertical Vertex Slicing</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.35;">Exact cell decomposition divides free space into contiguous, non-overlapping convex trapezoids and triangles by extending vertical line segments from each obstacle vertex.</p>
+          </div>
+          <div class="l05-golden-card" style="padding: 0.45rem 0.7rem;">
+            <div class="l05-golden-header" style="font-size: 0.8rem;"><span>🕸️</span><strong>Adjacency Dual Graph</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.35;">Nodes are placed at cell centroids and boundary midpoints. Connecting adjacent cells creates a topological graph searched from start cell to goal cell.</p>
+          </div>
+        </div>
+        <div class="l03-content-col" style="display: flex; flex-direction: column; justify-content: center;">
+          <div style="background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: 10px; padding: 0.45rem; box-shadow: 0 4px 14px rgba(0,0,0,0.12); text-align: center;">
+            <img src="assets/images/nav_exact_cell_decomp_step1.png" alt="Exact Cell Decomposition" style="width: 100%; max-height: 235px; object-fit: contain; border-radius: 6px; display: block; margin: 0 auto;" />
+            <div style="margin-top: 0.35rem; font-size: 0.68rem; color: var(--text-muted); font-family: var(--font-sans);">
+              Non-overlapping trapezoidal cells and resultant shortest path traversal
+            </div>
+          </div>
+        </div>
+      </div>
+    `
+  });
+
+  // 17. Approximate Cell Decomposition: Recursive Quadtree Subdivision
+  slides.push({
+    id: `${lesson.id}_sec15_approx_cell_decomp`,
+    type: 'concept',
+    lessonNum: lesson.num_str,
+    lessonId: lesson.id,
+    module: lesson.module,
+    sectionTitle: '15. Approx Cell Decomposition',
+    badge: '🌳 Quadtrees',
+    title: 'Approximate Cell Decomposition: Recursive Quadtree Subdivision',
+    htmlContent: `
+      <div class="l03-two-col-layout" style="display: grid; grid-template-columns: 1fr 1.05fr; gap: 0.65rem; align-items: center;">
+        <div class="l03-content-col" style="display: flex; flex-direction: column; justify-content: center; gap: 0.4rem;">
+          <div class="l05-golden-card" style="padding: 0.45rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🔲</span><strong>Three-State Cell Classification</strong></div>
+            <p style="font-size: 0.73rem; line-height: 1.32;">The workspace is recursively divided into 4 quadrants. Each cell is labeled: <code>Empty</code> (entirely free), <code>Full</code> (completely occupied), or <code>Mixed</code> (partially occupied).</p>
+          </div>
+          <div class="l05-golden-card" style="padding: 0.45rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🔄</span><strong>Hierarchical Refinement</strong></div>
+            <p style="font-size: 0.73rem; line-height: 1.32;">If no contiguous chain of Empty cells connects Start to Goal, Mixed cells are subdivided into 4 sub-quadrants. As resolution increases, narrow passages emerge!</p>
+          </div>
+        </div>
+        <div class="l03-content-col" style="display: flex; flex-direction: column; justify-content: center;">
+          <div style="background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: 10px; padding: 0.45rem; box-shadow: 0 4px 14px rgba(0,0,0,0.12); text-align: center;">
+            <img src="assets/images/nav_approx_cell_decomp_step2.png" alt="Approximate Cell Decomposition Quadtree" style="width: 100%; max-height: 235px; object-fit: contain; border-radius: 6px; display: block; margin: 0 auto;" />
+            <div style="margin-top: 0.35rem; font-size: 0.68rem; color: var(--text-muted); font-family: var(--font-sans);">
+              Recursive quadtree subdivision revealing free corridor through mixed cells
+            </div>
+          </div>
+        </div>
+      </div>
+    `
   });
 
   // ==============================================================
@@ -6424,24 +6772,93 @@ function buildLesson14Slides(doc, lesson, slides) {
             </div>
           </div>
           <div class="l05-banner-intro" style="margin: 0; font-size: 0.71rem; padding: 0.35rem 0.6rem; border-left: 3px solid #7c3aed;">
-            <strong>👉 Interactive Next:</strong> Click through the interactive state machine on the next slide to trace A* execution step-by-step!
+            <strong>👉 Execution Graph:</strong> See the step-by-step priority queue expansion graph on the next slide!
           </div>
         </div>
       </div>
     `
   });
 
-  // 20. Interactive Simulation: A* Search Step-by-Step On-Click Engine (Slide 168 in RSE)
+  // 20. A* Graph Search: Step-by-Step Node Expansion & Priority Queue (Slide 168 in RSE)
   slides.push({
-    id: `${lesson.id}_interactive_astar`,
-    type: 'interactive',
-    interactiveKey: 'astar',
+    id: `${lesson.id}_sec16_astar_expansion`,
+    type: 'concept',
     lessonNum: lesson.num_str,
     lessonId: lesson.id,
     module: lesson.module,
-    sectionTitle: '17. Interactive A* Search Engine',
-    badge: '⚡ Interactive Simulation',
-    title: 'A* Graph Search: Step-by-Step On-Click State Machine'
+    sectionTitle: '17. A* Search Execution',
+    badge: '🔍 Graph Expansion',
+    title: 'A* Graph Search: Step-by-Step Node Expansion & Priority Queue',
+    htmlContent: `
+      <div class="l03-two-col-layout" style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.65rem; align-items: center;">
+        <div class="l03-content-col" style="display: flex; flex-direction: column; justify-content: center; gap: 0.4rem;">
+          <div class="l05-golden-card" style="padding: 0.45rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>1️⃣</span><strong>Iteration 1: Start Node (S) Expansion</strong></div>
+            <p style="font-size: 0.73rem; line-height: 1.32;">Expand <code>S (g=0, h=6, f=6)</code>. Neighbors generated: <code>D (g=4, h=3, f=7)</code> and <code>A (g=2, h=4, f=6)</code>. Both pushed to Open List min-heap.</p>
+          </div>
+          <div class="l05-golden-card" style="padding: 0.45rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>2️⃣</span><strong>Iteration 2: Pop Lowest f(n) &rarr; Node A</strong></div>
+            <p style="font-size: 0.73rem; line-height: 1.32;"><code>f(A) = 6 &lt; f(D) = 7</code>. Pop <code>A</code>, add to Closed List. Neighbors evaluated: <code>E (g=2+3=5, h=2, f=7)</code>. Queue now contains <code>[D (f=7), E (f=7)]</code>.</p>
+          </div>
+          <div class="l05-golden-card" style="padding: 0.45rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>3️⃣</span><strong>Iteration 3: Expand Toward Goal (G)</strong></div>
+            <p style="font-size: 0.73rem; line-height: 1.32;">Pop <code>E</code>, expand edge to <code>Goal (g=5+2=7, h=0, f=7)</code>. Goal reached with guaranteed minimal cost <code>g*(G) = 7</code> along path <code>S &rarr; A &rarr; E &rarr; Goal</code>!</p>
+          </div>
+        </div>
+        <div class="l03-content-col" style="display: flex; flex-direction: column; justify-content: center; gap: 0.35rem;">
+          <div style="background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: 8px; padding: 0.45rem; box-shadow: 0 4px 14px rgba(0,0,0,0.12); text-align: center;">
+            <svg viewBox="0 0 420 220" style="width: 100%; max-height: 200px; display: block; margin: 0 auto;">
+              <defs>
+                <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                  <path d="M 0 0 L 10 5 L 0 10 z" fill="#7c3aed" />
+                </marker>
+              </defs>
+              <line x1="60" y1="110" x2="160" y2="60" stroke="#7c3aed" stroke-width="2.5" marker-end="url(#arrow)" />
+              <text x="100" y="75" fill="#a78bfa" font-size="11" font-weight="bold">cost=2</text>
+
+              <line x1="60" y1="110" x2="160" y2="160" stroke="#64748b" stroke-width="1.5" stroke-dasharray="3,3" />
+              <text x="100" y="150" fill="#94a3b8" font-size="11">cost=4</text>
+
+              <line x1="160" y1="60" x2="270" y2="80" stroke="#7c3aed" stroke-width="2.5" marker-end="url(#arrow)" />
+              <text x="210" y="65" fill="#a78bfa" font-size="11" font-weight="bold">cost=3</text>
+
+              <line x1="160" y1="160" x2="270" y2="140" stroke="#64748b" stroke-width="1.5" stroke-dasharray="3,3" />
+              <text x="210" y="165" fill="#94a3b8" font-size="11">cost=2</text>
+
+              <line x1="270" y1="80" x2="370" y2="110" stroke="#10b981" stroke-width="3" marker-end="url(#arrow)" />
+              <text x="320" y="90" fill="#34d399" font-size="11" font-weight="bold">cost=2</text>
+
+              <!-- Nodes -->
+              <circle cx="60" cy="110" r="22" fill="#3b82f6" stroke="#60a5fa" stroke-width="2" />
+              <text x="60" y="106" fill="#fff" font-size="12" font-weight="bold" text-anchor="middle">S</text>
+              <text x="60" y="122" fill="#bfdbfe" font-size="9" text-anchor="middle">g=0, h=6</text>
+
+              <circle cx="160" cy="60" r="22" fill="#7c3aed" stroke="#a78bfa" stroke-width="2" />
+              <text x="160" y="56" fill="#fff" font-size="12" font-weight="bold" text-anchor="middle">A</text>
+              <text x="160" y="72" fill="#ddd6fe" font-size="9" text-anchor="middle">g=2, h=4</text>
+
+              <circle cx="160" cy="160" r="20" fill="#334155" stroke="#64748b" stroke-width="1.5" />
+              <text x="160" y="156" fill="#e2e8f0" font-size="12" font-weight="bold" text-anchor="middle">D</text>
+              <text x="160" y="171" fill="#94a3b8" font-size="9" text-anchor="middle">g=4, h=3</text>
+
+              <circle cx="270" cy="80" r="22" fill="#7c3aed" stroke="#a78bfa" stroke-width="2" />
+              <text x="270" y="76" fill="#fff" font-size="12" font-weight="bold" text-anchor="middle">E</text>
+              <text x="270" y="92" fill="#ddd6fe" font-size="9" text-anchor="middle">g=5, h=2</text>
+
+              <circle cx="370" cy="110" r="24" fill="#10b981" stroke="#34d399" stroke-width="2.5" />
+              <text x="370" y="106" fill="#fff" font-size="12" font-weight="bold" text-anchor="middle">Goal</text>
+              <text x="370" y="122" fill="#d1fae5" font-size="9" text-anchor="middle">g=7, h=0</text>
+            </svg>
+            <div style="margin-top: 0.3rem; font-size: 0.68rem; color: var(--text-muted); font-family: var(--font-sans);">
+              A* Traversal Graph: Priority queue frontier expands optimal path <span style="color: #34d399; font-weight: bold;">S &rarr; A &rarr; E &rarr; Goal</span>
+            </div>
+          </div>
+          <div class="l05-banner-intro" style="margin: 0; font-size: 0.72rem; padding: 0.35rem 0.6rem; border-left: 3px solid #10b981;">
+            <strong>💡 Shortest Path Result:</strong> Total path cost $f(Goal) = 7.0$ units. Zero nodes expanded unnecessarily!
+          </div>
+        </div>
+      </div>
+    `
   });
 
   // ==============================================================
@@ -6463,19 +6880,89 @@ function buildLesson14Slides(doc, lesson, slides) {
     description: 'Real-time velocity generation, acceleration feasibility windows, and forward trajectory rollout scoring.'
   });
 
-  // 22. Dynamic Window Approach (DWA) Interactive (Slides 171-172 Merged)
+  // 22. Dynamic Window Approach (DWA): Velocity Space Sampling & Forward Simulation (Slide 169 in RSE)
   slides.push({
-    id: `${lesson.id}_sec17_dwa_interactive`,
-    type: 'interactive',
-    interactiveKey: 'dwa',
-    portalId: 'interactive-dwa-local-planner-root',
+    id: `${lesson.id}_sec17_dwa_rollout`,
+    type: 'concept',
     lessonNum: lesson.num_str,
     lessonId: lesson.id,
     module: lesson.module,
-    sectionTitle: 'Local Planning: Dynamic Window Approach',
-    badge: '🏎️ Interactive DWA Simulator',
-    title: 'Dynamic Window Approach (DWA) Trajectory Rollout & Evaluation',
-    summary: 'Interactive 3-stage local trajectory planner: dynamic velocity window V_d sampling, kinematic circular arc rollout, and multi-objective critic function evaluation.'
+    sectionTitle: '18. DWA Velocity Sampling',
+    badge: '🏎️ DWA Rollout',
+    title: 'Dynamic Window Approach (DWA): Velocity Sampling & Forward Rollout',
+    htmlContent: `
+      <div class="l03-two-col-layout" style="display: grid; grid-template-columns: 1fr 1.05fr; gap: 0.65rem; align-items: center;">
+        <div class="l03-content-col" style="display: flex; flex-direction: column; justify-content: center; gap: 0.4rem;">
+          <div class="l05-golden-card" style="padding: 0.45rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>1️⃣</span><strong>Dynamic Window Velocity Sampling</strong></div>
+            <p style="font-size: 0.73rem; line-height: 1.32;">Sample candidate velocity pairs <code>(v, &omega;)</code> reachable within one simulation timestep <code>dt</code> based on actuator limits and acceleration limits: <code>v &isin; [v - a<sub>max</sub>dt, v + a<sub>max</sub>dt]</code>.</p>
+          </div>
+          <div class="l05-golden-card" style="padding: 0.45rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>2️⃣</span><strong>Forward Trajectory Simulation</strong></div>
+            <p style="font-size: 0.73rem; line-height: 1.32;">For each sampled velocity pair, simulate the robot forward trajectory for <code>sim_time</code> (typically 1.5 to 2.5 seconds) using unicycle kinematics.</p>
+          </div>
+          <div class="l05-golden-card" style="padding: 0.45rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>3️⃣</span><strong>Collision Pruning & Best Pick</strong></div>
+            <p style="font-size: 0.73rem; line-height: 1.32;">Discard trajectories intersecting lethal obstacles. Evaluate remaining trajectories with scoring critics, pick the highest score, and stream <code>/cmd_vel</code> at 20 Hz!</p>
+          </div>
+        </div>
+        <div class="l03-content-col" style="display: flex; flex-direction: column; justify-content: center;">
+          <div style="background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: 10px; padding: 0.45rem; box-shadow: 0 4px 14px rgba(0,0,0,0.12); text-align: center;">
+            <img src="assets/images/nav_dwa_local_planner.png" alt="DWA Local Planner Rollout" style="width: 100%; max-height: 235px; object-fit: contain; border-radius: 6px; display: block; margin: 0 auto;" />
+            <div style="margin-top: 0.35rem; font-size: 0.68rem; color: var(--text-muted); font-family: var(--font-sans);">
+              Velocity space sampling, forward rollout curves, and collision pruning
+            </div>
+          </div>
+        </div>
+      </div>
+    `
+  });
+
+  // 23. Nav2 DWB Controller: Critic Scoring Pipeline
+  slides.push({
+    id: `${lesson.id}_sec18_dwb_critics`,
+    type: 'concept',
+    lessonNum: lesson.num_str,
+    lessonId: lesson.id,
+    module: lesson.module,
+    sectionTitle: '19. DWB Critic Scoring',
+    badge: '⚖️ Scoring Matrix',
+    title: 'Nav2 DWB Controller: Multi-Objective Critic Scoring Matrix',
+    htmlContent: `
+      <div class="l03-two-col-layout" style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.65rem; align-items: center;">
+        <div class="l03-content-col" style="display: flex; flex-direction: column; justify-content: center; gap: 0.4rem;">
+          <div class="l05-golden-card" style="padding: 0.45rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🎯</span><strong>Objective Function G(v, &omega;)</strong></div>
+            <p style="font-size: 0.73rem; line-height: 1.32;"><code>G(v, &omega;) = &sum;<sub>i</sub> w<sub>i</sub> &times; Critic<sub>i</sub>(trajectory)</code>. Each critic inspects candidate rollouts on the local costmap and outputs a normalized scalar score.</p>
+          </div>
+          <div class="l05-golden-card" style="padding: 0.45rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🛡️</span><strong>BaseObstacle Critic</strong></div>
+            <p style="font-size: 0.73rem; line-height: 1.32;">Evaluates robot footprint along the simulated curve against the local costmap. Any footprint crossing lethal cells (254) is instantly rejected with negative infinity.</p>
+          </div>
+        </div>
+        <div class="l03-content-col" style="display: flex; flex-direction: column; justify-content: center; gap: 0.35rem;">
+          <div style="background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: 8px; padding: 0.45rem; box-shadow: 0 4px 14px rgba(0,0,0,0.12);">
+            <div style="font-size: 0.76rem; font-weight: bold; color: #e11d48; margin-bottom: 0.3rem;">
+              DWB Critic Weighting Hierarchy
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 0.25rem; font-size: 0.7rem;">
+              <div style="padding: 0.25rem 0.45rem; background: rgba(15, 23, 42, 0.6); border-radius: 4px;">
+                <strong>PathAlign (scale: 32.0):</strong> Penalizes heading deviation from global plan.
+              </div>
+              <div style="padding: 0.25rem 0.45rem; background: rgba(15, 23, 42, 0.6); border-radius: 4px;">
+                <strong>GoalAlign (scale: 24.0):</strong> Penalizes robot heading pointing away from goal.
+              </div>
+              <div style="padding: 0.25rem 0.45rem; background: rgba(15, 23, 42, 0.6); border-radius: 4px;">
+                <strong>PathDist (scale: 32.0):</strong> Penalizes perpendicular distance from global line.
+              </div>
+              <div style="padding: 0.25rem 0.45rem; background: rgba(15, 23, 42, 0.6); border-radius: 4px;">
+                <strong>GoalDist (scale: 24.0):</strong> Incentivizes forward progress toward target.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    `
   });
 
   // ==============================================================
