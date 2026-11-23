@@ -229,18 +229,16 @@ export function AStarSearchInteractive() {
         display: 'flex',
         flexDirection: 'column',
         height: '100%',
-        maxHeight: '520px',
         width: '100%',
-        maxWidth: '1180px',
         margin: '0 auto',
-        padding: '0.45rem 0.75rem',
+        padding: '0.55rem 0.85rem',
         boxSizing: 'border-box',
         gap: '0.45rem',
-        background: 'linear-gradient(180deg, #0b1120 0%, #060913 100%)',
+        background: '#ffffff',
         borderRadius: '12px',
-        border: '1px solid #1e293b',
-        boxShadow: '0 8px 30px rgba(0, 0, 0, 0.45)',
-        color: '#f8fafc',
+        border: '1px solid #e2e8f0',
+        boxShadow: '0 4px 20px rgba(0, 0, 0, 0.05)',
+        color: '#0f172a',
         fontFamily: 'system-ui, -apple-system, sans-serif'
       }}
     >
@@ -269,51 +267,51 @@ export function AStarSearchInteractive() {
         }
         @keyframes astarGlowPulse {
           0%, 100% {
-            filter: drop-shadow(0 0 6px rgba(16, 185, 129, 0.7));
+            filter: drop-shadow(0 0 6px rgba(16, 185, 129, 0.6));
           }
           50% {
-            filter: drop-shadow(0 0 12px rgba(16, 185, 129, 0.95));
+            filter: drop-shadow(0 0 12px rgba(16, 185, 129, 0.9));
           }
         }
         .astar-edge-active {
-          stroke: #f59e0b !important;
-          stroke-width: 3 !important;
+          stroke: #d97706 !important;
+          stroke-width: 3.2 !important;
           stroke-dasharray: 6 4 !important;
           animation: astarMarch 0.7s linear infinite !important;
         }
         .astar-edge-optimal {
-          stroke: #10b981 !important;
+          stroke: #059669 !important;
           stroke-width: 4.5 !important;
           stroke-dasharray: none !important;
           animation: astarGlowPulse 1.8s ease-in-out infinite !important;
         }
         .astar-step-chip {
-          padding: 0.2rem 0.45rem;
-          font-size: 0.65rem;
+          padding: 0.22rem 0.5rem;
+          font-size: 0.67rem;
           font-weight: 600;
           border-radius: 6px;
-          border: 1px solid #334155;
-          background: #1e293b;
-          color: #94a3b8;
+          border: 1px solid #cbd5e1;
+          background: #f8fafc;
+          color: #475569;
           cursor: pointer;
           transition: all 0.2s ease;
           white-space: nowrap;
         }
         .astar-step-chip:hover {
-          background: #334155;
-          color: #f8fafc;
-          border-color: #64748b;
+          background: #f1f5f9;
+          color: #0f172a;
+          border-color: #94a3b8;
         }
         .astar-step-chip.active {
-          background: #7c3aed;
-          border-color: #a78bfa;
+          background: #4f46e5;
+          border-color: #4338ca;
           color: #ffffff;
-          box-shadow: 0 0 10px rgba(124, 58, 237, 0.5);
+          box-shadow: 0 2px 8px rgba(79, 70, 229, 0.35);
         }
         .astar-step-chip.completed {
-          border-color: #065f46;
-          color: #34d399;
-          background: rgba(6, 95, 70, 0.25);
+          border-color: #a7f3d0;
+          color: #059669;
+          background: #ecfdf5;
         }
       `}</style>
 
@@ -325,8 +323,8 @@ export function AStarSearchInteractive() {
           alignItems: 'center',
           flexWrap: 'wrap',
           gap: '0.4rem',
-          borderBottom: '1px solid #1e293b',
-          paddingBottom: '0.35rem'
+          borderBottom: '1px solid #e2e8f0',
+          paddingBottom: '0.4rem'
         }}
       >
         {/* Step Chips (Clickable to jump directly to any step) */}
@@ -356,9 +354,9 @@ export function AStarSearchInteractive() {
               fontSize: '0.72rem',
               fontWeight: 600,
               borderRadius: '6px',
-              border: '1px solid #475569',
-              background: currentStepIndex === 0 ? '#1e293b' : '#334155',
-              color: currentStepIndex === 0 ? '#64748b' : '#f8fafc',
+              border: '1px solid #cbd5e1',
+              background: currentStepIndex === 0 ? '#f1f5f9' : '#ffffff',
+              color: currentStepIndex === 0 ? '#94a3b8' : '#334155',
               cursor: currentStepIndex === 0 ? 'not-allowed' : 'pointer'
             }}
           >
@@ -375,9 +373,9 @@ export function AStarSearchInteractive() {
               fontSize: '0.72rem',
               fontWeight: 600,
               borderRadius: '6px',
-              border: '1px solid #8b5cf6',
-              background: isPlaying ? '#7c3aed' : 'rgba(139, 92, 246, 0.25)',
-              color: '#f8fafc',
+              border: isPlaying ? '1px solid #4338ca' : '1px solid #c7d2fe',
+              background: isPlaying ? '#4f46e5' : '#eef2ff',
+              color: isPlaying ? '#ffffff' : '#4338ca',
               cursor: 'pointer'
             }}
           >
@@ -396,11 +394,11 @@ export function AStarSearchInteractive() {
               fontSize: '0.72rem',
               fontWeight: 700,
               borderRadius: '6px',
-              border: '1px solid #10b981',
-              background: currentStepIndex === STEPS.length - 1 ? '#1e293b' : '#059669',
-              color: currentStepIndex === STEPS.length - 1 ? '#64748b' : '#ffffff',
+              border: '1px solid #047857',
+              background: currentStepIndex === STEPS.length - 1 ? '#f1f5f9' : '#059669',
+              color: currentStepIndex === STEPS.length - 1 ? '#94a3b8' : '#ffffff',
               cursor: currentStepIndex === STEPS.length - 1 ? 'not-allowed' : 'pointer',
-              boxShadow: currentStepIndex < STEPS.length - 1 ? '0 0 10px rgba(16, 185, 129, 0.4)' : 'none'
+              boxShadow: currentStepIndex < STEPS.length - 1 ? '0 2px 8px rgba(5, 150, 105, 0.3)' : 'none'
             }}
           >
             <MousePointerClick size={14} />
@@ -416,9 +414,9 @@ export function AStarSearchInteractive() {
               padding: '0.25rem 0.45rem',
               fontSize: '0.72rem',
               borderRadius: '6px',
-              border: '1px solid #475569',
-              background: '#1e293b',
-              color: '#94a3b8',
+              border: '1px solid #cbd5e1',
+              background: '#ffffff',
+              color: '#64748b',
               cursor: 'pointer'
             }}
           >
@@ -427,12 +425,12 @@ export function AStarSearchInteractive() {
         </div>
       </div>
 
-      {/* Main Dual Stage: SVG Graph on Left (60%), Priority Queue Table on Right (40%) */}
+      {/* Main Dual Stage: SVG Graph on Left (56%), Priority Queue Table on Right (44%) */}
       <div 
         style={{
           display: 'grid',
-          gridTemplateColumns: '1.25fr 1fr',
-          gap: '0.55rem',
+          gridTemplateColumns: '1.2fr 1fr',
+          gap: '0.65rem',
           flex: 1,
           minHeight: 0
         }}
@@ -443,26 +441,26 @@ export function AStarSearchInteractive() {
           title="Click anywhere inside graph to advance to next step"
           style={{
             position: 'relative',
-            background: 'radial-gradient(ellipse at 40% 50%, #0f172a 0%, #020617 100%)',
-            border: '1px solid rgba(139, 92, 246, 0.35)',
-            borderRadius: '8px',
+            background: '#f8fafc',
+            border: '1px solid #e2e8f0',
+            borderRadius: '10px',
             overflow: 'hidden',
             display: 'flex',
             flexDirection: 'column',
             justifyContent: 'center',
             cursor: currentStepIndex < STEPS.length - 1 ? 'pointer' : 'default',
-            padding: '0.25rem'
+            padding: '0.35rem'
           }}
         >
           {/* Legend and Click Hint */}
           <div 
             style={{
               position: 'absolute',
-              top: '6px',
-              left: '8px',
-              right: '8px',
-              fontSize: '0.64rem',
-              color: '#94a3b8',
+              top: '8px',
+              left: '10px',
+              right: '10px',
+              fontSize: '0.66rem',
+              color: '#64748b',
               display: 'flex',
               justifyContent: 'space-between',
               alignItems: 'center',
@@ -470,14 +468,14 @@ export function AStarSearchInteractive() {
               pointerEvents: 'none'
             }}
           >
-            <div style={{ display: 'flex', gap: '0.65rem' }}>
-              <span><strong style={{ color: '#f59e0b' }}>●</strong> Active / Popped</span>
-              <span><strong style={{ color: '#38bdf8' }}>●</strong> Open Frontier</span>
-              <span><strong style={{ color: '#818cf8' }}>●</strong> Closed</span>
-              <span><strong style={{ color: '#10b981' }}>●</strong> Optimal Path</span>
+            <div style={{ display: 'flex', gap: '0.75rem', fontWeight: 600 }}>
+              <span><strong style={{ color: '#d97706' }}>●</strong> Active / Popped</span>
+              <span><strong style={{ color: '#0284c7' }}>●</strong> Open Frontier</span>
+              <span><strong style={{ color: '#64748b' }}>●</strong> Closed</span>
+              <span><strong style={{ color: '#059669' }}>●</strong> Optimal Path</span>
             </div>
             {currentStepIndex < STEPS.length - 1 && (
-              <span style={{ color: '#a78bfa', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '0.2rem' }}>
+              <span style={{ color: '#4f46e5', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '0.2rem' }}>
                 <MousePointerClick size={12} /> Click graph to step
               </span>
             )}
@@ -485,11 +483,11 @@ export function AStarSearchInteractive() {
 
           <svg 
             viewBox="0 0 600 280" 
-            style={{ width: '100%', height: '100%', maxHeight: '250px' }}
+            style={{ width: '100%', height: '100%', minHeight: '260px', maxHeight: '340px' }}
           >
             <defs>
               <pattern id="astarGrid" width="20" height="20" patternUnits="userSpaceOnUse">
-                <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#1e293b" strokeWidth="0.5" strokeOpacity="0.4" />
+                <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#e2e8f0" strokeWidth="0.8" />
               </pattern>
             </defs>
 
@@ -505,18 +503,18 @@ export function AStarSearchInteractive() {
               const isActive = stepData.activeEdges.includes(edgeKey);
 
               let edgeClass = '';
-              let stroke = '#334155';
+              let stroke = '#cbd5e1';
               let strokeWidth = 2;
               let strokeDash = 'none';
 
               if (isOptimal) {
                 edgeClass = 'astar-edge-optimal';
-                stroke = '#10b981';
+                stroke = '#059669';
                 strokeWidth = 4.5;
               } else if (isActive) {
                 edgeClass = 'astar-edge-active';
-                stroke = '#f59e0b';
-                strokeWidth = 3;
+                stroke = '#d97706';
+                strokeWidth = 3.2;
                 strokeDash = '6 4';
               }
 
@@ -535,19 +533,19 @@ export function AStarSearchInteractive() {
                   />
                   {/* Cost Badge */}
                   <rect
-                    x={edge.midX - 11}
+                    x={edge.midX - 12}
                     y={edge.midY - 8}
-                    width={22}
+                    width={24}
                     height={16}
-                    rx={3}
-                    fill="#020617"
-                    stroke={isOptimal ? '#10b981' : (isActive ? '#f59e0b' : '#334155')}
+                    rx={4}
+                    fill="#ffffff"
+                    stroke={isOptimal ? '#059669' : (isActive ? '#d97706' : '#cbd5e1')}
                     strokeWidth={1.2}
                   />
                   <text
                     x={edge.midX}
                     y={edge.midY + 4}
-                    fill={isOptimal ? '#34d399' : (isActive ? '#fbbf24' : '#94a3b8')}
+                    fill={isOptimal ? '#059669' : (isActive ? '#b45309' : '#475569')}
                     fontSize="10"
                     fontWeight="bold"
                     textAnchor="middle"
@@ -567,26 +565,34 @@ export function AStarSearchInteractive() {
               const isInFrontier = stepData.frontier.some(f => f.targetNode === id);
               const isOptimal = currentStepIndex >= 6 && ['S', 'D', 'E', 'F', 'G'].includes(id);
 
-              let fill = '#1e293b';
-              let stroke = '#475569';
-              let textColor = '#f8fafc';
+              let fill = '#ffffff';
+              let stroke = '#94a3b8';
+              let textColor = '#0f172a';
 
               if (isOptimal && currentStepIndex === 7) {
-                fill = '#064e3b';
-                stroke = '#10b981';
-                textColor = '#6ee7b7';
+                fill = '#d1fae5';
+                stroke = '#059669';
+                textColor = '#065f46';
               } else if (isCurrent) {
-                fill = '#78350f';
-                stroke = '#f59e0b';
-                textColor = '#fef08a';
+                fill = '#fef3c7';
+                stroke = '#d97706';
+                textColor = '#92400e';
               } else if (isInFrontier) {
-                fill = '#0c4a6e';
+                fill = '#e0f2fe';
                 stroke = '#0284c7';
-                textColor = '#7dd3fc';
+                textColor = '#0369a1';
               } else if (isClosed) {
-                fill = '#312e81';
-                stroke = '#6366f1';
-                textColor = '#c7d2fe';
+                fill = '#f1f5f9';
+                stroke = '#64748b';
+                textColor = '#475569';
+              } else if (isStart) {
+                fill = '#eff6ff';
+                stroke = '#2563eb';
+                textColor = '#1d4ed8';
+              } else if (isGoal) {
+                fill = '#fef2f2';
+                stroke = '#dc2626';
+                textColor = '#b91c1c';
               }
 
               return (
@@ -598,7 +604,7 @@ export function AStarSearchInteractive() {
                       y={node.y}
                       r={24}
                       fill="none"
-                      stroke="#f59e0b"
+                      stroke="#d97706"
                       strokeWidth={2}
                       strokeDasharray="4 3"
                       style={{ animation: 'astarPulseRing 1.5s ease-out infinite' }}
@@ -612,7 +618,7 @@ export function AStarSearchInteractive() {
                       y={node.y}
                       r={22}
                       fill="none"
-                      stroke="#10b981"
+                      stroke="#059669"
                       strokeWidth={2}
                       strokeOpacity={0.6}
                     />
@@ -642,20 +648,20 @@ export function AStarSearchInteractive() {
 
                   {/* Heuristic Pill (Admissible Estimate to Goal) */}
                   <rect
-                    x={node.x - 17}
-                    y={node.y - 30}
-                    width={34}
-                    height={14}
-                    rx={3}
-                    fill="#020617"
-                    stroke={isCurrent ? '#f59e0b' : (isInFrontier ? '#0284c7' : '#334155')}
-                    strokeWidth={0.9}
+                    x={node.x - 18}
+                    y={node.y - 31}
+                    width={36}
+                    height={15}
+                    rx={4}
+                    fill="#ffffff"
+                    stroke={isCurrent ? '#d97706' : (isInFrontier ? '#0284c7' : '#cbd5e1')}
+                    strokeWidth={1}
                   />
                   <text
                     x={node.x}
                     y={node.y - 20}
-                    fill={isCurrent ? '#fef08a' : (isInFrontier ? '#38bdf8' : '#94a3b8')}
-                    fontSize="8.5"
+                    fill={isCurrent ? '#b45309' : (isInFrontier ? '#0369a1' : '#64748b')}
+                    fontSize="9"
                     fontWeight="bold"
                     textAnchor="middle"
                   >
@@ -670,46 +676,46 @@ export function AStarSearchInteractive() {
         {/* Priority Queue (Frontier) Live Table */}
         <div 
           style={{
-            background: 'rgba(2, 6, 23, 0.85)',
-            border: '1px solid rgba(139, 92, 246, 0.3)',
-            borderRadius: '8px',
-            padding: '0.45rem',
+            background: '#ffffff',
+            border: '1px solid #e2e8f0',
+            borderRadius: '10px',
+            padding: '0.55rem 0.7rem',
             display: 'flex',
             flexDirection: 'column',
             justifyContent: 'space-between',
             overflow: 'hidden'
           }}
         >
-          <div>
+          <div style={{ display: 'flex', flexDirection: 'column', flex: 1, minHeight: 0 }}>
             <div 
               style={{
                 display: 'flex',
                 justifyContent: 'space-between',
                 alignItems: 'center',
-                marginBottom: '0.35rem',
-                borderBottom: '1px solid #1e293b',
-                paddingBottom: '0.25rem'
+                marginBottom: '0.4rem',
+                borderBottom: '1px solid #e2e8f0',
+                paddingBottom: '0.3rem'
               }}
             >
               <div style={{ display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
-                <span style={{ fontSize: '0.74rem', fontWeight: 700, color: '#a78bfa' }}>
+                <span style={{ fontSize: '0.78rem', fontWeight: 700, color: '#4338ca' }}>
                   Min-Heap Priority Queue (Open List)
                 </span>
               </div>
-              <span style={{ fontSize: '0.64rem', color: '#94a3b8' }}>
+              <span style={{ fontSize: '0.66rem', color: '#64748b' }}>
                 Sorted by f(n) = g + h
               </span>
             </div>
 
-            <div style={{ overflowX: 'auto', maxHeight: '185px' }}>
-              <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.68rem' }}>
+            <div style={{ flex: 1, overflowY: 'auto', minHeight: 0 }}>
+              <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.72rem' }}>
                 <thead>
-                  <tr style={{ background: '#0f172a', color: '#94a3b8', textAlign: 'left' }}>
-                    <th style={{ padding: '0.22rem 0.35rem' }}>Candidate Path</th>
-                    <th style={{ padding: '0.22rem 0.35rem' }}>g(n)</th>
-                    <th style={{ padding: '0.22rem 0.35rem' }}>h(n)</th>
-                    <th style={{ padding: '0.22rem 0.35rem', color: '#eab308' }}>f(n)</th>
-                    <th style={{ padding: '0.22rem 0.35rem' }}>Frontier Status</th>
+                  <tr style={{ background: '#f8fafc', color: '#475569', textAlign: 'left', borderBottom: '2px solid #e2e8f0' }}>
+                    <th style={{ padding: '0.28rem 0.4rem', fontWeight: 700 }}>Candidate Path</th>
+                    <th style={{ padding: '0.28rem 0.4rem', fontWeight: 700 }}>g(n)</th>
+                    <th style={{ padding: '0.28rem 0.4rem', fontWeight: 700 }}>h(n)</th>
+                    <th style={{ padding: '0.28rem 0.4rem', fontWeight: 700, color: '#b45309' }}>f(n)</th>
+                    <th style={{ padding: '0.28rem 0.4rem', fontWeight: 700 }}>Frontier Status</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -717,26 +723,27 @@ export function AStarSearchInteractive() {
                     <tr 
                       key={idx}
                       style={{
-                        background: row.isLowest ? 'rgba(234, 179, 8, 0.14)' : 'transparent',
-                        borderBottom: '1px solid #1e293b',
-                        color: row.isLowest ? '#fef08a' : '#cbd5e1'
+                        background: row.isLowest ? '#fefce8' : 'transparent',
+                        borderBottom: '1px solid #f1f5f9',
+                        color: row.isLowest ? '#854d0e' : '#334155'
                       }}
                     >
-                      <td style={{ padding: '0.22rem 0.35rem', fontFamily: 'monospace', fontWeight: 700 }}>
+                      <td style={{ padding: '0.3rem 0.4rem', fontFamily: 'monospace', fontWeight: 700 }}>
                         {row.path}
                       </td>
-                      <td style={{ padding: '0.22rem 0.35rem' }}>{row.g.toFixed(1)}</td>
-                      <td style={{ padding: '0.22rem 0.35rem' }}>{row.h.toFixed(1)}</td>
-                      <td style={{ padding: '0.22rem 0.35rem', fontWeight: 800, color: row.isLowest ? '#fbbf24' : '#f8fafc' }}>
+                      <td style={{ padding: '0.3rem 0.4rem' }}>{row.g.toFixed(1)}</td>
+                      <td style={{ padding: '0.3rem 0.4rem' }}>{row.h.toFixed(1)}</td>
+                      <td style={{ padding: '0.3rem 0.4rem', fontWeight: 800, color: row.isLowest ? '#b45309' : '#0f172a' }}>
                         {row.f.toFixed(1)}
                       </td>
-                      <td style={{ padding: '0.22rem 0.35rem', fontSize: '0.62rem' }}>
+                      <td style={{ padding: '0.3rem 0.4rem', fontSize: '0.65rem' }}>
                         <span 
                           style={{
-                            padding: '0.12rem 0.35rem',
+                            padding: '0.12rem 0.4rem',
                             borderRadius: '4px',
-                            background: row.isLowest ? '#854d0e' : (row.status.includes('PRUNED') ? '#7f1d1d' : '#1e293b'),
-                            color: row.isLowest ? '#fef08a' : (row.status.includes('PRUNED') ? '#fca5a5' : '#94a3b8'),
+                            background: row.isLowest ? '#fef08a' : (row.status.includes('PRUNED') ? '#fee2e2' : (row.status.includes('OPTIMAL') ? '#d1fae5' : '#f1f5f9')),
+                            color: row.isLowest ? '#854d0e' : (row.status.includes('PRUNED') ? '#991b1b' : (row.status.includes('OPTIMAL') ? '#065f46' : '#475569')),
+                            border: row.isLowest ? '1px solid #fde047' : (row.status.includes('PRUNED') ? '1px solid #fca5a5' : (row.status.includes('OPTIMAL') ? '1px solid #6ee7b7' : '1px solid #e2e8f0')),
                             fontWeight: 600
                           }}
                         >
@@ -753,26 +760,27 @@ export function AStarSearchInteractive() {
           {/* Mathematical Decision Box */}
           <div 
             style={{
-              background: 'rgba(15, 23, 42, 0.9)',
-              border: '1px solid #334155',
+              background: '#f8fafc',
+              border: '1px solid #e2e8f0',
+              borderLeft: '4px solid #0284c7',
               borderRadius: '6px',
-              padding: '0.35rem 0.5rem',
-              fontSize: '0.68rem',
-              marginTop: '0.35rem',
+              padding: '0.4rem 0.65rem',
+              fontSize: '0.7rem',
+              marginTop: '0.4rem',
               display: 'flex',
               flexDirection: 'column',
               gap: '0.15rem'
             }}
           >
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-              <span style={{ color: '#38bdf8', fontWeight: 700 }}>
+              <span style={{ color: '#0284c7', fontWeight: 700 }}>
                 🧮 Math Evaluation:
               </span>
-              <span style={{ color: '#fbbf24', fontFamily: 'monospace', fontWeight: 700 }}>
+              <span style={{ color: '#1d4ed8', fontFamily: 'monospace', fontWeight: 700 }}>
                 {stepData.decisionFormula}
               </span>
             </div>
-            <div style={{ color: '#cbd5e1', fontSize: '0.64rem' }}>
+            <div style={{ color: '#475569', fontSize: '0.67rem' }}>
               {stepData.decisionNote}
             </div>
           </div>
@@ -782,25 +790,26 @@ export function AStarSearchInteractive() {
       {/* Bottom Step Explanation Banner */}
       <div 
         style={{
-          background: 'rgba(15, 23, 42, 0.95)',
-          borderLeft: '4px solid #8b5cf6',
-          padding: '0.4rem 0.65rem',
-          borderRadius: '4px',
-          fontSize: '0.73rem',
-          lineHeight: 1.35,
-          color: '#e2e8f0',
+          background: '#faf5ff',
+          border: '1px solid #e9d5ff',
+          borderLeft: '4px solid #7c3aed',
+          padding: '0.45rem 0.8rem',
+          borderRadius: '8px',
+          fontSize: '0.75rem',
+          lineHeight: 1.4,
+          color: '#334155',
           display: 'flex',
           alignItems: 'center',
-          gap: '0.5rem'
+          gap: '0.6rem'
         }}
       >
         <div 
           style={{
             background: '#7c3aed',
             color: '#fff',
-            padding: '0.15rem 0.45rem',
-            borderRadius: '4px',
-            fontSize: '0.65rem',
+            padding: '0.18rem 0.5rem',
+            borderRadius: '5px',
+            fontSize: '0.67rem',
             fontWeight: 800,
             whiteSpace: 'nowrap'
           }}
@@ -808,7 +817,7 @@ export function AStarSearchInteractive() {
           Step {currentStepIndex} of {STEPS.length - 1}
         </div>
         <div>
-          <strong style={{ color: '#a78bfa', marginRight: '0.35rem' }}>
+          <strong style={{ color: '#6d28d9', marginRight: '0.35rem' }}>
             {stepData.title}:
           </strong>
           <span>{stepData.explanation}</span>

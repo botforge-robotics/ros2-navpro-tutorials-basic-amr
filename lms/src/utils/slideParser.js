@@ -6027,55 +6027,6 @@ function buildLesson14Slides(doc, lesson, slides) {
     description: 'Modeling real-world warehouse environments, robot geometry, clearance checks, and obstacle inflation into Configuration Space.'
   });
 
-  // 2. Navigation Problem Formulation (Slide 146/147 in RSE)
-  slides.push({
-    id: `${lesson.id}_sec1_nav_problem`,
-    type: 'concept',
-    lessonNum: lesson.num_str,
-    lessonId: lesson.id,
-    module: lesson.module,
-    sectionTitle: '1. Navigation Problem Formulation',
-    badge: '🧭 Problem Statement',
-    title: 'Mobile Robot Navigation: Problem Formulation & Constraints',
-    htmlContent: `
-      <div class="scenario-blueprint-layout">
-        <!-- Top Mathematical Equation Banner -->
-        <div style="background: rgba(15, 23, 42, 0.75); border: 1px solid rgba(59, 130, 246, 0.45); border-radius: 8px; padding: 0.45rem 0.8rem; box-shadow: 0 4px 16px rgba(0,0,0,0.25); display: flex; align-items: center; justify-content: space-between;">
-          <div style="display: flex; align-items: center; gap: 0.5rem;">
-            <span style="background: #0284c7; color: #fff; font-size: 0.68rem; font-weight: 700; padding: 0.2rem 0.5rem; border-radius: 4px; text-transform: uppercase;">Optimization Target</span>
-            <span style="font-size: 0.78rem; font-family: var(--font-mono); color: #93c5fd;">Find trajectory &pi;(t) &in; &Cscr;<sub>free</sub> from q<sub>s</sub> &rarr; q<sub>g</sub> minimizing cost J(&pi;) = &int; L(q, q&#775;) dt</span>
-          </div>
-          <span style="font-size: 0.7rem; color: #38bdf8; font-weight: 600;">Kinematic Constraint: y&#775; cos &theta; - x&#775; sin &theta; = 0</span>
-        </div>
-
-        <!-- 3-Column Constraint Blueprint Grid -->
-        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.6rem;">
-          <div class="l05-golden-card" style="padding: 0.5rem 0.7rem; margin: 0;">
-            <div class="l05-golden-header" style="font-size: 0.79rem; color: #38bdf8;"><span>🏢</span><strong>1. Workspace Geometry (&Wscr;)</strong></div>
-            <p style="font-size: 0.72rem; line-height: 1.35; margin: 0.25rem 0 0 0;">Physical warehouse domain &Wscr; &sub; &reals;<sup>2</sup> bounded by perimeter walls, racking uprights, and static obstacles &Oscr;<sub>i</sub>. Defines physical navigable space.</p>
-            <div style="margin-top: 0.35rem; font-size: 0.68rem; color: var(--text-muted); border-top: 1px solid var(--border-color); padding-top: 0.25rem;">Domain: (x, y) &isin; [-50m, +50m]</div>
-          </div>
-
-          <div class="l05-golden-card" style="padding: 0.5rem 0.7rem; margin: 0;">
-            <div class="l05-golden-header" style="font-size: 0.79rem; color: #a855f7;"><span>🚜</span><strong>2. Robot Footprint (&Ascr;)</strong></div>
-            <p style="font-size: 0.72rem; line-height: 1.35; margin: 0.25rem 0 0 0;">Rigid chassis polygon &Ascr;(q) with length L, width W, and wheel track b. The AMR cannot be collapsed into a zero-radius point without collision failure.</p>
-            <div style="margin-top: 0.35rem; font-size: 0.68rem; color: var(--text-muted); border-top: 1px solid var(--border-color); padding-top: 0.25rem;">Kinematic limit: |v| &le; v<sub>max</sub>, |&omega;| &le; &omega;<sub>max</sub></div>
-          </div>
-
-          <div class="l05-golden-card" style="padding: 0.5rem 0.7rem; margin: 0;">
-            <div class="l05-golden-header" style="font-size: 0.79rem; color: #10b981;"><span>🎯</span><strong>3. Safety &amp; Optimality</strong></div>
-            <p style="font-size: 0.72rem; line-height: 1.35; margin: 0.25rem 0 0 0;">Strict collision avoidance: &Ascr;(q(t)) &cap; &Oscr;<sub>i</sub> = &empty; &forall; t. Path curvature &kappa;(t) must remain feasible while minimizing transit time and wheel wear.</p>
-            <div style="margin-top: 0.35rem; font-size: 0.68rem; color: #10b981; border-top: 1px solid var(--border-color); padding-top: 0.25rem; font-weight: 600;">Guarantee: dist(&Ascr;, &Oscr;) &gt; 0 mm</div>
-          </div>
-        </div>
-
-        <!-- Bottom Takeaway Banner -->
-        <div class="l05-banner-intro" style="margin: 0; font-size: 0.72rem; padding: 0.35rem 0.65rem; border-left: 3px solid #0284c7; background: rgba(2, 132, 199, 0.08);">
-          <strong>💡 Autonomous Navigation Core:</strong> Transforming continuous physical space &Wscr; into a collision-free Configuration Space &Cscr;<sub>free</sub> that path planners can evaluate in real time.
-        </div>
-      </div>
-    `
-  });
 
   // 3. Continuous Space Step 1: 2D Plane & Target Waypoint
   slides.push({
@@ -6310,66 +6261,6 @@ function buildLesson14Slides(doc, lesson, slides) {
     `
   });
 
-  // 10. Inflation Layer Mathematics: Exponential Cost Decay
-  slides.push({
-    id: `${lesson.id}_sec9_inflation_math`,
-    type: 'concept',
-    lessonNum: lesson.num_str,
-    lessonId: lesson.id,
-    module: lesson.module,
-    sectionTitle: '9. Inflation Mathematics',
-    badge: '🧮 Formulation',
-    title: 'Inflation Layer Mathematics: Exponential Cost Decay & Safety Radii',
-    htmlContent: `
-      <div class="inflation-spectrum-layout">
-        <!-- Top Centered Formula Banner -->
-        <div style="background: rgba(15, 23, 42, 0.75); border: 1px solid rgba(59, 130, 246, 0.4); border-radius: 8px; padding: 0.45rem 0.8rem; text-align: center; box-shadow: 0 4px 16px rgba(0,0,0,0.25);">
-          <div style="font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.05em; color: #60a5fa; font-weight: 700; margin-bottom: 0.15rem;">Continuous Cost Function</div>
-          <div style="font-size: 0.95rem; font-family: var(--font-mono); color: #f8fafc; font-weight: bold;">
-            Cost(d) = 253 &times; exp&lpar;&minus;&alpha; &times; (d &minus; r<sub>inscribed</sub>)&rpar;
-          </div>
-          <div style="display: flex; justify-content: center; gap: 1.2rem; font-size: 0.7rem; color: #94a3b8; margin-top: 0.2rem;">
-            <span><strong style="color: #38bdf8;">d:</strong> Distance to obstacle</span>
-            <span><strong style="color: #f59e0b;">r<sub>inscribed</sub>:</strong> Chassis radius (W/2)</span>
-            <span><strong style="color: #ec4899;">&alpha;:</strong> cost_scaling_factor</span>
-          </div>
-        </div>
-
-        <!-- Middle Full-Width Radial Spectrum Strip -->
-        <div style="background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: 8px; padding: 0.45rem 0.65rem;">
-          <div style="font-size: 0.72rem; font-weight: 700; color: var(--text-secondary); margin-bottom: 0.3rem; display: flex; justify-content: space-between;">
-            <span>Obstacle Center (d = 0)</span>
-            <span>Safety Radii Spectrum</span>
-            <span>Free Space (d &gt; r<sub>inflation</sub>)</span>
-          </div>
-          <div style="display: grid; grid-template-columns: 1.2fr 1.3fr 2.2fr 1fr; border-radius: 6px; overflow: hidden; height: 32px; font-size: 0.68rem; font-weight: bold; text-align: center; line-height: 32px; color: #fff;">
-            <div style="background: #ef4444;">Lethal (254)</div>
-            <div style="background: #f97316;">Inscribed (253)</div>
-            <div style="background: linear-gradient(90deg, #eab308, #3b82f6); color: #fff;">Exponential Decay (1–252)</div>
-            <div style="background: #10b981;">Free (0)</div>
-          </div>
-          <div style="display: grid; grid-template-columns: 1.2fr 1.3fr 2.2fr 1fr; font-size: 0.65rem; color: var(--text-muted); margin-top: 0.25rem; text-align: center;">
-            <span>0 &le; d &le; r<sub>inscribed</sub></span>
-            <span>r<sub>inscribed</sub> &lt; d &le; r<sub>circum</sub></span>
-            <span>r<sub>circum</sub> &lt; d &le; r<sub>inflation</sub></span>
-            <span>d &gt; r<sub>inflation</sub></span>
-          </div>
-        </div>
-
-        <!-- Bottom 2-Card Operational Principles -->
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.55rem;">
-          <div class="l05-golden-card" style="padding: 0.4rem 0.65rem; margin: 0;">
-            <div class="l05-golden-header" style="font-size: 0.76rem; color: #f59e0b;"><span>⚖️</span><strong>Inscribed vs. Circumscribed</strong></div>
-            <p style="font-size: 0.71rem; line-height: 1.32; margin: 0.2rem 0 0 0;"><code>r_inscribed</code> is half chassis width; <code>r_circumscribed</code> is half the diagonal. Traversing between them requires strict heading alignment to avoid clipping corners.</p>
-          </div>
-          <div class="l05-golden-card" style="padding: 0.4rem 0.65rem; margin: 0;">
-            <div class="l05-golden-header" style="font-size: 0.76rem; color: #10b981;"><span>🎛️</span><strong>Tuning Tradeoff Rule</strong></div>
-            <p style="font-size: 0.71rem; line-height: 1.32; margin: 0.2rem 0 0 0;">Higher <code>cost_scaling_factor</code> (&alpha;=5.0) causes steep decay, allowing traversal in tight racking aisles. Lower &alpha;=1.5 keeps the robot strictly in aisle centers.</p>
-          </div>
-        </div>
-      </div>
-    `
-  });
 
   // ==============================================================
   // PART II: DISCRETIZATION & ROADMAP METHODS
@@ -6639,52 +6530,6 @@ function buildLesson14Slides(doc, lesson, slides) {
     `
   });
 
-  // 23. Nav2 DWB Controller: Critic Scoring Pipeline
-  slides.push({
-    id: `${lesson.id}_sec18_dwb_critics`,
-    type: 'concept',
-    lessonNum: lesson.num_str,
-    lessonId: lesson.id,
-    module: lesson.module,
-    sectionTitle: '19. DWB Critic Scoring',
-    badge: '⚖️ Scoring Matrix',
-    title: 'Nav2 DWB Controller: Multi-Objective Critic Scoring Matrix',
-    htmlContent: `
-      <div class="l03-two-col-layout">
-        <div class="l03-content-col" style="display: flex; flex-direction: column; justify-content: center; gap: 0.4rem;">
-          <div class="l05-golden-card" style="padding: 0.45rem 0.65rem;">
-            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🎯</span><strong>Objective Function G(v, &omega;)</strong></div>
-            <p style="font-size: 0.73rem; line-height: 1.32;"><code>G(v, &omega;) = &sum;<sub>i</sub> w<sub>i</sub> &times; Critic<sub>i</sub>(trajectory)</code>. Each critic inspects candidate rollouts on the local costmap and outputs a normalized scalar score.</p>
-          </div>
-          <div class="l05-golden-card" style="padding: 0.45rem 0.65rem;">
-            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🛡️</span><strong>BaseObstacle Critic</strong></div>
-            <p style="font-size: 0.73rem; line-height: 1.32;">Evaluates robot footprint along the simulated curve against the local costmap. Any footprint crossing lethal cells (254) is instantly rejected with negative infinity.</p>
-          </div>
-        </div>
-        <div class="l03-content-col" style="display: flex; flex-direction: column; justify-content: center; gap: 0.35rem;">
-          <div style="background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: 8px; padding: 0.45rem; box-shadow: 0 4px 14px rgba(0,0,0,0.12);">
-            <div style="font-size: 0.76rem; font-weight: bold; color: #e11d48; margin-bottom: 0.3rem;">
-              DWB Critic Weighting Hierarchy
-            </div>
-            <div style="display: flex; flex-direction: column; gap: 0.25rem; font-size: 0.7rem;">
-              <div style="padding: 0.25rem 0.45rem; background: rgba(15, 23, 42, 0.6); border-radius: 4px;">
-                <strong>PathAlign (scale: 32.0):</strong> Penalizes heading deviation from global plan.
-              </div>
-              <div style="padding: 0.25rem 0.45rem; background: rgba(15, 23, 42, 0.6); border-radius: 4px;">
-                <strong>GoalAlign (scale: 24.0):</strong> Penalizes robot heading pointing away from goal.
-              </div>
-              <div style="padding: 0.25rem 0.45rem; background: rgba(15, 23, 42, 0.6); border-radius: 4px;">
-                <strong>PathDist (scale: 32.0):</strong> Penalizes perpendicular distance from global line.
-              </div>
-              <div style="padding: 0.25rem 0.45rem; background: rgba(15, 23, 42, 0.6); border-radius: 4px;">
-                <strong>GoalDist (scale: 24.0):</strong> Incentivizes forward progress toward target.
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    `
-  });
 
   // ==============================================================
   // PART V: NAV2 & PATH PLANNING STACK ARCHITECTURE

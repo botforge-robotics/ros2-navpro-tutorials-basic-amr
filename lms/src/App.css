@@ -9725,3 +9725,40 @@
 .presentation-viewport.is-fullscreen .nav-point-icon {
   font-size: 0.95rem !important;
 }
+
+/* Interactive A* Search Presentation Viewport Fitting */
+.presentation-viewport .ppt-slide-interactive-view:has(.astar-interactive-container) {
+  padding: 0.35rem 0.75rem !important;
+  height: calc(100vh - 270px) !important;
+  max-height: calc(100vh - 270px) !important;
+}
+
+.presentation-viewport .interactive-stage-container:has(.astar-interactive-container) {
+  max-height: none !important;
+  height: 100% !important;
+  display: flex !important;
+  align-items: stretch !important;
+  justify-content: stretch !important;
+  overflow: visible !important;
+}
+
+.presentation-viewport .interactive-stage-container:has(.astar-interactive-container) > .astar-interactive-container {
+  transform: none !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  height: 100% !important;
+  max-height: 100% !important;
+}
+
+.presentation-viewport.is-fullscreen .ppt-slide-interactive-view:has(.astar-interactive-container) {
+  padding: 0.5rem 1.25rem !important;
+  height: calc(100vh - 140px) !important;
+  max-height: calc(100vh - 140px) !important;
+}
+
+@media (max-height: 780px) {
+  .presentation-viewport .ppt-slide-interactive-view:has(.astar-interactive-container) {
+    height: calc(100vh - 230px) !important;
+    max-height: calc(100vh - 230px) !important;
+  }
+}
