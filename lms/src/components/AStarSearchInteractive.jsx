@@ -14,26 +14,26 @@ import {
 } from 'lucide-react';
 
 const NODES = {
-  S: { x: 65, y: 140, h: 11.5, label: 'S (Start)' },
-  A: { x: 175, y: 65, h: 10.1, label: 'A' },
-  D: { x: 185, y: 215, h: 9.2, label: 'D' },
-  B: { x: 315, y: 65, h: 5.8, label: 'B' },
-  E: { x: 315, y: 215, h: 7.1, label: 'E' },
-  C: { x: 445, y: 65, h: 3.4, label: 'C' },
-  F: { x: 435, y: 215, h: 3.5, label: 'F' },
-  G: { x: 535, y: 140, h: 0.0, label: 'G (Goal)' }
+  S: { x: 65, y: 145, h: 11.5, label: 'S', fullLabel: 'Start (S)', badgePos: 'top' },
+  A: { x: 185, y: 85, h: 10.1, label: 'A', fullLabel: 'Node A', badgePos: 'top' },
+  D: { x: 185, y: 205, h: 9.2, label: 'D', fullLabel: 'Node D', badgePos: 'bottom' },
+  B: { x: 330, y: 85, h: 5.8, label: 'B', fullLabel: 'Node B', badgePos: 'top' },
+  E: { x: 330, y: 205, h: 7.1, label: 'E', fullLabel: 'Node E', badgePos: 'bottom' },
+  C: { x: 470, y: 85, h: 3.4, label: 'C', fullLabel: 'Node C', badgePos: 'top' },
+  F: { x: 470, y: 205, h: 3.5, label: 'F', fullLabel: 'Node F', badgePos: 'bottom' },
+  G: { x: 555, y: 145, h: 0.0, label: 'G', fullLabel: 'Goal (G)', badgePos: 'top' }
 };
 
 const EDGES = [
-  { from: 'S', to: 'A', cost: 3.0, midX: 115, midY: 92 },
-  { from: 'S', to: 'D', cost: 4.0, midX: 120, midY: 188 },
-  { from: 'A', to: 'B', cost: 4.0, midX: 245, midY: 53 },
-  { from: 'A', to: 'D', cost: 5.0, midX: 190, midY: 140 },
-  { from: 'D', to: 'E', cost: 2.0, midX: 250, midY: 226 },
-  { from: 'B', to: 'C', cost: 4.0, midX: 380, midY: 53 },
-  { from: 'B', to: 'E', cost: 5.0, midX: 300, midY: 140 },
-  { from: 'E', to: 'F', cost: 4.0, midX: 375, midY: 226 },
-  { from: 'F', to: 'G', cost: 3.5, midX: 490, midY: 188 }
+  { from: 'S', to: 'A', cost: 3.0, midX: 125, midY: 115 },
+  { from: 'S', to: 'D', cost: 4.0, midX: 125, midY: 175 },
+  { from: 'A', to: 'B', cost: 4.0, midX: 257, midY: 85 },
+  { from: 'A', to: 'D', cost: 5.0, midX: 185, midY: 145 },
+  { from: 'D', to: 'E', cost: 2.0, midX: 257, midY: 205 },
+  { from: 'B', to: 'C', cost: 4.0, midX: 400, midY: 85 },
+  { from: 'B', to: 'E', cost: 5.0, midX: 330, midY: 145 },
+  { from: 'E', to: 'F', cost: 4.0, midX: 400, midY: 205 },
+  { from: 'F', to: 'G', cost: 3.5, midX: 512, midY: 175 }
 ];
 
 const STEPS = [
@@ -243,41 +243,37 @@ export function AStarSearchInteractive() {
       }}
     >
       <style>{`
-        @keyframes astarMarch {
-          to {
-            stroke-dashoffset: -20;
-          }
-        }
-        @keyframes astarPulseRing {
-          0% {
-            r: 18;
+        @keyframes astarSolidHalo {
+          0%, 100% {
             opacity: 0.95;
-            stroke-width: 2.5;
+            stroke-width: 2;
           }
           50% {
-            r: 25;
-            opacity: 0.45;
-            stroke-width: 3.5;
+            opacity: 0.4;
+            stroke-width: 3.2;
           }
-          100% {
-            r: 31;
-            opacity: 0;
-            stroke-width: 1;
+        }
+        @keyframes astarEdgeGlow {
+          0%, 100% {
+            stroke-opacity: 1;
+          }
+          50% {
+            stroke-opacity: 0.6;
           }
         }
         @keyframes astarGlowPulse {
           0%, 100% {
-            filter: drop-shadow(0 0 6px rgba(16, 185, 129, 0.6));
+            filter: drop-shadow(0 0 4px rgba(5, 150, 105, 0.5));
           }
           50% {
-            filter: drop-shadow(0 0 12px rgba(16, 185, 129, 0.9));
+            filter: drop-shadow(0 0 10px rgba(5, 150, 105, 0.8));
           }
         }
         .astar-edge-active {
           stroke: #d97706 !important;
-          stroke-width: 3.2 !important;
-          stroke-dasharray: 6 4 !important;
-          animation: astarMarch 0.7s linear infinite !important;
+          stroke-width: 3.5 !important;
+          stroke-dasharray: none !important;
+          animation: astarEdgeGlow 1.8s ease-in-out infinite !important;
         }
         .astar-edge-optimal {
           stroke: #059669 !important;
@@ -435,242 +431,327 @@ export function AStarSearchInteractive() {
           minHeight: 0
         }}
       >
-        {/* SVG Graph Canvas */}
+        {/* Left Side: SVG Graph Stage (Card with Dedicated Header Legend + Canvas + Footer Key) */}
         <div 
           onClick={handleNext}
           title="Click anywhere inside graph to advance to next step"
           style={{
-            position: 'relative',
-            background: '#f8fafc',
+            background: '#ffffff',
             border: '1px solid #e2e8f0',
             borderRadius: '10px',
             overflow: 'hidden',
             display: 'flex',
             flexDirection: 'column',
-            justifyContent: 'center',
             cursor: currentStepIndex < STEPS.length - 1 ? 'pointer' : 'default',
-            padding: '0.35rem'
+            boxShadow: '0 1px 3px rgba(0, 0, 0, 0.04)'
           }}
         >
-          {/* Legend and Click Hint */}
+          {/* Dedicated Header Legend Toolbar (Outside & Above SVG Canvas) */}
           <div 
             style={{
-              position: 'absolute',
-              top: '8px',
-              left: '10px',
-              right: '10px',
-              fontSize: '0.66rem',
-              color: '#64748b',
               display: 'flex',
               justifyContent: 'space-between',
               alignItems: 'center',
-              zIndex: 2,
-              pointerEvents: 'none'
+              padding: '0.35rem 0.65rem',
+              background: '#f1f5f9',
+              borderBottom: '1px solid #e2e8f0',
+              fontSize: '0.68rem',
+              color: '#334155'
             }}
           >
-            <div style={{ display: 'flex', gap: '0.75rem', fontWeight: 600 }}>
-              <span><strong style={{ color: '#d97706' }}>●</strong> Active / Popped</span>
-              <span><strong style={{ color: '#0284c7' }}>●</strong> Open Frontier</span>
-              <span><strong style={{ color: '#64748b' }}>●</strong> Closed</span>
-              <span><strong style={{ color: '#059669' }}>●</strong> Optimal Path</span>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', fontWeight: 600 }}>
+              <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.25rem' }}>
+                <span style={{ width: 9, height: 9, borderRadius: '50%', background: '#f59e0b', border: '1.5px solid #d97706', display: 'inline-block' }} />
+                <span>Active</span>
+              </span>
+              <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.25rem' }}>
+                <span style={{ width: 9, height: 9, borderRadius: '50%', background: '#38bdf8', border: '1.5px solid #0284c7', display: 'inline-block' }} />
+                <span>Frontier</span>
+              </span>
+              <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.25rem' }}>
+                <span style={{ width: 9, height: 9, borderRadius: '50%', background: '#f1f5f9', border: '1.5px solid #94a3b8', display: 'inline-block' }} />
+                <span>Closed</span>
+              </span>
+              <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.25rem' }}>
+                <span style={{ width: 9, height: 9, borderRadius: '50%', background: '#34d399', border: '1.5px solid #059669', display: 'inline-block' }} />
+                <span>Optimal</span>
+              </span>
             </div>
-            {currentStepIndex < STEPS.length - 1 && (
-              <span style={{ color: '#4f46e5', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '0.2rem' }}>
-                <MousePointerClick size={12} /> Click graph to step
+            {currentStepIndex < STEPS.length - 1 ? (
+              <span style={{ color: '#4f46e5', fontWeight: 700, display: 'inline-flex', alignItems: 'center', gap: '0.25rem', fontSize: '0.67rem' }}>
+                <MousePointerClick size={12} /> Click to step
+              </span>
+            ) : (
+              <span style={{ color: '#059669', fontWeight: 700, display: 'inline-flex', alignItems: 'center', gap: '0.25rem', fontSize: '0.67rem' }}>
+                <CheckCircle2 size={12} /> Optimal Solved
               </span>
             )}
           </div>
 
-          <svg 
-            viewBox="0 0 600 280" 
-            style={{ width: '100%', height: '100%', minHeight: '260px', maxHeight: '340px' }}
+          {/* SVG Canvas Area */}
+          <div style={{ flex: 1, position: 'relative', background: '#f8fafc', display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: 0 }}>
+            <svg 
+              viewBox="0 0 620 290" 
+              style={{ width: '100%', height: '100%', maxHeight: '330px' }}
+            >
+              <defs>
+                <pattern id="astarGrid" width="20" height="20" patternUnits="userSpaceOnUse">
+                  <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#e2e8f0" strokeWidth="0.8" />
+                </pattern>
+              </defs>
+
+              {/* Background Blueprint Grid */}
+              <rect width="620" height="290" fill="url(#astarGrid)" />
+
+              {/* Draw Edges */}
+              {EDGES.map(edge => {
+                const fromN = NODES[edge.from];
+                const toN = NODES[edge.to];
+                const edgeKey = `${edge.from}-${edge.to}`;
+                const isOptimal = stepData.optimalPath.includes(edgeKey);
+                const isActive = stepData.activeEdges.includes(edgeKey);
+
+                let edgeClass = '';
+                let stroke = '#cbd5e1';
+                let strokeWidth = 2;
+
+                if (isOptimal) {
+                  edgeClass = 'astar-edge-optimal';
+                  stroke = '#059669';
+                  strokeWidth = 4.5;
+                } else if (isActive) {
+                  edgeClass = 'astar-edge-active';
+                  stroke = '#d97706';
+                  strokeWidth = 3.5;
+                }
+
+                return (
+                  <g key={edgeKey}>
+                    <line
+                      x1={fromN.x}
+                      y1={fromN.y}
+                      x2={toN.x}
+                      y2={toN.y}
+                      stroke={stroke}
+                      strokeWidth={strokeWidth}
+                      className={edgeClass}
+                      style={{ transition: 'all 0.3s ease' }}
+                    />
+                    {/* Cost Badge */}
+                    <rect
+                      x={edge.midX - 14}
+                      y={edge.midY - 9}
+                      width={28}
+                      height={18}
+                      rx={4}
+                      fill="#ffffff"
+                      stroke={isOptimal ? '#059669' : (isActive ? '#d97706' : '#cbd5e1')}
+                      strokeWidth={isActive || isOptimal ? 1.8 : 1.2}
+                    />
+                    <text
+                      x={edge.midX}
+                      y={edge.midY + 4}
+                      fill={isOptimal ? '#059669' : (isActive ? '#b45309' : '#475569')}
+                      fontSize="10"
+                      fontWeight="bold"
+                      textAnchor="middle"
+                      style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}
+                    >
+                      {edge.cost.toFixed(1)}
+                    </text>
+                  </g>
+                );
+              })}
+
+              {/* Draw Nodes */}
+              {Object.entries(NODES).map(([id, node]) => {
+                const isCurrent = stepData.current === id;
+                const isClosed = stepData.closed.includes(id);
+                const isGoal = id === 'G';
+                const isStart = id === 'S';
+                const isInFrontier = stepData.frontier.some(f => f.targetNode === id);
+                const isOptimal = currentStepIndex >= 6 && ['S', 'D', 'E', 'F', 'G'].includes(id);
+
+                let fill = '#ffffff';
+                let stroke = '#94a3b8';
+                let textColor = '#0f172a';
+                let badgeStroke = '#e2e8f0';
+                let badgeFill = '#ffffff';
+                let badgeText = '#64748b';
+
+                if (isOptimal && currentStepIndex === 7) {
+                  fill = '#d1fae5';
+                  stroke = '#059669';
+                  textColor = '#065f46';
+                  badgeStroke = '#059669';
+                  badgeFill = '#ecfdf5';
+                  badgeText = '#047857';
+                } else if (isCurrent) {
+                  fill = '#fef3c7';
+                  stroke = '#d97706';
+                  textColor = '#92400e';
+                  badgeStroke = '#d97706';
+                  badgeFill = '#fffbeb';
+                  badgeText = '#b45309';
+                } else if (isInFrontier) {
+                  fill = '#e0f2fe';
+                  stroke = '#0284c7';
+                  textColor = '#0369a1';
+                  badgeStroke = '#0284c7';
+                  badgeFill = '#f0f9ff';
+                  badgeText = '#0284c7';
+                } else if (isClosed) {
+                  fill = '#f1f5f9';
+                  stroke = '#94a3b8';
+                  textColor = '#475569';
+                  badgeStroke = '#cbd5e1';
+                  badgeFill = '#ffffff';
+                  badgeText = '#64748b';
+                } else if (isStart) {
+                  fill = '#eff6ff';
+                  stroke = '#2563eb';
+                  textColor = '#1d4ed8';
+                  badgeStroke = '#2563eb';
+                  badgeFill = '#eff6ff';
+                  badgeText = '#1d4ed8';
+                } else if (isGoal) {
+                  fill = '#fef2f2';
+                  stroke = '#dc2626';
+                  textColor = '#b91c1c';
+                  badgeStroke = '#dc2626';
+                  badgeFill = '#fef2f2';
+                  badgeText = '#b91c1c';
+                }
+
+                const isTopBadge = node.badgePos === 'top';
+                const badgeY = isTopBadge ? node.y - 32 : node.y + 32;
+
+                return (
+                  <g key={id} style={{ transition: 'all 0.3s ease' }}>
+                    {/* Active/Popped Node Solid Halo (NO Dashes / NO Swarming Dots) */}
+                    {isCurrent && (
+                      <circle
+                        cx={node.x}
+                        cy={node.y}
+                        r={25}
+                        fill="rgba(245, 158, 11, 0.15)"
+                        stroke="#f59e0b"
+                        strokeWidth={2}
+                        style={{ animation: 'astarSolidHalo 2s ease-in-out infinite' }}
+                      />
+                    )}
+
+                    {/* Optimal Path Outer Halo */}
+                    {isOptimal && currentStepIndex === 7 && (
+                      <circle
+                        cx={node.x}
+                        cy={node.y}
+                        r={24}
+                        fill="rgba(5, 150, 105, 0.12)"
+                        stroke="#059669"
+                        strokeWidth={2}
+                      />
+                    )}
+
+                    {/* Main Node Circle */}
+                    <circle
+                      cx={node.x}
+                      cy={node.y}
+                      r={18}
+                      fill={fill}
+                      stroke={stroke}
+                      strokeWidth={isCurrent || isOptimal ? 3 : 2}
+                    />
+
+                    {/* Node Identifier Label */}
+                    <text
+                      x={node.x}
+                      y={node.y + 4.5}
+                      fill={textColor}
+                      fontSize="13"
+                      fontWeight="bold"
+                      textAnchor="middle"
+                      style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}
+                    >
+                      {id}
+                    </text>
+
+                    {/* Start / Goal Sub-labels */}
+                    {isStart && (
+                      <text
+                        x={node.x}
+                        y={node.y + 30}
+                        fill="#2563eb"
+                        fontSize="9.5"
+                        fontWeight="bold"
+                        textAnchor="middle"
+                        style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}
+                      >
+                        START
+                      </text>
+                    )}
+                    {isGoal && (
+                      <text
+                        x={node.x}
+                        y={node.y + 30}
+                        fill="#dc2626"
+                        fontSize="9.5"
+                        fontWeight="bold"
+                        textAnchor="middle"
+                        style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}
+                      >
+                        GOAL
+                      </text>
+                    )}
+
+                    {/* Heuristic Pill (Admissible Estimate to Goal) */}
+                    <rect
+                      x={node.x - 21}
+                      y={badgeY - 9}
+                      width={42}
+                      height={18}
+                      rx={4}
+                      fill={badgeFill}
+                      stroke={badgeStroke}
+                      strokeWidth={isCurrent || isInFrontier || (isOptimal && currentStepIndex === 7) ? 1.5 : 1}
+                    />
+                    <text
+                      x={node.x}
+                      y={badgeY + 4}
+                      fill={badgeText}
+                      fontSize="9.5"
+                      fontWeight="bold"
+                      textAnchor="middle"
+                      style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}
+                    >
+                      h={node.h.toFixed(1)}
+                    </text>
+                  </g>
+                );
+              })}
+            </svg>
+          </div>
+
+          {/* Educational Graph Key / Formula Strip at Bottom of Left Stage */}
+          <div 
+            style={{
+              padding: '0.28rem 0.65rem',
+              background: '#f8fafc',
+              borderTop: '1px solid #e2e8f0',
+              fontSize: '0.66rem',
+              color: '#475569',
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center'
+            }}
           >
-            <defs>
-              <pattern id="astarGrid" width="20" height="20" patternUnits="userSpaceOnUse">
-                <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#e2e8f0" strokeWidth="0.8" />
-              </pattern>
-            </defs>
-
-            {/* Background Blueprint Grid */}
-            <rect width="600" height="280" fill="url(#astarGrid)" />
-
-            {/* Draw Edges */}
-            {EDGES.map(edge => {
-              const fromN = NODES[edge.from];
-              const toN = NODES[edge.to];
-              const edgeKey = `${edge.from}-${edge.to}`;
-              const isOptimal = stepData.optimalPath.includes(edgeKey);
-              const isActive = stepData.activeEdges.includes(edgeKey);
-
-              let edgeClass = '';
-              let stroke = '#cbd5e1';
-              let strokeWidth = 2;
-              let strokeDash = 'none';
-
-              if (isOptimal) {
-                edgeClass = 'astar-edge-optimal';
-                stroke = '#059669';
-                strokeWidth = 4.5;
-              } else if (isActive) {
-                edgeClass = 'astar-edge-active';
-                stroke = '#d97706';
-                strokeWidth = 3.2;
-                strokeDash = '6 4';
-              }
-
-              return (
-                <g key={edgeKey}>
-                  <line
-                    x1={fromN.x}
-                    y1={fromN.y}
-                    x2={toN.x}
-                    y2={toN.y}
-                    stroke={stroke}
-                    strokeWidth={strokeWidth}
-                    strokeDasharray={strokeDash}
-                    className={edgeClass}
-                    style={{ transition: 'all 0.3s ease' }}
-                  />
-                  {/* Cost Badge */}
-                  <rect
-                    x={edge.midX - 12}
-                    y={edge.midY - 8}
-                    width={24}
-                    height={16}
-                    rx={4}
-                    fill="#ffffff"
-                    stroke={isOptimal ? '#059669' : (isActive ? '#d97706' : '#cbd5e1')}
-                    strokeWidth={1.2}
-                  />
-                  <text
-                    x={edge.midX}
-                    y={edge.midY + 4}
-                    fill={isOptimal ? '#059669' : (isActive ? '#b45309' : '#475569')}
-                    fontSize="10"
-                    fontWeight="bold"
-                    textAnchor="middle"
-                  >
-                    {edge.cost.toFixed(1)}
-                  </text>
-                </g>
-              );
-            })}
-
-            {/* Draw Nodes */}
-            {Object.entries(NODES).map(([id, node]) => {
-              const isCurrent = stepData.current === id;
-              const isClosed = stepData.closed.includes(id);
-              const isGoal = id === 'G';
-              const isStart = id === 'S';
-              const isInFrontier = stepData.frontier.some(f => f.targetNode === id);
-              const isOptimal = currentStepIndex >= 6 && ['S', 'D', 'E', 'F', 'G'].includes(id);
-
-              let fill = '#ffffff';
-              let stroke = '#94a3b8';
-              let textColor = '#0f172a';
-
-              if (isOptimal && currentStepIndex === 7) {
-                fill = '#d1fae5';
-                stroke = '#059669';
-                textColor = '#065f46';
-              } else if (isCurrent) {
-                fill = '#fef3c7';
-                stroke = '#d97706';
-                textColor = '#92400e';
-              } else if (isInFrontier) {
-                fill = '#e0f2fe';
-                stroke = '#0284c7';
-                textColor = '#0369a1';
-              } else if (isClosed) {
-                fill = '#f1f5f9';
-                stroke = '#64748b';
-                textColor = '#475569';
-              } else if (isStart) {
-                fill = '#eff6ff';
-                stroke = '#2563eb';
-                textColor = '#1d4ed8';
-              } else if (isGoal) {
-                fill = '#fef2f2';
-                stroke = '#dc2626';
-                textColor = '#b91c1c';
-              }
-
-              return (
-                <g key={id} style={{ transition: 'all 0.3s ease' }}>
-                  {/* Animated Pulsing Ring around Active/Popped Node */}
-                  {isCurrent && (
-                    <circle
-                      cx={node.x}
-                      y={node.y}
-                      r={24}
-                      fill="none"
-                      stroke="#d97706"
-                      strokeWidth={2}
-                      strokeDasharray="4 3"
-                      style={{ animation: 'astarPulseRing 1.5s ease-out infinite' }}
-                    />
-                  )}
-
-                  {/* Optimal Path Outer Halo */}
-                  {isOptimal && currentStepIndex === 7 && (
-                    <circle
-                      cx={node.x}
-                      y={node.y}
-                      r={22}
-                      fill="none"
-                      stroke="#059669"
-                      strokeWidth={2}
-                      strokeOpacity={0.6}
-                    />
-                  )}
-
-                  {/* Main Node Body */}
-                  <circle
-                    cx={node.x}
-                    y={node.y}
-                    r={18}
-                    fill={fill}
-                    stroke={stroke}
-                    strokeWidth={isCurrent || isOptimal ? 3 : 2}
-                  />
-
-                  {/* Node Label */}
-                  <text
-                    x={node.x}
-                    y={node.y + 4}
-                    fill={textColor}
-                    fontSize="12"
-                    fontWeight="bold"
-                    textAnchor="middle"
-                  >
-                    {id}
-                  </text>
-
-                  {/* Heuristic Pill (Admissible Estimate to Goal) */}
-                  <rect
-                    x={node.x - 18}
-                    y={node.y - 31}
-                    width={36}
-                    height={15}
-                    rx={4}
-                    fill="#ffffff"
-                    stroke={isCurrent ? '#d97706' : (isInFrontier ? '#0284c7' : '#cbd5e1')}
-                    strokeWidth={1}
-                  />
-                  <text
-                    x={node.x}
-                    y={node.y - 20}
-                    fill={isCurrent ? '#b45309' : (isInFrontier ? '#0369a1' : '#64748b')}
-                    fontSize="9"
-                    fontWeight="bold"
-                    textAnchor="middle"
-                  >
-                    h={node.h.toFixed(1)}
-                  </text>
-                </g>
-              );
-            })}
-          </svg>
+            <span>
+              <strong>Graph Labels:</strong> Edge numbers = Cost <em>g(u,v)</em> &bull; Pills = Heuristic <em>h(n)</em>
+            </span>
+            <span style={{ color: '#1e293b' }}>
+              Formula: <strong>f(n) = g(n) + h(n)</strong>
+            </span>
+          </div>
         </div>
 
         {/* Priority Queue (Frontier) Live Table */}
