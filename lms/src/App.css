@@ -9551,6 +9551,11 @@
 /* ========================================================================= */
 /* LESSON 14 FULL VIEW IMAGE EXPLANATION LAYOUT                              */
 /* ========================================================================= */
+.presentation-viewport:not(.is-fullscreen) .concept-html-body:has(.nav-full-image-slide-layout) {
+  max-height: calc(100vh - 270px) !important;
+  height: 100% !important;
+}
+
 .nav-full-image-slide-layout {
   display: flex !important;
   flex-direction: column !important;
@@ -9558,82 +9563,165 @@
   justify-content: center !important;
   width: 100% !important;
   height: 100% !important;
-  max-width: 1260px !important;
+  max-width: 1300px !important;
   margin: 0 auto !important;
-  gap: 0.5rem !important;
+  gap: 0.45rem !important;
 }
 
 .nav-full-image-container {
   width: 100% !important;
   flex: 1 !important;
-  background: var(--bg-surface, #ffffff) !important;
-  border: 1px solid var(--border-color, #e2e8f0) !important;
-  border-radius: 12px !important;
-  padding: 0.45rem 0.75rem !important;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08) !important;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0 !important;
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
 }
 
-[data-theme='dark'] .nav-full-image-container {
-  background: #0f172a !important;
-  border-color: #334155 !important;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25) !important;
-}
-
 .nav-full-image-container img {
   width: auto !important;
   max-width: 100% !important;
-  max-height: 440px !important;
+  max-height: 510px !important;
   object-fit: contain !important;
-  border-radius: 8px !important;
+  border-radius: 10px !important;
+  border: 1px solid var(--border-color, #cbd5e1) !important;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.16) !important;
   display: block !important;
   margin: 0 auto !important;
-  filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.15));
+}
+
+[data-theme='dark'] .nav-full-image-container img {
+  border-color: #334155 !important;
+  box-shadow: 0 10px 32px rgba(0, 0, 0, 0.45) !important;
 }
 
 .nav-bottom-caption {
-  width: 100% !important;
-  margin: 0 !important;
-  padding: 0.45rem 0.95rem !important;
-  font-size: 0.75rem !important;
+  width: auto !important;
+  min-width: 650px !important;
+  max-width: 1000px !important;
+  margin: 0 auto !important;
+  padding: 0.42rem 1rem !important;
+  font-size: 0.76rem !important;
   line-height: 1.4 !important;
   border-radius: 8px !important;
   box-sizing: border-box !important;
+  text-align: center !important;
+}
+
+/* Multi-Point Bottom Explanation Banner (2-3 Points) */
+.nav-points-banner {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 0.22rem !important;
+  width: auto !important;
+  min-width: 680px !important;
+  max-width: 1050px !important;
+  margin: 0 auto !important;
+  background: var(--bg-surface, #ffffff) !important;
+  border: 1px solid var(--border-color, #e2e8f0) !important;
+  border-left: 4px solid #3b82f6 !important;
+  border-radius: 8px !important;
+  padding: 0.38rem 0.85rem !important;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05) !important;
+  box-sizing: border-box !important;
+}
+
+[data-theme='dark'] .nav-points-banner {
+  background: rgba(15, 23, 42, 0.85) !important;
+  border-color: rgba(255, 255, 255, 0.1) !important;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25) !important;
+}
+
+.nav-point-bullet {
+  display: flex !important;
+  align-items: baseline !important;
+  gap: 0.45rem !important;
+  font-size: 0.73rem !important;
+  line-height: 1.32 !important;
+  color: var(--text-secondary, #334155) !important;
+}
+
+[data-theme='dark'] .nav-point-bullet {
+  color: #cbd5e1 !important;
+}
+
+.nav-point-bullet strong {
+  color: var(--text-primary, #0f172a) !important;
+}
+
+[data-theme='dark'] .nav-point-bullet strong {
+  color: #f1f5f9 !important;
+}
+
+.nav-point-icon {
+  font-size: 0.76rem !important;
+  flex-shrink: 0 !important;
+  line-height: 1 !important;
 }
 
 @media (max-height: 780px) {
+  .presentation-viewport:not(.is-fullscreen) .concept-html-body:has(.nav-full-image-slide-layout) {
+    max-height: calc(100vh - 250px) !important;
+  }
   .nav-full-image-container img {
-    max-height: 335px !important;
+    max-height: 350px !important;
   }
   .nav-full-image-slide-layout {
     gap: 0.35rem !important;
   }
   .nav-bottom-caption {
-    font-size: 0.70rem !important;
-    padding: 0.35rem 0.75rem !important;
+    font-size: 0.72rem !important;
+    padding: 0.35rem 0.85rem !important;
     line-height: 1.35 !important;
+    min-width: unset !important;
+    width: 100% !important;
+  }
+  .nav-points-banner {
+    padding: 0.28rem 0.65rem !important;
+    gap: 0.15rem !important;
+    min-width: unset !important;
+    width: 100% !important;
+  }
+  .nav-point-bullet {
+    font-size: 0.68rem !important;
+    line-height: 1.25 !important;
   }
 }
 
 /* Fullscreen adjustments */
+.presentation-viewport.is-fullscreen .concept-html-body:has(.nav-full-image-slide-layout) {
+  max-height: calc(100vh - 180px) !important;
+}
+
 .presentation-viewport.is-fullscreen .nav-full-image-slide-layout {
   max-width: 1500px !important;
   gap: 0.75rem !important;
 }
 
-.presentation-viewport.is-fullscreen .nav-full-image-container {
-  padding: 0.75rem 1rem !important;
-  border-radius: 16px !important;
-}
-
 .presentation-viewport.is-fullscreen .nav-full-image-container img {
-  max-height: 580px !important;
+  max-height: 650px !important;
 }
 
 .presentation-viewport.is-fullscreen .nav-bottom-caption {
-  font-size: 0.92rem !important;
-  padding: 0.65rem 1.25rem !important;
+  font-size: 0.95rem !important;
+  padding: 0.65rem 1.4rem !important;
+  line-height: 1.5 !important;
+  max-width: 1100px !important;
+}
+
+.presentation-viewport.is-fullscreen .nav-points-banner {
+  padding: 0.6rem 1.25rem !important;
+  gap: 0.4rem !important;
+  max-width: 1200px !important;
+}
+
+.presentation-viewport.is-fullscreen .nav-point-bullet {
+  font-size: 0.88rem !important;
   line-height: 1.45 !important;
+}
+
+.presentation-viewport.is-fullscreen .nav-point-icon {
+  font-size: 0.95rem !important;
 }
