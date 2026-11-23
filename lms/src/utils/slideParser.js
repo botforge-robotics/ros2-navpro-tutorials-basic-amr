@@ -542,7 +542,7 @@ export function parseLessonIntoSlides(lesson) {
   } else if (lesson.id === '14' || lesson.num_str === '14' || lesson.id === 'lesson_14') {
     buildLesson14Slides(doc, lesson, slides);
   } else if (lesson.id === '15' || lesson.num_str === '15' || lesson.id === 'lesson_15') {
-    buildLesson15Slides(doc, lesson, slides);
+    buildLesson14Slides(doc, lesson, slides);
   } else if (lesson.id === '16' || lesson.num_str === '16' || lesson.id === 'lesson_16') {
     buildLesson16Slides(doc, lesson, slides);
   } else if (lesson.id === '17' || lesson.num_str === '17' || lesson.id === 'lesson_17') {
@@ -7022,96 +7022,20 @@ function buildLesson14Slides(doc, lesson, slides) {
     module: lesson.module,
     sectionTitle: '20. Nav2 Stack Block Diagram',
     badge: '🏗️ Architecture Block Diagram',
-    title: 'Path Planning Stack Architecture: Complete System Block Diagram',
+    title: 'Nav2 Architecture & Stack Subsystems: Complete Block Diagram',
     htmlContent: `
-      <div style="display: flex; flex-direction: column; gap: 0.45rem; width: 100%; height: 100%; justify-content: center;">
-        {/* Responsive High-Contrast Architecture Block Diagram */}
-        <div style="background: rgba(15, 23, 42, 0.85); border: 1px solid rgba(79, 70, 229, 0.35); border-radius: 10px; padding: 0.5rem 0.8rem; box-shadow: 0 4px 20px rgba(0,0,0,0.25);">
-          <div style="display: grid; grid-template-columns: 0.85fr 2fr 0.85fr; gap: 0.6rem; align-items: center;">
-            
-            {/* Left Inputs Column */}
-            <div style="display: flex; flex-direction: column; gap: 0.4rem;">
-              <div style="font-size: 0.7rem; font-weight: bold; color: #06b6d4; text-transform: uppercase; letter-spacing: 0.5px;">
-                Sensor & State Inputs
-              </div>
-              <div style="background: rgba(6, 182, 212, 0.12); border: 1px solid #06b6d4; border-radius: 6px; padding: 0.35rem 0.5rem; font-size: 0.7rem;">
-                <div style="font-weight: bold; color: #22d3ee;">2D LiDAR</div>
-                <code style="font-size: 0.65rem;">/scan (50 Hz)</code>
-              </div>
-              <div style="background: rgba(6, 182, 212, 0.12); border: 1px solid #06b6d4; border-radius: 6px; padding: 0.35rem 0.5rem; font-size: 0.7rem;">
-                <div style="font-weight: bold; color: #22d3ee;">Wheel Odometry</div>
-                <code style="font-size: 0.65rem;">/odom &amp; /tf</code>
-              </div>
-              <div style="background: rgba(6, 182, 212, 0.12); border: 1px solid #06b6d4; border-radius: 6px; padding: 0.35rem 0.5rem; font-size: 0.7rem;">
-                <div style="font-weight: bold; color: #22d3ee;">Map Server</div>
-                <code style="font-size: 0.65rem;">/map (.yaml &amp; .pgm)</code>
-              </div>
-            </div>
-
-            {/* Center Core Stack Column */}
-            <div style="display: flex; flex-direction: column; gap: 0.45rem;">
-              {/* BT Navigator */}
-              <div style="background: rgba(139, 92, 246, 0.15); border: 1.5px solid #8b5cf6; border-radius: 6px; padding: 0.4rem 0.6rem; text-align: center;">
-                <div style="font-weight: bold; font-size: 0.76rem; color: #c084fc;">
-                  BT Navigator (<code>bt_navigator</code>)
-                </div>
-                <div style="font-size: 0.66rem; color: #e2e8f0;">
-                  XML Behavior Tree Orchestrator: Dispatches goals, handles recovery &amp; replanning logic
-                </div>
-              </div>
-
-              {/* Planners & Controllers Dual Block */}
-              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.45rem;">
-                {/* Global Planner */}
-                <div style="background: rgba(59, 130, 246, 0.15); border: 1px solid #3b82f6; border-radius: 6px; padding: 0.35rem 0.5rem;">
-                  <div style="font-weight: bold; font-size: 0.72rem; color: #60a5fa;">Global Planner</div>
-                  <div style="font-size: 0.64rem; color: #cbd5e1;"><code>planner_server</code> (A* / Smac)</div>
-                  <div style="font-size: 0.62rem; color: #94a3b8; margin-top: 0.2rem;">Over Global Costmap 2D</div>
-                </div>
-                {/* Local Controller */}
-                <div style="background: rgba(16, 185, 129, 0.15); border: 1px solid #10b981; border-radius: 6px; padding: 0.35rem 0.5rem;">
-                  <div style="font-weight: bold; font-size: 0.72rem; color: #34d399;">Local Controller</div>
-                  <div style="font-size: 0.64rem; color: #cbd5e1;"><code>controller_server</code> (DWB / RPP)</div>
-                  <div style="font-size: 0.62rem; color: #94a3b8; margin-top: 0.2rem;">Over Local Costmap (20 Hz)</div>
-                </div>
-              </div>
-
-              {/* Recovery Behaviors Server */}
-              <div style="background: rgba(245, 158, 11, 0.15); border: 1px solid #f59e0b; border-radius: 6px; padding: 0.3rem 0.6rem; display: flex; justify-content: space-between; align-items: center;">
-                <span style="font-weight: bold; font-size: 0.7rem; color: #fbbf24;">Recovery Server (<code>behavior_server</code>)</span>
-                <span style="font-size: 0.64rem; color: #fde68a;">Spin (360&deg;) &bull; BackUp (0.3m) &bull; Wait (2s)</span>
-              </div>
-            </div>
-
-            {/* Right Actuators Output Column */}
-            <div style="display: flex; flex-direction: column; gap: 0.4rem;">
-              <div style="font-size: 0.7rem; font-weight: bold; color: #10b981; text-transform: uppercase; letter-spacing: 0.5px;">
-                Motion Actuation
-              </div>
-              <div style="background: rgba(16, 185, 129, 0.18); border: 1.5px solid #10b981; border-radius: 6px; padding: 0.55rem 0.5rem; text-align: center;">
-                <div style="font-weight: bold; font-size: 0.74rem; color: #34d399;">Velocity Command</div>
-                <code style="font-size: 0.68rem; font-weight: bold;">/cmd_vel</code>
-                <div style="font-size: 0.62rem; color: #a7f3d0; margin-top: 0.2rem;">geometry_msgs/Twist</div>
-              </div>
-              <div style="background: rgba(15, 23, 42, 0.6); border: 1px solid #475569; border-radius: 6px; padding: 0.35rem 0.5rem; font-size: 0.66rem; text-align: center; color: #94a3b8;">
-                Diff-Drive Motor Base
-              </div>
-            </div>
-
-          </div>
+      <div style="display: flex; flex-direction: column; gap: 0.45rem; justify-content: center; align-items: center; width: 100%; height: 100%;">
+        <div style="background: #ffffff; border: 1px solid var(--border-color); border-radius: 10px; padding: 0.35rem 0.6rem; box-shadow: 0 4px 14px rgba(0,0,0,0.12); width: 100%; max-width: 860px; text-align: center;">
+          <img src="assets/images/nav2_server_architecture.svg" alt="Nav2 Server Subsystem &amp; Costmap Architecture" style="width: 100%; max-height: 290px; object-fit: contain; border-radius: 6px; display: block; margin: 0 auto;" />
         </div>
-        <div class="l05-banner-intro" style="margin: 0; font-size: 0.71rem; padding: 0.35rem 0.65rem; border-left: 3px solid #4f46e5;">
-          <strong>💡 Architecture Separation:</strong> High-level mission decisions (Behavior Trees) are decoupled from global routing (Planner) and reactive obstacle avoidance (Controller).
+        <div class="l05-banner-intro" style="margin: 0; width: 100%; max-width: 860px; padding: 0.35rem 0.65rem; border-left: 3px solid #6366f1; font-size: 0.72rem; line-height: 1.35;">
+          💡 <strong>Nav2 Modular Architecture:</strong> BT Navigator coordinates action servers (Planner at 1 Hz, Controller at 20 Hz, Recoveries) communicating over ROS 2 actions while sharing synchronized Global &amp; Local Costmaps.
         </div>
       </div>
     `
   });
 
-  // ==============================================================
-  // PART VI: ROS 2 NAVIGATION PRACTICAL (HANDS-ON LAB)
-  // ==============================================================
-
-  // 26. Section Title: Part VI
+  // 26. Section Title: Part VI - ROS 2 Navigation Practical
   slides.push({
     id: `${lesson.id}_sec_title_practical_nav`,
     type: 'section_title',
@@ -7373,56 +7297,108 @@ ros2 launch nexus_amr_navigation navigation.launch.py
 
   // 32. Practical Step 6: AMCL & Nav2 Parameter Tuning Guide
   slides.push({
-    id: `${lesson.id}_sec25_step6_tuning_guide`,
+    id: `${lesson.id}_sec25_step6_amcl_costmap_tuning`,
     type: 'concept',
     lessonNum: lesson.num_str,
     lessonId: lesson.id,
     module: lesson.module,
     sectionTitle: '26. Practical Step 6: Tuning Matrix',
-    badge: '🎛️ Practical Step 6',
-    title: 'Practical Step 6: AMCL & Nav2 Production Parameter Tuning Guide',
+    badge: '🎛️ Tuning Matrix I',
+    title: 'Practical Step 6: AMCL & Costmap 2D Parameter Tuning Guide',
     htmlContent: `
-      <div style="display: flex; flex-direction: column; gap: 0.4rem; justify-content: center; height: 100%;">
-        <div style="background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: 8px; padding: 0.45rem; box-shadow: 0 4px 14px rgba(0,0,0,0.12);">
-          <table style="width: 100%; border-collapse: collapse; font-size: 0.71rem; line-height: 1.35;">
-            <thead>
-              <tr style="background: rgba(15, 23, 42, 0.8); color: #60a5fa; text-align: left; border-bottom: 2px solid #3b82f6;">
-                <th style="padding: 0.35rem 0.5rem;">Subsystem</th>
-                <th style="padding: 0.35rem 0.5rem;">Parameter Name</th>
-                <th style="padding: 0.35rem 0.5rem;">Nexus AMR Setting</th>
-                <th style="padding: 0.35rem 0.5rem;">Production Impact</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr style="border-bottom: 1px solid var(--border-color);">
-                <td style="padding: 0.35rem 0.5rem; font-weight: bold; color: #a78bfa;">AMCL</td>
-                <td style="padding: 0.35rem 0.5rem;"><code>min_particles / max_particles</code></td>
-                <td style="padding: 0.35rem 0.5rem;"><code>500 / 2000</code></td>
-                <td style="padding: 0.35rem 0.5rem;">Prevents particle deprivation during rapid turns while bounding CPU usage.</td>
-              </tr>
-              <tr style="border-bottom: 1px solid var(--border-color);">
-                <td style="padding: 0.35rem 0.5rem; font-weight: bold; color: #38bdf8;">Costmap 2D</td>
-                <td style="padding: 0.35rem 0.5rem;"><code>inflation_radius / cost_scaling_factor</code></td>
-                <td style="padding: 0.35rem 0.5rem;"><code>0.55 m / 3.0</code></td>
-                <td style="padding: 0.35rem 0.5rem;">Maintains smooth safety gradient without blocking narrow warehouse door passages.</td>
-              </tr>
-              <tr style="border-bottom: 1px solid var(--border-color);">
-                <td style="padding: 0.35rem 0.5rem; font-weight: bold; color: #34d399;">DWB Controller</td>
-                <td style="padding: 0.35rem 0.5rem;"><code>max_vel_x / acc_lim_x</code></td>
-                <td style="padding: 0.35rem 0.5rem;"><code>0.6 m/s / 1.5 m/s&sup2;</code></td>
-                <td style="padding: 0.35rem 0.5rem;">Limits linear acceleration to eliminate wheel slip and motor stall.</td>
-              </tr>
-              <tr>
-                <td style="padding: 0.35rem 0.5rem; font-weight: bold; color: #fbbf24;">Critics</td>
-                <td style="padding: 0.35rem 0.5rem;"><code>PathAlign.scale / PathDist.scale</code></td>
-                <td style="padding: 0.35rem 0.5rem;"><code>32.0 / 32.0</code></td>
-                <td style="padding: 0.35rem 0.5rem;">Prevents AMR from drifting away from global path or cutting blind corners.</td>
-              </tr>
-            </tbody>
-          </table>
+      <div class="l03-two-col-layout">
+        <div class="l03-content-col" style="display: flex; flex-direction: column; justify-content: center; gap: 0.4rem;">
+          <div class="l05-golden-card" style="padding: 0.45rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>📡</span><strong>AMCL Particle Filter Tuning</strong></div>
+            <p style="font-size: 0.72rem; line-height: 1.32;"><code>min_particles: 500</code> / <code>max_particles: 2000</code> bounds CPU load while preventing particle deprivation during aggressive turning.</p>
+            <p style="font-size: 0.72rem; line-height: 1.32; margin-top: 0.25rem;"><code>update_min_d: 0.20m</code> / <code>update_min_a: 0.20rad</code> triggers ray-cast sensor updates only upon actual motion, eliminating idle drift.</p>
+          </div>
+          <div class="l05-golden-card" style="padding: 0.45rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🗺️</span><strong>Costmap 2D Resolution &amp; Range</strong></div>
+            <p style="font-size: 0.72rem; line-height: 1.32;"><code>resolution: 0.05m</code> (5 cm/cell) provides high obstacle precision for warehouse doors while maintaining efficient memory footprint.</p>
+            <p style="font-size: 0.72rem; line-height: 1.32; margin-top: 0.25rem;"><code>raytrace_max_range: 3.0m</code> / <code>obstacle_max_range: 2.5m</code> discards grazing laser noise at extreme distances.</p>
+          </div>
         </div>
-        <div class="l05-banner-intro" style="margin: 0; font-size: 0.71rem; padding: 0.35rem 0.65rem; border-left: 3px solid #10b981;">
-          <strong>🎯 Tuning Pro-Tip:</strong> Always tune AMCL localization first! If localization covariance is high, costmaps misalign and controllers produce erratic jerky motions.
+        <div class="l03-content-col" style="display: flex; flex-direction: column; justify-content: center; gap: 0.45rem;">
+          <div class="l05-golden-card" style="padding: 0.45rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🛡️</span><strong>Inflation Layer Gradient Tuning</strong></div>
+            <p style="font-size: 0.72rem; line-height: 1.32;"><code>inflation_radius: 0.55m</code> (chassis radius 0.25m + 0.30m safety buffer) prevents cutting corners near pallet racks.</p>
+            <p style="font-size: 0.72rem; line-height: 1.32; margin-top: 0.25rem;"><code>cost_scaling_factor: 3.0</code> sets exponential decay steepness. Higher value (&gt;5.0) pushes paths closer to obstacles for narrow doorway traversal.</p>
+          </div>
+          <div class="l05-banner-intro" style="margin: 0; padding: 0.4rem 0.65rem; border-left: 3px solid #10b981; font-size: 0.72rem; line-height: 1.35;">
+            🎯 <strong>Tuning Rule #1:</strong> Always tune AMCL localization covariance first! If particle spread is broad, costmaps will jitter and controllers will generate erratic oscillatory curves.
+          </div>
+        </div>
+      </div>
+    `
+  });
+
+  // 33. Practical Step 7: Controller Server & DWB / RPP Parameter Matrix
+  slides.push({
+    id: `${lesson.id}_sec26_step7_controller_tuning`,
+    type: 'concept',
+    lessonNum: lesson.num_str,
+    lessonId: lesson.id,
+    module: lesson.module,
+    sectionTitle: '27. Controller Tuning Matrix',
+    badge: '⚖️ Tuning Matrix II',
+    title: 'Practical Step 7: Controller Server (DWB vs. RPP) Tuning Guide',
+    htmlContent: `
+      <div class="l03-two-col-layout">
+        <div class="l03-content-col" style="display: flex; flex-direction: column; justify-content: center; gap: 0.4rem;">
+          <div class="l05-golden-card" style="padding: 0.45rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🎯</span><strong>DWB Critic Balancing Hierarchy</strong></div>
+            <p style="font-size: 0.72rem; line-height: 1.32;"><code>PathAlign (scale: 32.0)</code>: Prevents chassis heading deviation from global plan.</p>
+            <p style="font-size: 0.72rem; line-height: 1.32; margin-top: 0.2rem;"><code>PathDist (scale: 32.0)</code>: Penalizes lateral cross-track distance away from the global path.</p>
+            <p style="font-size: 0.72rem; line-height: 1.32; margin-top: 0.2rem;"><code>GoalDist (scale: 24.0)</code>: Incentivizes forward velocity toward target waypoint.</p>
+            <p style="font-size: 0.72rem; line-height: 1.32; margin-top: 0.2rem;"><code>BaseObstacle (scale: 0.02)</code>: Critical safety critic: instantly vetoes any candidate trajectory crossing lethal obstacles.</p>
+          </div>
+        </div>
+        <div class="l03-content-col" style="display: flex; flex-direction: column; justify-content: center; gap: 0.45rem;">
+          <div class="l05-golden-card" style="padding: 0.45rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🏎️</span><strong>Regulated Pure Pursuit (RPP) Tuning</strong></div>
+            <p style="font-size: 0.72rem; line-height: 1.32;"><code>lookahead_dist: 0.6m</code> (min: 0.4m, max: 1.2m): Dynamic lookahead scales with speed.</p>
+            <p style="font-size: 0.72rem; line-height: 1.32; margin-top: 0.2rem;"><code>use_regulated_linear_velocity_scaling: true</code>: Automatically decelerates in tight corners.</p>
+            <p style="font-size: 0.72rem; line-height: 1.32; margin-top: 0.2rem;"><code>xy_goal_tolerance: 0.15m</code> / <code>yaw_goal_tolerance: 0.10rad</code>: Clean station docking.</p>
+          </div>
+          <div class="l05-banner-intro" style="margin: 0; padding: 0.4rem 0.65rem; border-left: 3px solid #6366f1; font-size: 0.72rem; line-height: 1.35;">
+            💡 <strong>DWB vs. RPP Decision:</strong> Choose <strong>Regulated Pure Pursuit</strong> for repeatable warehouse aisle trucking; choose <strong>DWB</strong> when dynamic obstacle swerving is required.
+          </div>
+        </div>
+      </div>
+    `
+  });
+
+  // 34. Practical Step 8: Recovery Behaviors & Lifecycle Governors
+  slides.push({
+    id: `${lesson.id}_sec27_step8_recovery_tuning`,
+    type: 'concept',
+    lessonNum: lesson.num_str,
+    lessonId: lesson.id,
+    module: lesson.module,
+    sectionTitle: '28. Recovery & Lifecycle Matrix',
+    badge: '🛡️ Tuning Matrix III',
+    title: 'Practical Step 8: Recovery Behaviors & Progress Checker Matrix',
+    htmlContent: `
+      <div class="l03-two-col-layout">
+        <div class="l03-content-col" style="display: flex; flex-direction: column; justify-content: center; gap: 0.4rem;">
+          <div class="l05-golden-card" style="padding: 0.45rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🚨</span><strong>Nav2 Recovery Server Behaviors</strong></div>
+            <p style="font-size: 0.72rem; line-height: 1.32;"><code>spin (target_yaw: 1.57 rad / 90&deg;)</code>: In-place rotation clears LiDAR blind spots around chassis.</p>
+            <p style="font-size: 0.72rem; line-height: 1.32; margin-top: 0.2rem;"><code>backup (backup_dist: 0.15m, speed: 0.05m/s)</code>: Reverses away from obstacle when stuck.</p>
+            <p style="font-size: 0.72rem; line-height: 1.32; margin-top: 0.2rem;"><code>wait (duration: 5.0s)</code>: Pauses motion to allow dynamic pedestrians or forklifts to pass.</p>
+          </div>
+        </div>
+        <div class="l03-content-col" style="display: flex; flex-direction: column; justify-content: center; gap: 0.45rem;">
+          <div class="l05-golden-card" style="padding: 0.45rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>⏱️</span><strong>Progress Checker &amp; Costmap Clearing</strong></div>
+            <p style="font-size: 0.72rem; line-height: 1.32;"><code>required_movement_radius: 0.2m</code>: Minimum translation expected from controller.</p>
+            <p style="font-size: 0.72rem; line-height: 1.32; margin-top: 0.2rem;"><code>movement_time_allowance: 10.0s</code>: Triggers recovery sequence if robot fails to advance 0.2m.</p>
+            <p style="font-size: 0.72rem; line-height: 1.32; margin-top: 0.2rem;"><code>clear_entirely_local_costmap</code>: Erases dynamic obstacle layer to purge phantom LiDAR reflections.</p>
+          </div>
+          <div class="l05-banner-intro" style="margin: 0; padding: 0.4rem 0.65rem; border-left: 3px solid #ef4444; font-size: 0.72rem; line-height: 1.35;">
+            ⚠️ <strong>Recovery Escalation:</strong> Progress Timeout &rarr; Clear Local Costmap &rarr; Back Up 0.15m &rarr; Spin 90&deg; &rarr; Replanning. If all fail, safely abort and request human operator intervention.
+          </div>
         </div>
       </div>
     `
@@ -7432,7 +7408,7 @@ ros2 launch nexus_amr_navigation navigation.launch.py
   // PART VII: ASSESSMENT & SUMMARY
   // ==============================================================
 
-  // 33. Knowledge Check: Configuration Space & Costmap Inflation
+  // 35. Knowledge Check: Configuration Space & Costmap Inflation
   slides.push({
     id: `${lesson.id}_quiz_cspace_inflation`,
     type: 'quiz',
@@ -7441,7 +7417,7 @@ ros2 launch nexus_amr_navigation navigation.launch.py
     module: lesson.module,
     sectionTitle: 'Assessment: C-Space',
     title: 'Configuration Space & Costmap Inflation',
-    question: 'Why do path planning algorithms inflate obstacle boundaries by the robot radius R to form Configuration Space (C-Space)?',
+    question: 'Why do modern mobile robotics navigation algorithms inflate obstacle boundaries by the robot radius R to form Configuration Space (C-Space)?',
     options: [
       'To increase 2D LiDAR detection range and improve laser scan reflectivity.',
       'To allow the physical robot to be treated as an infinitesimal 0-radius point particle.',
@@ -7452,7 +7428,7 @@ ros2 launch nexus_amr_navigation navigation.launch.py
     explanation: 'Inflating obstacles by the robot radius R (Minkowski sum W_obs &oplus; A) transforms the robot into a single point particle in C-Space, vastly simplifying collision checking during graph search.'
   });
 
-  // 34. Knowledge Check: A* Heuristics & DWA Trajectory Rollouts
+  // 36. Knowledge Check: A* Heuristics & DWA Trajectory Rollouts
   slides.push({
     id: `${lesson.id}_quiz_astar_heuristics`,
     type: 'quiz',
@@ -7472,9 +7448,29 @@ ros2 launch nexus_amr_navigation navigation.launch.py
     explanation: 'An admissible heuristic h(n) &le; h*(n) never overestimates the true cost to reach the goal. Admissibility mathematically guarantees that the first path popped to the goal is optimal.'
   });
 
-  // 35. Lesson 14 Summary & Key Takeaways
+  // 37. Knowledge Check: Nav2 Parameter Tuning & Recovery
   slides.push({
-    id: `${lesson.id}_sec26_summary`,
+    id: `${lesson.id}_quiz_param_tuning`,
+    type: 'quiz',
+    lessonNum: lesson.num_str,
+    lessonId: lesson.id,
+    module: lesson.module,
+    sectionTitle: 'Assessment: Tuning & Recovery',
+    title: 'Nav2 Parameter Tuning & Recovery Escalation',
+    question: 'If the AMR gets wedged in an aisle and the Progress Checker times out after 10 seconds, what is the correct Nav2 recovery escalation sequence?',
+    options: [
+      'Immediate emergency shutdown of the motor drivers and reset of all nodes.',
+      'Wipe local costmap obstacle layer &rarr; BackUp 0.15m &rarr; Spin 90&deg; &rarr; Replan global path.',
+      'Double the maximum velocity to 1.2 m/s to power through the obstruction.',
+      'Switch from DWB controller to manual teleoperation mode automatically.'
+    ],
+    answer: 1,
+    explanation: 'Nav2 recovery escalation systematically clears transient sensor noise (phantom obstacles), reverses away from collision boundaries, rotates to acquire new laser clearance, and requests a fresh global plan.'
+  });
+
+  // 38. Lesson 14 Summary & Key Takeaways
+  slides.push({
+    id: `${lesson.id}_sec28_summary`,
     type: 'concept',
     lessonNum: lesson.num_str,
     lessonId: lesson.id,
@@ -7511,565 +7507,24 @@ ros2 launch nexus_amr_navigation navigation.launch.py
         <div style="background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: 8px; padding: 0.5rem; display: flex; flex-direction: column; justify-content: space-between;">
           <div>
             <div style="font-size: 0.78rem; font-weight: bold; color: #10b981; margin-bottom: 0.35rem; display: flex; align-items: center; gap: 0.3rem;">
-              <span>🏎️</span> DWA &amp; Nav2 Stack
+              <span>🎛️</span> Nav2 Stack &amp; Tuning
             </div>
-            <p style="font-size: 0.72rem; line-height: 1.35; color: var(--text-secondary);">DWA samples velocity space within acceleration limits. Nav2 stack decouples BT mission logic, global routing, and 20 Hz /cmd_vel execution.</p>
+            <p style="font-size: 0.72rem; line-height: 1.35; color: var(--text-secondary);">BT Navigator orchestrates Planner and Controller servers. Parameter matrix balances AMCL covariance, costmap inflation buffers, and critic weights.</p>
           </div>
           <div style="font-size: 0.68rem; color: #10b981; font-weight: bold;">
-            Key: 20 Hz critic scoring
+            Key: Production tuning matrix
           </div>
         </div>
       </div>
     `
   });
 }
-
 
 function buildLesson15Slides(doc, lesson, slides) {
-  // 1. Path Planning Taxonomy & Roadmap Hierarchy
-  slides.push({
-    id: `${lesson.id}_sec1_roadmap_taxonomy`,
-    type: 'concept',
-    lessonNum: lesson.num_str,
-    lessonId: lesson.id,
-    module: lesson.module,
-    sectionTitle: '1. Path Planning Roadmap Taxonomy',
-    badge: '🗺️ Algorithm Hierarchy',
-    title: '1. Path Planning Roadmap: Algorithmic Taxonomy & Hierarchy',
-    htmlContent: `
-      <div class="l03-two-col-layout">
-        <div class="l03-content-col" style="display: flex; flex-direction: column; justify-content: space-between; gap: 0.35rem;">
-          <div class="l05-golden-card" style="padding: 0.4rem 0.65rem;">
-            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🌐</span><strong>Continuous Roadmaps</strong></div>
-            <p style="font-size: 0.74rem; line-height: 1.3;">Construct connected line networks in continuous space. Key approaches: <strong>Visibility Graphs</strong> (shortest path) and <strong>Voronoi Diagrams</strong> (maximum clearance).</p>
-          </div>
-          <div class="l05-golden-card" style="padding: 0.4rem 0.65rem;">
-            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🔲</span><strong>Cell Decomposition</strong></div>
-            <p style="font-size: 0.74rem; line-height: 1.3;">Discretize space into polygons: <strong>Exact Cell Decomposition</strong> (trapezoids/triangles) and <strong>Approximate Cell Decomposition</strong> (Quadtree recursive subdivision).</p>
-          </div>
-          <div class="l05-golden-card" style="padding: 0.4rem 0.65rem;">
-            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>⭐</span><strong>Discrete Graph Search</strong></div>
-            <p style="font-size: 0.74rem; line-height: 1.3;">Once roadmaps or grids are formed, <strong>A* Search</strong> and Dijkstra traverse connectivity graphs to find optimal routes.</p>
-          </div>
-        </div>
-        <div class="l03-content-col" style="display: flex; flex-direction: column; justify-content: center;">
-          <div style="background: rgba(15, 23, 42, 0.65); border: 1px solid rgba(234, 179, 8, 0.35); border-radius: 8px; padding: 0.35rem; box-shadow: 0 4px 14px rgba(0,0,0,0.3);">
-            <img src="assets/images/nav_roadmap_algorithms.png" alt="Path Planning Roadmap Taxonomy" style="width: 100%; max-height: 250px; object-fit: contain; border-radius: 6px; display: block;" />
-            <div style="margin-top: 0.3rem; font-size: 0.68rem; color: #94a3b8; text-align: center; font-family: monospace;">
-              Path Planning Algorithms: Roadmaps (Visibility/Voronoi), Cell Decomposition & A* Search
-            </div>
-          </div>
-          <div class="l05-banner-intro" style="margin-top: 0.35rem; font-size: 0.72rem; padding: 0.35rem 0.65rem; border-left: 3px solid #eab308;">
-            <strong>💡 Pedagogical Progression:</strong> We study each algorithm's geometric construction, trade-offs, and industrial application.
-          </div>
-        </div>
-      </div>
-    `
-  });
-
-  // 2. Visibility Graph Step 1: Interconnecting Visible Obstacle Vertices
-  slides.push({
-    id: `${lesson.id}_sec2_visibility_step1`,
-    type: 'concept',
-    lessonNum: lesson.num_str,
-    lessonId: lesson.id,
-    module: lesson.module,
-    sectionTitle: '2. Visibility Graph Step 1: Vertex Connection',
-    badge: '👁️ Visibility Step 1 / 2',
-    title: '2. Visibility Graph Step 1: Interconnecting Visible Obstacle Vertices',
-    htmlContent: `
-      <div class="l03-two-col-layout">
-        <div class="l03-content-col" style="display: flex; flex-direction: column; justify-content: space-between; gap: 0.35rem;">
-          <div class="l05-golden-card" style="padding: 0.4rem 0.65rem;">
-            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>👁️</span><strong>Line-of-Sight Visibility</strong></div>
-            <p style="font-size: 0.74rem; line-height: 1.3;">The Visibility Graph links the Start node, all obstacle polygon vertices, and the Goal node to each other wherever a straight unobstructed line exists.</p>
-          </div>
-          <div class="l05-golden-card" style="padding: 0.4rem 0.65rem;">
-            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🚫</span><strong>Collision Occlusion Pruning</strong></div>
-            <p style="font-size: 0.74rem; line-height: 1.3;">Any connection that passes through an obstacle interior or intersects an obstacle edge is discarded as an invalid connection.</p>
-          </div>
-          <div class="l05-golden-card" style="padding: 0.4rem 0.65rem;">
-            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🕸️</span><strong>Roadmap Graph Formation</strong></div>
-            <p style="font-size: 0.74rem; line-height: 1.3;">The resulting network connects every node to all other nodes visible from its physical coordinates, forming an undirected roadmap graph.</p>
-          </div>
-        </div>
-        <div class="l03-content-col" style="display: flex; flex-direction: column; justify-content: center;">
-          <div style="background: rgba(15, 23, 42, 0.65); border: 1px solid rgba(59, 130, 246, 0.35); border-radius: 8px; padding: 0.35rem; box-shadow: 0 4px 14px rgba(0,0,0,0.3);">
-            <img src="assets/images/nav_visibility_graph_construction.png" alt="Visibility Graph Construction" style="width: 100%; max-height: 250px; object-fit: contain; border-radius: 6px; display: block;" />
-            <div style="margin-top: 0.3rem; font-size: 0.68rem; color: #94a3b8; text-align: center; font-family: monospace;">
-              Visibility Graph: Connecting start, goal, and all mutually visible obstacle vertices
-            </div>
-          </div>
-          <div class="l05-banner-intro" style="margin-top: 0.35rem; font-size: 0.72rem; padding: 0.35rem 0.65rem; border-left: 3px solid #3b82f6;">
-            <strong>💡 Construction Rule:</strong> An edge exists between vertex A and vertex B if and only if segment AB lies entirely within free space.
-          </div>
-        </div>
-      </div>
-    `
-  });
-
-  // 3. Visibility Graph Step 2: Shortest Path Graph Search
-  slides.push({
-    id: `${lesson.id}_sec3_visibility_step2`,
-    type: 'concept',
-    lessonNum: lesson.num_str,
-    lessonId: lesson.id,
-    module: lesson.module,
-    sectionTitle: '3. Visibility Graph Step 2: Shortest Path',
-    badge: '👁️ Visibility Step 2 / 2',
-    title: '3. Visibility Graph Step 2: Shortest Path Graph Search',
-    htmlContent: `
-      <div class="l03-two-col-layout">
-        <div class="l03-content-col" style="display: flex; flex-direction: column; justify-content: space-between; gap: 0.35rem;">
-          <div class="l05-golden-card" style="padding: 0.4rem 0.65rem; border-left: 3px solid #10b981;">
-            <div class="l05-golden-header" style="font-size: 0.78rem; color: #34d399;"><span>🏆</span><strong>Mathematically Shortest Path</strong></div>
-            <p style="font-size: 0.74rem; line-height: 1.3;">Running A* or Dijkstra search on the visibility graph finds the <strong>shortest possible route</strong> in continuous 2D Euclidean space from start to goal.</p>
-          </div>
-          <div class="l05-golden-card" style="padding: 0.4rem 0.65rem; border-left: 3px solid #f59e0b;">
-            <div class="l05-golden-header" style="font-size: 0.78rem; color: #fbbf24;"><span>⚠️</span><strong>The Corner-Grazing Trade-off</strong></div>
-            <p style="font-size: 0.74rem; line-height: 1.3;">Because the shortest path connects obstacle vertices directly, it grazes dangerously close to obstacle corners with zero clearance margin.</p>
-          </div>
-          <div class="l05-golden-card" style="padding: 0.4rem 0.65rem;">
-            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🏭</span><strong>Industrial Implication</strong></div>
-            <p style="font-size: 0.74rem; line-height: 1.3;">Requires significant obstacle inflation buffers before running search to prevent high-speed AMR wheels from scraping warehouse pallet corners.</p>
-          </div>
-        </div>
-        <div class="l03-content-col" style="display: flex; flex-direction: column; justify-content: center;">
-          <div style="background: rgba(15, 23, 42, 0.65); border: 1px solid rgba(16, 185, 129, 0.35); border-radius: 8px; padding: 0.35rem; box-shadow: 0 4px 14px rgba(0,0,0,0.3);">
-            <img src="assets/images/nav_visibility_graph_shortest_path.png" alt="Shortest Path in Visibility Graph" style="width: 100%; max-height: 250px; object-fit: contain; border-radius: 6px; display: block;" />
-            <div style="margin-top: 0.3rem; font-size: 0.68rem; color: #86efac; text-align: center; font-family: monospace;">
-              Shortest Path: Graph search identifies the shortest Euclidean path hugging obstacle corners
-            </div>
-          </div>
-          <div class="l05-banner-intro" style="margin-top: 0.35rem; font-size: 0.72rem; padding: 0.35rem 0.65rem; border-left: 3px solid #10b981;">
-            <strong>💡 Alternative Philosophy:</strong> What if we want maximum clearance instead of minimum distance? We use Voronoi Diagrams!
-          </div>
-        </div>
-      </div>
-    `
-  });
-
-  // 4. Voronoi Diagram: Free-Space Bisectors & Maximum Obstacle Clearance
-  slides.push({
-    id: `${lesson.id}_sec4_voronoi`,
-    type: 'concept',
-    lessonNum: lesson.num_str,
-    lessonId: lesson.id,
-    module: lesson.module,
-    sectionTitle: '4. Voronoi Diagram: Maximum Clearance',
-    badge: '🛡️ Maximum Clearance',
-    title: '4. Voronoi Diagram: Free-Space Bisectors & Maximum Obstacle Clearance',
-    htmlContent: `
-      <div class="l03-two-col-layout">
-        <div class="l03-content-col" style="display: flex; flex-direction: column; justify-content: space-between; gap: 0.35rem;">
-          <div class="l05-golden-card" style="padding: 0.4rem 0.65rem;">
-            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>⚖️</span><strong>Equidistant Free-Space Bisectors</strong></div>
-            <p style="font-size: 0.74rem; line-height: 1.3;">A Voronoi Diagram is a graph whose edges bisect the free space midway between obstacles. Every edge lies strictly equidistant from surrounding hazards.</p>
-          </div>
-          <div class="l05-golden-card" style="padding: 0.4rem 0.65rem; border-left: 3px solid #10b981;">
-            <div class="l05-golden-header" style="font-size: 0.78rem; color: #34d399;"><span>🛡️</span><strong>Maximum Clearance Guarantee</strong></div>
-            <p style="font-size: 0.74rem; line-height: 1.3;">Unlike visibility graphs that hug walls, Voronoi diagrams <strong>maximize clearance</strong>, guiding the robot down the safest center aisle of warehouse corridors.</p>
-          </div>
-          <div class="l05-golden-card" style="padding: 0.4rem 0.65rem;">
-            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>📈</span><strong>Sub-optimal Path Length</strong></div>
-            <p style="font-size: 0.74rem; line-height: 1.3;">The path is longer than the visibility graph route, but it provides the largest margin of safety against sensor noise and dynamic obstacles.</p>
-          </div>
-        </div>
-        <div class="l03-content-col" style="display: flex; flex-direction: column; justify-content: center;">
-          <div style="background: rgba(15, 23, 42, 0.65); border: 1px solid rgba(16, 185, 129, 0.35); border-radius: 8px; padding: 0.35rem; box-shadow: 0 4px 14px rgba(0,0,0,0.3);">
-            <img src="assets/images/nav_voronoi_diagram_clearance.png" alt="Voronoi Diagram Clearance" style="width: 100%; max-height: 250px; object-fit: contain; border-radius: 6px; display: block;" />
-            <div style="margin-top: 0.3rem; font-size: 0.68rem; color: #86efac; text-align: center; font-family: monospace;">
-              Voronoi Diagram: Edges lie equidistant from obstacles with greatest possible clearance
-            </div>
-          </div>
-          <div class="l05-banner-intro" style="margin-top: 0.35rem; font-size: 0.72rem; padding: 0.35rem 0.65rem; border-left: 3px solid #10b981;">
-            <strong>💡 Modern Use:</strong> Nav2's Smac Planner uses Voronoi fields in its heuristic to pull paths naturally toward corridor centerlines!
-          </div>
-        </div>
-      </div>
-    `
-  });
-
-  // 5. Exact Cell Decomposition: Trapezoidal & Triangular Slicing
-  slides.push({
-    id: `${lesson.id}_sec5_exact_cell_decomp`,
-    type: 'concept',
-    lessonNum: lesson.num_str,
-    lessonId: lesson.id,
-    module: lesson.module,
-    sectionTitle: '5. Exact Cell Decomposition',
-    badge: '📐 Exact Decomposition',
-    title: '5. Exact Cell Decomposition: Trapezoidal & Triangular Slicing',
-    htmlContent: `
-      <div class="l03-two-col-layout">
-        <div class="l03-content-col" style="display: flex; flex-direction: column; justify-content: space-between; gap: 0.35rem;">
-          <div class="l05-golden-card" style="padding: 0.4rem 0.65rem;">
-            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>✂️</span><strong>Vertical Line Segment Projection</strong></div>
-            <p style="font-size: 0.74rem; line-height: 1.3;">Exact cell decomposition divides free space into non-overlapping cells by projecting vertical line segments up and down from every obstacle vertex.</p>
-          </div>
-          <div class="l05-golden-card" style="padding: 0.4rem 0.65rem;">
-            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>📐</span><strong>Convex Polygon Partitioning</strong></div>
-            <p style="font-size: 0.74rem; line-height: 1.3;">Slices free space into simple trapezoids and triangles. Because each cell is convex, moving between any two points inside a cell is guaranteed collision-free!</p>
-          </div>
-          <div class="l05-golden-card" style="padding: 0.4rem 0.65rem;">
-            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🔗</span><strong>Adjacency Channel Graph</strong></div>
-            <p style="font-size: 0.74rem; line-height: 1.3;">Nodes are placed at cell centroids and boundary midpoints. Searching this graph yields an ordered sequence of channel portals from start to goal.</p>
-          </div>
-        </div>
-        <div class="l03-content-col" style="display: flex; flex-direction: column; justify-content: center;">
-          <div style="background: rgba(15, 23, 42, 0.65); border: 1px solid rgba(168, 85, 247, 0.35); border-radius: 8px; padding: 0.35rem; box-shadow: 0 4px 14px rgba(0,0,0,0.3);">
-            <img src="assets/images/nav_exact_cell_decomposition.png" alt="Exact Cell Decomposition" style="width: 100%; max-height: 250px; object-fit: contain; border-radius: 6px; display: block;" />
-            <div style="margin-top: 0.3rem; font-size: 0.68rem; color: #d8b4fe; text-align: center; font-family: monospace;">
-              Exact Cell Decomposition: Vertical lines at obstacle vertices partition space into trapezoids
-            </div>
-          </div>
-          <div class="l05-banner-intro" style="margin-top: 0.35rem; font-size: 0.72rem; padding: 0.35rem 0.65rem; border-left: 3px solid #a855f7;">
-            <strong>💡 Completeness:</strong> Exact cell decomposition is mathematically complete—if a valid path exists in free space, it is guaranteed to be found.
-          </div>
-        </div>
-      </div>
-    `
-  });
-
-  // 6. Approximate Cell Decomposition: Recursive Quadtree Subdivision
-  slides.push({
-    id: `${lesson.id}_sec6_approx_cell_decomp`,
-    type: 'concept',
-    lessonNum: lesson.num_str,
-    lessonId: lesson.id,
-    module: lesson.module,
-    sectionTitle: '6. Approximate Cell Decomposition',
-    badge: '🔲 Quadtree Decomposition',
-    title: '6. Approximate Cell Decomposition: Recursive Quadtree Subdivision',
-    htmlContent: `
-      <div class="l03-two-col-layout">
-        <div class="l03-content-col" style="display: flex; flex-direction: column; justify-content: space-between; gap: 0.35rem;">
-          <div class="l05-golden-card" style="padding: 0.4rem 0.65rem;">
-            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>4️⃣</span><strong>Four Quadrant Decomposition</strong></div>
-            <p style="font-size: 0.74rem; line-height: 1.3;">Decomposes space recursively into four quadrants. Each quadrant is classified into one of three states: <strong>Empty</strong>, <strong>Full</strong>, or <strong>Mixed</strong>.</p>
-          </div>
-          <div class="l05-golden-card" style="padding: 0.4rem 0.65rem;">
-            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🔀</span><strong>The "Mixed" Cell Label</strong></div>
-            <p style="font-size: 0.74rem; line-height: 1.3;">Represents cells that contain both obstacle portions and free space. If an all-empty path cannot be found, mixed cells are quartered again.</p>
-          </div>
-          <div class="l05-golden-card" style="padding: 0.4rem 0.65rem;">
-            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🌲</span><strong>Hierarchical Quadtree Storage</strong></div>
-            <p style="font-size: 0.74rem; line-height: 1.3;">Large open warehouse areas remain as single large cells, while fine detail is allocated only around tight rack corners—saving massive memory.</p>
-          </div>
-        </div>
-        <div class="l03-content-col" style="display: flex; flex-direction: column; justify-content: center;">
-          <div style="background: rgba(15, 23, 42, 0.65); border: 1px solid rgba(234, 179, 8, 0.35); border-radius: 8px; padding: 0.35rem; box-shadow: 0 4px 14px rgba(0,0,0,0.3);">
-            <img src="assets/images/nav_approx_cell_decomposition_iterations.png" alt="Approx Cell Decomposition Quadtree" style="width: 100%; max-height: 250px; object-fit: contain; border-radius: 6px; display: block;" />
-            <div style="margin-top: 0.3rem; font-size: 0.68rem; color: #94a3b8; text-align: center; font-family: monospace;">
-              Approximate Cell Decomposition: Iterative recursive quadtree refinement revealing free channels
-            </div>
-          </div>
-          <div class="l05-banner-intro" style="margin-top: 0.35rem; font-size: 0.72rem; padding: 0.35rem 0.65rem; border-left: 3px solid #eab308;">
-            <strong>💡 Convergence:</strong> Through successive iterations, more free cells emerge until a connected sequence links Start to Goal.
-          </div>
-        </div>
-      </div>
-    `
-  });
-
-  // 7. Graph Search: The A* Search Engine & Heuristic Function
-  slides.push({
-    id: `${lesson.id}_sec7_astar_search`,
-    type: 'concept',
-    lessonNum: lesson.num_str,
-    lessonId: lesson.id,
-    module: lesson.module,
-    sectionTitle: '7. Graph Search: A* Algorithm',
-    badge: '⭐ A* Search Engine',
-    title: '7. Graph Search: The A* Search Engine & Heuristic Function',
-    htmlContent: `
-      <div class="l03-two-col-layout">
-        <div class="l03-content-col" style="display: flex; flex-direction: column; justify-content: space-between; gap: 0.35rem;">
-          <div class="l05-golden-card" style="padding: 0.4rem 0.65rem;">
-            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>📐</span><strong>The Evaluation Function f(n)</strong></div>
-            <p style="font-size: 0.74rem; line-height: 1.3;"><code>f(n) = g(n) + h(n)</code> balances the known past cost against estimated future progress toward the goal destination.</p>
-          </div>
-          <div class="l05-golden-card" style="padding: 0.4rem 0.65rem;">
-            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>📏</span><strong>g(n): Exact Path Cost</strong></div>
-            <p style="font-size: 0.74rem; line-height: 1.3;">The exact accumulated travel cost from Start to the current node <code>n</code>, factoring in traversal distance and costmap obstacle inflation penalties.</p>
-          </div>
-          <div class="l05-golden-card" style="padding: 0.4rem 0.65rem;">
-            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🎯</span><strong>h(n): Admissible Heuristic</strong></div>
-            <p style="font-size: 0.74rem; line-height: 1.3;">Estimated distance from node <code>n</code> to Goal. If <code>h(n) &le; true cost</code> (e.g. straight Euclidean distance), A* is mathematically guaranteed optimal.</p>
-          </div>
-        </div>
-        <div class="l03-content-col" style="display: flex; flex-direction: column; justify-content: center;">
-          <div style="background: rgba(15, 23, 42, 0.65); border: 1px solid rgba(234, 179, 8, 0.35); border-radius: 8px; padding: 0.4rem; box-shadow: 0 4px 14px rgba(0,0,0,0.3);">
-            <div style="font-family: monospace; font-size: 0.82rem; color: #fbbf24; text-align: center; margin-bottom: 0.3rem;">
-              f(n) = g(n) + h(n)
-            </div>
-            <div style="font-size: 0.71rem; line-height: 1.45; color: #cbd5e1;">
-              <strong>1. Open Priority Queue:</strong> Nodes sorted by lowest <code>f(n)</code>.<br>
-              <strong>2. Directed Expansion:</strong> Heuristic pulls search directly toward target, avoiding blind radial flood fill.<br>
-              <strong>3. Nav2 Implementations:</strong> <code>NavFn</code> (Dijkstra / A*) and <code>SmacPlanner2D</code> (highly optimized modern A*).
-            </div>
-          </div>
-          <div class="l05-banner-intro" style="margin-top: 0.35rem; font-size: 0.72rem; padding: 0.35rem 0.65rem; border-left: 3px solid #eab308;">
-            <strong>💡 Global vs Local:</strong> A* solves the global path at 1 Hz. But to follow it at 20 Hz without hitting dynamic obstacles, we need local planners!
-          </div>
-        </div>
-      </div>
-    `
-  });
-
-  // 8. Dynamic Window Approach (DWA): Velocity Sampling & Forward Rollout
-  slides.push({
-    id: `${lesson.id}_sec8_dwa_rollout`,
-    type: 'concept',
-    lessonNum: lesson.num_str,
-    lessonId: lesson.id,
-    module: lesson.module,
-    sectionTitle: '8. DWA Local Planner Mechanics',
-    badge: '⏱️ 20 Hz Local Controller',
-    title: '8. Dynamic Window Approach (DWA): Velocity Sampling & Forward Rollout',
-    htmlContent: `
-      <div class="l03-two-col-layout">
-        <div class="l03-content-col" style="display: flex; flex-direction: column; justify-content: space-between; gap: 0.35rem;">
-          <div class="l05-golden-card" style="padding: 0.4rem 0.65rem;">
-            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>1️⃣</span><strong>Sample Velocities (v, &omega;)</strong></div>
-            <p style="font-size: 0.74rem; line-height: 1.3;">Discretely samples candidate linear velocities <code>v</code> and angular velocities <code>&omega;</code> reachable within the dynamic acceleration window.</p>
-          </div>
-          <div class="l05-golden-card" style="padding: 0.4rem 0.65rem;">
-            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>2️⃣</span><strong>Forward Simulation Rollout</strong></div>
-            <p style="font-size: 0.74rem; line-height: 1.3;">Numerically rolls out candidate trajectories forward over a short time horizon (e.g. 1.5s) to predict future poses assuming velocity is held constant.</p>
-          </div>
-          <div class="l05-golden-card" style="padding: 0.4rem 0.65rem;">
-            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>3️⃣</span><strong>Score Trajectories & Execute</strong></div>
-            <p style="font-size: 0.74rem; line-height: 1.3;">Discards colliding trajectories. Evaluates remaining arcs with critics, picks the highest-scoring <code>(v, &omega;)</code>, sends to motors, and repeats at 20 Hz.</p>
-          </div>
-        </div>
-        <div class="l03-content-col" style="display: flex; flex-direction: column; justify-content: center;">
-          <div style="background: rgba(15, 23, 42, 0.65); border: 1px solid rgba(59, 130, 246, 0.35); border-radius: 8px; padding: 0.35rem; box-shadow: 0 4px 14px rgba(0,0,0,0.3);">
-            <img src="assets/images/nav_dwa_local_planner_rollout.png" alt="DWA Local Planner Rollout" style="width: 100%; max-height: 250px; object-fit: contain; border-radius: 6px; display: block;" />
-            <div style="margin-top: 0.3rem; font-size: 0.68rem; color: #94a3b8; text-align: center; font-family: monospace;">
-              DWA Rollout: Forward simulation trajectories evaluated against dynamic obstacles
-            </div>
-          </div>
-          <div class="l05-banner-intro" style="margin-top: 0.35rem; font-size: 0.72rem; padding: 0.35rem 0.65rem; border-left: 3px solid #3b82f6;">
-            <strong>💡 The DWA Loop:</strong> Sample &rarr; Forward Rollout &rarr; Evaluate Critics &rarr; Send Highest Score Velocity &rarr; Repeat at 20 Hz.
-          </div>
-        </div>
-      </div>
-    `
-  });
-
-  // 9. Nav2 DWB Controller: Forward Simulation & Critic Scoring Matrix
-  slides.push({
-    id: `${lesson.id}_sec9_dwb_critics`,
-    type: 'concept',
-    lessonNum: lesson.num_str,
-    lessonId: lesson.id,
-    module: lesson.module,
-    sectionTitle: '9. Nav2 DWB Controller',
-    badge: '🎯 DWB Trajectory Scoring',
-    title: '9. Nav2 DWB Controller: Forward Simulation & Critic Scoring Matrix',
-    htmlContent: `
-      <div class="l03-two-col-layout">
-        <div class="l03-content-col" style="display: flex; flex-direction: column; justify-content: space-between; gap: 0.35rem;">
-          <div class="l05-golden-card" style="padding: 0.4rem 0.65rem;">
-            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🚜</span><strong>Modular Critic Plugins</strong></div>
-            <p style="font-size: 0.74rem; line-height: 1.3;">DWB modernizes ROS 1 DWA by breaking trajectory evaluation into modular, independently weighted critic plugins in <code>nav2_params.yaml</code>.</p>
-          </div>
-          <div class="l05-golden-card" style="padding: 0.4rem 0.65rem;">
-            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>📊</span><strong>Linear Weighted Sum</strong></div>
-            <p style="font-size: 0.74rem; line-height: 1.3;"><code>Total Score = &Sigma; (Weight_i &times; Score_i)</code>. Any trajectory that touches an obstacle cell in the local costmap receives an immediate score of &infin; (illegal).</p>
-          </div>
-          <div class="l05-golden-card" style="padding: 0.4rem 0.65rem;">
-            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🔄</span><strong>Non-Holonomic Feasibility</strong></div>
-            <p style="font-size: 0.74rem; line-height: 1.3;">Rollout trajectories obey differential drive kinematic limits: <code>v_y = 0</code> (no sideways crab crawl) and respect maximum wheel acceleration limits.</p>
-          </div>
-        </div>
-        <div class="l03-content-col" style="display: flex; flex-direction: column; justify-content: center;">
-          <div style="background: rgba(15, 23, 42, 0.65); border: 1px solid rgba(234, 179, 8, 0.35); border-radius: 8px; padding: 0.4rem; box-shadow: 0 4px 14px rgba(0,0,0,0.3);">
-            <div style="font-size: 0.76rem; font-weight: bold; color: #fbbf24; margin-bottom: 0.3rem;">
-              Critical DWB Critic Components
-            </div>
-            <ul style="font-size: 0.71rem; line-height: 1.4; color: #cbd5e1; margin: 0; padding-left: 1.1rem;">
-              <li><code>BaseObstacle</code>: Penalizes proximity to obstacles (clearance).</li>
-              <li><code>PathAlign</code>: Heading alignment with global path tangent.</li>
-              <li><code>GoalAlign</code>: Heading alignment directly toward goal.</li>
-              <li><code>PathDist</code>: Cross-track distance away from global path.</li>
-              <li><code>RotateToGoal</code>: Enforces in-place rotation at destination.</li>
-            </ul>
-          </div>
-          <div class="l05-banner-intro" style="margin-top: 0.35rem; font-size: 0.72rem; padding: 0.35rem 0.65rem; border-left: 3px solid #eab308;">
-            <strong>💡 Tuning Balance:</strong> If <code>PathDist</code> is too high, the robot refuses to steer around dynamic obstacles. If too low, it wanders off path!
-          </div>
-        </div>
-      </div>
-    `
-  });
-
-  // 10. DWB Critic Scoring Matrix: Balancing Clearance, Speed & Goal Accuracy
-  slides.push({
-    id: `${lesson.id}_sec10_dwb_tuning_matrix`,
-    type: 'concept',
-    lessonNum: lesson.num_str,
-    lessonId: lesson.id,
-    module: lesson.module,
-    sectionTitle: '10. DWB Critic Matrix',
-    badge: '⚖️ DWB Critic Matrix',
-    title: '10. DWB Critic Scoring Matrix: Balancing Clearance, Speed & Goal Accuracy',
-    htmlContent: `
-      <div style="background: rgba(15, 23, 42, 0.65); border: 1px solid rgba(234, 179, 8, 0.3); border-radius: 8px; padding: 0.4rem; box-shadow: 0 4px 14px rgba(0,0,0,0.3);">
-        <table class="l03-table" style="width: 100%; border-collapse: collapse; font-size: 0.71rem;">
-          <thead>
-            <tr style="background: rgba(30, 41, 59, 0.8); color: #fbbf24; border-bottom: 2px solid #eab308;">
-              <th style="padding: 0.3rem 0.4rem; text-align: left; width: 18%;">Critic Plugin</th>
-              <th style="padding: 0.3rem 0.4rem; text-align: left; width: 12%;">Default</th>
-              <th style="padding: 0.3rem 0.4rem; text-align: left; width: 40%;">Behavioral Metric</th>
-              <th style="padding: 0.3rem 0.4rem; text-align: left; width: 30%;">Tuning Recommendation</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr style="border-bottom: 1px solid rgba(255, 255, 255, 0.08);">
-              <td style="padding: 0.25rem 0.4rem;"><code>BaseObstacle</code></td>
-              <td style="padding: 0.25rem 0.4rem;"><code>0.02</code></td>
-              <td style="padding: 0.25rem 0.4rem;">Penalizes trajectories grazing close to costmap obstacles.</td>
-              <td style="padding: 0.25rem 0.4rem;">Increase if robot clips rack corners in turns.</td>
-            </tr>
-            <tr style="border-bottom: 1px solid rgba(255, 255, 255, 0.08);">
-              <td style="padding: 0.25rem 0.4rem;"><code>PathAlign</code></td>
-              <td style="padding: 0.25rem 0.4rem;"><code>32.0</code></td>
-              <td style="padding: 0.25rem 0.4rem;">Keeps robot heading aligned with global path direction.</td>
-              <td style="padding: 0.25rem 0.4rem;">High weight ensures straight aisle travel.</td>
-            </tr>
-            <tr style="border-bottom: 1px solid rgba(255, 255, 255, 0.08);">
-              <td style="padding: 0.25rem 0.4rem;"><code>GoalAlign</code></td>
-              <td style="padding: 0.25rem 0.4rem;"><code>24.0</code></td>
-              <td style="padding: 0.25rem 0.4rem;">Orients robot heading directly towards goal destination.</td>
-              <td style="padding: 0.25rem 0.4rem;">Prevents overshooting the target waypoint.</td>
-            </tr>
-            <tr style="border-bottom: 1px solid rgba(255, 255, 255, 0.08);">
-              <td style="padding: 0.25rem 0.4rem;"><code>PathDist</code></td>
-              <td style="padding: 0.25rem 0.4rem;"><code>32.0</code></td>
-              <td style="padding: 0.25rem 0.4rem;">Penalizes cross-track distance away from global path.</td>
-              <td style="padding: 0.25rem 0.4rem;">Keeps robot glued to corridor centerlines.</td>
-            </tr>
-            <tr>
-              <td style="padding: 0.25rem 0.4rem;"><code>RotateToGoal</code></td>
-              <td style="padding: 0.25rem 0.4rem;"><code>32.0</code></td>
-              <td style="padding: 0.25rem 0.4rem;">Enforces final in-place rotation when within XY tolerance.</td>
-              <td style="padding: 0.25rem 0.4rem;">Crucial for docking into pallet stands.</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-      <div class="l05-banner-intro" style="margin-top: 0.35rem; font-size: 0.72rem; padding: 0.35rem 0.65rem; border-left: 3px solid #eab308;">
-        <strong>⚖️ Golden Rule:</strong> Never change multiple critic weights simultaneously! Adjust one weight by 2x, test trajectory smoothness, and verify oscillation stability.
-      </div>
-    `
-  });
-
-  // 11. Regulated Pure Pursuit (RPP): Deterministic Industrial Path Tracking
-  slides.push({
-    id: `${lesson.id}_sec11_rpp_controller`,
-    type: 'concept',
-    lessonNum: lesson.num_str,
-    lessonId: lesson.id,
-    module: lesson.module,
-    sectionTitle: '11. Regulated Pure Pursuit (RPP)',
-    badge: '📐 Pure Pursuit',
-    title: '11. Regulated Pure Pursuit (RPP): Deterministic Industrial Path Tracking',
-    htmlContent: `
-      <div class="l03-two-col-layout">
-        <div class="l03-content-col" style="display: flex; flex-direction: column; justify-content: space-between; gap: 0.35rem;">
-          <div class="l05-golden-card" style="padding: 0.4rem 0.65rem;">
-            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🎯</span><strong>Geometric Lookahead Arc</strong></div>
-            <p style="font-size: 0.74rem; line-height: 1.3;">RPP projects an imaginary anchor point along the global path at distance <code>L_lookahead</code>. It calculates the exact geometric curvature arc required to steer toward it.</p>
-          </div>
-          <div class="l05-golden-card" style="padding: 0.4rem 0.65rem;">
-            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>📉</span><strong>Automatic Curvature Deceleration</strong></div>
-            <p style="font-size: 0.74rem; line-height: 1.3;">Slows down automatically in sharp corners proportional to path curvature radius, preventing AMR chassis tipping or wheel skid under load.</p>
-          </div>
-          <div class="l05-golden-card" style="padding: 0.4rem 0.65rem;">
-            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🏭</span><strong>Industrial Predictability</strong></div>
-            <p style="font-size: 0.74rem; line-height: 1.3;">DWB can exhibit exploratory swerves. RPP produces perfectly predictable, repeatable train-track paths preferred in commercial logistics.</p>
-          </div>
-        </div>
-        <div class="l03-content-col">
-          <div class="l03-cmd-card">
-            <div class="l03-cmd-header"><span class="l03-term-badge">nav2_params.yaml</span><strong>RPP Configuration Snippet</strong></div>
-            <pre><code class="language-yaml">controller_server:
-  ros__parameters:
-    FollowPath:
-      plugin: "nav2_regulated_pure_pursuit_controller::RegulatedPurePursuitController"
-      desired_linear_vel: 0.5
-      lookahead_dist: 0.6
-      min_lookahead_dist: 0.3
-      max_lookahead_dist: 0.9
-      lookahead_time: 1.5
-      use_velocity_scaled_lookahead_dist: true
-      use_regulated_linear_velocity_scaling: true
-      regulated_linear_scaling_min_radius: 0.9
-      use_cost_regulated_linear_velocity_scaling: true</code></pre>
-          </div>
-        </div>
-      </div>
-    `
-  });
-
-  // 12. Production Tuning: Controller Server nav2_params.yaml Parameter Matrix
-  slides.push({
-    id: `${lesson.id}_sec12_controller_params`,
-    type: 'concept',
-    lessonNum: lesson.num_str,
-    lessonId: lesson.id,
-    module: lesson.module,
-    sectionTitle: '12. Controller Server Matrix',
-    badge: '⚙️ Controller Tuning',
-    title: '12. Production Tuning: Controller Server nav2_params.yaml Matrix',
-    htmlContent: `
-      <div class="l03-two-col-layout">
-        <div class="l03-content-col" style="display: flex; flex-direction: column; justify-content: space-between; gap: 0.35rem;">
-          <div class="l05-golden-card" style="padding: 0.4rem 0.65rem;">
-            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>⏱️</span><strong>controller_frequency: 20.0 Hz</strong></div>
-            <p style="font-size: 0.74rem; line-height: 1.3;">Controls the frequency of the velocity loop. 20 Hz provides rapid reactive collision avoidance while maintaining low CPU load.</p>
-          </div>
-          <div class="l05-golden-card" style="padding: 0.4rem 0.65rem;">
-            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🎯</span><strong>Goal Checker Tolerances</strong></div>
-            <p style="font-size: 0.74rem; line-height: 1.3;"><code>xy_goal_tolerance: 0.15</code> (15cm) and <code>yaw_goal_tolerance: 0.10</code> (~5.7&deg;) define acceptable destination completion bounds.</p>
-          </div>
-          <div class="l05-golden-card" style="padding: 0.4rem 0.65rem;">
-            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🛡️</span><strong>Progress Checker Timeouts</strong></div>
-            <p style="font-size: 0.74rem; line-height: 1.3;"><code>required_movement_radius: 0.2m</code> within <code>movement_time_allowance: 10.0s</code> triggers recovery behaviors if the robot gets trapped.</p>
-          </div>
-        </div>
-        <div class="l03-content-col">
-          <div class="l03-cmd-card">
-            <div class="l03-cmd-header"><span class="l03-term-badge">nav2_params.yaml</span><strong>Controller Server Core Parameters</strong></div>
-            <pre><code class="language-yaml">controller_server:
-  ros__parameters:
-    controller_frequency: 20.0
-    min_x_velocity_threshold: 0.001
-    min_theta_velocity_threshold: 0.001
-    progress_checker_plugin: "progress_checker"
-    goal_checker_plugins: ["general_goal_checker"]
-    controller_plugins: ["FollowPath"]
-    progress_checker:
-      plugin: "nav2_controller::SimpleProgressChecker"
-      required_movement_radius: 0.2
-      movement_time_allowance: 10.0
-    general_goal_checker:
-      plugin: "nav2_controller::SimpleGoalChecker"
-      xy_goal_tolerance: 0.15
-      yaw_goal_tolerance: 0.10</code></pre>
-          </div>
-        </div>
-      </div>
-    `
-  });
+  // Lesson 15 has been merged into Lesson 14. If requested, delegate to Lesson 14.
+  return buildLesson14Slides(doc, lesson, slides);
 }
 
-/**
- * Dedicated High-Yield Pedagogical Deck Builder for Lesson 16:
- * Autonomous Navigation Scripting with Nav2 Simple Commander.
- */
 function buildLesson16Slides(doc, lesson, slides) {
   // 1. Simple Commander Python API Architecture
   slides.push({
