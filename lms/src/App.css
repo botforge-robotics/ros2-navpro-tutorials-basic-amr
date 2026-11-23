@@ -9547,3 +9547,26 @@
   font-size: 0.86rem !important;
   line-height: 1.4 !important;
 }
+
+/* ========================================================================= */
+/* LESSON 13 HERO STORYTELLING LOCALIZATION LAYOUT                           */
+/* ========================================================================= */
+.presentation-viewport .concept-html-body .localization-hero-story-layout {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr) !important;
+  gap: 1.15rem !important;
+  align-items: center !important;
+  height: 100% !important;
+  max-height: 520px !important;
+  box-sizing: border-box !important;
+}
+
+.presentation-viewport.is-fullscreen .localization-hero-story-layout {
+  grid-template-columns: minmax(0, 1.45fr) minmax(0, 1fr) !important;
+  gap: 1.75rem !important;
+}
+
+.presentation-viewport.is-fullscreen .localization-hero-story-layout p {
+  font-size: 0.95rem !important;
+  line-height: 1.42 !important;
+}

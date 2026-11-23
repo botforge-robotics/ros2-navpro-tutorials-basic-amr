@@ -5192,34 +5192,57 @@ function buildLesson13Slides(doc, lesson, slides) {
     lessonNum: lesson.num_str,
     lessonId: lesson.id,
     module: lesson.module,
-    sectionTitle: 'Localization Definition',
-    badge: '📍 Core Definition',
-    title: 'Mobile Robot Localization: Problem Statement',
+    sectionTitle: 'The Fundamental Question',
+    badge: '📍 Core Problem Statement',
+    title: 'The Fundamental Question: "Where Am I?"',
     htmlContent: `
-      <div class="l03-two-col-layout">
-        <div class="l03-content-col" style="display: flex; flex-direction: column; justify-content: center; gap: 0.45rem;">
-          <div class="l05-golden-card" style="padding: 0.45rem 0.7rem;">
-            <div class="l05-golden-header" style="font-size: 0.8rem;"><span>❓</span><strong>The Fundamental Question</strong></div>
-            <p style="font-size: 0.74rem; line-height: 1.32;"><em>"Where is the robot relative to the world coordinate frame?"</em> Given a static environment map <code>m</code> and sensor readings <code>z_{1:t}</code>, compute pose <code>(x, y, &theta;) &isin; SE(2)</code>.</p>
-          </div>
-          <div class="l05-golden-card" style="padding: 0.45rem 0.7rem;">
-            <div class="l05-golden-header" style="font-size: 0.8rem;"><span>🔄</span><strong>Odometry vs. Perception Fusion</strong></div>
-            <p style="font-size: 0.74rem; line-height: 1.32;">Wheel encoders measure motion rapidly at 50 Hz but suffer from cumulative integration drift. Exteroceptive sensors (2D LiDAR) correct this drift against pre-mapped walls.</p>
-          </div>
-          <div class="l05-golden-card" style="padding: 0.45rem 0.7rem;">
-            <div class="l05-golden-header" style="font-size: 0.8rem;"><span>🎯</span><strong>Belief Probability Distribution</strong></div>
-            <p style="font-size: 0.74rem; line-height: 1.32;">Because sensors and actuators contain physical noise, the robot maintains a belief distribution <code>bel(x_t) = p(x_t | z_{1:t}, u_{1:t})</code> rather than a single deterministic coordinate.</p>
-          </div>
-        </div>
-        <div class="l03-content-col" style="display: flex; flex-direction: column; justify-content: center; gap: 0.45rem;">
-          <div style="background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: 10px; padding: 0.45rem; box-shadow: 0 4px 14px rgba(0,0,0,0.12); display: flex; flex-direction: column; align-items: center; justify-content: center;">
-            <img src="assets/images/localization_concept_pose_estimation.png" alt="Robot Localization in Given Map" style="width: 100%; max-height: 240px; object-fit: contain; border-radius: 6px; display: block; margin: 0 auto;" />
-            <div style="margin-top: 0.35rem; font-size: 0.68rem; color: var(--text-muted); text-align: center; font-family: var(--font-sans);">
-              Localization: Estimate robot pose (x, y, &theta;) in the pre-mapped environment
+      <div class="localization-hero-story-layout">
+        <!-- Left 60%: Dominant Floor-Plan Technical Visual Story -->
+        <div style="display: flex; flex-direction: column; justify-content: center; gap: 0.45rem;">
+          <div style="background: #ffffff; border: 1.5px solid #cbd5e1; border-radius: 10px; padding: 0.45rem; box-shadow: 0 4px 16px rgba(15, 23, 42, 0.12); display: flex; flex-direction: column; align-items: center; justify-content: center;">
+            <img src="assets/images/nav_localization_problem_visual_story.png" alt="Robot Localization Problem Statement: Ground Truth vs Odometry Drift vs LiDAR Scan Matching" style="width: 100%; max-height: 310px; object-fit: contain; border-radius: 6px; display: block; margin: 0 auto;" />
+            <div style="margin-top: 0.35rem; font-size: 0.70rem; color: #475569; font-weight: 600; text-align: center; font-family: var(--font-sans);">
+              Floor-Plan Blueprint: Ground Truth Pose <span style="color: #059669; font-weight: 700;">x*</span> &bull; Estimated Odometry Drift <span style="color: #0284c7; font-weight: 700;">x&#770;</span> &bull; Uncertainty Envelope <span style="color: #ea580c; font-weight: 700;">&Sigma;<sub>t</sub></span> &bull; LiDAR Ray Correction <span style="color: #0284c7; font-weight: 700;">z<sub>t</sub></span>
             </div>
           </div>
-          <div class="l05-banner-intro" style="margin: 0; font-size: 0.72rem; padding: 0.38rem 0.65rem; border-left: 3px solid #eab308;">
-            <strong>💡 Ground Truth:</strong> Without accurate localization, all downstream Nav2 costmap alignment and trajectory rollouts immediately fail.
+          <div class="l05-banner-intro" style="margin: 0; font-size: 0.72rem; padding: 0.38rem 0.65rem; border-left: 3.5px solid #ea580c; background: #fff7ed; color: #9a3412;">
+            <strong>💡 Visual Storytelling:</strong> Wheel slip causes unbounded dead-reckoning drift &rarr; Uncertainty envelope &Sigma;<sub>t</sub> expands &rarr; 2D LiDAR scans (z<sub>t</sub>) lock onto static map walls to collapse belief back to truth.
+          </div>
+        </div>
+
+        <!-- Right 40%: High-Legibility Technical Explanatory Columns -->
+        <div style="display: flex; flex-direction: column; justify-content: center; gap: 0.45rem;">
+          <!-- Section 1: The Unknown State -->
+          <div style="background: #ffffff; border: 1px solid #e2e8f0; border-left: 4px solid #0f172a; border-radius: 8px; padding: 0.45rem 0.65rem; box-shadow: 0 2px 8px rgba(0,0,0,0.06);">
+            <div style="font-size: 0.84rem; font-weight: 800; color: #0f172a; display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.2rem;">
+              <span>🧭 1. State Estimation in SE(2)</span>
+              <span style="font-family: var(--font-mono); font-size: 0.72rem; color: #ea580c; background: #fff7ed; padding: 0.1rem 0.4rem; border-radius: 4px; font-weight: 700;">x<sub>t</sub> = [x, y, &theta;]<sup>T</sup></span>
+            </div>
+            <p style="font-size: 0.74rem; line-height: 1.34; margin: 0; color: #334155;">
+              Given known static map <code>m</code> and historical control inputs <code>u_{1:t}</code>, calculate the exact 2D position and heading angle of the AMR chassis relative to world frame origin {W}.
+            </p>
+          </div>
+
+          <!-- Section 2: The Odometry Dilemma -->
+          <div style="background: #ffffff; border: 1px solid #fed7aa; border-left: 4px solid #ea580c; border-radius: 8px; padding: 0.45rem 0.65rem; box-shadow: 0 2px 8px rgba(0,0,0,0.06);">
+            <div style="font-size: 0.84rem; font-weight: 800; color: #ea580c; display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.2rem;">
+              <span>⚠️ 2. The Odometry Dilemma</span>
+              <span style="font-size: 0.68rem; color: #dc2626; font-weight: 700;">Wheel Slip &amp; Backlash</span>
+            </div>
+            <p style="font-size: 0.74rem; line-height: 1.34; margin: 0; color: #334155;">
+              Wheel encoders provide fast dead-reckoning (50 Hz), but physical slip, floor unevenness, and tire wear accumulate unbounded drift (&Delta;x, &Delta;y, &Delta;&theta;). After 20m of travel, open-loop odometry is entirely unreliable.
+            </p>
+          </div>
+
+          <!-- Section 3: The Probabilistic Solution -->
+          <div style="background: #ffffff; border: 1px solid #bae6fd; border-left: 4px solid #0284c7; border-radius: 8px; padding: 0.45rem 0.65rem; box-shadow: 0 2px 8px rgba(0,0,0,0.06);">
+            <div style="font-size: 0.84rem; font-weight: 800; color: #0284c7; display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.2rem;">
+              <span>🎯 3. Probabilistic Belief</span>
+              <span style="font-family: var(--font-mono); font-size: 0.70rem; color: #0369a1; background: #f0f9ff; padding: 0.1rem 0.4rem; border-radius: 4px; font-weight: 700;">bel(x<sub>t</sub>) = p(x<sub>t</sub> | z<sub>1:t</sub>, u<sub>1:t</sub>)</span>
+            </div>
+            <p style="font-size: 0.74rem; line-height: 1.34; margin: 0; color: #334155;">
+              Rather than assuming a single point, maintain a belief distribution across all candidate poses. Exteroceptive 2D LiDAR range returns (z<sub>t</sub>) match static walls to collapse uncertainty back onto ground truth.
+            </p>
           </div>
         </div>
       </div>
