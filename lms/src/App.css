@@ -9558,9 +9558,63 @@
   justify-content: center !important;
   width: 100% !important;
   height: 100% !important;
-  max-width: 980px !important;
+  max-width: 1100px !important;
   margin: 0 auto !important;
-  gap: 0.55rem !important;
+  gap: 0.45rem !important;
+}
+
+/* Top 3-Pill Technical Specifications Strip */
+.nav-tech-specs-strip {
+  display: grid !important;
+  grid-template-columns: repeat(3, 1fr) !important;
+  gap: 0.5rem !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+.nav-spec-item {
+  background: rgba(15, 23, 42, 0.04) !important;
+  border: 1px solid var(--border-color, #e2e8f0) !important;
+  border-radius: 6px !important;
+  padding: 0.28rem 0.65rem !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+  line-height: 1.25 !important;
+}
+
+[data-theme='dark'] .nav-spec-item {
+  background: rgba(30, 41, 59, 0.6) !important;
+  border-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+.nav-spec-label {
+  font-size: 0.60rem !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.06em !important;
+  font-weight: 700 !important;
+  color: var(--text-muted, #64748b) !important;
+}
+
+.nav-spec-val {
+  font-size: 0.72rem !important;
+  font-weight: 600 !important;
+  color: var(--text-primary, #0f172a) !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+}
+
+[data-theme='dark'] .nav-spec-val {
+  color: #f1f5f9 !important;
+}
+
+.nav-spec-val code {
+  font-family: var(--font-mono, monospace) !important;
+  font-size: 0.70rem !important;
+  color: #0284c7 !important;
+  background: transparent !important;
+  padding: 0 !important;
 }
 
 .nav-full-image-container {
@@ -9568,17 +9622,23 @@
   background: var(--bg-surface, #ffffff) !important;
   border: 1px solid var(--border-color, #e2e8f0) !important;
   border-radius: 10px !important;
-  padding: 0.45rem 0.6rem !important;
+  padding: 0.4rem 0.6rem !important;
   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08) !important;
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
 }
 
+.nav-full-image-container.dark-frame {
+  background: #0f172a !important;
+  border: 1px solid #334155 !important;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25) !important;
+}
+
 .nav-full-image-container img {
   width: auto !important;
   max-width: 100% !important;
-  max-height: 295px !important;
+  max-height: 335px !important;
   object-fit: contain !important;
   border-radius: 6px !important;
   display: block !important;
@@ -9588,31 +9648,169 @@
 .nav-bottom-caption {
   width: 100% !important;
   margin: 0 !important;
-  padding: 0.45rem 0.85rem !important;
+  padding: 0.4rem 0.85rem !important;
   font-size: 0.74rem !important;
-  line-height: 1.4 !important;
+  line-height: 1.38 !important;
   border-radius: 8px !important;
   box-sizing: border-box !important;
 }
 
+/* Taxonomy 3-Column Balanced Layout for Slide 13 */
+.nav-taxonomy-triptych-layout {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr) !important;
+  gap: 0.85rem !important;
+  align-items: center !important;
+  width: 100% !important;
+  height: 100% !important;
+  max-width: 1140px !important;
+  margin: 0 auto !important;
+}
+
+.nav-taxonomy-triptych-layout .taxonomy-center-img {
+  background: var(--bg-surface, #ffffff) !important;
+  border: 1px solid var(--border-color, #e2e8f0) !important;
+  border-radius: 10px !important;
+  padding: 0.4rem 0.6rem !important;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.nav-taxonomy-triptych-layout .taxonomy-center-img img {
+  max-height: 355px !important;
+  width: auto !important;
+  object-fit: contain !important;
+  border-radius: 6px !important;
+}
+
+/* Full-view Image with Flanking Engineering Wings (Eliminates Empty Space) */
+.nav-showcase-triptych-layout {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 2.4fr) minmax(0, 1.05fr) !important;
+  gap: 0.75rem !important;
+  align-items: center !important;
+  width: 100% !important;
+  max-width: 1220px !important;
+  margin: 0 auto !important;
+}
+
+.nav-showcase-center-visual {
+  background: #0f172a !important;
+  border: 1px solid #334155 !important;
+  border-radius: 10px !important;
+  padding: 0.35rem !important;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.nav-showcase-center-visual.light-frame {
+  background: var(--bg-surface, #ffffff) !important;
+  border: 1px solid var(--border-color, #e2e8f0) !important;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08) !important;
+}
+
+.nav-showcase-center-visual img {
+  width: 100% !important;
+  max-height: 345px !important;
+  object-fit: contain !important;
+  border-radius: 6px !important;
+  display: block !important;
+  margin: 0 auto !important;
+}
+
+.nav-showcase-wing-card {
+  background: var(--bg-surface, #ffffff) !important;
+  border: 1px solid var(--border-color, #e2e8f0) !important;
+  border-radius: 8px !important;
+  padding: 0.5rem 0.65rem !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05) !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 0.3rem !important;
+}
+
+.nav-showcase-wing-card .wing-title {
+  font-size: 0.78rem !important;
+  font-weight: 700 !important;
+  color: var(--text-primary, #0f172a) !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 0.35rem !important;
+}
+
+.nav-showcase-wing-card p {
+  font-size: 0.71rem !important;
+  line-height: 1.34 !important;
+  color: var(--text-secondary, #334155) !important;
+  margin: 0 !important;
+}
+
+[data-theme='dark'] .nav-showcase-wing-card {
+  background: rgba(30, 41, 59, 0.75) !important;
+  border-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+[data-theme='dark'] .nav-showcase-wing-card .wing-title {
+  color: #f1f5f9 !important;
+}
+
+[data-theme='dark'] .nav-showcase-wing-card p {
+  color: #cbd5e1 !important;
+}
+
 @media (max-height: 780px) {
   .nav-full-image-container img {
-    max-height: 255px !important;
+    max-height: 235px !important;
+  }
+  .nav-taxonomy-triptych-layout .taxonomy-center-img img {
+    max-height: 250px !important;
+  }
+  .nav-showcase-center-visual img {
+    max-height: 245px !important;
+  }
+  .nav-showcase-wing-card {
+    padding: 0.35rem 0.5rem !important;
+    gap: 0.2rem !important;
+  }
+  .nav-showcase-wing-card .wing-title {
+    font-size: 0.72rem !important;
+  }
+  .nav-showcase-wing-card p {
+    font-size: 0.65rem !important;
+    line-height: 1.25 !important;
   }
   .nav-full-image-slide-layout {
-    gap: 0.4rem !important;
+    gap: 0.35rem !important;
+  }
+  .nav-spec-item {
+    padding: 0.2rem 0.5rem !important;
+  }
+  .nav-spec-label {
+    font-size: 0.56rem !important;
+  }
+  .nav-spec-val {
+    font-size: 0.68rem !important;
   }
   .nav-bottom-caption {
-    font-size: 0.70rem !important;
-    padding: 0.35rem 0.7rem !important;
-    line-height: 1.35 !important;
+    font-size: 0.69rem !important;
+    padding: 0.32rem 0.7rem !important;
+    line-height: 1.32 !important;
   }
 }
 
 /* Fullscreen adjustments */
 .presentation-viewport.is-fullscreen .nav-full-image-slide-layout {
-  max-width: 1240px !important;
-  gap: 0.85rem !important;
+  max-width: 1280px !important;
+  gap: 0.75rem !important;
+}
+
+.presentation-viewport.is-fullscreen .nav-showcase-triptych-layout {
+  max-width: 1420px !important;
+  gap: 1.1rem !important;
 }
 
 .presentation-viewport.is-fullscreen .nav-full-image-container {
@@ -9620,11 +9818,41 @@
 }
 
 .presentation-viewport.is-fullscreen .nav-full-image-container img {
-  max-height: 440px !important;
+  max-height: 460px !important;
+}
+
+.presentation-viewport.is-fullscreen .nav-taxonomy-triptych-layout .taxonomy-center-img img {
+  max-height: 480px !important;
+}
+
+.presentation-viewport.is-fullscreen .nav-showcase-center-visual img {
+  max-height: 470px !important;
+}
+
+.presentation-viewport.is-fullscreen .nav-showcase-wing-card {
+  padding: 0.75rem 1rem !important;
+  gap: 0.5rem !important;
+}
+
+.presentation-viewport.is-fullscreen .nav-showcase-wing-card .wing-title {
+  font-size: 0.95rem !important;
+}
+
+.presentation-viewport.is-fullscreen .nav-showcase-wing-card p {
+  font-size: 0.82rem !important;
+  line-height: 1.45 !important;
+}
+
+.presentation-viewport.is-fullscreen .nav-spec-label {
+  font-size: 0.70rem !important;
+}
+
+.presentation-viewport.is-fullscreen .nav-spec-val {
+  font-size: 0.86rem !important;
 }
 
 .presentation-viewport.is-fullscreen .nav-bottom-caption {
-  font-size: 0.90rem !important;
-  padding: 0.6rem 1.1rem !important;
+  font-size: 0.88rem !important;
+  padding: 0.55rem 1.1rem !important;
   line-height: 1.45 !important;
 }
