@@ -5308,19 +5308,168 @@ function buildLesson13Slides(doc, lesson, slides) {
     `
   });
 
-  // 5. AMCL Particle Filter Interactive Step-by-Step (Slides 130-134 Merged)
+  // 5. AMCL Step 1: Global Uniform Particle Distribution (Slide 130)
   slides.push({
-    id: `${lesson.id}_sec1_amcl_interactive`,
-    type: 'interactive',
-    interactiveKey: 'amcl',
-    portalId: 'interactive-amcl-particle-filter-root',
+    id: `${lesson.id}_sec1_amcl_step1_uniform`,
+    type: 'concept',
     lessonNum: lesson.num_str,
     lessonId: lesson.id,
     module: lesson.module,
-    sectionTitle: 'Localization: AMCL Particle Filter',
-    badge: '🎲 Interactive AMCL Engine',
-    title: 'Adaptive Monte Carlo Localization (AMCL) Particle Filter',
-    summary: 'Interactive 4-stage breakdown: uniform sampling, particle state vector [x, y, theta, w], motion prediction + LiDAR beam weighting, and importance resampling.'
+    sectionTitle: 'AMCL Step 1',
+    badge: '🎲 AMCL Step 1 / 4',
+    title: 'AMCL Step 1: Global Uniform Particle Distribution (Zero Prior Pose)',
+    htmlContent: `
+      <div class="l03-two-col-layout">
+        <div class="l03-content-col" style="display: flex; flex-direction: column; justify-content: center; gap: 0.45rem;">
+          <div class="l05-golden-card" style="padding: 0.45rem 0.7rem;">
+            <div class="l05-golden-header" style="font-size: 0.8rem;"><span>🌐</span><strong>Global Pose Uncertainty</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.32;">When the robot starts with zero prior pose knowledge, AMCL initializes particles uniformly across all reachable free space in the map.</p>
+          </div>
+          <div class="l05-golden-card" style="padding: 0.45rem 0.7rem;">
+            <div class="l05-golden-header" style="font-size: 0.8rem;"><span>🧭</span><strong>Random Heading Hypotheses</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.32;">Each particle is assigned random coordinates <code>(x, y)</code> and a random heading <code>&theta; &isin; [-&pi;, +&pi;]</code>, modeling equal initial likelihood everywhere.</p>
+          </div>
+          <div class="l05-golden-card" style="padding: 0.45rem 0.7rem;">
+            <div class="l05-golden-header" style="font-size: 0.8rem;"><span>🎲</span><strong>Monte Carlo Sampling</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.32;">Instead of tracking complex non-linear probability equations analytically, AMCL uses discrete particle samples to approximate arbitrary multimodal distributions.</p>
+          </div>
+        </div>
+        <div class="l03-content-col" style="display: flex; flex-direction: column; justify-content: center; gap: 0.45rem;">
+          <div style="background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: 10px; padding: 0.45rem; box-shadow: 0 4px 14px rgba(0,0,0,0.12); display: flex; flex-direction: column; align-items: center; justify-content: center;">
+            <img src="assets/images/amcl_step1_uniform_particles.png" alt="AMCL Step 1: Uniform Particle Distribution" style="width: 100%; max-height: 240px; object-fit: contain; border-radius: 6px; display: block; margin: 0 auto;" />
+            <div style="margin-top: 0.35rem; font-size: 0.68rem; color: var(--text-muted); text-align: center; font-family: var(--font-sans);">
+              AMCL Initial State: Red particles with orientation arrows uniformly scattered across the apartment
+            </div>
+          </div>
+          <div class="l05-banner-intro" style="margin: 0; font-size: 0.72rem; padding: 0.38rem 0.65rem; border-left: 3px solid #eab308;">
+            <strong>💡 Initial State:</strong> Every particle carries an equal initial weight: <code>w_0 = 1 / N_particles</code>.
+          </div>
+        </div>
+      </div>
+    `
+  });
+
+  // 6. AMCL Step 2: Anatomy of the Particle State Vector (Slide 131)
+  slides.push({
+    id: `${lesson.id}_sec1_amcl_step2_state_vector`,
+    type: 'concept',
+    lessonNum: lesson.num_str,
+    lessonId: lesson.id,
+    module: lesson.module,
+    sectionTitle: 'AMCL Step 2',
+    badge: '📐 AMCL Step 2 / 4',
+    title: 'AMCL Step 2: Anatomy of the Particle State Vector',
+    htmlContent: `
+      <div class="l03-two-col-layout">
+        <div class="l03-content-col" style="display: flex; flex-direction: column; justify-content: center; gap: 0.45rem;">
+          <div class="l05-golden-card" style="padding: 0.45rem 0.7rem;">
+            <div class="l05-golden-header" style="font-size: 0.8rem;"><span>📐</span><strong>Mathematical Formulation</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.32;">Each particle <code>i</code> represents a discrete hypothesis of robot pose: <code>S_t^{[i]} = &lang; x^{[i]}, y^{[i]}, &theta;^{[i]}, w^{[i]} &rang;</code>.</p>
+          </div>
+          <div class="l05-golden-card" style="padding: 0.45rem 0.7rem;">
+            <div class="l05-golden-header" style="font-size: 0.8rem;"><span>⚖️</span><strong>Importance Weight (w)</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.32;">Weight <code>w^{[i]}</code> is proportional to likelihood that the actual sensor scan matches what would be observed if robot were at that pose: <code>w^{[i]} &prop; p(z_t | x_t^{[i]}, m)</code>.</p>
+          </div>
+          <div class="l05-golden-card" style="padding: 0.45rem 0.7rem;">
+            <div class="l05-golden-header" style="font-size: 0.8rem;"><span>⚡</span><strong>Normalizing Property</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.32;">Across all particles in the filter cloud, total weight sums to unity: <code>&sum;_{i=1}^{N} w^{[i]} = 1</code>.</p>
+          </div>
+        </div>
+        <div class="l03-content-col" style="display: flex; flex-direction: column; justify-content: center; gap: 0.45rem;">
+          <div style="background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: 10px; padding: 0.45rem; box-shadow: 0 4px 14px rgba(0,0,0,0.12); display: flex; flex-direction: column; align-items: center; justify-content: center;">
+            <img src="assets/images/amcl_step2_particle_anatomy.png" alt="AMCL Step 2: Particle Anatomy" style="width: 100%; max-height: 240px; object-fit: contain; border-radius: 6px; display: block; margin: 0 auto;" />
+            <div style="margin-top: 0.35rem; font-size: 0.68rem; color: var(--text-muted); text-align: center; font-family: var(--font-sans);">
+              Particle State Vector: Hypothesized (x, y) coordinate, heading &theta;, and importance weight w
+            </div>
+          </div>
+          <div class="l05-banner-intro" style="margin: 0; font-size: 0.72rem; padding: 0.38rem 0.65rem; border-left: 3px solid #eab308;">
+            <strong>💡 Odometry Frame:</strong> Particle coordinates reside in the global <code>map</code> frame, eliminating dead-reckoning drift.
+          </div>
+        </div>
+      </div>
+    `
+  });
+
+  // 7. AMCL Step 3: Motion Prediction & Measurement Weight Filtering (Slide 132)
+  slides.push({
+    id: `${lesson.id}_sec1_amcl_step3_motion_sensor`,
+    type: 'concept',
+    lessonNum: lesson.num_str,
+    lessonId: lesson.id,
+    module: lesson.module,
+    sectionTitle: 'AMCL Step 3',
+    badge: '⚖️ AMCL Step 3 / 4',
+    title: 'AMCL Step 3: Motion Prediction & Measurement Weight Filtering',
+    htmlContent: `
+      <div class="l03-two-col-layout">
+        <div class="l03-content-col" style="display: flex; flex-direction: column; justify-content: center; gap: 0.45rem;">
+          <div class="l05-golden-card" style="padding: 0.45rem 0.7rem;">
+            <div class="l05-golden-header" style="font-size: 0.8rem;"><span>🚀</span><strong>Phase A: Motion Model Prediction</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.32;">When the robot drives forward, each particle is moved according to the odometry displacement plus calibrated Gaussian noise: <code>x_t^{[i]} ~ p(x_t | u_t, x_{t-1}^{[i]})</code>.</p>
+          </div>
+          <div class="l05-golden-card" style="padding: 0.45rem 0.7rem;">
+            <div class="l05-golden-header" style="font-size: 0.8rem;"><span>🔍</span><strong>Phase B: Sensor Model Correction</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.32;">For each particle, a simulated LiDAR scan is compared against the actual physical laser scan. Particles that match real wall contours receive high weights.</p>
+          </div>
+          <div class="l05-golden-card" style="padding: 0.45rem 0.7rem;">
+            <div class="l05-golden-header" style="font-size: 0.8rem;"><span>🗑️</span><strong>Eliminating Infeasible Poses</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.32;">Particles predicting walls inside open corridors receive weights near zero (faded/eliminated).</p>
+          </div>
+        </div>
+        <div class="l03-content-col" style="display: flex; flex-direction: column; justify-content: center; gap: 0.45rem;">
+          <div style="background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: 10px; padding: 0.45rem; box-shadow: 0 4px 14px rgba(0,0,0,0.12); display: flex; flex-direction: column; align-items: center; justify-content: center;">
+            <img src="assets/images/amcl_step3_motion_and_sensor_update.png" alt="AMCL Step 3: Motion and Sensor Update" style="width: 100%; max-height: 240px; object-fit: contain; border-radius: 6px; display: block; margin: 0 auto;" />
+            <div style="margin-top: 0.35rem; font-size: 0.68rem; color: var(--text-muted); text-align: center; font-family: var(--font-sans);">
+              Measurement Update: Particles aligned with walls turn green (high weight); mismatched particles fade away
+            </div>
+          </div>
+          <div class="l05-banner-intro" style="margin: 0; font-size: 0.72rem; padding: 0.38rem 0.65rem; border-left: 3px solid #eab308;">
+            <strong>💡 Convergence Indicator:</strong> As the robot travels through corridors, particle cloud spread shrinks rapidly!
+          </div>
+        </div>
+      </div>
+    `
+  });
+
+  // 8. AMCL Step 4: Resampling & Pose Convergence (Slide 133)
+  slides.push({
+    id: `${lesson.id}_sec1_amcl_step4_resampling`,
+    type: 'concept',
+    lessonNum: lesson.num_str,
+    lessonId: lesson.id,
+    module: lesson.module,
+    sectionTitle: 'AMCL Step 4',
+    badge: '🎯 AMCL Step 4 / 4',
+    title: 'AMCL Step 4: Resampling & Pose Convergence',
+    htmlContent: `
+      <div class="l03-two-col-layout">
+        <div class="l03-content-col" style="display: flex; flex-direction: column; justify-content: center; gap: 0.45rem;">
+          <div class="l05-golden-card" style="padding: 0.45rem 0.7rem;">
+            <div class="l05-golden-header" style="font-size: 0.8rem;"><span>🎡</span><strong>Roulette Wheel Resampling</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.32;">Particles are drawn with replacement proportional to their weights. High-weight particles multiply into identical copies; low-weight particles die off.</p>
+          </div>
+          <div class="l05-golden-card" style="padding: 0.45rem 0.7rem;">
+            <div class="l05-golden-header" style="font-size: 0.8rem;"><span>🎯</span><strong>Tight Particle Cluster</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.32;">After 2-3 motion cycles, the entire particle population collapses into a tight, dense cluster centered on true robot position.</p>
+          </div>
+          <div class="l05-golden-card" style="padding: 0.45rem 0.7rem;">
+            <div class="l05-golden-header" style="font-size: 0.8rem;"><span>📉</span><strong>KLD-Sampling Efficiency</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.32;">AMCL reduces active particle count from 2,000 down to 200 once converged, slashing CPU overhead to &lt; 5% on typical embedded ARM processors.</p>
+          </div>
+        </div>
+        <div class="l03-content-col" style="display: flex; flex-direction: column; justify-content: center; gap: 0.45rem;">
+          <div style="background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: 10px; padding: 0.45rem; box-shadow: 0 4px 14px rgba(0,0,0,0.12); display: flex; flex-direction: column; align-items: center; justify-content: center;">
+            <img src="assets/images/amcl_step4_resampling_convergence.png" alt="AMCL Step 4: Resampling and Convergence" style="width: 100%; max-height: 240px; object-fit: contain; border-radius: 6px; display: block; margin: 0 auto;" />
+            <div style="margin-top: 0.35rem; font-size: 0.68rem; color: var(--text-muted); text-align: center; font-family: var(--font-sans);">
+              Pose Convergence: Particles tightly grouped at actual robot location with orientation aligned
+            </div>
+          </div>
+          <div class="l05-banner-intro" style="margin: 0; font-size: 0.72rem; padding: 0.38rem 0.65rem; border-left: 3px solid #10b981;">
+            <strong>💡 Estimated Pose Output:</strong> The published <code>/amcl_pose</code> is the weighted spatial mean of this tight particle cluster.
+          </div>
+        </div>
+      </div>
+    `
   });
 
   // 9. Localization Challenge: Position Tracking (Slide 135)
@@ -5423,19 +5572,168 @@ function buildLesson13Slides(doc, lesson, slides) {
     description: 'Constructing an accurate 2D metric occupancy grid map of an unknown environment from laser scan observations.'
   });
 
-  // 12. Occupancy Grid Mapping Interactive (Slides 138-141 Merged)
+  // 12. Mapping Step 1: Discretizing Continuous Space into a 2D Grid Lattice (Slide 138)
   slides.push({
-    id: `${lesson.id}_sec3_mapping_interactive`,
-    type: 'interactive',
-    interactiveKey: 'occupancy',
-    portalId: 'interactive-occupancy-grid-mapping-root',
+    id: `${lesson.id}_sec3_mapping_step1_lattice`,
+    type: 'concept',
     lessonNum: lesson.num_str,
     lessonId: lesson.id,
     module: lesson.module,
-    sectionTitle: 'Mapping: Occupancy Grid Discretization',
-    badge: '🗺️ Interactive Grid Mapper',
-    title: 'Occupancy Grid Mapping & 2D Space Discretization',
-    summary: 'Interactive 4-stage breakdown: continuous world discretization, binary metric states {0, 1}, 2D occupancy matrix, and LiDAR raycasting log-odds updates.'
+    sectionTitle: 'Mapping Step 1',
+    badge: '🗺️ Mapping Step 1 / 4',
+    title: 'Mapping Step 1: Discretizing Continuous Space into a 2D Grid Lattice',
+    htmlContent: `
+      <div class="l03-two-col-layout">
+        <div class="l03-content-col" style="display: flex; flex-direction: column; justify-content: center; gap: 0.45rem;">
+          <div class="l05-golden-card" style="padding: 0.45rem 0.7rem;">
+            <div class="l05-golden-header" style="font-size: 0.8rem;"><span>🌐</span><strong>Infinite Continuous Reality</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.32;">The physical world has continuous real-valued coordinates <code>(x, y) &isin; R^2</code>. Computers cannot store infinite precision boundaries directly.</p>
+          </div>
+          <div class="l05-golden-card" style="padding: 0.45rem 0.7rem;">
+            <div class="l05-golden-header" style="font-size: 0.8rem;"><span>📐</span><strong>Lattice Grid Discretization</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.32;">We superimpose a uniform matrix of square cells over the floorplan. Each cell spans width <code>&Delta;x</code> and height <code>&Delta;y</code> (resolution).</p>
+          </div>
+          <div class="l05-golden-card" style="padding: 0.45rem 0.7rem;">
+            <div class="l05-golden-header" style="font-size: 0.8rem;"><span>⚙️</span><strong>Coordinate Discretization Math</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.32;">Continuous coordinate <code>(x, y)</code> maps to discrete cell indices via: <code>i = floor((x - origin_x) / resolution)</code>, <code>j = floor((y - origin_y) / resolution)</code>.</p>
+          </div>
+        </div>
+        <div class="l03-content-col" style="display: flex; flex-direction: column; justify-content: center; gap: 0.45rem;">
+          <div style="background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: 10px; padding: 0.45rem; box-shadow: 0 4px 14px rgba(0,0,0,0.12); display: flex; flex-direction: column; align-items: center; justify-content: center;">
+            <img src="assets/images/occupancy_grid_step1_discretization.png" alt="Mapping Step 1: Discretization" style="width: 100%; max-height: 240px; object-fit: contain; border-radius: 6px; display: block; margin: 0 auto;" />
+            <div style="margin-top: 0.35rem; font-size: 0.68rem; color: var(--text-muted); text-align: center; font-family: var(--font-sans);">
+              Spatial Discretization: Overlaying a uniform 2D grid matrix across continuous floorplan geometry
+            </div>
+          </div>
+          <div class="l05-banner-intro" style="margin: 0; font-size: 0.72rem; padding: 0.38rem 0.65rem; border-left: 3px solid #0284c7;">
+            <strong>💡 Standard AMR Resolution:</strong> Warehouse AMRs typically use <strong>0.05m (5 cm)</strong> grid resolution to resolve pallet edges.
+          </div>
+        </div>
+      </div>
+    `
+  });
+
+  // 13. Mapping Step 2: Binary States & Metric Quantization (Slide 139)
+  slides.push({
+    id: `${lesson.id}_sec3_mapping_step2_binary_states`,
+    type: 'concept',
+    lessonNum: lesson.num_str,
+    lessonId: lesson.id,
+    module: lesson.module,
+    sectionTitle: 'Mapping Step 2',
+    badge: '🗺️ Mapping Step 2 / 4',
+    title: 'Mapping Step 2: Binary States & Metric Quantization',
+    htmlContent: `
+      <div class="l03-two-col-layout">
+        <div class="l03-content-col" style="display: flex; flex-direction: column; justify-content: center; gap: 0.45rem;">
+          <div class="l05-golden-card" style="padding: 0.45rem 0.7rem;">
+            <div class="l05-golden-header" style="font-size: 0.8rem;"><span>⬜</span><strong>Free Space State (Cell = 0)</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.32;">Traversable open floor cleared by laser beams without detecting obstacles. AMRs can safely plan paths through these cells.</p>
+          </div>
+          <div class="l05-golden-card" style="padding: 0.45rem 0.7rem;">
+            <div class="l05-golden-header" style="font-size: 0.8rem;"><span>⬛</span><strong>Occupied Obstacle State (Cell = 100)</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.32;">Impassable structures (walls, pillars, racks). Laser pulses bounce back from surfaces inside these cell boundaries.</p>
+          </div>
+          <div class="l05-golden-card" style="padding: 0.45rem 0.7rem;">
+            <div class="l05-golden-header" style="font-size: 0.8rem;"><span>🔘</span><strong>Unknown State (Cell = -1)</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.32;">Unexplored areas beyond walls or shadowed by obstacles. Nav2 planners treat unknown areas as potentially lethal.</p>
+          </div>
+        </div>
+        <div class="l03-content-col" style="display: flex; flex-direction: column; justify-content: center; gap: 0.45rem;">
+          <div style="background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: 10px; padding: 0.45rem; box-shadow: 0 4px 14px rgba(0,0,0,0.12); display: flex; flex-direction: column; align-items: center; justify-content: center;">
+            <img src="assets/images/occupancy_grid_step2_binary_cells.png" alt="Mapping Step 2: Binary Cells" style="width: 100%; max-height: 240px; object-fit: contain; border-radius: 6px; display: block; margin: 0 auto;" />
+            <div style="margin-top: 0.35rem; font-size: 0.68rem; color: var(--text-muted); text-align: center; font-family: var(--font-sans);">
+              Binary Grid Classification: White = Free (0), Black = Obstacle (100), Gray = Unknown (-1)
+            </div>
+          </div>
+          <div class="l05-banner-intro" style="margin: 0; font-size: 0.72rem; padding: 0.38rem 0.65rem; border-left: 3px solid #0284c7;">
+            <strong>💡 ROS 2 Message Standard:</strong> Published on <code>/map</code> topic as <code>nav_msgs/msg/OccupancyGrid</code> with <code>int8[] data</code>.
+          </div>
+        </div>
+      </div>
+    `
+  });
+
+  // 14. Mapping Step 3: Full Warehouse Binary Matrix (Slide 140)
+  slides.push({
+    id: `${lesson.id}_sec3_mapping_step3_full_matrix`,
+    type: 'concept',
+    lessonNum: lesson.num_str,
+    lessonId: lesson.id,
+    module: lesson.module,
+    sectionTitle: 'Mapping Step 3',
+    badge: '🗺️ Mapping Step 3 / 4',
+    title: 'Mapping Step 3: The Full Warehouse Discretized Binary Matrix',
+    htmlContent: `
+      <div class="l03-two-col-layout">
+        <div class="l03-content-col" style="display: flex; flex-direction: column; justify-content: center; gap: 0.45rem;">
+          <div class="l05-golden-card" style="padding: 0.45rem 0.7rem;">
+            <div class="l05-golden-header" style="font-size: 0.8rem;"><span>🏢</span><strong>Facility-Wide Grid Matrix</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.32;">The entire warehouse floorplan is represented as a contiguous 2D binary matrix: <code>M = {m_1, m_2, ..., m_N}</code> spanning width &times; height.</p>
+          </div>
+          <div class="l05-golden-card" style="padding: 0.45rem 0.7rem;">
+            <div class="l05-golden-header" style="font-size: 0.8rem;"><span>💾</span><strong>Memory Allocation & Sizing</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.32;">A 100m &times; 100m warehouse at 5cm resolution requires <code>2,000 &times; 2,000 = 4,000,000</code> cells (~4 MB uncompressed), easily cacheable in RAM.</p>
+          </div>
+          <div class="l05-golden-card" style="padding: 0.45rem 0.7rem;">
+            <div class="l05-golden-header" style="font-size: 0.8rem;"><span>🎯</span><strong>Origin & Transformation Alignment</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.32;">The grid matrix is anchored to the global world frame via origin coordinates <code>(origin_x, origin_y, origin_theta)</code>.</p>
+          </div>
+        </div>
+        <div class="l03-content-col" style="display: flex; flex-direction: column; justify-content: center; gap: 0.45rem;">
+          <div style="background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: 10px; padding: 0.45rem; box-shadow: 0 4px 14px rgba(0,0,0,0.12); display: flex; flex-direction: column; align-items: center; justify-content: center;">
+            <img src="assets/images/occupancy_grid_step3_full_matrix.png" alt="Mapping Step 3: Full Matrix" style="width: 100%; max-height: 240px; object-fit: contain; border-radius: 6px; display: block; margin: 0 auto;" />
+            <div style="margin-top: 0.35rem; font-size: 0.68rem; color: var(--text-muted); text-align: center; font-family: var(--font-sans);">
+              Global Matrix: Full apartment floorplan mapped into discrete binary cells
+            </div>
+          </div>
+          <div class="l05-banner-intro" style="margin: 0; font-size: 0.72rem; padding: 0.38rem 0.65rem; border-left: 3px solid #10b981;">
+            <strong>💡 Serialization:</strong> When saved via <code>nav2_map_server</code>, this binary matrix is exported directly to an image (.pgm).
+          </div>
+        </div>
+      </div>
+    `
+  });
+
+  // 15. Mapping Step 4: The LiDAR Measurement Cone & Log-Odds Bayesian Updates (Slide 141)
+  slides.push({
+    id: `${lesson.id}_sec3_mapping_step4_raycast_cone`,
+    type: 'concept',
+    lessonNum: lesson.num_str,
+    lessonId: lesson.id,
+    module: lesson.module,
+    sectionTitle: 'Mapping Step 4',
+    badge: '🗺️ Mapping Step 4 / 4',
+    title: 'Mapping Step 4: The LiDAR Measurement Cone & Log-Odds Bayesian Updates',
+    htmlContent: `
+      <div class="l03-two-col-layout">
+        <div class="l03-content-col" style="display: flex; flex-direction: column; justify-content: center; gap: 0.45rem;">
+          <div class="l05-golden-card" style="padding: 0.45rem 0.7rem;">
+            <div class="l05-golden-header" style="font-size: 0.8rem;"><span>🔦</span><strong>Bresenham Raycasting</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.32;">Each LiDAR beam traverses a straight line from robot origin to range return. Cells along the ray are cleared as free space.</p>
+          </div>
+          <div class="l05-golden-card" style="padding: 0.45rem 0.7rem;">
+            <div class="l05-golden-header" style="font-size: 0.8rem;"><span>💥</span><strong>Obstacle Hit Cell</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.32;">The endpoint cell where the laser beam reflects is incremented as an occupied obstacle barrier.</p>
+          </div>
+          <div class="l05-golden-card" style="padding: 0.45rem 0.7rem;">
+            <div class="l05-golden-header" style="font-size: 0.8rem;"><span>➕</span><strong>Log-Odds Numerical Stability</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.32;">Instead of multiplying probabilities (underflow risk), occupancy uses log-odds addition: <code>l_{t,i} = l_{t-1,i} + log_odds(z_t)</code>.</p>
+          </div>
+        </div>
+        <div class="l03-content-col" style="display: flex; flex-direction: column; justify-content: center; gap: 0.45rem;">
+          <div style="background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: 10px; padding: 0.45rem; box-shadow: 0 4px 14px rgba(0,0,0,0.12); display: flex; flex-direction: column; align-items: center; justify-content: center;">
+            <img src="assets/images/occupancy_grid_step4_raycast_cone.png" alt="Mapping Step 4: Raycast Cone" style="width: 100%; max-height: 240px; object-fit: contain; border-radius: 6px; display: block; margin: 0 auto;" />
+            <div style="margin-top: 0.35rem; font-size: 0.68rem; color: var(--text-muted); text-align: center; font-family: var(--font-sans);">
+              LiDAR Raycast Cone: Sweeping laser beams updating log-odds occupancy across cells
+            </div>
+          </div>
+          <div class="l05-banner-intro" style="margin: 0; font-size: 0.72rem; padding: 0.38rem 0.65rem; border-left: 3px solid #10b981;">
+            <strong>💡 Update Logic:</strong> <code>l_free = log(0.35/0.65) = -0.62</code> | <code>l_occ = log(0.85/0.15) = +1.73</code>.
+          </div>
+        </div>
+      </div>
+    `
   });
 
   // ==============================================================
