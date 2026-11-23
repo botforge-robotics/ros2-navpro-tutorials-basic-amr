@@ -6404,54 +6404,94 @@ function buildLesson14Slides(doc, lesson, slides) {
     `
   });
 
-  // 8. Costmap 2D Layers & Inflation Gradient
+  // 9. Costmap 2D Architecture: The 3-Tier Layered Representation
   slides.push({
     id: `${lesson.id}_sec8_costmap_layers`,
     type: 'concept',
     lessonNum: lesson.num_str,
     lessonId: lesson.id,
     module: lesson.module,
-    sectionTitle: '8. Costmap 2D Architecture',
-    badge: '🗺️ Architecture & Math',
-    title: 'Costmap 2D Architecture: 3-Tier Layered Representation & Inflation',
+    sectionTitle: '8. Costmap 2D Layers',
+    badge: '🗺️ Architecture',
+    title: 'Costmap 2D Architecture: The 3-Tier Layered Representation',
     htmlContent: `
       <div class="l03-two-col-layout">
-        <div class="l03-content-col" style="display: flex; flex-direction: column; justify-content: center; gap: 0.35rem;">
-          <div class="l05-golden-card" style="padding: 0.4rem 0.6rem;">
-            <div class="l05-golden-header" style="font-size: 0.76rem;"><span>🗺️</span><strong>Layer 1: Static Layer</strong></div>
-            <p style="font-size: 0.71rem; line-height: 1.28;">Loaded from SLAM map via <code>map_server</code>. Represents permanent structural walls, fixed warehouse columns, and keep-out zones.</p>
+        <div class="l03-content-col" style="display: flex; flex-direction: column; justify-content: center; gap: 0.4rem;">
+          <div class="l05-golden-card" style="padding: 0.45rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🗺️</span><strong>Layer 1: Static Layer</strong></div>
+            <p style="font-size: 0.73rem; line-height: 1.32;">Loaded from pre-built SLAM map via <code>map_server</code>. Represents permanent structural walls, fixed warehouse columns, and keep-out zones.</p>
           </div>
-          <div class="l05-golden-card" style="padding: 0.4rem 0.6rem;">
-            <div class="l05-golden-header" style="font-size: 0.76rem;"><span>📡</span><strong>Layer 2: Obstacle / Voxel Layer</strong></div>
-            <p style="font-size: 0.71rem; line-height: 1.28;">Subscribes to live 2D LiDAR <code>/scan</code> and 3D pointclouds. Dynamically inserts pallets, pedestrians, and moving forklifts with ray-trace clearing.</p>
+          <div class="l05-golden-card" style="padding: 0.45rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>📡</span><strong>Layer 2: Obstacle / Voxel Layer</strong></div>
+            <p style="font-size: 0.73rem; line-height: 1.32;">Subscribes to live 2D LiDAR <code>/scan</code> and 3D pointclouds. Dynamically inserts pallets, pedestrians, and moving forklifts with automatic ray-tracing clearing.</p>
           </div>
-          <div class="l05-golden-card" style="padding: 0.4rem 0.6rem;">
-            <div class="l05-golden-header" style="font-size: 0.76rem;"><span>🛡️</span><strong>Layer 3: Inflation Layer</strong></div>
-            <p style="font-size: 0.71rem; line-height: 1.28;">Propagates obstacle costs outward using exponential decay curves, creating a smooth cost gradient that pushes global paths away from walls.</p>
+          <div class="l05-golden-card" style="padding: 0.45rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🛡️</span><strong>Layer 3: Inflation Layer</strong></div>
+            <p style="font-size: 0.73rem; line-height: 1.32;">Propagates obstacle costs outward using exponential decay curves, creating a smooth cost gradient that pushes global paths away from walls.</p>
           </div>
         </div>
-        <div class="l03-content-col" style="display: flex; flex-direction: column; justify-content: center; gap: 0.35rem;">
-          <div style="background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: 8px; padding: 0.45rem; box-shadow: 0 4px 14px rgba(0,0,0,0.12);">
-            <div style="font-size: 0.74rem; font-weight: bold; color: #0284c7; margin-bottom: 0.25rem;">
-              Costmap Values (0 to 255) &amp; Decay Formula
+        <div class="l03-content-col" style="display: flex; flex-direction: column; justify-content: center; gap: 0.4rem;">
+          <div style="background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: 8px; padding: 0.5rem; box-shadow: 0 4px 14px rgba(0,0,0,0.12);">
+            <div style="font-size: 0.76rem; font-weight: bold; color: #0284c7; margin-bottom: 0.35rem;">
+              Costmap Values (0 to 255)
             </div>
-            <div style="display: flex; flex-direction: column; gap: 0.25rem; font-size: 0.69rem;">
-              <div style="display: flex; justify-content: space-between; padding: 0.15rem 0.35rem; background: rgba(239, 68, 68, 0.15); border-left: 3px solid #ef4444; border-radius: 4px;">
+            <div style="display: flex; flex-direction: column; gap: 0.3rem; font-size: 0.71rem;">
+              <div style="display: flex; justify-content: space-between; padding: 0.2rem 0.4rem; background: rgba(239, 68, 68, 0.15); border-left: 3px solid #ef4444; border-radius: 4px;">
                 <strong>254 (Lethal Obstacle):</strong> Physical collision point
               </div>
-              <div style="display: flex; justify-content: space-between; padding: 0.15rem 0.35rem; background: rgba(245, 158, 11, 0.15); border-left: 3px solid #f59e0b; border-radius: 4px;">
-                <strong>253 (Inscribed Obstacle):</strong> Center within chassis radius (0.22 m)
+              <div style="display: flex; justify-content: space-between; padding: 0.2rem 0.4rem; background: rgba(245, 158, 11, 0.15); border-left: 3px solid #f59e0b; border-radius: 4px;">
+                <strong>253 (Inscribed Obstacle):</strong> Center within robot radius
               </div>
-              <div style="display: flex; justify-content: space-between; padding: 0.15rem 0.35rem; background: rgba(59, 130, 246, 0.15); border-left: 3px solid #3b82f6; border-radius: 4px;">
-                <strong>1 to 252 (Decay Gradient):</strong> Exponential safety decay buffer
+              <div style="display: flex; justify-content: space-between; padding: 0.2rem 0.4rem; background: rgba(59, 130, 246, 0.15); border-left: 3px solid #3b82f6; border-radius: 4px;">
+                <strong>1 to 252 (Decay Gradient):</strong> Exponential inflation buffer
               </div>
-              <div style="display: flex; justify-content: space-between; padding: 0.15rem 0.35rem; background: rgba(16, 185, 129, 0.15); border-left: 3px solid #10b981; border-radius: 4px;">
+              <div style="display: flex; justify-content: space-between; padding: 0.2rem 0.4rem; background: rgba(16, 185, 129, 0.15); border-left: 3px solid #10b981; border-radius: 4px;">
                 <strong>0 (Free Space):</strong> Safe, unimpeded traversal
               </div>
             </div>
-            <div style="margin-top: 0.35rem; padding: 0.35rem 0.5rem; background: rgba(15, 23, 42, 0.7); border: 1px solid rgba(59, 130, 246, 0.3); border-radius: 6px; font-size: 0.68rem; color: #cbd5e1;">
-              <strong style="color: #38bdf8;">Decay Function:</strong> <code>Cost(d) = 253 &times; exp(-&alpha; &times; (d - r<sub>inscribed</sub>))</code><br/>
-              <span style="font-size: 0.64rem; color: #94a3b8;">r<sub>inscribed</sub>=0.22 m, r<sub>circum</sub>=0.32 m, r<sub>inflation</sub>=0.55 m • Controls obstacle avoidance margins</span>
+          </div>
+        </div>
+      </div>
+    `
+  });
+
+  // 10. Inflation Layer Mathematics: Exponential Cost Decay
+  slides.push({
+    id: `${lesson.id}_sec9_inflation_math`,
+    type: 'concept',
+    lessonNum: lesson.num_str,
+    lessonId: lesson.id,
+    module: lesson.module,
+    sectionTitle: '9. Inflation Mathematics',
+    badge: '🧮 Formulation',
+    title: 'Inflation Layer Mathematics: Exponential Cost Decay & Safety Radii',
+    htmlContent: `
+      <div class="l03-two-col-layout">
+        <div class="l03-content-col" style="display: flex; flex-direction: column; justify-content: center; gap: 0.4rem;">
+          <div class="l05-golden-card" style="padding: 0.45rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>📐</span><strong>Decay Equation</strong></div>
+            <p style="font-size: 0.73rem; line-height: 1.32;">For distance <code>d</code> from obstacle: <code>Cost(d) = 253 &times; exp(-&alpha; &times; (d - r<sub>inscribed</sub>))</code>. Ensures smooth gradient descent for local trajectory generation.</p>
+          </div>
+          <div class="l05-golden-card" style="padding: 0.45rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🎯</span><strong>cost_scaling_factor (&alpha;)</strong></div>
+            <p style="font-size: 0.73rem; line-height: 1.32;">Higher &alpha; causes steeper cost dropoff (robot hugs obstacles closer in narrow aisles); lower &alpha; creates wider safety margins in open spaces.</p>
+          </div>
+        </div>
+        <div class="l03-content-col" style="display: flex; flex-direction: column; justify-content: center; gap: 0.4rem;">
+          <div style="background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: 8px; padding: 0.5rem; box-shadow: 0 4px 14px rgba(0,0,0,0.12);">
+            <div style="font-size: 0.76rem; font-weight: bold; color: #0284c7; margin-bottom: 0.35rem;">
+              Geometric Radius Hierarchy
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 0.35rem; font-size: 0.71rem;">
+              <div style="padding: 0.3rem 0.5rem; background: rgba(15, 23, 42, 0.6); border-radius: 4px;">
+                <strong>Inscribed Radius (r<sub>inscribed</sub>):</strong> Radius of largest circle completely inside chassis (0.22 m for Nexus AMR).
+              </div>
+              <div style="padding: 0.3rem 0.5rem; background: rgba(15, 23, 42, 0.6); border-radius: 4px;">
+                <strong>Circumscribed Radius (r<sub>circum</sub>):</strong> Radius of smallest circle enclosing all corners (0.32 m for Nexus AMR).
+              </div>
+              <div style="padding: 0.3rem 0.5rem; background: rgba(15, 23, 42, 0.6); border-radius: 4px;">
+                <strong>Inflation Radius (r<sub>inflation</sub>):</strong> Maximum distance (e.g. 0.55 m) up to which cost values are propagated.
+              </div>
             </div>
           </div>
         </div>
@@ -6463,7 +6503,7 @@ function buildLesson14Slides(doc, lesson, slides) {
   // PART II: DISCRETIZATION & ROADMAP METHODS
   // ==============================================================
 
-  // 9. Section Title: Part II
+  // 11. Section Title: Part II
   slides.push({
     id: `${lesson.id}_sec_title_discretization`,
     type: 'section_title',
@@ -6478,7 +6518,7 @@ function buildLesson14Slides(doc, lesson, slides) {
     description: 'Transforming continuous Configuration Space into searchable topological graphs and discrete cell lattices.'
   });
 
-  // 10. Path Planning Taxonomy: Continuous vs. Discretized Roadmaps (Slide 148 in RSE)
+  // 12. Path Planning Taxonomy: Continuous vs. Discretized Roadmaps (Slide 148 in RSE)
   slides.push({
     id: `${lesson.id}_sec10_roadmap_taxonomy`,
     type: 'concept',
@@ -6486,136 +6526,105 @@ function buildLesson14Slides(doc, lesson, slides) {
     lessonId: lesson.id,
     module: lesson.module,
     sectionTitle: '10. Path Planning Taxonomy',
-    badge: '🗺️ Discretization Framework',
-    title: 'Path Planning Discretization: The 3 Core Navigation Paradigms',
+    badge: '🗂️ Taxonomy',
+    title: 'Path Planning Taxonomy: Continuous vs. Discretized Roadmaps',
     htmlContent: `
-      <div style="display: flex; flex-direction: column; gap: 0.45rem; height: 100%;">
-        <!-- Top Core Premise Banner -->
-        <div style="background: rgba(15, 23, 42, 0.85); border: 1px solid #334155; border-left: 4px solid #d97706; border-radius: 6px; padding: 0.35rem 0.6rem; font-size: 0.72rem; line-height: 1.35; color: #cbd5e1;">
-          <strong style="color: #f59e0b;">Core Principle:</strong> Continuous space &Wscr; &sub; &reals;<sup>2</sup> contains infinite states and cannot be searched directly. 
-          Discretization transforms continuous &Cscr;<sub>free</sub> into a finite topological graph &Gscr; = (&Vscr;, &Escr;) that algorithms can traverse in milliseconds.
-        </div>
-
-        <!-- 3 Comparative Columns -->
-        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.5rem; flex: 1;">
-          <!-- Column 1: Roadmap Networks -->
-          <div style="background: var(--bg-surface); border: 1px solid #0284c7; border-radius: 8px; padding: 0.45rem 0.55rem; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 4px 12px rgba(2, 132, 199, 0.1);">
-            <div>
-              <div style="font-size: 0.77rem; font-weight: bold; color: #0284c7; margin-bottom: 0.25rem; display: flex; align-items: center; gap: 0.3rem;">
-                <span>📍</span> 1. Roadmap Networks
-              </div>
-              <div style="font-size: 0.68rem; color: #94a3b8; margin-bottom: 0.35rem; line-height: 1.25;">
-                Extracts 1D skeletal curves through free space &Cscr;<sub>free</sub>.
-              </div>
-              <div style="display: flex; flex-direction: column; gap: 0.3rem; font-size: 0.69rem; line-height: 1.3;">
-                <div style="background: rgba(2, 132, 199, 0.1); padding: 0.25rem 0.4rem; border-radius: 4px; border-left: 2px solid #0284c7;">
-                  <strong style="color: #38bdf8;">Visibility Graphs:</strong> Connects visible obstacle corners &rarr; <em>Shortest path</em>, but touches vertices (0 mm clearance).
-                </div>
-                <div style="background: rgba(2, 132, 199, 0.1); padding: 0.25rem 0.4rem; border-radius: 4px; border-left: 2px solid #0284c7;">
-                  <strong style="color: #38bdf8;">Voronoi Diagrams:</strong> Equidistant obstacle bisectors &rarr; <em>Maximized safety clearance</em>, but longer paths.
-                </div>
-              </div>
-            </div>
-            <div style="font-size: 0.65rem; color: #0284c7; font-weight: bold; margin-top: 0.3rem;">
-              Output: Waypoint graph &Gscr; = (&Vscr;, &Escr;)
-            </div>
+      <div class="l03-two-col-layout">
+        <div class="l03-content-col" style="display: flex; flex-direction: column; justify-content: center; gap: 0.4rem;">
+          <div class="l05-golden-card" style="padding: 0.45rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>📍</span><strong>RoadMap Methods</strong></div>
+            <p style="font-size: 0.73rem; line-height: 1.32;">Construct a 1D network of navigable curves in C_free: Visibility Graphs (shortest path) and Voronoi Diagrams (maximum obstacle clearance).</p>
           </div>
-
-          <!-- Column 2: Cell Decomposition -->
-          <div style="background: var(--bg-surface); border: 1px solid #10b981; border-radius: 8px; padding: 0.45rem 0.55rem; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 4px 12px rgba(16, 185, 129, 0.1);">
-            <div>
-              <div style="font-size: 0.77rem; font-weight: bold; color: #10b981; margin-bottom: 0.25rem; display: flex; align-items: center; gap: 0.3rem;">
-                <span>🧩</span> 2. Cell Decomposition
-              </div>
-              <div style="font-size: 0.68rem; color: #94a3b8; margin-bottom: 0.35rem; line-height: 1.25;">
-                Partitions &Cscr;<sub>free</sub> into contiguous 2D convex regions.
-              </div>
-              <div style="display: flex; flex-direction: column; gap: 0.3rem; font-size: 0.69rem; line-height: 1.3;">
-                <div style="background: rgba(16, 185, 129, 0.1); padding: 0.25rem 0.4rem; border-radius: 4px; border-left: 2px solid #10b981;">
-                  <strong style="color: #34d399;">Exact Slicing:</strong> Vertical trapezoidal decomposition &rarr; Exact polygonal coverage, zero resolution loss.
-                </div>
-                <div style="background: rgba(16, 185, 129, 0.1); padding: 0.25rem 0.4rem; border-radius: 4px; border-left: 2px solid #10b981;">
-                  <strong style="color: #34d399;">Approximate (Quadtree):</strong> Recursive square subdivision (Empty / Full / Mixed) &rarr; Foundation of <strong>Costmap 2D</strong>!
-                </div>
-              </div>
-            </div>
-            <div style="font-size: 0.65rem; color: #10b981; font-weight: bold; margin-top: 0.3rem;">
-              Output: Region adjacency dual graph
-            </div>
+          <div class="l05-golden-card" style="padding: 0.45rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🧩</span><strong>Cell Decomposition</strong></div>
+            <p style="font-size: 0.73rem; line-height: 1.32;">Partition C_free into contiguous non-overlapping regions: Exact Cell Decomposition (trapezoidal slicing) and Approximate Cell Decomposition (quadtrees).</p>
           </div>
-
-          <!-- Column 3: Graph Search Algorithms -->
-          <div style="background: var(--bg-surface); border: 1px solid #8b5cf6; border-radius: 8px; padding: 0.45rem 0.55rem; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 4px 12px rgba(139, 92, 246, 0.1);">
-            <div>
-              <div style="font-size: 0.77rem; font-weight: bold; color: #8b5cf6; margin-bottom: 0.25rem; display: flex; align-items: center; gap: 0.3rem;">
-                <span>🔍</span> 3. Graph Search Engines
-              </div>
-              <div style="font-size: 0.68rem; color: #94a3b8; margin-bottom: 0.35rem; line-height: 1.25;">
-                Traverses graph &Gscr; to compute the shortest feasible path.
-              </div>
-              <div style="display: flex; flex-direction: column; gap: 0.3rem; font-size: 0.69rem; line-height: 1.3;">
-                <div style="background: rgba(139, 92, 246, 0.1); padding: 0.25rem 0.4rem; border-radius: 4px; border-left: 2px solid #8b5cf6;">
-                  <strong style="color: #a78bfa;">Dijkstra:</strong> Uniform cost exploration f(n) = g(n) in all directions. Mathematically optimal, but expands many states.
-                </div>
-                <div style="background: rgba(139, 92, 246, 0.1); padding: 0.25rem 0.4rem; border-radius: 4px; border-left: 2px solid #8b5cf6;">
-                  <strong style="color: #a78bfa;">A* Search:</strong> Uses admissible heuristic h(n) (f = g + h) to guide search greedily toward Goal. Fast &amp; optimal.
-                </div>
-              </div>
-            </div>
-            <div style="font-size: 0.65rem; color: #8b5cf6; font-weight: bold; margin-top: 0.3rem;">
-              Output: Ordered waypoint path P = {p0..pN}
-            </div>
+          <div class="l05-golden-card" style="padding: 0.45rem 0.65rem;">
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>🔍</span><strong>Graph Search Algorithms</strong></div>
+            <p style="font-size: 0.73rem; line-height: 1.32;">Once roadmaps or cells are formed, optimal pathfinding engines (A*, Dijkstra) evaluate node heuristics to produce the final trajectory.</p>
           </div>
         </div>
-
-        <!-- Bottom Nav2 Connection Banner -->
-        <div style="background: rgba(2, 6, 23, 0.8); border: 1px solid #1e293b; border-radius: 6px; padding: 0.3rem 0.6rem; font-size: 0.69rem; color: #94a3b8; display: flex; align-items: center; justify-content: space-between;">
-          <span><strong>🚀 Nav2 Production Choice:</strong> Nav2 combines <strong>Costmap 2D Grid Cells</strong> with <strong>A* Search</strong> (in <code>NavfnPlanner</code> / <code>SmacPlanner2D</code>) for sub-10ms path generation.</span>
-          <span style="color: #38bdf8; font-weight: bold; white-space: nowrap;">Grid + A* = Industry Standard</span>
+        <div class="l03-content-col" style="display: flex; flex-direction: column; justify-content: center; gap: 0.45rem;">
+          <div style="background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: 10px; padding: 0.45rem; box-shadow: 0 4px 14px rgba(0,0,0,0.12); text-align: center;">
+            <img src="assets/images/nav_roadmap_taxonomy.png" alt="Path Planning Roadmap Taxonomy" style="width: 100%; max-height: 235px; object-fit: contain; border-radius: 6px; display: block; margin: 0 auto;" />
+            <div style="margin-top: 0.35rem; font-size: 0.68rem; color: var(--text-muted); font-family: var(--font-sans);">
+              Algorithmic taxonomy from RSE.pptx: Roadmap vs. Cell Decomposition vs. A* Search
+            </div>
+          </div>
+          <div class="l05-banner-intro" style="margin-top: 0; padding: 0.4rem 0.65rem; border-left: 3px solid #6366f1; font-size: 0.72rem; line-height: 1.35;">
+            💡 <strong>Roadmap Core:</strong> Discretize continuous &#x2133;<sub>free</sub> into a finite graph G=(V, E) searchable by algorithms.
+          </div>
         </div>
       </div>
     `
   });
 
-  // 11. Visibility Graph: Infographic Explanation (Consolidated Single Picture Slide)
+  // 13. Visibility Graph Step 1: Interconnecting Visible Obstacle Vertices
   slides.push({
-    id: `${lesson.id}_sec11_visibility_graph`,
+    id: `${lesson.id}_sec11_visibility_step1`,
     type: 'concept',
     lessonNum: lesson.num_str,
     lessonId: lesson.id,
     module: lesson.module,
-    sectionTitle: '11. Visibility Graph Architecture',
-    badge: '📐 Complete Infographic',
-    title: 'Visibility Graph: Construction, Shortest Path & Corner-Grazing Tradeoff',
+    sectionTitle: '11. Visibility Graph Step 1',
+    badge: '👁️ Visibility Graph',
+    title: 'Visibility Graph: Interconnecting Visible Obstacle Vertices',
     htmlContent: `
-      <div class="l03-two-col-layout" style="display: grid; grid-template-columns: 0.72fr 1.28fr; gap: 0.6rem; height: 100%; align-items: stretch;">
-        <!-- Left Column: Pedagogical Walkthrough -->
-        <div class="l03-content-col" style="display: flex; flex-direction: column; justify-content: space-between; gap: 0.35rem;">
-          <div class="l05-golden-card" style="padding: 0.4rem 0.6rem;">
-            <div class="l05-golden-header" style="font-size: 0.76rem;"><span>1️⃣</span><strong>Step 1: Line-of-Sight Network</strong></div>
-            <p style="font-size: 0.71rem; line-height: 1.3;">Connects Start (S), Goal (G), and all obstacle polygon vertices (v<sub>1</sub>..v<sub>12</sub>) with line segments that do not intersect obstacles. Forms edge network &Escr; &sub; &Oscr;(N<sup>2</sup>).</p>
+      <div class="l03-two-col-layout">
+        <div class="l03-content-col" style="display: flex; flex-direction: column; justify-content: center; gap: 0.45rem;">
+          <div class="l05-golden-card" style="padding: 0.45rem 0.7rem;">
+            <div class="l05-golden-header" style="font-size: 0.8rem;"><span>👁️</span><strong>Line-of-Sight Interconnection</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.35;">The Visibility Graph connects the Start node, all polygon obstacle vertices, and the Goal node to each other wherever a direct straight line segment does not intersect obstacles.</p>
           </div>
-          <div class="l05-golden-card" style="padding: 0.4rem 0.6rem;">
-            <div class="l05-golden-header" style="font-size: 0.76rem;"><span>2️⃣</span><strong>Step 2: Shortest Euclidean Path</strong></div>
-            <p style="font-size: 0.71rem; line-height: 1.3;">A* search on &Gscr; guarantees finding the <strong>globally shortest possible Euclidean path</strong> (S &rarr; v<sub>4</sub> &rarr; v<sub>6</sub> &rarr; v<sub>12</sub> &rarr; G). Path length = 14.8 m.</p>
-          </div>
-          <div class="l05-golden-card" style="padding: 0.4rem 0.6rem; border-color: rgba(239, 68, 68, 0.4); background: rgba(239, 68, 68, 0.06);">
-            <div class="l05-golden-header" style="font-size: 0.76rem; color: #f87171;"><span>⚠️</span><strong>The Corner-Grazing Tradeoff</strong></div>
-            <p style="font-size: 0.71rem; line-height: 1.3; color: #fecaca;">Paths touch polygon vertices directly (clearance d = 0 mm!). Physical robots with non-zero radius R will clip corners. Requires &Cscr;-Space obstacle inflation before building graph.</p>
+          <div class="l05-golden-card" style="padding: 0.45rem 0.7rem;">
+            <div class="l05-golden-header" style="font-size: 0.8rem;"><span>🕸️</span><strong>Roadmap Graph Structure</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.35;">Because every vertex is connected to all 'visible' peers, searching this graph guarantees finding the globally shortest Euclidean distance path.</p>
           </div>
         </div>
-
-        <!-- Right Column: High-Resolution Generated Infographic Picture -->
-        <div class="l03-content-col" style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
-          <div style="background: #070d1c; border: 1px solid #1e293b; border-radius: 10px; padding: 0.3rem; box-shadow: 0 8px 24px rgba(0,0,0,0.4); width: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center;">
-            <img 
-              src="assets/images/nav_visibility_graph_infographic.png" 
-              alt="Visibility Graph Construction & Shortest Path Infographic" 
-              style="width: 100%; max-height: 380px; object-fit: contain; border-radius: 6px; display: block;" 
-            />
+        <div class="l03-content-col" style="display: flex; flex-direction: column; justify-content: center; gap: 0.45rem;">
+          <div style="background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: 10px; padding: 0.45rem; box-shadow: 0 4px 14px rgba(0,0,0,0.12); display: flex; flex-direction: column; align-items: center; justify-content: center;">
+            <img src="assets/images/nav_visibility_graph_step1.png" alt="Visibility Graph Interconnection" style="width: 100%; max-height: 235px; object-fit: contain; border-radius: 6px; display: block; margin: 0 auto;" />
+            <div style="margin-top: 0.35rem; font-size: 0.68rem; color: var(--text-muted); font-family: var(--font-sans);">
+              Connecting all obstacle vertices visible from each other in C_free
+            </div>
+          <div class="l05-banner-intro" style="margin: 0; font-size: 0.71rem; padding: 0.35rem 0.6rem; border-left: 3px solid #0284c7;">
+            <strong>💡 Graph Construction:</strong> Nodes = {Start, Goal, Vertices}; Edges = Line-of-Sight segments.
           </div>
-          <div style="margin-top: 0.25rem; font-size: 0.66rem; color: var(--text-muted); text-align: center;">
-            Complete Discretization Pipeline: Obstacle Vertices &rarr; Line-of-Sight Network &rarr; Globally Optimal Shortest Path
+        </div>
+      </div>
+    `
+  });
+
+  // 14. Visibility Graph Step 2: Shortest Path Search
+  slides.push({
+    id: `${lesson.id}_sec12_visibility_step2`,
+    type: 'concept',
+    lessonNum: lesson.num_str,
+    lessonId: lesson.id,
+    module: lesson.module,
+    sectionTitle: '12. Visibility Graph Step 2',
+    badge: '⚡ Shortest Path',
+    title: 'Visibility Graph: Shortest Euclidean Path & Corner Grazing',
+    htmlContent: `
+      <div class="l03-two-col-layout">
+        <div class="l03-content-col" style="display: flex; flex-direction: column; justify-content: center; gap: 0.45rem;">
+          <div class="l05-golden-card" style="padding: 0.45rem 0.7rem;">
+            <div class="l05-golden-header" style="font-size: 0.8rem;"><span>📏</span><strong>Optimal Euclidean Distance</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.35;">Running graph search on the visibility network computes the shortest possible trajectory from Start to Goal across 2D polygonal space.</p>
+          </div>
+          <div class="l05-golden-card" style="padding: 0.45rem 0.7rem;">
+            <div class="l05-golden-header" style="font-size: 0.8rem;"><span>⚠️</span><strong>The Corner-Grazing Tradeoff</strong></div>
+            <p style="font-size: 0.74rem; line-height: 1.35;">Because paths pass directly through obstacle vertices, clearance is minimal (0 mm without inflation). Industrial AMRs require obstacle inflation to prevent chassis clipping.</p>
+          </div>
+        </div>
+        <div class="l03-content-col" style="display: flex; flex-direction: column; justify-content: center; gap: 0.45rem;">
+          <div style="background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: 10px; padding: 0.45rem; box-shadow: 0 4px 14px rgba(0,0,0,0.12); display: flex; flex-direction: column; align-items: center; justify-content: center;">
+            <img src="assets/images/nav_visibility_graph_step2.png" alt="Visibility Graph Shortest Path" style="width: 100%; max-height: 235px; object-fit: contain; border-radius: 6px; display: block; margin: 0 auto;" />
+            <div style="margin-top: 0.35rem; font-size: 0.68rem; color: #10b981; font-family: var(--font-sans); font-weight: bold;">
+              Optimal shortest path computed through the visibility roadmap
+            </div>
+          <div class="l05-banner-intro" style="margin: 0; font-size: 0.71rem; padding: 0.35rem 0.6rem; border-left: 3px solid #eab308;">
+            <strong>⚠️ Corner Grazing Risk:</strong> Shortest paths touch obstacle vertices directly, requiring safety padding in practice.
           </div>
         </div>
       </div>
