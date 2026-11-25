@@ -5229,30 +5229,38 @@ function buildLesson13Slides(doc, lesson, slides) {
     badge: '🤖 Localization Paradigms',
     title: 'Different Types of Localization Algorithms',
     htmlContent: `
-      <div class="l03-two-col-layout">
-        <div class="l03-content-col" style="display: flex; flex-direction: column; justify-content: center; gap: 0.45rem;">
-          <div class="l05-golden-card" style="padding: 0.45rem 0.7rem;">
-            <div class="l05-golden-header" style="font-size: 0.8rem;"><span>1️⃣</span><strong>Extended Kalman Filter (EKF Localization)</strong></div>
-            <p style="font-size: 0.74rem; line-height: 1.32;">Tracks the robot as a single bell curve of position and uncertainty. Very fast, but fails if the robot is confused between multiple identical warehouse aisles.</p>
-          </div>
-          <div class="l05-golden-card" style="padding: 0.45rem 0.7rem;">
-            <div class="l05-golden-header" style="font-size: 0.8rem;"><span>2️⃣</span><strong>Markov Localization</strong></div>
-            <p style="font-size: 0.74rem; line-height: 1.32;">Divides the room into a 3D grid of positions and orientations (X, Y, Heading). Calculates probability scores across all grid cells to find the robot anywhere on the map.</p>
+      <div class="l13-clean-vertical-list">
+        <div class="l13-clean-list-item">
+          <span class="l13-clean-list-badge">1️⃣</span>
+          <div class="l13-clean-list-content">
+            <div class="l13-clean-list-title">Extended Kalman Filter (The Single-Guess Tracker)</div>
+            <div class="l13-clean-list-desc">Keeps track of just <em>one</em> best guess. It is super fast and lightweight on CPU, but if two hallways look identical, it gets tricked and cannot recover.</div>
           </div>
         </div>
-        <div class="l03-content-col" style="display: flex; flex-direction: column; justify-content: center; gap: 0.45rem;">
-          <div class="l05-golden-card" style="padding: 0.45rem 0.7rem;">
-            <div class="l05-golden-header" style="font-size: 0.8rem;"><span>3️⃣</span><strong>Grid Localization</strong></div>
-            <p style="font-size: 0.74rem; line-height: 1.32;">Stores probabilities inside fixed floor tiles. High detail requires huge amounts of computer memory; low detail causes positioning inaccuracies.</p>
-          </div>
-          <div class="l05-golden-card" style="padding: 0.45rem 0.7rem; border-left: 3px solid #10b981;">
-            <div class="l05-golden-header" style="font-size: 0.8rem; color: #10b981;"><span>4️⃣</span><strong>Monte Carlo Localization (MCL / Particle Filter)</strong></div>
-            <p style="font-size: 0.74rem; line-height: 1.32;">Tracks the robot using hundreds of floating guesses called "particles." <strong>AMCL</strong> automatically spawns more particles when lost and shrinks the count when locked on to save CPU.</p>
+
+        <div class="l13-clean-list-item">
+          <span class="l13-clean-list-badge">2️⃣</span>
+          <div class="l13-clean-list-content">
+            <div class="l13-clean-list-title">Grid Localization (The Giant Chessboard)</div>
+            <div class="l13-clean-list-desc">Chops the warehouse floor into tiny square tiles like a giant chessboard and tests every tile. Super thorough, but eats huge computer memory and runs slower.</div>
           </div>
         </div>
-      </div>
-      <div class="l05-banner-intro" style="margin-top: 0.45rem; font-size: 0.72rem; padding: 0.35rem 0.65rem; border-left: 3px solid #10b981;">
-        <strong>🏆 Industry Standard:</strong> ROS 2 Nav2 standardizes on <strong>AMCL</strong> (Adaptive Monte Carlo Localization) for robust 2D LiDAR warehouse localization.
+
+        <div class="l13-clean-list-item">
+          <span class="l13-clean-list-badge">3️⃣</span>
+          <div class="l13-clean-list-content">
+            <div class="l13-clean-list-title">Markov Localization (The Thorough Detective)</div>
+            <div class="l13-clean-list-desc">Checks every possible position and facing angle across the building. It can find a lost robot from scratch, but it is too slow to drive with in real-time.</div>
+          </div>
+        </div>
+
+        <div class="l13-clean-list-item">
+          <span class="l13-clean-list-badge">4️⃣</span>
+          <div class="l13-clean-list-content">
+            <div class="l13-clean-list-title" style="color: #10b981;">Monte Carlo / AMCL (The Swarm of Smart Clones) — 🏆 Nav2 Standard</div>
+            <div class="l13-clean-list-desc">Scatters hundreds of tiny virtual robot guesses ("particles") across the map. Good guesses that match real laser scans survive and cluster together; bad guesses vanish. Fast, smart, and the universal standard in ROS 2!</div>
+          </div>
+        </div>
       </div>
     `
   });
@@ -5272,18 +5280,18 @@ function buildLesson13Slides(doc, lesson, slides) {
         <div class="nav-full-image-container">
           <img src="assets/images/amcl_measurement_representation.png" alt="AMCL Measurement Representation" />
         </div>
-        <div class="nav-points-banner" style="border-left: 4px solid #0284c7;">
+        <div class="nav-points-list-clean">
           <div class="nav-point-bullet">
-            <span class="nav-point-icon">📡</span>
-            <span><strong>Virtual Raycasting:</strong> For each test particle, AMCL simulates what a laser would see from that spot by casting virtual rays through the map until hitting a wall.</span>
+            <span class="nav-point-icon">🔦</span>
+            <span><strong>Virtual Laser Flashlight (Raycasting):</strong> For every test guess on the map, the computer shines a fake laser beam until it hits a wall to see what the robot <em>should</em> see from there.</span>
           </div>
           <div class="nav-point-bullet">
-            <span class="nav-point-icon">⚖️</span>
-            <span><strong>Confidence Scoring:</strong> Compares the real LiDAR scan against the simulated scan; particles whose virtual beams line up closely with physical walls receive higher confidence scores.</span>
+            <span class="nav-point-icon">🎯</span>
+            <span><strong>Real Scan vs. Map Guess (Matching):</strong> The robot compares its real LiDAR scan with the fake scan. If real walls line up with the guess, that guess gets high confidence points!</span>
           </div>
           <div class="nav-point-bullet">
             <span class="nav-point-icon">🛡️</span>
-            <span><strong>Sensor Noise Robustness:</strong> Measurement model accounts for laser beam noise, moving people, dark surface reflections, and temporary sensor dropouts.</span>
+            <span><strong>Ignoring Everyday Chaos (Noise Protection):</strong> People walk by and dark boxes absorb laser beams. The robot stays calm and doesn't get tricked by a few weird beams.</span>
           </div>
         </div>
       </div>

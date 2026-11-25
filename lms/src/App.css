@@ -9583,7 +9583,7 @@
 .nav-full-image-container img {
   width: auto !important;
   max-width: 100% !important;
-  max-height: 510px !important;
+  max-height: 410px !important;
   object-fit: contain !important;
   border-radius: 10px !important;
   border: 1px solid var(--border-color, #cbd5e1) !important;
@@ -9661,12 +9661,12 @@
   line-height: 1 !important;
 }
 
-@media (max-height: 780px) {
+@media (max-height: 820px) {
   .presentation-viewport:not(.is-fullscreen) .concept-html-body:has(.nav-full-image-slide-layout) {
     max-height: calc(100vh - 250px) !important;
   }
   .nav-full-image-container img {
-    max-height: 350px !important;
+    max-height: 340px !important;
   }
   .nav-full-image-slide-layout {
     gap: 0.35rem !important;
@@ -9701,7 +9701,7 @@
 }
 
 .presentation-viewport.is-fullscreen .nav-full-image-container img {
-  max-height: 650px !important;
+  max-height: min(650px, calc(100vh - 340px)) !important;
 }
 
 .presentation-viewport.is-fullscreen .nav-bottom-caption {
@@ -9762,3 +9762,138 @@
     max-height: calc(100vh - 230px) !important;
   }
 }
+
+/* ==============================================================
+   Frameless Vertical Lists (No Boundary Boxes / Clean Presentation)
+   ============================================================== */
+.l13-clean-vertical-list {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 0.65rem !important;
+  width: 100% !important;
+  max-width: 980px !important;
+  margin: 0.2rem auto 0 auto !important;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+}
+
+.l13-clean-list-item {
+  display: flex !important;
+  align-items: flex-start !important;
+  gap: 0.75rem !important;
+  padding-bottom: 0.55rem !important;
+  border-bottom: 1px solid var(--border-color, #e2e8f0) !important;
+  background: transparent !important;
+  border-top: none !important;
+  border-left: none !important;
+  border-right: none !important;
+  box-shadow: none !important;
+}
+
+.l13-clean-list-item:last-child {
+  border-bottom: none !important;
+  padding-bottom: 0 !important;
+}
+
+.l13-clean-list-badge {
+  font-size: 1.15rem !important;
+  line-height: 1.2 !important;
+  flex-shrink: 0 !important;
+}
+
+.l13-clean-list-content {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 0.15rem !important;
+}
+
+.l13-clean-list-title {
+  font-size: 0.88rem !important;
+  font-weight: 700 !important;
+  color: var(--text-primary, #0f172a) !important;
+  line-height: 1.25 !important;
+}
+
+.l13-clean-list-desc {
+  font-size: 0.78rem !important;
+  line-height: 1.38 !important;
+  color: var(--text-secondary, #475569) !important;
+}
+
+[data-theme='dark'] .l13-clean-list-desc {
+  color: #cbd5e1 !important;
+}
+
+[data-theme='dark'] .l13-clean-list-item {
+  border-bottom-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+.presentation-viewport.is-fullscreen .l13-clean-vertical-list {
+  gap: 1.2rem !important;
+  max-width: 1250px !important;
+  margin-top: 0.8rem !important;
+}
+
+.presentation-viewport.is-fullscreen .l13-clean-list-item {
+  gap: 1.1rem !important;
+  padding-bottom: 1rem !important;
+}
+
+.presentation-viewport.is-fullscreen .l13-clean-list-badge {
+  font-size: 1.6rem !important;
+}
+
+.presentation-viewport.is-fullscreen .l13-clean-list-title {
+  font-size: 1.15rem !important;
+}
+
+.presentation-viewport.is-fullscreen .l13-clean-list-desc {
+  font-size: 0.98rem !important;
+  line-height: 1.55 !important;
+}
+
+/* Frameless points list below image (zero boundary boxes) */
+.nav-points-list-clean {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 0.28rem !important;
+  width: 100% !important;
+  max-width: 1050px !important;
+  margin: 0.25rem auto 0 auto !important;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  box-sizing: border-box !important;
+}
+
+.nav-points-list-clean .nav-point-bullet {
+  display: flex !important;
+  align-items: baseline !important;
+  gap: 0.55rem !important;
+  font-size: 0.76rem !important;
+  line-height: 1.35 !important;
+  color: var(--text-secondary, #334155) !important;
+}
+
+[data-theme='dark'] .nav-points-list-clean .nav-point-bullet {
+  color: #cbd5e1 !important;
+}
+
+.presentation-viewport.is-fullscreen .nav-points-list-clean {
+  gap: 0.55rem !important;
+  max-width: 1250px !important;
+  margin-top: 0.6rem !important;
+}
+
+.presentation-viewport.is-fullscreen .nav-points-list-clean .nav-point-bullet {
+  font-size: 0.92rem !important;
+  line-height: 1.5 !important;
+}
+
+.presentation-viewport.is-fullscreen .nav-points-list-clean .nav-point-icon {
+  font-size: 1rem !important;
+}
+
