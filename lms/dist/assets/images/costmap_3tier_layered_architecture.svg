@@ -1,0 +1,269 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 640" width="100%" height="100%">
+  <defs>
+    <!-- Gradients -->
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#1e293b"/>
+    </linearGradient>
+
+    <linearGradient id="staticGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1e3a8a" stop-opacity="0.35"/>
+      <stop offset="100%" stop-color="#3b82f6" stop-opacity="0.15"/>
+    </linearGradient>
+
+    <linearGradient id="obstacleGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#78350f" stop-opacity="0.4"/>
+      <stop offset="100%" stop-color="#f59e0b" stop-opacity="0.15"/>
+    </linearGradient>
+
+    <linearGradient id="inflationGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#881337" stop-opacity="0.4"/>
+      <stop offset="100%" stop-color="#f43f5e" stop-opacity="0.15"/>
+    </linearGradient>
+
+    <linearGradient id="masterGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#064e3b" stop-opacity="0.5"/>
+      <stop offset="100%" stop-color="#10b981" stop-opacity="0.2"/>
+    </linearGradient>
+
+    <radialGradient id="haloGrad" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#ef4444" stop-opacity="0.9"/>
+      <stop offset="45%" stop-color="#f97316" stop-opacity="0.6"/>
+      <stop offset="80%" stop-color="#eab308" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#3b82f6" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Filters -->
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="6" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+
+    <filter id="cardShadow" x="-5%" y="-5%" width="110%" height="115%">
+      <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#000000" flood-opacity="0.35"/>
+    </filter>
+  </defs>
+
+  <!-- Background Base Canvas -->
+  <rect width="1200" height="640" rx="16" fill="url(#bgGrad)" stroke="#334155" stroke-width="1.5"/>
+
+  <!-- Subtle Blueprint Grid Pattern -->
+  <g opacity="0.15">
+    <path d="M 0 80 L 1200 80 M 0 160 L 1200 160 M 0 240 L 1200 240 M 0 320 L 1200 320 M 0 400 L 1200 400 M 0 480 L 1200 480 M 0 560 L 1200 560" stroke="#94a3b8" stroke-width="0.8" stroke-dasharray="4,4"/>
+    <path d="M 150 0 L 150 640 M 300 0 L 300 640 M 450 0 L 450 640 M 600 0 L 600 640 M 750 0 L 750 640 M 900 0 L 900 640 M 1050 0 L 1050 640" stroke="#94a3b8" stroke-width="0.8" stroke-dasharray="4,4"/>
+  </g>
+
+  <!-- Header Banner -->
+  <g transform="translate(60, 42)">
+    <rect x="0" y="0" width="1080" height="42" rx="8" fill="#1e293b" stroke="#3b82f6" stroke-opacity="0.4" stroke-width="1.2"/>
+    <circle cx="24" cy="21" r="7" fill="#3b82f6"/>
+    <text x="42" y="26" font-family="system-ui, -apple-system, sans-serif" font-size="14.5" font-weight="800" fill="#f8fafc" letter-spacing="0.5">
+      NAV2 COSTMAP 2D: 3-TIER LAYERED ARCHITECTURE &amp; DATA PIPELINE
+    </text>
+    <rect x="915" y="10" width="145" height="22" rx="11" fill="rgba(59, 130, 246, 0.2)" stroke="#3b82f6" stroke-width="1"/>
+    <text x="987" y="25" font-family="monospace" font-size="10.5" font-weight="700" fill="#60a5fa" text-anchor="middle">NAV2 STACK ENGINE</text>
+  </g>
+
+  <!-- Left: 3 Stacked Layers (Isometric / Tiered Presentation) -->
+  
+  <!-- TIER 3: INFLATION LAYER -->
+  <g transform="translate(60, 110)" filter="url(#cardShadow)">
+    <rect width="520" height="135" rx="10" fill="url(#inflationGrad)" stroke="#f43f5e" stroke-width="1.5"/>
+    <rect x="14" y="14" width="28" height="28" rx="6" fill="#f43f5e"/>
+    <text x="28" y="33" font-size="15" text-anchor="middle">🛡️</text>
+    <text x="52" y="27" font-family="system-ui, sans-serif" font-size="13.5" font-weight="800" fill="#fda4af">LAYER 3: INFLATION LAYER</text>
+    <text x="52" y="42" font-family="monospace" font-size="9.5" fill="#f43f5e" font-weight="600">Exponential Safety Decay Buffer &bull; Stand-off Margin</text>
+
+    <!-- Visual Representation of Safety Halos -->
+    <g transform="translate(370, 68)">
+      <!-- Halo 1 -->
+      <circle cx="0" cy="0" r="38" fill="url(#haloGrad)"/>
+      <circle cx="0" cy="0" r="22" fill="#f97316" fill-opacity="0.4" stroke="#f97316" stroke-width="1.2"/>
+      <circle cx="0" cy="0" r="10" fill="#ef4444" stroke="#b91c1c" stroke-width="1.5"/>
+      <!-- Halo 2 -->
+      <circle cx="85" cy="0" r="32" fill="url(#haloGrad)"/>
+      <circle cx="85" cy="0" r="18" fill="#f97316" fill-opacity="0.4" stroke="#f97316" stroke-width="1.2"/>
+      <circle cx="85" cy="0" r="8" fill="#ef4444" stroke="#b91c1c" stroke-width="1.5"/>
+    </g>
+
+    <text x="20" y="78" font-family="system-ui, sans-serif" font-size="11" font-weight="600" fill="#fecdd3">
+      • Radiates repulsive cost gradients around all obstacles
+    </text>
+    <text x="20" y="98" font-family="system-ui, sans-serif" font-size="11" font-weight="600" fill="#fecdd3">
+      • Keeps robot chassis at a safe stand-off distance
+    </text>
+    <text x="20" y="118" font-family="system-ui, sans-serif" font-size="11" font-weight="600" fill="#fda4af">
+      • Prevents wheels and chassis corners from grazing walls
+    </text>
+  </g>
+
+  <!-- Connective Arrow 1 -->
+  <g transform="translate(320, 248)">
+    <line x1="0" y1="0" x2="0" y2="18" stroke="#f43f5e" stroke-width="2.5" stroke-dasharray="3,3"/>
+    <polygon points="-5,14 5,14 0,22" fill="#f43f5e"/>
+  </g>
+
+  <!-- TIER 2: OBSTACLE LAYER -->
+  <g transform="translate(60, 275)" filter="url(#cardShadow)">
+    <rect width="520" height="135" rx="10" fill="url(#obstacleGrad)" stroke="#f59e0b" stroke-width="1.5"/>
+    <rect x="14" y="14" width="28" height="28" rx="6" fill="#f59e0b"/>
+    <text x="28" y="33" font-size="15" text-anchor="middle">📡</text>
+    <text x="52" y="27" font-family="system-ui, sans-serif" font-size="13.5" font-weight="800" fill="#fde047">LAYER 2: OBSTACLE / VOXEL LAYER</text>
+    <text x="52" y="42" font-family="monospace" font-size="9.5" fill="#f59e0b" font-weight="600">Live 2D LiDAR (/scan) &bull; 3D Depth PointClouds</text>
+
+    <!-- Visual Representation of Live Laser Rays -->
+    <g transform="translate(385, 70)">
+      <!-- LiDAR Origin -->
+      <circle cx="-30" cy="0" r="6" fill="#0284c7" stroke="#38bdf8" stroke-width="1.5"/>
+      <!-- Beams -->
+      <line x1="-30" y1="0" x2="45" y2="-28" stroke="#eab308" stroke-width="1" stroke-dasharray="3,2" opacity="0.8"/>
+      <line x1="-30" y1="0" x2="70" y2="0" stroke="#ef4444" stroke-width="1.5"/>
+      <line x1="-30" y1="0" x2="50" y2="28" stroke="#eab308" stroke-width="1" stroke-dasharray="3,2" opacity="0.8"/>
+      <!-- Hit Obstacle -->
+      <rect x="70" y="-12" width="24" height="24" rx="3" fill="#ef4444" stroke="#b91c1c" stroke-width="1.5"/>
+      <text x="82" y="4" font-size="11" text-anchor="middle">📦</text>
+    </g>
+
+    <text x="20" y="78" font-family="system-ui, sans-serif" font-size="11" font-weight="600" fill="#fef08a">
+      • Subscribes to live sensor topics (/scan, /camera/points)
+    </text>
+    <text x="20" y="98" font-family="system-ui, sans-serif" font-size="11" font-weight="600" fill="#fef08a">
+      • Tracks moving pallets, carts, and walking workers
+    </text>
+    <text x="20" y="118" font-family="system-ui, sans-serif" font-size="11" font-weight="600" fill="#fde047">
+      • Raytraces to automatically clear obstacles once they leave
+    </text>
+  </g>
+
+  <!-- Connective Arrow 2 -->
+  <g transform="translate(320, 413)">
+    <line x1="0" y1="0" x2="0" y2="18" stroke="#f59e0b" stroke-width="2.5" stroke-dasharray="3,3"/>
+    <polygon points="-5,14 5,14 0,22" fill="#f59e0b"/>
+  </g>
+
+  <!-- TIER 1: STATIC LAYER -->
+  <g transform="translate(60, 440)" filter="url(#cardShadow)">
+    <rect width="520" height="135" rx="10" fill="url(#staticGrad)" stroke="#3b82f6" stroke-width="1.5"/>
+    <rect x="14" y="14" width="28" height="28" rx="6" fill="#3b82f6"/>
+    <text x="28" y="33" font-size="15" text-anchor="middle">🗺️</text>
+    <text x="52" y="27" font-family="system-ui, sans-serif" font-size="13.5" font-weight="800" fill="#93c5fd">LAYER 1: STATIC MAP LAYER</text>
+    <text x="52" y="42" font-family="monospace" font-size="9.5" fill="#60a5fa" font-weight="600">Saved SLAM Map &bull; Permanent Warehouse Architecture</text>
+
+    <!-- Visual Representation of Floor Plan -->
+    <g transform="translate(370, 35)">
+      <!-- Mini Map Box -->
+      <rect x="0" y="0" width="120" height="80" rx="4" fill="#0f172a" stroke="#3b82f6" stroke-width="1.2"/>
+      <!-- Walls -->
+      <line x1="10" y1="10" x2="110" y2="10" stroke="#ffffff" stroke-width="3"/>
+      <line x1="10" y1="10" x2="10" y2="70" stroke="#ffffff" stroke-width="3"/>
+      <line x1="10" y1="70" x2="110" y2="70" stroke="#ffffff" stroke-width="3"/>
+      <line x1="110" y1="10" x2="110" y2="40" stroke="#ffffff" stroke-width="3"/>
+      <rect x="40" y="30" width="14" height="25" fill="#64748b"/>
+      <rect x="75" y="30" width="14" height="25" fill="#64748b"/>
+    </g>
+
+    <text x="20" y="78" font-family="system-ui, sans-serif" font-size="11" font-weight="600" fill="#bfdbfe">
+      • Loaded from disk via map_server (.yaml &amp; .pgm files)
+    </text>
+    <text x="20" y="98" font-family="system-ui, sans-serif" font-size="11" font-weight="600" fill="#bfdbfe">
+      • Provides permanent building columns, walls &amp; boundaries
+    </text>
+    <text x="20" y="118" font-family="system-ui, sans-serif" font-size="11" font-weight="600" fill="#93c5fd">
+      • Defines restricted keep-out zones &amp; designated lanes
+    </text>
+  </g>
+
+  <!-- Big Central Fusion Pipe / Arrow -->
+  <g transform="translate(595, 305)">
+    <path d="M 0 0 L 25 0" stroke="#10b981" stroke-width="4" stroke-dasharray="6,4"/>
+    <polygon points="25,-10 45,0 25,10" fill="#10b981" filter="url(#glow)"/>
+    <rect x="-8" y="-36" width="56" height="20" rx="4" fill="#064e3b" stroke="#10b981" stroke-width="1"/>
+    <text x="20" y="-22" font-family="system-ui, sans-serif" font-size="9" font-weight="800" fill="#a7f3d0" text-anchor="middle">STACKS</text>
+  </g>
+
+  <!-- Right: MASTER FUSED 2D COSTMAP (Output Result) -->
+  <g transform="translate(650, 110)" filter="url(#cardShadow)">
+    <rect width="490" height="465" rx="12" fill="url(#masterGrad)" stroke="#10b981" stroke-width="2"/>
+    
+    <!-- Title Header -->
+    <rect x="16" y="16" width="32" height="32" rx="6" fill="#10b981"/>
+    <text x="32" y="38" font-size="18" text-anchor="middle">🎯</text>
+    <text x="58" y="30" font-family="system-ui, sans-serif" font-size="15" font-weight="800" fill="#6ee7b7">MASTER FUSED COSTMAP (2D GRID)</text>
+    <text x="58" y="47" font-family="monospace" font-size="10.5" fill="#34d399" font-weight="700">Combined Cost Values: [0 = Free &bull; 253 = Inscribed &bull; 254 = Lethal]</text>
+
+    <!-- Visual Top-Down Warehouse Navigation Map with Safe Route -->
+    <g transform="translate(25, 70)">
+      <!-- Map Border Area -->
+      <rect x="0" y="0" width="440" height="300" rx="8" fill="#09141f" stroke="#1e293b" stroke-width="1.5"/>
+
+      <!-- Grid lines -->
+      <g opacity="0.25">
+        <line x1="0" y1="60" x2="440" y2="60" stroke="#334155" stroke-width="1"/>
+        <line x1="0" y1="120" x2="440" y2="120" stroke="#334155" stroke-width="1"/>
+        <line x1="0" y1="180" x2="440" y2="180" stroke="#334155" stroke-width="1"/>
+        <line x1="0" y1="240" x2="440" y2="240" stroke="#334155" stroke-width="1"/>
+        <line x1="88" y1="0" x2="88" y2="300" stroke="#334155" stroke-width="1"/>
+        <line x1="176" y1="0" x2="176" y2="300" stroke="#334155" stroke-width="1"/>
+        <line x1="264" y1="0" x2="264" y2="300" stroke="#334155" stroke-width="1"/>
+        <line x1="352" y1="0" x2="352" y2="300" stroke="#334155" stroke-width="1"/>
+      </g>
+
+      <!-- Outer Boundary Walls (Static Layer) -->
+      <rect x="15" y="15" width="410" height="270" fill="none" stroke="#60a5fa" stroke-width="6"/>
+
+      <!-- Permanent Wall Column 1 with Inflation Halo -->
+      <g transform="translate(140, 110)">
+        <rect x="-42" y="-42" width="84" height="84" rx="42" fill="url(#haloGrad)"/>
+        <rect x="-24" y="-24" width="48" height="48" rx="24" fill="#f97316" fill-opacity="0.35" stroke="#f97316" stroke-width="1.2"/>
+        <rect x="-12" y="-12" width="24" height="24" rx="3" fill="#ef4444" stroke="#ffffff" stroke-width="1.5"/>
+        <text x="0" y="3" font-family="system-ui, sans-serif" font-size="7.5" font-weight="800" fill="#ffffff" text-anchor="middle">STATIC</text>
+      </g>
+
+      <!-- Live Dynamic Obstacle (Obstacle Layer) with Inflation Halo -->
+      <g transform="translate(290, 175)">
+        <circle cx="0" cy="0" r="48" fill="url(#haloGrad)"/>
+        <circle cx="0" cy="0" r="28" fill="#f97316" fill-opacity="0.4" stroke="#f97316" stroke-width="1.2"/>
+        <rect x="-14" y="-14" width="28" height="28" rx="4" fill="#ef4444" stroke="#facc15" stroke-width="2"/>
+        <text x="0" y="3" font-family="system-ui, sans-serif" font-size="8.5" font-weight="800" fill="#ffffff" text-anchor="middle">LIVE</text>
+      </g>
+
+      <!-- AMR Start Position -->
+      <g transform="translate(60, 235)">
+        <circle cx="0" cy="0" r="14" fill="#0284c7" stroke="#38bdf8" stroke-width="2"/>
+        <polygon points="0,-7 6,5 -6,5" fill="#ffffff"/>
+        <text x="0" y="24" font-family="monospace" font-size="9" font-weight="700" fill="#38bdf8" text-anchor="middle">START</text>
+      </g>
+
+      <!-- AMR Goal Target -->
+      <g transform="translate(370, 75)">
+        <circle cx="0" cy="0" r="14" fill="#10b981" stroke="#34d399" stroke-width="2"/>
+        <circle cx="0" cy="0" r="6" fill="#ffffff"/>
+        <text x="0" y="24" font-family="monospace" font-size="9" font-weight="700" fill="#34d399" text-anchor="middle">GOAL</text>
+      </g>
+
+      <!-- Planned Global Path (Smooth Green Arc Avoiding Halos) -->
+      <path d="M 60 235 C 100 235, 120 185, 170 170 C 220 155, 250 90, 310 80 C 330 75, 350 75, 370 75" fill="none" stroke="#10b981" stroke-width="3.5" stroke-linecap="round" stroke-dasharray="8,4" filter="url(#glow)"/>
+
+      <!-- Path Legend Callout -->
+      <g transform="translate(18, 20)">
+        <rect width="130" height="24" rx="4" fill="rgba(15, 23, 42, 0.85)" stroke="#10b981" stroke-width="1"/>
+        <line x1="8" y1="12" x2="28" y2="12" stroke="#10b981" stroke-width="2.5" stroke-dasharray="4,2"/>
+        <text x="34" y="16" font-family="system-ui, sans-serif" font-size="9" font-weight="700" fill="#6ee7b7">Optimal Safe Route</text>
+      </g>
+    </g>
+
+    <!-- Bottom Explanatory Strip inside Master Card -->
+    <g transform="translate(25, 385)">
+      <rect width="440" height="62" rx="6" fill="#062e24" stroke="#10b981" stroke-width="1"/>
+      <text x="14" y="22" font-family="system-ui, sans-serif" font-size="11" font-weight="700" fill="#a7f3d0">
+        💡 Why This Architecture Matters:
+      </text>
+      <text x="14" y="39" font-family="system-ui, sans-serif" font-size="10" fill="#d1fae5">
+        Global Planners (NavFn / Smac) and Local Controllers (DWB / RPP) read
+      </text>
+      <text x="14" y="53" font-family="system-ui, sans-serif" font-size="10" fill="#6ee7b7" font-weight="600">
+        this single merged map to generate collision-free paths in milliseconds!
+      </text>
+    </g>
+  </g>
+</svg>

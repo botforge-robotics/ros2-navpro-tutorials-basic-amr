@@ -6179,90 +6179,18 @@ function buildLesson14Slides(doc, lesson, slides) {
     badge: '🗺️ Architecture',
     title: 'Costmap 2D Architecture: The 3-Tier Layered Representation',
     htmlContent: `
-      <div class="costmap-pipeline-layout">
-        <!-- Left: Layered Sandwich Data Pipeline -->
-        <div style="display: flex; flex-direction: column; gap: 0.35rem;">
-          <!-- Layer 3: Inflation -->
-          <div style="background: rgba(239, 68, 68, 0.12); border: 1px solid rgba(239, 68, 68, 0.4); border-radius: 8px; padding: 0.4rem 0.65rem;">
-            <div style="display: flex; align-items: center; justify-content: space-between;">
-              <span style="font-size: 0.77rem; font-weight: 700; color: #f87171;">🛡️ Layer 3: Inflation Layer</span>
-              <span style="font-size: 0.66rem; background: rgba(239, 68, 68, 0.25); color: #fca5a5; padding: 0.1rem 0.4rem; border-radius: 4px;">Cost Decay Engine</span>
-            </div>
-            <p style="font-size: 0.71rem; line-height: 1.3; margin: 0.2rem 0 0 0; color: var(--text-secondary);">Propagates exponential repulsive cost gradients around detected obstacles; establishes safe stand-off buffer.</p>
-          </div>
-
-          <div style="text-align: center; color: #94a3b8; font-size: 0.75rem; line-height: 1; margin: -0.15rem 0;">&uarr; fuses into</div>
-
-          <!-- Layer 2: Obstacle / Voxel -->
-          <div style="background: rgba(234, 179, 8, 0.12); border: 1px solid rgba(234, 179, 8, 0.4); border-radius: 8px; padding: 0.4rem 0.65rem;">
-            <div style="display: flex; align-items: center; justify-content: space-between;">
-              <span style="font-size: 0.77rem; font-weight: 700; color: #facc15;">📡 Layer 2: Obstacle / Voxel Layer</span>
-              <span style="font-size: 0.66rem; background: rgba(234, 179, 8, 0.25); color: #fde047; padding: 0.1rem 0.4rem; border-radius: 4px;">Dynamic Sensing</span>
-            </div>
-            <p style="font-size: 0.71rem; line-height: 1.3; margin: 0.2rem 0 0 0; color: var(--text-secondary);">Subscribes to 2D LiDAR <code>/scan</code> &amp; 3D PointClouds; dynamically marks moving obstacles and raytraces clear free space.</p>
-          </div>
-
-          <div style="text-align: center; color: #94a3b8; font-size: 0.75rem; line-height: 1; margin: -0.15rem 0;">&uarr; stacks on</div>
-
-          <!-- Layer 1: Static -->
-          <div style="background: rgba(59, 130, 246, 0.12); border: 1px solid rgba(59, 130, 246, 0.4); border-radius: 8px; padding: 0.4rem 0.65rem;">
-            <div style="display: flex; align-items: center; justify-content: space-between;">
-              <span style="font-size: 0.77rem; font-weight: 700; color: #60a5fa;">🗺️ Layer 1: Static Layer</span>
-              <span style="font-size: 0.66rem; background: rgba(59, 130, 246, 0.25); color: #93c5fd; padding: 0.1rem 0.4rem; border-radius: 4px;">Pre-built Map</span>
-            </div>
-            <p style="font-size: 0.71rem; line-height: 1.3; margin: 0.2rem 0 0 0; color: var(--text-secondary);">Loaded via <code>map_server</code>; provides permanent architectural walls, structural building columns, and keep-out zones.</p>
-          </div>
-
-          <!-- Master Output Bar -->
-          <div style="background: rgba(16, 185, 129, 0.15); border: 1px solid #10b981; border-radius: 6px; padding: 0.35rem 0.6rem; display: flex; align-items: center; justify-content: space-between;">
-            <span style="font-size: 0.73rem; font-weight: bold; color: #34d399;">&rArr; Master Costmap Output:</span>
-            <span style="font-size: 0.7rem; font-family: var(--font-mono); color: #a7f3d0;">2D Grid Array [0 &hellip; 255]</span>
-          </div>
+      <div class="nav-full-image-slide-layout">
+        <div class="nav-full-image-container">
+          <img src="assets/images/costmap_3tier_layered_architecture.svg" alt="Costmap 2D 3-Tier Layered Architecture Diagram" />
         </div>
-
-        <!-- Right: Cell Interpretation Lookup Table -->
-        <div style="background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: 8px; padding: 0.55rem; box-shadow: 0 4px 14px rgba(0,0,0,0.12);">
-          <div style="font-size: 0.77rem; font-weight: bold; color: #0284c7; margin-bottom: 0.35rem; display: flex; align-items: center; gap: 0.35rem;">
-            <span>📊</span> Costmap Cell Values (uchar 0–255)
+        <div class="nav-points-list-clean">
+          <div class="nav-point-bullet">
+            <span class="nav-point-icon">🥞</span>
+            <span><strong>The Layered Sandwich Architecture:</strong> Nav2 stacks the permanent building walls (Static Layer), live sensor obstacles (Obstacle Layer), and safety padding (Inflation Layer) into one master grid.</span>
           </div>
-          <table style="width: 100%; border-collapse: collapse; font-size: 0.71rem; line-height: 1.35;">
-            <thead>
-              <tr style="border-bottom: 1px solid var(--border-color); color: var(--text-muted); text-align: left;">
-                <th style="padding: 0.25rem 0.35rem;">Value</th>
-                <th style="padding: 0.25rem 0.35rem;">Meaning</th>
-                <th style="padding: 0.25rem 0.35rem;">Planner Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr style="border-bottom: 1px solid rgba(255,255,255,0.06);">
-                <td style="padding: 0.25rem 0.35rem; color: #ef4444; font-weight: bold;">254</td>
-                <td style="padding: 0.25rem 0.35rem;">Lethal Obstacle</td>
-                <td style="padding: 0.25rem 0.35rem; color: #f87171;">Strict collision: Veto</td>
-              </tr>
-              <tr style="border-bottom: 1px solid rgba(255,255,255,0.06);">
-                <td style="padding: 0.25rem 0.35rem; color: #f97316; font-weight: bold;">253</td>
-                <td style="padding: 0.25rem 0.35rem;">Inscribed Radius</td>
-                <td style="padding: 0.25rem 0.35rem; color: #fdba74;">Collision if rotated</td>
-              </tr>
-              <tr style="border-bottom: 1px solid rgba(255,255,255,0.06);">
-                <td style="padding: 0.25rem 0.35rem; color: #eab308; font-weight: bold;">1–252</td>
-                <td style="padding: 0.25rem 0.35rem;">Inflation Decay</td>
-                <td style="padding: 0.25rem 0.35rem; color: #fde047;">Penalize proximity</td>
-              </tr>
-              <tr style="border-bottom: 1px solid rgba(255,255,255,0.06);">
-                <td style="padding: 0.25rem 0.35rem; color: #10b981; font-weight: bold;">0</td>
-                <td style="padding: 0.25rem 0.35rem;">Free Space</td>
-                <td style="padding: 0.25rem 0.35rem; color: #86efac;">Preferred travel</td>
-              </tr>
-              <tr>
-                <td style="padding: 0.25rem 0.35rem; color: #94a3b8; font-weight: bold;">255</td>
-                <td style="padding: 0.25rem 0.35rem;">Unknown Space</td>
-                <td style="padding: 0.25rem 0.35rem; color: #cbd5e1;">Allow or explore</td>
-              </tr>
-            </tbody>
-          </table>
-          <div style="margin-top: 0.35rem; font-size: 0.67rem; color: var(--text-muted); background: var(--bg-sidebar); padding: 0.25rem 0.45rem; border-radius: 4px;">
-            ⚡ <strong>Update Loop:</strong> Global costmap updates at 1 Hz; Local costmap updates at 5–10 Hz for rapid dynamic obstacle evasion.
+          <div class="nav-point-bullet">
+            <span class="nav-point-icon">⚡</span>
+            <span><strong>Real-Time Collision Avoidance:</strong> Path planners read this single fused 2D costmap to steer smoothly around static walls and unexpected moving obstacles with guaranteed safety clearance.</span>
           </div>
         </div>
       </div>
