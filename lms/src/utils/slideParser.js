@@ -6225,15 +6225,22 @@ function buildLesson14Slides(doc, lesson, slides) {
     lessonId: lesson.id,
     module: lesson.module,
     sectionTitle: '10. Path Planning Taxonomy',
-    badge: '🗂️ Taxonomy',
-    title: 'Path Planning Taxonomy: Continuous vs. Discretized Roadmaps',
+    badge: '🗺️ Overview & Table of Contents',
+    title: 'Path Planning Taxonomy: 3 Foundational Roadmap Approaches',
     htmlContent: `
       <div class="nav-full-image-slide-layout">
         <div class="nav-full-image-container">
-          <img src="assets/images/nav_roadmap_taxonomy.png" alt="Path Planning Roadmap Taxonomy" />
+          <img src="assets/images/nav_roadmap_taxonomy_3approaches.svg" alt="Path Planning Roadmap 3 Foundational Approaches Taxonomy" />
         </div>
-        <div class="l05-banner-intro nav-bottom-caption" style="border-left: 4px solid #6366f1; background: rgba(99, 102, 241, 0.08);">
-          <strong>🗂️ Path Planning Taxonomy:</strong> Continuous open floor space is turned into a searchable roadmap network via Visibility Graphs, Voronoi safe corridors, or Cell Grids, and solved using the A* search engine.
+        <div class="nav-points-list-clean">
+          <div class="nav-point-bullet">
+            <span class="nav-point-icon">🗺️</span>
+            <span><strong>3 Core Discretization Approaches:</strong> Continuous open floor space must be turned into a searchable graph. We explore <strong>(1) Visibility Graphs</strong>, <strong>(2) Voronoi Diagrams</strong>, and <strong>(3) Cell Decomposition</strong> in the next slides.</span>
+          </div>
+          <div class="nav-point-bullet">
+            <span class="nav-point-icon">⚡</span>
+            <span><strong>Tradeoff Summary:</strong> Visibility Graphs find the shortest path (0 mm clearance); Voronoi finds the safest path (longer detours); Cell Decomposition creates the structured grid used by modern ROS 2 costmaps.</span>
+          </div>
         </div>
       </div>
     `
@@ -6247,15 +6254,25 @@ function buildLesson14Slides(doc, lesson, slides) {
     lessonId: lesson.id,
     module: lesson.module,
     sectionTitle: '11. Visibility Graph Step 1',
-    badge: '👁️ Visibility Graph',
+    badge: '🔵 Approach 1 of 3 • Visibility Graph (1/2)',
     title: 'Visibility Graph: Interconnecting Visible Obstacle Vertices',
     htmlContent: `
       <div class="nav-full-image-slide-layout">
+        <div class="nav-method-strip is-blue">
+          <span>🔵 APPROACH 1 OF 3: VISIBILITY GRAPH &bull; STEP 1 OF 2</span>
+        </div>
         <div class="nav-full-image-container">
           <img src="assets/images/nav_visibility_graph_step1.png" alt="Visibility Graph Interconnection" />
         </div>
-        <div class="l05-banner-intro nav-bottom-caption" style="border-left: 4px solid #0284c7; background: rgba(2, 132, 199, 0.08);">
-          <strong>👁️ Line-of-Sight Network:</strong> Interconnects Start, Goal, and all visible obstacle polygon vertices with straight line segments that do not intersect obstacle interiors, creating a discrete graph searchable in polynomial time.
+        <div class="nav-points-list-clean">
+          <div class="nav-point-bullet">
+            <span class="nav-point-icon">👁️</span>
+            <span><strong>Line-of-Sight Network:</strong> The robot draws straight imaginary sightlines between Start, Goal, and every obstacle corner that can "see" each other without walking through walls.</span>
+          </div>
+          <div class="nav-point-bullet">
+            <span class="nav-point-icon">🕸️</span>
+            <span><strong>Constructs the Graph:</strong> Solid obstacle interiors block sightlines, leaving a discrete web of walkable straight-line routes ready for graph search.</span>
+          </div>
         </div>
       </div>
     `
@@ -6269,15 +6286,25 @@ function buildLesson14Slides(doc, lesson, slides) {
     lessonId: lesson.id,
     module: lesson.module,
     sectionTitle: '12. Visibility Graph Step 2',
-    badge: '⚡ Shortest Path',
+    badge: '🔵 Approach 1 of 3 • Visibility Graph (2/2)',
     title: 'Visibility Graph: Shortest Euclidean Path & Corner Grazing',
     htmlContent: `
       <div class="nav-full-image-slide-layout">
+        <div class="nav-method-strip is-blue">
+          <span>🔵 APPROACH 1 OF 3: VISIBILITY GRAPH &bull; STEP 2 OF 2</span>
+        </div>
         <div class="nav-full-image-container">
           <img src="assets/images/nav_visibility_graph_step2.png" alt="Visibility Graph Shortest Path" />
         </div>
-        <div class="l05-banner-intro nav-bottom-caption" style="border-left: 4px solid #eab308; background: rgba(234, 179, 8, 0.08);">
-          <strong>⚡ Shortest Route &amp; Zero Wall Clearance:</strong> Graph search finds the absolute shortest straight-line path, but routes cut directly around sharp obstacle corners (zero clearance)—requiring obstacle padding before building the graph.
+        <div class="nav-points-list-clean">
+          <div class="nav-point-bullet">
+            <span class="nav-point-icon">⚡</span>
+            <span><strong>Shortest Possible Route:</strong> Moving straight from corner to corner guarantees the mathematically shortest distance between Start and Goal.</span>
+          </div>
+          <div class="nav-point-bullet">
+            <span class="nav-point-icon">⚠️</span>
+            <span><strong>The Dangerous Tradeoff (0 mm Clearance):</strong> The line cuts right through sharp obstacle corners with zero buffer! Robots must inflate obstacles first so wheels don't scrape walls.</span>
+          </div>
         </div>
       </div>
     `
@@ -6291,15 +6318,25 @@ function buildLesson14Slides(doc, lesson, slides) {
     lessonId: lesson.id,
     module: lesson.module,
     sectionTitle: '13. Voronoi Diagram',
-    badge: '🛡️ Maximum Clearance',
+    badge: '🟢 Approach 2 of 3 • Voronoi Diagram (1/1)',
     title: 'Voronoi Diagram: Free-Space Bisectors & Maximum Clearance',
     htmlContent: `
       <div class="nav-full-image-slide-layout">
+        <div class="nav-method-strip is-emerald">
+          <span>🟢 APPROACH 2 OF 3: VORONOI DIAGRAM &bull; MAXIMUM SAFETY HIGHWAY</span>
+        </div>
         <div class="nav-full-image-container">
           <img src="assets/images/nav_voronoi_diagram.png" alt="Voronoi Diagram Bisectors" />
         </div>
-        <div class="l05-banner-intro nav-bottom-caption" style="border-left: 4px solid #10b981; background: rgba(16, 185, 129, 0.08);">
-          <strong>🛡️ Maximum Clearance Bisectors:</strong> Voronoi edges trace points strictly equidistant from neighboring obstacles, maximizing standoff clearance for safe high-speed AMR travel in warehouse aisles at the expense of longer paths.
+        <div class="nav-points-list-clean">
+          <div class="nav-point-bullet">
+            <span class="nav-point-icon">🛡️</span>
+            <span><strong>The Centerline Highway:</strong> Instead of cutting close to corners, Voronoi edges trace a path that stays <em>exactly</em> halfway between neighboring obstacles.</span>
+          </div>
+          <div class="nav-point-bullet">
+            <span class="nav-point-icon">🏎️</span>
+            <span><strong>Maximum Safety vs. Longer Paths:</strong> Gives the robot maximum breathing room for fast, safe warehouse driving, at the cost of slightly longer detour routes.</span>
+          </div>
         </div>
       </div>
     `
@@ -6313,15 +6350,25 @@ function buildLesson14Slides(doc, lesson, slides) {
     lessonId: lesson.id,
     module: lesson.module,
     sectionTitle: '14. Exact Cell Decomposition',
-    badge: '📐 Cell Slicing',
-    title: 'Exact Cell Decomposition: Trapezoidal & Triangular Slicing',
+    badge: '🟣 Approach 3 of 3 • Cell Decomposition (1/2)',
+    title: 'Exact Cell Decomposition: Trapezoidal Geometric Slicing',
     htmlContent: `
       <div class="nav-full-image-slide-layout">
+        <div class="nav-method-strip is-purple">
+          <span>🟣 APPROACH 3 OF 3: CELL DECOMPOSITION &bull; PART A: EXACT SLICING</span>
+        </div>
         <div class="nav-full-image-container">
           <img src="assets/images/nav_exact_cell_decomp_step1.png" alt="Exact Cell Decomposition" />
         </div>
-        <div class="l05-banner-intro nav-bottom-caption" style="border-left: 4px solid #14b8a6; background: rgba(20, 184, 166, 0.08);">
-          <strong>✂️ Exact Trapezoidal Decomposition:</strong> Free space is partitioned into contiguous convex trapezoids via vertical vertex rays; straight-line motion within any convex cell is 100% collision-free, connected via an adjacency dual graph.
+        <div class="nav-points-list-clean">
+          <div class="nav-point-bullet">
+            <span class="nav-point-icon">✂️</span>
+            <span><strong>Slicing Space into Clean Trapezoids:</strong> Drops imaginary vertical lines from every obstacle corner to partition open floor space into simple geometric shapes.</span>
+          </div>
+          <div class="nav-point-bullet">
+            <span class="nav-point-icon">🎯</span>
+            <span><strong>100% Collision-Free Movement:</strong> Driving in a straight line inside any convex trapezoid is guaranteed safe; connecting cell centers forms the roadmap graph.</span>
+          </div>
         </div>
       </div>
     `
@@ -6335,15 +6382,25 @@ function buildLesson14Slides(doc, lesson, slides) {
     lessonId: lesson.id,
     module: lesson.module,
     sectionTitle: '15. Approx Cell Decomposition',
-    badge: '🌳 Quadtrees',
-    title: 'Approximate Cell Decomposition: Recursive Quadtree Subdivision',
+    badge: '🟣 Approach 3 of 3 • Cell Decomposition (2/2)',
+    title: 'Approximate Cell Decomposition: Recursive Quadtree Grids',
     htmlContent: `
       <div class="nav-full-image-slide-layout">
+        <div class="nav-method-strip is-purple">
+          <span>🟣 APPROACH 3 OF 3: CELL DECOMPOSITION &bull; PART B: QUADTREE GRIDS</span>
+        </div>
         <div class="nav-full-image-container">
           <img src="assets/images/nav_approx_cell_decomp_step2.png" alt="Approximate Cell Decomposition Quadtree" />
         </div>
-        <div class="l05-banner-intro nav-bottom-caption" style="border-left: 4px solid #06b6d4; background: rgba(6, 182, 212, 0.08);">
-          <strong>🌳 Recursive Quadtree Subdivision:</strong> Cells are recursively classified as <code>Empty</code>, <code>Full</code>, or <code>Mixed</code>; mixed boundary cells are subdivided until a connected corridor of empty cells links Start to Goal, minimizing memory overhead.
+        <div class="nav-points-list-clean">
+          <div class="nav-point-bullet">
+            <span class="nav-point-icon">🌳</span>
+            <span><strong>Recursive Quadtree Slicing:</strong> Divides rooms into 4 squares. If a square touches a wall, it divides into 4 smaller squares until clear corridors emerge.</span>
+          </div>
+          <div class="nav-point-bullet">
+            <span class="nav-point-icon">🗺️</span>
+            <span><strong>Standard for 2D Costmaps:</strong> Saves computer memory by keeping large squares in empty rooms and high resolution only near walls—the foundation of ROS 2 Costmaps!</span>
+          </div>
         </div>
       </div>
     `

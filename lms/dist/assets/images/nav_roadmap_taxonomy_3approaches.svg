@@ -1,0 +1,280 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 640" width="100%" height="100%">
+  <defs>
+    <!-- Background Gradient -->
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#1e293b"/>
+    </linearGradient>
+
+    <!-- Card 1: Visibility Graph (Blue) -->
+    <linearGradient id="visGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#0369a1" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#0f172a" stop-opacity="0.6"/>
+    </linearGradient>
+
+    <!-- Card 2: Voronoi Diagram (Emerald) -->
+    <linearGradient id="vorGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#047857" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#0f172a" stop-opacity="0.6"/>
+    </linearGradient>
+
+    <!-- Card 3: Cell Decomposition (Purple) -->
+    <linearGradient id="cellGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#6d28d9" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#0f172a" stop-opacity="0.6"/>
+    </linearGradient>
+
+    <!-- Glow Filter -->
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="5" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+
+    <filter id="cardShadow" x="-5%" y="-5%" width="110%" height="115%">
+      <feDropShadow dx="0" dy="6" stdDeviation="10" flood-color="#000000" flood-opacity="0.4"/>
+    </filter>
+  </defs>
+
+  <!-- Outer Background Canvas -->
+  <rect width="1200" height="640" rx="16" fill="url(#bgGrad)" stroke="#334155" stroke-width="1.5"/>
+
+  <!-- Blueprint Grid Texture -->
+  <g opacity="0.12">
+    <path d="M 0 60 L 1200 60 M 0 120 L 1200 120 M 0 180 L 1200 180 M 0 240 L 1200 240 M 0 300 L 1200 300 M 0 360 L 1200 360 M 0 420 L 1200 420 M 0 480 L 1200 480 M 0 540 L 1200 540 M 0 600 L 1200 600" stroke="#94a3b8" stroke-width="0.8" stroke-dasharray="4,4"/>
+    <path d="M 100 0 L 100 640 M 200 0 L 200 640 M 300 0 L 300 640 M 400 0 L 400 640 M 500 0 L 500 640 M 600 0 L 600 640 M 700 0 L 700 640 M 800 0 L 800 640 M 900 0 L 900 640 M 1000 0 L 1000 640 M 1100 0 L 1100 640" stroke="#94a3b8" stroke-width="0.8" stroke-dasharray="4,4"/>
+  </g>
+
+  <!-- Header Banner -->
+  <g transform="translate(50, 32)">
+    <rect x="0" y="0" width="1100" height="48" rx="8" fill="#1e293b" stroke="#6366f1" stroke-opacity="0.4" stroke-width="1.2"/>
+    <circle cx="28" cy="24" r="8" fill="#6366f1"/>
+    <text x="48" y="29" font-family="system-ui, -apple-system, sans-serif" font-size="15" font-weight="800" fill="#f8fafc" letter-spacing="0.5">
+      PATH PLANNING TAXONOMY: 3 FOUNDATIONAL ROADMAP APPROACHES
+    </text>
+    <rect x="910" y="11" width="170" height="26" rx="13" fill="rgba(99, 102, 241, 0.2)" stroke="#818cf8" stroke-width="1"/>
+    <text x="995" y="28" font-family="monospace" font-size="11" font-weight="700" fill="#a5b4fc" text-anchor="middle">CURRICULUM ROADMAP</text>
+  </g>
+
+  <!-- ==============================================================
+       COLUMN 1: VISIBILITY GRAPH (BLUE)
+       ============================================================== -->
+  <g transform="translate(50, 95)" filter="url(#cardShadow)">
+    <rect width="350" height="455" rx="12" fill="url(#visGrad)" stroke="#0284c7" stroke-width="2"/>
+    
+    <!-- Header Badge -->
+    <rect x="16" y="16" width="318" height="34" rx="6" fill="#0369a1"/>
+    <text x="175" y="38" font-family="system-ui, sans-serif" font-size="12.5" font-weight="800" fill="#ffffff" text-anchor="middle" letter-spacing="0.5">
+      APPROACH 1: VISIBILITY GRAPH
+    </text>
+
+    <!-- Subtitle -->
+    <text x="175" y="70" font-family="monospace" font-size="10.5" font-weight="700" fill="#38bdf8" text-anchor="middle">
+      Corner-to-Corner Sight Lines
+    </text>
+
+    <!-- Visual Schematic (Mini Diagram) -->
+    <g transform="translate(20, 85)">
+      <rect width="310" height="175" rx="8" fill="#0b1726" stroke="#1e293b" stroke-width="1.5"/>
+
+      <!-- Obstacle Polygon 1 -->
+      <polygon points="70,55 125,45 135,115 80,125" fill="#1e293b" stroke="#ef4444" stroke-width="2"/>
+      <text x="100" y="85" font-family="system-ui, sans-serif" font-size="9" font-weight="800" fill="#fca5a5" text-anchor="middle">WALL 1</text>
+
+      <!-- Obstacle Polygon 2 -->
+      <polygon points="190,65 245,55 235,130 180,120" fill="#1e293b" stroke="#ef4444" stroke-width="2"/>
+      <text x="210" y="95" font-family="system-ui, sans-serif" font-size="9" font-weight="800" fill="#fca5a5" text-anchor="middle">WALL 2</text>
+
+      <!-- Start and Goal -->
+      <circle cx="35" cy="140" r="8" fill="#0284c7" stroke="#38bdf8" stroke-width="2"/>
+      <text x="35" y="160" font-family="monospace" font-size="8.5" font-weight="700" fill="#38bdf8" text-anchor="middle">START</text>
+
+      <circle cx="275" cy="40" r="8" fill="#10b981" stroke="#34d399" stroke-width="2"/>
+      <text x="275" y="28" font-family="monospace" font-size="8.5" font-weight="700" fill="#34d399" text-anchor="middle">GOAL</text>
+
+      <!-- Visible Interconnect Sight Lines -->
+      <line x1="35" y1="140" x2="80" y2="125" stroke="#38bdf8" stroke-width="1.5" stroke-dasharray="3,2" opacity="0.7"/>
+      <line x1="35" y1="140" x2="70" y2="55" stroke="#38bdf8" stroke-width="1.5" stroke-dasharray="3,2" opacity="0.7"/>
+      <line x1="70" y1="55" x2="125" y2="45" stroke="#38bdf8" stroke-width="1.5" stroke-dasharray="3,2" opacity="0.7"/>
+      <line x1="125" y1="45" x2="190" y2="65" stroke="#38bdf8" stroke-width="1.5" stroke-dasharray="3,2" opacity="0.7"/>
+      <line x1="190" y1="65" x2="275" y2="40" stroke="#38bdf8" stroke-width="1.5" stroke-dasharray="3,2" opacity="0.7"/>
+      <line x1="135" y1="115" x2="180" y2="120" stroke="#38bdf8" stroke-width="1.5" stroke-dasharray="3,2" opacity="0.7"/>
+      <line x1="80" y1="125" x2="180" y2="120" stroke="#38bdf8" stroke-width="1.5" stroke-dasharray="3,2" opacity="0.7"/>
+
+      <!-- Optimal Shortest Path (Hugging Corners) -->
+      <polyline points="35,140 70,55 125,45 190,65 275,40" fill="none" stroke="#38bdf8" stroke-width="3" filter="url(#glow)"/>
+
+      <!-- Corner Grazing Indicator -->
+      <circle cx="125" cy="45" r="4" fill="#facc15" stroke="#ffffff" stroke-width="1"/>
+      <rect x="110" y="15" width="70" height="16" rx="3" fill="#854d0e"/>
+      <text x="145" y="26" font-family="system-ui, sans-serif" font-size="7.5" font-weight="700" fill="#fef08a" text-anchor="middle">Grazes Vertex!</text>
+    </g>
+
+    <!-- Key Bullet Points -->
+    <g transform="translate(20, 275)">
+      <rect width="310" height="34" rx="5" fill="rgba(2, 132, 199, 0.15)" stroke="#0284c7" stroke-width="1"/>
+      <text x="10" y="21" font-family="system-ui, sans-serif" font-size="10.5" font-weight="700" fill="#38bdf8">
+        ⭐ Advantage: Shortest Possible Route
+      </text>
+
+      <rect y="42" width="310" height="34" rx="5" fill="rgba(239, 68, 68, 0.12)" stroke="#ef4444" stroke-width="1"/>
+      <text x="10" y="63" font-family="system-ui, sans-serif" font-size="10.5" font-weight="700" fill="#fca5a5">
+        ⚠️ Limitation: Zero Wall Clearance (0 mm)
+      </text>
+
+      <!-- Slides Tag -->
+      <rect y="84" width="310" height="78" rx="6" fill="#0f172a" stroke="#1e293b" stroke-width="1"/>
+      <text x="12" y="103" font-family="system-ui, sans-serif" font-size="10" font-weight="700" fill="#94a3b8">EXPLAINED IN DETAIL:</text>
+      <text x="12" y="122" font-family="system-ui, sans-serif" font-size="10" fill="#e2e8f0">• <tspan font-weight="700" fill="#38bdf8">Slide 12:</tspan> Line-of-sight sightlines</text>
+      <text x="12" y="140" font-family="system-ui, sans-serif" font-size="10" fill="#e2e8f0">• <tspan font-weight="700" fill="#38bdf8">Slide 13:</tspan> Euclidean shortest path</text>
+    </g>
+  </g>
+
+  <!-- ==============================================================
+       COLUMN 2: VORONOI DIAGRAM (EMERALD)
+       ============================================================== -->
+  <g transform="translate(425, 95)" filter="url(#cardShadow)">
+    <rect width="350" height="455" rx="12" fill="url(#vorGrad)" stroke="#10b981" stroke-width="2"/>
+    
+    <!-- Header Badge -->
+    <rect x="16" y="16" width="318" height="34" rx="6" fill="#047857"/>
+    <text x="175" y="38" font-family="system-ui, sans-serif" font-size="12.5" font-weight="800" fill="#ffffff" text-anchor="middle" letter-spacing="0.5">
+      APPROACH 2: VORONOI DIAGRAM
+    </text>
+
+    <!-- Subtitle -->
+    <text x="175" y="70" font-family="monospace" font-size="10.5" font-weight="700" fill="#34d399" text-anchor="middle">
+      Equidistant Hallway Centerlines
+    </text>
+
+    <!-- Visual Schematic (Mini Diagram) -->
+    <g transform="translate(20, 85)">
+      <rect width="310" height="175" rx="8" fill="#0b1726" stroke="#1e293b" stroke-width="1.5"/>
+
+      <!-- Obstacle Box 1 (Left Wall) -->
+      <rect x="40" y="30" width="70" height="115" rx="4" fill="#1e293b" stroke="#ef4444" stroke-width="2"/>
+      <text x="75" y="90" font-family="system-ui, sans-serif" font-size="9" font-weight="800" fill="#fca5a5" text-anchor="middle">WALL A</text>
+
+      <!-- Obstacle Box 2 (Right Wall) -->
+      <rect x="200" y="30" width="70" height="115" rx="4" fill="#1e293b" stroke="#ef4444" stroke-width="2"/>
+      <text x="235" y="90" font-family="system-ui, sans-serif" font-size="9" font-weight="800" fill="#fca5a5" text-anchor="middle">WALL B</text>
+
+      <!-- Start and Goal -->
+      <circle cx="155" cy="155" r="7" fill="#0284c7" stroke="#38bdf8" stroke-width="2"/>
+      <text x="155" y="170" font-family="monospace" font-size="8" font-weight="700" fill="#38bdf8" text-anchor="middle">START</text>
+
+      <circle cx="155" cy="20" r="7" fill="#10b981" stroke="#34d399" stroke-width="2"/>
+      <text x="155" y="12" font-family="monospace" font-size="8" font-weight="700" fill="#34d399" text-anchor="middle">GOAL</text>
+
+      <!-- Equidistant Voronoi Ridge (Centerline Highway) -->
+      <line x1="155" y1="155" x2="155" y2="20" stroke="#10b981" stroke-width="3" filter="url(#glow)"/>
+
+      <!-- Clearance Arrows -->
+      <line x1="155" y1="88" x2="110" y2="88" stroke="#34d399" stroke-width="1.2" stroke-dasharray="2,2"/>
+      <line x1="155" y1="88" x2="200" y2="88" stroke="#34d399" stroke-width="1.2" stroke-dasharray="2,2"/>
+      <circle cx="110" cy="88" r="2" fill="#34d399"/>
+      <circle cx="200" cy="88" r="2" fill="#34d399"/>
+
+      <rect x="118" y="73" width="74" height="14" rx="3" fill="#064e3b"/>
+      <text x="155" y="83" font-family="system-ui, sans-serif" font-size="7.5" font-weight="800" fill="#a7f3d0" text-anchor="middle">Equal Clearance</text>
+    </g>
+
+    <!-- Key Bullet Points -->
+    <g transform="translate(20, 275)">
+      <rect width="310" height="34" rx="5" fill="rgba(16, 185, 129, 0.15)" stroke="#10b981" stroke-width="1"/>
+      <text x="10" y="21" font-family="system-ui, sans-serif" font-size="10.5" font-weight="700" fill="#34d399">
+        ⭐ Advantage: Maximum Clearance &amp; Safety
+      </text>
+
+      <rect y="42" width="310" height="34" rx="5" fill="rgba(234, 179, 8, 0.12)" stroke="#eab308" stroke-width="1"/>
+      <text x="10" y="63" font-family="system-ui, sans-serif" font-size="10.5" font-weight="700" fill="#fde047">
+        ⚠️ Limitation: Sub-optimal Traveled Distance
+      </text>
+
+      <!-- Slides Tag -->
+      <rect y="84" width="310" height="78" rx="6" fill="#0f172a" stroke="#1e293b" stroke-width="1"/>
+      <text x="12" y="103" font-family="system-ui, sans-serif" font-size="10" font-weight="700" fill="#94a3b8">EXPLAINED IN DETAIL:</text>
+      <text x="12" y="122" font-family="system-ui, sans-serif" font-size="10" fill="#e2e8f0">• <tspan font-weight="700" fill="#34d399">Slide 14:</tspan> Free-space bisector highway</text>
+      <text x="12" y="140" font-family="system-ui, sans-serif" font-size="10" fill="#e2e8f0">• Maximizing safety margins in narrow aisles</text>
+    </g>
+  </g>
+
+  <!-- ==============================================================
+       COLUMN 3: CELL DECOMPOSITION (PURPLE)
+       ============================================================== -->
+  <g transform="translate(800, 95)" filter="url(#cardShadow)">
+    <rect width="350" height="455" rx="12" fill="url(#cellGrad)" stroke="#8b5cf6" stroke-width="2"/>
+    
+    <!-- Header Badge -->
+    <rect x="16" y="16" width="318" height="34" rx="6" fill="#6d28d9"/>
+    <text x="175" y="38" font-family="system-ui, sans-serif" font-size="12.5" font-weight="800" fill="#ffffff" text-anchor="middle" letter-spacing="0.5">
+      APPROACH 3: CELL DECOMPOSITION
+    </text>
+
+    <!-- Subtitle -->
+    <text x="175" y="70" font-family="monospace" font-size="10.5" font-weight="700" fill="#c084fc" text-anchor="middle">
+      Exact Trapezoids &amp; Quadtree Lattices
+    </text>
+
+    <!-- Visual Schematic (Mini Diagram) -->
+    <g transform="translate(20, 85)">
+      <rect width="310" height="175" rx="8" fill="#0b1726" stroke="#1e293b" stroke-width="1.5"/>
+
+      <!-- Quadtree Subdivided Grid Representation -->
+      <!-- Large Quadrants -->
+      <rect x="25" y="20" width="130" height="135" fill="rgba(139, 92, 246, 0.08)" stroke="#8b5cf6" stroke-width="1"/>
+      <rect x="155" y="20" width="130" height="135" fill="rgba(139, 92, 246, 0.08)" stroke="#8b5cf6" stroke-width="1"/>
+
+      <!-- Subdivided Top Left Quadrant into 4 sub-cells -->
+      <rect x="25" y="20" width="65" height="67.5" fill="none" stroke="#a78bfa" stroke-width="0.8" stroke-dasharray="2,2"/>
+      <rect x="90" y="20" width="65" height="67.5" fill="#ef4444" fill-opacity="0.6" stroke="#ef4444" stroke-width="1"/>
+      <text x="122" y="58" font-family="system-ui, sans-serif" font-size="8" font-weight="800" fill="#ffffff" text-anchor="middle">OCC</text>
+
+      <rect x="25" y="87.5" width="65" height="67.5" fill="none" stroke="#a78bfa" stroke-width="0.8" stroke-dasharray="2,2"/>
+      <rect x="90" y="87.5" width="65" height="67.5" fill="none" stroke="#a78bfa" stroke-width="0.8" stroke-dasharray="2,2"/>
+
+      <!-- Graph Centroid Nodes & Adjacency Edges -->
+      <circle cx="57" cy="53" r="5" fill="#8b5cf6"/>
+      <circle cx="57" cy="121" r="5" fill="#8b5cf6"/>
+      <circle cx="122" cy="121" r="5" fill="#8b5cf6"/>
+      <circle cx="220" cy="87" r="7" fill="#8b5cf6"/>
+
+      <line x1="57" y1="53" x2="57" y2="121" stroke="#c084fc" stroke-width="1.5"/>
+      <line x1="57" y1="121" x2="122" y2="121" stroke="#c084fc" stroke-width="1.5"/>
+      <line x1="122" y1="121" x2="220" y2="87" stroke="#c084fc" stroke-width="1.5"/>
+
+      <!-- Traversed Path -->
+      <polyline points="57,53 57,121 122,121 220,87" fill="none" stroke="#34d399" stroke-width="2.5" stroke-dasharray="4,2"/>
+    </g>
+
+    <!-- Key Bullet Points -->
+    <g transform="translate(20, 275)">
+      <rect width="310" height="34" rx="5" fill="rgba(139, 92, 246, 0.15)" stroke="#8b5cf6" stroke-width="1"/>
+      <text x="10" y="21" font-family="system-ui, sans-serif" font-size="10.5" font-weight="700" fill="#c084fc">
+        ⭐ Advantage: Standard for 2D Costmap Grids
+      </text>
+
+      <rect y="42" width="310" height="34" rx="5" fill="rgba(234, 179, 8, 0.12)" stroke="#eab308" stroke-width="1"/>
+      <text x="10" y="63" font-family="system-ui, sans-serif" font-size="10.5" font-weight="700" fill="#fde047">
+        ⚠️ Limitation: Memory / Resolution Tradeoff
+      </text>
+
+      <!-- Slides Tag -->
+      <rect y="84" width="310" height="78" rx="6" fill="#0f172a" stroke="#1e293b" stroke-width="1"/>
+      <text x="12" y="103" font-family="system-ui, sans-serif" font-size="10" font-weight="700" fill="#94a3b8">EXPLAINED IN DETAIL:</text>
+      <text x="12" y="122" font-family="system-ui, sans-serif" font-size="10" fill="#e2e8f0">• <tspan font-weight="700" fill="#c084fc">Slide 15:</tspan> Exact trapezoidal slicing</text>
+      <text x="12" y="140" font-family="system-ui, sans-serif" font-size="10" fill="#e2e8f0">• <tspan font-weight="700" fill="#c084fc">Slide 16:</tspan> Approximate quadtree grids</text>
+    </g>
+  </g>
+
+  <!-- Bottom Common Destination Footer Bar -->
+  <g transform="translate(50, 565)">
+    <rect width="1100" height="52" rx="8" fill="#1e1b4b" stroke="#6366f1" stroke-width="1.5"/>
+    <text x="30" y="31" font-size="18">⚡</text>
+    <text x="60" y="26" font-family="system-ui, sans-serif" font-size="12" font-weight="800" fill="#c7d2fe">
+      COMMON DESTINATION ACROSS ALL 3 APPROACHES:
+    </text>
+    <text x="60" y="42" font-family="system-ui, sans-serif" font-size="11" fill="#e0e7ff">
+      Every method outputs a searchable Node &amp; Edge Graph <tspan font-family="monospace" font-weight="700" fill="#a5b4fc">G = (V, E)</tspan>, which is subsequently solved by the <tspan font-weight="700" fill="#38bdf8">A* Search Engine</tspan> to find the global path!
+    </text>
+  </g>
+</svg>

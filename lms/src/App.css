@@ -9869,6 +9869,63 @@
   box-sizing: border-box !important;
 }
 
+/* Roadmap Method Indicator Breadcrumb / Strip */
+.nav-method-strip {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 0.5rem !important;
+  padding: 0.18rem 0.65rem !important;
+  border-radius: 9999px !important;
+  font-size: 0.72rem !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.05em !important;
+  text-transform: uppercase !important;
+  margin: 0 auto 0.2rem auto !important;
+  width: fit-content !important;
+}
+
+.nav-method-strip.is-blue {
+  background: rgba(2, 132, 199, 0.12) !important;
+  color: #0284c7 !important;
+  border: 1px solid rgba(2, 132, 199, 0.3) !important;
+}
+
+[data-theme='dark'] .nav-method-strip.is-blue {
+  background: rgba(2, 132, 199, 0.22) !important;
+  color: #38bdf8 !important;
+  border-color: rgba(56, 189, 248, 0.35) !important;
+}
+
+.nav-method-strip.is-emerald {
+  background: rgba(16, 185, 129, 0.12) !important;
+  color: #059669 !important;
+  border: 1px solid rgba(16, 185, 129, 0.3) !important;
+}
+
+[data-theme='dark'] .nav-method-strip.is-emerald {
+  background: rgba(16, 185, 129, 0.22) !important;
+  color: #34d399 !important;
+  border-color: rgba(52, 211, 153, 0.35) !important;
+}
+
+.nav-method-strip.is-purple {
+  background: rgba(139, 92, 246, 0.12) !important;
+  color: #7c3aed !important;
+  border: 1px solid rgba(139, 92, 246, 0.3) !important;
+}
+
+[data-theme='dark'] .nav-method-strip.is-purple {
+  background: rgba(139, 92, 246, 0.22) !important;
+  color: #c084fc !important;
+  border-color: rgba(192, 132, 252, 0.35) !important;
+}
+
+.presentation-viewport.is-fullscreen .nav-method-strip {
+  font-size: 0.85rem !important;
+  padding: 0.3rem 0.85rem !important;
+  margin-bottom: 0.35rem !important;
+}
+
 .nav-points-list-clean .nav-point-bullet {
   display: flex !important;
   align-items: baseline !important;
