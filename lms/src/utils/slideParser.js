@@ -576,7 +576,7 @@ export function parseLessonIntoSlides(lesson) {
       h2Lower.includes('challenge') ||
       h2Lower.includes('practical lab') ||
       h2Lower.includes('student lab') ||
-      h2Lower.includes('mission') ||
+      (/\bmission\b/i.test(h2Title) && !h2Lower.includes('permission')) ||
       h2Lower.includes('hands-on student')
     ) {
       return;
