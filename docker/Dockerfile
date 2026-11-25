@@ -53,6 +53,9 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     net-tools \
     psmisc \
     nano \
+    vim \
+    mousepad \
+    gedit \
     ttyd \
     sudo && \
     ln -sf /usr/share/novnc/vnc.html /usr/share/novnc/index.html && \

@@ -92,8 +92,41 @@ Icon=folder-documents
 Terminal=false
 StartupNotify=true
 EOF
+        cat << 'EOF' > /home/student/Desktop/Text_Editor.desktop
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Text Editor
+Comment=Edit text files and code
+Exec=mousepad %U
+Icon=org.xfce.mousepad
+Terminal=false
+StartupNotify=true
+Categories=Utility;TextEditor;GTK;
+EOF
         chmod +x /home/student/Desktop/*.desktop 2>/dev/null || true
         chown -R student:student /home/student/Desktop 2>/dev/null || true
+    fi
+
+    if [ ! -f "/home/student/Desktop/Text_Editor.desktop" ]; then
+        if [ -f "/usr/share/applications/org.xfce.mousepad.desktop" ]; then
+            cp /usr/share/applications/org.xfce.mousepad.desktop /home/student/Desktop/Text_Editor.desktop
+        else
+            cat << 'EOF' > /home/student/Desktop/Text_Editor.desktop
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Text Editor
+Comment=Edit text files and code
+Exec=mousepad %U
+Icon=org.xfce.mousepad
+Terminal=false
+StartupNotify=true
+Categories=Utility;TextEditor;GTK;
+EOF
+        fi
+        chmod +x /home/student/Desktop/Text_Editor.desktop 2>/dev/null || true
+        chown student:student /home/student/Desktop/Text_Editor.desktop 2>/dev/null || true
     fi
 
     # Symlink ros2_ws_reference into student home space so VS Code and shell see it
