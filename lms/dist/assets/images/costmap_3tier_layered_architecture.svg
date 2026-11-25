@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 640" width="100%" height="100%">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 640" width="1200" height="640">
   <defs>
     <!-- Gradients -->
     <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -72,7 +72,7 @@
     <rect x="14" y="14" width="28" height="28" rx="6" fill="#f43f5e"/>
     <text x="28" y="33" font-size="15" text-anchor="middle">🛡️</text>
     <text x="52" y="27" font-family="system-ui, sans-serif" font-size="13.5" font-weight="800" fill="#fda4af">LAYER 3: INFLATION LAYER</text>
-    <text x="52" y="42" font-family="monospace" font-size="9.5" fill="#f43f5e" font-weight="600">Exponential Safety Decay Buffer &bull; Stand-off Margin</text>
+    <text x="52" y="42" font-family="monospace" font-size="9.5" fill="#f43f5e" font-weight="600">Exponential Safety Decay Buffer &#8226; Stand-off Margin</text>
 
     <!-- Visual Representation of Safety Halos -->
     <g transform="translate(370, 68)">
@@ -109,7 +109,7 @@
     <rect x="14" y="14" width="28" height="28" rx="6" fill="#f59e0b"/>
     <text x="28" y="33" font-size="15" text-anchor="middle">📡</text>
     <text x="52" y="27" font-family="system-ui, sans-serif" font-size="13.5" font-weight="800" fill="#fde047">LAYER 2: OBSTACLE / VOXEL LAYER</text>
-    <text x="52" y="42" font-family="monospace" font-size="9.5" fill="#f59e0b" font-weight="600">Live 2D LiDAR (/scan) &bull; 3D Depth PointClouds</text>
+    <text x="52" y="42" font-family="monospace" font-size="9.5" fill="#f59e0b" font-weight="600">Live 2D LiDAR (/scan) &#8226; 3D Depth PointClouds</text>
 
     <!-- Visual Representation of Live Laser Rays -->
     <g transform="translate(385, 70)">
@@ -147,7 +147,7 @@
     <rect x="14" y="14" width="28" height="28" rx="6" fill="#3b82f6"/>
     <text x="28" y="33" font-size="15" text-anchor="middle">🗺️</text>
     <text x="52" y="27" font-family="system-ui, sans-serif" font-size="13.5" font-weight="800" fill="#93c5fd">LAYER 1: STATIC MAP LAYER</text>
-    <text x="52" y="42" font-family="monospace" font-size="9.5" fill="#60a5fa" font-weight="600">Saved SLAM Map &bull; Permanent Warehouse Architecture</text>
+    <text x="52" y="42" font-family="monospace" font-size="9.5" fill="#60a5fa" font-weight="600">Saved SLAM Map &#8226; Permanent Warehouse Architecture</text>
 
     <!-- Visual Representation of Floor Plan -->
     <g transform="translate(370, 35)">
@@ -189,7 +189,7 @@
     <rect x="16" y="16" width="32" height="32" rx="6" fill="#10b981"/>
     <text x="32" y="38" font-size="18" text-anchor="middle">🎯</text>
     <text x="58" y="30" font-family="system-ui, sans-serif" font-size="15" font-weight="800" fill="#6ee7b7">MASTER FUSED COSTMAP (2D GRID)</text>
-    <text x="58" y="47" font-family="monospace" font-size="10.5" fill="#34d399" font-weight="700">Combined Cost Values: [0 = Free &bull; 253 = Inscribed &bull; 254 = Lethal]</text>
+    <text x="58" y="47" font-family="monospace" font-size="10.5" fill="#34d399" font-weight="700">Combined Cost Values: [0 = Free &#8226; 253 = Inscribed &#8226; 254 = Lethal]</text>
 
     <!-- Visual Top-Down Warehouse Navigation Map with Safe Route -->
     <g transform="translate(25, 70)">
