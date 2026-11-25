@@ -5203,15 +5203,15 @@ function buildLesson13Slides(doc, lesson, slides) {
         <div class="nav-points-banner" style="border-left: 4px solid #3b82f6;">
           <div class="nav-point-bullet">
             <span class="nav-point-icon">❓</span>
-            <span><strong>The Fundamental Question:</strong> <em>"Where is the robot relative to the world coordinate frame?"</em> Given a static map <code>m</code> and sensor scans <code>z_{1:t}</code>, estimate pose <code>(x, y, &theta;) &isin; SE(2)</code>.</span>
+            <span><strong>The Fundamental Question:</strong> <em>"Where is the robot inside the warehouse right now?"</em> Using a saved floor map and live sensor readings, determine the robot's current position (X, Y) and heading direction.</span>
           </div>
           <div class="nav-point-bullet">
             <span class="nav-point-icon">🔄</span>
-            <span><strong>Odometry vs. Perception:</strong> Wheel encoders drift rapidly from wheel slip; 2D LiDAR scans continuously correct drift against pre-mapped static walls.</span>
+            <span><strong>Odometry vs. Perception:</strong> Wheel encoders drift rapidly from tire slip; 2D LiDAR scans continuously correct drift by matching against known warehouse walls.</span>
           </div>
           <div class="nav-point-bullet">
             <span class="nav-point-icon">🎯</span>
-            <span><strong>Probabilistic Belief:</strong> Sensor and actuator noise require maintaining a belief distribution <code>bel(x_t) = p(x_t | z_{1:t}, u_{1:t})</code> rather than single deterministic points.</span>
+            <span><strong>Handling Uncertainty:</strong> Real-world wheel slip and sensor noise mean the robot can never be 100% certain of its exact spot. Instead, it tracks a "cloud of possible positions" (a probability spread) and picks the most likely match.</span>
           </div>
         </div>
       </div>
@@ -5233,21 +5233,21 @@ function buildLesson13Slides(doc, lesson, slides) {
         <div class="l03-content-col" style="display: flex; flex-direction: column; justify-content: center; gap: 0.45rem;">
           <div class="l05-golden-card" style="padding: 0.45rem 0.7rem;">
             <div class="l05-golden-header" style="font-size: 0.8rem;"><span>1️⃣</span><strong>Extended Kalman Filter (EKF Localization)</strong></div>
-            <p style="font-size: 0.74rem; line-height: 1.32;">Represents pose as a unimodal Gaussian belief <code>N(&mu;, &Sigma;)</code>. Linearizes non-linear motion models using Taylor Jacobians. Fast &amp; efficient, but fails under multimodal ambiguity.</p>
+            <p style="font-size: 0.74rem; line-height: 1.32;">Tracks the robot as a single bell curve of position and uncertainty. Very fast, but fails if the robot is confused between multiple identical warehouse aisles.</p>
           </div>
           <div class="l05-golden-card" style="padding: 0.45rem 0.7rem;">
             <div class="l05-golden-header" style="font-size: 0.8rem;"><span>2️⃣</span><strong>Markov Localization</strong></div>
-            <p style="font-size: 0.74rem; line-height: 1.32;">Discretizes continuous state space into a 3D probabilistic lattice grid <code>(x, y, &theta;)</code>. Evaluates recursive Bayesian updates across all grid cells. Capable of global localization.</p>
+            <p style="font-size: 0.74rem; line-height: 1.32;">Divides the room into a 3D grid of positions and orientations (X, Y, Heading). Calculates probability scores across all grid cells to find the robot anywhere on the map.</p>
           </div>
         </div>
         <div class="l03-content-col" style="display: flex; flex-direction: column; justify-content: center; gap: 0.45rem;">
           <div class="l05-golden-card" style="padding: 0.45rem 0.7rem;">
             <div class="l05-golden-header" style="font-size: 0.8rem;"><span>3️⃣</span><strong>Grid Localization</strong></div>
-            <p style="font-size: 0.74rem; line-height: 1.32;">A variant of Markov localization storing probabilities in spatial histogram cells. High resolution demands extreme memory; coarse resolution introduces significant discretization errors.</p>
+            <p style="font-size: 0.74rem; line-height: 1.32;">Stores probabilities inside fixed floor tiles. High detail requires huge amounts of computer memory; low detail causes positioning inaccuracies.</p>
           </div>
           <div class="l05-golden-card" style="padding: 0.45rem 0.7rem; border-left: 3px solid #10b981;">
             <div class="l05-golden-header" style="font-size: 0.8rem; color: #10b981;"><span>4️⃣</span><strong>Monte Carlo Localization (MCL / Particle Filter)</strong></div>
-            <p style="font-size: 0.74rem; line-height: 1.32;">Represents arbitrary multimodal probability distributions using a cloud of discrete particles. <strong>AMCL</strong> dynamically adapts particle count (KLD sampling) to balance accuracy and CPU load.</p>
+            <p style="font-size: 0.74rem; line-height: 1.32;">Tracks the robot using hundreds of floating guesses called "particles." <strong>AMCL</strong> automatically spawns more particles when lost and shrinks the count when locked on to save CPU.</p>
           </div>
         </div>
       </div>
@@ -5275,15 +5275,15 @@ function buildLesson13Slides(doc, lesson, slides) {
         <div class="nav-points-banner" style="border-left: 4px solid #0284c7;">
           <div class="nav-point-bullet">
             <span class="nav-point-icon">📡</span>
-            <span><strong>Virtual Raycasting:</strong> For each candidate particle, AMCL simulates laser range returns <code>z_t^{k*}</code> by casting virtual rays through the occupancy grid map until intersecting occupied cells.</span>
+            <span><strong>Virtual Raycasting:</strong> For each test particle, AMCL simulates what a laser would see from that spot by casting virtual rays through the map until hitting a wall.</span>
           </div>
           <div class="nav-point-bullet">
             <span class="nav-point-icon">⚖️</span>
-            <span><strong>Likelihood Weighting:</strong> Compares actual LiDAR range <code>z_t^k</code> against simulated <code>z_t^{k*}</code>; particles whose raycasts align with physical wall returns gain high weights.</span>
+            <span><strong>Confidence Scoring:</strong> Compares the real LiDAR scan against the simulated scan; particles whose virtual beams line up closely with physical walls receive higher confidence scores.</span>
           </div>
           <div class="nav-point-bullet">
             <span class="nav-point-icon">🛡️</span>
-            <span><strong>Sensor Noise Robustness:</strong> Measurement model accounts for Gaussian beam noise, dynamic unmapped obstacles (personnel), specular dropouts, and random sensor noise.</span>
+            <span><strong>Sensor Noise Robustness:</strong> Measurement model accounts for laser beam noise, moving people, dark surface reflections, and temporary sensor dropouts.</span>
           </div>
         </div>
       </div>
@@ -5308,15 +5308,15 @@ function buildLesson13Slides(doc, lesson, slides) {
         <div class="nav-points-banner" style="border-left: 4px solid #eab308;">
           <div class="nav-point-bullet">
             <span class="nav-point-icon">🌐</span>
-            <span><strong>Zero Prior Pose Knowledge:</strong> When starting without an initial pose estimate, AMCL scatters particles uniformly across all reachable free-space cells in the map.</span>
+            <span><strong>Zero Starting Knowledge:</strong> When starting without knowing where the robot is placed, AMCL scatters particles evenly across all open floor spaces in the map.</span>
           </div>
           <div class="nav-point-bullet">
             <span class="nav-point-icon">🧭</span>
-            <span><strong>Random Orientation Hypotheses:</strong> Each particle is assigned random <code>(x, y)</code> coordinates and random heading <code>&theta; &isin; [-&pi;, +&pi;]</code> representing maximum initial entropy.</span>
+            <span><strong>Random Facing Angles:</strong> Each particle gets a random position (X, Y) and a random facing angle (0° to 360°), representing total starting uncertainty.</span>
           </div>
           <div class="nav-point-bullet">
             <span class="nav-point-icon">🎲</span>
-            <span><strong>Equal Initial Weighting:</strong> Every particle starts with identical importance weight: <code>w_0 = 1 / N_{particles}</code> before motion and sensor updates begin.</span>
+            <span><strong>Equal Initial Chances:</strong> Every particle starts with an identical starting weight before the robot begins driving or scanning.</span>
           </div>
         </div>
       </div>
@@ -5341,15 +5341,15 @@ function buildLesson13Slides(doc, lesson, slides) {
         <div class="nav-points-banner" style="border-left: 4px solid #8b5cf6;">
           <div class="nav-point-bullet">
             <span class="nav-point-icon">📐</span>
-            <span><strong>Discrete State Vector:</strong> Each particle represents a 2D pose hypothesis: <code>S_t^{[i]} = &lang; x^{[i]}, y^{[i]}, &theta;^{[i]}, w^{[i]} &rang;</code> tracking position, heading, and weight.</span>
+            <span><strong>What a Particle Stores:</strong> Each particle is a 4-item guess containing (X position, Y position, Heading angle, and Confidence weight).</span>
           </div>
           <div class="nav-point-bullet">
             <span class="nav-point-icon">⚖️</span>
-            <span><strong>Observation Weighting:</strong> Importance weight is proportional to LiDAR likelihood: <code>w^{[i]} &prop; p(z_t | x_t^{[i]}, m)</code>, scoring real laser scans against virtual map raycasts.</span>
+            <span><strong>Scoring Against Real Scans:</strong> The closer a particle's simulated view matches the robot's real LiDAR scan, the higher confidence score (weight) it gets.</span>
           </div>
           <div class="nav-point-bullet">
             <span class="nav-point-icon">⚡</span>
-            <span><strong>Total Cloud Normalization:</strong> Across the entire particle filter population, all weights strictly sum to unity: <code>&sum;_{i=1}^{N} w^{[i]} = 1</code>.</span>
+            <span><strong>Normalized Total Confidence:</strong> All particle confidence scores are scaled so the entire cloud sums to 100% total probability.</span>
           </div>
         </div>
       </div>
@@ -5374,7 +5374,7 @@ function buildLesson13Slides(doc, lesson, slides) {
         <div class="nav-points-banner" style="border-left: 4px solid #06b6d4;">
           <div class="nav-point-bullet">
             <span class="nav-point-icon">🚀</span>
-            <span><strong>Phase A (Motion Prediction):</strong> When AMR moves, particles propagate by odometry displacement plus calibrated Gaussian noise: <code>x_t^{[i]} ~ p(x_t | u_t, x_{t-1}^{[i]})</code>.</span>
+            <span><strong>Phase A (Motion Prediction):</strong> When the robot moves forward, all particles shift forward by the wheel odometer reading, with a tiny bit of random spread added to model tire slip.</span>
           </div>
           <div class="nav-point-bullet">
             <span class="nav-point-icon">🔍</span>
@@ -5524,11 +5524,11 @@ function buildLesson13Slides(doc, lesson, slides) {
         <div class="nav-points-banner" style="border-left: 4px solid #0284c7;">
           <div class="nav-point-bullet">
             <span class="nav-point-icon">🌐</span>
-            <span><strong>Continuous to Discrete Lattice:</strong> Superimposes a uniform matrix of square cells over continuous space $(x, y) \in \mathbb{R}^2$ to enable finite computational storage.</span>
+            <span><strong>Continuous Space to Grid Tiles:</strong> Divides the open warehouse floor into a uniform grid of tiny square tiles so the computer can store the map efficiently.</span>
           </div>
           <div class="nav-point-bullet">
             <span class="nav-point-icon">📐</span>
-            <span><strong>Metric Quantization Math:</strong> Real coordinates $(x, y)$ map to discrete grid cell indices via $i = \lfloor(x - x_0)/\text{res}\rfloor$ and $j = \lfloor(y - y_0)/\text{res}\rfloor$.</span>
+            <span><strong>Converting Meters to Grid Tiles:</strong> Real-world distances (in meters) are converted to row and column tile numbers by dividing distance from the map origin by the resolution (e.g. 5 cm per tile).</span>
           </div>
           <div class="nav-point-bullet">
             <span class="nav-point-icon">⚡</span>
@@ -5590,11 +5590,11 @@ function buildLesson13Slides(doc, lesson, slides) {
         <div class="nav-points-banner" style="border-left: 4px solid #10b981;">
           <div class="nav-point-bullet">
             <span class="nav-point-icon">🏢</span>
-            <span><strong>Facility-Wide Grid Matrix:</strong> The entire warehouse floorplan is structured as a contiguous 2D binary matrix $M = \{m_1, \dots, m_N\}$ referenced to global map origin $(x_0, y_0)$.</span>
+            <span><strong>Facility-Wide Grid:</strong> The entire floor plan is stored as a large 2D table of cells starting from the bottom-left map origin.</span>
           </div>
           <div class="nav-point-bullet">
             <span class="nav-point-icon">💾</span>
-            <span><strong>Lightweight RAM Footprint:</strong> A massive 100m &times; 100m facility at 5 cm resolution requires $2,000 \times 2,000 = 4,000,000$ cells (~4 MB), easily held in memory.</span>
+            <span><strong>Lightweight RAM Footprint:</strong> Even a massive 100m by 100m warehouse with high-precision 5 cm tiles takes only ~4 MB of RAM, easily fitting in robot memory.</span>
           </div>
           <div class="nav-point-bullet">
             <span class="nav-point-icon">📦</span>
@@ -5614,7 +5614,7 @@ function buildLesson13Slides(doc, lesson, slides) {
     module: lesson.module,
     sectionTitle: 'Mapping Step 4',
     badge: '🗺️ Mapping Step 4 / 4',
-    title: 'Mapping Step 4: The LiDAR Measurement Cone & Log-Odds Bayesian Updates',
+    title: 'Mapping Step 4: The LiDAR Laser Beam Sweep & Cell Confidence Updates',
     htmlContent: `
       <div class="nav-full-image-slide-layout">
         <div class="nav-full-image-container">
@@ -5623,15 +5623,15 @@ function buildLesson13Slides(doc, lesson, slides) {
         <div class="nav-points-banner" style="border-left: 4px solid #10b981;">
           <div class="nav-point-bullet">
             <span class="nav-point-icon">🔦</span>
-            <span><strong>Bresenham Raycasting:</strong> LiDAR rays sweep straight lines from sensor origin to return endpoint; intervening cells are decremented as free space ($l_{\text{free}} = -0.62$).</span>
+            <span><strong>Tracing Laser Beams:</strong> LiDAR rays sweep straight lines from sensor origin to obstacle; all tiles along the beam path are confirmed clear, open floor.</span>
           </div>
           <div class="nav-point-bullet">
             <span class="nav-point-icon">💥</span>
-            <span><strong>Obstacle Reflection Hit:</strong> Endpoint cells where laser energy bounces back receive high occupancy reinforcement ($l_{\text{occ}} = +1.73$).</span>
+            <span><strong>Obstacle Reflection Hit:</strong> The tile where the laser beam bounces back is reinforced as a solid obstacle wall.</span>
           </div>
           <div class="nav-point-bullet">
             <span class="nav-point-icon">➕</span>
-            <span><strong>Log-Odds Numerical Stability:</strong> Additive log-odds $l_{t,i} = l_{t-1,i} + \text{log\_odds}(z_t)$ eliminates probability floating-point underflow and handles noisy sensors.</span>
+            <span><strong>Accumulating Confidence:</strong> Instead of multiplying tiny decimals, the robot adds confidence points each time a beam clears or hits a tile, smoothly filtering out sensor noise.</span>
           </div>
         </div>
       </div>
@@ -6044,7 +6044,7 @@ function buildLesson14Slides(doc, lesson, slides) {
           <img src="assets/images/nav_continuous_rep_step1.png" alt="Continuous Space 2D Plane" />
         </div>
         <div class="l05-banner-intro nav-bottom-caption" style="border-left: 4px solid #3b82f6; background: rgba(59, 130, 246, 0.08);">
-          <strong>💡 Continuous Workspace (&Wscr;):</strong> Physical space is modeled as continuous &reals;<sup>2</sup> with 64-bit floating point precision, where the planner finds a continuous trajectory <code>q(t)</code> connecting start pose to goal <code>(x_g, y_g, &theta;_g)</code>.
+          <strong>💡 Real-World Continuous Floor:</strong> The warehouse is an open 2D floor where the robot can be at any exact position. The goal of path planning is to find a smooth driving path connecting the starting point to the destination.
         </div>
       </div>
     `
@@ -6066,7 +6066,7 @@ function buildLesson14Slides(doc, lesson, slides) {
           <img src="assets/images/nav_continuous_rep_step3.png" alt="Obstacle Boundaries and Swept Footprint Trajectory" />
         </div>
         <div class="l05-banner-intro nav-bottom-caption" style="border-left: 4px solid #f59e0b; background: rgba(245, 158, 11, 0.08);">
-          <strong>💡 Swept Volume Collision Condition:</strong> As the AMR moves along trajectory <code>q(t)</code>, its 2D physical footprint volume <code>Swept(&tau;) = &cup;<sub>t</sub> &Ascr;(q(t))</code> must remain completely disjoint from obstacle boundaries (<code>Swept(&tau;) &cap; &Wscr;<sub>obs</sub> = &empty;</code>).
+          <strong>💡 The Swept Footprint Area:</strong> As the robot drives along its path, its entire rectangular body sweeps across the floor like a moving shadow. To prevent crashes, this swept footprint must never touch or overlap any wall, box, or pillar.
         </div>
       </div>
     `
@@ -6110,7 +6110,7 @@ function buildLesson14Slides(doc, lesson, slides) {
           <img src="assets/images/nav_continuous_rep_allowable_path.png" alt="Distance Clearance Condition d > R" />
         </div>
         <div class="l05-banner-intro nav-bottom-caption" style="border-left: 4px solid #10b981; background: rgba(16, 185, 129, 0.08);">
-          <strong>✅ Safe Corridor Clearance Condition:</strong> Enforcing <code>dist(p, &part;&Wscr;<sub>obs</sub>) &gt; R<sub>robot</sub></code> at every point along the path guarantees safe traversal for any AMR orientation inside bounding radius <code>R<sub>robot</sub></code>.
+          <strong>✅ Safe Distance Rule (Clearance > Robot Radius):</strong> If the robot's center point stays farther from obstacles than its outer corner radius, the robot can safely turn and drive at any angle without colliding.
         </div>
       </div>
     `
@@ -6132,7 +6132,7 @@ function buildLesson14Slides(doc, lesson, slides) {
           <img src="assets/images/nav_cspace_obstacle_inflation.png" alt="Obstacle Inflation by Robot Radius" />
         </div>
         <div class="l05-banner-intro nav-bottom-caption" style="border-left: 4px solid #8b5cf6; background: rgba(139, 92, 246, 0.08);">
-          <strong>🎈 Minkowski Sum Expansion (&Wscr;<sub>obs</sub> &oplus; &Ascr;):</strong> Expanding obstacle boundaries outward by robot radius <code>R</code> collapses the AMR into a dimensionless point, replacing expensive polygon collision tests with instant point checks.
+          <strong>🎈 Obstacle Inflation (Padding Obstacles):</strong> By expanding every obstacle outward by the robot's radius, we can treat the robot as a single point! Checking if a point touches an inflated wall is 100x faster than checking a complex turning rectangle.
         </div>
       </div>
     `
@@ -6154,7 +6154,7 @@ function buildLesson14Slides(doc, lesson, slides) {
           <img src="assets/images/nav_cspace_cfree_cobs.png" alt="Point AMR in C_free vs C_obs" />
         </div>
         <div class="l05-banner-intro nav-bottom-caption" style="border-left: 4px solid #10b981; background: rgba(16, 185, 129, 0.08);">
-          <strong>✨ Dual Manifold Partition:</strong> Workspace splits into collision-free space <code>&Cscr;<sub>free</sub></code> and forbidden space <code>&Cscr;<sub>obs</sub></code>. Navigation is reduced to finding a 1D curve in <code>&Cscr;<sub>free</sub></code> connecting start to goal.
+          <strong>✨ Free Space vs. Obstacle Space:</strong> The warehouse is cleanly divided into two zones: safe driveable floor (Free Space) and forbidden zones (Obstacle Space). Path planning simply finds any line through the safe zone from start to goal.
         </div>
       </div>
     `
@@ -6297,7 +6297,7 @@ function buildLesson14Slides(doc, lesson, slides) {
           <img src="assets/images/nav_roadmap_taxonomy.png" alt="Path Planning Roadmap Taxonomy" />
         </div>
         <div class="l05-banner-intro nav-bottom-caption" style="border-left: 4px solid #6366f1; background: rgba(99, 102, 241, 0.08);">
-          <strong>🗂️ Path Planning Taxonomy:</strong> Continuous &Cscr;<sub>free</sub> is discretized into searchable topological graphs via Roadmap methods (Visibility Graphs, Voronoi) or Cell Decomposition (Exact, Quadtree), and solved by optimal A* graph search engines.
+          <strong>🗂️ Path Planning Taxonomy:</strong> Continuous open floor space is turned into a searchable roadmap network via Visibility Graphs, Voronoi safe corridors, or Cell Grids, and solved using the A* search engine.
         </div>
       </div>
     `
@@ -6341,7 +6341,7 @@ function buildLesson14Slides(doc, lesson, slides) {
           <img src="assets/images/nav_visibility_graph_step2.png" alt="Visibility Graph Shortest Path" />
         </div>
         <div class="l05-banner-intro nav-bottom-caption" style="border-left: 4px solid #eab308; background: rgba(234, 179, 8, 0.08);">
-          <strong>⚡ Euclidean Optimality &amp; 0 mm Clearance:</strong> Graph search guarantees the mathematically shortest Euclidean path, but edges graze obstacle vertices directly (0 mm clearance)—mandating C-space inflation before graph construction.
+          <strong>⚡ Shortest Route &amp; Zero Wall Clearance:</strong> Graph search finds the absolute shortest straight-line path, but routes cut directly around sharp obstacle corners (zero clearance)—requiring obstacle padding before building the graph.
         </div>
       </div>
     `
@@ -6429,7 +6429,7 @@ function buildLesson14Slides(doc, lesson, slides) {
     title: 'Graph Search & A* Algorithm',
     titleClass: 'text-slam',
     titleColor: '#7c3aed',
-    description: 'Evaluating node frontiers with admissible heuristics to compute mathematically optimal global paths.'
+    description: 'Combining distance already traveled with smart straight-line estimates to find the guaranteed shortest path.'
   });
 
   // 19. The A* Search Engine: Formulation & Priority Queue (Slide 167 in RSE)
@@ -6446,30 +6446,30 @@ function buildLesson14Slides(doc, lesson, slides) {
       <div class="l03-two-col-layout">
         <div class="l03-content-col" style="display: flex; flex-direction: column; justify-content: center; gap: 0.4rem;">
           <div class="l05-golden-card" style="padding: 0.45rem 0.65rem;">
-            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>⭐</span><strong>Evaluation Function f(n) = g(n) + h(n)</strong></div>
-            <p style="font-size: 0.73rem; line-height: 1.32;"><code>g(n)</code> = exact cumulative cost from start to node <code>n</code>.<br/><code>h(n)</code> = estimated cheapest cost from node <code>n</code> to goal (heuristic).<br/><code>f(n)</code> = total estimated path cost through node <code>n</code>.</p>
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>⭐</span><strong>Total Estimated Trip = Traveled Distance + Estimated Distance Remaining</strong></div>
+            <p style="font-size: 0.73rem; line-height: 1.32;">• <strong>Traveled Distance (g):</strong> Exact distance already driven from start to this spot.<br/>• <strong>Distance to Goal (h / Heuristic):</strong> Straight-line "as the crow flies" guess to the goal.<br/>• <strong>Total Estimated Trip (f = g + h):</strong> Summing both numbers tells the robot which route looks best.</p>
           </div>
           <div class="l05-golden-card" style="padding: 0.45rem 0.65rem;">
-            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>📋</span><strong>Priority Queue Frontier</strong></div>
-            <p style="font-size: 0.73rem; line-height: 1.32;">A* orders candidate nodes in a min-heap priority queue by <code>f(n)</code>. At each iteration, the node with lowest <code>f(n)</code> is expanded, keeping paths short while driving toward the goal.</p>
+            <div class="l05-golden-header" style="font-size: 0.78rem;"><span>📋</span><strong>Pick the Smallest Estimate First</strong></div>
+            <p style="font-size: 0.73rem; line-height: 1.32;">A* always explores the route with the lowest estimated total distance first. This keeps the search focused toward the goal without wandering.</p>
           </div>
         </div>
         <div class="l03-content-col" style="display: flex; flex-direction: column; justify-content: center; gap: 0.4rem;">
           <div style="background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: 8px; padding: 0.5rem; box-shadow: 0 4px 14px rgba(0,0,0,0.12);">
             <div style="font-size: 0.76rem; font-weight: bold; color: #7c3aed; margin-bottom: 0.35rem;">
-              Heuristic Admissibility & Consistency
+              Guaranteed Shortest Route Rules
             </div>
             <div style="display: flex; flex-direction: column; gap: 0.35rem; font-size: 0.71rem;">
               <div style="padding: 0.3rem 0.45rem; background: rgba(124, 58, 237, 0.1); border-left: 3px solid #7c3aed; border-radius: 4px;">
-                <strong>Admissible (h(n) &le; h*(n)):</strong> The heuristic never overestimates the true remaining distance (e.g. Euclidean straight-line distance). Guarantees optimal path!
+                <strong>Optimistic Guess (Never Overestimate):</strong> As long as the straight-line guess is optimistic (never guessing longer than real distance), A* is mathematically guaranteed to find the true shortest route!
               </div>
               <div style="padding: 0.3rem 0.45rem; background: rgba(59, 130, 246, 0.1); border-left: 3px solid #3b82f6; border-radius: 4px;">
-                <strong>Dijkstra Equivalence:</strong> When <code>h(n) = 0</code> everywhere, A* degenerates into uniform-cost Dijkstra search.
+                <strong>Without the Guess:</strong> If the robot doesn't guess distance to goal (h = 0), A* becomes Dijkstra search, exploring equally in all directions.
               </div>
             </div>
           </div>
           <div class="l05-banner-intro" style="margin: 0; font-size: 0.71rem; padding: 0.35rem 0.6rem; border-left: 3px solid #7c3aed;">
-            <strong>👉 Interactive Engine:</strong> Click through the animated step-by-step node expansion & priority queue on the next slide!
+            <strong>👉 Interactive Engine:</strong> Click through the animated step-by-step node expansion on the next slide!
           </div>
         </div>
       </div>
@@ -7050,7 +7050,7 @@ ros2 launch nexus_amr_navigation navigation.launch.py</code></pre>
       'To convert differential-drive kinematic models into omnidirectional holonomic models.'
     ],
     answer: 1,
-    explanation: 'Inflating obstacles by the robot radius R (Minkowski sum W_obs &oplus; A) transforms the robot into a single point particle in C-Space, vastly simplifying collision checking during graph search.'
+    explanation: 'Inflating obstacles outward by the robot radius turns the robot into a simple point on the map, making collision checking 100x faster and simpler.'
   });
 
   // 36. Knowledge Check: A* Heuristics & DWA Trajectory Rollouts
@@ -7061,16 +7061,16 @@ ros2 launch nexus_amr_navigation navigation.launch.py</code></pre>
     lessonId: lesson.id,
     module: lesson.module,
     sectionTitle: 'Assessment: A* & DWA',
-    title: 'A* Heuristic Admissibility & Local Control',
-    question: 'In the A* graph search evaluation function f(n) = g(n) + h(n), what mathematical property must heuristic h(n) satisfy to guarantee finding the shortest path?',
+    title: 'A* Heuristic Rules & Path Optimality',
+    question: 'In A* path planning (Total Estimate = Distance Traveled + Guess to Goal), how must the goal distance guess behave to guarantee finding the shortest path?',
     options: [
-      'h(n) must equal zero for all non-terminal nodes in the search tree.',
-      'h(n) must be strictly greater than the actual remaining cost to force greedy expansion.',
-      'h(n) must be admissible (it must never overestimate the true remaining cost to the goal).',
-      'h(n) must be computed using Manhattan distance rather than Euclidean distance.'
+      'The guess must always equal zero for all points on the map.',
+      'The guess must overestimate the distance to force the robot to hurry.',
+      'The guess must never overestimate the true remaining distance (stay optimistic or equal to straight-line distance).',
+      'The guess must use complex grid matrix algebra.'
     ],
     answer: 2,
-    explanation: 'An admissible heuristic h(n) &le; h*(n) never overestimates the true cost to reach the goal. Admissibility mathematically guarantees that the first path popped to the goal is optimal.'
+    explanation: 'An optimistic guess (admissible heuristic) ensures the robot never ignores a potentially shorter route. This guarantees that the first path reaching the goal is the true shortest route.'
   });
 
   // 37. Knowledge Check: Nav2 Parameter Tuning & Recovery
@@ -7110,10 +7110,10 @@ ros2 launch nexus_amr_navigation navigation.launch.py</code></pre>
             <div style="font-size: 0.78rem; font-weight: bold; color: #0284c7; margin-bottom: 0.35rem; display: flex; align-items: center; gap: 0.3rem;">
               <span>📐</span> Continuous &amp; C-Space
             </div>
-            <p style="font-size: 0.72rem; line-height: 1.35; color: var(--text-secondary);">Obstacle inflation by robot radius converts complex polygon collisions into simple 0-radius point pathfinding in C_free.</p>
+            <p style="font-size: 0.72rem; line-height: 1.35; color: var(--text-secondary);">Padding obstacles by the robot radius turns complex chassis collisions into simple point checks on a safe floor map.</p>
           </div>
           <div style="font-size: 0.68rem; color: #0284c7; font-weight: bold;">
-            Key: Swept volume clearance
+            Key: Safe clearance buffer
           </div>
         </div>
 
@@ -7122,10 +7122,10 @@ ros2 launch nexus_amr_navigation navigation.launch.py</code></pre>
             <div style="font-size: 0.78rem; font-weight: bold; color: #7c3aed; margin-bottom: 0.35rem; display: flex; align-items: center; gap: 0.3rem;">
               <span>⭐</span> Discretization &amp; A*
             </div>
-            <p style="font-size: 0.72rem; line-height: 1.35; color: var(--text-secondary);">Roadmaps (Visibility, Voronoi, Cell Decomposition) discretize space. A* min-heap priority queue evaluates f(n) = g + h to guarantee optimal paths.</p>
+            <p style="font-size: 0.72rem; line-height: 1.35; color: var(--text-secondary);">Roadmaps turn open warehouse floors into simple connected routes. A* adds distance traveled to estimated distance left to guarantee the shortest safe path.</p>
           </div>
           <div style="font-size: 0.68rem; color: #7c3aed; font-weight: bold;">
-            Key: Admissible heuristics
+            Key: Optimistic distance guesses
           </div>
         </div>
 

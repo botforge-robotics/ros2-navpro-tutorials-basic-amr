@@ -40,134 +40,134 @@ const STEPS = [
   {
     step: 0,
     chipLabel: '0: Init S',
-    title: 'Initialize Min-Heap Frontier at Start Node S',
+    title: 'Start Search at Start Node S',
     current: 'S',
     closed: [],
     frontier: [
-      { path: 'S', targetNode: 'S', g: 0.0, h: 11.5, f: 11.5, status: 'Root Initialized', isLowest: true }
+      { path: 'S', targetNode: 'S', g: 0.0, h: 11.5, f: 11.5, status: 'Starting Point', isLowest: true }
     ],
     activeEdges: [],
     optimalPath: [],
-    decisionFormula: 'f(S) = g(0.0) + h(11.5) = 11.5',
-    decisionNote: 'Push start node S into Open List min-heap.',
-    explanation: 'Search begins at Start Node S. True path cost from start g(S) = 0. Admissible heuristic estimate to goal h(S) = 11.5. Priority queue initializes with root f(S) = 11.5.'
+    decisionFormula: 'Start at S: Traveled 0.0 + Est. to Goal 11.5 = Total 11.5',
+    decisionNote: 'Add Start Node S to the open candidate list.',
+    explanation: 'Search begins at Start Node S. Traveled distance is 0. Estimated straight-line distance to goal is 11.5. Total estimated trip starts at 11.5.'
   },
   {
     step: 1,
     chipLabel: '1: Expand S',
-    title: 'Pop Node S: Expand Neighbors A & D',
+    title: 'Expand Node S: Test Paths to Neighbors A & D',
     current: 'S',
     closed: ['S'],
     frontier: [
-      { path: 'S → A', targetNode: 'A', g: 3.0, h: 10.1, f: 13.1, status: '★ Lowest f(n) • Selected', isLowest: true },
-      { path: 'S → D', targetNode: 'D', g: 4.0, h: 9.2, f: 13.2, status: 'Queued in Min-Heap', isLowest: false }
+      { path: 'S → A', targetNode: 'A', g: 3.0, h: 10.1, f: 13.1, status: '★ Lowest Estimate • Pick Next', isLowest: true },
+      { path: 'S → D', targetNode: 'D', g: 4.0, h: 9.2, f: 13.2, status: 'Waiting in Queue', isLowest: false }
     ],
     activeEdges: ['S-A', 'S-D'],
     optimalPath: [],
-    decisionFormula: 'f(S→A) = 3.0 + 10.1 = 13.1  <  f(S→D) = 4.0 + 9.2 = 13.2',
-    decisionNote: 'Select S → A next (13.1 is strictly smaller than 13.2).',
-    explanation: 'Pop S from min-heap. Evaluate outgoing edges: edge (S,A) cost 3 gives f=13.1; edge (S,D) cost 4 gives f=13.2. Candidate S→A holds lowest f-score and is chosen next for expansion.'
+    decisionFormula: 'Route via A (13.1 total) looks shorter than Route via D (13.2 total)',
+    decisionNote: 'Choose S → A next because 13.1 is smaller than 13.2.',
+    explanation: 'From Start S, we check neighbors A and D. Path to A has total estimate 13.1 (traveled 3 + remaining 10.1). Path to D has total estimate 13.2. A* picks the smaller estimate (A) to explore first.'
   },
   {
     step: 2,
     chipLabel: '2: Pop A',
-    title: 'Pop S → A (f=13.1): Expand Node A to B & D',
+    title: 'Expand Node A: Test Paths to B & D',
     current: 'A',
     closed: ['S', 'A'],
     frontier: [
-      { path: 'S → A → B', targetNode: 'B', g: 7.0, h: 5.8, f: 12.8, status: '★ Lowest f(n) • Selected', isLowest: true },
-      { path: 'S → D', targetNode: 'D', g: 4.0, h: 9.2, f: 13.2, status: 'Queued in Min-Heap', isLowest: false },
-      { path: 'S → A → D', targetNode: 'D', g: 8.0, h: 9.2, f: 17.2, status: 'Sub-optimal (g=8 > g=4)', isLowest: false }
+      { path: 'S → A → B', targetNode: 'B', g: 7.0, h: 5.8, f: 12.8, status: '★ Lowest Estimate • Pick Next', isLowest: true },
+      { path: 'S → D', targetNode: 'D', g: 4.0, h: 9.2, f: 13.2, status: 'Waiting in Queue', isLowest: false },
+      { path: 'S → A → D', targetNode: 'D', g: 8.0, h: 9.2, f: 17.2, status: 'Too Long (cost 8 vs 4)', isLowest: false }
     ],
     activeEdges: ['S-A', 'A-B', 'A-D', 'S-D'],
     optimalPath: [],
-    decisionFormula: 'f(S→A→B) = 7.0 + 5.8 = 12.8 (Lowest in entire Min-Heap!)',
-    decisionNote: 'Branch B is very promising due to low heuristic h(B)=5.8.',
-    explanation: 'Pop S→A (f=13.1). Expanding A generates path to B (g=7, h=5.8, f=12.8) and path to D (g=8, h=9.2, f=17.2). Candidate S→A→B now holds the lowest f-score in the entire queue!'
+    decisionFormula: 'Route S→A→B has lowest total estimate (12.8) in entire list!',
+    decisionNote: 'Branch B is promising because estimated distance left to goal is only 5.8.',
+    explanation: 'From A, we can reach B or D. Route S→A→B needs 7 traveled + 5.8 remaining = 12.8 total. This is currently the lowest estimate in the whole queue, so A* continues down this promising route!'
   },
   {
     step: 3,
     chipLabel: '3: Backtrack ↩',
-    title: 'Pop S → A → B (f=12.8): Expand B → A* Backtracks to D!',
+    title: 'Expand B: Forward Paths Look Long → Smart Backtrack to D!',
     current: 'B',
     closed: ['S', 'A', 'B'],
     frontier: [
-      { path: 'S → D', targetNode: 'D', g: 4.0, h: 9.2, f: 13.2, status: '★ Lowest f(n) • BACKTRACK ↩', isLowest: true },
-      { path: 'S → A → B → C', targetNode: 'C', g: 11.0, h: 3.4, f: 14.4, status: 'Queued in Min-Heap', isLowest: false },
-      { path: 'S → A → D', targetNode: 'D', g: 8.0, h: 9.2, f: 17.2, status: 'Sub-optimal', isLowest: false },
-      { path: 'S → A → B → E', targetNode: 'E', g: 12.0, h: 7.1, f: 19.1, status: 'Sub-optimal', isLowest: false }
+      { path: 'S → D', targetNode: 'D', g: 4.0, h: 9.2, f: 13.2, status: '★ Lowest Estimate • BACKTRACK ↩', isLowest: true },
+      { path: 'S → A → B → C', targetNode: 'C', g: 11.0, h: 3.4, f: 14.4, status: 'Waiting in Queue', isLowest: false },
+      { path: 'S → A → D', targetNode: 'D', g: 8.0, h: 9.2, f: 17.2, status: 'Too Long', isLowest: false },
+      { path: 'S → A → B → E', targetNode: 'E', g: 12.0, h: 7.1, f: 19.1, status: 'Too Long', isLowest: false }
     ],
     activeEdges: ['S-A', 'A-B', 'B-C', 'B-E', 'S-D'],
     optimalPath: [],
-    decisionFormula: 'f(S→D) = 13.2  <  f(S→A→B→C) = 14.4  <  f(S→A→B→E) = 19.1',
-    decisionNote: 'Intelligent A* Backtracking: Switches focus back to branch D!',
-    explanation: 'Pop S→A→B. Evaluating B generates C (f=14.4) and E (f=19.1). Both are worse than the waiting candidate S→D (f=13.2)! A* automatically backtracks to branch D, preventing wasted exploration!'
+    decisionFormula: 'Route via D (13.2) is shorter than continuing via C (14.4) or E (19.1)',
+    decisionNote: 'Smart Backtracking: Switches focus back to the waiting branch at D!',
+    explanation: 'From B, continuing forward to C estimates 14.4 total, and to E estimates 19.1. Both are worse than the earlier waiting route S→D (13.2)! A* automatically backtracks to branch D, preventing wasted detours.'
   },
   {
     step: 4,
     chipLabel: '4: Pop D (Prune ✂)',
-    title: 'Pop S → D (f=13.2): Expand D to E → Prune Costly Paths!',
+    title: 'Expand D to E: Cheaper Route Found → Cut Out Costly Path!',
     current: 'D',
     closed: ['S', 'A', 'B', 'D'],
     frontier: [
-      { path: 'S → D → E', targetNode: 'E', g: 6.0, h: 7.1, f: 13.1, status: '★ Lowest f(n) • Selected', isLowest: true },
-      { path: 'S → A → B → C', targetNode: 'C', g: 11.0, h: 3.4, f: 14.4, status: 'Queued in Min-Heap', isLowest: false },
-      { path: 'S → D → A', targetNode: 'A', g: 9.0, h: 10.1, f: 19.1, status: 'Sub-optimal', isLowest: false },
-      { path: 'S → A → B → E', targetNode: 'E', g: 12.0, h: 7.1, f: 19.1, status: '✂ PRUNED (g=12 > g=6)', isLowest: false }
+      { path: 'S → D → E', targetNode: 'E', g: 6.0, h: 7.1, f: 13.1, status: '★ Lowest Estimate • Pick Next', isLowest: true },
+      { path: 'S → A → B → C', targetNode: 'C', g: 11.0, h: 3.4, f: 14.4, status: 'Waiting in Queue', isLowest: false },
+      { path: 'S → D → A', targetNode: 'A', g: 9.0, h: 10.1, f: 19.1, status: 'Too Long', isLowest: false },
+      { path: 'S → A → B → E', targetNode: 'E', g: 12.0, h: 7.1, f: 19.1, status: '✂ PRUNED (cost 12 vs 6)', isLowest: false }
     ],
     activeEdges: ['S-D', 'D-E', 'S-A', 'A-B', 'B-C'],
     optimalPath: [],
-    decisionFormula: 'g(S→D→E) = 6.0  vs  g(S→A→B→E) = 12.0 → Pruned!',
-    decisionNote: 'Reaching E via D is half the cost of reaching E via B.',
-    explanation: 'Pop S→D (f=13.2). Edge (D,E) cost 2 reaches E with g=6.0, f=13.1. This is far cheaper than the earlier route via B (g=12.0). A* prunes the costly branch and selects S→D→E!'
+    decisionFormula: 'Reaching E via D costs only 6.0 vs. 12.0 via B → Cut expensive route!',
+    decisionNote: 'Reaching E via D is half the distance of reaching E via B.',
+    explanation: 'From D, moving to E costs only 6.0 total distance traveled (estimate 13.1 total). This is much shorter than reaching E via B (cost 12.0). A* cuts the expensive detour and advances along S→D→E!'
   },
   {
     step: 5,
     chipLabel: '5: Expand E',
-    title: 'Pop S → D → E (f=13.1): Expand E to F',
+    title: 'Expand E: Advance Directly to Neighbor F',
     current: 'E',
     closed: ['S', 'A', 'B', 'D', 'E'],
     frontier: [
-      { path: 'S → D → E → F', targetNode: 'F', g: 10.0, h: 3.5, f: 13.5, status: '★ Lowest f(n) • Selected', isLowest: true },
-      { path: 'S → A → B → C', targetNode: 'C', g: 11.0, h: 3.4, f: 14.4, status: 'Queued in Min-Heap', isLowest: false },
-      { path: 'S → D → E → B', targetNode: 'B', g: 11.0, h: 5.8, f: 16.8, status: 'Sub-optimal (Closed)', isLowest: false }
+      { path: 'S → D → E → F', targetNode: 'F', g: 10.0, h: 3.5, f: 13.5, status: '★ Lowest Estimate • Pick Next', isLowest: true },
+      { path: 'S → A → B → C', targetNode: 'C', g: 11.0, h: 3.4, f: 14.4, status: 'Waiting in Queue', isLowest: false },
+      { path: 'S → D → E → B', targetNode: 'B', g: 11.0, h: 5.8, f: 16.8, status: 'Closed (Already Visited)', isLowest: false }
     ],
     activeEdges: ['S-D', 'D-E', 'E-F'],
     optimalPath: [],
-    decisionFormula: 'f(S→D→E→F) = 10.0 + 3.5 = 13.5',
-    decisionNote: 'Node F is only 3.5 units estimated distance from Goal.',
-    explanation: 'Pop S→D→E (f=13.1). Expand E: edge (E,F) cost 4 gives g=10.0, h=3.5, f=13.5. Path S→D→E→F holds the lowest f-score in the queue and advances directly toward the Goal.'
+    decisionFormula: 'Route S→D→E→F (13.5 total) is closest to Goal (only 3.5 units away)',
+    decisionNote: 'Node F is right next to the Goal.',
+    explanation: 'Expanding E leads to F: traveled distance is 10.0, and remaining guess to Goal is only 3.5, giving total estimate 13.5. This is the top candidate in the queue, heading straight for the Goal.'
   },
   {
     step: 6,
     chipLabel: '6: Reach G',
-    title: 'Pop S → D → E → F (f=13.5): Reach Goal G!',
+    title: 'From F: Reach Goal G! (Total Distance = 13.5)',
     current: 'F',
     closed: ['S', 'A', 'B', 'D', 'E', 'F'],
     frontier: [
-      { path: 'S → D → E → F → G', targetNode: 'G', g: 13.5, h: 0.0, f: 13.5, status: '★ GOAL FOUND • Ready to Pop', isLowest: true },
-      { path: 'S → A → B → C', targetNode: 'C', g: 11.0, h: 3.4, f: 14.4, status: 'Queued in Min-Heap', isLowest: false }
+      { path: 'S → D → E → F → G', targetNode: 'G', g: 13.5, h: 0.0, f: 13.5, status: '★ GOAL REACHED • Ready to Complete', isLowest: true },
+      { path: 'S → A → B → C', targetNode: 'C', g: 11.0, h: 3.4, f: 14.4, status: 'Waiting in Queue', isLowest: false }
     ],
     activeEdges: ['S-D', 'D-E', 'E-F', 'F-G'],
     optimalPath: ['S-D', 'D-E', 'E-F', 'F-G'],
-    decisionFormula: 'f(Goal) = g(13.5) + h(0.0) = 13.5',
-    decisionNote: 'Goal node queued at head of min-heap. Ready for final pop.',
-    explanation: 'Pop S→D→E→F (f=13.5). Edge (F,G) cost 3.5 reaches Goal G! Path cost g = 13.5, h(G) = 0, f = 13.5. Candidate path is placed at top of priority queue.'
+    decisionFormula: 'Goal Reached: Traveled = 13.5, Remaining to Goal = 0.0 → Total = 13.5',
+    decisionNote: 'The Goal route sits at the head of the list with zero distance left.',
+    explanation: 'From F, edge to G (cost 3.5) arrives at the Goal! Distance traveled is 13.5 and remaining distance is 0.0. The complete route is placed at the top of the queue for final confirmation.'
   },
   {
     step: 7,
     chipLabel: '7: Goal Optimal ★',
-    title: 'Pop Goal G: Optimal Path Guaranteed (Cost = 13.5)',
+    title: 'Confirm Goal G: Guaranteed Shortest Route Found!',
     current: 'G',
     closed: ['S', 'A', 'B', 'D', 'E', 'F', 'G'],
     frontier: [
-      { path: 'S → D → E → F → G', targetNode: 'G', g: 13.5, h: 0.0, f: 13.5, status: '✓ MATHEMATICALLY OPTIMAL PATH', isLowest: true }
+      { path: 'S → D → E → F → G', targetNode: 'G', g: 13.5, h: 0.0, f: 13.5, status: '✓ GUARANTEED SHORTEST ROUTE', isLowest: true }
     ],
     activeEdges: ['S-D', 'D-E', 'E-F', 'F-G'],
     optimalPath: ['S-D', 'D-E', 'E-F', 'F-G'],
-    decisionFormula: 'Optimal Path: S → D → E → F → G (Total Cost g* = 13.5)',
-    decisionNote: 'Admissible Heuristic Guarantee: No other path can be shorter.',
-    explanation: 'Goal node G popped from min-heap! Because the heuristic h(n) is admissible (h(n) ≤ h*(n) everywhere), the first path popped to the goal is provably optimal. Search halts with guaranteed shortest trajectory.'
+    decisionFormula: 'Shortest Route: S → D → E → F → G (Total Distance = 13.5)',
+    decisionNote: 'Optimistic Guess Guarantee: No unexplored route can ever beat 13.5!',
+    explanation: 'Goal node G confirmed! Because straight-line distance guesses are optimistic (never guessing longer than real physical paths), this first route reaching the goal is mathematically guaranteed to be the shortest path!'
   }
 ];
 
@@ -746,10 +746,10 @@ export function AStarSearchInteractive() {
             }}
           >
             <span>
-              <strong>Graph Labels:</strong> Edge numbers = Cost <em>g(u,v)</em> &bull; Pills = Heuristic <em>h(n)</em>
+              <strong>Graph Labels:</strong> Edge numbers = Travel Distance &bull; Badges = Est. Distance to Goal
             </span>
             <span style={{ color: '#1e293b' }}>
-              Formula: <strong>f(n) = g(n) + h(n)</strong>
+              Rule: <strong>Total Estimate = Distance Traveled + Distance to Goal</strong>
             </span>
           </div>
         </div>
@@ -780,11 +780,11 @@ export function AStarSearchInteractive() {
             >
               <div style={{ display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
                 <span style={{ fontSize: '0.78rem', fontWeight: 700, color: '#4338ca' }}>
-                  Min-Heap Priority Queue (Open List)
+                  Candidate Routes Queue (Open List)
                 </span>
               </div>
               <span style={{ fontSize: '0.66rem', color: '#64748b' }}>
-                Sorted by f(n) = g + h
+                Sorted by Total Estimate (Lowest First)
               </span>
             </div>
 
@@ -793,10 +793,10 @@ export function AStarSearchInteractive() {
                 <thead>
                   <tr style={{ background: '#f8fafc', color: '#475569', textAlign: 'left', borderBottom: '2px solid #e2e8f0' }}>
                     <th style={{ padding: '0.28rem 0.4rem', fontWeight: 700 }}>Candidate Path</th>
-                    <th style={{ padding: '0.28rem 0.4rem', fontWeight: 700 }}>g(n)</th>
-                    <th style={{ padding: '0.28rem 0.4rem', fontWeight: 700 }}>h(n)</th>
-                    <th style={{ padding: '0.28rem 0.4rem', fontWeight: 700, color: '#b45309' }}>f(n)</th>
-                    <th style={{ padding: '0.28rem 0.4rem', fontWeight: 700 }}>Frontier Status</th>
+                    <th style={{ padding: '0.28rem 0.4rem', fontWeight: 700 }}>Traveled (g)</th>
+                    <th style={{ padding: '0.28rem 0.4rem', fontWeight: 700 }}>To Goal (h)</th>
+                    <th style={{ padding: '0.28rem 0.4rem', fontWeight: 700, color: '#b45309' }}>Total Est. (f)</th>
+                    <th style={{ padding: '0.28rem 0.4rem', fontWeight: 700 }}>Search Status</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -822,9 +822,9 @@ export function AStarSearchInteractive() {
                           style={{
                             padding: '0.12rem 0.4rem',
                             borderRadius: '4px',
-                            background: row.isLowest ? '#fef08a' : (row.status.includes('PRUNED') ? '#fee2e2' : (row.status.includes('OPTIMAL') ? '#d1fae5' : '#f1f5f9')),
-                            color: row.isLowest ? '#854d0e' : (row.status.includes('PRUNED') ? '#991b1b' : (row.status.includes('OPTIMAL') ? '#065f46' : '#475569')),
-                            border: row.isLowest ? '1px solid #fde047' : (row.status.includes('PRUNED') ? '1px solid #fca5a5' : (row.status.includes('OPTIMAL') ? '1px solid #6ee7b7' : '1px solid #e2e8f0')),
+                            background: row.isLowest ? '#fef08a' : (row.status.includes('PRUNED') ? '#fee2e2' : (row.status.includes('OPTIMAL') || row.status.includes('SHORTEST') ? '#d1fae5' : '#f1f5f9')),
+                            color: row.isLowest ? '#854d0e' : (row.status.includes('PRUNED') ? '#991b1b' : (row.status.includes('OPTIMAL') || row.status.includes('SHORTEST') ? '#065f46' : '#475569')),
+                            border: row.isLowest ? '1px solid #fde047' : (row.status.includes('PRUNED') ? '1px solid #fca5a5' : (row.status.includes('OPTIMAL') || row.status.includes('SHORTEST') ? '1px solid #6ee7b7' : '1px solid #e2e8f0')),
                             fontWeight: 600
                           }}
                         >
@@ -855,9 +855,9 @@ export function AStarSearchInteractive() {
           >
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
               <span style={{ color: '#0284c7', fontWeight: 700 }}>
-                🧮 Math Evaluation:
+                💡 Decision Logic:
               </span>
-              <span style={{ color: '#1d4ed8', fontFamily: 'monospace', fontWeight: 700 }}>
+              <span style={{ color: '#1d4ed8', fontWeight: 700 }}>
                 {stepData.decisionFormula}
               </span>
             </div>
